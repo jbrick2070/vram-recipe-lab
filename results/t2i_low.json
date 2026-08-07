@@ -1,10 +1,10 @@
 {
   "recipe": "t2i_low",
-  "peak_vram_gb": 1.677734375,
-  "duration_s": 2.004068374633789,
+  "peak_vram_gb": 1.6630859375,
+  "duration_s": 2.0052950382232666,
   "output_path": "",
   "boot_lane": "lab-8199, sage-free",
   "pass": true,
-  "run_count": 5,
+  "run_count": 6,
   "blocked": false
 }
