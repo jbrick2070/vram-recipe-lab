@@ -23,4 +23,4 @@ This file records measured VRAM and runtime performance for every recipe variant
 | `h3_r2v_best` | **BLOCKED** | 0.00 | 0.00 | 0.0 | 864x480 x 124f; weights missing (42.5 GB); EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | t2i_low | PASS | 12.32 | 1.90 | 7.3 | Run #11; boot lane: lab-8199, sage-free |
 | t2i_high | PASS | 13.15 | 1.90 | 6.3 | Run #5; boot lane: lab-8199, sage-free |
-| wan_ti2v_low | PASS (cold) | 12.38 | 1.40 | 12.7 | Run #5; boot lane: lab-8199, sage-free |
+| wan_ti2v_low | PASS | 12.46 | 1.47 | 13.8 | Run #7; boot lane: lab-8199, sage-free |
