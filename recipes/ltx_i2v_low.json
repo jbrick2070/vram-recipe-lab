@@ -2,13 +2,13 @@
   "name": "ltx_i2v_low",
   "tier": "smoke",
   "contract": {
-    "engine": "ltx_video",
+    "engine": "ltx_i2v",
     "mode": "i2v",
     "width": 512,
     "height": 320,
     "frames": 25,
-    "fps": 6.6,
-    "duration_s": 3.75,
+    "fps": 24.0,
+    "duration_s": 1.04,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
@@ -86,7 +86,13 @@
       "class_type": "CreateVideo",
       "inputs": {
         "images": ["9", 0],
-        "fps": 24.0,
+        "fps": 24.0
+      }
+    },
+    "11": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": ["10", 0],
         "filename_prefix": "ltx_i2v_low_out"
       }
     }

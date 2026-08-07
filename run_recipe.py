@@ -337,17 +337,25 @@ def check_models_exist(recipe_data: Dict[str, Any]):
 
 
 def check_widget_integrity(recipe_data: Dict[str, Any], object_info: Dict[str, Any]):
-    """Preflight Check #6: Recipe JSON parses; widget structure validated."""
+    """Preflight Check #6: Recipe JSON parses; widget count & input structure validated against server object_info schema."""
     prompt_dict = recipe_data.get("prompt", recipe_data)
     for node_id, node in prompt_dict.items():
         if not isinstance(node, dict):
             continue
         class_type = node.get("class_type")
         inputs = node.get("inputs", {})
-        if not class_type or class_type not in object_info:
-            continue
+        if not class_type:
+            raise PreflightError(6, "Widget integrity", f"Node {node_id} missing class_type")
         if not isinstance(inputs, dict):
             raise PreflightError(6, "Widget integrity", f"Node {node_id} inputs is not a dictionary")
+        if class_type in object_info:
+            info = object_info[class_type]
+            req_inputs = info.get("input", {}).get("required", {})
+            opt_inputs = info.get("input", {}).get("optional", {})
+            schema_keys = set(req_inputs.keys()) | set(opt_inputs.keys())
+            for in_key in inputs:
+                if in_key not in schema_keys:
+                    print(f"[PREFLIGHT WARN] Node {node_id} ({class_type}) input '{in_key}' not found in server object_info schema.")
 
 
 def check_affordability(recipe_name: str):
@@ -660,9 +668,14 @@ def main():
                             execution_success = True
                             for n_out in outputs.values():
                                 if "images" in n_out and n_out["images"]:
-                                    output_path = n_out["images"][0].get("filename", "output.png")
+                                    output_path = n_out["images"][0].get("filename", "")
                                 elif "gifs" in n_out and n_out["gifs"]:
-                                    output_path = n_out["gifs"][0].get("filename", "output.mp4")
+                                    output_path = n_out["gifs"][0].get("filename", "")
+                            if output_path:
+                                target_file = REPO_ROOT / "outputs" / output_path
+                                if not target_file.exists() or target_file.stat().st_size == 0:
+                                    execution_success = False
+                                    print(f"[ERROR] Output file '{output_path}' missing or 0 bytes on disk!")
                         else:
                             execution_success = False
                             print(f"[ERROR] ComfyUI execution failed for prompt {prompt_id}: status_str='{status_str}', outputs={bool(outputs)}, messages={messages}")
@@ -682,22 +695,24 @@ def main():
         # 5. Invalid measurement guard: peak <= baseline + 0.2 GB means sampler missed render
         is_measurement_valid = peak_vram_gb > (baseline_vram_gb + 0.2)
 
-        # Determine run count for warm cache gating
+        # Determine run count and previous pass state for warm cache gating
         prev_run_count = 0
+        prev_passed = False
         result_file = RESULTS_DIR / f"{recipe_name}.json"
         if result_file.exists():
             try:
                 prev_data = json.loads(result_file.read_text(encoding="utf-8"))
                 prev_run_count = prev_data.get("run_count", 0)
+                prev_passed = prev_data.get("pass", False)
             except Exception:
                 pass
         
         run_count = prev_run_count + 1
-        is_warm_cache = run_count >= 2
+        is_warm_cache = (run_count >= 2) and prev_passed
 
         if not execution_success:
             passed = False
-            status = "FAIL (execution error)"
+            status = "ERROR (execution error)"
         elif not is_measurement_valid:
             passed = False
             status = "INVALID (sampler missed peak)"

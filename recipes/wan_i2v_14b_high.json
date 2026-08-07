@@ -2,13 +2,13 @@
   "name": "wan_i2v_14b_high",
   "tier": "smoke",
   "contract": {
-    "engine": "wan_ti2v",
-    "mode": "ti2v",
+    "engine": "wan_i2v_14b",
+    "mode": "i2v",
     "width": 768,
     "height": 512,
     "frames": 25,
-    "fps": 6.6,
-    "duration_s": 3.75,
+    "fps": 16.0,
+    "duration_s": 1.56,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
@@ -29,7 +29,7 @@
     "3": {
       "class_type": "VAELoader",
       "inputs": {
-        "vae_name": "wan2.2_vae.safetensors"
+        "vae_name": "wan2.1_vae.safetensors"
       }
     },
     "4": {
@@ -41,14 +41,14 @@
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "cinematic 8k camera motion across vintage radio control room, volumetric light rays",
+        "text": "cinematic slow pan across vintage radio control room from still image, high quality",
         "clip": ["2", 0]
       }
     },
     "6": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "blurry, low quality, noise, artifacts",
+        "text": "blurry, low quality, noise, distortion",
         "clip": ["2", 0]
       }
     },
@@ -64,10 +64,10 @@
       "class_type": "KSampler",
       "inputs": {
         "seed": 42,
-        "steps": 20,
-        "cfg": 5.5,
-        "sampler_name": "uni_pc",
-        "scheduler": "simple",
+        "steps": 12,
+        "cfg": 3.0,
+        "sampler_name": "euler",
+        "scheduler": "normal",
         "denoise": 1.0,
         "model": ["1", 0],
         "positive": ["5", 0],
@@ -86,7 +86,13 @@
       "class_type": "CreateVideo",
       "inputs": {
         "images": ["9", 0],
-        "fps": 24.0,
+        "fps": 16.0
+      }
+    },
+    "11": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": ["10", 0],
         "filename_prefix": "wan_i2v_14b_high_out"
       }
     }

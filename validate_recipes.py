@@ -5,10 +5,11 @@ Runs all static validations that do NOT require a live lab server:
   1. Strict UTF-8 encoding (NO BOM)
   2. JSON parsing validity
   3. Recipe contract integrity (width, height, frames, vram_ceiling_gb)
-  4. Node class_type presence and prompt dictionary structure
-  5. Graph reachability, link index integrity, and data types
-  6. Sink output node type validation (SaveImage vs CreateVideo/VHS_VideoCombine)
-  7. Fixture file existence for I2V/R2V/Audio recipes
+  4. Mandatory coverage of all 16 canonical recipes
+  5. Node class_type presence and prompt dictionary structure
+  6. Graph reachability, link index integrity, and data types
+  7. Sink output node type validation (SaveImage for still, SaveVideo for video)
+  8. Fixture file existence for I2V/R2V/Audio recipes
 """
 
 import json
@@ -18,6 +19,17 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent.resolve()
 RECIPES_DIR = REPO_ROOT / "recipes"
 FIXTURES_DIR = REPO_ROOT / "fixtures"
+
+REQUIRED_RECIPES = [
+    "t2i_low", "t2i_high",
+    "wan_ti2v_low", "wan_ti2v_high",
+    "wan_i2v_14b_low", "wan_i2v_14b_high",
+    "ltx_i2v_low", "ltx_i2v_high",
+    "ltx_audio_low", "ltx_lipsync_low",
+    "h3_t2v_low", "h3_t2v_best",
+    "h3_i2v_low", "h3_i2v_best",
+    "h3_r2v_low", "h3_r2v_best"
+]
 
 
 def validate_recipe_file(recipe_path: Path) -> dict:
@@ -56,8 +68,8 @@ def validate_recipe_file(recipe_path: Path) -> dict:
         errors.append("Missing or empty 'prompt' dictionary")
     else:
         node_ids = set(prompt.keys())
-        has_video_sink = False
-        has_image_sink = False
+        has_video_save = False
+        has_image_save = False
 
         for node_id, node in prompt.items():
             if not isinstance(node, dict):
@@ -68,10 +80,10 @@ def validate_recipe_file(recipe_path: Path) -> dict:
                 errors.append(f"Node {node_id} missing 'class_type'")
                 continue
 
-            if class_type in ["CreateVideo", "VHS_VideoCombine", "SaveVideo"]:
-                has_video_sink = True
+            if class_type == "SaveVideo":
+                has_video_save = True
             elif class_type == "SaveImage":
-                has_image_sink = True
+                has_image_save = True
 
             inputs = node.get("inputs", {})
             if not isinstance(inputs, dict):
@@ -87,11 +99,11 @@ def validate_recipe_file(recipe_path: Path) -> dict:
 
         # 6. Check sink output node type match
         if "t2i" in recipe_name:
-            if not has_image_sink:
+            if not has_image_save:
                 errors.append("Still image recipe missing SaveImage sink node")
         else:
-            if not has_video_sink:
-                errors.append("Video recipe missing video sink node (CreateVideo / SaveVideo / VHS_VideoCombine)")
+            if not has_video_save:
+                errors.append("Video recipe missing SaveVideo sink node (must end in SaveVideo)")
 
     # 7. Check fixtures for image/audio recipes
     if "i2v" in recipe_name or "r2v" in recipe_name:
@@ -120,16 +132,16 @@ def main():
     print("       vram-recipe-lab :: PAPER VALIDATION SUITE        ")
     print("=========================================================\n")
 
-    recipe_files = sorted(list(RECIPES_DIR.glob("*.json")))
-    if not recipe_files:
-        print("[ERROR] No recipe JSON files found in recipes/!")
-        sys.exit(1)
-
     results = []
     all_valid = True
 
-    for recipe_path in recipe_files:
-        recipe_name = recipe_path.stem
+    for recipe_name in REQUIRED_RECIPES:
+        recipe_path = RECIPES_DIR / f"{recipe_name}.json"
+        if not recipe_path.exists():
+            print(f"[MISSING] Required recipe file missing: {recipe_name}.json!")
+            all_valid = False
+            continue
+
         res = validate_recipe_file(recipe_path)
         results.append(res)
 
@@ -143,12 +155,12 @@ def main():
 
     print("\n---------------------------------------------------------")
     passed_count = sum(1 for r in results if r["valid"])
-    total_count = len(results)
-    print(f"Summary: {passed_count}/{total_count} recipes PAPER VALIDATED successfully.")
+    total_count = len(REQUIRED_RECIPES)
+    print(f"Summary: {passed_count}/{total_count} required recipes PAPER VALIDATED successfully.")
     print("Note: Schema-vs-/object_info live server checks marked PENDING server window.")
     print("=========================================================\n")
 
-    if passed_count != total_count:
+    if passed_count != total_count or len(results) != total_count:
         sys.exit(1)
 
 

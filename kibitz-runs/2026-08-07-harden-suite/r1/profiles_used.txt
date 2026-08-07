@@ -1,0 +1,1 @@
+comfyui: C:\Users\jeffr\.gemini\config\plugins\kibitz-plugin\skills\kibitz\references\profiles\comfyui.md

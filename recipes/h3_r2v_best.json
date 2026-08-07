@@ -88,7 +88,13 @@
       "class_type": "CreateVideo",
       "inputs": {
         "images": ["9", 0],
-        "fps": 24.0,
+        "fps": 24.0
+      }
+    },
+    "11": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": ["10", 0],
         "filename_prefix": "h3_r2v_best_out"
       }
     }

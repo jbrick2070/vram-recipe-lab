@@ -2,13 +2,13 @@
   "name": "ltx_audio_low",
   "tier": "smoke",
   "contract": {
-    "engine": "ltx_video",
-    "mode": "audio_conditioned",
+    "engine": "ltx_audio",
+    "mode": "i2v_audio",
     "width": 512,
     "height": 320,
     "frames": 25,
-    "fps": 6.6,
-    "duration_s": 3.75,
+    "fps": 24.0,
+    "duration_s": 1.04,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
@@ -29,26 +29,26 @@
     "3": {
       "class_type": "VAELoader",
       "inputs": {
-        "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors"
+        "vae_name": "ltx-2.3-22b-dev_video_vae.safetensors"
       }
     },
     "4": {
-      "class_type": "LoadAudio",
+      "class_type": "LoadImage",
       "inputs": {
-        "audio": "narration.wav"
+        "image": "scene_still.png"
       }
     },
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "audio-reactive vintage radio broadcast visualizer, dynamic lights syncing to speech",
+        "text": "cinematic slow pan across vintage radio control room, radio static chatter audio",
         "clip": ["2", 0]
       }
     },
     "6": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "blurry, low quality, noise",
+        "text": "blurry, low quality, noise, distortion",
         "clip": ["2", 0]
       }
     },
@@ -86,7 +86,13 @@
       "class_type": "CreateVideo",
       "inputs": {
         "images": ["9", 0],
-        "fps": 24.0,
+        "fps": 24.0
+      }
+    },
+    "11": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": ["10", 0],
         "filename_prefix": "ltx_audio_low_out"
       }
     }
