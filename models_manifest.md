@@ -27,6 +27,7 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors` | `diffusion_models/` | LTX Video 2.3 22B Transformer FP8 |
 | `lumina_2_model_bf16.safetensors` | `diffusion_models/` | Lumina 2 BF16 diffusion model |
 | `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors` | `diffusion_models/` | Wan 2.2 I2V 14B FP8 model |
+| `Wan2.2-TI2V-5B-Q5_K_M.gguf` | `diffusion_models/` | Wan 2.2 TI2V 5B Q5_K_M GGUF model |
 
 ### Text Encoders / CLIP (`CLIPLoader`)
 | Model Filename | Path / Store | Notes |

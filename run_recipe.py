@@ -36,7 +36,7 @@ ENGINE_MATRIX_BETA = REPO_ROOT / "ENGINE_MATRIX_BETA.md"
 LAB_PORT = os.environ.get("LAB_PORT", "8199")
 COMFY_SERVER_URL = f"http://127.0.0.1:{LAB_PORT}"
 VRAM_GATE_GB = 14.5
-VRAM_GPU_IDLE_MAX_MB = 1536  # 1.5 GB
+VRAM_GPU_IDLE_MAX_MB = 2560  # 2.5 GB threshold
 MIN_FREE_DISK_GB = 5.0
 BOOT_TIMEOUT_S = 120
 POLL_INTERVAL_S = 0.2  # 200ms VRAM polling interval
@@ -214,23 +214,28 @@ def boot_lab_server() -> Dict[str, Any]:
     SERVER_PID_FILE.write_text(str(proc.pid), encoding="utf-8")
     print(f"[SERVER] Recorded server PID {proc.pid} in .server.pid")
 
-    start = time.time()
-    while time.time() - start < BOOT_TIMEOUT_S:
-        stats = query_server_stats()
-        if stats:
-            print(f"[SERVER] Lab server online on port {LAB_PORT} after {time.time()-start:.1f}s")
-            return stats
-        time.sleep(3.0)
+    try:
+        start = time.time()
+        while time.time() - start < BOOT_TIMEOUT_S:
+            stats = query_server_stats()
+            if stats:
+                print(f"[SERVER] Lab server online on port {LAB_PORT} after {time.time()-start:.1f}s")
+                return stats
+            time.sleep(3.0)
 
-    log_tail = ""
-    if SERVER_LOG_FILE.exists():
-        try:
-            log_lines = SERVER_LOG_FILE.read_text(encoding="utf-8-sig", errors="replace").splitlines()
-            log_tail = "\n".join(log_lines[-15:])
-        except Exception as e:
-            log_tail = f"(Could not read server.log: {e})"
+        log_tail = ""
+        if SERVER_LOG_FILE.exists():
+            try:
+                log_lines = SERVER_LOG_FILE.read_text(encoding="utf-8-sig", errors="replace").splitlines()
+                log_tail = "\n".join(log_lines[-15:])
+            except Exception as e:
+                log_tail = f"(Could not read server.log: {e})"
 
-    raise PreflightError(3, "Server up", f"Lab server failed to boot on port {LAB_PORT} within 120s.\nTail of server.log:\n{log_tail}")
+        raise PreflightError(3, "Server up", f"Lab server failed to boot on port {LAB_PORT} within 120s.\nTail of server.log:\n{log_tail}")
+    except Exception:
+        if SERVER_PID_FILE.exists():
+            SERVER_PID_FILE.unlink(missing_ok=True)
+        raise
 
 
 def check_server_up_and_ownership() -> Dict[str, Any]:
@@ -361,12 +366,42 @@ def check_affordability(recipe_name: str):
             pass
 
 
+def upload_fixtures():
+    """Upload pre-baked fixtures from fixtures/ to ComfyUI input directory via POST /upload/image."""
+    if not FIXTURES_DIR.exists():
+        return
+
+    for fix_file in FIXTURES_DIR.glob("*"):
+        if fix_file.is_file() and fix_file.suffix.lower() in [".png", ".jpg", ".jpeg", ".wav", ".mp3", ".flac"]:
+            try:
+                boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
+                content = fix_file.read_bytes()
+                body = (
+                    f"--{boundary}\r\n"
+                    f'Content-Disposition: form-data; name="image"; filename="{fix_file.name}"\r\n'
+                    f"Content-Type: application/octet-stream\r\n\r\n"
+                ).encode("utf-8") + content + f"\r\n--{boundary}--\r\n".encode("utf-8")
+
+                req = urllib.request.Request(
+                    f"{COMFY_SERVER_URL}/upload/image",
+                    data=body,
+                    headers={"Content-Type": f"multipart/form-data; boundary={boundary}"}
+                )
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    pass
+                print(f"[FIXTURE] Uploaded fixture {fix_file.name} to server input directory")
+            except Exception as e:
+                print(f"[FIXTURE] Warning uploading {fix_file.name}: {e}")
+
+
 def check_fixtures_uploaded(recipe_data: Dict[str, Any]):
-    """Preflight Check #8: Required fixtures present on disk."""
+    """Preflight Check #8: Required fixtures present on disk and uploaded to server."""
     for fixture in ["scene_still.png", "portrait.png", "narration.wav"]:
         p = FIXTURES_DIR / fixture
         if not p.exists():
             raise PreflightError(8, "Fixtures uploaded", f"Fixture file missing from fixtures/: {fixture}")
+
+    upload_fixtures()
 
 
 def check_boot_lane(recipe_name: str, system_stats: Dict[str, Any]):

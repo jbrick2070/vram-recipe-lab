@@ -13,10 +13,9 @@
   },
   "prompt": {
     "1": {
-      "class_type": "UNETLoader",
+      "class_type": "UnetLoaderGGUF",
       "inputs": {
-        "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-        "weight_dtype": "fp8_e4m3fn"
+        "unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"
       }
     },
     "2": {

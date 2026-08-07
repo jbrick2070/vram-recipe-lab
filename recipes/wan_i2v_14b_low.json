@@ -1,5 +1,5 @@
 {
-  "name": "wan_ti2v_low",
+  "name": "wan_i2v_14b_low",
   "tier": "smoke",
   "contract": {
     "engine": "wan_ti2v",
@@ -13,9 +13,10 @@
   },
   "prompt": {
     "1": {
-      "class_type": "UnetLoaderGGUF",
+      "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"
+        "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "weight_dtype": "fp8_e4m3fn"
       }
     },
     "2": {

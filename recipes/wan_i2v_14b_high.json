@@ -1,11 +1,11 @@
 {
-  "name": "wan_ti2v_low",
+  "name": "wan_i2v_14b_high",
   "tier": "smoke",
   "contract": {
     "engine": "wan_ti2v",
     "mode": "ti2v",
-    "width": 512,
-    "height": 320,
+    "width": 768,
+    "height": 512,
     "frames": 25,
     "fps": 6.6,
     "duration_s": 3.75,
@@ -13,9 +13,10 @@
   },
   "prompt": {
     "1": {
-      "class_type": "UnetLoaderGGUF",
+      "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"
+        "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "weight_dtype": "fp8_e4m3fn"
       }
     },
     "2": {
@@ -40,7 +41,7 @@
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "cinematic camera motion across vintage radio control room, 8k",
+        "text": "cinematic 8k camera motion across vintage radio control room, volumetric light rays",
         "clip": ["2", 0]
       }
     },
@@ -54,8 +55,8 @@
     "7": {
       "class_type": "EmptyLatentImage",
       "inputs": {
-        "width": 512,
-        "height": 320,
+        "width": 768,
+        "height": 512,
         "batch_size": 1
       }
     },
@@ -63,8 +64,8 @@
       "class_type": "KSampler",
       "inputs": {
         "seed": 42,
-        "steps": 15,
-        "cfg": 5.0,
+        "steps": 20,
+        "cfg": 5.5,
         "sampler_name": "uni_pc",
         "scheduler": "simple",
         "denoise": 1.0,
@@ -85,7 +86,7 @@
       "class_type": "SaveImage",
       "inputs": {
         "images": ["9", 0],
-        "filename_prefix": "wan_ti2v_low_out"
+        "filename_prefix": "wan_ti2v_high_out"
       }
     }
   },
