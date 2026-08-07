@@ -51,8 +51,8 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `lumina2_ae.safetensors` | `vae/` | Lumina 2 VAE |
 | `ltx-2.3-22b-dev_video_vae.safetensors` | `vae/` | LTX Video VAE |
 | `ltx-2.3-22b-dev_audio_vae.safetensors` | `vae/` | LTX Audio VAE |
-| `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE |
-| `wan_2.1_vae.safetensors` | `vae/` | Wan 2.1 VAE |
+| `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE — REQUIRED by Wan2.2 TI2V-5B (OTR ruling M8: "The 5B REQUIRES the Wan2.2 VAE, not the 2.1 VAE"). Never swap. |
+| `wan_2.1_vae.safetensors` | `vae/` | Wan 2.1 VAE — used by the Wan2.2 14B models (wan_i2v_14b_*). Wrong VAE does not crash; it silently decodes garbage the machine gate cannot detect. |
 
 ## Missing / Unloaded Models (BLOCKED)
 
