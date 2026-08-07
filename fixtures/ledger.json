@@ -1,0 +1,295 @@
+{
+  "schema_version": "l3-2026-05-08",
+  "episode_id": "signal_lost_signal_lost_20260510_140841_20260510_140841",
+  "commit": "b33d0b3",
+  "total_episode_dur_s": 46.61333333333334,
+  "total_char_count": 181,
+  "total_word_count": 25,
+  "total_dialogue_lines": 4,
+  "total_beats": 0,
+  "cast": [
+    {
+      "char_id": "c01",
+      "name": "CAPTAIN KAI",
+      "description": "Male, dry, 40s",
+      "gender": "male",
+      "voice_preset": "v2/en_speaker_6",
+      "line_count": 2,
+      "word_count": 12,
+      "portrait_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\portraits\\c01_portrait.png"
+    },
+    {
+      "char_id": "c02",
+      "name": "DR. LIN",
+      "description": "Female, energetic, 60s",
+      "gender": "female",
+      "voice_preset": "v2/en_speaker_4",
+      "line_count": 1,
+      "word_count": 8,
+      "portrait_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\portraits\\c02_portrait.png"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "scene_1",
+      "description": "Control room aboard spaceship",
+      "env": null,
+      "line_count": 0,
+      "word_count": 0
+    }
+  ],
+  "shots": [
+    {
+      "shot_id": "frame_0000",
+      "scene_id": "scene_1",
+      "description": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior ",
+      "visual_prompt": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior shot of a dimly lit control room, holographic screens displaying star charts, sleek console panels, harsh shadows, establishing framing, opening of the scene, near-future industrial sci-fi, clean lines, utilitarian, cinematic, 35mm film look, 1980s broadcast aesthetic, subtle film grain, volumetric lighting",
+      "png_path": null,
+      "start_s": null,
+      "dur_s": null
+    },
+    {
+      "shot_id": "frame_0001",
+      "scene_id": "scene_1",
+      "description": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior ",
+      "visual_prompt": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior shot of a dimly lit control room, holographic screens displaying star charts, sleek console panels, harsh shadows, transition within scene, action continues, near-future industrial sci-fi, clean lines, utilitarian, cinematic, 35mm film look, 1980s broadcast aesthetic, subtle film grain, volumetric lighting",
+      "png_path": null,
+      "start_s": null,
+      "dur_s": null
+    },
+    {
+      "shot_id": "frame_0002",
+      "scene_id": "scene_1",
+      "description": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior ",
+      "visual_prompt": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior shot of a dimly lit control room, holographic screens displaying star charts, sleek console panels, harsh shadows, transition within scene, action continues, near-future industrial sci-fi, clean lines, utilitarian, cinematic, 35mm film look, 1980s broadcast aesthetic, subtle film grain, volumetric lighting",
+      "png_path": null,
+      "start_s": null,
+      "dur_s": null
+    },
+    {
+      "shot_id": "frame_0003",
+      "scene_id": "scene_1",
+      "description": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior ",
+      "visual_prompt": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior shot of a dimly lit control room, holographic screens displaying star charts, sleek console panels, harsh shadows, transition within scene, action continues, near-future industrial sci-fi, clean lines, utilitarian, cinematic, 35mm film look, 1980s broadcast aesthetic, subtle film grain, volumetric lighting",
+      "png_path": null,
+      "start_s": null,
+      "dur_s": null
+    },
+    {
+      "shot_id": "frame_0004",
+      "scene_id": "scene_1",
+      "description": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior ",
+      "visual_prompt": "Close-up of a determined male captain in his 40s, stern expression, uniform with rank insignia, Portrait of a passionate female scientist in her 30s, round glasses, lab coat, wide-eyed gaze, Interior shot of a dimly lit control room, holographic screens displaying star charts, sleek console panels, harsh shadows, final closing framing, end of episode, near-future industrial sci-fi, clean lines, utilitarian, cinematic, 35mm film look, 1980s broadcast aesthetic, subtle film grain, volumetric lighting",
+      "png_path": null,
+      "start_s": null,
+      "dur_s": null
+    }
+  ],
+  "beats": [],
+  "lines": [
+    {
+      "line_id": "b001",
+      "shot_id": null,
+      "beat_id": "b001",
+      "char_id": "music_open",
+      "text": "Set the tense, claustrophobic atmosphere",
+      "traits": "Tense",
+      "boundary": null,
+      "char_count": 40,
+      "word_count": 5,
+      "bark_wav_path": null,
+      "start_s": null,
+      "dur_s": null,
+      "speaker_role": "music_open"
+    },
+    {
+      "line_id": "b002",
+      "shot_id": null,
+      "beat_id": "b002",
+      "char_id": "c01",
+      "text": "Check that out. Pulsar's showing unusual activity.",
+      "traits": "Intrigued",
+      "boundary": null,
+      "char_count": 50,
+      "word_count": 7,
+      "bark_wav_path": null,
+      "start_s": 9.5,
+      "dur_s": 12.72,
+      "speaker_role": "character",
+      "tts_engine": "bark",
+      "bark_wav_dur_s": 12.72,
+      "bark_render_ms": 26663,
+      "text_for_tts": "Check that out. Pulsar's showing unusual activity.",
+      "voice_preset": "v2/en_speaker_6",
+      "render_ms": 26663,
+      "generated_dur_s": 12.72,
+      "audio_sample_hash": "e759ec32",
+      "start_s_space": "master_mix"
+    },
+    {
+      "line_id": "b003",
+      "shot_id": null,
+      "beat_id": "b003",
+      "char_id": "c02",
+      "text": "By the stars, it's repeating! This isn't random!",
+      "traits": "Excited",
+      "boundary": null,
+      "char_count": 48,
+      "word_count": 8,
+      "bark_wav_path": null,
+      "start_s": 22.22,
+      "dur_s": 11.233333333333333,
+      "speaker_role": "character",
+      "tts_engine": "bark",
+      "bark_wav_dur_s": 11.133333333333333,
+      "bark_render_ms": 22327,
+      "text_for_tts": "By the stars, it's repeating! This isn't random!",
+      "voice_preset": "v2/en_speaker_4",
+      "render_ms": 22327,
+      "generated_dur_s": 11.133333333333333,
+      "audio_sample_hash": "d882b1e1",
+      "start_s_space": "master_mix"
+    },
+    {
+      "line_id": "b004",
+      "shot_id": null,
+      "beat_id": "b004",
+      "char_id": "c01",
+      "text": "Incoming transmission, prepare for contact!",
+      "traits": "Alarmed",
+      "boundary": null,
+      "char_count": 43,
+      "word_count": 5,
+      "bark_wav_path": null,
+      "start_s": 33.45333333333333,
+      "dur_s": 5.66,
+      "speaker_role": "character",
+      "tts_engine": "bark",
+      "bark_wav_dur_s": 5.56,
+      "bark_render_ms": 11854,
+      "text_for_tts": "Incoming transmission, prepare for contact!",
+      "voice_preset": "v2/en_speaker_6",
+      "render_ms": 11854,
+      "generated_dur_s": 5.56,
+      "audio_sample_hash": "408ce2b3",
+      "start_s_space": "master_mix"
+    }
+  ],
+  "sfx": [
+    {
+      "cue_id": "sfx_001",
+      "shot_id": null,
+      "description": "Claustrophobic atmosphere",
+      "generation_prompt": "Low hum of machinery, distant echoing footsteps, faint static interference, tight indoor perspective",
+      "wav_path": null,
+      "start_s": null,
+      "dur_s": null
+    }
+  ],
+  "music": [
+    {
+      "cue_id": "opening",
+      "description": "1940s old time radio opening theme",
+      "generation_prompt": "1940s old time radio opening theme, tense strings, pulsating synth, dark piano chords, suspenseful, ends on a held chord",
+      "wav_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\pending_20260510_140521\\audio\\opening_6e282e40.wav",
+      "start_s": 0.0,
+      "dur_s": 10.0,
+      "tts_engine": "musicgen",
+      "render_ms": 14132,
+      "generated_dur_s": 12.1,
+      "audio_sample_hash": "a23130a0",
+      "start_s_space": "master_mix"
+    },
+    {
+      "cue_id": "closing",
+      "description": "1940s old time radio closing sting",
+      "generation_prompt": "1940s old time radio closing sting, low brass and strings, resolving cadence, eerie synth pad, warm tube saturation, fades to silence",
+      "wav_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\pending_20260510_140521\\audio\\closing_7d699dff.wav",
+      "start_s": 38.61333333333334,
+      "dur_s": 8.0,
+      "tts_engine": "musicgen",
+      "render_ms": 10133,
+      "generated_dur_s": 8.1,
+      "audio_sample_hash": "ec1d7904",
+      "start_s_space": "master_mix"
+    },
+    {
+      "cue_id": "interstitial",
+      "description": "Short old time radio act-break stinger",
+      "generation_prompt": "Short old time radio act-break stinger, sudden synth hit with cymbal swell, mono, tube warmth",
+      "wav_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\pending_20260510_140521\\audio\\interstitial_0efd4db0.wav",
+      "start_s": null,
+      "dur_s": 4.1,
+      "tts_engine": "musicgen",
+      "render_ms": 4468,
+      "generated_dur_s": 4.1,
+      "audio_sample_hash": "5e7c814b"
+    }
+  ],
+  "clips": [],
+  "final_audio_path": null,
+  "final_video_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\audio\\signal_lost_signal_lost_20260510_140841_20260510_140841.mp4",
+  "meta": {
+    "procgen_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\audio\\signal_lost_signal_lost_20260510_140841_20260510_140841.mp4",
+    "paths": {
+      "ledger_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\audio\\signal_lost_signal_lost_20260510_140841_20260510_140841_ledger.json",
+      "episode_root": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841",
+      "audio_dir": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\audio",
+      "stills_dir": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\stills",
+      "portraits_dir": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\portraits",
+      "videos_dir": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\videos",
+      "composited_dir": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\composited",
+      "obs_final": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\obs\\signal_lost_signal_lost_20260510_140841_20260510_140841.mp4",
+      "obs_dir": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\obs",
+      "layout": "per-episode-workspace"
+    },
+    "schema_version": "l3-2026-05-08",
+    "radio_bookend_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\stills\\radio_bookend_signal_lost_signal_lost_20260510_140841_20260510_140841.png",
+    "radio_bookend_prompt_source": "fallback (no style)"
+  },
+  "audio_gates": [
+    {
+      "gate": "post_bark",
+      "dur_s": 12.72,
+      "sample_count": 305280,
+      "sample_rate": 24000,
+      "sha256_first_kb": "6e0653e98055679601dbdea0033544ba"
+    },
+    {
+      "gate": "post_scene_sequencer",
+      "dur_s": 29.613333333333333,
+      "sample_count": 1421440,
+      "sample_rate": 48000,
+      "sha256_first_kb": "fcbdeef399595a4f54bb6391ab8272b9"
+    },
+    {
+      "gate": "post_audio_enhance",
+      "dur_s": 29.613333333333333,
+      "sample_count": 1421440,
+      "sample_rate": 48000,
+      "sha256_first_kb": "76649d61f47276f6d691f70c2d759c87"
+    },
+    {
+      "gate": "post_episode_assembler",
+      "dur_s": 46.61333333333334,
+      "sample_count": 2237440,
+      "sample_rate": 48000,
+      "sha256_first_kb": "635d13679b8404727fcc7455840d30ca"
+    }
+  ],
+  "transitions": [
+    {
+      "from_line_id": "opening_theme",
+      "to_line_id": "scene_audio",
+      "crossfade_ms": 500,
+      "boundary_s": 10.0
+    },
+    {
+      "from_line_id": "scene_audio",
+      "to_line_id": "closing_theme",
+      "crossfade_ms": 500,
+      "boundary_s": 38.61333333333334
+    }
+  ],
+  "radio_bookend_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\signal_lost_signal_lost_20260510_140841_20260510_140841\\stills\\radio_bookend_signal_lost_signal_lost_20260510_140841_20260510_140841.png"
+}

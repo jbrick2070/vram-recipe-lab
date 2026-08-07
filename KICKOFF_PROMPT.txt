@@ -1,0 +1,88 @@
+Paste everything below this line into Codex or Antigravity as the first prompt.
+================================================================================
+
+Work in C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab (it already exists and
+is a git repo). This is a standalone sandbox for ComfyUI workflow smoke tests.
+It is NOT part of any existing repo. Never read from or write to any other folder
+under Documents\ComfyUI except the ComfyUI API over HTTP.
+
+GOAL: a library of paired ComfyUI workflow JSONs ("recipes") — one _low and one
+_high VRAM variant per capability (text-to-video, image-to-video, text-to-audio,
+TTS, image gen) — where EVERY variant, including _high, renders with peak VRAM
+at or under 14.5 GB on an RTX 5080 Laptop (16 GB, Blackwell sm_120). "High" means
+quality knobs up (resolution, steps, fp16 over fp8/GGUF), never over the ceiling.
+
+RECIPES ARE FIXTURE-DRIVEN, NOT FULL PIPELINES. fixtures/ holds a frozen ledger,
+scene still, character portrait, and narration wav from a real episode (read
+fixtures/FIXTURES.md). Recipes contain ONLY the terminal render stage — still
+and/or audio IN, video OUT. No story generation, no TTS, no still generation.
+Never regenerate or replace a fixture.
+
+TWO TEST TIERS, both driven by run_recipe.py:
+- SMOKE: one single clip per recipe. Fast gate for iterating on settings.
+- SUITE: a hearty multi-clip sequence run back-to-back (still sequential, one
+  clip at a time): several image-to-video clips from scene_still.png, at least
+  one audio-conditioned clip using narration.wav, and at least one lip-sync
+  clip (portrait.png + narration.wav through the face lane). The suite records
+  peak VRAM PER CLIP and flags VRAM CREEP — if peak or post-clip allocated
+  VRAM climbs clip over clip, that is a FAIL even if every clip fits. Creep is
+  how real multi-beat episodes die mid-render.
+
+HARD RULES (also write these into AGENTS.md in the repo root, and re-read
+AGENTS.md at the start of every session):
+1. VRAM pass line is 14.5 GB. 16 GB is the hardware ceiling, not the target.
+2. Platform: Windows 11, Python 3.12, torch 2.10.0, CUDA 13.0, SageAttention+SDPA.
+   Flash Attention 2 does NOT exist for this platform (no wheel for torch 2.10 +
+   CUDA 13 + sm_120). Do not install it, suggest it, or debug toward it.
+3. 100% local and offline. No cloud APIs, no API keys, no paid services.
+4. Do NOT download any model. First task: query the running ComfyUI instance
+   (http://127.0.0.1:8188) for available models and write models_manifest.md.
+   Recipes may only reference models in that manifest. If a recipe needs a model
+   not present, mark it BLOCKED in the results ledger and move on.
+5. All files UTF-8 without BOM. Never write Python or JSON via PowerShell
+   Set-Content or Out-File.
+6. Sequential execution only. One render at a time. The runner must use a
+   lockfile (.gpu.lock) and refuse to queue if it exists.
+7. After editing any workflow JSON: validate it parses, every node's widget
+   count matches its widgets_values length, and all node types exist on the
+   server (GET /object_info).
+
+BUILD FIRST:
+- AGENTS.md  (the rules above)
+- run_recipe.py  — takes a recipe JSON path; runs EVERY check in PREFLIGHT.md
+  (in code — a failed check aborts with a named reason, nothing queues);
+  acquires .gpu.lock; queues via the ComfyUI HTTP API; polls nvidia-smi every
+  2s during the run recording peak VRAM; waits for completion; verifies a
+  non-zero output file exists; writes results/<recipe_name>.json with
+  {peak_vram_gb, duration_s, output_path, boot_lane, pass}. PASS = clean
+  completion AND peak <= 14.5 AND output exists. The official gate is the
+  SECOND consecutive run (warm cache), not the first. In SUITE mode it also
+  records per-clip peaks and flags VRAM creep as FAIL.
+
+MAINTAIN ENGINE_MATRIX_BETA.md (repo root — read its header for the rules):
+the lab's living engine matrix, seeded from the frozen OTR snapshot in
+research/. Update the engine's row after every gated run with measured
+numbers. Never edit the snapshot, never touch the OTR repo. Candidate engines
+like minimax_h3 live in the beta matrix first and graduate only by Jeffrey's
+hand. research/ also holds the wan_ti2v mirror-free recipe and the fastwan-8gb
+model manifest — use those as the starting points for the wan/fastwan recipes
+so the lab's workflows stay relevant to the shipping pipeline.
+- RESULTS.md  — human-readable ledger table, one row per recipe variant:
+  name | status (PASS/FAIL/BLOCKED) | peak VRAM | notes. Update after every run.
+
+THEN: build ONE seed pair — the simplest text-to-image recipe from the manifest,
+recipes/t2i_low.json and recipes/t2i_high.json — and run both through
+run_recipe.py to prove the loop end to end. Commit locally with clear messages.
+Do not push anywhere. Stop after the seed pair passes and summarize.
+
+PRIORITY MISSION after the seed pair works: MiniMax H3. Read
+research/MINIMAX_H3_BRIEF.md and research/2026-08-03-PROBLEM-STATEMENT-minimax-h3.md
+before touching anything H3. Non-negotiables from that brief: H3 weights are not
+on disk yet (42.5 GB set — render tasks are BLOCKED until Jeffrey downloads
+them, do the dry prep meanwhile); H3 runs need a Sage-free ComfyUI boot lane
+(SageAttention silently turns H3 output into pure noise with no error, so a
+machine-gate PASS is not sufficient — flag every H3 output for human eyeball
+review); seed workflows are in research/comfy_templates/.
+
+A recipe is only "working" when results/ shows a passing second run. Never
+report a recipe as done based on the JSON looking correct.
