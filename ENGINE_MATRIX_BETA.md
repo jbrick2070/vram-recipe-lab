@@ -22,4 +22,4 @@ This document tracks engine candidate evaluations in `vram-recipe-lab`.
 | `h3_r2v_best` | smoke | BLOCKED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | N/A | 864x480 x 124f; weights missing; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | t2i_low | smoke | PASS | 12.32 | N/A | no | 7.3s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
 | t2i_high | smoke | PASS | 13.15 | N/A | no | 6.3s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
-| wan_ti2v_low | smoke | PASS (cold) | 12.49 | N/A | no | 15.8s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS (cold)) |
+| wan_ti2v_low | smoke | PASS (cold) | 12.38 | N/A | no | 12.7s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS (cold)) |

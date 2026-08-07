@@ -703,26 +703,34 @@ def main():
             try:
                 prev_data = json.loads(result_file.read_text(encoding="utf-8"))
                 prev_run_count = prev_data.get("run_count", 0)
-                prev_passed = prev_data.get("pass", False)
+                prev_passed = prev_data.get("pass", prev_data.get("passed", False))
             except Exception:
                 pass
         
         run_count = prev_run_count + 1
-        is_warm_cache = (run_count >= 2) and prev_passed
-
+        # gate_pass = this run individually passed the VRAM ceiling
+        # warm_pass = two consecutive gate passes (the final certification)
         if not execution_success:
-            passed = False
+            gate_pass = False
+            warm_pass = False
             status = "ERROR (execution error)"
         elif not is_measurement_valid:
-            passed = False
+            gate_pass = False
+            warm_pass = False
             status = "INVALID (sampler missed peak)"
             print(f"[WARNING] Invalid measurement! Peak ({peak_vram_gb:.2f} GB) <= baseline ({baseline_vram_gb:.2f} GB) + 0.2 GB. Refusing PASS.")
         elif peak_vram_gb > VRAM_GATE_GB:
-            passed = False
+            gate_pass = False
+            warm_pass = False
             status = f"FAIL (VRAM {peak_vram_gb:.2f} GB > {VRAM_GATE_GB} GB)"
         else:
-            passed = is_warm_cache
+            gate_pass = True
+            is_warm_cache = (run_count >= 2) and prev_passed
+            warm_pass = is_warm_cache
             status = "PASS" if is_warm_cache else "PASS (cold)"
+
+        # For backwards compat, 'passed' used in print/ledger = warm_pass
+        passed = warm_pass
 
         print(f"\n--- Run Summary ---")
         print(f"Recipe:        {recipe_name}")
@@ -739,7 +747,8 @@ def main():
             "recipe": recipe_name,
             "run_number": run_count,
             "status": status,
-            "passed": passed,
+            "pass": gate_pass,
+            "warm_pass": warm_pass,
             "peak_vram_gb": round(peak_vram_gb, 2),
             "baseline_vram_gb": round(baseline_vram_gb, 2),
             "peak_host_ram_gb": round(peak_host_ram_gb, 2),
