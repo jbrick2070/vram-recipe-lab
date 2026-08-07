@@ -1,0 +1,74 @@
+I will start by viewing the `kibitz` skill document to understand the context and guidelines for this review.
+I will view the input document containing the plan/spec that needs to be reviewed.
+I will list the directory contents of the target repository to locate the code files related to the recipes and preflight checks.
+I will list the files in the `recipes` folder to understand what recipe definitions we have.
+I will list the files in the `results` folder to see what recorded outcomes we have.
+I will view the `ltx_i2v_low.json` recipe file to check its parameters and inputs.
+I will view the `ltx_i2v_high.json` recipe file to check its parameters and inputs.
+I will view `validate_recipes.py` to see what kind of recipe checks exist.
+I will view the `debug_prompt_error.py` script to see if it provides insight into the tensor size mismatch error on LTX-Video.
+I will view the `live_schema_check.py` script.
+I will run the offline validation script `validate_recipes.py` to check the current status of all 16 required recipes in the repository.
+I will run the `live_schema_check.py` script to see if the schemas of our recipes match the ComfyUI server node specifications.
+I will search the codebase for references to `LTXVImgToVideo` to see how this node is used or defined.
+I will view `models_manifest.md` to see information about models, clips, or configurations for LTX-Video.
+I will view the `run_recipe.py` file to see how recipes are run and how preflight checks are performed.
+I will view `results/ltx_i2v_low.json` to see the results.
+I will view the `ENGINE_MATRIX_BETA.md` file to see the state of all engines/recipes and how they relate.
+I will view `recipes/ltx_audio_low.json` to see how it is set up.
+I will view the `boot_lab_server.cmd` script to see where ComfyUI is installed and how it is executed.
+I will view the `BOOT.md` file to see the boot documentation and requirements.
+I will view `comfy_model_paths.yaml` to see how the ComfyUI paths are mapped.
+I will list the directories in the custom nodes folder to see what external ComfyUI custom nodes are installed.
+I will list the files in the `docs` folder to see if there is any documentation on LTX-Video, Wan, or ComfyUI custom node specs.
+I will view the `docs/ltx_wan_failures_review.md` file.
+I will view `docs/VIDEO_RECIPE_ATTEMPTS.md` to see historical context on the recipe attempts.
+I will view `docs/ESCALATE.md` to check what was logged there.
+I will view `docs/ARCH_REVIEW_LOG.md` to see the architectural review log.
+I will view `PREFLIGHT.md` to see the documented preflight check requirements.
+I will view `KICKOFF_PROMPT.txt` to read the project parameters and constraints.
+I will run a command to locate `av_model.py` in the ComfyUI installation or custom nodes directories to inspect its structure.
+I will check the status of the running background task searching for `av_model.py`.
+I will list the files in `ComfyUI-LTXVideo` to see its structure.
+I will check if the search task for `av_model.py` has completed.
+I will kill the broad search task and narrow it down to the ComfyUI installation folder.
+I will run a python command to search for `av_model.py` and `embeddings_connector.py` inside the ComfyUI installation directory.
+I will view the contents of `C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\comfy\ldm\lightricks\av_model.py` around line 579 to see how text and audio embeddings are preprocessed.
+I will view the `__init__` code of the model in `av_model.py` to see the dimensions configuration.
+I will view the beginning of `embeddings_connector.py` to inspect the initialization of `Embeddings1DConnector`.
+I will view the `forward` function of `Embeddings1DConnector` around line 286 in `embeddings_connector.py`.
+I will view `embeddings_connector.py` from line 150 to 220 to see how `learnable_registers` and input projection are set up.
+I will view `av_model.py` from line 450 to 500 to see what dimensions are defined for video and audio.
+I will view `av_model.py` from line 420 to 450 to see where dimensions like `self.cross_attention_dim` are defined.
+I will view lines 350 to 420 of `av_model.py` to see class definition and default values.
+I will view the `ltx_lipsync_low.json` recipe to see how it structures its conditioning and inputs.
+I will view the `__init__.py` file in `ComfyUI-LTXVideo` to see what node classes are registered.
+I will view the `nodes_registry.py` file to see what dynamic node mappings exist.
+I will view `text_embeddings_connectors.py` to see what node classes it defines for CLIP / text embedding connectors in LTX-Video.
+I will view the next part of `text_embeddings_connectors.py` to see what node classes are defined for loading and processing the embeddings.
+I will view `gemma_encoder.py` to see how the Gemma loader and text embeddings connector are loaded.
+I will view the next lines of `gemma_encoder.py` to see the forward pass of `LTXVGemmaTextEncoderModel`.
+I will run a python command to find all occurrences of `AVEmbeddingsProcessor` in the custom node repository.
+I will view `text_embeddings_connectors.py` from line 300 to 377.
+I will view `low_vram_loaders.py` to see what models it is loading and if they relate to the VRAM/embedding issues.
+I will view lines 200 to 300 of `gemma_encoder.py`.
+I will list the example workflows in the LTX-Video custom node directory to see if they show how the node inputs are wired.
+I will list the files in the `2.3` example workflows directory.
+I will run a python command to inspect the node class types used in the official `LTX-2.3_T2V_I2V_Single_Stage_Distilled_Full.json` workflow.
+I will run a python command to see how `LTXAVTextEncoderLoader` and text encoding are set up in the example 2.3 workflow.
+I will view `gemma_encoder.py` from line 350 to see the input definition of `GemmaAPITextEncode`.
+I will view the rest of `gemma_encoder.py` to see the definition of `LTXAVTextEncoderLoader`.
+I will search the ComfyUI-LTXVideo repository for the definition of `LTXAVTextEncoderLoader` to see how it loads Gemma 3 and connectors.
+I will search the main ComfyUI installation directory for the `LTXAVTextEncoderLoader` node class.
+I will view the `nodes_lt_audio.py` file to see the definition of `LTXAVTextEncoderLoader` and understand how it loads the text encoder and the embeddings connectors.
+I will view the `eng_ltx_av.py` file to see how `LTXAVTextEncoderLoader` is typically configured and what files are passed to it.
+I will view lines 600 to 650 of `eng_ltx_av.py` to see the exact filenames used for the Gemma-3 text encoder and the projection checkpoint.
+
+[KIBITZ DIAGNOSTIC]
+Antigravity quota/backend exhaustion detected in recent CLI log C:\Users\jeffr\.gemini\antigravity-cli\log\cli-20260807_164307.log:
+"status": "RESOURCE_EXHAUSTED"
+ERROR: logging before google.Init: W0807 16:46:07.071756     249 cache.go:56] Cache(loadCodeAssistResponse): Singleflight refresh failed: RESOURCE_EXHAUSTED (code 429): Resource has been exhausted (e.g. check quota).
+ERROR: logging before google.Init: E0807 16:46:07.071756     249 errorreport.go:223] RESOURCE_EXHAUSTED (code 429): Resource has been exhausted (e.g. check quota).
+ERROR: logging before google.Init: E0807 16:46:07.071756     249 credits_manager.go:42] failed to refresh G1 credits: failed to get load code assist response: RESOURCE_EXHAUSTED (code 429): Resource has been exhausted (e.g. check quota).
+ERROR: logging before google.Init: E0807 16:46:07.071756    4448 generation.go:726] Failed to record ConversationOffered metrics: failed to get load code assist response: RESOURCE_EXHAUSTED (code 429): Resource has been exhausted (e.g. check quota).
+ERROR: logging before google.Init: W0807 16:46:07.071756    4463 cache.go:79] Failed to refresh cache in background: RESOURCE_EXHAUSTED (code 429): Resource has been exhausted (e.g. check quota).

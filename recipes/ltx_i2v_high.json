@@ -20,10 +20,12 @@
       }
     },
     "2": {
-      "class_type": "CLIPLoader",
+      "class_type": "DualCLIPLoader",
       "inputs": {
-        "clip_name": "t5xxl_fp16.safetensors",
-        "type": "ltxv"
+        "clip_name1": "gemma_3_12B_it_fp4_mixed.safetensors",
+        "clip_name2": "ltx-2.3-22b-dev_embeddings_connectors.safetensors",
+        "type": "ltxv",
+        "device": "cpu"
       }
     },
     "3": {
@@ -58,12 +60,30 @@
         ]
       }
     },
-    "7": {
-      "class_type": "EmptyLatentImage",
+    "12": {
+      "class_type": "LTXVImgToVideo",
       "inputs": {
+        "positive": [
+          "5",
+          0
+        ],
+        "negative": [
+          "6",
+          0
+        ],
+        "image": [
+          "4",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
         "width": 768,
         "height": 512,
-        "batch_size": 1
+        "length": 25,
+        "batch_size": 1,
+        "strength": 1.0
       }
     },
     "8": {
@@ -80,16 +100,16 @@
           0
         ],
         "positive": [
-          "5",
+          "12",
           0
         ],
         "negative": [
-          "6",
-          0
+          "12",
+          1
         ],
         "latent_image": [
-          "7",
-          0
+          "12",
+          2
         ]
       }
     },

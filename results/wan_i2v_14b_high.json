@@ -1,8 +1,9 @@
 {
-  "recipe": "wan_ti2v_high",
+  "recipe": "wan_i2v_14b_high",
   "run_number": 1,
   "status": "FAIL (execution error)",
-  "passed": false,
+  "pass": false,
+  "warm_pass": false,
   "peak_vram_gb": 15.34,
   "baseline_vram_gb": 1.19,
   "peak_host_ram_gb": 44.41,

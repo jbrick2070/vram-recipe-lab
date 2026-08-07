@@ -24,3 +24,5 @@ This file records measured VRAM and runtime performance for every recipe variant
 | t2i_low | PASS | 12.32 | 1.90 | 7.3 | Run #11; boot lane: lab-8199, sage-free |
 | t2i_high | PASS | 13.15 | 1.90 | 6.3 | Run #5; boot lane: lab-8199, sage-free |
 | wan_ti2v_low | PASS | 12.46 | 1.47 | 13.8 | Run #7; boot lane: lab-8199, sage-free |
+| wan_ti2v_high | FAIL | 0.00 | 0.00 | 0.0 | Aborted on Preflight #7 (Affordability estimate): Last measured peak (15.55 GB) exceeded 14.5 GB gate line. Refusing unchanged re-run. |
+| ltx_i2v_low | ERROR (execution error) | 1.05 | 1.05 | 1.4 | Run #8; boot lane: lab-8199, sage-free |

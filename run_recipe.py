@@ -708,6 +708,8 @@ def main():
                 pass
         
         run_count = prev_run_count + 1
+        is_warm_cache = (run_count >= 2) and prev_passed
+
         # gate_pass = this run individually passed the VRAM ceiling
         # warm_pass = two consecutive gate passes (the final certification)
         if not execution_success:
@@ -725,7 +727,6 @@ def main():
             status = f"FAIL (VRAM {peak_vram_gb:.2f} GB > {VRAM_GATE_GB} GB)"
         else:
             gate_pass = True
-            is_warm_cache = (run_count >= 2) and prev_passed
             warm_pass = is_warm_cache
             status = "PASS" if is_warm_cache else "PASS (cold)"
 

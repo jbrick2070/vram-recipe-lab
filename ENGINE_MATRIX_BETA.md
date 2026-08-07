@@ -23,3 +23,4 @@ This document tracks engine candidate evaluations in `vram-recipe-lab`.
 | t2i_low | smoke | PASS | 12.32 | N/A | no | 7.3s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
 | t2i_high | smoke | PASS | 13.15 | N/A | no | 6.3s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
 | wan_ti2v_low | smoke | PASS | 12.46 | N/A | no | 13.8s | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
+| ltx_i2v_low | smoke | ERROR (execution error) | 1.05 | N/A | no | 1.4s | lab-8199, sage-free | 2026-08-07 | Measured on box (ERROR (execution error)) |

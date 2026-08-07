@@ -1,0 +1,1 @@
+- 2026-08-07T16:48:11 Antigravity failed on quota/credit/rate-limit usage. Suggested retry after 1h (2026-08-07T17:48-07:00).

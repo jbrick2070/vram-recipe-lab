@@ -154,9 +154,28 @@ def main():
             print(f"         +-- WARN:  {warn}")
 
     print("\n---------------------------------------------------------")
+    # Verify results ledger payload consistency (Kibitz check)
+    results_dir = REPO_ROOT / "results"
+    receipt_errors = 0
+    if results_dir.exists():
+        for rf in results_dir.glob("*.json"):
+            try:
+                rdata = json.loads(rf.read_text(encoding="utf-8"))
+                payload_recipe = rdata.get("recipe")
+                expected_stem = rf.stem.split("_run")[0]
+                if payload_recipe and payload_recipe != expected_stem:
+                    print(f"  [ERROR] Receipt mislabel: {rf.name} payload says '{payload_recipe}', expected '{expected_stem}'")
+                    receipt_errors += 1
+            except Exception:
+                pass
+
     passed_count = sum(1 for r in results if r["valid"])
     total_count = len(REQUIRED_RECIPES)
-    print(f"Summary: {passed_count}/{total_count} required recipes PAPER VALIDATED successfully.")
+    if receipt_errors > 0:
+        print(f"Summary: {passed_count}/{total_count} required recipes PAPER VALIDATED, BUT {receipt_errors} corrupt result receipts found.")
+        all_valid = False
+    else:
+        print(f"Summary: {passed_count}/{total_count} required recipes PAPER VALIDATED successfully.")
     print("Note: Schema-vs-/object_info live server checks marked PENDING server window.")
     print("=========================================================\n")
 

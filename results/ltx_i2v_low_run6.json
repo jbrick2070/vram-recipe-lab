@@ -1,0 +1,19 @@
+{
+  "recipe": "ltx_i2v_low",
+  "run_number": 6,
+  "status": "FAIL (VRAM 15.29 GB > 14.5 GB)",
+  "pass": false,
+  "warm_pass": false,
+  "peak_vram_gb": 15.29,
+  "baseline_vram_gb": 1.53,
+  "peak_host_ram_gb": 60.1,
+  "baseline_host_ram_gb": 20.1,
+  "duration_s": 33.9,
+  "output_path": "ltx_i2v_low_out_00001_.mp4",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-07T23:50:18Z",
+  "prompt_id": "4fc9c11b-8c95-4b87-8869-251e0494afc7",
+  "valid_measurement": true,
+  "run_count": 6,
+  "blocked": false
+}
