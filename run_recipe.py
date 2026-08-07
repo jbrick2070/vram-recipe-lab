@@ -217,16 +217,27 @@ def check_server_up_and_ownership() -> Dict[str, Any]:
 
 
 def shutdown_lab_server():
-    """Stop the recorded lab server PID if running and remove .server.pid as final step."""
+    """Stop the recorded lab server PID and all child processes recursively, removing .server.pid as final step."""
     pid = get_recorded_pid()
     if pid:
         print(f"[SERVER] Shutting down recorded lab server (PID {pid})...")
         try:
             if psutil.pid_exists(pid):
-                p = psutil.Process(pid)
-                p.terminate()
-                p.wait(timeout=10)
-                print(f"[SERVER] Process {pid} terminated successfully.")
+                parent = psutil.Process(pid)
+                children = parent.children(recursive=True)
+                for child in children:
+                    try:
+                        child.terminate()
+                    except psutil.NoSuchProcess:
+                        pass
+                parent.terminate()
+                _, alive = psutil.wait_procs(children + [parent], timeout=10)
+                for p in alive:
+                    try:
+                        p.kill()
+                    except psutil.NoSuchProcess:
+                        pass
+                print(f"[SERVER] Process {pid} and children terminated successfully.")
         except (psutil.NoSuchProcess, psutil.TimeoutExpired, OSError) as e:
             print(f"[SERVER] Shutdown warning: {e}")
 
@@ -247,8 +258,9 @@ def fetch_object_info() -> Dict[str, Any]:
 
 def check_nodes_exist(recipe_data: Dict[str, Any], object_info: Dict[str, Any]):
     """Preflight Check #4: Every class_type in recipe appears in GET /object_info."""
+    prompt_dict = recipe_data.get("prompt", recipe_data)
     missing_nodes = set()
-    for node_id, node in recipe_data.items():
+    for node_id, node in prompt_dict.items():
         if isinstance(node, dict) and "class_type" in node:
             class_type = node["class_type"]
             if class_type not in object_info:
@@ -286,7 +298,8 @@ def check_models_exist(recipe_data: Dict[str, Any]):
 
 def check_widget_integrity(recipe_data: Dict[str, Any], object_info: Dict[str, Any]):
     """Preflight Check #6: Recipe JSON parses; widget structure validated."""
-    for node_id, node in recipe_data.items():
+    prompt_dict = recipe_data.get("prompt", recipe_data)
+    for node_id, node in prompt_dict.items():
         if not isinstance(node, dict):
             continue
         class_type = node.get("class_type")
