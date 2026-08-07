@@ -82,9 +82,10 @@
       }
     },
     "10": {
-      "class_type": "SaveImage",
+      "class_type": "CreateVideo",
       "inputs": {
         "images": ["9", 0],
+        "fps": 24.0,
         "filename_prefix": "wan_ti2v_low_out"
       }
     }

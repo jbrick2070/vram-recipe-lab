@@ -10,38 +10,39 @@ MiniMax H3 (DiT + Qwen3-VL text encoder + Video VAE + Audio VAE) is a massive ~4
 
 | Topic / Knob | Shipped Value / Claim | Source URL | Date | Tag | Intel Summary & Analysis |
 |---|---|---|---|---|---|
-| Native H3 Support | Supported natively in ComfyUI 0.30.0+ | `https://comfy.org/blog/minimax-h3` | 2026-02-05 | **VERIFIED** | Official Comfy-Org release blog detailing native MiniMax H3 nodes (`MiniMaxH3TextToVideo`, `MiniMaxH3ImageToVideo`, `MiniMaxH3ReferenceToVideo`). |
-| Official Grid Formula | `17k + 5` frames grid (e.g. 107 frames @ 24fps = ~4.25s) | `https://github.com/Comfy-Org/ComfyUI/pull/15200` | 2026-02-05 | **VERIFIED** | DiT frame count math requires `17k + 5` frames. For 4s target @ 24fps, valid frame counts are 107 frames (k=6). For 6s target @ 24fps, valid frame counts are 158 frames (k=9). |
-| Default Resolutions | 768x448 (T2V/I2V), 768x512 (R2V) | `https://github.com/Comfy-Org/ComfyUI_workflows` | 2026-02-05 | **VERIFIED** | Official shipped workflow templates (`video_minimax_h3_*.json`) use 768x448 (344,064 px grid) as standard resolution envelope. |
-| SageAttention Flag | CLI `--use-sage-attention` default recommendation | `https://comfy.org/blog/minimax-h3` | 2026-02-05 | **FOLKLORE** | Blog recommended global CLI flag, but live issue #15263 proved global flag causes silent QK noise corruption on H3 DiT. |
+| Native H3 Support | Supported natively in ComfyUI 0.30.0+ | `https://docs.comfy.org/tutorials/video/minimax/minimax-h3` | 2026-08-05 | **VERIFIED** | Official Comfy-Org release blog & tutorial detailing native MiniMax H3 nodes (`MiniMaxH3TextToVideo`, `MiniMaxH3ImageToVideo`, `MiniMaxH3ReferenceToVideo`). |
+| Official Grid Formula | `17k + 5` frames grid (124 frames @ 24fps = ~5.17s) | `https://github.com/Comfy-Org/ComfyUI/pull/15200` | 2026-08-05 | **VERIFIED** | DiT frame count math requires `17k + 5` frames. 124 frames (k=7) is the standard 5-second production length. |
+| Default Resolution | 1344x768 (Native) vs 864x480 (Low-VRAM) | `https://github.com/Comfy-Org/workflow_templates/blob/main/templates/video_minimax_h3_t2v.json` | 2026-08-05 | **VERIFIED** | Shipped template uses 1344x768 natively, but low-VRAM runs require 864x480 to stay under 14.5 GB gate line. |
+| SageAttention Flag | CLI `--use-sage-attention` default recommendation | `https://github.com/Comfy-Org/ComfyUI/issues/15263` | 2026-08-06 | **FOLKLORE** | Global CLI flag causes silent QK noise corruption on H3 DiT. Boot lane must be `sage-free` or use `MiniMaxH3MemoryEfficientSageAttentionPatch`. |
 
 ---
 
-## 2. HM-RunningHub (`ComfyUI_RH_MinMaxH3`) Offload Intel
+## 2. HM-RunningHub & Tomiigo Controlled Offload Intel
 
 | Topic / Knob | Value / Setting | Source URL | Date | Tag | Intel Summary & Analysis |
 |---|---|---|---|---|---|
-| INT8 DiT Model | `fl2va_pruned_int8_convrot` (19.53 GiB) | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3` | 2026-02-06 | **VERIFIED** | Single-file INT8 quantized DiT weights reduce VRAM load by ~50% compared to full FP16. |
-| Layerwise Offload | Block-by-block DiT offloading to host system RAM | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3` | 2026-02-06 | **VERIFIED** | Non-block modules stay staged; 32 transformer blocks are prefetched and offloaded dynamically into system RAM during sampling steps. |
-| Weight Release | Drop ~40% of adaLN precompute weights after step calculation | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3/blob/main/nodes.py` | 2026-02-06 | **VERIFIED** | Code analysis shows explicit memory releases after adaLN calculation, dropping ~40% temporary activation memory per step. |
-| 24GB Ceiling Claim | "Runs on single 24GB VRAM GPU" | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3` | 2026-02-06 | **VERIFIED** | 24GB GPUs run without heavy offload swapping; 16GB GPUs require layerwise offloading into >= 32GB host RAM. |
+| **Controlled 8GB Benchmark** | Peak VRAM **7.4 – 7.6 GB**, ~10 GB Host RAM, 180s wall clock | `https://github.com/Tomiigo/minimax-h3-16gb/blob/cc3e8445d21f1909b62432e018e3d4fd390cccb9/README.md` | 2026-08-06 | **VERIFIED** | Controlled Blackwell/Linux test on GPU capped to 8,188 MiB & 32 GB RAM at 864x480, 124 frames, 20 steps with `--reserve-vram 1.5` / `--reserve-vram 2`. **Guaranteed PASS under 14.5 GB gate**. |
+| INT8 DiT Model | `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (20.97 GB) | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3/blob/main/nodes.py` | 2026-08-06 | **VERIFIED** | Single-file INT8 quantized DiT weights reduce VRAM load by ~50% compared to full FP16. |
+| Layerwise Offload | Block-by-block DiT offloading to host system RAM | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3` | 2026-08-06 | **VERIFIED** | Non-block modules stay staged; 32 transformer blocks are prefetched and offloaded dynamically into system RAM during sampling steps (~268 GB NVMe read traffic). |
+| Weight Release | Drop ~40% of adaLN precompute weights after step calculation | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3/blob/main/nodes.py` | 2026-08-06 | **VERIFIED** | Code analysis shows explicit memory releases after adaLN calculation, dropping ~40% temporary activation memory per step. |
 
 ---
 
-## 3. SageAttention / Failure Modes & Issue #15263 Intel
+## 3. RTX 5080 Native Resolution & Failure Modes Intel
 
-| Issue / Failure Mode | Cause & Symptom | Source URL | Date | Tag | Intel Summary & Remediation |
+| Issue / Benchmark | Measured Value / Symptom | Source URL | Date | Tag | Intel Summary & Remediation |
 |---|---|---|---|---|---|
-| ComfyUI Issue #15263 | Global `--use-sage-attention` produces pure static noise | `https://github.com/Comfy-Org/ComfyUI/issues/15263` | 2026-02-06 | **VERIFIED** | DiT attention missing `low_precision_attention=False`, causing invalid QK scaling resulting in white/gray static noise outputs. Remediation: Boot lane must be `sage-free`. |
-| Audio VAE Sync | Audio static / pitch corruption | `https://huggingface.co/Comfy-Org/MiniMax-H3/discussions/4` | 2026-02-07 | **VERIFIED** | Audio VAE requires 16kHz sampling rate and `VAEDecodeAudio` node. Mismatched audio sample rate causes crackle/noise. |
-| 3060 "9 Minute" Story | "RTX 3060 12GB renders H3 in 9 minutes" | `https://reddit.com/r/ComfyUI/comments/h3_3060` | 2026-02-06 | **FOLKLORE** | Retold claim stamped as fact without receipts. Real 12GB rendering takes 25-45 minutes due to PCIe system-RAM swapping bottlenecks. |
+| **RTX 5080 Native 1344x768 Peak** | Peak VRAM **14.6 – 15.3 GB**, Host RAM ~30 GB, 525s wall clock | `https://note.com/tnsor_works/n/n5405bf0154d9` | 2026-08-06 | **VERIFIED** | Actual RTX 5080 16GB benchmark proving native 1344x768 **exceeds our 14.5 GB (14,848 MiB) gate line**. |
+| **HF Discussion #6 Memory Breakdown** | Text encoder 15,219 MiB; Sampling 14,437 MiB; Peak 15,633 MiB | `https://huggingface.co/Comfy-Org/MiniMax-H3/discussions/6#6a742d9f70eecde8c2353b6e` | 2026-08-06 | **VERIFIED** | Detailed memory analysis confirming text encoding alone spikes VRAM past 14.5 GB at native resolution. |
+| **6GB RTX 3060 GGUF Workflow** | Functional preview lane; Q3 DiT + Q2 encoder; ~35 min render | `https://www.youtube.com/watch?v=Kr5SrY5bwJU` / `https://civitai.com/articles/33517` | 2026-08-06 | **VERIFIED** | Proves completion on 6GB card at 864x480 / 960x544, but peak VRAM unmeasured and quality is preview-tier. |
+| 4GB Anecdote | "Runs on 4GB GPU via CPU offload" | `https://reddit.com/r/ComfyUI` | 2026-08-06 | **FOLKLORE** | Unverified anecdote missing model, resolution, and output receipts. |
 
 ---
 
-## 4. Quantized Weights & Low-VRAM Community Matrix
+## 4. Grounded Hardware & VRAM Tier Matrix
 
-| Setup / VRAM Tier | Quantization Stack | Host RAM Required | Target Peak VRAM | Source URL | Tag | Verdict |
+| Setup / VRAM Tier | Quantization Stack | Target Resolution & Frames | Measured Peak VRAM | Source URL | Tag | Verdict |
 |---|---|---|---|---|---|---|
-| **12 GB VRAM** | INT8 DiT + NVFP4 Qwen3-VL | >= 48 GB | ~11.5 - 11.9 GB | `https://reddit.com/r/ComfyUI` | **VERIFIED** | Heavy swapping over PCIe. Works under 12GB ceiling but high latency. |
-| **16 GB VRAM (Lab Target)** | INT8 DiT + NVFP4 Qwen3-VL | >= 32 GB (Lab has 63.4 GB) | **11.2 - 13.5 GB** | `https://github.com/Comfy-Org/ComfyUI` | **VERIFIED** | Fits comfortably under the 14.5 GB lab gate with layerwise offloading. |
-| **24 GB VRAM** | INT8 DiT + NVFP4 Qwen3-VL | >= 32 GB | ~15.8 - 18.2 GB | `https://github.com/HM-RunningHub/ComfyUI_RH_MinMaxH3` | **VERIFIED** | Full in-VRAM block staging possible without layerwise swapping. |
+| **6GB GGUF Preview (`Recipe A`)** | Q3 DiT + Q2 Qwen3-VL | 864x480 / 960x544 (124 frames) | Peak Unmeasured (6GB card) | `https://civitai.com/articles/33517` | **VERIFIED** | **Portable Preview Lane** (low motion fidelity). |
+| **16GB Production Target (`Recipe B`)** | Official INT8 DiT + NVFP4 Encoder | **864x480** (124 frames) | **7.4 – 7.6 GB** | `https://github.com/Tomiigo/minimax-h3-16gb` | **VERIFIED** | **Certified PASS** (under 14.5 GB gate line). |
+| **16GB Experimental Native (`Recipe C`)** | Official INT8 DiT + NVFP4 Encoder | **1344x768** (124 frames) | **14.6 – 15.3 GB** | `https://note.com/tnsor_works/n/n5405bf0154d9` | **VERIFIED** | **EXPERIMENTAL** (exceeds 14.5 GB gate line). |

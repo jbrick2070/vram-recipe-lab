@@ -89,9 +89,10 @@
       }
     },
     "11": {
-      "class_type": "SaveImage",
+      "class_type": "CreateVideo",
       "inputs": {
         "images": ["10", 0],
+        "fps": 24.0,
         "filename_prefix": "ltx_lipsync_low_out"
       }
     }

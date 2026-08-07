@@ -5,68 +5,69 @@
   "contract": {
     "engine": "minimax_h3",
     "mode": "t2v",
-    "width": 768,
-    "height": 448,
-    "frames": 145,
-    "fps": 24,
+    "width": 864,
+    "height": 480,
+    "frames": 124,
+    "fps": 24.0,
+    "duration_s": 5.16,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
     "1": {
       "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "fl2va_pruned_int8_convrot.safetensors",
-        "weight_dtype": "fp8_e4m3fn"
+        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "weight_dtype": "default"
       }
     },
     "2": {
       "class_type": "CLIPLoader",
       "inputs": {
-        "clip_name": "qwen3vl_32b_nvfp4_awq.safetensors",
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
         "type": "minimax_h3"
       }
     },
     "3": {
       "class_type": "VAELoader",
       "inputs": {
-        "vae_name": "minimax_h3_video_vae.safetensors"
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
       }
     },
     "4": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "VAELoader",
       "inputs": {
-        "text": "masterpiece 8k cinematic camera motion across vintage radio station control room, volumetric light rays",
-        "clip": ["2", 0]
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
       }
     },
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "blurry, low quality, distortion, noise",
+        "text": "cinematic camera motion across vintage radio control room, volumetric light, 8k",
         "clip": ["2", 0]
       }
     },
     "6": {
-      "class_type": "EmptyLatentImage",
+      "class_type": "CLIPTextEncode",
       "inputs": {
-        "width": 768,
-        "height": 448,
-        "batch_size": 1
+        "text": "blurry, noise, artifacts, distorted",
+        "clip": ["2", 0]
       }
     },
     "7": {
-      "class_type": "KSampler",
+      "class_type": "MiniMaxH3TextToVideo",
       "inputs": {
+        "width": 864,
+        "height": 480,
+        "frames": 124,
+        "fps": 24.0,
         "seed": 42,
-        "steps": 25,
+        "steps": 20,
         "cfg": 6.5,
-        "sampler_name": "euler",
-        "scheduler": "normal",
-        "denoise": 1.0,
         "model": ["1", 0],
-        "positive": ["4", 0],
-        "negative": ["5", 0],
-        "latent_image": ["6", 0]
+        "positive": ["5", 0],
+        "negative": ["6", 0],
+        "vae": ["3", 0],
+        "audio_vae": ["4", 0]
       }
     },
     "8": {
@@ -77,9 +78,10 @@
       }
     },
     "9": {
-      "class_type": "SaveImage",
+      "class_type": "CreateVideo",
       "inputs": {
         "images": ["8", 0],
+        "fps": 24.0,
         "filename_prefix": "h3_t2v_best_out"
       }
     }
