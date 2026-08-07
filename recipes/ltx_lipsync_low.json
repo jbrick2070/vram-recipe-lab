@@ -49,14 +49,20 @@
       "class_type": "CLIPTextEncode",
       "inputs": {
         "text": "portrait character speaking aligned with narration track",
-        "clip": ["2", 0]
+        "clip": [
+          "2",
+          0
+        ]
       }
     },
     "7": {
       "class_type": "CLIPTextEncode",
       "inputs": {
         "text": "blurry, low quality, noise, distortion",
-        "clip": ["2", 0]
+        "clip": [
+          "2",
+          0
+        ]
       }
     },
     "8": {
@@ -76,31 +82,57 @@
         "sampler_name": "euler",
         "scheduler": "normal",
         "denoise": 1.0,
-        "model": ["1", 0],
-        "positive": ["6", 0],
-        "negative": ["7", 0],
-        "latent_image": ["8", 0]
+        "model": [
+          "1",
+          0
+        ],
+        "positive": [
+          "6",
+          0
+        ],
+        "negative": [
+          "7",
+          0
+        ],
+        "latent_image": [
+          "8",
+          0
+        ]
       }
     },
     "10": {
       "class_type": "VAEDecode",
       "inputs": {
-        "samples": ["9", 0],
-        "vae": ["3", 0]
+        "samples": [
+          "9",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
       }
     },
     "11": {
       "class_type": "CreateVideo",
       "inputs": {
-        "images": ["10", 0],
+        "images": [
+          "10",
+          0
+        ],
         "fps": 24.0
       }
     },
     "12": {
       "class_type": "SaveVideo",
       "inputs": {
-        "video": ["11", 0],
-        "filename_prefix": "ltx_lipsync_low_out"
+        "video": [
+          "11",
+          0
+        ],
+        "filename_prefix": "ltx_lipsync_low_out",
+        "format": "auto",
+        "codec": "auto"
       }
     }
   },

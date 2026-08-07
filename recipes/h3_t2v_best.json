@@ -43,14 +43,20 @@
       "class_type": "CLIPTextEncode",
       "inputs": {
         "text": "cinematic camera motion across vintage radio control room, volumetric light, 8k",
-        "clip": ["2", 0]
+        "clip": [
+          "2",
+          0
+        ]
       }
     },
     "6": {
       "class_type": "CLIPTextEncode",
       "inputs": {
         "text": "blurry, noise, artifacts, distorted",
-        "clip": ["2", 0]
+        "clip": [
+          "2",
+          0
+        ]
       }
     },
     "7": {
@@ -63,32 +69,61 @@
         "seed": 42,
         "steps": 20,
         "cfg": 6.5,
-        "model": ["1", 0],
-        "positive": ["5", 0],
-        "negative": ["6", 0],
-        "vae": ["3", 0],
-        "audio_vae": ["4", 0]
+        "model": [
+          "1",
+          0
+        ],
+        "positive": [
+          "5",
+          0
+        ],
+        "negative": [
+          "6",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "audio_vae": [
+          "4",
+          0
+        ]
       }
     },
     "8": {
       "class_type": "VAEDecode",
       "inputs": {
-        "samples": ["7", 0],
-        "vae": ["3", 0]
+        "samples": [
+          "7",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
       }
     },
     "9": {
       "class_type": "CreateVideo",
       "inputs": {
-        "images": ["8", 0],
+        "images": [
+          "8",
+          0
+        ],
         "fps": 24.0
       }
     },
     "10": {
       "class_type": "SaveVideo",
       "inputs": {
-        "video": ["9", 0],
-        "filename_prefix": "h3_t2v_best_out"
+        "video": [
+          "9",
+          0
+        ],
+        "filename_prefix": "h3_t2v_best_out",
+        "format": "auto",
+        "codec": "auto"
       }
     }
   },
