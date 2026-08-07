@@ -1,18 +1,22 @@
 # Models Manifest — Available Local Models
 
-Query timestamp: 2026-08-07
+Query timestamp: 2026-08-07 (Verified from live ComfyUI `GET /object_info`)
 
-This manifest lists models available via the local ComfyUI instance (`http://127.0.0.1:8188`) or registered on disk for recipe validation. Recipes in `recipes/` must ONLY reference models listed in this manifest.
+This manifest lists models available via the local ComfyUI instance (`http://127.0.0.1:8188`). Recipes in `recipes/` must ONLY reference models listed in this manifest.
 
-## Available Models
+## Available Local Models
 
 | Category | Model Filename | Path / Store | Notes |
 |---|---|---|---|
-| Checkpoint / UNET | `v1-5-pruned-emaonly.safetensors` | `checkpoints/` | SD 1.5 standard base model for t2i seed pair |
-| Checkpoint / UNET | `Wan2.2-TI2V-5B-Q5_K_M.gguf` | `unet/` | Wan 2.2 TI2V 5B GGUF base model |
-| LoRA | `Wan2_2_5B_FastWanFullAttn_lora_rank_128_bf16.safetensors` | `loras/` | FastWan 5B distillation LoRA |
-| Text Encoder | `umt5-xxl-encoder-Q5_K_M.gguf` | `text_encoders/` | uMT5 XXL encoder for Wan recipes |
-| VAE | `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE |
+| Checkpoint | `ltx-video-2b-v0.9.safetensors` | `checkpoints/` | LTX Video 2B base model |
+| Checkpoint | `ltx-2.3-22b-dev.safetensors` | `checkpoints/` | LTX Video 2.3 22B model |
+| Checkpoint | `ltxv-2b-0.9.8-distilled.safetensors` | `checkpoints/` | LTX Video 2B distilled model |
+| UNET / Diffusion | `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors` | `diffusion_models/` | Wan 2.2 I2V 14B FP8 model |
+| UNET / Diffusion | `humo_1.7B_fp16.safetensors` | `diffusion_models/` | HuMo 1.7B FP16 model |
+| UNET / Diffusion | `Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors` | `diffusion_models/` | HuMo 14B FP8 model |
+| VAE | `ltx-2.3-22b-dev_video_vae.safetensors` | `vae/` | LTX Video VAE |
+| VAE | `ltx-2.3-22b-dev_audio_vae.safetensors` | `vae/` | LTX Audio VAE |
+| VAE | `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 Video VAE |
 
 ## Missing / Unloaded Models (BLOCKED)
 

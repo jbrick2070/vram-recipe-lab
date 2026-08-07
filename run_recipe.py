@@ -3,6 +3,8 @@
 run_recipe.py — Recipe execution runner and preflight enforcement harness
 for ComfyUI workflow VRAM recipe benchmarking.
 
+Talks to lab server at http://127.0.0.1:8199.
+Self-boots lab server via boot_lab_server.cmd if down, tracking PID in .server.pid.
 Windows 11 / RTX 5080 Laptop (16 GB, 14.5 GB gate ceiling).
 """
 
@@ -22,15 +24,21 @@ from typing import Dict, Any, List, Tuple, Optional
 # --- Constants & Paths ---
 REPO_ROOT = Path(__file__).parent.resolve()
 LOCKFILE_PATH = REPO_ROOT / ".gpu.lock"
+SERVER_PID_FILE = REPO_ROOT / ".server.pid"
+SERVER_LOG_FILE = REPO_ROOT / "server.log"
+BOOT_CMD = REPO_ROOT / "boot_lab_server.cmd"
 RESULTS_DIR = REPO_ROOT / "results"
 FIXTURES_DIR = REPO_ROOT / "fixtures"
 MODELS_MANIFEST = REPO_ROOT / "models_manifest.md"
 RESULTS_LEDGER = REPO_ROOT / "RESULTS.md"
 ENGINE_MATRIX_BETA = REPO_ROOT / "ENGINE_MATRIX_BETA.md"
-COMFY_SERVER_URL = "http://127.0.0.1:8188"
+
+LAB_PORT = os.environ.get("LAB_PORT", "8199")
+COMFY_SERVER_URL = f"http://127.0.0.1:{LAB_PORT}"
 VRAM_GATE_GB = 14.5
 VRAM_GPU_IDLE_MAX_MB = 1536  # 1.5 GB
 MIN_FREE_DISK_GB = 5.0
+BOOT_TIMEOUT_S = 120
 
 
 class PreflightError(Exception):
@@ -51,7 +59,6 @@ class LockManager:
 
     def acquire(self):
         if self.lock_path.exists():
-            # Check for stale lock
             try:
                 content = self.lock_path.read_text(encoding="utf-8")
                 lock_info = json.loads(content)
@@ -92,7 +99,7 @@ class LockManager:
 
 
 def check_gpu_idle() -> float:
-    """Preflight Check #2: nvidia-smi shows under 1.5 GB allocated memory."""
+    """Preflight Check #2: nvidia-smi shows under 1.5 GB allocated memory (or < 2.0 GB if lab server is running)."""
     try:
         res = subprocess.run(
             ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
@@ -101,8 +108,12 @@ def check_gpu_idle() -> float:
             check=True
         )
         used_mb = float(res.stdout.strip().splitlines()[0])
-        if used_mb >= VRAM_GPU_IDLE_MAX_MB:
-            raise PreflightError(2, "GPU idle", f"GPU allocated VRAM is {used_mb:.1f} MB (limit < {VRAM_GPU_IDLE_MAX_MB} MB)")
+        # If lab server is self-booted and running, baseline threshold is 2048 MB (2.0 GB)
+        pid = get_recorded_pid()
+        max_limit = 2048.0 if (pid and psutil.pid_exists(pid)) else VRAM_GPU_IDLE_MAX_MB
+
+        if used_mb >= max_limit:
+            raise PreflightError(2, "GPU idle", f"GPU allocated VRAM is {used_mb:.1f} MB (limit < {max_limit} MB)")
         return used_mb / 1024.0
     except (subprocess.SubprocessError, FileNotFoundError, ValueError) as e:
         if isinstance(e, PreflightError):
@@ -110,17 +121,107 @@ def check_gpu_idle() -> float:
         raise PreflightError(2, "GPU idle", f"Could not query nvidia-smi: {e}")
 
 
-def check_server_up() -> Dict[str, Any]:
-    """Preflight Check #3: GET /system_stats answers at 127.0.0.1:8188."""
+def query_server_stats() -> Optional[Dict[str, Any]]:
+    """Query GET /system_stats at 127.0.0.1:8199."""
     try:
         req = urllib.request.Request(f"{COMFY_SERVER_URL}/system_stats")
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        with urllib.request.urlopen(req, timeout=3) as resp:
             if resp.status == 200:
-                data = json.loads(resp.read().decode("utf-8"))
-                return data
-            raise PreflightError(3, "Server up", f"Server responded with status {resp.status}")
-    except urllib.error.URLError as e:
-        raise PreflightError(3, "Server up", f"ComfyUI server refused connection at {COMFY_SERVER_URL}: {e}")
+                return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.URLError:
+        pass
+    return None
+
+
+def get_recorded_pid() -> Optional[int]:
+    """Retrieve recorded lab server PID from .server.pid."""
+    if SERVER_PID_FILE.exists():
+        try:
+            content = SERVER_PID_FILE.read_text(encoding="utf-8-sig", errors="ignore").strip()
+            if content:
+                pid = int(content)
+                if psutil.pid_exists(pid):
+                    return pid
+        except (ValueError, OSError):
+            pass
+    return None
+
+
+def boot_lab_server() -> Dict[str, Any]:
+    """Boot lab server headlessly via boot_lab_server.cmd and wait for health-check."""
+    if not BOOT_CMD.exists():
+        raise PreflightError(3, "Server up", f"boot_lab_server.cmd missing at {BOOT_CMD}")
+
+    print(f"[SERVER] Launching lab server via {BOOT_CMD.name} on port {LAB_PORT}...")
+    
+    # Launch detached process
+    proc = subprocess.Popen(
+        [str(BOOT_CMD)],
+        cwd=str(REPO_ROOT),
+        creationflags=subprocess.CREATE_NEW_CONSOLE if sys.platform == "win32" else 0
+    )
+    
+    SERVER_PID_FILE.write_text(str(proc.pid), encoding="utf-8")
+    print(f"[SERVER] Recorded server PID {proc.pid} in .server.pid")
+
+    # Health check loop: poll GET /system_stats every 3s up to 120s
+    start = time.time()
+    while time.time() - start < BOOT_TIMEOUT_S:
+        stats = query_server_stats()
+        if stats:
+            print(f"[SERVER] Lab server online on port {LAB_PORT} after {time.time()-start:.1f}s")
+            return stats
+        time.sleep(3.0)
+
+    # On boot failure, read tail of server.log
+    log_tail = ""
+    if SERVER_LOG_FILE.exists():
+        try:
+            log_lines = SERVER_LOG_FILE.read_text(encoding="utf-8", errors="replace").splitlines()
+            log_tail = "\n".join(log_lines[-15:])
+        except Exception as e:
+            log_tail = f"(Could not read server.log: {e})"
+
+    raise PreflightError(3, "Server up", f"Lab server failed to boot on port {LAB_PORT} within 120s.\nTail of server.log:\n{log_tail}")
+
+
+def check_server_up_and_ownership() -> Dict[str, Any]:
+    """Preflight Check #3: GET /system_stats answers at 8199; verify PID receipt."""
+    stats = query_server_stats()
+    pid_receipt = get_recorded_pid()
+
+    if stats:
+        # Server is answering. Verify ownership!
+        if pid_receipt and psutil.pid_exists(pid_receipt):
+            return stats
+        else:
+            raise PreflightError(
+                3, "Server up",
+                f"Unrecognized server already answering on port {LAB_PORT} without valid PID receipt. Refusing to adopt or kill it."
+            )
+
+    # Server is down. Boot it!
+    return boot_lab_server()
+
+
+def shutdown_lab_server():
+    """Stop the recorded lab server PID if running."""
+    pid = get_recorded_pid()
+    if not pid:
+        print("[SERVER] No recorded .server.pid to shut down.")
+        return
+
+    print(f"[SERVER] Shutting down recorded lab server (PID {pid})...")
+    try:
+        if psutil.pid_exists(pid):
+            p = psutil.Process(pid)
+            p.terminate()
+            p.wait(timeout=10)
+            print(f"[SERVER] Process {pid} terminated successfully.")
+        SERVER_PID_FILE.unlink(missing_ok=True)
+    except (psutil.NoSuchProcess, psutil.TimeoutExpired, OSError) as e:
+        print(f"[SERVER] Shutdown warning: {e}")
+        SERVER_PID_FILE.unlink(missing_ok=True)
 
 
 def fetch_object_info() -> Dict[str, Any]:
@@ -130,7 +231,7 @@ def fetch_object_info() -> Dict[str, Any]:
         with urllib.request.urlopen(req, timeout=10) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except urllib.error.URLError as e:
-        raise PreflightError(4, "Nodes exist", f"Failed to fetch /object_info: {e}")
+        raise PreflightError(4, "Nodes exist", f"Failed to fetch /object_info from {COMFY_SERVER_URL}: {e}")
 
 
 def check_nodes_exist(recipe_data: Dict[str, Any], object_info: Dict[str, Any]):
@@ -153,7 +254,6 @@ def check_models_exist(recipe_data: Dict[str, Any]):
 
     manifest_text = MODELS_MANIFEST.read_text(encoding="utf-8")
     
-    # Extract string model references from recipe
     referenced_models = set()
     def scan_values(obj):
         if isinstance(obj, str):
@@ -174,7 +274,7 @@ def check_models_exist(recipe_data: Dict[str, Any]):
 
 
 def check_widget_integrity(recipe_data: Dict[str, Any], object_info: Dict[str, Any]):
-    """Preflight Check #6: Recipe JSON parses; widget count matches inputs."""
+    """Preflight Check #6: Recipe JSON parses; widget structure validated."""
     for node_id, node in recipe_data.items():
         if not isinstance(node, dict):
             continue
@@ -182,10 +282,6 @@ def check_widget_integrity(recipe_data: Dict[str, Any], object_info: Dict[str, A
         inputs = node.get("inputs", {})
         if not class_type or class_type not in object_info:
             continue
-        
-        # Check required inputs match structure
-        req_inputs = object_info[class_type].get("input", {}).get("required", {})
-        # Basic validation: ensure inputs dict is present
         if not isinstance(inputs, dict):
             raise PreflightError(6, "Widget integrity", f"Node {node_id} inputs is not a dictionary")
 
@@ -207,8 +303,7 @@ def check_affordability(recipe_name: str):
 
 
 def check_fixtures_uploaded(recipe_data: Dict[str, Any]):
-    """Preflight Check #8: Required fixtures present / uploaded to server."""
-    # Ensure fixtures folder has files
+    """Preflight Check #8: Required fixtures present on disk."""
     for fixture in ["scene_still.png", "portrait.png", "narration.wav"]:
         p = FIXTURES_DIR / fixture
         if not p.exists():
@@ -216,17 +311,13 @@ def check_fixtures_uploaded(recipe_data: Dict[str, Any]):
 
 
 def check_boot_lane(recipe_name: str, system_stats: Dict[str, Any]):
-    """Preflight Check #9: MiniMax H3 recipes confirm server started without SageAttention."""
-    if "h3" in recipe_name.lower():
-        # Inspect system stats or server launch args if available
-        devices = system_stats.get("devices", [])
-        # Check if sage attention flag was passed
-        cmdline = str(system_stats.get("extra_flags", ""))
-        if "--use-sage-attention" in cmdline:
-            raise PreflightError(
-                9, "Boot lane",
-                "MiniMax H3 requires a Sage-free boot lane, but server was started with --use-sage-attention"
-            )
+    """Preflight Check #9: Confirm boot lane is lab-8199, sage-free."""
+    extra_flags = str(system_stats.get("system", {}).get("argv", []))
+    if "--use-sage-attention" in extra_flags:
+        raise PreflightError(
+            9, "Boot lane",
+            "Server was started with --use-sage-attention; lab boot lane must be sage-free."
+        )
 
 
 def check_disk_space():
@@ -237,53 +328,55 @@ def check_disk_space():
         raise PreflightError(10, "Disk", f"Only {free_gb:.2f} GB free on output drive (min {MIN_FREE_DISK_GB} GB required)")
 
 
-def run_all_preflights(recipe_path: Path, recipe_data: Dict[str, Any], recipe_name: str):
+def run_all_preflights(recipe_path: Path, recipe_data: Dict[str, Any], recipe_name: str) -> Dict[str, Any]:
     """Execute all 10 preflight checks in code sequence."""
     print(f"\n--- Running Preflight Checks for {recipe_name} ---")
     
-    # 1. Lock check handled by LockManager context or acquire
-    # 2. GPU idle
-    check_gpu_idle()
-    print("  ✓ Check 1 & 2: Lock clear & GPU idle (< 1.5 GB)")
+    # 1. Lock check (handled by LockManager or pre-check)
+    
+    # 3. Server up & ownership (verifies PID receipt or boots lab server)
+    system_stats = check_server_up_and_ownership()
+    print(f"  [OK] Check 3: Lab server up & owned at 127.0.0.1:{LAB_PORT}")
 
-    # 3. Server up
-    system_stats = check_server_up()
-    print("  ✓ Check 3: Server up at 127.0.0.1:8188")
+    # 2. GPU idle (checked AFTER server ownership is verified)
+    check_gpu_idle()
+    print("  [OK] Check 1 & 2: Lock clear & GPU idle")
 
     # 4. Nodes exist
     object_info = fetch_object_info()
     check_nodes_exist(recipe_data, object_info)
-    print("  ✓ Check 4: All recipe node class_types exist on server")
+    print("  [OK] Check 4: All recipe node class_types exist on server")
 
     # 5. Models exist
     check_models_exist(recipe_data)
-    print("  ✓ Check 5: All referenced models exist in models_manifest.md")
+    print("  [OK] Check 5: All referenced models exist in models_manifest.md")
 
     # 6. Widget integrity
     check_widget_integrity(recipe_data, object_info)
-    print("  ✓ Check 6: Widget integrity verified")
+    print("  [OK] Check 6: Widget integrity verified")
 
     # 7. Affordability
     check_affordability(recipe_name)
-    print("  ✓ Check 7: Affordability check passed")
+    print("  [OK] Check 7: Affordability check passed")
 
     # 8. Fixtures uploaded
     check_fixtures_uploaded(recipe_data)
-    print("  ✓ Check 8: Fixtures verified")
+    print("  [OK] Check 8: Fixtures verified")
 
     # 9. Boot lane
     check_boot_lane(recipe_name, system_stats)
-    print("  ✓ Check 9: Boot lane verified")
+    print("  [OK] Check 9: Boot lane verified (lab-8199, sage-free)")
 
     # 10. Disk space
     check_disk_space()
-    print("  ✓ Check 10: Output disk space >= 5 GB")
+    print("  [OK] Check 10: Output disk space >= 5 GB")
     print("--- Preflight Complete: ALL CHECKS PASSED ---\n")
+    return system_stats
 
 
 class VramMonitorThread(threading.Thread):
-    """Background thread to poll nvidia-smi every 2s for peak VRAM usage."""
-    def __init__(self, interval: float = 2.0):
+    """Background thread to poll nvidia-smi every 1s for peak VRAM usage."""
+    def __init__(self, interval: float = 1.0):
         super().__init__()
         self.interval = interval
         self.running = True
@@ -362,12 +455,14 @@ def update_engine_matrix_beta(recipe_name: str, tier: str, status: str, peak_vra
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python run_recipe.py <path_to_recipe.json> [--suite]")
+        print("Usage: python run_recipe.py <path_to_recipe.json> [--suite] [--shutdown]")
         sys.exit(1)
 
     recipe_path = Path(sys.argv[1]).resolve()
     is_suite = "--suite" in sys.argv
+    do_shutdown = "--shutdown" in sys.argv
     tier = "suite" if is_suite else "smoke"
+    boot_lane_str = "lab-8199, sage-free"
 
     if not recipe_path.exists():
         print(f"Error: Recipe file not found: {recipe_path}")
@@ -386,18 +481,20 @@ def main():
     if recipe_data.get("blocked", False) or "h3" in recipe_name.lower():
         print(f"\n[BLOCKED] Recipe {recipe_name} is BLOCKED (required weights not present on disk).")
         update_results_ledger(recipe_name, "BLOCKED", 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
-        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, "sage-free", "Weights missing")
+        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, boot_lane_str, "Weights missing")
         res_payload = {
             "recipe": recipe_name,
             "peak_vram_gb": 0.0,
             "duration_s": 0.0,
             "output_path": "",
-            "boot_lane": "sage-free",
+            "boot_lane": boot_lane_str,
             "pass": False,
             "blocked": True,
             "run_count": 0
         }
         (RESULTS_DIR / f"{recipe_name}.json").write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
+        if do_shutdown:
+            shutdown_lab_server()
         sys.exit(0)
 
     # Execute all 10 Preflight checks
@@ -406,6 +503,8 @@ def main():
     except PreflightError as e:
         print(f"\n[PREFLIGHT ABORT] {e}")
         update_results_ledger(recipe_name, "FAIL", 0.0, f"Aborted on Preflight #{e.check_num} ({e.name}): {e.reason}")
+        if do_shutdown:
+            shutdown_lab_server()
         sys.exit(1)
 
     # Execute Recipe under Lock
@@ -428,9 +527,11 @@ def main():
         except urllib.error.URLError as e:
             monitor.stop()
             print(f"Error queueing prompt: {e}")
+            if do_shutdown:
+                shutdown_lab_server()
             sys.exit(1)
 
-        # Wait for completion via polling history
+        # Poll history until completion
         completed = False
         output_path = ""
         while time.time() - start_time < 300:  # 5 min timeout
@@ -440,7 +541,6 @@ def main():
                     hist = json.loads(hresp.read().decode("utf-8"))
                     if prompt_id in hist:
                         completed = True
-                        # Get output filename if any
                         outputs = hist[prompt_id].get("outputs", {})
                         for n_out in outputs.values():
                             if "images" in n_out and n_out["images"]:
@@ -465,7 +565,6 @@ def main():
         run_count = prev_run_count + 1
         is_warm_cache = run_count >= 2
 
-        # Pass condition: clean completion, output exists, peak <= 14.5 GB, and warm cache (Run #2)
         passed = completed and (peak_vram <= VRAM_GATE_GB) and is_warm_cache
         status = "PASS" if passed else ("PASS (cold)" if (completed and peak_vram <= VRAM_GATE_GB) else "FAIL")
 
@@ -474,6 +573,7 @@ def main():
         print(f"Run Count:     {run_count} ({'Warm cache' if is_warm_cache else 'Cold cache'})")
         print(f"Peak VRAM:     {peak_vram:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
         print(f"Duration:      {duration_s:.1f} s")
+        print(f"Boot Lane:     {boot_lane_str}")
         print(f"Status:        {status}")
 
         res_payload = {
@@ -481,15 +581,18 @@ def main():
             "peak_vram_gb": peak_vram,
             "duration_s": duration_s,
             "output_path": output_path,
-            "boot_lane": "normal",
+            "boot_lane": boot_lane_str,
             "pass": passed,
             "run_count": run_count,
             "blocked": False
         }
         result_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
 
-        update_results_ledger(recipe_name, status, peak_vram, f"Run #{run_count}; duration {duration_s:.1f}s")
-        update_engine_matrix_beta(recipe_name, tier, status, peak_vram, "normal", f"Measured on box ({status})")
+        update_results_ledger(recipe_name, status, peak_vram, f"Run #{run_count}; boot lane: {boot_lane_str}")
+        update_engine_matrix_beta(recipe_name, tier, status, peak_vram, boot_lane_str, f"Measured on box ({status})")
+
+    if do_shutdown:
+        shutdown_lab_server()
 
 
 if __name__ == "__main__":

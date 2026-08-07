@@ -1,0 +1,5 @@
+outputs/
+server.log
+.gpu.lock
+.server.pid
+__pycache__/

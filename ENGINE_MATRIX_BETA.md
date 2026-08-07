@@ -17,8 +17,8 @@ The lab's own living copy of the video engine matrix. Rules:
 
 | engine / recipe | tier | status | peak VRAM smoke (GB) | peak VRAM suite (GB) | VRAM creep? | wall clock / clip | boot lane | last measured | notes |
 |---|---|---|---|---|---|---|---|---|---|
-| t2i_low | smoke | PASS | 4.82 | N/A | no | 1.4s | normal | 2026-08-07 | SD 1.5 512x512 seed pair low |
-| t2i_high | smoke | PASS | 6.15 | N/A | no | 2.1s | normal | 2026-08-07 | SD 1.5 768x768 seed pair high |
+| t2i_low | smoke | PASS | 1.68 | N/A | no | N/A | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
+| t2i_high | smoke | PASS | 1.64 | N/A | no | N/A | lab-8199, sage-free | 2026-08-07 | Measured on box (PASS) |
 | h3_t2v_low | smoke | BLOCKED | 0.00 | N/A | no | N/A | sage-free | 2026-08-07 | Weights missing (42.5 GB) |
 | h3_t2v_high | smoke | BLOCKED | 0.00 | N/A | no | N/A | sage-free | 2026-08-07 | Weights missing (42.5 GB) |
 
