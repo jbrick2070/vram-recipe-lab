@@ -1,18 +1,33 @@
-# MiniMax H3 VRAM & Host RAM Budget Analysis
+# MiniMax H3 VRAM & Operational Budget Analysis
 
 ## Hardware & Operating System Invariants
-- **GPU**: NVIDIA GeForce RTX 5080 Laptop GPU (16.0 GB VRAM, 14.5 GB / 14,848 MiB Hard Gate Ceiling)
+- **Target System**: NVIDIA GeForce RTX 5080 Laptop GPU (16.0 GB VRAM, 14.5 GB / 14,848 MiB Hard Gate Ceiling)
 - **Host System RAM**: 63.4 GB total RAM
-- **Platform**: Windows 11, PyTorch 2.10.0+cu130, CUDA 13.0, SageAttention (disabled on H3 stock boot lane)
-- **Boot Lane**: `lab-8199, sage-free` <!-- Grounding Citation: ComfyUI Issue #15263 confirms --use-sage-attention causes silent QK noise corruption on H3 DiT -->
-- **Windows Portable Launch Command**:
-  ```powershell
-  .\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --reserve-vram 2 --fast-disk --preview-method none
-  ```
+- **Platform**: Windows 11, PyTorch 2.10.0+cu130, CUDA 13.0
+- **Boot Lane**: `lab-8199, sage-free` (SageAttention causes silent QK noise corruption on H3 DiT)
+- **Lab Execution Status**: **BLOCKED** across all H3 recipes (zero H3 weights on disk; zero local runs executed).
 
 ---
 
-## Model Weight Footprint & Total Stack Size
+## Provenance Disclaimer
+All VRAM peaks, host RAM figures, wall clock times, and NVMe throughput metrics below are **EXTERNAL-REPORTED** claims from third-party sources (Tomiigo Linux benchmark, tnsor_works RTX 5080 test, CG Pixel RTX 3060 test). No numbers have been measured locally by `run_recipe.py` on this system.
+
+---
+
+## Operational Costs & System Impact
+
+1. **NVMe Disk Read Overhead**: Layerwise DiT offloading streams **~268 GB of reads from disk per 5-second generation** (EXTERNAL-REPORTED by Tomiigo). On a laptop NVMe SSD, continuous layerwise streaming increases drive read wear and introduces I-O throughput bottlenecks.
+2. **Linux vs. Windows Memory Management Delta**: Third-party low-VRAM benchmarks (7.4–7.6 GB peak) were executed on Linux. Windows 11 WDDM driver allocation adds OS background VRAM overhead (~0.5–1.2 GB), which may raise local Windows VRAM peaks.
+3. **Boot-Lane Flag Options**:
+   - The Tomiigo external benchmark used `--disable-pinned-memory` and `--reserve-vram 1.5`.
+   - **Boot Lane Handling**: These flags are proposed boot-lane options for `boot_lab_server.cmd` if a dedicated H3 server lane is booted. They must NOT be edited silently into the standard `boot_lab_server.cmd`.
+4. **Licensing Status**:
+   - **Official INT8 Stack**: MiniMax-H3 community license contains US local weight usage restrictions; text remains unread by this lab.
+   - **GGUF Stack**: GGUF quantization license status is unknown.
+
+---
+
+## Model Weight Footprint & Total Active Stack
 
 | Component | Model Checkpoint File | Weight Size (GiB) | Offload & Residency Strategy |
 |---|---|---|---|
@@ -25,29 +40,19 @@
 
 ---
 
-## Multi-Lane Preset Matrix & Telemetry
+## Internal Recipe Options & External-Reported Telemetry
 
-### 1. `MMH3_HQ_480P_GATE145` (Certified Production Target)
-- **Resolution**: **864×480**
-- **Length**: **124 frames** (5.17s @ 24 fps, `17k+5` grid k=7)
-- **Steps**: 20 steps
-- **Measured VRAM Peak**: **7.4 – 7.6 GB** (Controlled 8GB physical GPU test, [`Tomiigo/minimax-h3-16gb`](https://github.com/Tomiigo/minimax-h3-16gb))
-- **Measured Host RAM**: ~10 GB
-- **Wall Clock**: ~180 seconds
-- **Gate Verdict**: **PASS** (Safely under 14.5 GB / 14,848 MiB gate ceiling).
+### 1. `h3_*_low` (Official INT8 Stack @ 864×480)
+- **Resolution & Length**: 864×480, 124 frames (5.17s @ 24 fps, `17k+5` grid k=7), 20 steps.
+- **EXTERNAL-REPORTED Metrics**: 7.4 – 7.6 GB VRAM peak, ~10 GB Host RAM, 180s wall clock (Tomiigo Linux 8GB benchmark).
+- **Local Lab Status**: **BLOCKED** (Weights missing).
 
-### 2. `MMH3_HQ_NATIVE_EXPERIMENTAL` (Experimental Native Lane)
-- **Resolution**: **1344×768**
-- **Length**: **124 frames** (5.17s @ 24 fps)
-- **Steps**: 20 steps
-- **Measured VRAM Peak**: **14.6 – 15.3 GB** (Actual RTX 5080 16GB test, [`note.com/tnsor_works`](https://note.com/tnsor_works/n/n5405bf0154d9))
-- **Measured Host RAM**: ~30 GB
-- **Wall Clock**: ~525 seconds
-- **Gate Verdict**: **EXPERIMENTAL** (Exceeds 14.5 GB / 14,848 MiB gate ceiling). Produce native resolution via 864x480 generation + separate LTX 2.3 ×2 upscale pass after unloading H3.
+### 2. `h3_*_native_experimental` (Official INT8 Stack @ 1344×768)
+- **Resolution & Length**: 1344×768, 124 frames (5.17s @ 24 fps), 20 steps.
+- **EXTERNAL-REPORTED Metrics**: 14.6 – 15.3 GB VRAM peak, ~30 GB Host RAM, 525s wall clock (tnsor_works RTX 5080 test).
+- **Local Lab Status**: **BLOCKED** (Predicts > 14.5 GB gate line).
 
-### 3. `MMH3_Q3Q2_6GB_PREVIEW` (Portable Preview Lane)
-- **Model Stack**: GGUF Q3 DiT (`MiniMax-H3-FL2VA-Q3_K_M.gguf`, 15.58 GB) + Q2 Qwen3-VL (`qwen3vl-32B-MiniMax-H3-Q2_K.gguf`, 8.49 GB)
-- **Resolution**: 864×480 / 960×544
-- **Length**: 124 frames, 20 steps
-- **Measured VRAM Peak**: Unmeasured (runs on 6GB RTX 3060 card)
-- **Gate Verdict**: **Portable Preview Lane** (low motion fidelity and character consistency).
+### 3. `h3_*_gguf_preview` (GGUF Stack @ 864×480)
+- **Model Stack**: `MiniMax-H3-FL2VA-Q3_K_M.gguf` (15.58 GB) + `qwen3vl-32B-MiniMax-H3-Q2_K.gguf` (8.49 GB).
+- **EXTERNAL-REPORTED Metrics**: VRAM peak unmeasured (CG Pixel RTX 3060 6GB test).
+- **Local Lab Status**: **BLOCKED** (Weights missing; requires GGUF custom nodes).

@@ -1,104 +1,62 @@
-# MiniMax-H3 ComfyUI Community Release Package & Multi-Tier Workflow Matrix
+# MiniMax-H3 Internal Architecture & Options Matrix
 
-**Primary Author**: Jeffrey Brick / vram-recipe-lab  
-**Target Audience**: Community Release for **Low VRAM (6GB–8GB)**, **Mid VRAM (12GB–16GB, RTX 5080 Lab Target)**, and **High VRAM (24GB+)** users.  
-**Lab Hardware Invariant**: NVIDIA GeForce RTX 5080 Laptop GPU (16 GB Physical VRAM, 14.5 GB / 14,848 MiB Hard Gate Ceiling), 64 GB System Host RAM, Windows 11.
+**Internal Lab Reference**: `vram-recipe-lab`  
+**Lab Hardware Ceiling**: NVIDIA GeForce RTX 5080 Laptop GPU (16 GB Physical VRAM, 14.5 GB / 14,848 MiB Hard Gate Ceiling), 64 GB System Host RAM, Windows 11.  
+**Local Execution Status**: **BLOCKED** across all H3 recipes (zero H3 weights exist on disk; zero local runs executed).
 
 ---
 
-## Executive Summary & Community Shipping Matrix
+## Executive Summary & Provenance Disclaimers
 
-To ensure maximum accessibility, this ComfyUI workflow package is structured into **three distinct tier presets** tailored for low, mid, and high VRAM hardware. Every user—from a 6GB RTX 3060 to a 24GB RTX 4090 / 5090—gets a fully functional, optimized MiniMax-H3 workflow.
+> [!IMPORTANT]
+> **Provenance Invariant**: `vram-recipe-lab` has **NEVER** executed MiniMax-H3. No H3 model weights exist on disk in `C:\ComfyUI-Models`. All numbers, VRAM peaks, system RAM figures, and runtimes cited below are **EXTERNAL-REPORTED** claims from third-party benchmarks. They are not local measurements and do NOT constitute lab certification. All local H3 recipes remain **BLOCKED**.
 
-### Multi-Tier Community Release Matrix
+---
 
-| Target Hardware Tier | Workflow Preset | Model Stack | Resolution & Frames | Measured Peak VRAM | Quality & Target Audience |
+## Internal Option Matrix
+
+| Internal Option | Primary Target Setup | External Reported Source | External-Reported VRAM Peak | External-Reported Host RAM | Local Lab Gate Status |
 |---|---|---|---|---|---|
-| **Low VRAM (6GB – 8GB)** | `MMH3_LOW_VRAM_6GB_PREVIEW` | GGUF Q3 DiT + Q2 Qwen3-VL | 864×480 / 960×544 (124 frames) | Peak Unmeasured (6GB card) | **Low / Portable Preview** (RTX 3060 6GB/8GB) |
-| **Mid VRAM (12GB – 16GB)** | `MMH3_MID_VRAM_16GB_PRODUCTION` | Official INT8 DiT + NVFP4 Encoder | **864×480** (124 frames) | **7.4 – 7.6 GB** | **Certified Production Target** (RTX 4070 / 4080 / 5080 16GB) |
-| **High VRAM (24GB+)** | `MMH3_HIGH_VRAM_24GB_NATIVE` | Official INT8 DiT + NVFP4 Encoder | **1344×768 (Native)** (124 frames) | **14.6 – 15.6 GB** | **Native High Fidelity** (RTX 3090 / 4090 / 5090 24GB+) |
+| **Path A (`h3_*_low`)** | Official INT8/NVFP4 (864×480) | Tomiigo Linux/Blackwell Benchmark | **7.4 – 7.6 GB** (EXTERNAL-REPORTED by Tomiigo) | ~10 GB (EXTERNAL-REPORTED) | **BLOCKED** (Weights missing; gate target <= 14.5 GB) |
+| **Path A (`h3_*_native_experimental`)** | Official INT8/NVFP4 (1344×768) | tnsor_works RTX 5080 Test | **14.6 – 15.3 GB** (EXTERNAL-REPORTED by tnsor_works) | ~30 GB (EXTERNAL-REPORTED) | **BLOCKED** (Predicts > 14.5 GB gate line) |
+| **Path B (`h3_*_gguf_preview`)** | GGUF Q3 DiT / Q2 Encoder (864×480) | CG Pixel RTX 3060 Test | Peak Unmeasured (EXTERNAL-REPORTED on 6GB card) | Unreported | **BLOCKED** (Weights missing; requires GGUF nodes) |
 
 ---
 
-## 1. Low VRAM Shipping Tier: `MMH3_LOW_VRAM_6GB_PREVIEW`
+## Option 1: Official INT8 Weight Stack (Path A)
 
-### Target Hardware
-GPUs with 6GB to 8GB VRAM (e.g. NVIDIA GeForce RTX 3060 6GB/8GB, RTX 4050 Laptop).
-
-### Models & Storage Requirements (~29.9 GB total)
-- `MiniMax-H3-FL2VA-Q3_K_M.gguf` (15.58 GB) — GGUF Q3 DiT
-- `qwen3vl-32B-MiniMax-H3-Q2_K.gguf` (8.49 GB) — GGUF Q2 Text Encoder
-- `minimax_h3_video_vae_fp16.safetensors` (5.21 GB)
-- `minimax_h3_audio_vae_fp32.safetensors` (0.61 GB)
-- *Source Repo*: [`realrebelai/MiniMax-H3_GGUFs`](https://huggingface.co/realrebelai/MiniMax-H3_GGUFs/tree/main)
-
-### Required Custom Nodes
-- `ComfyUI-GGUF` (`city96/ComfyUI-GGUF`)
-- `ComfyUI-Spectrum-MiniMax-H3` (`xmarre/ComfyUI-Spectrum-MiniMax-H3`)
-- `ComfyUI-Easy-Use` (`yolain/Comfyui-Easy-Use`) cache-clearing nodes
-- Native `MiniMaxH3SigmaShift`
-
-### Preset Configuration
-- **T2V**: 960×544, 124 frames (~5.17s @ 24 fps), 20 steps, Euler sampler, simple scheduler, Sigma Shift 12→3, Spectrum enabled (~20 min render).
-- **FLF / I2V**: 864×480, 124 frames, 20 steps (~35 min render).
-- **Community Reference**: Grounded in the [CG Pixel RTX 3060 6GB workflow](https://www.youtube.com/watch?v=Kr5SrY5bwJU) & [Civitai tutorial](https://civitai.com/articles/33517).
-
----
-
-## 2. Mid VRAM Shipping Tier: `MMH3_MID_VRAM_16GB_PRODUCTION`
-
-### Target Hardware & Lab Standard
-GPUs with 12GB to 16GB VRAM (e.g. NVIDIA GeForce RTX 4070 / 4080 / RTX 5080 16GB). **This is our lab's certified production target.**
-
-### Models & Storage Requirements (~42.5 GB total)
-- `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (20.97 GB) — Official INT8 Image-to-Video / Text-to-Video DiT
-- `minimax_h3_ref2va_pruned_int8_convrot.safetensors` (20.97 GB) — Official INT8 Reference-to-Video DiT
+### Model Footprint (~42.5 GB total on disk)
+- `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (20.97 GB) — Official INT8 DiT (T2V/I2V)
+- `minimax_h3_ref2va_pruned_int8_convrot.safetensors` (20.97 GB) — Official INT8 DiT (R2V)
 - `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` (15.69 GB) — Official NVFP4 Text Encoder
 - `minimax_h3_video_vae_fp16.safetensors` (5.21 GB)
 - `minimax_h3_audio_vae_fp32.safetensors` (0.61 GB)
-- *Source Repo*: [`Comfy-Org/MiniMax-H3`](https://huggingface.co/Comfy-Org/MiniMax-H3)
 
-### Benchmark Telemetry ([`Tomiigo/minimax-h3-16gb`](https://github.com/Tomiigo/minimax-h3-16gb))
-- **Resolution & Length**: **864×480**, **124 frames** (5.17s @ 24 fps), 20 steps.
-- **Measured VRAM Peak**: **7.4 – 7.6 GB** across 5 consecutive runs (fits comfortably under the 14.5 GB gate line).
-- **Measured Host RAM**: ~10 GB.
-- **Wall Clock**: ~180 seconds.
-- **Recommended Upscale Path**: Render at 864×480, completely unload H3 from VRAM, then run a separate LTX 2.3 ×2 upscale pass.
+### External-Reported Telemetry ([Tomiigo Benchmark](https://github.com/Tomiigo/minimax-h3-16gb/blob/cc3e8445d21f1909b62432e018e3d4fd390cccb9/README.md))
+- **Source Environment**: Linux, PyTorch, CUDA, physical GPU VRAM restricted to 8,188 MiB, system RAM restricted to 32 GB.
+- **Parameters**: 864×480, 124 frames (5.17s @ 24 fps), 20 steps.
+- **EXTERNAL-REPORTED Metrics**: 7.4–7.6 GB VRAM peak, ~10 GB host RAM, ~180s wall clock, **~268 GB NVMe read traffic** per run from layerwise DiT block swapping.
 
 ---
 
-## 3. High VRAM Shipping Tier: `MMH3_HIGH_VRAM_24GB_NATIVE`
+## Option 2: GGUF Quantized Stack (Path B)
 
-### Target Hardware
-GPUs with 24GB+ VRAM (e.g. NVIDIA GeForce RTX 3090 / 4090 / RTX 5090 24GB+, RTX A6000).
+### Model Footprint (~29.9 GB total on disk)
+- `MiniMax-H3-FL2VA-Q3_K_M.gguf` (15.58 GB) — Quantized Q3 DiT
+- `qwen3vl-32B-MiniMax-H3-Q2_K.gguf` (8.49 GB) — Quantized Q2 Text Encoder
+- `minimax_h3_video_vae_fp16.safetensors` (5.21 GB)
+- `minimax_h3_audio_vae_fp32.safetensors` (0.61 GB)
 
-### Preset Configuration
-- **Model Stack**: Official INT8 DiT + NVFP4 / FP16 Text Encoder + VAEs.
-- **Resolution & Length**: **1344×768 (Native)**, **124 frames** (5.17s @ 24 fps), 20 steps.
-- **Measured Telemetry** ([`tnsor_works`](https://note.com/tnsor_works/n/n5405bf0154d9) & [`HF Discussion #6`](https://huggingface.co/Comfy-Org/MiniMax-H3/discussions/6)):
-  - **Measured VRAM Peak**: **14.6 – 15.6 GB** (15,219 MiB text encoding peak, 15,633 MiB sampling peak).
-  - **Measured Host RAM**: 29.8 – 30.7 GB.
-  - **Wall Clock**: ~525 seconds.
-- **Note for 16GB Cards**: Runs on a physical 16GB RTX 5080 card, but exceeds our strict 14.5 GB (14,848 MiB) lab gate ceiling. High VRAM users with 24GB+ can run this natively without layerwise swapping pressure.
+### External-Reported Telemetry ([CG Pixel Test](https://www.youtube.com/watch?v=Kr5SrY5bwJU))
+- **Source Environment**: Windows, RTX 3060 6GB card.
+- **EXTERNAL-REPORTED Metrics**: Rendered 864×480 / 960×544 in ~35 mins. VRAM peak and host RAM were **unmeasured**. One FLF attempt OOMed before succeeding on requeue.
 
 ---
 
-## Standalone Windows Startup Command
+## Operational Costs & Unknowns
 
-For shipping the standalone Windows ComfyUI package, the recommended startup command is:
-
-```powershell
-.\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build --reserve-vram 2 --fast-disk --preview-method none
-```
-
-### Critical Operating Guidelines
-1. **Keep DynamicVRAM Enabled**: Do NOT pass `--disable-dynamic-vram`. DynamicVRAM handles block-by-block layerwise DiT swapping into host RAM.
-2. **`--lowvram` Flag**: Ineffective while DynamicVRAM is active.
-3. **System RAM Allocation**: Require at least 32GB system RAM (64GB recommended for optimal layerwise caching).
-
----
-
-## Licensing Q&A Notice for Community Release
-
-> [!CAUTION]
-> The current [MiniMax-H3 Community License](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE) does not grant local-weight execution within the United States. Per the official [Licensing Q&A](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/QA-about-License.md), US-based users must obtain separate MiniMax authorization before local execution or commercial distribution. The hosted API remains globally available.
+1. **NVMe Wear & Storage Strain**: Layerwise DiT swapping streams **~268 GB of reads from disk per generation**. On a laptop NVMe SSD, frequent generations accelerate drive wear and produce thermal/I-O latency.
+2. **Linux vs. Windows Delta**: The Tomiigo 7.4–7.6 GB report was measured on Linux. Windows WDDM driver memory management adds OS VRAM overhead (~0.5–1.2 GB), which may push VRAM higher on Windows.
+3. **Licensing Status**:
+   - **Official Stack License**: MiniMax-H3 community license contains US usage restrictions; license text remains unread by this lab.
+   - **GGUF Stack License**: Quantized GGUF license status is unknown.
