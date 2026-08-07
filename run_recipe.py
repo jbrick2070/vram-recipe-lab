@@ -39,6 +39,7 @@ VRAM_GATE_GB = 14.5
 VRAM_GPU_IDLE_MAX_MB = 1536  # 1.5 GB
 MIN_FREE_DISK_GB = 5.0
 BOOT_TIMEOUT_S = 120
+POLL_INTERVAL_S = 0.2  # 200ms VRAM polling interval
 
 
 class PreflightError(Exception):
@@ -60,7 +61,7 @@ class LockManager:
     def acquire(self):
         if self.lock_path.exists():
             try:
-                content = self.lock_path.read_text(encoding="utf-8")
+                content = self.lock_path.read_text(encoding="utf-8-sig", errors="ignore")
                 lock_info = json.loads(content)
                 pid = lock_info.get("pid")
                 if pid and not psutil.pid_exists(pid):
@@ -98,17 +99,44 @@ class LockManager:
         self.release()
 
 
+def query_gpu_vram_mb() -> float:
+    """Query current GPU VRAM usage in MB via nvidia-smi."""
+    res = subprocess.run(
+        ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    return float(res.stdout.strip().splitlines()[0])
+
+
+def get_recorded_pid() -> Optional[int]:
+    """Retrieve recorded lab server PID from .server.pid."""
+    if SERVER_PID_FILE.exists():
+        try:
+            content = SERVER_PID_FILE.read_text(encoding="utf-8-sig", errors="ignore").strip()
+            if content:
+                pid = int(content)
+                if psutil.pid_exists(pid):
+                    return pid
+        except (ValueError, OSError):
+            pass
+    return None
+
+
+def cleanup_stale_pid_receipt():
+    """Remove .server.pid if it exists but the process is no longer running."""
+    if SERVER_PID_FILE.exists():
+        pid = get_recorded_pid()
+        if not pid:
+            print("[SERVER] Cleaning up stale .server.pid receipt")
+            SERVER_PID_FILE.unlink(missing_ok=True)
+
+
 def check_gpu_idle() -> float:
     """Preflight Check #2: nvidia-smi shows under 1.5 GB allocated memory (or < 2.0 GB if lab server is running)."""
     try:
-        res = subprocess.run(
-            ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        used_mb = float(res.stdout.strip().splitlines()[0])
-        # If lab server is self-booted and running, baseline threshold is 2048 MB (2.0 GB)
+        used_mb = query_gpu_vram_mb()
         pid = get_recorded_pid()
         max_limit = 2048.0 if (pid and psutil.pid_exists(pid)) else VRAM_GPU_IDLE_MAX_MB
 
@@ -133,38 +161,24 @@ def query_server_stats() -> Optional[Dict[str, Any]]:
     return None
 
 
-def get_recorded_pid() -> Optional[int]:
-    """Retrieve recorded lab server PID from .server.pid."""
-    if SERVER_PID_FILE.exists():
-        try:
-            content = SERVER_PID_FILE.read_text(encoding="utf-8-sig", errors="ignore").strip()
-            if content:
-                pid = int(content)
-                if psutil.pid_exists(pid):
-                    return pid
-        except (ValueError, OSError):
-            pass
-    return None
-
-
 def boot_lab_server() -> Dict[str, Any]:
     """Boot lab server headlessly via boot_lab_server.cmd and wait for health-check."""
     if not BOOT_CMD.exists():
         raise PreflightError(3, "Server up", f"boot_lab_server.cmd missing at {BOOT_CMD}")
 
+    cleanup_stale_pid_receipt()
     print(f"[SERVER] Launching lab server via {BOOT_CMD.name} on port {LAB_PORT}...")
     
-    # Launch detached process
+    CREATE_NO_WINDOW = 0x08000000
     proc = subprocess.Popen(
-        [str(BOOT_CMD)],
+        ["cmd.exe", "/c", str(BOOT_CMD)],
         cwd=str(REPO_ROOT),
-        creationflags=subprocess.CREATE_NEW_CONSOLE if sys.platform == "win32" else 0
+        creationflags=CREATE_NO_WINDOW if sys.platform == "win32" else 0
     )
     
     SERVER_PID_FILE.write_text(str(proc.pid), encoding="utf-8")
     print(f"[SERVER] Recorded server PID {proc.pid} in .server.pid")
 
-    # Health check loop: poll GET /system_stats every 3s up to 120s
     start = time.time()
     while time.time() - start < BOOT_TIMEOUT_S:
         stats = query_server_stats()
@@ -173,11 +187,10 @@ def boot_lab_server() -> Dict[str, Any]:
             return stats
         time.sleep(3.0)
 
-    # On boot failure, read tail of server.log
     log_tail = ""
     if SERVER_LOG_FILE.exists():
         try:
-            log_lines = SERVER_LOG_FILE.read_text(encoding="utf-8", errors="replace").splitlines()
+            log_lines = SERVER_LOG_FILE.read_text(encoding="utf-8-sig", errors="replace").splitlines()
             log_tail = "\n".join(log_lines[-15:])
         except Exception as e:
             log_tail = f"(Could not read server.log: {e})"
@@ -187,11 +200,11 @@ def boot_lab_server() -> Dict[str, Any]:
 
 def check_server_up_and_ownership() -> Dict[str, Any]:
     """Preflight Check #3: GET /system_stats answers at 8199; verify PID receipt."""
+    cleanup_stale_pid_receipt()
     stats = query_server_stats()
     pid_receipt = get_recorded_pid()
 
     if stats:
-        # Server is answering. Verify ownership!
         if pid_receipt and psutil.pid_exists(pid_receipt):
             return stats
         else:
@@ -200,28 +213,26 @@ def check_server_up_and_ownership() -> Dict[str, Any]:
                 f"Unrecognized server already answering on port {LAB_PORT} without valid PID receipt. Refusing to adopt or kill it."
             )
 
-    # Server is down. Boot it!
     return boot_lab_server()
 
 
 def shutdown_lab_server():
-    """Stop the recorded lab server PID if running."""
+    """Stop the recorded lab server PID if running and remove .server.pid as final step."""
     pid = get_recorded_pid()
-    if not pid:
-        print("[SERVER] No recorded .server.pid to shut down.")
-        return
+    if pid:
+        print(f"[SERVER] Shutting down recorded lab server (PID {pid})...")
+        try:
+            if psutil.pid_exists(pid):
+                p = psutil.Process(pid)
+                p.terminate()
+                p.wait(timeout=10)
+                print(f"[SERVER] Process {pid} terminated successfully.")
+        except (psutil.NoSuchProcess, psutil.TimeoutExpired, OSError) as e:
+            print(f"[SERVER] Shutdown warning: {e}")
 
-    print(f"[SERVER] Shutting down recorded lab server (PID {pid})...")
-    try:
-        if psutil.pid_exists(pid):
-            p = psutil.Process(pid)
-            p.terminate()
-            p.wait(timeout=10)
-            print(f"[SERVER] Process {pid} terminated successfully.")
+    if SERVER_PID_FILE.exists():
         SERVER_PID_FILE.unlink(missing_ok=True)
-    except (psutil.NoSuchProcess, psutil.TimeoutExpired, OSError) as e:
-        print(f"[SERVER] Shutdown warning: {e}")
-        SERVER_PID_FILE.unlink(missing_ok=True)
+        print("[SERVER] Removed .server.pid receipt.")
 
 
 def fetch_object_info() -> Dict[str, Any]:
@@ -332,42 +343,31 @@ def run_all_preflights(recipe_path: Path, recipe_data: Dict[str, Any], recipe_na
     """Execute all 10 preflight checks in code sequence."""
     print(f"\n--- Running Preflight Checks for {recipe_name} ---")
     
-    # 1. Lock check (handled by LockManager or pre-check)
-    
-    # 3. Server up & ownership (verifies PID receipt or boots lab server)
     system_stats = check_server_up_and_ownership()
     print(f"  [OK] Check 3: Lab server up & owned at 127.0.0.1:{LAB_PORT}")
 
-    # 2. GPU idle (checked AFTER server ownership is verified)
     check_gpu_idle()
     print("  [OK] Check 1 & 2: Lock clear & GPU idle")
 
-    # 4. Nodes exist
     object_info = fetch_object_info()
     check_nodes_exist(recipe_data, object_info)
     print("  [OK] Check 4: All recipe node class_types exist on server")
 
-    # 5. Models exist
     check_models_exist(recipe_data)
     print("  [OK] Check 5: All referenced models exist in models_manifest.md")
 
-    # 6. Widget integrity
     check_widget_integrity(recipe_data, object_info)
     print("  [OK] Check 6: Widget integrity verified")
 
-    # 7. Affordability
     check_affordability(recipe_name)
     print("  [OK] Check 7: Affordability check passed")
 
-    # 8. Fixtures uploaded
     check_fixtures_uploaded(recipe_data)
     print("  [OK] Check 8: Fixtures verified")
 
-    # 9. Boot lane
     check_boot_lane(recipe_name, system_stats)
     print("  [OK] Check 9: Boot lane verified (lab-8199, sage-free)")
 
-    # 10. Disk space
     check_disk_space()
     print("  [OK] Check 10: Output disk space >= 5 GB")
     print("--- Preflight Complete: ALL CHECKS PASSED ---\n")
@@ -375,8 +375,8 @@ def run_all_preflights(recipe_path: Path, recipe_data: Dict[str, Any], recipe_na
 
 
 class VramMonitorThread(threading.Thread):
-    """Background thread to poll nvidia-smi every 1s for peak VRAM usage."""
-    def __init__(self, interval: float = 1.0):
+    """Background thread polling nvidia-smi every 200ms (0.2s) for peak VRAM usage."""
+    def __init__(self, interval: float = POLL_INTERVAL_S):
         super().__init__()
         self.interval = interval
         self.running = True
@@ -385,11 +385,7 @@ class VramMonitorThread(threading.Thread):
     def run(self):
         while self.running:
             try:
-                res = subprocess.run(
-                    ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
-                    capture_output=True, text=True, check=True
-                )
-                used_mb = float(res.stdout.strip().splitlines()[0])
+                used_mb = query_gpu_vram_mb()
                 self.peaks.append(used_mb / 1024.0)
             except Exception:
                 pass
@@ -401,18 +397,30 @@ class VramMonitorThread(threading.Thread):
         return max(self.peaks) if self.peaks else 0.0
 
 
-def update_results_ledger(recipe_name: str, status: str, peak_vram: float, notes: str):
-    """Update human-readable ledger in RESULTS.md."""
+def update_results_ledger(recipe_name: str, status: str, peak_vram: float, baseline_vram: float, wall_clock: float, notes: str):
+    """Update human-readable ledger in RESULTS.md with wall clock and baseline VRAM."""
     if not RESULTS_LEDGER.exists():
         RESULTS_LEDGER.write_text(
-            "# Results Ledger\n\n| recipe | status | peak VRAM (GB) | notes |\n|---|---|---|---|\n",
+            "# Results Ledger\n\n| recipe | status | peak VRAM (GB) | baseline VRAM (GB) | wall clock (s) | notes |\n|---|---|---|---|---|---|\n",
             encoding="utf-8"
         )
     
     lines = RESULTS_LEDGER.read_text(encoding="utf-8").splitlines()
     updated = False
     new_lines = []
-    row_str = f"| {recipe_name} | {status} | {peak_vram:.2f} | {notes} |"
+    header_idx = -1
+
+    for idx, line in enumerate(lines):
+        if line.startswith("# Results Ledger"):
+            header_idx = idx
+
+    # If file header needs restoring to 6-column format
+    if header_idx != -1 and len(lines) > header_idx + 4:
+        if "| baseline VRAM" not in lines[header_idx + 4]:
+            lines[header_idx + 4] = "| recipe | status | peak VRAM (GB) | baseline VRAM (GB) | wall clock (s) | notes |"
+            lines[header_idx + 5] = "|---|---|---|---|---|---|"
+
+    row_str = f"| {recipe_name} | {status} | {peak_vram:.2f} | {baseline_vram:.2f} | {wall_clock:.1f} | {notes} |"
 
     for line in lines:
         if line.startswith(f"| {recipe_name} |"):
@@ -428,14 +436,21 @@ def update_results_ledger(recipe_name: str, status: str, peak_vram: float, notes
     print(f"[LEDGER] Updated RESULTS.md entry for {recipe_name}: {status}")
 
 
-def update_engine_matrix_beta(recipe_name: str, tier: str, status: str, peak_vram: float, boot_lane: str, notes: str):
-    """Update engine row in ENGINE_MATRIX_BETA.md."""
+def update_engine_matrix_beta(recipe_name: str, tier: str, status: str, peak_vram: float, baseline_vram: float, wall_clock: float, boot_lane: str, notes: str):
+    """Update engine row in ENGINE_MATRIX_BETA.md with restored wall clock column."""
     if not ENGINE_MATRIX_BETA.exists():
         return
 
     today = time.strftime("%Y-%m-%d")
     lines = ENGINE_MATRIX_BETA.read_text(encoding="utf-8").splitlines()
-    row_str = f"| {recipe_name} | {tier} | {status} | {peak_vram:.2f} | N/A | no | N/A | {boot_lane} | {today} | {notes} |"
+    
+    # Restore header format if missing
+    for i, line in enumerate(lines):
+        if line.startswith("| engine / recipe |"):
+            lines[i] = "| engine / recipe | tier | status | peak VRAM smoke (GB) | peak VRAM suite (GB) | VRAM creep? | wall clock / clip | boot lane | last measured | notes |"
+            lines[i+1] = "|---|---|---|---|---|---|---|---|---|---|"
+
+    row_str = f"| {recipe_name} | {tier} | {status} | {peak_vram:.2f} | N/A | no | {wall_clock:.1f}s | {boot_lane} | {today} | {notes} |"
     
     updated = False
     new_lines = []
@@ -472,7 +487,7 @@ def main():
     RESULTS_DIR.mkdir(exist_ok=True)
 
     try:
-        recipe_data = json.loads(recipe_path.read_text(encoding="utf-8"))
+        recipe_data = json.loads(recipe_path.read_text(encoding="utf-8-sig"))
     except json.JSONDecodeError as e:
         print(f"Error: Failed to parse recipe JSON: {e}")
         sys.exit(1)
@@ -480,11 +495,12 @@ def main():
     # Check for BLOCKED status in recipe metadata
     if recipe_data.get("blocked", False) or "h3" in recipe_name.lower():
         print(f"\n[BLOCKED] Recipe {recipe_name} is BLOCKED (required weights not present on disk).")
-        update_results_ledger(recipe_name, "BLOCKED", 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
-        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, boot_lane_str, "Weights missing")
+        update_results_ledger(recipe_name, "BLOCKED", 0.0, 0.0, 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
+        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, 0.0, 0.0, boot_lane_str, "Weights missing")
         res_payload = {
             "recipe": recipe_name,
             "peak_vram_gb": 0.0,
+            "baseline_vram_gb": 0.0,
             "duration_s": 0.0,
             "output_path": "",
             "boot_lane": boot_lane_str,
@@ -502,20 +518,25 @@ def main():
         run_all_preflights(recipe_path, recipe_data, recipe_name)
     except PreflightError as e:
         print(f"\n[PREFLIGHT ABORT] {e}")
-        update_results_ledger(recipe_name, "FAIL", 0.0, f"Aborted on Preflight #{e.check_num} ({e.name}): {e.reason}")
+        update_results_ledger(recipe_name, "FAIL", 0.0, 0.0, 0.0, f"Aborted on Preflight #{e.check_num} ({e.name}): {e.reason}")
         if do_shutdown:
             shutdown_lab_server()
         sys.exit(1)
 
     # Execute Recipe under Lock
     with LockManager() as lock:
-        print(f"Queueing prompt for {recipe_name}...")
-        monitor = VramMonitorThread(interval=1.0)
+        # 1. Record baseline VRAM before run
+        baseline_vram_gb = query_gpu_vram_mb() / 1024.0
+        print(f"[VRAM] Baseline GPU VRAM: {baseline_vram_gb:.2f} GB")
+
+        # 2. Start VRAM monitor thread BEFORE /prompt POST
+        monitor = VramMonitorThread(interval=POLL_INTERVAL_S)
         monitor.start()
         start_time = time.time()
 
-        # Submit prompt to ComfyUI API
-        prompt_payload = {"prompt": recipe_data}
+        print(f"Queueing prompt for {recipe_name}...")
+        prompt_dict = recipe_data.get("prompt", recipe_data)
+        prompt_payload = {"prompt": prompt_dict}
         req_data = json.dumps(prompt_payload).encode("utf-8")
         req = urllib.request.Request(f"{COMFY_SERVER_URL}/prompt", data=req_data, headers={"Content-Type": "application/json"})
         
@@ -531,26 +552,53 @@ def main():
                 shutdown_lab_server()
             sys.exit(1)
 
-        # Poll history until completion
+        # 3. Poll history until completion (keep monitor running!)
         completed = False
+        execution_success = False
         output_path = ""
         while time.time() - start_time < 300:  # 5 min timeout
-            time.sleep(2.0)
+            time.sleep(0.5)
             try:
                 with urllib.request.urlopen(f"{COMFY_SERVER_URL}/history/{prompt_id}") as hresp:
                     hist = json.loads(hresp.read().decode("utf-8"))
                     if prompt_id in hist:
                         completed = True
-                        outputs = hist[prompt_id].get("outputs", {})
-                        for n_out in outputs.values():
-                            if "images" in n_out and n_out["images"]:
-                                output_path = n_out["images"][0].get("filename", "output.png")
+                        prompt_hist = hist[prompt_id]
+                        status_obj = prompt_hist.get("status", {})
+                        status_str = status_obj.get("status_str", "")
+                        completed_flag = status_obj.get("completed", False)
+                        messages = status_obj.get("messages", [])
+                        outputs = prompt_hist.get("outputs", {})
+                        
+                        has_error = (status_str != "success") or (not completed_flag) or (not outputs)
+                        for m in messages:
+                            if isinstance(m, (list, tuple)) and len(m) >= 2 and m[0] == "execution_error":
+                                has_error = True
+                        
+                        if not has_error:
+                            execution_success = True
+                            for n_out in outputs.values():
+                                if "images" in n_out and n_out["images"]:
+                                    output_path = n_out["images"][0].get("filename", "output.png")
+                                elif "gifs" in n_out and n_out["gifs"]:
+                                    output_path = n_out["gifs"][0].get("filename", "output.mp4")
+                        else:
+                            execution_success = False
+                            print(f"[ERROR] ComfyUI execution failed for prompt {prompt_id}: status_str='{status_str}', outputs={bool(outputs)}, messages={messages}")
                         break
             except Exception:
                 pass
 
         duration_s = time.time() - start_time
-        peak_vram = monitor.stop()
+        
+        # 4. Stop VRAM monitor thread ONLY AFTER history completes
+        peak_vram_gb = monitor.stop()
+
+        # Ensure peak is at least baseline if monitor missed lower points
+        peak_vram_gb = max(peak_vram_gb, baseline_vram_gb)
+
+        # 5. Invalid measurement guard: peak <= baseline + 0.2 GB means sampler missed render
+        is_measurement_valid = peak_vram_gb > (baseline_vram_gb + 0.2)
 
         # Determine run count for warm cache gating
         prev_run_count = 0
@@ -565,31 +613,45 @@ def main():
         run_count = prev_run_count + 1
         is_warm_cache = run_count >= 2
 
-        passed = completed and (peak_vram <= VRAM_GATE_GB) and is_warm_cache
-        status = "PASS" if passed else ("PASS (cold)" if (completed and peak_vram <= VRAM_GATE_GB) else "FAIL")
+        if not execution_success:
+            passed = False
+            status = "FAIL (execution error)"
+        elif not is_measurement_valid:
+            passed = False
+            status = "INVALID (sampler missed peak)"
+            print(f"[WARNING] Invalid measurement! Peak ({peak_vram_gb:.2f} GB) <= baseline ({baseline_vram_gb:.2f} GB) + 0.2 GB. Refusing PASS.")
+        elif peak_vram_gb > VRAM_GATE_GB:
+            passed = False
+            status = f"FAIL (VRAM {peak_vram_gb:.2f} GB > {VRAM_GATE_GB} GB)"
+        else:
+            passed = is_warm_cache
+            status = "PASS" if is_warm_cache else "PASS (cold)"
 
         print(f"\n--- Run Summary ---")
         print(f"Recipe:        {recipe_name}")
         print(f"Run Count:     {run_count} ({'Warm cache' if is_warm_cache else 'Cold cache'})")
-        print(f"Peak VRAM:     {peak_vram:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
-        print(f"Duration:      {duration_s:.1f} s")
+        print(f"Baseline VRAM: {baseline_vram_gb:.2f} GB")
+        print(f"Peak VRAM:     {peak_vram_gb:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
+        print(f"Wall Clock:    {duration_s:.1f} s")
         print(f"Boot Lane:     {boot_lane_str}")
         print(f"Status:        {status}")
 
         res_payload = {
             "recipe": recipe_name,
-            "peak_vram_gb": peak_vram,
+            "peak_vram_gb": peak_vram_gb,
+            "baseline_vram_gb": baseline_vram_gb,
             "duration_s": duration_s,
             "output_path": output_path,
             "boot_lane": boot_lane_str,
             "pass": passed,
+            "valid_measurement": is_measurement_valid,
             "run_count": run_count,
             "blocked": False
         }
         result_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
 
-        update_results_ledger(recipe_name, status, peak_vram, f"Run #{run_count}; boot lane: {boot_lane_str}")
-        update_engine_matrix_beta(recipe_name, tier, status, peak_vram, boot_lane_str, f"Measured on box ({status})")
+        update_results_ledger(recipe_name, status, peak_vram_gb, baseline_vram_gb, duration_s, f"Run #{run_count}; boot lane: {boot_lane_str}")
+        update_engine_matrix_beta(recipe_name, tier, status, peak_vram_gb, baseline_vram_gb, duration_s, boot_lane_str, f"Measured on box ({status})")
 
     if do_shutdown:
         shutdown_lab_server()
