@@ -1,52 +1,58 @@
 {
-  "name": "h3_t2v_low",
+  "name": "ltx_audio_low",
   "tier": "smoke",
-  "blocked": true,
   "contract": {
-    "engine": "minimax_h3",
-    "mode": "t2v",
+    "engine": "ltx_video",
+    "mode": "audio_conditioned",
     "width": 512,
     "height": 320,
-    "frames": 97,
-    "fps": 24,
+    "frames": 25,
+    "fps": 6.6,
+    "duration_s": 3.75,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
     "1": {
       "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "fl2va_pruned_int8_convrot.safetensors",
+        "unet_name": "ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors",
         "weight_dtype": "fp8_e4m3fn"
       }
     },
     "2": {
       "class_type": "CLIPLoader",
       "inputs": {
-        "clip_name": "qwen3vl_32b_nvfp4_awq.safetensors",
-        "type": "minimax_h3"
+        "clip_name": "t5xxl_fp16.safetensors",
+        "type": "ltxv"
       }
     },
     "3": {
       "class_type": "VAELoader",
       "inputs": {
-        "vae_name": "minimax_h3_video_vae.safetensors"
+        "vae_name": "ltx-2.3-22b-dev_audio_vae.safetensors"
       }
     },
     "4": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "LoadAudio",
       "inputs": {
-        "text": "cinematic camera motion across futuristic radio station control room, high detail",
-        "clip": ["2", 0]
+        "audio": "narration.wav"
       }
     },
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "blurry, low quality, distortion, static noise",
+        "text": "audio-reactive vintage radio broadcast visualizer, dynamic lights syncing to speech",
         "clip": ["2", 0]
       }
     },
     "6": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "blurry, low quality, noise",
+        "clip": ["2", 0]
+      }
+    },
+    "7": {
       "class_type": "EmptyLatentImage",
       "inputs": {
         "width": 512,
@@ -54,33 +60,33 @@
         "batch_size": 1
       }
     },
-    "7": {
+    "8": {
       "class_type": "KSampler",
       "inputs": {
         "seed": 42,
-        "steps": 20,
-        "cfg": 6.0,
+        "steps": 12,
+        "cfg": 3.0,
         "sampler_name": "euler",
         "scheduler": "normal",
         "denoise": 1.0,
         "model": ["1", 0],
-        "positive": ["4", 0],
-        "negative": ["5", 0],
-        "latent_image": ["6", 0]
-      }
-    },
-    "8": {
-      "class_type": "VAEDecode",
-      "inputs": {
-        "samples": ["7", 0],
-        "vae": ["3", 0]
+        "positive": ["5", 0],
+        "negative": ["6", 0],
+        "latent_image": ["7", 0]
       }
     },
     "9": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": ["8", 0],
+        "vae": ["3", 0]
+      }
+    },
+    "10": {
       "class_type": "SaveImage",
       "inputs": {
-        "images": ["8", 0],
-        "filename_prefix": "h3_t2v_low_out"
+        "images": ["9", 0],
+        "filename_prefix": "ltx_audio_low_out"
       }
     }
   },

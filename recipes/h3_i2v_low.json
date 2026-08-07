@@ -1,10 +1,10 @@
 {
-  "name": "h3_t2v_low",
+  "name": "h3_i2v_low",
   "tier": "smoke",
   "blocked": true,
   "contract": {
     "engine": "minimax_h3",
-    "mode": "t2v",
+    "mode": "i2v",
     "width": 512,
     "height": 320,
     "frames": 97,
@@ -33,25 +33,23 @@
       }
     },
     "4": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "LoadImage",
       "inputs": {
-        "text": "cinematic camera motion across futuristic radio station control room, high detail",
-        "clip": ["2", 0]
+        "image": "scene_still.png"
       }
     },
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "blurry, low quality, distortion, static noise",
+        "text": "smooth pan across retro radio station console from still image",
         "clip": ["2", 0]
       }
     },
     "6": {
-      "class_type": "EmptyLatentImage",
+      "class_type": "CLIPTextEncode",
       "inputs": {
-        "width": 512,
-        "height": 320,
-        "batch_size": 1
+        "text": "blurry, low quality, artifacts",
+        "clip": ["2", 0]
       }
     },
     "7": {
@@ -64,9 +62,9 @@
         "scheduler": "normal",
         "denoise": 1.0,
         "model": ["1", 0],
-        "positive": ["4", 0],
-        "negative": ["5", 0],
-        "latent_image": ["6", 0]
+        "positive": ["5", 0],
+        "negative": ["6", 0],
+        "latent_image": ["4", 0]
       }
     },
     "8": {
@@ -80,7 +78,7 @@
       "class_type": "SaveImage",
       "inputs": {
         "images": ["8", 0],
-        "filename_prefix": "h3_t2v_low_out"
+        "filename_prefix": "h3_i2v_low_out"
       }
     }
   },

@@ -1,0 +1,11 @@
+{
+  "recipe": "ltx_lipsync_low",
+  "peak_vram_gb": 0.0,
+  "baseline_vram_gb": 0.0,
+  "duration_s": 0.0,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "pass": false,
+  "blocked": true,
+  "run_count": 0
+}

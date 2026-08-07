@@ -110,6 +110,42 @@ def query_gpu_vram_mb() -> float:
     return float(res.stdout.strip().splitlines()[0])
 
 
+def query_host_ram_gb() -> float:
+    """Query current host system RAM usage in GB via psutil."""
+    return psutil.virtual_memory().used / (1024.0 ** 3)
+
+
+class ResourceMonitorThread(threading.Thread):
+    """Background thread polling GPU VRAM and Host System RAM at 200ms interval."""
+
+    def __init__(self, interval: float = 0.2):
+        super().__init__(daemon=True)
+        self.interval = interval
+        self.peak_vram_gb = 0.0
+        self.peak_host_ram_gb = 0.0
+        self._stop_event = threading.Event()
+
+    def run(self):
+        while not self._stop_event.is_set():
+            try:
+                vram_mb = query_gpu_vram_mb()
+                vram_gb = vram_mb / 1024.0
+                if vram_gb > self.peak_vram_gb:
+                    self.peak_vram_gb = vram_gb
+
+                host_gb = query_host_ram_gb()
+                if host_gb > self.peak_host_ram_gb:
+                    self.peak_host_ram_gb = host_gb
+            except Exception:
+                pass
+            time.sleep(self.interval)
+
+    def stop(self) -> Tuple[float, float]:
+        self._stop_event.set()
+        self.join(timeout=2.0)
+        return self.peak_vram_gb, self.peak_host_ram_gb
+
+
 def get_recorded_pid() -> Optional[int]:
     """Retrieve recorded lab server PID from .server.pid."""
     if SERVER_PID_FILE.exists():
@@ -134,14 +170,13 @@ def cleanup_stale_pid_receipt():
 
 
 def check_gpu_idle() -> float:
-    """Preflight Check #2: nvidia-smi shows under 1.5 GB allocated memory (or < 2.0 GB if lab server is running)."""
+    """Preflight Check #2: Verify GPU VRAM is under 2.5 GB (2560 MB) so background desktop load doesn't fail preflight."""
     try:
         used_mb = query_gpu_vram_mb()
-        pid = get_recorded_pid()
-        max_limit = 2048.0 if (pid and psutil.pid_exists(pid)) else VRAM_GPU_IDLE_MAX_MB
+        max_limit_mb = 2560.0  # 2.5 GB threshold
 
-        if used_mb >= max_limit:
-            raise PreflightError(2, "GPU idle", f"GPU allocated VRAM is {used_mb:.1f} MB (limit < {max_limit} MB)")
+        if used_mb >= max_limit_mb:
+            raise PreflightError(2, "GPU idle", f"GPU allocated VRAM is {used_mb:.1f} MB (exceeds idle threshold {max_limit_mb} MB / 2.5 GB)")
         return used_mb / 1024.0
     except (subprocess.SubprocessError, FileNotFoundError, ValueError) as e:
         if isinstance(e, PreflightError):
@@ -449,21 +484,18 @@ def update_results_ledger(recipe_name: str, status: str, peak_vram: float, basel
     print(f"[LEDGER] Updated RESULTS.md entry for {recipe_name}: {status}")
 
 
-def update_engine_matrix_beta(recipe_name: str, tier: str, status: str, peak_vram: float, baseline_vram: float, wall_clock: float, boot_lane: str, notes: str):
-    """Update engine row in ENGINE_MATRIX_BETA.md with restored wall clock column."""
+def update_engine_matrix_beta(recipe_name: str, tier: str, status: str, peak_vram_smoke: float, peak_vram_suite: float, vram_creep: str, wall_clock: float, boot_lane: str, notes: str):
+    """Update engine row in ENGINE_MATRIX_BETA.md with smoke/suite peaks and VRAM creep column."""
     if not ENGINE_MATRIX_BETA.exists():
         return
 
     today = time.strftime("%Y-%m-%d")
     lines = ENGINE_MATRIX_BETA.read_text(encoding="utf-8").splitlines()
     
-    # Restore header format if missing
-    for i, line in enumerate(lines):
-        if line.startswith("| engine / recipe |"):
-            lines[i] = "| engine / recipe | tier | status | peak VRAM smoke (GB) | peak VRAM suite (GB) | VRAM creep? | wall clock / clip | boot lane | last measured | notes |"
-            lines[i+1] = "|---|---|---|---|---|---|---|---|---|---|"
+    smoke_str = f"{peak_vram_smoke:.2f}" if peak_vram_smoke > 0 else "N/A"
+    suite_str = f"{peak_vram_suite:.2f}" if peak_vram_suite > 0 else "N/A"
 
-    row_str = f"| {recipe_name} | {tier} | {status} | {peak_vram:.2f} | N/A | no | {wall_clock:.1f}s | {boot_lane} | {today} | {notes} |"
+    row_str = f"| {recipe_name} | {tier} | {status} | {smoke_str} | {suite_str} | {vram_creep} | {wall_clock:.1f}s | {boot_lane} | {today} | {notes} |"
     
     updated = False
     new_lines = []
@@ -509,7 +541,7 @@ def main():
     if recipe_data.get("blocked", False) or "h3" in recipe_name.lower():
         print(f"\n[BLOCKED] Recipe {recipe_name} is BLOCKED (required weights not present on disk).")
         update_results_ledger(recipe_name, "BLOCKED", 0.0, 0.0, 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
-        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, 0.0, 0.0, boot_lane_str, "Weights missing")
+        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, 0.0, "no", 0.0, boot_lane_str, "Weights missing")
         res_payload = {
             "recipe": recipe_name,
             "peak_vram_gb": 0.0,
@@ -538,12 +570,13 @@ def main():
 
     # Execute Recipe under Lock
     with LockManager() as lock:
-        # 1. Record baseline VRAM before run
+        # 1. Record baseline VRAM and Host RAM before run
         baseline_vram_gb = query_gpu_vram_mb() / 1024.0
-        print(f"[VRAM] Baseline GPU VRAM: {baseline_vram_gb:.2f} GB")
+        baseline_host_ram_gb = query_host_ram_gb()
+        print(f"[RESOURCES] Baseline GPU VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
 
-        # 2. Start VRAM monitor thread BEFORE /prompt POST
-        monitor = VramMonitorThread(interval=POLL_INTERVAL_S)
+        # 2. Start Resource monitor thread BEFORE /prompt POST
+        monitor = ResourceMonitorThread(interval=POLL_INTERVAL_S)
         monitor.start()
         start_time = time.time()
 
@@ -604,11 +637,12 @@ def main():
 
         duration_s = time.time() - start_time
         
-        # 4. Stop VRAM monitor thread ONLY AFTER history completes
-        peak_vram_gb = monitor.stop()
+        # 4. Stop Resource monitor thread ONLY AFTER history completes
+        peak_vram_gb, peak_host_ram_gb = monitor.stop()
 
-        # Ensure peak is at least baseline if monitor missed lower points
+        # Ensure peaks are at least baselines
         peak_vram_gb = max(peak_vram_gb, baseline_vram_gb)
+        peak_host_ram_gb = max(peak_host_ram_gb, baseline_host_ram_gb)
 
         # 5. Invalid measurement guard: peak <= baseline + 0.2 GB means sampler missed render
         is_measurement_valid = peak_vram_gb > (baseline_vram_gb + 0.2)
@@ -643,28 +677,40 @@ def main():
         print(f"\n--- Run Summary ---")
         print(f"Recipe:        {recipe_name}")
         print(f"Run Count:     {run_count} ({'Warm cache' if is_warm_cache else 'Cold cache'})")
-        print(f"Baseline VRAM: {baseline_vram_gb:.2f} GB")
+        print(f"Baseline VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
         print(f"Peak VRAM:     {peak_vram_gb:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
+        print(f"Peak Host RAM: {peak_host_ram_gb:.2f} GB")
         print(f"Wall Clock:    {duration_s:.1f} s")
         print(f"Boot Lane:     {boot_lane_str}")
         print(f"Status:        {status}")
 
+        iso_timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         res_payload = {
             "recipe": recipe_name,
-            "peak_vram_gb": peak_vram_gb,
-            "baseline_vram_gb": baseline_vram_gb,
-            "duration_s": duration_s,
+            "run_number": run_count,
+            "status": status,
+            "passed": passed,
+            "peak_vram_gb": round(peak_vram_gb, 2),
+            "baseline_vram_gb": round(baseline_vram_gb, 2),
+            "peak_host_ram_gb": round(peak_host_ram_gb, 2),
+            "baseline_host_ram_gb": round(baseline_host_ram_gb, 2),
+            "duration_s": round(duration_s, 1),
             "output_path": output_path,
             "boot_lane": boot_lane_str,
-            "pass": passed,
+            "timestamp": iso_timestamp,
+            "prompt_id": prompt_id,
             "valid_measurement": is_measurement_valid,
             "run_count": run_count,
             "blocked": False
         }
+        run_receipt_file = RESULTS_DIR / f"{recipe_name}_run{run_count}.json"
+        run_receipt_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
         result_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
 
         update_results_ledger(recipe_name, status, peak_vram_gb, baseline_vram_gb, duration_s, f"Run #{run_count}; boot lane: {boot_lane_str}")
-        update_engine_matrix_beta(recipe_name, tier, status, peak_vram_gb, baseline_vram_gb, duration_s, boot_lane_str, f"Measured on box ({status})")
+        smoke_peak = 0.0 if is_suite else peak_vram_gb
+        suite_peak = peak_vram_gb if is_suite else 0.0
+        update_engine_matrix_beta(recipe_name, tier, status, smoke_peak, suite_peak, "no", duration_s, boot_lane_str, f"Measured on box ({status})")
 
     if do_shutdown:
         shutdown_lab_server()

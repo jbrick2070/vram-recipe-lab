@@ -1,0 +1,103 @@
+{
+  "name": "ltx_lipsync_low",
+  "tier": "smoke",
+  "blocked": true,
+  "contract": {
+    "engine": "humo_lipsync",
+    "mode": "lipsync",
+    "width": 512,
+    "height": 512,
+    "frames": 25,
+    "fps": 6.6,
+    "duration_s": 3.75,
+    "vram_ceiling_gb": 14.5
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors",
+        "weight_dtype": "fp8_e4m3fn"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan2.2_vae.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "portrait.png"
+      }
+    },
+    "5": {
+      "class_type": "LoadAudio",
+      "inputs": {
+        "audio": "narration.wav"
+      }
+    },
+    "6": {
+      "class_type": "HuMoLipSyncConditioner",
+      "inputs": {
+        "portrait": ["4", 0],
+        "audio": ["5", 0]
+      }
+    },
+    "7": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "character portrait speaking lip sync narration",
+        "clip": ["2", 0]
+      }
+    },
+    "8": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "blurry, low quality, artifacts",
+        "clip": ["2", 0]
+      }
+    },
+    "9": {
+      "class_type": "KSampler",
+      "inputs": {
+        "seed": 42,
+        "steps": 15,
+        "cfg": 5.0,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1.0,
+        "model": ["1", 0],
+        "positive": ["7", 0],
+        "negative": ["8", 0],
+        "latent_image": ["6", 0]
+      }
+    },
+    "10": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": ["9", 0],
+        "vae": ["3", 0]
+      }
+    },
+    "11": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": ["10", 0],
+        "filename_prefix": "ltx_lipsync_low_out"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  }
+}

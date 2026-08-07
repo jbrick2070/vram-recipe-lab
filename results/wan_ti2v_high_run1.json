@@ -1,0 +1,18 @@
+{
+  "recipe": "wan_ti2v_high",
+  "run_number": 1,
+  "status": "FAIL (execution error)",
+  "passed": false,
+  "peak_vram_gb": 15.34,
+  "baseline_vram_gb": 1.19,
+  "peak_host_ram_gb": 44.41,
+  "baseline_host_ram_gb": 20.59,
+  "duration_s": 30.0,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-07T21:56:38Z",
+  "prompt_id": "47ac7c16-7526-4b7e-b1bf-9dd7aad80f52",
+  "valid_measurement": true,
+  "run_count": 1,
+  "blocked": false
+}
