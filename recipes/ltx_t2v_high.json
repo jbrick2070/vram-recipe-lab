@@ -201,12 +201,10 @@
           "325",
           0
         ],
-        "resize_type": {
-          "resize_type": "scale dimensions",
-          "width": 1920,
-          "height": 1088,
-          "crop": "center"
-        },
+        "resize_type": "scale dimensions",
+        "resize_type.width": 1920,
+        "resize_type.height": 1088,
+        "resize_type.crop": "center",
         "scale_method": "lanczos"
       }
     },
