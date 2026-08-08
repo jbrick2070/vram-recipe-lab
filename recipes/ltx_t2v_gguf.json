@@ -2,6 +2,12 @@
   "name": "ltx_t2v_gguf",
   "tier": "gguf",
   "status": "ACTIVE",
+  "experiment": {
+    "campaign": "quality_attempt_3_factorial",
+    "variant": "B_scheduler_only_selected",
+    "scheduler_latent": "connected_pre_sampler_av",
+    "decode": "tiled_768_64_4096_4"
+  },
   "contract": {
     "engine": "ltx_t2v",
     "mode": "t2v",
@@ -89,7 +95,11 @@
         "max_shift": 2.05,
         "base_shift": 0.95,
         "stretch": true,
-        "terminal": 0.1
+        "terminal": 0.1,
+        "latent": [
+          "30",
+          0
+        ]
       }
     },
     "8": {

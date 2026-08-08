@@ -20,3 +20,16 @@ Per laboratory rules, these runs are reclassified as **`ERROR`** (wiring/graph f
 To resolve this for future production releases:
 - Does LTX Video 2.3 FP8 transformer require a dedicated `ltx-2.3-22b-dev_embeddings_connectors.safetensors` model patcher node?
 - Or should LTXAV text encoding use `CLIPLoader` with a specific LTX-3B / LTXAV clip configuration?
+
+## 2026-08-08 — LTX T2V Texture Defect After Three Controlled Variants
+
+The decode/scheduler factorial completed without proving external VAE tiling as
+the defect source. Plain and tiled outputs from the corrected scheduler remain
+close (SSIM 0.950), while plain decode costs slightly more VRAM and time. The
+confirmed scheduler-latent correction materially improves motion coherence, so
+the selected candidate is corrected scheduler + official tiled decode.
+
+The selected artifact still needs Jeffrey's full-video eyeball approval. Stop
+quality-knob tuning here. If it fails, the next campaign should compare the
+locally available Q3 GGUF against a proven higher-precision local weight/topology
+under an explicitly high-VRAM lane; do not retune decode boundaries again.

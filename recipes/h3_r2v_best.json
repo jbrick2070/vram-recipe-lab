@@ -16,7 +16,7 @@
     "1": {
       "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
         "weight_dtype": "default"
       }
     },
@@ -40,21 +40,20 @@
       }
     },
     "5": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "RandomNoise",
       "inputs": {
-        "text": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
-        "clip": [
-          "2",
-          0
-        ]
+        "noise_seed": 42
       }
     },
     "6": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "BasicGuider",
       "inputs": {
-        "text": "blurry, noise, artifacts, distorted, static, oversaturated",
-        "clip": [
-          "2",
+        "model": [
+          "1",
+          0
+        ],
+        "conditioning": [
+          "7",
           0
         ]
       }
@@ -80,7 +79,7 @@
           "4",
           0
         ],
-        "prompt": "cinematic portrait, vintage radio control room, warm lighting",
+        "prompt": "Use <Picture 1> as the exact character identity and appearance reference. Place that person in a vintage radio control room under warm analog lighting; preserve their face, hair, clothing, and proportions while the camera makes a slow cinematic move.",
         "width": 1344,
         "height": 768,
         "length": 124,
@@ -94,30 +93,46 @@
       }
     },
     "8": {
-      "class_type": "KSampler",
+      "class_type": "SamplerCustomAdvanced",
       "inputs": {
-        "seed": 42,
-        "steps": 20,
-        "cfg": 6.0,
-        "sampler_name": "euler",
-        "scheduler": "simple",
-        "denoise": 1.0,
-        "model": [
-          "1",
+        "noise": [
+          "5",
           0
         ],
-        "positive": [
-          "7",
-          0
-        ],
-        "negative": [
+        "guider": [
           "6",
+          0
+        ],
+        "sampler": [
+          "13",
+          0
+        ],
+        "sigmas": [
+          "14",
           0
         ],
         "latent_image": [
           "7",
           1
         ]
+      }
+    },
+    "13": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "res_multistep"
+      }
+    },
+    "14": {
+      "class_type": "BasicScheduler",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
       }
     },
     "9": {
@@ -133,11 +148,28 @@
         ]
       }
     },
+    "15": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "4",
+          0
+        ]
+      }
+    },
     "10": {
       "class_type": "CreateVideo",
       "inputs": {
         "images": [
           "9",
+          0
+        ],
+        "audio": [
+          "15",
           0
         ],
         "fps": 24.0

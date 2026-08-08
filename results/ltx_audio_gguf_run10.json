@@ -1,5 +1,4 @@
 {
-  "receipt_schema_version": 2,
   "recipe": "ltx_audio_gguf",
   "run_number": 10,
   "config_run_count": 2,

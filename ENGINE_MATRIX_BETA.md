@@ -18,10 +18,14 @@ ram-recipe-lab.
 | ltx_audio_low | smoke | FAIL (VRAM 15.45 GB > 14.5 GB) | 15.45 | 0.0 | yes | 0/2 | lab-8199, sage-free | 2026-08-08 | Run #5; boot lane: lab-8199, sage-free |
 | ltx_audio_high | smoke | FAIL (VRAM 14.52 GB > 14.5 GB) | 14.52 | 0.0 | yes | 0/2 | lab-8199, sage-free | 2026-08-08 | Run #5; boot lane: lab-8199, sage-free |
 | ltx_lipsync_low | smoke | UNMEASURED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | 2026-08-08 | Run #0; boot lane: lab-8199, sage-free |
-| h3_t2v_low | smoke | PASS | 6.37 | N/A | no | 492.2s | lab-8199, sage-free, no-pinned, clamp-12gb | 2026-08-08 | Measured on box (PASS) |
-| h3_i2v_low | smoke | PASS (cold) | 6.52 | N/A | no | 514.1s | lab-8199, sage-free, no-pinned, clamp-12gb | 2026-08-08 | Measured on box (PASS (cold)) |
-| h3_r2v_low | smoke | PASS (cold) | 6.41 | N/A | no | 490.1s | lab-8199, sage-free, no-pinned, clamp-12gb | 2026-08-08 | Measured on box (PASS (cold)) |
-| ltx_audio_ckpt | smoke | FAIL (VRAM 15.34 GB > 14.5 GB) | 15.34 | N/A | no | 209.5s | lab-8199, sage-free | 2026-08-08 | Measured on box (FAIL (VRAM 15.34 GB > 14.5 GB)) |
-| ltx_audio_gguf | smoke | PASS | 7.41 | N/A | no | 261.9s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |
-| ltx_i2v_gguf | smoke | PASS | 7.17 | N/A | no | 268.0s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |
-| ltx_t2v_gguf | smoke | PASS | 7.37 | N/A | no | 262.8s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |
+| h3_t2v_low | smoke | PASS (legacy lane semantics) | 6.37 | 492.2 | yes | 2/2 | reserve-12gb (legacy label was clamp-12gb) | 2026-08-08 | Human-approved artifact; not target-card evidence |
+| h3_t2v_best | suite | PENDING (legacy topology, unmeasured) | N/A | N/A | no | 0/2 | lab-8199, sage-free | 2026-08-08 | Not certified |
+| h3_i2v_low | smoke | MACHINE PASS; HUMAN PENDING (legacy provenance) | 7.15 | 239.5 | yes | 2/2 | reserve-12gb (legacy label was clamp-12gb) | 2026-08-08 | Deterministic artifact; promotion pending Jeffrey's eyeball |
+| h3_r2v_low | smoke | MACHINE PASS; HUMAN AUDIO/VIDEO PENDING | 6.56 | 206.6 | yes | 2/2 | lab-8199, sage-free, no-pinned, reserve-12gb | 2026-08-08 | Deterministic corrected Ref2VA artifact; audition required |
+| h3_i2v_best | suite | PENDING (official topology, unmeasured) | N/A | N/A | no | 0/2 | lab-8199, sage-free | 2026-08-08 | Not certified |
+| h3_r2v_best | suite | PENDING (official topology, unmeasured) | N/A | N/A | no | 0/2 | lab-8199, sage-free | 2026-08-08 | Not certified |
+| ltx_audio_ckpt | smoke | FAIL (VRAM 15.34 GB > 14.5 GB) | 15.34 | 209.5 | yes | 0/2 | lab-8199, sage-free | 2026-08-08 | Measured on box |
+| ltx_audio_gguf | gguf | PASS | 8.55 | 185.1 | yes | 2/2 | lab-8199, sage-free, reserve-12gb | 2026-08-08 | Deterministic source-audio mux |
+| ltx_i2v_gguf | smoke | PASS (legacy lane semantics) | 7.17 | 268.0 | yes | 2/2 | reserve-14gb (legacy label was clamp-14gb) | 2026-08-08 | Valid artifact; not target-card evidence |
+| ltx_t2v_gguf | gguf | STALE (selected B not rerun) | 15.14 | 236.9 | yes | 0/2 | lab-8199, sage-free | 2026-08-08 | Latest artifact is variant C; selected B remains uncertified after attempt-limit escalation |
+| h3_i2v_continuation_experimental | experimental | MACHINE PASS (cold); HUMAN PENDING | 6.80 | 252.3 | yes | 1/2 | lab-8199, sage-free, no-pinned, reserve-12gb | 2026-08-08 | Clip-3 identity only; promotion pending eyeball |

@@ -1,10 +1,17 @@
 {
   "recipe": "h3_r2v_low",
   "run_number": 2,
-  "status": "PASS (cold)",
-  "pass": true,
+  "status": "INVALID AS R2V (loaded FL2VA; missing <Picture 1>)",
+  "execution_status": "PASS (cold)",
+  "gate_pass": true,
+  "pass": false,
   "warm_pass": false,
   "eyeball": "pending",
+  "human_eyeball_record": "ok",
+  "human_eyeball_source": "Jeffrey's campaign order",
+  "technical_validity": "invalid",
+  "certification_valid": false,
+  "stale_reason": "Artifact used the FL2VA UNET and omitted the required <Picture 1> prompt assignment; it cannot certify the corrected Ref2VA recipe. See runs 3-4.",
   "peak_vram_gb": 6.41,
   "baseline_vram_gb": 1.99,
   "peak_host_ram_gb": 27.12,
@@ -12,9 +19,11 @@
   "duration_s": 490.1,
   "output_path": "h3_r2v_low_out_00001_.mp4",
   "boot_lane": "lab-8199, sage-free, no-pinned, clamp-12gb",
+  "lane_semantics": "legacy label: direct --reserve-vram 12, not a simulated 12 GiB target card",
   "timestamp": "2026-08-08T13:25:11Z",
   "prompt_id": "15ec2992-786f-4c74-8e78-552e07da59f5",
   "valid_measurement": true,
   "run_count": 2,
-  "blocked": false
+  "blocked": false,
+  "artifact_sha256": "bfd195887fa4995d9ea1603ea0579de2f9707da946b9ffe3564ea5364db7f1e0"
 }

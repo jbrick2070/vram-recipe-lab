@@ -40,21 +40,20 @@
       }
     },
     "5": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "RandomNoise",
       "inputs": {
-        "text": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
-        "clip": [
-          "2",
-          0
-        ]
+        "noise_seed": 42
       }
     },
     "6": {
-      "class_type": "CLIPTextEncode",
+      "class_type": "BasicGuider",
       "inputs": {
-        "text": "blurry, noise, artifacts, distorted, static, oversaturated",
-        "clip": [
-          "2",
+        "model": [
+          "1",
+          0
+        ],
+        "conditioning": [
+          "7",
           0
         ]
       }
@@ -87,30 +86,46 @@
       }
     },
     "8": {
-      "class_type": "KSampler",
+      "class_type": "SamplerCustomAdvanced",
       "inputs": {
-        "seed": 42,
-        "steps": 20,
-        "cfg": 6.0,
-        "sampler_name": "euler",
-        "scheduler": "simple",
-        "denoise": 1.0,
-        "model": [
-          "1",
+        "noise": [
+          "5",
           0
         ],
-        "positive": [
-          "7",
-          0
-        ],
-        "negative": [
+        "guider": [
           "6",
+          0
+        ],
+        "sampler": [
+          "13",
+          0
+        ],
+        "sigmas": [
+          "14",
           0
         ],
         "latent_image": [
           "7",
           1
         ]
+      }
+    },
+    "13": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "res_multistep"
+      }
+    },
+    "14": {
+      "class_type": "BasicScheduler",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
       }
     },
     "9": {

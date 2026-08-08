@@ -1,10 +1,17 @@
 {
-  "name": "h3_r2v_low",
-  "tier": "smoke",
+  "name": "h3_i2v_continuation_experimental",
+  "tier": "experimental",
   "blocked": false,
+  "experiment": {
+    "campaign": "h3_multiclip_continuity",
+    "variant": "clip3_last_to_first",
+    "source_artifact": "h3_i2v_continuation_clip2_out_00001_.mp4",
+    "source_artifact_sha256": "c375e84d3889f055bfc5c1670e0fe7966c4f429b38195e6672680e84fb746a14",
+    "first_frame_sha256": "3fdc668234db997699d533c150125bce4b5837ed6f2e22c761a1de5edc381544"
+  },
   "contract": {
     "engine": "minimax_h3",
-    "mode": "r2v",
+    "mode": "i2v_continuation",
     "width": 864,
     "height": 480,
     "frames": 124,
@@ -16,7 +23,7 @@
     "1": {
       "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "weight_dtype": "default"
       }
     },
@@ -33,16 +40,37 @@
         "vae_name": "minimax_h3_video_vae_fp16.safetensors"
       }
     },
-    "4": {
-      "class_type": "VAELoader",
-      "inputs": {
-        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
-      }
-    },
     "5": {
       "class_type": "RandomNoise",
       "inputs": {
-        "noise_seed": 42
+        "noise_seed": 44
+      }
+    },
+    "11": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "h3_clip2_last.png"
+      }
+    },
+    "7": {
+      "class_type": "MiniMaxH3ImageToVideo",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "prompt": "A seamless continuation of <Picture 1> in the same retro-futuristic radio control room. Open exactly on the supplied frame with no cut or flash. Continue the same slow rightward camera glide and ease into a gentle push toward the analog meter wall. Meter needles and amber indicator lamps move subtly while the console remains physically consistent. Preserve the room, lighting, teal-and-amber color, lens, and scale; no scene change, no transition, no new people, no sudden motion.",
+        "width": 864,
+        "height": 480,
+        "length": 124,
+        "first_frame": [
+          "11",
+          0
+        ]
       }
     },
     "6": {
@@ -58,38 +86,22 @@
         ]
       }
     },
-    "11": {
-      "class_type": "LoadImage",
+    "13": {
+      "class_type": "KSamplerSelect",
       "inputs": {
-        "image": "portrait.png"
+        "sampler_name": "res_multistep"
       }
     },
-    "7": {
-      "class_type": "MiniMaxH3ReferenceToVideo",
+    "14": {
+      "class_type": "BasicScheduler",
       "inputs": {
-        "clip": [
-          "2",
+        "model": [
+          "1",
           0
         ],
-        "vae": [
-          "3",
-          0
-        ],
-        "audio_vae": [
-          "4",
-          0
-        ],
-        "prompt": "Use <Picture 1> as the exact character identity and appearance reference. Place that person in a vintage radio control room under warm analog lighting; preserve their face, hair, clothing, and proportions while the camera makes a slow cinematic move.",
-        "width": 864,
-        "height": 480,
-        "length": 124,
-        "ref_image_size": "match",
-        "ref_images": {
-          "ref_image_0": [
-            "11",
-            0
-          ]
-        }
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
       }
     },
     "8": {
@@ -117,24 +129,6 @@
         ]
       }
     },
-    "13": {
-      "class_type": "KSamplerSelect",
-      "inputs": {
-        "sampler_name": "res_multistep"
-      }
-    },
-    "14": {
-      "class_type": "BasicScheduler",
-      "inputs": {
-        "model": [
-          "1",
-          0
-        ],
-        "scheduler": "simple",
-        "steps": 20,
-        "denoise": 1.0
-      }
-    },
     "9": {
       "class_type": "VAEDecode",
       "inputs": {
@@ -148,28 +142,11 @@
         ]
       }
     },
-    "15": {
-      "class_type": "VAEDecodeAudio",
-      "inputs": {
-        "samples": [
-          "8",
-          0
-        ],
-        "vae": [
-          "4",
-          0
-        ]
-      }
-    },
     "10": {
       "class_type": "CreateVideo",
       "inputs": {
         "images": [
           "9",
-          0
-        ],
-        "audio": [
-          "15",
           0
         ],
         "fps": 24.0
@@ -182,7 +159,7 @@
           "10",
           0
         ],
-        "filename_prefix": "h3_r2v_low_out",
+        "filename_prefix": "h3_i2v_continuation_clip3_out",
         "format": "auto",
         "codec": "auto"
       }

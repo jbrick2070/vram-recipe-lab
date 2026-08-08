@@ -13,7 +13,7 @@ This file defines the strict operating constraints for agents working in `vram-r
    - The lab boots its OWN headless ComfyUI server on **`127.0.0.1:8199`** via `boot_lab_server.cmd`.
    - Never query or touch Jeffrey's interactive instance (port 8188) or OTR's headless servers.
    - If port 8199 is answering BUT no local PID receipt (`.server.pid`) exists, abort preflight immediately (`Unrecognized server on 8199 without PID receipt`). Do NOT adopt it or kill it.
-   - When booted, track the PID in `.server.pid`. Always shut down recorded lab server processes upon completing session runs.
+   - When booted, track the verified serving PID in `.server.pid`. Always shut down recorded lab server processes upon completing session runs, and remove the receipt only after their exit is confirmed.
 5. **Zero Weight Downloads**: Do NOT download any model. Query the running lab server instance (`http://127.0.0.1:8199`) for available models and write `models_manifest.md`. Recipes may only reference models present in `models_manifest.md`. Missing models must be marked `BLOCKED` in `RESULTS.md`.
 6. **UTF-8 Encoding (No BOM)**: All text, code, and JSON files must be UTF-8 encoded without BOM. Never write Python or JSON via PowerShell `Set-Content` or `Out-File`.
 7. **Sequential Execution & Lockfile**: Render execution must be strictly sequential (one render at a time). `run_recipe.py` must acquire `.gpu.lock` atomically and refuse to queue if a lock exists.
@@ -29,8 +29,9 @@ This file defines the strict operating constraints for agents working in `vram-r
     - Update `ENGINE_MATRIX_BETA.md` and `RESULTS.md` after every gated run.
     - Never touch the OTR repo or edit the snapshot in `research/`.
 12. **Clamp Lane & Reserve VRAM**:
-    - Setting `LAB_RESERVE_VRAM_GB` (or passing `--clamp <N>`) instructs `boot_lab_server.cmd` to append `--reserve-vram %LAB_RESERVE_VRAM_GB%`.
-    - Boot lane string is recorded as `lab-8199, sage-free, clamp-<N>gb`.
-    - **Clamp Pass Line**: A `clamp-<N>gb` run passes when `(peak_vram_gb - baseline_vram_gb) <= N GB`, since desktop baseline VRAM is not part of the recipe's allocated footprint.
-    - Clamp lane runs validate that low-VRAM profiles stay within tight physical hardware limits (e.g. 8 GB VRAM targets) by using PyTorch reserve-vram allocation limits.
+    - `--clamp <N>` means a target-card budget of N GiB. `run_recipe.py` queries physical VRAM T and passes `--reserve-vram max(0, T-N)` to ComfyUI.
+    - The lane records both meanings: `clamp-<N>gb (reserve-<T-N>gb)`. The live server argv must match the computed reserve.
+    - Direct `LAB_RESERVE_VRAM_GB=<X>` means ComfyUI reserve/offload pressure X GiB and is labeled `reserve-<X>gb`; it is not a simulated X GiB card.
+    - **Clamp Pass Line**: a target-card run must satisfy both the global 14.5 GB peak ceiling and `(peak_vram_gb - baseline_vram_gb) <= N GB`.
+    - Reserve-vram induces memory/offload pressure but is not perfect hardware emulation. Historical `clamp-Ngb` receipts before the 2026-08-08 semantics fix used N as the reserve amount and are legacy-labelled evidence only.
 13. **Marginal-Pass Rule**: A pass within 0.25 GB of the ceiling (i.e. peak VRAM between 14.25 GB and 14.50 GB on a 14.50 GB gate) is recorded `PASS (marginal)` and is not promotable to production use without a lower-footprint variant.

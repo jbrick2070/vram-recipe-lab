@@ -1,10 +1,15 @@
 {
   "recipe": "h3_i2v_low",
   "run_number": 1,
-  "status": "PASS (cold)",
-  "pass": true,
+  "status": "INVALID QUALITY (pink-dot/noise corruption)",
+  "execution_status": "PASS (cold)",
+  "gate_pass": true,
+  "pass": false,
   "warm_pass": false,
-  "eyeball": "pending",
+  "eyeball": "defect:pink_dot_noise",
+  "eyeball_source": "human",
+  "eyeball_reviewed_at": "2026-08-08T00:00:00Z",
+  "certification_valid": false,
   "peak_vram_gb": 6.52,
   "baseline_vram_gb": 2.01,
   "peak_host_ram_gb": 26.57,
@@ -12,9 +17,11 @@
   "duration_s": 514.1,
   "output_path": "h3_i2v_low_out_00001_.mp4",
   "boot_lane": "lab-8199, sage-free, no-pinned, clamp-12gb",
+  "lane_semantics": "legacy label: direct --reserve-vram 12, not a simulated 12 GiB target card",
   "timestamp": "2026-08-08T13:15:39Z",
   "prompt_id": "ea23b6b4-bc08-4a10-8102-170484a457d2",
   "valid_measurement": true,
   "run_count": 1,
-  "blocked": false
+  "blocked": false,
+  "artifact_sha256": "04f24cc802a2453980900550d802c9fcedf40fbb0fbb08a12fdd8fc7d9450ecc"
 }

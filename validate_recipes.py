@@ -13,6 +13,7 @@ Runs all static validations that do NOT require a live lab server:
 """
 
 import json
+import hashlib
 import sys
 from pathlib import Path
 
@@ -107,17 +108,25 @@ def validate_recipe_file(recipe_path: Path) -> dict:
             if not has_video_save:
                 errors.append("Video recipe missing SaveVideo sink node (must end in SaveVideo)")
 
-    # 7. Check fixtures for image/audio recipes
-    if "i2v" in recipe_name or "r2v" in recipe_name:
-        fixture_name = "portrait.png" if "r2v" in recipe_name else "scene_still.png"
-        p = FIXTURES_DIR / fixture_name
-        if not p.exists():
-            warnings.append(f"Fixture file missing: {fixture_name}")
-
-    if "audio" in recipe_name:
-        p = FIXTURES_DIR / "narration.wav"
-        if not p.exists():
-            warnings.append(f"Fixture file missing: narration.wav")
+    # 7. Check the literal fixtures referenced by graph loader nodes.
+    if isinstance(prompt, dict):
+        fixture_inputs = {"LoadImage": "image", "LoadAudio": "audio"}
+        for node in prompt.values():
+            if not isinstance(node, dict):
+                continue
+            input_name = fixture_inputs.get(node.get("class_type"))
+            if not input_name:
+                continue
+            fixture_name = node.get("inputs", {}).get(input_name)
+            if isinstance(fixture_name, str) and fixture_name:
+                normalized = fixture_name.replace("\\", "/")
+                candidate = Path(normalized)
+                if candidate.is_absolute() or len(candidate.parts) != 1 or normalized in {".", ".."}:
+                    errors.append(f"Fixture reference escapes fixtures/: {fixture_name}")
+                    continue
+                p = FIXTURES_DIR / fixture_name
+                if not p.is_file():
+                    errors.append(f"Referenced fixture missing: {fixture_name}")
 
     return {
         "recipe": recipe_name,
@@ -129,6 +138,93 @@ def validate_recipe_file(recipe_path: Path) -> dict:
     }
 
 
+def current_certification_errors(rdata: dict, recipe_file: Path, repo_root: Path) -> list[str]:
+    """Validate a current warm receipt without allowing field deletion to imply legacy."""
+    if not rdata.get("pass"):
+        return []
+
+    modern_markers = (
+        "receipt_schema_version",
+        "run_identity_sha256",
+        "identity",
+        "runner_sha256",
+        "provenance_unchanged",
+    )
+    if not any(marker in rdata for marker in modern_markers):
+        return []
+
+    errors = []
+    schema_version = rdata.get("receipt_schema_version")
+    if schema_version not in (1, 2):
+        errors.append("modern pass requires receipt_schema_version 1 or 2")
+        schema_version = 0
+    if schema_version == 1 and rdata.get("legacy_provenance") is not True:
+        errors.append("schema v1 requires explicit legacy_provenance=true")
+
+    if not recipe_file.is_file():
+        errors.append("certified recipe file is missing")
+    else:
+        current_hash = hashlib.sha256(recipe_file.read_bytes()).hexdigest()
+        if rdata.get("recipe_sha256") != current_hash:
+            errors.append(
+                f"recipe hash {rdata.get('recipe_sha256')} != current {current_hash}"
+            )
+
+    identity = rdata.get("identity")
+    expected_identity_hash = (
+        hashlib.sha256(
+            json.dumps(identity, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        if isinstance(identity, dict)
+        else ""
+    )
+    if not isinstance(identity, dict):
+        errors.append("identity payload is missing")
+    elif rdata.get("run_identity_sha256") != expected_identity_hash:
+        errors.append("identity hash does not recompute")
+
+    if not rdata.get("gate_pass") or not rdata.get("warm_pass"):
+        errors.append("pass requires gate_pass and warm_pass")
+    if int(rdata.get("config_run_count", 0) or 0) < 2:
+        errors.append("pass requires config_run_count >= 2")
+
+    if schema_version >= 2:
+        required_fields = (
+            "runner_sha256",
+            "fixture_sha256s",
+            "identity",
+            "run_identity_sha256",
+            "recipe_sha256",
+            "artifact_sha256",
+            "provenance_unchanged",
+            "gate_pass",
+            "warm_pass",
+            "config_run_count",
+            "output_path",
+        )
+        for field in required_fields:
+            if field not in rdata:
+                errors.append(f"schema v2 field is missing: {field}")
+        if rdata.get("provenance_unchanged") is not True:
+            errors.append("pass requires unchanged provenance")
+        if isinstance(identity, dict):
+            for field, identity_value in identity.items():
+                if field not in rdata or rdata.get(field) != identity_value:
+                    errors.append(f"top-level field disagrees with identity: {field}")
+
+    output_name = rdata.get("output_path")
+    output_file = repo_root / "outputs" / output_name if output_name else None
+    if output_file is None or not output_file.is_file():
+        errors.append("certified output artifact is missing")
+    elif rdata.get("artifact_sha256") != hashlib.sha256(output_file.read_bytes()).hexdigest():
+        errors.append("artifact SHA-256 mismatch")
+
+    if rdata.get("promotion_ready") and rdata.get("requires_human_eyeball"):
+        if rdata.get("eyeball") != "ok" or rdata.get("eyeball_source") != "human":
+            errors.append("H3 promotion requires explicit human eyeball=ok")
+    return errors
+
+
 def main():
     print("=========================================================")
     print("       vram-recipe-lab :: PAPER VALIDATION SUITE        ")
@@ -137,7 +233,10 @@ def main():
     results = []
     all_valid = True
 
-    for recipe_name in REQUIRED_RECIPES:
+    discovered_names = {path.stem for path in RECIPES_DIR.glob("*.json")}
+    recipe_names = REQUIRED_RECIPES + sorted(discovered_names - set(REQUIRED_RECIPES))
+
+    for recipe_name in recipe_names:
         recipe_path = RECIPES_DIR / f"{recipe_name}.json"
         if not recipe_path.exists():
             print(f"[MISSING] Required recipe file missing: {recipe_name}.json!")
@@ -156,7 +255,7 @@ def main():
             print(f"         +-- WARN:  {warn}")
 
     print("\n---------------------------------------------------------")
-    # Verify results ledger payload consistency (Kibitz check)
+    # Verify receipt JSON, payload labels, and any current warm certification.
     results_dir = REPO_ROOT / "results"
     receipt_errors = 0
     if results_dir.exists():
@@ -164,24 +263,35 @@ def main():
             try:
                 rdata = json.loads(rf.read_text(encoding="utf-8"))
                 payload_recipe = rdata.get("recipe")
+                if not payload_recipe:
+                    print(f"  [ERROR] Receipt missing recipe label: {rf.name}")
+                    receipt_errors += 1
+                    continue
                 expected_stem = rf.stem.split("_run")[0]
-                if payload_recipe and payload_recipe != expected_stem:
+                if payload_recipe != expected_stem:
                     print(f"  [ERROR] Receipt mislabel: {rf.name} payload says '{payload_recipe}', expected '{expected_stem}'")
                     receipt_errors += 1
-            except Exception:
-                pass
+                is_current_receipt = rf.name == f"{payload_recipe}.json"
+                recipe_file = RECIPES_DIR / f"{payload_recipe}.json"
+                if is_current_receipt:
+                    for invariant_error in current_certification_errors(rdata, recipe_file, REPO_ROOT):
+                        print(f"  [ERROR] Invalid certification {rf.name}: {invariant_error}")
+                        receipt_errors += 1
+            except (OSError, ValueError, json.JSONDecodeError) as exc:
+                print(f"  [ERROR] Malformed receipt {rf.name}: {exc}")
+                receipt_errors += 1
 
     passed_count = sum(1 for r in results if r["valid"])
-    total_count = len(REQUIRED_RECIPES)
+    total_count = len(recipe_names)
     if receipt_errors > 0:
-        print(f"Summary: {passed_count}/{total_count} required recipes PAPER VALIDATED, BUT {receipt_errors} corrupt result receipts found.")
+        print(f"Summary: {passed_count}/{total_count} recipes PAPER VALIDATED, BUT {receipt_errors} receipt integrity errors found.")
         all_valid = False
     else:
-        print(f"Summary: {passed_count}/{total_count} required recipes PAPER VALIDATED successfully.")
+        print(f"Summary: {passed_count}/{total_count} canonical/discovered recipes PAPER VALIDATED successfully.")
     print("Note: Schema-vs-/object_info live server checks marked PENDING server window.")
     print("=========================================================\n")
 
-    if passed_count != total_count or len(results) != total_count:
+    if not all_valid or passed_count != total_count or len(results) != total_count:
         sys.exit(1)
 
 

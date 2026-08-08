@@ -2,6 +2,13 @@
   "name": "ltx_audio_gguf",
   "tier": "gguf",
   "status": "ACTIVE",
+  "experiment": {
+    "campaign": "audio_conditioning_behavior",
+    "variant": "speech_conditioning_source_audio_mux_selected",
+    "audio_guide_mask": 0.0,
+    "scheduler_latent": "connected_pre_sampler_av",
+    "output_audio_policy": "mux_trimmed_source_audio_not_vae_reconstruction"
+  },
   "contract": {
     "engine": "ltx_audio",
     "mode": "ia2v",
@@ -46,7 +53,7 @@
           "3",
           0
         ],
-        "text": "cinematic video of a sunlit coastal road trip, high quality"
+        "text": "retro-futuristic radio control room matching the supplied image, locked camera, subtle natural movement in instrument meters and indicator lights, no scene change, high quality"
       }
     },
     "5": {
@@ -89,7 +96,11 @@
         "max_shift": 2.05,
         "base_shift": 0.95,
         "stretch": true,
-        "terminal": 0.1
+        "terminal": 0.1,
+        "latent": [
+          "30",
+          0
+        ]
       }
     },
     "8": {
@@ -230,7 +241,7 @@
       "inputs": {
         "width": 832,
         "height": 480,
-        "value": 1.0
+        "value": 0.0
       }
     },
     "24": {
@@ -310,19 +321,6 @@
         "temporal_overlap": 4
       }
     },
-    "34": {
-      "class_type": "LTXVAudioVAEDecode",
-      "inputs": {
-        "samples": [
-          "32",
-          1
-        ],
-        "audio_vae": [
-          "2",
-          0
-        ]
-      }
-    },
     "35": {
       "class_type": "CreateVideo",
       "inputs": {
@@ -331,7 +329,7 @@
           0
         ],
         "audio": [
-          "34",
+          "21",
           0
         ],
         "fps": [

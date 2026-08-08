@@ -1,7 +1,4 @@
 {
-  "receipt_schema_version": 1,
-  "legacy_provenance": true,
-  "legacy_provenance_reason": "Render predates runner, fixture, and model fingerprint fields; machine warm pass only.",
   "recipe": "h3_i2v_low",
   "run_number": 3,
   "config_run_count": 2,

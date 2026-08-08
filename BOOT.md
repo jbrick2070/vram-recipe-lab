@@ -27,6 +27,10 @@ OTR's verified headless launcher — do not "improve" it without a reason:
 - **Sage-free by construction:** the boot passes no `--use-sage-attention`.
   This satisfies PREFLIGHT check 9 for MiniMax H3 automatically. If a recipe
   ever needs Sage, that is a per-workflow setting, not a boot flag.
+- **Reserve semantics:** `boot_lab_server.cmd` forwards
+  `LAB_RESERVE_VRAM_GB=X` as ComfyUI `--reserve-vram X`. Direct use means
+  reserve/offload pressure, not an X GiB target card. `run_recipe.py --clamp N`
+  computes X as `physical_total - N` and records both target and reserve.
 
 ## Health check (before any queue)
 
@@ -38,8 +42,10 @@ root, append-mode) and report the actual error — do not just retry.
 
 Stop the recorded PID (`Stop-Process -Id <pid>`), then confirm the port no
 longer answers. Always shut down a server you booted when the session's runs
-are done — an idle loaded server holds VRAM that the next preflight's
-GPU-idle check (under 1.5 GB) will refuse.
+are done — an idle loaded server holds VRAM that the next pre-boot GPU-idle
+check will refuse. Remove `.server.pid` only after confirming the verified
+recorded process tree exited; retain the receipt and abort future boots if
+shutdown cannot prove that.
 
 ## Rules
 

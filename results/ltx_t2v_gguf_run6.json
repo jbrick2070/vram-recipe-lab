@@ -2,11 +2,7 @@
   "recipe": "ltx_t2v_gguf",
   "run_number": 6,
   "config_run_count": 1,
-  "status": "STALE (selected scheduler+tiled recipe not rerun after factorial)",
-  "last_execution_status": "FAIL (VRAM 15.14 GB > 14.5 GB; scheduler+plain variant C)",
-  "certification_valid": false,
-  "selected_recipe_sha256": "6e5d89265fcd83b0192fd98457c43de9bb088dd290c691c33e80092450473826",
-  "stale_reason": "Attempt limit reached. Current recipe selects variant B (scheduler+tiled), while the latest receipt is variant C (scheduler+plain). Keep the three immutable run receipts as diagnostic evidence; do not claim the selected file is certified.",
+  "status": "FAIL (VRAM 15.14 GB > 14.5 GB)",
   "gate_pass": false,
   "pass": false,
   "warm_pass": false,
@@ -74,5 +70,8 @@
   "audio_bitrate": 128007,
   "bitrate_anomaly": false,
   "bitrate_baseline_status": "provisional:0-of-3-clean-artifacts",
-  "clean_baseline_sample_count": 0
+  "clean_baseline_sample_count": 0,
+  "agent_visual_assessment": "near-identical quality to tiled decode with slightly higher VRAM and runtime; not selected",
+  "mean_frame_delta_yavg": 6.5967,
+  "ssim_vs_tiled_decode_same_scheduler": 0.950162
 }
