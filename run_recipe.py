@@ -258,32 +258,33 @@ def check_server_up_and_ownership() -> Dict[str, Any]:
 
 def shutdown_lab_server():
     """Stop the recorded lab server PID and all child processes recursively, removing .server.pid as final step."""
-    pid = get_recorded_pid()
-    if pid:
-        print(f"[SERVER] Shutting down recorded lab server (PID {pid})...")
-        try:
-            if psutil.pid_exists(pid):
-                parent = psutil.Process(pid)
-                children = parent.children(recursive=True)
-                for child in children:
-                    try:
-                        child.terminate()
-                    except psutil.NoSuchProcess:
-                        pass
-                parent.terminate()
-                _, alive = psutil.wait_procs(children + [parent], timeout=10)
-                for p in alive:
-                    try:
-                        p.kill()
-                    except psutil.NoSuchProcess:
-                        pass
-                print(f"[SERVER] Process {pid} and children terminated successfully.")
-        except (psutil.NoSuchProcess, psutil.TimeoutExpired, OSError) as e:
-            print(f"[SERVER] Shutdown warning: {e}")
-
-    if SERVER_PID_FILE.exists():
-        SERVER_PID_FILE.unlink(missing_ok=True)
-        print("[SERVER] Removed .server.pid receipt.")
+    try:
+        pid = get_recorded_pid()
+        if pid:
+            print(f"[SERVER] Shutting down recorded lab server (PID {pid})...")
+            try:
+                if psutil.pid_exists(pid):
+                    parent = psutil.Process(pid)
+                    children = parent.children(recursive=True)
+                    for child in children:
+                        try:
+                            child.terminate()
+                        except psutil.NoSuchProcess:
+                            pass
+                    parent.terminate()
+                    _, alive = psutil.wait_procs(children + [parent], timeout=10)
+                    for p in alive:
+                        try:
+                            p.kill()
+                        except psutil.NoSuchProcess:
+                            pass
+                    print(f"[SERVER] Process {pid} and children terminated successfully.")
+            except (psutil.NoSuchProcess, psutil.TimeoutExpired, OSError) as e:
+                print(f"[SERVER] Shutdown warning: {e}")
+    finally:
+        if SERVER_PID_FILE.exists():
+            SERVER_PID_FILE.unlink(missing_ok=True)
+            print("[SERVER] Removed .server.pid receipt.")
 
 
 def fetch_object_info() -> Dict[str, Any]:
@@ -573,207 +574,201 @@ def main():
 
     recipe_name = recipe_path.stem
     RESULTS_DIR.mkdir(exist_ok=True)
-
     try:
-        recipe_data = json.loads(recipe_path.read_text(encoding="utf-8-sig"))
-    except json.JSONDecodeError as e:
-        print(f"Error: Failed to parse recipe JSON: {e}")
-        sys.exit(1)
-
-    # Check for BLOCKED status in recipe metadata
-    if recipe_data.get("blocked", False) or "h3" in recipe_name.lower():
-        print(f"\n[BLOCKED] Recipe {recipe_name} is BLOCKED (required weights not present on disk).")
-        update_results_ledger(recipe_name, "BLOCKED", 0.0, 0.0, 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
-        update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, 0.0, "no", 0.0, boot_lane_str, "Weights missing")
-        res_payload = {
-            "recipe": recipe_name,
-            "peak_vram_gb": 0.0,
-            "baseline_vram_gb": 0.0,
-            "duration_s": 0.0,
-            "output_path": "",
-            "boot_lane": boot_lane_str,
-            "pass": False,
-            "blocked": True,
-            "run_count": 0
-        }
-        (RESULTS_DIR / f"{recipe_name}.json").write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
-        if do_shutdown:
-            shutdown_lab_server()
-        sys.exit(0)
-
-    # Execute all 10 Preflight checks
-    try:
-        run_all_preflights(recipe_path, recipe_data, recipe_name)
-    except PreflightError as e:
-        print(f"\n[PREFLIGHT ABORT] {e}")
-        update_results_ledger(recipe_name, "FAIL", 0.0, 0.0, 0.0, f"Aborted on Preflight #{e.check_num} ({e.name}): {e.reason}")
-        if do_shutdown:
-            shutdown_lab_server()
-        sys.exit(1)
-
-    # Execute Recipe under Lock
-    with LockManager() as lock:
-        # 1. Record baseline VRAM and Host RAM before run
-        baseline_vram_gb = query_gpu_vram_mb() / 1024.0
-        baseline_host_ram_gb = query_host_ram_gb()
-        print(f"[RESOURCES] Baseline GPU VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
-
-        # 2. Start Resource monitor thread BEFORE /prompt POST
-        monitor = ResourceMonitorThread(interval=POLL_INTERVAL_S)
-        monitor.start()
-        start_time = time.time()
-
-        print(f"Queueing prompt for {recipe_name}...")
-        prompt_dict = recipe_data.get("prompt", recipe_data)
-        prompt_payload = {"prompt": prompt_dict}
-        req_data = json.dumps(prompt_payload).encode("utf-8")
-        req = urllib.request.Request(f"{COMFY_SERVER_URL}/prompt", data=req_data, headers={"Content-Type": "application/json"})
-        
         try:
-            with urllib.request.urlopen(req) as resp:
-                res_json = json.loads(resp.read().decode("utf-8"))
-                prompt_id = res_json.get("prompt_id")
-                print(f"Queued successfully (Prompt ID: {prompt_id})")
-        except urllib.error.URLError as e:
-            monitor.stop()
-            print(f"Error queueing prompt: {e}")
-            if do_shutdown:
-                shutdown_lab_server()
+            recipe_data = json.loads(recipe_path.read_text(encoding="utf-8-sig"))
+        except json.JSONDecodeError as e:
+            print(f"Error: Failed to parse recipe JSON: {e}")
             sys.exit(1)
 
-        # 3. Poll history until completion (keep monitor running!)
-        completed = False
-        execution_success = False
-        output_path = ""
-        while time.time() - start_time < 300:  # 5 min timeout
-            time.sleep(0.5)
+        # Check for BLOCKED status in recipe metadata
+        if recipe_data.get("blocked", False) or "h3" in recipe_name.lower():
+            print(f"\n[BLOCKED] Recipe {recipe_name} is BLOCKED (required weights not present on disk).")
+            update_results_ledger(recipe_name, "BLOCKED", 0.0, 0.0, 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
+            update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, 0.0, "no", 0.0, boot_lane_str, "Weights missing")
+            res_payload = {
+                "recipe": recipe_name,
+                "peak_vram_gb": 0.0,
+                "baseline_vram_gb": 0.0,
+                "duration_s": 0.0,
+                "output_path": "",
+                "boot_lane": boot_lane_str,
+                "pass": False,
+                "blocked": True,
+                "run_count": 0
+            }
+            (RESULTS_DIR / f"{recipe_name}.json").write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
+            return
+
+        # Execute all 10 Preflight checks
+        try:
+            run_all_preflights(recipe_path, recipe_data, recipe_name)
+        except PreflightError as e:
+            print(f"\n[PREFLIGHT ABORT] {e}")
+            update_results_ledger(recipe_name, "FAIL", 0.0, 0.0, 0.0, f"Aborted on Preflight #{e.check_num} ({e.name}): {e.reason}")
+            sys.exit(1)
+
+        # Execute Recipe under Lock
+        with LockManager() as lock:
+            # 1. Record baseline VRAM and Host RAM before run
+            baseline_vram_gb = query_gpu_vram_mb() / 1024.0
+            baseline_host_ram_gb = query_host_ram_gb()
+            print(f"[RESOURCES] Baseline GPU VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
+
+            # 2. Start Resource monitor thread BEFORE /prompt POST
+            monitor = ResourceMonitorThread(interval=POLL_INTERVAL_S)
+            monitor.start()
+            start_time = time.time()
+
+            print(f"Queueing prompt for {recipe_name}...")
+            prompt_dict = recipe_data.get("prompt", recipe_data)
+            prompt_payload = {"prompt": prompt_dict}
+            req_data = json.dumps(prompt_payload).encode("utf-8")
+            req = urllib.request.Request(f"{COMFY_SERVER_URL}/prompt", data=req_data, headers={"Content-Type": "application/json"})
+            
             try:
-                with urllib.request.urlopen(f"{COMFY_SERVER_URL}/history/{prompt_id}") as hresp:
-                    hist = json.loads(hresp.read().decode("utf-8"))
-                    if prompt_id in hist:
-                        completed = True
-                        prompt_hist = hist[prompt_id]
-                        status_obj = prompt_hist.get("status", {})
-                        status_str = status_obj.get("status_str", "")
-                        completed_flag = status_obj.get("completed", False)
-                        messages = status_obj.get("messages", [])
-                        outputs = prompt_hist.get("outputs", {})
-                        
-                        has_error = (status_str != "success") or (not completed_flag) or (not outputs)
-                        for m in messages:
-                            if isinstance(m, (list, tuple)) and len(m) >= 2 and m[0] == "execution_error":
-                                has_error = True
-                        
-                        if not has_error:
-                            execution_success = True
-                            for n_out in outputs.values():
-                                if "images" in n_out and n_out["images"]:
-                                    output_path = n_out["images"][0].get("filename", "")
-                                elif "gifs" in n_out and n_out["gifs"]:
-                                    output_path = n_out["gifs"][0].get("filename", "")
-                            if output_path:
-                                target_file = REPO_ROOT / "outputs" / output_path
-                                if not target_file.exists() or target_file.stat().st_size == 0:
-                                    execution_success = False
-                                    print(f"[ERROR] Output file '{output_path}' missing or 0 bytes on disk!")
-                        else:
-                            execution_success = False
-                            print(f"[ERROR] ComfyUI execution failed for prompt {prompt_id}: status_str='{status_str}', outputs={bool(outputs)}, messages={messages}")
-                        break
-            except Exception:
-                pass
+                with urllib.request.urlopen(req) as resp:
+                    res_json = json.loads(resp.read().decode("utf-8"))
+                    prompt_id = res_json.get("prompt_id")
+                    print(f"Queued successfully (Prompt ID: {prompt_id})")
+            except urllib.error.URLError as e:
+                monitor.stop()
+                print(f"Error queueing prompt: {e}")
+                sys.exit(1)
 
-        duration_s = time.time() - start_time
-        
-        # 4. Stop Resource monitor thread ONLY AFTER history completes
-        peak_vram_gb, peak_host_ram_gb = monitor.stop()
+            # 3. Poll history until completion (keep monitor running!)
+            completed = False
+            execution_success = False
+            output_path = ""
+            while time.time() - start_time < 300:  # 5 min timeout
+                time.sleep(0.5)
+                try:
+                    with urllib.request.urlopen(f"{COMFY_SERVER_URL}/history/{prompt_id}") as hresp:
+                        hist = json.loads(hresp.read().decode("utf-8"))
+                        if prompt_id in hist:
+                            completed = True
+                            prompt_hist = hist[prompt_id]
+                            status_obj = prompt_hist.get("status", {})
+                            status_str = status_obj.get("status_str", "")
+                            completed_flag = status_obj.get("completed", False)
+                            messages = status_obj.get("messages", [])
+                            outputs = prompt_hist.get("outputs", {})
+                            
+                            has_error = (status_str != "success") or (not completed_flag) or (not outputs)
+                            for m in messages:
+                                if isinstance(m, (list, tuple)) and len(m) >= 2 and m[0] == "execution_error":
+                                    has_error = True
+                            
+                            if not has_error:
+                                execution_success = True
+                                for n_out in outputs.values():
+                                    if "images" in n_out and n_out["images"]:
+                                        output_path = n_out["images"][0].get("filename", "")
+                                    elif "gifs" in n_out and n_out["gifs"]:
+                                        output_path = n_out["gifs"][0].get("filename", "")
+                                if output_path:
+                                    target_file = REPO_ROOT / "outputs" / output_path
+                                    if not target_file.exists() or target_file.stat().st_size == 0:
+                                        execution_success = False
+                                        print(f"[ERROR] Output file '{output_path}' missing or 0 bytes on disk!")
+                            else:
+                                execution_success = False
+                                print(f"[ERROR] ComfyUI execution failed for prompt {prompt_id}: status_str='{status_str}', outputs={bool(outputs)}, messages={messages}")
+                            break
+                except Exception:
+                    pass
 
-        # Ensure peaks are at least baselines
-        peak_vram_gb = max(peak_vram_gb, baseline_vram_gb)
-        peak_host_ram_gb = max(peak_host_ram_gb, baseline_host_ram_gb)
+            duration_s = time.time() - start_time
+            
+            # 4. Stop Resource monitor thread ONLY AFTER history completes
+            peak_vram_gb, peak_host_ram_gb = monitor.stop()
 
-        # 5. Invalid measurement guard: peak <= baseline + 0.2 GB means sampler missed render
-        is_measurement_valid = peak_vram_gb > (baseline_vram_gb + 0.2)
+            # Ensure peaks are at least baselines
+            peak_vram_gb = max(peak_vram_gb, baseline_vram_gb)
+            peak_host_ram_gb = max(peak_host_ram_gb, baseline_host_ram_gb)
 
-        # Determine run count and previous pass state for warm cache gating
-        prev_run_count = 0
-        prev_passed = False
-        result_file = RESULTS_DIR / f"{recipe_name}.json"
-        if result_file.exists():
-            try:
-                prev_data = json.loads(result_file.read_text(encoding="utf-8"))
-                prev_run_count = prev_data.get("run_count", 0)
-                prev_passed = prev_data.get("pass", prev_data.get("passed", False))
-            except Exception:
-                pass
-        
-        run_count = prev_run_count + 1
-        is_warm_cache = (run_count >= 2) and prev_passed
+            # 5. Invalid measurement guard: peak <= baseline + 0.2 GB means sampler missed render
+            is_measurement_valid = peak_vram_gb > (baseline_vram_gb + 0.2)
 
-        # gate_pass = this run individually passed the VRAM ceiling
-        # warm_pass = two consecutive gate passes (the final certification)
-        if not execution_success:
-            gate_pass = False
-            warm_pass = False
-            status = "ERROR (execution error)"
-        elif not is_measurement_valid:
-            gate_pass = False
-            warm_pass = False
-            status = "INVALID (sampler missed peak)"
-            print(f"[WARNING] Invalid measurement! Peak ({peak_vram_gb:.2f} GB) <= baseline ({baseline_vram_gb:.2f} GB) + 0.2 GB. Refusing PASS.")
-        elif peak_vram_gb > VRAM_GATE_GB:
-            gate_pass = False
-            warm_pass = False
-            status = f"FAIL (VRAM {peak_vram_gb:.2f} GB > {VRAM_GATE_GB} GB)"
-        else:
-            gate_pass = True
-            warm_pass = is_warm_cache
-            status = "PASS" if is_warm_cache else "PASS (cold)"
+            # Determine run count and previous pass state for warm cache gating
+            prev_run_count = 0
+            prev_passed = False
+            result_file = RESULTS_DIR / f"{recipe_name}.json"
+            if result_file.exists():
+                try:
+                    prev_data = json.loads(result_file.read_text(encoding="utf-8"))
+                    prev_run_count = prev_data.get("run_count", 0)
+                    prev_passed = prev_data.get("pass", prev_data.get("passed", False))
+                except Exception:
+                    pass
+            
+            run_count = prev_run_count + 1
+            is_warm_cache = (run_count >= 2) and prev_passed
 
-        # For backwards compat, 'passed' used in print/ledger = warm_pass
-        passed = warm_pass
+            # gate_pass = this run individually passed the VRAM ceiling
+            # warm_pass = two consecutive gate passes (the final certification)
+            if not execution_success:
+                gate_pass = False
+                warm_pass = False
+                status = "ERROR (execution error)"
+            elif not is_measurement_valid:
+                gate_pass = False
+                warm_pass = False
+                status = "INVALID (sampler missed peak)"
+                print(f"[WARNING] Invalid measurement! Peak ({peak_vram_gb:.2f} GB) <= baseline ({baseline_vram_gb:.2f} GB) + 0.2 GB. Refusing PASS.")
+            elif peak_vram_gb > VRAM_GATE_GB:
+                gate_pass = False
+                warm_pass = False
+                status = f"FAIL (VRAM {peak_vram_gb:.2f} GB > {VRAM_GATE_GB} GB)"
+            else:
+                gate_pass = True
+                warm_pass = is_warm_cache
+                status = "PASS" if is_warm_cache else "PASS (cold)"
 
-        print(f"\n--- Run Summary ---")
-        print(f"Recipe:        {recipe_name}")
-        print(f"Run Count:     {run_count} ({'Warm cache' if is_warm_cache else 'Cold cache'})")
-        print(f"Baseline VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
-        print(f"Peak VRAM:     {peak_vram_gb:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
-        print(f"Peak Host RAM: {peak_host_ram_gb:.2f} GB")
-        print(f"Wall Clock:    {duration_s:.1f} s")
-        print(f"Boot Lane:     {boot_lane_str}")
-        print(f"Status:        {status}")
+            # For backwards compat, 'passed' used in print/ledger = warm_pass
+            passed = warm_pass
 
-        iso_timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-        res_payload = {
-            "recipe": recipe_name,
-            "run_number": run_count,
-            "status": status,
-            "pass": gate_pass,
-            "warm_pass": warm_pass,
-            "peak_vram_gb": round(peak_vram_gb, 2),
-            "baseline_vram_gb": round(baseline_vram_gb, 2),
-            "peak_host_ram_gb": round(peak_host_ram_gb, 2),
-            "baseline_host_ram_gb": round(baseline_host_ram_gb, 2),
-            "duration_s": round(duration_s, 1),
-            "output_path": output_path,
-            "boot_lane": boot_lane_str,
-            "timestamp": iso_timestamp,
-            "prompt_id": prompt_id,
-            "valid_measurement": is_measurement_valid,
-            "run_count": run_count,
-            "blocked": False
-        }
-        run_receipt_file = RESULTS_DIR / f"{recipe_name}_run{run_count}.json"
-        run_receipt_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
-        result_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
+            print(f"\n--- Run Summary ---")
+            print(f"Recipe:        {recipe_name}")
+            print(f"Run Count:     {run_count} ({'Warm cache' if is_warm_cache else 'Cold cache'})")
+            print(f"Baseline VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
+            print(f"Peak VRAM:     {peak_vram_gb:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
+            print(f"Peak Host RAM: {peak_host_ram_gb:.2f} GB")
+            print(f"Wall Clock:    {duration_s:.1f} s")
+            print(f"Boot Lane:     {boot_lane_str}")
+            print(f"Status:        {status}")
 
-        update_results_ledger(recipe_name, status, peak_vram_gb, baseline_vram_gb, duration_s, f"Run #{run_count}; boot lane: {boot_lane_str}")
-        smoke_peak = 0.0 if is_suite else peak_vram_gb
-        suite_peak = peak_vram_gb if is_suite else 0.0
-        update_engine_matrix_beta(recipe_name, tier, status, smoke_peak, suite_peak, "no", duration_s, boot_lane_str, f"Measured on box ({status})")
+            iso_timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            res_payload = {
+                "recipe": recipe_name,
+                "run_number": run_count,
+                "status": status,
+                "pass": gate_pass,
+                "warm_pass": warm_pass,
+                "peak_vram_gb": round(peak_vram_gb, 2),
+                "baseline_vram_gb": round(baseline_vram_gb, 2),
+                "peak_host_ram_gb": round(peak_host_ram_gb, 2),
+                "baseline_host_ram_gb": round(baseline_host_ram_gb, 2),
+                "duration_s": round(duration_s, 1),
+                "output_path": output_path,
+                "boot_lane": boot_lane_str,
+                "timestamp": iso_timestamp,
+                "prompt_id": prompt_id,
+                "valid_measurement": is_measurement_valid,
+                "run_count": run_count,
+                "blocked": False
+            }
+            run_receipt_file = RESULTS_DIR / f"{recipe_name}_run{run_count}.json"
+            run_receipt_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
+            result_file.write_text(json.dumps(res_payload, indent=2), encoding="utf-8")
 
-    if do_shutdown:
-        shutdown_lab_server()
+            update_results_ledger(recipe_name, status, peak_vram_gb, baseline_vram_gb, duration_s, f"Run #{run_count}; boot lane: {boot_lane_str}")
+            smoke_peak = 0.0 if is_suite else peak_vram_gb
+            suite_peak = peak_vram_gb if is_suite else 0.0
+            update_engine_matrix_beta(recipe_name, tier, status, smoke_peak, suite_peak, "no", duration_s, boot_lane_str, f"Measured on box ({status})")
+    finally:
+        if do_shutdown:
+            shutdown_lab_server()
 
 
 if __name__ == "__main__":
