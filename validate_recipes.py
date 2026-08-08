@@ -24,8 +24,9 @@ REQUIRED_RECIPES = [
     "t2i_low", "t2i_high",
     "wan_ti2v_low", "wan_ti2v_high",
     "wan_i2v_14b_low", "wan_i2v_14b_high",
+    "ltx_t2v_low", "ltx_t2v_high",
     "ltx_i2v_low", "ltx_i2v_high",
-    "ltx_audio_low", "ltx_lipsync_low",
+    "ltx_audio_low", "ltx_audio_high", "ltx_lipsync_low",
     "h3_t2v_low", "h3_t2v_best",
     "h3_i2v_low", "h3_i2v_best",
     "h3_r2v_low", "h3_r2v_best"

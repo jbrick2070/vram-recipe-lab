@@ -1,6 +1,6 @@
 {
-  "name": "ltx_audio_low",
-  "tier": "low",
+  "name": "ltx_audio_high",
+  "tier": "high",
   "status": "ACTIVE",
   "contract": {
     "engine": "ltx_audio",
@@ -514,7 +514,7 @@
       "class_type": "LoraLoaderModelOnly",
       "inputs": {
         "model": [
-          "317",
+          "999",
           0
         ],
         "lora_name": "ltxv\\ltx2\\ltx-2.3-22b-distilled-lora-384-1.1.safetensors",
@@ -611,6 +611,12 @@
     "349": {
       "class_type": "PrimitiveBoolean",
       "inputs": {}
+    },
+    "999": {
+      "class_type": "UnetLoaderGGUF",
+      "inputs": {
+        "unet_name": "ltx-2.3-22b-dev-Q3_K_M.gguf"
+      }
     }
   }
 }
