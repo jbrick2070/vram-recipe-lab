@@ -26,3 +26,24 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
     - Generated Video: [`outputs/ltx_audio_gguf_out_00001_.mp4`](file:///c:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/outputs/ltx_audio_gguf_out_00001_.mp4)
 
 - **Eyeball Verdict**: Pending Jeffrey's eyeball review of generated video [`outputs/ltx_audio_gguf_out_00001_.mp4`](file:///c:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/outputs/ltx_audio_gguf_out_00001_.mp4) to confirm whether removing the distilled LoRA and using 20-step `LTXVScheduler` eliminated the periodic flash defect (~every 0.4s).
+
+### Attempt #2: T2V Mesh Grid Defect Audit & Fix (`ltx_t2v_gguf`)
+- **Date**: 2026-08-08
+- **Target Recipe**: `ltx_t2v_gguf`
+- **Issue**: Regular lattice/mesh grid over textures (e.g. hillside) in rendered clip [`outputs/ltx_t2v_gguf_out_00001_.mp4`](file:///c:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/outputs/ltx_t2v_gguf_out_00001_.mp4) (`eyeball: defect:mesh_grid`).
+- **Node-by-Node Diff Audit**:
+  1. **Suspect (a) - Tiled VAE Decode Settings (`VAEDecodeTiled`)**:
+     - `ltx_t2v_gguf.json` used `tile_size: 512`, `overlap: 64`, `temporal_size: 16`, `temporal_overlap: 4`.
+     - On an 832x480 canvas, `tile_size: 512` forces a vertical spatial seam down the center (x=320..512), and `temporal_size: 16` (only 2 latent frames per temporal tile) forces temporal decoding chunking every 16 frames (0.4s). Together, spatial + temporal chunking creates a periodic 3D lattice mesh grid over textures.
+     - Template `video_ltx2_3_t2v.json` uses `tile_size: 768`, `overlap: 64`, `temporal_size: 4096` (no temporal chunking), `temporal_overlap: 4`.
+  2. **Suspect (b) - Missing T2V Canvas Image Conditioning (`LTXVImgToVideoInplace`)**:
+     - `ltx_i2v_gguf.json` (which passed eyeball with zero mesh artifacts) feeds an input image through `ResizeImageMaskNode` -> `LTXVPreprocess` -> `LTXVImgToVideoInplace` (strength: 1.0) into `EmptyLTXVLatentVideo`.
+     - `ltx_t2v_gguf.json` omitted nodes 13-16, passing raw unconditioned `EmptyLTXVLatentVideo` to diffusion sampling.
+     - Template `video_ltx2_3_t2v.json` includes `EmptyImage` (512x512) -> `ResizeImageMaskNode` -> `LTXVPreprocess` (compression: 18) -> `LTXVImgToVideoInplace` (strength: 1.0).
+  3. **Suspect (c) - Sampler/Scheduler**:
+     - Sampler (`euler`) and `LTXVScheduler` (20 steps) match between `ltx_i2v_gguf` and `ltx_t2v_gguf`.
+
+- **Planned Fix**:
+  1. Re-align `VAEDecodeTiled` in `ltx_t2v_gguf.json` to `tile_size: 768`, `overlap: 64`, `temporal_size: 4096`, `temporal_overlap: 4` (matching template Node 251).
+  2. Add `EmptyImage` (832x480) -> `ResizeImageMaskNode` (832x480, lanczos) -> `LTXVPreprocess` (compression: 18) -> `LTXVImgToVideoInplace` (strength: 1.0) to `ltx_t2v_gguf.json` matching clean `ltx_i2v_gguf` graph structure and template `video_ltx2_3_t2v.json`.
+

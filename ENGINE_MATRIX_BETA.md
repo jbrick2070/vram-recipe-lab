@@ -18,10 +18,10 @@ ram-recipe-lab.
 | ltx_audio_low | smoke | FAIL (VRAM 15.45 GB > 14.5 GB) | 15.45 | 0.0 | yes | 0/2 | lab-8199, sage-free | 2026-08-08 | Run #5; boot lane: lab-8199, sage-free |
 | ltx_audio_high | smoke | FAIL (VRAM 14.52 GB > 14.5 GB) | 14.52 | 0.0 | yes | 0/2 | lab-8199, sage-free | 2026-08-08 | Run #5; boot lane: lab-8199, sage-free |
 | ltx_lipsync_low | smoke | UNMEASURED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | 2026-08-08 | Run #0; boot lane: lab-8199, sage-free |
-| h3_t2v_low | smoke | FAIL (VRAM 15.30 GB > 14.5 GB) | 15.30 | N/A | no | 465.9s | lab-8199, sage-free | 2026-08-08 | Measured on box (FAIL (VRAM 15.30 GB > 14.5 GB)) |
-| h3_i2v_low | smoke | UNTESTED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | N/A | Missing weight/recipe data |
-| h3_r2v_low | smoke | UNTESTED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | N/A | Missing weight/recipe data |
+| h3_t2v_low | smoke | PASS | 6.37 | N/A | no | 492.2s | lab-8199, sage-free, no-pinned, clamp-12gb | 2026-08-08 | Measured on box (PASS) |
+| h3_i2v_low | smoke | PASS (cold) | 6.52 | N/A | no | 514.1s | lab-8199, sage-free, no-pinned, clamp-12gb | 2026-08-08 | Measured on box (PASS (cold)) |
+| h3_r2v_low | smoke | PASS (cold) | 6.41 | N/A | no | 490.1s | lab-8199, sage-free, no-pinned, clamp-12gb | 2026-08-08 | Measured on box (PASS (cold)) |
 | ltx_audio_ckpt | smoke | FAIL (VRAM 15.34 GB > 14.5 GB) | 15.34 | N/A | no | 209.5s | lab-8199, sage-free | 2026-08-08 | Measured on box (FAIL (VRAM 15.34 GB > 14.5 GB)) |
 | ltx_audio_gguf | smoke | PASS | 7.41 | N/A | no | 261.9s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |
 | ltx_i2v_gguf | smoke | PASS | 7.17 | N/A | no | 268.0s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |
-| ltx_t2v_gguf | smoke | PASS | 7.18 | N/A | no | 218.4s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |
+| ltx_t2v_gguf | smoke | PASS | 7.37 | N/A | no | 262.8s | lab-8199, sage-free, clamp-14gb | 2026-08-08 | Measured on box (PASS) |

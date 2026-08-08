@@ -198,9 +198,9 @@
           "1",
           2
         ],
-        "tile_size": 512,
+        "tile_size": 768,
         "overlap": 64,
-        "temporal_size": 16,
+        "temporal_size": 4096,
         "temporal_overlap": 4
       }
     },

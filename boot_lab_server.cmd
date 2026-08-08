@@ -10,6 +10,7 @@ if not defined LAB_PORT set LAB_PORT=8199
 
 set EXTRA_ARGS=
 if defined LAB_RESERVE_VRAM_GB set EXTRA_ARGS=--reserve-vram %LAB_RESERVE_VRAM_GB%
+if defined LAB_DISABLE_PINNED set EXTRA_ARGS=%EXTRA_ARGS% --disable-pinned-memory
 
 echo [lab-boot] headless ComfyUI on port %LAB_PORT% %EXTRA_ARGS%
 C:\Users\jeffr\Documents\ComfyUI\.venv\Scripts\python.exe ^

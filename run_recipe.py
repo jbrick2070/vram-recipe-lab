@@ -574,12 +574,21 @@ def main():
     tier = "suite" if is_suite else "smoke"
     
     clamp_gb = os.environ.get("LAB_RESERVE_VRAM_GB")
+    disable_pinned = bool(os.environ.get("LAB_DISABLE_PINNED"))
     for i, arg in enumerate(sys.argv):
         if arg == "--clamp" and i + 1 < len(sys.argv):
             clamp_gb = sys.argv[i + 1]
             os.environ["LAB_RESERVE_VRAM_GB"] = clamp_gb
+        if arg == "--disable-pinned-memory":
+            disable_pinned = True
+            os.environ["LAB_DISABLE_PINNED"] = "1"
 
-    boot_lane_str = f"lab-8199, sage-free, clamp-{clamp_gb}gb" if clamp_gb else "lab-8199, sage-free"
+    lane_parts = ["lab-8199", "sage-free"]
+    if disable_pinned:
+        lane_parts.append("no-pinned")
+    if clamp_gb:
+        lane_parts.append(f"clamp-{clamp_gb}gb")
+    boot_lane_str = ", ".join(lane_parts)
 
     if not recipe_path.exists():
         print(f"Error: Recipe file not found: {recipe_path}")

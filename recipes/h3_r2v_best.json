@@ -85,10 +85,12 @@
         "height": 768,
         "length": 124,
         "ref_image_size": "match",
-        "ref_image_0": [
-          "11",
-          0
-        ]
+        "ref_images": {
+          "ref_image_0": [
+            "11",
+            0
+          ]
+        }
       }
     },
     "8": {

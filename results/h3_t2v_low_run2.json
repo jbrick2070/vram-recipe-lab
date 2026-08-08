@@ -1,0 +1,20 @@
+{
+  "recipe": "h3_t2v_low",
+  "run_number": 2,
+  "status": "FAIL (net VRAM 8.42 GB > clamp 8.0 GB)",
+  "pass": false,
+  "warm_pass": false,
+  "eyeball": "ok",
+  "peak_vram_gb": 10.46,
+  "baseline_vram_gb": 2.04,
+  "peak_host_ram_gb": 25.68,
+  "baseline_host_ram_gb": 17.88,
+  "duration_s": 549.4,
+  "output_path": "h3_t2v_low_out_00002_.mp4",
+  "boot_lane": "lab-8199, sage-free, no-pinned, clamp-8gb",
+  "timestamp": "2026-08-08T12:49:09Z",
+  "prompt_id": "b52971b6-f371-47d7-9cd1-55e5941a63e2",
+  "valid_measurement": true,
+  "run_count": 2,
+  "blocked": false
+}

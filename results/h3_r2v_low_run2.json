@@ -1,0 +1,20 @@
+{
+  "recipe": "h3_r2v_low",
+  "run_number": 2,
+  "status": "PASS (cold)",
+  "pass": true,
+  "warm_pass": false,
+  "eyeball": "pending",
+  "peak_vram_gb": 6.41,
+  "baseline_vram_gb": 1.99,
+  "peak_host_ram_gb": 27.12,
+  "baseline_host_ram_gb": 17.64,
+  "duration_s": 490.1,
+  "output_path": "h3_r2v_low_out_00001_.mp4",
+  "boot_lane": "lab-8199, sage-free, no-pinned, clamp-12gb",
+  "timestamp": "2026-08-08T13:25:11Z",
+  "prompt_id": "15ec2992-786f-4c74-8e78-552e07da59f5",
+  "valid_measurement": true,
+  "run_count": 2,
+  "blocked": false
+}

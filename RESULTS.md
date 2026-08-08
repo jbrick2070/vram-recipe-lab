@@ -19,10 +19,10 @@ This file records measured VRAM and runtime performance for every recipe variant
 | ltx_audio_low | **FAIL (VRAM 15.45 GB > 14.5 GB)** | 15.45 | 1.65 | 0.0 | Run #5; boot lane: lab-8199, sage-free |
 | ltx_audio_high | **FAIL (VRAM 14.52 GB > 14.5 GB)** | 14.52 | 1.35 | 0.0 | Run #5; boot lane: lab-8199, sage-free |
 | ltx_lipsync_low | **UNMEASURED** | 0.00 | 0.00 | 0.0 | Run #0; boot lane: lab-8199, sage-free |
-| h3_t2v_low | FAIL (VRAM 15.30 GB > 14.5 GB) | 15.30 | 1.87 | 465.9 | Run #1; boot lane: lab-8199, sage-free |
-| h3_i2v_low | **BLOCKED** | 0.00 | 0.00 | 0.0 | Missing weight/recipe data |
-| h3_r2v_low | **BLOCKED** | 0.00 | 0.00 | 0.0 | Missing weight/recipe data |
+| h3_t2v_low | PASS | 6.37 | 2.01 | 492.2 | Run #4; boot lane: lab-8199, sage-free, no-pinned, clamp-12gb |
+| h3_i2v_low | PASS (cold) | 6.52 | 2.01 | 514.1 | Run #1; boot lane: lab-8199, sage-free, no-pinned, clamp-12gb |
+| h3_r2v_low | PASS (cold) | 6.41 | 1.99 | 490.1 | Run #2; boot lane: lab-8199, sage-free, no-pinned, clamp-12gb |
 | ltx_audio_ckpt | FAIL (VRAM 15.34 GB > 14.5 GB) | 15.34 | 1.43 | 209.5 | Run #3; boot lane: lab-8199, sage-free |
 | ltx_audio_gguf | PASS | 7.41 | 1.39 | 261.9 | Run #5; boot lane: lab-8199, sage-free, clamp-14gb |
 | ltx_i2v_gguf | PASS | 7.17 | 1.86 | 268.0 | Run #2; boot lane: lab-8199, sage-free, clamp-14gb |
-| ltx_t2v_gguf | PASS | 7.18 | 1.87 | 218.4 | Run #2; boot lane: lab-8199, sage-free, clamp-14gb |
+| ltx_t2v_gguf | PASS | 7.37 | 2.06 | 262.8 | Run #3; boot lane: lab-8199, sage-free, clamp-14gb |

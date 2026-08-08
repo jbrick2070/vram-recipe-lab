@@ -4,7 +4,7 @@
   "status": "PASS (cold)",
   "pass": true,
   "warm_pass": false,
-  "eyeball": "pending",
+  "eyeball": "ok",
   "peak_vram_gb": 7.17,
   "baseline_vram_gb": 1.86,
   "peak_host_ram_gb": 42.06,
@@ -16,5 +16,6 @@
   "prompt_id": "b25591d0-155a-4632-873c-92cbd3b5b77b",
   "valid_measurement": true,
   "run_count": 1,
-  "blocked": false
+  "blocked": false,
+  "eyeball_notes": "Best of batch; low motion noted (prompt-driven)."
 }

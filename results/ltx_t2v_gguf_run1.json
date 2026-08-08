@@ -4,7 +4,7 @@
   "status": "PASS (cold)",
   "pass": true,
   "warm_pass": false,
-  "eyeball": "pending",
+  "eyeball": "defect:mesh_grid",
   "peak_vram_gb": 7.38,
   "baseline_vram_gb": 2.07,
   "peak_host_ram_gb": 42.17,
@@ -16,5 +16,6 @@
   "prompt_id": "3746ebd9-6800-44ee-84e0-f6336f133fdc",
   "valid_measurement": true,
   "run_count": 1,
-  "blocked": false
+  "blocked": false,
+  "eyeball_notes": "Regular lattice over textures (suspected decode-seam or graph-plumbing artifact)."
 }
