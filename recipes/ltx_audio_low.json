@@ -36,19 +36,6 @@
       "class_type": "LoadAudio",
       "inputs": {}
     },
-    "340": {
-      "class_type": "98ee9e5b-467b-40aa-a534-36033f27d0b4",
-      "inputs": {
-        "input": [
-          "269",
-          0
-        ],
-        "audio": [
-          "276",
-          0
-        ]
-      }
-    },
     "285": {
       "class_type": "RandomNoise",
       "inputs": {}

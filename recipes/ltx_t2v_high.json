@@ -24,10 +24,6 @@
         "codec": "auto"
       }
     },
-    "267": {
-      "class_type": "b94257db-cdc1-45d3-8913-ca61e782d9c1",
-      "inputs": {}
-    },
     "216": {
       "class_type": "RandomNoise",
       "inputs": {}

@@ -28,15 +28,6 @@
         "codec": "auto"
       }
     },
-    "320": {
-      "class_type": "2454ad83-157c-40dd-9f19-5daaf4041ce0",
-      "inputs": {
-        "input": [
-          "269",
-          0
-        ]
-      }
-    },
     "276": {
       "class_type": "RandomNoise",
       "inputs": {}
