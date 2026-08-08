@@ -1,0 +1,19 @@
+{
+  "recipe": "ltx_t2v_high",
+  "run_number": 3,
+  "status": "FAIL (no artifact output)",
+  "pass": false,
+  "warm_pass": false,
+  "peak_vram_gb": 14.28,
+  "baseline_vram_gb": 1.38,
+  "peak_host_ram_gb": 40.38,
+  "baseline_host_ram_gb": 15.83,
+  "duration_s": 300.3,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T06:33:21Z",
+  "prompt_id": "4f244e88-89c8-41cc-a29c-f56be49ea13d",
+  "valid_measurement": true,
+  "run_count": 3,
+  "blocked": false
+}

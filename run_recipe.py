@@ -653,7 +653,8 @@ def main():
             completed = False
             execution_success = False
             output_path = ""
-            while time.time() - start_time < 300:  # 5 min timeout
+            outputs = {}
+            while time.time() - start_time < 600:  # 10 min timeout
                 time.sleep(0.5)
                 try:
                     with urllib.request.urlopen(f"{COMFY_SERVER_URL}/history/{prompt_id}") as hresp:
@@ -673,20 +674,34 @@ def main():
                                     has_error = True
                             
                             if not has_error:
-                                execution_success = True
+                                output_path = ""
                                 for n_out in outputs.values():
-                                    if "images" in n_out and n_out["images"]:
-                                        output_path = n_out["images"][0].get("filename", "")
-                                    elif "gifs" in n_out and n_out["gifs"]:
-                                        output_path = n_out["gifs"][0].get("filename", "")
-                                if output_path:
+                                    if isinstance(n_out, dict):
+                                        for k in ["images", "gifs", "videos", "audio", "animated"]:
+                                            if k in n_out and isinstance(n_out[k], list) and len(n_out[k]) > 0:
+                                                item = n_out[k][0]
+                                                if isinstance(item, dict):
+                                                    output_path = item.get("filename", "")
+                                                elif isinstance(item, str):
+                                                    output_path = item
+                                                if output_path:
+                                                    break
+                                        if output_path:
+                                            break
+                                
+                                if not output_path:
+                                    execution_success = False
+                                    print(f"[ERROR] Execution for prompt {prompt_id} produced no output artifact (output_path is empty)!")
+                                else:
                                     target_file = REPO_ROOT / "outputs" / output_path
                                     if not target_file.exists() or target_file.stat().st_size == 0:
                                         execution_success = False
                                         print(f"[ERROR] Output file '{output_path}' missing or 0 bytes on disk!")
+                                    else:
+                                        execution_success = True
                             else:
                                 execution_success = False
-                                print(f"[ERROR] ComfyUI execution failed for prompt {prompt_id}: status_str='{status_str}', outputs={bool(outputs)}, messages={messages}")
+                                print(f"[ERROR] ComfyUI execution failed for prompt {prompt_id}: status_str='{status_str}', outputs={bool(outputs)} (keys: {list(outputs.keys())}), messages={messages}")
                             break
                 except Exception:
                     pass
@@ -723,7 +738,10 @@ def main():
             if not execution_success:
                 gate_pass = False
                 warm_pass = False
-                status = "ERROR (execution error)"
+                if not outputs or not output_path:
+                    status = "FAIL (no artifact output)"
+                else:
+                    status = "ERROR (execution error)"
             elif not is_measurement_valid:
                 gate_pass = False
                 warm_pass = False

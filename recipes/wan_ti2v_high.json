@@ -4,8 +4,8 @@
   "contract": {
     "engine": "wan_ti2v",
     "mode": "ti2v",
-    "width": 512,
-    "height": 320,
+    "width": 640,
+    "height": 384,
     "frames": 25,
     "fps": 16.0,
     "duration_s": 1.56,
@@ -60,8 +60,8 @@
     "7": {
       "class_type": "EmptyLatentImage",
       "inputs": {
-        "width": 512,
-        "height": 320,
+        "width": 640,
+        "height": 384,
         "batch_size": 1
       }
     },

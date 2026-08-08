@@ -22,7 +22,7 @@
         ],
         "format": "auto",
         "codec": "auto",
-        "filename_prefix": "video_ltx2_3_t2v_out"
+        "filename_prefix": "ltx_t2v_low_out"
       }
     },
     "216": {
@@ -52,7 +52,9 @@
     },
     "221": {
       "class_type": "LTXVAudioVAELoader",
-      "inputs": {}
+      "inputs": {
+        "ckpt_name": "ltx-2.3-22b-dev.safetensors"
+      }
     },
     "246": {
       "class_type": "KSamplerSelect",
@@ -80,7 +82,8 @@
         "negative": [
           "212",
           1
-        ]
+        ],
+        "cfg": 3.0
       }
     },
     "215": {
@@ -182,7 +185,8 @@
         "bypass": [
           "201",
           0
-        ]
+        ],
+        "strength": 1.0
       }
     },
     "248": {
@@ -191,7 +195,8 @@
         "image": [
           "235",
           0
-        ]
+        ],
+        "img_compression": 0.0
       }
     },
     "238": {
@@ -248,7 +253,8 @@
         "length": [
           "277",
           1
-        ]
+        ],
+        "batch_size": 1
       }
     },
     "249": {
@@ -269,7 +275,8 @@
         "bypass": [
           "201",
           0
-        ]
+        ],
+        "strength": 1.0
       }
     },
     "220": {
@@ -363,7 +370,8 @@
         "frame_rate": [
           "261",
           1
-        ]
+        ],
+        "batch_size": 1
       }
     },
     "252": {
@@ -450,7 +458,8 @@
         "clip": [
           "243",
           0
-        ]
+        ],
+        "text": "negative prompt, low quality, blurry, distorted"
       }
     },
     "231": {
@@ -467,7 +476,8 @@
         "negative": [
           "239",
           1
-        ]
+        ],
+        "cfg": 3.0
       }
     },
     "251": {
@@ -480,7 +490,11 @@
         "vae": [
           "236",
           2
-        ]
+        ],
+        "tile_size": 512,
+        "overlap": 64,
+        "temporal_size": 16,
+        "temporal_overlap": 4
       }
     },
     "236": {
@@ -532,7 +546,12 @@
     },
     "325": {
       "class_type": "EmptyImage",
-      "inputs": {}
+      "inputs": {
+        "width": 1920,
+        "height": 1088,
+        "color": 0,
+        "batch_size": 1
+      }
     },
     "326": {
       "class_type": "LoraLoader",

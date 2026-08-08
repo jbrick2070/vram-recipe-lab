@@ -1,0 +1,19 @@
+{
+  "recipe": "ltx_i2v_high",
+  "run_number": 4,
+  "status": "PASS (cold)",
+  "pass": true,
+  "warm_pass": false,
+  "peak_vram_gb": 14.1,
+  "baseline_vram_gb": 0.97,
+  "peak_host_ram_gb": 42.86,
+  "baseline_host_ram_gb": 15.83,
+  "duration_s": 281.9,
+  "output_path": "ltx_i2v_high_out_00001_.mp4",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T06:42:55Z",
+  "prompt_id": "4d423be1-424b-42e0-b25d-b91a19d7e607",
+  "valid_measurement": true,
+  "run_count": 4,
+  "blocked": false
+}

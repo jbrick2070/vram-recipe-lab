@@ -32,7 +32,7 @@
         ],
         "format": "auto",
         "codec": "auto",
-        "filename_prefix": "video_ltx2_3_ia2v_out"
+        "filename_prefix": "ltx_audio_high_out"
       }
     },
     "276": {
@@ -92,7 +92,8 @@
         "negative": [
           "292",
           1
-        ]
+        ],
+        "cfg": 3.0
       }
     },
     "291": {
@@ -172,7 +173,8 @@
         "bypass": [
           "305",
           0
-        ]
+        ],
+        "strength": 1.0
       }
     },
     "298": {
@@ -279,7 +281,8 @@
         "clip": [
           "318",
           0
-        ]
+        ],
+        "text": "negative prompt, low quality, blurry, distorted"
       }
     },
     "315": {
@@ -296,7 +299,8 @@
         "negative": [
           "307",
           1
-        ]
+        ],
+        "cfg": 3.0
       }
     },
     "316": {
@@ -309,7 +313,11 @@
         "vae": [
           "317",
           2
-        ]
+        ],
+        "tile_size": 512,
+        "overlap": 64,
+        "temporal_size": 16,
+        "temporal_overlap": 4
       }
     },
     "325": {
@@ -330,7 +338,8 @@
         "bypass": [
           "305",
           0
-        ]
+        ],
+        "strength": 1.0
       }
     },
     "330": {
@@ -342,19 +351,16 @@
     "333": {
       "class_type": "SolidMask",
       "inputs": {
-        "width": [
-          "330",
-          0
-        ],
-        "height": [
-          "324",
-          0
-        ]
+        "width": 1920,
+        "height": 1088,
+        "value": 1.0
       }
     },
     "335": {
       "class_type": "LTXVAudioVAELoader",
-      "inputs": {}
+      "inputs": {
+        "ckpt_name": "ltx-2.3-22b-dev.safetensors"
+      }
     },
     "305": {
       "class_type": "PrimitiveBoolean",
@@ -378,7 +384,8 @@
         "image": [
           "294",
           0
-        ]
+        ],
+        "img_compression": 0.0
       }
     },
     "301": {
@@ -454,7 +461,8 @@
         "length": [
           "329",
           1
-        ]
+        ],
+        "batch_size": 1
       }
     },
     "329": {
@@ -487,7 +495,8 @@
         "duration": [
           "331",
           0
-        ]
+        ],
+        "start_index": 0.0
       }
     },
     "328": {
