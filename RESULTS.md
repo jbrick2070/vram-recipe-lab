@@ -22,4 +22,6 @@ This file records measured VRAM and runtime performance for every recipe variant
 | `h3_r2v_low` | **BLOCKED** | 0.00 | 0.00 | 0.0 | Weights missing on disk; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | `h3_r2v_best` | **BLOCKED** | 0.00 | 0.00 | 0.0 | Weights missing on disk; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | wan_ti2v_high | FAIL | 0.00 | 0.00 | 0.0 | Aborted on Preflight #7 (Affordability estimate): Last measured peak (15.55 GB) exceeded 14.5 GB gate line. Refusing unchanged re-run. |
-| ltx_audio_high | ERROR (execution error) | 1.67 | 1.67 | 2.6 | Run #1; boot lane: lab-8199, sage-free |
+| ltx_audio_high | PASS | 11.08 | 1.50 | 39.8 | Run #3; boot lane: lab-8199, sage-free |
+| ltx_audio_low | PASS | 11.07 | 1.49 | 38.3 | Run #3; boot lane: lab-8199, sage-free |
+| ltx_i2v_low | ERROR (execution error) | 1.50 | 1.50 | 0.7 | Run #9; boot lane: lab-8199, sage-free |
