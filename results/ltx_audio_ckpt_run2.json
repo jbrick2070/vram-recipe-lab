@@ -1,0 +1,20 @@
+{
+  "recipe": "ltx_audio_ckpt",
+  "run_number": 2,
+  "status": "TIMEOUT (exceeded 600s runner completion window)",
+  "pass": false,
+  "warm_pass": false,
+  "eyeball": "defect:vram_oom",
+  "peak_vram_gb": 15.43,
+  "baseline_vram_gb": 1.91,
+  "peak_host_ram_gb": 61.21,
+  "baseline_host_ram_gb": 21.25,
+  "duration_s": 600.5,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T07:49:02Z",
+  "prompt_id": "13690ca6-aa42-42ca-b042-c35f981fe2a6",
+  "valid_measurement": true,
+  "run_count": 2,
+  "blocked": false
+}

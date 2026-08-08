@@ -1,0 +1,21 @@
+{
+  "recipe": "ltx_audio_gguf",
+  "run_number": 4,
+  "status": "PASS (cold)",
+  "pass": true,
+  "warm_pass": false,
+  "eyeball": "ok",
+  "peak_vram_gb": 7.47,
+  "baseline_vram_gb": 1.37,
+  "peak_host_ram_gb": 43.35,
+  "baseline_host_ram_gb": 17.1,
+  "duration_s": 264.4,
+  "output_path": "ltx_audio_gguf_out_00003_.mp4",
+  "boot_lane": "lab-8199, sage-free, clamp-14gb",
+  "timestamp": "2026-08-08T08:26:07Z",
+  "prompt_id": "aa809efa-c1a8-4d54-9a81-6ed7bad40b1d",
+  "valid_measurement": true,
+  "run_count": 4,
+  "blocked": false,
+  "eyeball_notes": "Flashing GONE. Quality acceptable. Low motion (tuning observation, prompt-driven)."
+}

@@ -1,15 +1,15 @@
 {
   "name": "h3_t2v_best",
-  "tier": "smoke",
-  "blocked": true,
+  "tier": "suite",
+  "blocked": false,
   "contract": {
     "engine": "minimax_h3",
     "mode": "t2v",
-    "width": 864,
-    "height": 480,
+    "width": 1344,
+    "height": 768,
     "frames": 124,
     "fps": 24.0,
-    "duration_s": 5.16,
+    "duration_s": 5.17,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
@@ -24,7 +24,7 @@
       "class_type": "CLIPLoader",
       "inputs": {
         "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
-        "type": "minimax_h3"
+        "type": "minimax"
       }
     },
     "3": {
@@ -42,7 +42,7 @@
     "5": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "cinematic camera motion across vintage radio control room, volumetric light, 8k",
+        "text": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
         "clip": [
           "2",
           0
@@ -52,7 +52,7 @@
     "6": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "blurry, noise, artifacts, distorted",
+        "text": "blurry, noise, artifacts, distorted, static, oversaturated",
         "clip": [
           "2",
           0
@@ -60,65 +60,77 @@
       }
     },
     "7": {
-      "class_type": "MiniMaxH3TextToVideo",
+      "class_type": "MiniMaxH3ImageToVideo",
       "inputs": {
-        "width": 864,
-        "height": 480,
-        "frames": 124,
-        "fps": 24.0,
+        "clip": [
+          "2",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "prompt": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
+        "width": 1344,
+        "height": 768,
+        "length": 124
+      }
+    },
+    "8": {
+      "class_type": "KSampler",
+      "inputs": {
         "seed": 42,
         "steps": 20,
-        "cfg": 6.5,
+        "cfg": 6.0,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1.0,
         "model": [
           "1",
           0
         ],
         "positive": [
-          "5",
+          "7",
           0
         ],
         "negative": [
           "6",
           0
         ],
-        "vae": [
-          "3",
-          0
-        ],
-        "audio_vae": [
-          "4",
-          0
-        ]
-      }
-    },
-    "8": {
-      "class_type": "VAEDecode",
-      "inputs": {
-        "samples": [
+        "latent_image": [
           "7",
-          0
-        ],
-        "vae": [
-          "3",
-          0
+          1
         ]
       }
     },
     "9": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "10": {
       "class_type": "CreateVideo",
       "inputs": {
         "images": [
-          "8",
+          "9",
           0
         ],
         "fps": 24.0
       }
     },
-    "10": {
+    "12": {
       "class_type": "SaveVideo",
       "inputs": {
         "video": [
-          "9",
+          "10",
           0
         ],
         "filename_prefix": "h3_t2v_best_out",

@@ -15,5 +15,6 @@
   "prompt_id": "669c06ca-cbfc-4b57-aac7-28e3d91c78d1",
   "valid_measurement": true,
   "run_count": 3,
-  "blocked": false
+  "blocked": false,
+  "eyeball": "defect:periodic_flash"
 }

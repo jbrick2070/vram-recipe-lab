@@ -1,0 +1,20 @@
+{
+  "recipe": "ltx_audio_ckpt",
+  "run_number": 1,
+  "status": "FAIL (no artifact output)",
+  "pass": false,
+  "warm_pass": false,
+  "eyeball": "defect:vram_oom",
+  "peak_vram_gb": 2.68,
+  "baseline_vram_gb": 1.91,
+  "peak_host_ram_gb": 23.36,
+  "baseline_host_ram_gb": 21.44,
+  "duration_s": 3.0,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T07:38:27Z",
+  "prompt_id": "b416fb75-075e-49e9-ba4d-5a059c156363",
+  "valid_measurement": true,
+  "run_count": 1,
+  "blocked": false
+}

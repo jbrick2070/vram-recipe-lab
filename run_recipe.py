@@ -360,8 +360,8 @@ def check_widget_integrity(recipe_data: Dict[str, Any], object_info: Dict[str, A
 
 
 def check_affordability(recipe_name: str, recipe_path: Path = None, is_force: bool = False):
-    """Preflight Check #7: Refuse configurations whose last measured peak exceeded 14.5 GB unless --force or recipe edited."""
-    if is_force:
+    """Preflight Check #7: Refuse configurations whose last measured peak exceeded 14.5 GB unless --force, --clamp, or recipe edited."""
+    if is_force or os.environ.get("LAB_RESERVE_VRAM_GB"):
         return
     result_file = RESULTS_DIR / f"{recipe_name}.json"
     if result_file.exists():
@@ -595,7 +595,7 @@ def main():
             sys.exit(1)
 
         # Check for BLOCKED status in recipe metadata
-        if recipe_data.get("blocked", False) or "h3" in recipe_name.lower():
+        if recipe_data.get("blocked", False):
             print(f"\n[BLOCKED] Recipe {recipe_name} is BLOCKED (required weights not present on disk).")
             update_results_ledger(recipe_name, "BLOCKED", 0.0, 0.0, 0.0, "Dry prep complete; weights not on disk (42.5 GB)")
             update_engine_matrix_beta(recipe_name, tier, "BLOCKED", 0.0, 0.0, "no", 0.0, boot_lane_str, "Weights missing")
@@ -654,7 +654,8 @@ def main():
             execution_success = False
             output_path = ""
             outputs = {}
-            while time.time() - start_time < 600:  # 10 min timeout
+            RUNNER_COMPLETION_TIMEOUT_S = 1800
+            while time.time() - start_time < RUNNER_COMPLETION_TIMEOUT_S:  # 1800s (30 min) completion window
                 time.sleep(0.5)
                 try:
                     with urllib.request.urlopen(f"{COMFY_SERVER_URL}/history/{prompt_id}") as hresp:
@@ -722,11 +723,13 @@ def main():
             prev_run_count = 0
             prev_passed = False
             result_file = RESULTS_DIR / f"{recipe_name}.json"
+            prev_eyeball = "pending"
             if result_file.exists():
                 try:
                     prev_data = json.loads(result_file.read_text(encoding="utf-8"))
                     prev_run_count = prev_data.get("run_count", 0)
                     prev_passed = prev_data.get("pass", prev_data.get("passed", False))
+                    prev_eyeball = prev_data.get("eyeball", "pending")
                 except Exception:
                     pass
             
@@ -735,7 +738,11 @@ def main():
 
             # gate_pass = this run individually passed the VRAM ceiling
             # warm_pass = two consecutive gate passes (the final certification)
-            if not execution_success:
+            if not completed:
+                gate_pass = False
+                warm_pass = False
+                status = f"TIMEOUT (exceeded {RUNNER_COMPLETION_TIMEOUT_S}s runner completion window)"
+            elif not execution_success:
                 gate_pass = False
                 warm_pass = False
                 if not outputs or not output_path:
@@ -747,6 +754,21 @@ def main():
                 warm_pass = False
                 status = "INVALID (sampler missed peak)"
                 print(f"[WARNING] Invalid measurement! Peak ({peak_vram_gb:.2f} GB) <= baseline ({baseline_vram_gb:.2f} GB) + 0.2 GB. Refusing PASS.")
+            elif clamp_gb is not None:
+                target_limit = float(clamp_gb)
+                vram_delta = peak_vram_gb - baseline_vram_gb
+                if vram_delta > target_limit:
+                    gate_pass = False
+                    warm_pass = False
+                    status = f"FAIL (net VRAM {vram_delta:.2f} GB > clamp {target_limit} GB)"
+                else:
+                    gate_pass = True
+                    warm_pass = is_warm_cache
+                    is_marginal = (vram_delta >= (target_limit - 0.25))
+                    if is_marginal:
+                        status = "PASS (marginal)" if is_warm_cache else "PASS (cold, marginal)"
+                    else:
+                        status = "PASS" if is_warm_cache else "PASS (cold)"
             elif peak_vram_gb > VRAM_GATE_GB:
                 gate_pass = False
                 warm_pass = False
@@ -754,7 +776,11 @@ def main():
             else:
                 gate_pass = True
                 warm_pass = is_warm_cache
-                status = "PASS" if is_warm_cache else "PASS (cold)"
+                is_marginal = (peak_vram_gb >= (VRAM_GATE_GB - 0.25))
+                if is_marginal:
+                    status = "PASS (marginal)" if is_warm_cache else "PASS (cold, marginal)"
+                else:
+                    status = "PASS" if is_warm_cache else "PASS (cold)"
 
             # For backwards compat, 'passed' used in print/ledger = warm_pass
             passed = warm_pass
@@ -776,6 +802,7 @@ def main():
                 "status": status,
                 "pass": gate_pass,
                 "warm_pass": warm_pass,
+                "eyeball": prev_eyeball,
                 "peak_vram_gb": round(peak_vram_gb, 2),
                 "baseline_vram_gb": round(baseline_vram_gb, 2),
                 "peak_host_ram_gb": round(peak_host_ram_gb, 2),

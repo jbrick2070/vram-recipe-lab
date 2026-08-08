@@ -7,5 +7,6 @@
   "boot_lane": "lab-8199, sage-free",
   "pass": false,
   "blocked": true,
-  "run_count": 0
+  "run_count": 0,
+  "eyeball": "defect:periodic_flash"
 }

@@ -33,4 +33,4 @@ This file defines the strict operating constraints for agents working in `vram-r
     - Boot lane string is recorded as `lab-8199, sage-free, clamp-<N>gb`.
     - **Clamp Pass Line**: A `clamp-<N>gb` run passes when `(peak_vram_gb - baseline_vram_gb) <= N GB`, since desktop baseline VRAM is not part of the recipe's allocated footprint.
     - Clamp lane runs validate that low-VRAM profiles stay within tight physical hardware limits (e.g. 8 GB VRAM targets) by using PyTorch reserve-vram allocation limits.
-
+13. **Marginal-Pass Rule**: A pass within 0.25 GB of the ceiling (i.e. peak VRAM between 14.25 GB and 14.50 GB on a 14.50 GB gate) is recorded `PASS (marginal)` and is not promotable to production use without a lower-footprint variant.

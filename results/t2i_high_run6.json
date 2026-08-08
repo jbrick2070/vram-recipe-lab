@@ -15,5 +15,6 @@
   "prompt_id": "c5eb4b51-b50d-48e2-b236-1f927c1de722",
   "valid_measurement": true,
   "run_count": 6,
-  "blocked": false
+  "blocked": false,
+  "eyeball": "pending"
 }

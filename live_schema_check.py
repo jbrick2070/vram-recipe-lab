@@ -26,12 +26,14 @@ REQUIRED_RECIPES = [
     "t2i_low", "t2i_high",
     "wan_ti2v_low", "wan_ti2v_high",
     "wan_i2v_14b_low", "wan_i2v_14b_high",
-    "ltx_i2v_low", "ltx_i2v_high",
-    "ltx_audio_low", "ltx_lipsync_low",
+    "ltx_t2v_ckpt", "ltx_t2v_gguf", "ltx_t2v_fullhd_experimental",
+    "ltx_i2v_ckpt", "ltx_i2v_gguf", "ltx_i2v_fullhd_experimental",
+    "ltx_audio_ckpt", "ltx_audio_gguf", "ltx_audio_fullhd_experimental", "ltx_lipsync_low",
     "h3_t2v_low", "h3_t2v_best",
     "h3_i2v_low", "h3_i2v_best",
     "h3_r2v_low", "h3_r2v_best"
 ]
+
 
 
 def is_server_listening() -> bool:
@@ -44,30 +46,8 @@ def is_server_listening() -> bool:
 
 
 def boot_server():
-    if is_server_listening():
-        print(f"[SERVER] Lab server already online at {SERVER_URL}")
-        return
-
-    print(f"[SERVER] Launching lab server via {BOOT_CMD.name} on port 8199...")
-    creationflags = subprocess.CREATE_NEW_PROCESS_GROUP | getattr(subprocess, "DETACHED_PROCESS", 0x00000008)
-    proc = subprocess.Popen(
-        [str(BOOT_CMD)],
-        cwd=str(REPO_ROOT),
-        creationflags=creationflags,
-        close_fds=True
-    )
-    SERVER_PID_FILE.write_text(str(proc.pid), encoding="utf-8")
-    print(f"[SERVER] Recorded server PID {proc.pid} in {SERVER_PID_FILE.name}")
-
-    start_t = time.time()
-    while time.time() - start_t < 120:
-        if is_server_listening():
-            elapsed = time.time() - start_t
-            print(f"[SERVER] Lab server online on port 8199 after {elapsed:.1f}s")
-            return
-        time.sleep(2)
-
-    raise RuntimeError("Lab server failed to come online on port 8199 within 120s timeout")
+    import run_recipe
+    run_recipe.check_server_up_and_ownership()
 
 
 def shutdown_server():

@@ -1,0 +1,20 @@
+{
+  "recipe": "h3_t2v_low",
+  "run_number": 1,
+  "status": "FAIL (VRAM 15.30 GB > 14.5 GB)",
+  "pass": false,
+  "warm_pass": false,
+  "eyeball": "pending",
+  "peak_vram_gb": 15.3,
+  "baseline_vram_gb": 1.87,
+  "peak_host_ram_gb": 61.28,
+  "baseline_host_ram_gb": 17.14,
+  "duration_s": 465.9,
+  "output_path": "h3_t2v_low_out_00001_.mp4",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T10:19:23Z",
+  "prompt_id": "c7b8d0c4-c435-477a-8a87-68a59141db14",
+  "valid_measurement": true,
+  "run_count": 1,
+  "blocked": false
+}

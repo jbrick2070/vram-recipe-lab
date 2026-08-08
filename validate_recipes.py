@@ -24,13 +24,14 @@ REQUIRED_RECIPES = [
     "t2i_low", "t2i_high",
     "wan_ti2v_low", "wan_ti2v_high",
     "wan_i2v_14b_low", "wan_i2v_14b_high",
-    "ltx_t2v_low", "ltx_t2v_high",
-    "ltx_i2v_low", "ltx_i2v_high",
-    "ltx_audio_low", "ltx_audio_high", "ltx_lipsync_low",
+    "ltx_t2v_ckpt", "ltx_t2v_gguf", "ltx_t2v_fullhd_experimental",
+    "ltx_i2v_ckpt", "ltx_i2v_gguf", "ltx_i2v_fullhd_experimental",
+    "ltx_audio_ckpt", "ltx_audio_gguf", "ltx_audio_fullhd_experimental", "ltx_lipsync_low",
     "h3_t2v_low", "h3_t2v_best",
     "h3_i2v_low", "h3_i2v_best",
     "h3_r2v_low", "h3_r2v_best"
 ]
+
 
 
 def validate_recipe_file(recipe_path: Path) -> dict:

@@ -1,22 +1,22 @@
 {
   "name": "h3_r2v_best",
-  "tier": "smoke",
-  "blocked": true,
+  "tier": "suite",
+  "blocked": false,
   "contract": {
     "engine": "minimax_h3",
     "mode": "r2v",
-    "width": 864,
-    "height": 480,
+    "width": 1344,
+    "height": 768,
     "frames": 124,
     "fps": 24.0,
-    "duration_s": 5.16,
+    "duration_s": 5.17,
     "vram_ceiling_gb": 14.5
   },
   "prompt": {
     "1": {
       "class_type": "UNETLoader",
       "inputs": {
-        "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "weight_dtype": "default"
       }
     },
@@ -24,7 +24,7 @@
       "class_type": "CLIPLoader",
       "inputs": {
         "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
-        "type": "minimax_h3"
+        "type": "minimax"
       }
     },
     "3": {
@@ -40,55 +40,36 @@
       }
     },
     "5": {
-      "class_type": "LoadImage",
+      "class_type": "CLIPTextEncode",
       "inputs": {
-        "image": "portrait.png"
+        "text": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
+        "clip": [
+          "2",
+          0
+        ]
       }
     },
     "6": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "character speaking into vintage radio broadcast microphone, realistic facial motion",
+        "text": "blurry, noise, artifacts, distorted, static, oversaturated",
         "clip": [
           "2",
           0
         ]
+      }
+    },
+    "11": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "portrait.png"
       }
     },
     "7": {
-      "class_type": "CLIPTextEncode",
-      "inputs": {
-        "text": "blurry, noise, artifacts, distorted",
-        "clip": [
-          "2",
-          0
-        ]
-      }
-    },
-    "8": {
       "class_type": "MiniMaxH3ReferenceToVideo",
       "inputs": {
-        "reference_image": [
-          "5",
-          0
-        ],
-        "width": 864,
-        "height": 480,
-        "frames": 124,
-        "fps": 24.0,
-        "seed": 42,
-        "steps": 20,
-        "cfg": 6.5,
-        "model": [
-          "1",
-          0
-        ],
-        "positive": [
-          "6",
-          0
-        ],
-        "negative": [
-          "7",
+        "clip": [
+          "2",
           0
         ],
         "vae": [
@@ -98,6 +79,42 @@
         "audio_vae": [
           "4",
           0
+        ],
+        "prompt": "cinematic portrait, vintage radio control room, warm lighting",
+        "width": 1344,
+        "height": 768,
+        "length": 124,
+        "ref_image_size": "match",
+        "ref_image_0": [
+          "11",
+          0
+        ]
+      }
+    },
+    "8": {
+      "class_type": "KSampler",
+      "inputs": {
+        "seed": 42,
+        "steps": 20,
+        "cfg": 6.0,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1.0,
+        "model": [
+          "1",
+          0
+        ],
+        "positive": [
+          "7",
+          0
+        ],
+        "negative": [
+          "6",
+          0
+        ],
+        "latent_image": [
+          "7",
+          1
         ]
       }
     },
@@ -124,7 +141,7 @@
         "fps": 24.0
       }
     },
-    "11": {
+    "12": {
       "class_type": "SaveVideo",
       "inputs": {
         "video": [

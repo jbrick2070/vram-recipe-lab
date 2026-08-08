@@ -1,6 +1,6 @@
 # Models Manifest — Available Local Models
 
-Query timestamp: 2026-08-07 (Verified from live lab ComfyUI `GET /object_info` at `http://127.0.0.1:8199`)
+Query timestamp: 2026-08-08 (Verified from live lab ComfyUI `GET /object_info` at `http://127.0.0.1:8199`)
 
 This manifest lists all models available on the local lab server (`http://127.0.0.1:8199`). Recipes in `recipes/` must ONLY reference models listed in this manifest.
 
@@ -20,6 +20,8 @@ This manifest lists all models available on the local lab server (`http://127.0.
 ### UNET / Diffusion Models (`UNETLoader` & `UnetLoaderGGUF`)
 | Model Filename | Path / Store | Notes |
 |---|---|---|
+| `minimax_h3_fl2va_pruned_int8_convrot.safetensors` | `diffusion_models/` | MiniMax H3 FL2VA Pruned INT8 ConvRot diffusion model |
+| `minimax_h3_ref2va_pruned_int8_convrot.safetensors` | `diffusion_models/` | MiniMax H3 Ref2VA Pruned INT8 ConvRot diffusion model |
 | `z_image_turbo_nvfp4.safetensors` | `diffusion_models/` | Z-Image Turbo NVFP4 image diffusion model |
 | `Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors` | `diffusion_models/` | Wan 2.1 HuMo 14B FP8 video model |
 | `humo_1.7B_fp16.safetensors` | `diffusion_models/` | HuMo 1.7B FP16 video model |
@@ -35,7 +37,8 @@ This manifest lists all models available on the local lab server (`http://127.0.
 ### Text Encoders / CLIP (`CLIPLoader`)
 | Model Filename | Path / Store | Notes |
 |---|---|---|
-| `qwen_3_4b_fp8_mixed.safetensors` | `text_encoders/` | Qwen 3.4B FP8 text encoder (used for `qwen_image` / `z_image`) |
+| `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` | `text_encoders/` | Qwen3-VL 32B MiniMax H3 NVFP4 AWQ text encoder |
+| `qwen_3_4b_fp8_mixed.safetensors` | `text_encoders/` | Qwen 3.4B FP8 text encoder |
 | `qwen_3_4b.safetensors` | `text_encoders/` | Qwen 3.4B text encoder |
 | `gemma_2_2b_fp16.safetensors` | `text_encoders/` | Gemma 2 2B FP16 text encoder |
 | `gemma_3_12B_it_fp4_mixed.safetensors` | `text_encoders/` | Gemma 3 12B FP4 text encoder |
@@ -49,13 +52,15 @@ This manifest lists all models available on the local lab server (`http://127.0.
 ### VAEs (`VAELoader`)
 | Model Filename | Path / Store | Notes |
 |---|---|---|
-| `ae.safetensors` | `vae/` | Standard Autoencoder VAE (used for `z_image` / Flux / SD) |
+| `minimax_h3_audio_vae_fp32.safetensors` | `vae/` | MiniMax H3 Audio VAE FP32 |
+| `minimax_h3_video_vae_fp16.safetensors` | `vae/` | MiniMax H3 Video VAE FP16 |
+| `ae.safetensors` | `vae/` | Standard Autoencoder VAE |
 | `flux2-vae.safetensors` | `vae/` | Flux 2 VAE |
 | `lumina2_ae.safetensors` | `vae/` | Lumina 2 VAE |
 | `ltx-2.3-22b-dev_video_vae.safetensors` | `vae/` | LTX Video VAE |
 | `ltx-2.3-22b-dev_audio_vae.safetensors` | `vae/` | LTX Audio VAE |
-| `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE — REQUIRED by Wan2.2 TI2V-5B (OTR ruling M8: "The 5B REQUIRES the Wan2.2 VAE, not the 2.1 VAE"). Never swap. |
-| `wan_2.1_vae.safetensors` | `vae/` | Wan 2.1 VAE — used by the Wan2.2 14B models (wan_i2v_14b_*). Wrong VAE does not crash; it silently decodes garbage the machine gate cannot detect. |
+| `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE |
+| `wan_2.1_vae.safetensors` | `vae/` | Wan 2.1 VAE |
 
 ### LoRAs (`LoraLoader` & `LoraLoaderModelOnly`)
 | Model Filename | Path / Store | Notes |
@@ -65,8 +70,5 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `Wan2_2_5B_FastWanFullAttn_lora_rank_128_bf16.safetensors` | `loras/` | Wan 2.2 5B Fast Full Attention LoRA |
 | `lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors` | `loras/` | LightX2V I2V 14B 480p LoRA |
 
-## Missing / Unloaded Models (BLOCKED)
-
-| Model Set | Required Files | Status | Reason |
-|---|---|---|---|
-| MiniMax H3 | `fl2va_pruned_int8_convrot`, `qwen3vl_32b_nvfp4_awq`, video VAE, audio VAE | **BLOCKED** | 42.5 GB weight set not present on disk. |
+## Verified Active Models
+All MiniMax H3 weight files verified byte-exact on disk in `C:\ComfyUI-Models` under license grant at `docs/H3_LICENSE_GRANT.md`.
