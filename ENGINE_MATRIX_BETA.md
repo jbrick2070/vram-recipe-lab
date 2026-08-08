@@ -20,3 +20,4 @@ This document tracks engine candidate evaluations in `vram-recipe-lab`.
 | `h3_i2v_best` | smoke | BLOCKED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | N/A | 864x480 x 124f; weights missing; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | `h3_r2v_low` | smoke | BLOCKED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | N/A | 864x480 x 124f; weights missing; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | `h3_r2v_best` | smoke | BLOCKED | 0.00 | 0.0 | no | 0/2 | lab-8199, sage-free | N/A | 864x480 x 124f; weights missing; EXTERNAL-REPORTED peak 7.4-7.6 GB |
+| ltx_audio_high | smoke | ERROR (execution error) | 1.67 | N/A | no | 2.6s | lab-8199, sage-free | 2026-08-07 | Measured on box (ERROR (execution error)) |
