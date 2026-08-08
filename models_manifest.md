@@ -56,6 +56,14 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE — REQUIRED by Wan2.2 TI2V-5B (OTR ruling M8: "The 5B REQUIRES the Wan2.2 VAE, not the 2.1 VAE"). Never swap. |
 | `wan_2.1_vae.safetensors` | `vae/` | Wan 2.1 VAE — used by the Wan2.2 14B models (wan_i2v_14b_*). Wrong VAE does not crash; it silently decodes garbage the machine gate cannot detect. |
 
+### LoRAs (`LoraLoader` & `LoraLoaderModelOnly`)
+| Model Filename | Path / Store | Notes |
+|---|---|---|
+| `ltxv\ltx2\ltx-2.3-22b-distilled-lora-384-1.1.safetensors` | `loras/` | LTX Video 2.3 22B Distilled LoRA 1.1 |
+| `ltxv\ltx2\ltx-2.3-22b-distilled-lora-384.safetensors` | `loras/` | LTX Video 2.3 22B Distilled LoRA 1.0 |
+| `Wan2_2_5B_FastWanFullAttn_lora_rank_128_bf16.safetensors` | `loras/` | Wan 2.2 5B Fast Full Attention LoRA |
+| `lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors` | `loras/` | LightX2V I2V 14B 480p LoRA |
+
 ## Missing / Unloaded Models (BLOCKED)
 
 | Model Set | Required Files | Status | Reason |
