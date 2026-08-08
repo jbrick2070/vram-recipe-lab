@@ -7,11 +7,15 @@ set PYTHONUTF8=1
 set PYTHONIOENCODING=utf-8
 set HF_HOME=C:\ComfyUI-Models\huggingface
 if not defined LAB_PORT set LAB_PORT=8199
-echo [lab-boot] headless ComfyUI on port %LAB_PORT%
+
+set EXTRA_ARGS=
+if defined LAB_RESERVE_VRAM_GB set EXTRA_ARGS=--reserve-vram %LAB_RESERVE_VRAM_GB%
+
+echo [lab-boot] headless ComfyUI on port %LAB_PORT% %EXTRA_ARGS%
 C:\Users\jeffr\Documents\ComfyUI\.venv\Scripts\python.exe ^
   C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\main.py ^
   --port %LAB_PORT% --cuda-malloc --user-directory C:\Users\jeffr\Documents\ComfyUI ^
   --output-directory C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\outputs ^
   --extra-model-paths-config "%~dp0comfy_model_paths.yaml" ^
-  --disable-metadata ^
+  --disable-metadata %EXTRA_ARGS% ^
   >> "%~dp0server.log" 2>&1

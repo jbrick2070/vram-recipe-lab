@@ -566,7 +566,14 @@ def main():
     is_suite = "--suite" in sys.argv
     do_shutdown = "--shutdown" in sys.argv
     tier = "suite" if is_suite else "smoke"
-    boot_lane_str = "lab-8199, sage-free"
+    
+    clamp_gb = os.environ.get("LAB_RESERVE_VRAM_GB")
+    for i, arg in enumerate(sys.argv):
+        if arg == "--clamp" and i + 1 < len(sys.argv):
+            clamp_gb = sys.argv[i + 1]
+            os.environ["LAB_RESERVE_VRAM_GB"] = clamp_gb
+
+    boot_lane_str = f"lab-8199, sage-free, clamp-{clamp_gb}gb" if clamp_gb else "lab-8199, sage-free"
 
     if not recipe_path.exists():
         print(f"Error: Recipe file not found: {recipe_path}")

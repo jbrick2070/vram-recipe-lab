@@ -28,3 +28,8 @@ This file defines the strict operating constraints for agents working in `vram-r
 11. **Living Beta Matrix & Results**:
     - Update `ENGINE_MATRIX_BETA.md` and `RESULTS.md` after every gated run.
     - Never touch the OTR repo or edit the snapshot in `research/`.
+12. **Clamp Lane & Reserve VRAM**:
+    - Setting `LAB_RESERVE_VRAM_GB` (or passing `--clamp <N>`) instructs `boot_lab_server.cmd` to append `--reserve-vram %LAB_RESERVE_VRAM_GB%`.
+    - Boot lane string is recorded as `lab-8199, sage-free, clamp-<N>gb`.
+    - Clamp lane runs validate that low-VRAM profiles stay within tight physical hardware limits (e.g. 8 GB VRAM targets) by using PyTorch reserve-vram allocation limits.
+
