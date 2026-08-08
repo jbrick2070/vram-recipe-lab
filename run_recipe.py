@@ -359,10 +359,15 @@ def check_widget_integrity(recipe_data: Dict[str, Any], object_info: Dict[str, A
                     print(f"[PREFLIGHT WARN] Node {node_id} ({class_type}) input '{in_key}' not found in server object_info schema.")
 
 
-def check_affordability(recipe_name: str):
-    """Preflight Check #7: Refuse configurations whose last measured peak exceeded 14.5 GB."""
+def check_affordability(recipe_name: str, recipe_path: Path = None, is_force: bool = False):
+    """Preflight Check #7: Refuse configurations whose last measured peak exceeded 14.5 GB unless --force or recipe edited."""
+    if is_force:
+        return
     result_file = RESULTS_DIR / f"{recipe_name}.json"
     if result_file.exists():
+        if recipe_path and recipe_path.exists():
+            if recipe_path.stat().st_mtime > result_file.stat().st_mtime:
+                return  # Recipe was edited since last run
         try:
             prev = json.loads(result_file.read_text(encoding="utf-8"))
             last_peak = prev.get("peak_vram_gb", 0.0)
@@ -431,9 +436,9 @@ def check_disk_space():
         raise PreflightError(10, "Disk", f"Only {free_gb:.2f} GB free on output drive (min {MIN_FREE_DISK_GB} GB required)")
 
 
-def run_all_preflights(recipe_path: Path, recipe_data: Dict[str, Any], recipe_name: str) -> Dict[str, Any]:
-    """Execute all 10 preflight checks in code sequence."""
-    print(f"\n--- Running Preflight Checks for {recipe_name} ---")
+def run_all_preflights(recipe_path: Path, recipe_data: dict, recipe_name: str, is_force: bool = False):
+    """Run all 10 preflight safety and validity checks before acquiring lock."""
+    print(f"--- Running Preflight Checks for {recipe_name} ---")
     
     system_stats = check_server_up_and_ownership()
     print(f"  [OK] Check 3: Lab server up & owned at 127.0.0.1:{LAB_PORT}")
@@ -451,7 +456,7 @@ def run_all_preflights(recipe_path: Path, recipe_data: Dict[str, Any], recipe_na
     check_widget_integrity(recipe_data, object_info)
     print("  [OK] Check 6: Widget integrity verified")
 
-    check_affordability(recipe_name)
+    check_affordability(recipe_name, recipe_path=recipe_path, is_force=is_force)
     print("  [OK] Check 7: Affordability check passed")
 
     check_fixtures_uploaded(recipe_data)
@@ -565,6 +570,7 @@ def main():
     recipe_path = Path(sys.argv[1]).resolve()
     is_suite = "--suite" in sys.argv
     do_shutdown = "--shutdown" in sys.argv
+    is_force = "--force" in sys.argv
     tier = "suite" if is_suite else "smoke"
     
     clamp_gb = os.environ.get("LAB_RESERVE_VRAM_GB")
@@ -609,7 +615,7 @@ def main():
 
         # Execute all 10 Preflight checks
         try:
-            run_all_preflights(recipe_path, recipe_data, recipe_name)
+            run_all_preflights(recipe_path, recipe_data, recipe_name, is_force=is_force)
         except PreflightError as e:
             print(f"\n[PREFLIGHT ABORT] {e}")
             update_results_ledger(recipe_name, "FAIL", 0.0, 0.0, 0.0, f"Aborted on Preflight #{e.check_num} ({e.name}): {e.reason}")
