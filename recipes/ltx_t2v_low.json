@@ -21,16 +21,21 @@
           0
         ],
         "format": "auto",
-        "codec": "auto"
+        "codec": "auto",
+        "filename_prefix": "video_ltx2_3_t2v_out"
       }
     },
     "216": {
       "class_type": "RandomNoise",
-      "inputs": {}
+      "inputs": {
+        "noise_seed": 42
+      }
     },
     "237": {
       "class_type": "RandomNoise",
-      "inputs": {}
+      "inputs": {
+        "noise_seed": 42
+      }
     },
     "229": {
       "class_type": "LTXVConcatAVLatent",
@@ -51,11 +56,15 @@
     },
     "246": {
       "class_type": "KSamplerSelect",
-      "inputs": {}
+      "inputs": {
+        "sampler_name": "euler"
+      }
     },
     "211": {
       "class_type": "ManualSigmas",
-      "inputs": {}
+      "inputs": {
+        "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+      }
     },
     "213": {
       "class_type": "CFGGuider",
@@ -124,7 +133,8 @@
           0
         ],
         "lora_name": "ltxv\\ltx2\\ltx-2.3-22b-distilled-lora-384-1.1.safetensors",
-        "strength_model": 1.0
+        "strength_model": 1.0,
+        "strength_clip": 1.0
       }
     },
     "235": {
@@ -133,7 +143,8 @@
         "images": [
           "238",
           0
-        ]
+        ],
+        "longer_edge": 1536
       }
     },
     "253": {
@@ -209,7 +220,9 @@
     },
     "209": {
       "class_type": "KSamplerSelect",
-      "inputs": {}
+      "inputs": {
+        "sampler_name": "euler"
+      }
     },
     "256": {
       "class_type": "ComfyMathExpression",
@@ -217,7 +230,8 @@
         "values.a": [
           "257",
           0
-        ]
+        ],
+        "expression": "a/2"
       }
     },
     "259": {
@@ -226,7 +240,8 @@
         "values.a": [
           "258",
           0
-        ]
+        ],
+        "expression": "a/2"
       }
     },
     "228": {
@@ -286,24 +301,33 @@
         "values.a": [
           "260",
           0
-        ]
+        ],
+        "expression": "a"
       }
     },
     "258": {
       "class_type": "PrimitiveInt",
-      "inputs": {}
+      "inputs": {
+        "value": 720
+      }
     },
     "260": {
       "class_type": "PrimitiveInt",
-      "inputs": {}
+      "inputs": {
+        "value": 25
+      }
     },
     "225": {
       "class_type": "PrimitiveInt",
-      "inputs": {}
+      "inputs": {
+        "value": 5
+      }
     },
     "201": {
       "class_type": "PrimitiveBoolean",
-      "inputs": {}
+      "inputs": {
+        "value": true
+      }
     },
     "240": {
       "class_type": "CLIPTextEncode",
@@ -354,7 +378,9 @@
     },
     "252": {
       "class_type": "ManualSigmas",
-      "inputs": {}
+      "inputs": {
+        "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+      }
     },
     "217": {
       "class_type": "LTXVSeparateAVLatent",
@@ -418,11 +444,15 @@
     },
     "233": {
       "class_type": "LatentUpscaleModelLoader",
-      "inputs": {}
+      "inputs": {
+        "model_name": "ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
+      }
     },
     "257": {
       "class_type": "PrimitiveInt",
-      "inputs": {}
+      "inputs": {
+        "value": 1280
+      }
     },
     "247": {
       "class_type": "CLIPTextEncode",
@@ -465,15 +495,23 @@
     },
     "236": {
       "class_type": "CheckpointLoaderSimple",
-      "inputs": {}
+      "inputs": {
+        "ckpt_name": "ltx-2.3-22b-dev.safetensors"
+      }
     },
     "243": {
       "class_type": "LTXAVTextEncoderLoader",
-      "inputs": {}
+      "inputs": {
+        "text_encoder": "gemma_3_12B_it_fp4_mixed.safetensors",
+        "ckpt_name": "ltx-2.3-22b-dev.safetensors",
+        "device": "default"
+      }
     },
     "266": {
       "class_type": "PrimitiveStringMultiline",
-      "inputs": {}
+      "inputs": {
+        "value": "cinematic video of a sunlit coastal road trip, high quality"
+      }
     },
     "222": {
       "class_type": "LTXVConcatAVLatent",
@@ -498,7 +536,8 @@
         "values.b": [
           "260",
           0
-        ]
+        ],
+        "expression": "a * b + 1"
       }
     },
     "325": {
@@ -517,7 +556,8 @@
           0
         ],
         "lora_name": "ltxv\\ltx2\\ltx-2.3-22b-distilled-lora-384-1.1.safetensors",
-        "strength_model": 1.0
+        "strength_model": 1.0,
+        "strength_clip": 1.0
       }
     },
     "327": {
@@ -562,7 +602,9 @@
     },
     "330": {
       "class_type": "PrimitiveBoolean",
-      "inputs": {}
+      "inputs": {
+        "value": true
+      }
     }
   }
 }

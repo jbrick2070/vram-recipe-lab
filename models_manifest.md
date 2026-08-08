@@ -30,6 +30,7 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `Wan2.2-TI2V-5B-Q5_K_M.gguf` | `diffusion_models/` | Wan 2.2 TI2V 5B Q5_K_M GGUF model (`UnetLoaderGGUF`) |
 | `ltx-2.3-22b-dev-Q3_K_M.gguf` | `unet/` | LTX Video 2.3 22B Q3_K_M GGUF model (`UnetLoaderGGUF`) |
 | `distilled-1.1/ltx-2.3-22b-distilled-1.1-Q3_K_M.gguf` | `unet/` | LTX Video 2.3 22B Distilled Q3_K_M GGUF model (`UnetLoaderGGUF`) |
+| `ltx-2.3-spatial-upscaler-x2-1.1.safetensors` | `latent_upscale_models/` | LTX Video 2.3 Spatial Upscaler x2 model |
 
 ### Text Encoders / CLIP (`CLIPLoader`)
 | Model Filename | Path / Store | Notes |
