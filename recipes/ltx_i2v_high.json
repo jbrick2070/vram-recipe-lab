@@ -209,14 +209,8 @@
         ],
         "resize_type": {
           "resize_type": "scale dimensions",
-          "width": [
-            "312",
-            0
-          ],
-          "height": [
-            "299",
-            0
-          ],
+          "width": 1920,
+          "height": 1088,
           "crop": "center"
         },
         "scale_method": "lanczos"
