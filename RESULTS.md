@@ -21,3 +21,4 @@ This file records measured VRAM and runtime performance for every recipe variant
 | `h3_i2v_best` | **BLOCKED** | 0.00 | 0.00 | 0.0 | Weights missing on disk; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | `h3_r2v_low` | **BLOCKED** | 0.00 | 0.00 | 0.0 | Weights missing on disk; EXTERNAL-REPORTED peak 7.4-7.6 GB |
 | `h3_r2v_best` | **BLOCKED** | 0.00 | 0.00 | 0.0 | Weights missing on disk; EXTERNAL-REPORTED peak 7.4-7.6 GB |
+| wan_ti2v_high | FAIL | 0.00 | 0.00 | 0.0 | Aborted on Preflight #7 (Affordability estimate): Last measured peak (15.55 GB) exceeded 14.5 GB gate line. Refusing unchanged re-run. |

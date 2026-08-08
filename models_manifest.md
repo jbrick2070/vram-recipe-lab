@@ -17,7 +17,7 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `stable-audio-open-1.0.safetensors` | `checkpoints/` | Stable Audio Open 1.0 audio model |
 | `stable_audio_3_small_music.safetensors` | `checkpoints/` | Stable Audio 3 Small Music model |
 
-### UNET / Diffusion Models (`UNETLoader`)
+### UNET / Diffusion Models (`UNETLoader` & `UnetLoaderGGUF`)
 | Model Filename | Path / Store | Notes |
 |---|---|---|
 | `z_image_turbo_nvfp4.safetensors` | `diffusion_models/` | Z-Image Turbo NVFP4 image diffusion model |
@@ -27,7 +27,9 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `ltx-2.3-22b-distilled-1.1_transformer_only_fp8_scaled.safetensors` | `diffusion_models/` | LTX Video 2.3 22B Transformer FP8 |
 | `lumina_2_model_bf16.safetensors` | `diffusion_models/` | Lumina 2 BF16 diffusion model |
 | `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors` | `diffusion_models/` | Wan 2.2 I2V 14B FP8 model |
-| `Wan2.2-TI2V-5B-Q5_K_M.gguf` | `diffusion_models/` | Wan 2.2 TI2V 5B Q5_K_M GGUF model |
+| `Wan2.2-TI2V-5B-Q5_K_M.gguf` | `diffusion_models/` | Wan 2.2 TI2V 5B Q5_K_M GGUF model (`UnetLoaderGGUF`) |
+| `ltx-2.3-22b-dev-Q3_K_M.gguf` | `unet/` | LTX Video 2.3 22B Q3_K_M GGUF model (`UnetLoaderGGUF`) |
+| `distilled-1.1/ltx-2.3-22b-distilled-1.1-Q3_K_M.gguf` | `unet/` | LTX Video 2.3 22B Distilled Q3_K_M GGUF model (`UnetLoaderGGUF`) |
 
 ### Text Encoders / CLIP (`CLIPLoader`)
 | Model Filename | Path / Store | Notes |
