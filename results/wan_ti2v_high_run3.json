@@ -1,0 +1,19 @@
+{
+  "recipe": "wan_ti2v_high",
+  "run_number": 3,
+  "status": "PASS (cold)",
+  "pass": true,
+  "warm_pass": false,
+  "peak_vram_gb": 12.82,
+  "baseline_vram_gb": 1.49,
+  "peak_host_ram_gb": 29.16,
+  "baseline_host_ram_gb": 18.36,
+  "duration_s": 13.0,
+  "output_path": "wan_ti2v_high_out_00003_.mp4",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T01:34:14Z",
+  "prompt_id": "070fdb53-9010-43e1-bc8c-b976821a8ab1",
+  "valid_measurement": true,
+  "run_count": 3,
+  "blocked": false
+}

@@ -1,0 +1,19 @@
+{
+  "recipe": "ltx_i2v_low",
+  "run_number": 10,
+  "status": "ERROR (execution error)",
+  "pass": false,
+  "warm_pass": false,
+  "peak_vram_gb": 1.48,
+  "baseline_vram_gb": 1.48,
+  "peak_host_ram_gb": 20.33,
+  "baseline_host_ram_gb": 20.3,
+  "duration_s": 0.7,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T01:14:17Z",
+  "prompt_id": "5017ed0a-8197-4c47-b40d-fceecb72e25f",
+  "valid_measurement": false,
+  "run_count": 10,
+  "blocked": false
+}

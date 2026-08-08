@@ -1,0 +1,19 @@
+{
+  "recipe": "ltx_audio_high",
+  "run_number": 1,
+  "status": "ERROR (execution error)",
+  "pass": false,
+  "warm_pass": false,
+  "peak_vram_gb": 1.67,
+  "baseline_vram_gb": 1.67,
+  "peak_host_ram_gb": 22.12,
+  "baseline_host_ram_gb": 20.85,
+  "duration_s": 2.6,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T01:03:30Z",
+  "prompt_id": "e8e3c467-6659-432e-b0ec-f26f4fe2a905",
+  "valid_measurement": false,
+  "run_count": 1,
+  "blocked": false
+}

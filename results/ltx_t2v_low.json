@@ -1,0 +1,19 @@
+{
+  "recipe": "ltx_t2v_low",
+  "run_number": 2,
+  "status": "PASS",
+  "pass": true,
+  "warm_pass": true,
+  "peak_vram_gb": 11.13,
+  "baseline_vram_gb": 1.49,
+  "peak_host_ram_gb": 29.45,
+  "baseline_host_ram_gb": 18.59,
+  "duration_s": 27.7,
+  "output_path": "",
+  "boot_lane": "lab-8199, sage-free",
+  "timestamp": "2026-08-08T01:27:26Z",
+  "prompt_id": "21982c83-37de-4778-82fe-8a6684f5278e",
+  "valid_measurement": true,
+  "run_count": 2,
+  "blocked": false
+}

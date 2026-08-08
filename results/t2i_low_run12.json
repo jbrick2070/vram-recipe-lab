@@ -1,0 +1,19 @@
+{
+  "recipe": "t2i_low",
+  "run_number": 12,
+  "status": "PASS",
+  "pass": true,
+  "warm_pass": true,
+  "peak_vram_gb": 9.54,
+  "baseline_vram_gb": 1.49,
+  "peak_host_ram_gb": 30.38,
+  "baseline_host_ram_gb": 18.42,
+  "duration_s": 6.6,
+  "output_path": "t2i_low_out_00003_.png",
+  "boot_lane": "lab-8199, sage-free, clamp-8gb",
+  "timestamp": "2026-08-08T01:35:34Z",
+  "prompt_id": "1138b793-b2c6-4168-9f23-948094a8af15",
+  "valid_measurement": true,
+  "run_count": 12,
+  "blocked": false
+}
