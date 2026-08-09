@@ -2,6 +2,13 @@
 
 This document tracks engine candidate evaluations in `vram-recipe-lab`.
 
+**Measurement coverage: COMPLETE.** Every shipping video engine plus the H3
+character challenger now has receipt-bound machine evidence. Character casting is
+still `PENDING_HUMAN` across the five-clip HuMo/H3 review package; OTR-side HuMo rows
+are measurements, not lab-gate passes. See
+[`docs/HUMO_BAKEOFF.md`](docs/HUMO_BAKEOFF.md) and
+`results/otr_side/humo_character_lane_bakeoff.json`.
+
 | recipe | tier | status | peak VRAM (GB) | wall clock (s) | gated | pass consecutive | boot lane | last run | notes |
 |---|---|---|---|---|---|---|---|---|---|
 | t2i_low | smoke | PASS | 9.48 | 0.0 | yes | 2/2 | lab-8199, sage-free, clamp-8gb | 2026-08-08 | Warm cache (Run #13); boot lane: lab-8199, sage-free, clamp-8gb (Clamp Pass Line applied) |
@@ -55,6 +62,8 @@ This document tracks engine candidate evaluations in `vram-recipe-lab`.
 | ltx_audio_motion_m3_double_duration | gguf | GATE PASS (cold-only) | 8.24 | 400.3 | yes | 1/2 | lab-8199, sage-free, no-pinned, cache-classic, reserve-12gb | 2026-08-09 | Receipt: `results/ltx_audio_motion_m3_double_duration_run1.json` |
 | h3_mime_i2v_ledger_music_closing_8s | experiment | GATE PASS (cold-only) (machine; human pending) | 6.71 | 542.9 | yes | 1/2 | lab-8199, sage-free, no-pinned, cache-classic, reserve-12gb | 2026-08-09 | Receipt: `results/h3_mime_i2v_ledger_music_closing_8s_run1.json` |
 | h3_i2v_turbo_w4a8_4step | proposed turbo | **BLOCKED (missing both assets)** | 0.00 | 0.0 | no | 0/2 | not run | 2026-08-09 | No download; W4A8-mixed H3 weight and H3 four-step LoRA absent. Evidence: `results/comparisons/h3_speed_stack_inventory.json` |
+| humo_1_7b_bakeoff (OTR) | production-lane bakeoff | **MEASURED OTR-SIDE; HUMAN PENDING; NOT LAB-GATED** | 15.12-15.23 | 207.5-233.8 | no | 2 measured takes | otr-headless-8000, HUMO, production-wrapper | 2026-08-09 | Fixed request seed 7; 480x832x129 @ 25 fps / 5.160 s. Receipts: `results/otr_side/humo_1_7b_bakeoff_take1.json`, `results/otr_side/humo_1_7b_bakeoff_take2.json` |
+| humo_14b_fp8_bakeoff (OTR) | production-lane bakeoff | **MEASURED OTR-SIDE; HUMAN PENDING; NOT LAB-GATED** | 14.98 | 245.9 | no | 1 measured take | otr-headless-8000, HUMO, production-wrapper | 2026-08-09 | Production engine ID `humo`; 480x832x97 @ 25 fps / 3.880 s. Receipt: `results/otr_side/humo_14b_fp8_bakeoff_take1.json` |
 
 ## Normalized speed ranking
 
@@ -82,9 +91,10 @@ Evidence: `results/comparisons/general_video_speed_pair.json`.
 | Capability | Candidate | Machine state | Promotion/human state | Evidence |
 |---|---|---|---|---|
 | Sprint/general video | LTX Video distilled 2B | Normalized warm winner | Recommended per shot; quality remains content-dependent | `results/comparisons/general_video_speed_pair.json` |
-| Workhorse lips | H3 Ref2VA speaking retest | Two cold machine-gated seeds | Visible articulation; exact sync and consistency pending Jeffrey and OTR-side HuMo A/B | `results/comparisons/h3_lipsync_ab_package.json` |
+| Workhorse lips | H3 Ref2VA speaking retest | Two cold machine-gated seeds | Visible articulation; exact sync and consistency pending Jeffrey's five-clip HuMo/H3 review | `docs/HUMO_BAKEOFF.md`; `results/comparisons/h3_lipsync_ab_package.json` |
 | H3 reference audio | Opening-music RefAudio | Aligned PCM r=**0.969528** over the 3.88-second input | Reconstruction evidence; not an independent audio-generator lane | `results/comparisons/h3_refaudio_reconstruction.json` |
-| Hero lips | HuMo incumbent | Not measured in this lab | Remains incumbent until the OTR-side exact-fixture A/B; H3 now uses only portrait plus raw TTS | `results/comparisons/h3_lipsync_ab_package.json` |
+| Hero lips | HuMo incumbent | Three OTR-side production-lane measurements complete; no lab gate | Remains the recommendation pending lips/onset/identity review of all five clips | `docs/HUMO_BAKEOFF.md`; `results/otr_side/humo_1_7b_bakeoff_take1.json`; `results/otr_side/humo_14b_fp8_bakeoff_take1.json` |
+| Character-lane bakeoff | HuMo 1.7B / HuMo 14B FP8 / H3 Ref2VA | Three OTR-side HuMo runs plus two lab H3 runs complete | `PENDING_HUMAN`; measurement coverage complete, casting decision open | `docs/HUMO_BAKEOFF.md`; `results/otr_side/humo_character_lane_bakeoff.json` |
 | LTX Audio HQ | H3 canvas+duration rung | Warm pass at **1024x576x193** | Best machine-certified HQ recommendation; Jeffrey eyeball pending | `results/comparisons/ltx_audio_hq_ladder.json` |
 | WAN image-to-video | WAN I2V 14B production floor | Warm pass; cold **11.90/12 GiB** net | Exonerated but tight; WAN TI2V remains safer default | `results/comparisons/wan_i2v_14b_exoneration.json` |
 | H3 turbo | W4A8-mixed + four-step LoRA | **BLOCKED**, both assets absent | No download; new campaign only after authorization | `results/comparisons/h3_speed_stack_inventory.json` |

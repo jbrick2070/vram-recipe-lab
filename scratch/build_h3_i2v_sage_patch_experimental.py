@@ -188,12 +188,20 @@ def local_speed_stack_inventory() -> dict[str, Any]:
     h3_names = sorted(
         path.name
         for path in diffusion_dir.iterdir()
-        if path.is_file() and re.search(r"(?i)(?:minimax|h3)", path.name)
+        if path.is_file()
+        and path.suffix.lower() == ".safetensors"
+        and re.search(r"(?i)(?:minimax|h3)", path.name)
     )
     if h3_names != [FL2VA_NAME, REF2VA_NAME]:
         raise RuntimeError(f"Local H3 diffusion inventory changed: {h3_names}")
     lightx_paths = sorted(
-        (path for path in lora_dir.rglob("*") if path.is_file() and "lightx" in path.name.lower()),
+        (
+            path
+            for path in lora_dir.rglob("*")
+            if path.is_file()
+            and path.suffix.lower() == ".safetensors"
+            and "lightx" in path.name.lower()
+        ),
         key=lambda path: path.as_posix().lower(),
     )
     if [path.name for path in lightx_paths] != [WAN_LIGHTX_NAME]:

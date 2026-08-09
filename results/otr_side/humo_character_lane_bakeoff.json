@@ -1,0 +1,114 @@
+{
+  "entries": [
+    {
+      "artifact": "outputs/humo_1_7b_bakeoff_take1.mp4",
+      "artifact_sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9",
+      "category": "HuMo 1.7B fp16",
+      "duration_s": 5.16,
+      "peak_host_ram_gb": 35.13619613647461,
+      "peak_vram_gb": 15.1181640625,
+      "receipt": "results/otr_side/humo_1_7b_bakeoff_take1.json",
+      "receipt_sha256": "05c9208a85bf41e8057e5776b23831d79be3880fa6b16041926738d7739680cb",
+      "render_seconds_per_output_second": 45.306172868217054,
+      "seed": 7,
+      "verdicts": {
+        "identity": "PENDING_HUMAN",
+        "lips": "PENDING_HUMAN",
+        "onset": "PENDING_HUMAN"
+      },
+      "wall_s": 233.779852
+    },
+    {
+      "artifact": "outputs/humo_1_7b_bakeoff_take2.mp4",
+      "artifact_sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9",
+      "category": "HuMo 1.7B fp16",
+      "duration_s": 5.16,
+      "peak_host_ram_gb": 36.07855987548828,
+      "peak_vram_gb": 15.2314453125,
+      "receipt": "results/otr_side/humo_1_7b_bakeoff_take2.json",
+      "receipt_sha256": "b2ef2069a545bd44ab3f496af671d5257224313c549160569f3b548b79da7063",
+      "render_seconds_per_output_second": 40.21579011627907,
+      "seed": 7,
+      "verdicts": {
+        "identity": "PENDING_HUMAN",
+        "lips": "PENDING_HUMAN",
+        "onset": "PENDING_HUMAN"
+      },
+      "wall_s": 207.513477
+    },
+    {
+      "artifact": "outputs/humo_14b_fp8_bakeoff_take1.mp4",
+      "artifact_sha256": "796ca4b15b1bd44eb0860ccbe192854f970962986ac0710bfaa04d643c801de0",
+      "category": "HuMo 14B FP8 + LightX2V 6-step",
+      "duration_s": 3.88,
+      "peak_host_ram_gb": 51.62986373901367,
+      "peak_vram_gb": 14.984375,
+      "receipt": "results/otr_side/humo_14b_fp8_bakeoff_take1.json",
+      "receipt_sha256": "ed53c2249b3a23d64bf6b2e06833aef9d7a787c8ae8a05ccd2f915ccfb2d5938",
+      "render_seconds_per_output_second": 63.387622422680415,
+      "seed": 7,
+      "verdicts": {
+        "identity": "PENDING_HUMAN",
+        "lips": "PENDING_HUMAN",
+        "onset": "PENDING_HUMAN"
+      },
+      "wall_s": 245.943975
+    },
+    {
+      "artifact": "outputs/h3_r2v_refaudio_tts_lipsync_exact_seed42_out_00001_.mp4",
+      "artifact_sha256": "925f406f779aeef26b75e84fe7b71944db8ae453d1aaca118d3a392c88cc4cb2",
+      "category": "H3 Ref2VA",
+      "duration_s": 5.166667,
+      "label": "h3_seed42",
+      "peak_host_ram_gb": 27.27,
+      "peak_vram_gb": 6.71,
+      "receipt": "results/h3_r2v_refaudio_tts_lipsync_exact_seed42_run1.json",
+      "receipt_sha256": "24fc96d2785c93e3a53c19cb39cf69dafd0907803b14eade3dc0d63ee4914711",
+      "render_seconds_per_output_second": 59.09031876836653,
+      "seed": 42,
+      "verdicts": {
+        "identity": "PENDING_HUMAN",
+        "lips": "PENDING_HUMAN",
+        "onset": "PENDING_HUMAN"
+      },
+      "wall_s": 305.3
+    },
+    {
+      "artifact": "outputs/h3_r2v_refaudio_tts_lipsync_exact_seed43_out_00001_.mp4",
+      "artifact_sha256": "7212cfcef59a516371fbb406d4e1f8cf93baf993a5585eb4853833c3fa757101",
+      "category": "H3 Ref2VA",
+      "duration_s": 5.166667,
+      "label": "h3_seed43",
+      "peak_host_ram_gb": 27.32,
+      "peak_vram_gb": 6.51,
+      "receipt": "results/h3_r2v_refaudio_tts_lipsync_exact_seed43_run1.json",
+      "receipt_sha256": "f1a1505d50fcdc8bab41850d58b8d4e8dce6713b9573444ab27f552cc2325716",
+      "render_seconds_per_output_second": 57.63870595879316,
+      "seed": 43,
+      "verdicts": {
+        "identity": "PENDING_HUMAN",
+        "lips": "PENDING_HUMAN",
+        "onset": "PENDING_HUMAN"
+      },
+      "wall_s": 297.8
+    }
+  ],
+  "fixture_parity": true,
+  "fixture_sha256s": {
+    "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+    "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+  },
+  "human_decision": {
+    "identity": "PENDING_HUMAN",
+    "lips": "PENDING_HUMAN",
+    "onset": "PENDING_HUMAN"
+  },
+  "measurement_category_count": 4,
+  "otr_worktree_integrity_receipt_sha256": "660a60f06418821850417ad38def3c4254847cfa21332a53e3a01ca3b04062a7",
+  "receipt_kind": "character-lane-bakeoff-package",
+  "receipt_schema_version": 1,
+  "review_clip_count": 5,
+  "status": "MEASUREMENT COVERAGE COMPLETE; CASTING PENDING_HUMAN",
+  "workload_duration_parity": false,
+  "workload_note": "Raw TTS is 10.000s; H3 delivers 5.167s, HuMo 1.7B 5.160s, HuMo 14B 3.880s."
+}

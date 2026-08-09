@@ -1,0 +1,1688 @@
+{
+  "artifact_after": null,
+  "artifact_before": null,
+  "artifact_report_after": null,
+  "artifact_report_before": {
+    "bytes": 302,
+    "exists": true,
+    "is_file": true,
+    "mtime_ns": 1783113902566015400,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_single_humo_1.7B.json",
+    "sha256": "1850f102bcf08c39faa63a95132b25234481d4b6dedf33e40fd0a76dce332dd4"
+  },
+  "baseline_host_ram_bytes": 21335425024,
+  "baseline_host_ram_gib": 19.870162963867188,
+  "baseline_sample": {
+    "gpu_index": 0,
+    "gpu_utilization_percent": 7.0,
+    "host_ram_total_bytes": 68112736256,
+    "host_ram_used_bytes": 21335425024,
+    "sampled_at_ns": 1786279609157016100,
+    "sampled_at_utc": "2026-08-09T12:46:49.157016100Z",
+    "vram_total_mib": 16303.0,
+    "vram_used_mib": 2346.0
+  },
+  "baseline_vram_gib": 2.291015625,
+  "baseline_vram_mib": 2346.0,
+  "boot_lane": "otr-headless-8000, HUMO, production-wrapper",
+  "command": [
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "-u",
+    "scripts\\_otr_single_engine_smoke.py",
+    "--engine",
+    "humo_1.7B",
+    "--frames",
+    "129",
+    "--portrait",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+    "--audio",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+    "--cache-buster",
+    "4201",
+    "--timeout",
+    "2400"
+  ],
+  "command_contract": {
+    "audio": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+    "audio_sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1",
+    "cache_buster": 4201,
+    "engine": "humo_1.7B",
+    "frames": 129,
+    "portrait": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+    "portrait_sha256": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+    "request_seed": 7
+  },
+  "command_duration_s": 30.141,
+  "command_process": {
+    "argv": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "-u",
+      "scripts\\_otr_single_engine_smoke.py",
+      "--engine",
+      "humo_1.7B",
+      "--frames",
+      "129",
+      "--portrait",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+      "--audio",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+      "--cache-buster",
+      "4201",
+      "--timeout",
+      "2400"
+    ],
+    "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "parent_pid": 28784,
+    "pid": 8124,
+    "process_create_time": 1786279609.2025952
+  },
+  "command_returncode": 1,
+  "error": "SidecarError: Artifact proof timed out after 30s: artifact report did not advance",
+  "finished_at_utc": "2026-08-09T12:47:19.342089200Z",
+  "gpu_index": 0,
+  "label": "humo_1_7b_bakeoff_take1",
+  "measured": "otr-side production lane",
+  "render_to_artifact_s": null,
+  "sampler": {
+    "interval_s": 0.2,
+    "observed_processes": [
+      {
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-u",
+          "scripts\\_otr_single_engine_smoke.py",
+          "--engine",
+          "humo_1.7B",
+          "--frames",
+          "129",
+          "--portrait",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+          "--audio",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+          "--cache-buster",
+          "4201",
+          "--timeout",
+          "2400"
+        ],
+        "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "parent_pid": 28784,
+        "pid": 8124,
+        "process_create_time": 1786279609.2025952
+      },
+      {
+        "argv": [
+          "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "-u",
+          "scripts\\_otr_single_engine_smoke.py",
+          "--engine",
+          "humo_1.7B",
+          "--frames",
+          "129",
+          "--portrait",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+          "--audio",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+          "--cache-buster",
+          "4201",
+          "--timeout",
+          "2400"
+        ],
+        "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+        "parent_pid": 8124,
+        "pid": 39132,
+        "process_create_time": 1786279609.2096772
+      }
+    ],
+    "peak_host_ram_bytes": 21415702528,
+    "peak_host_ram_gib": 19.944927215576172,
+    "peak_process_tree_rss_bytes": 29732864,
+    "peak_process_tree_rss_gib": 0.027690887451171875,
+    "peak_vram_gib": 2.2939453125,
+    "peak_vram_mib": 2349.0,
+    "sample_count": 151,
+    "sample_error_count": 0,
+    "sample_errors": [],
+    "samples": [
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21343879168,
+        "sampled_at_ns": 1786279609216772600,
+        "sampled_at_utc": "2026-08-09T12:46:49.216772600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21342191616,
+        "sampled_at_ns": 1786279609429701800,
+        "sampled_at_utc": "2026-08-09T12:46:49.429701800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355569152,
+        "sampled_at_ns": 1786279609634364200,
+        "sampled_at_utc": "2026-08-09T12:46:49.634364200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2348.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21351960576,
+        "sampled_at_ns": 1786279609824173600,
+        "sampled_at_utc": "2026-08-09T12:46:49.824173600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2349.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21348704256,
+        "sampled_at_ns": 1786279610028853200,
+        "sampled_at_utc": "2026-08-09T12:46:50.028853200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2349.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21344071680,
+        "sampled_at_ns": 1786279610231961400,
+        "sampled_at_utc": "2026-08-09T12:46:50.231961400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2349.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21347831808,
+        "sampled_at_ns": 1786279610434046900,
+        "sampled_at_utc": "2026-08-09T12:46:50.434046900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2349.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21337501696,
+        "sampled_at_ns": 1786279610638488400,
+        "sampled_at_utc": "2026-08-09T12:46:50.638488400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2349.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21348646912,
+        "sampled_at_ns": 1786279610826119800,
+        "sampled_at_utc": "2026-08-09T12:46:50.826119800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2349.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21338890240,
+        "sampled_at_ns": 1786279611032461400,
+        "sampled_at_utc": "2026-08-09T12:46:51.032461400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21328146432,
+        "sampled_at_ns": 1786279611235573400,
+        "sampled_at_utc": "2026-08-09T12:46:51.235573400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21336498176,
+        "sampled_at_ns": 1786279611438282100,
+        "sampled_at_utc": "2026-08-09T12:46:51.438282100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21327257600,
+        "sampled_at_ns": 1786279611642529300,
+        "sampled_at_utc": "2026-08-09T12:46:51.642529300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21335584768,
+        "sampled_at_ns": 1786279611831172500,
+        "sampled_at_utc": "2026-08-09T12:46:51.831172500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2346.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21327597568,
+        "sampled_at_ns": 1786279612019175000,
+        "sampled_at_utc": "2026-08-09T12:46:52.019175000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21336702976,
+        "sampled_at_ns": 1786279612222471400,
+        "sampled_at_utc": "2026-08-09T12:46:52.222471400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21335617536,
+        "sampled_at_ns": 1786279612425769200,
+        "sampled_at_utc": "2026-08-09T12:46:52.425769200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21328773120,
+        "sampled_at_ns": 1786279612628938200,
+        "sampled_at_utc": "2026-08-09T12:46:52.628938200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21335789568,
+        "sampled_at_ns": 1786279612815741000,
+        "sampled_at_utc": "2026-08-09T12:46:52.815741000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21331992576,
+        "sampled_at_ns": 1786279613018829800,
+        "sampled_at_utc": "2026-08-09T12:46:53.018829800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21324574720,
+        "sampled_at_ns": 1786279613223171200,
+        "sampled_at_utc": "2026-08-09T12:46:53.223171200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21334454272,
+        "sampled_at_ns": 1786279613427173100,
+        "sampled_at_utc": "2026-08-09T12:46:53.427173100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2343.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21313126400,
+        "sampled_at_ns": 1786279613632134200,
+        "sampled_at_utc": "2026-08-09T12:46:53.632134200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2344.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21309227008,
+        "sampled_at_ns": 1786279613822952800,
+        "sampled_at_utc": "2026-08-09T12:46:53.822952800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2344.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21307277312,
+        "sampled_at_ns": 1786279614028458100,
+        "sampled_at_utc": "2026-08-09T12:46:54.028458100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2342.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21311848448,
+        "sampled_at_ns": 1786279614233186900,
+        "sampled_at_utc": "2026-08-09T12:46:54.233186900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2336.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21316849664,
+        "sampled_at_ns": 1786279614435319500,
+        "sampled_at_utc": "2026-08-09T12:46:54.435319500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2336.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370929152,
+        "sampled_at_ns": 1786279614637024200,
+        "sampled_at_utc": "2026-08-09T12:46:54.637024200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21339758592,
+        "sampled_at_ns": 1786279614825782200,
+        "sampled_at_utc": "2026-08-09T12:46:54.825782200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21339856896,
+        "sampled_at_ns": 1786279615029544200,
+        "sampled_at_utc": "2026-08-09T12:46:55.029544200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21334237184,
+        "sampled_at_ns": 1786279615235672000,
+        "sampled_at_utc": "2026-08-09T12:46:55.235672000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21339635712,
+        "sampled_at_ns": 1786279615441231000,
+        "sampled_at_utc": "2026-08-09T12:46:55.441231000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21334745088,
+        "sampled_at_ns": 1786279615628688700,
+        "sampled_at_utc": "2026-08-09T12:46:55.628688700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21341384704,
+        "sampled_at_ns": 1786279615830019300,
+        "sampled_at_utc": "2026-08-09T12:46:55.830019300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21337997312,
+        "sampled_at_ns": 1786279616018783700,
+        "sampled_at_utc": "2026-08-09T12:46:56.018783700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21338951680,
+        "sampled_at_ns": 1786279616223069900,
+        "sampled_at_utc": "2026-08-09T12:46:56.223069900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21325500416,
+        "sampled_at_ns": 1786279616429247500,
+        "sampled_at_utc": "2026-08-09T12:46:56.429247500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21324283904,
+        "sampled_at_ns": 1786279616618726700,
+        "sampled_at_utc": "2026-08-09T12:46:56.618726700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21329580032,
+        "sampled_at_ns": 1786279616822892500,
+        "sampled_at_utc": "2026-08-09T12:46:56.822892500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21321068544,
+        "sampled_at_ns": 1786279617025481800,
+        "sampled_at_utc": "2026-08-09T12:46:57.025481800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21314056192,
+        "sampled_at_ns": 1786279617228991000,
+        "sampled_at_utc": "2026-08-09T12:46:57.228991000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21319000064,
+        "sampled_at_ns": 1786279617434292600,
+        "sampled_at_utc": "2026-08-09T12:46:57.434292600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21314314240,
+        "sampled_at_ns": 1786279617639422300,
+        "sampled_at_utc": "2026-08-09T12:46:57.639422300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21320126464,
+        "sampled_at_ns": 1786279617828508400,
+        "sampled_at_utc": "2026-08-09T12:46:57.828508400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21320343552,
+        "sampled_at_ns": 1786279618033203100,
+        "sampled_at_utc": "2026-08-09T12:46:58.033203100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21315567616,
+        "sampled_at_ns": 1786279618237395000,
+        "sampled_at_utc": "2026-08-09T12:46:58.237395000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21322747904,
+        "sampled_at_ns": 1786279618426351300,
+        "sampled_at_utc": "2026-08-09T12:46:58.426351300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21320925184,
+        "sampled_at_ns": 1786279618628542600,
+        "sampled_at_utc": "2026-08-09T12:46:58.628542600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21324910592,
+        "sampled_at_ns": 1786279618817070800,
+        "sampled_at_utc": "2026-08-09T12:46:58.817070800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21324845056,
+        "sampled_at_ns": 1786279619021181900,
+        "sampled_at_utc": "2026-08-09T12:46:59.021181900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21323247616,
+        "sampled_at_ns": 1786279619226222700,
+        "sampled_at_utc": "2026-08-09T12:46:59.226222700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21337886720,
+        "sampled_at_ns": 1786279619431775500,
+        "sampled_at_utc": "2026-08-09T12:46:59.431775500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2337.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21415702528,
+        "sampled_at_ns": 1786279619637769400,
+        "sampled_at_utc": "2026-08-09T12:46:59.637769400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21353451520,
+        "sampled_at_ns": 1786279619839688600,
+        "sampled_at_utc": "2026-08-09T12:46:59.839688600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21365542912,
+        "sampled_at_ns": 1786279620029756000,
+        "sampled_at_utc": "2026-08-09T12:47:00.029756000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21365514240,
+        "sampled_at_ns": 1786279620234244100,
+        "sampled_at_utc": "2026-08-09T12:47:00.234244100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21366169600,
+        "sampled_at_ns": 1786279620438681700,
+        "sampled_at_utc": "2026-08-09T12:47:00.438681700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21360070656,
+        "sampled_at_ns": 1786279620643460300,
+        "sampled_at_utc": "2026-08-09T12:47:00.643460300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21363888128,
+        "sampled_at_ns": 1786279620830998000,
+        "sampled_at_utc": "2026-08-09T12:47:00.830998000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355216896,
+        "sampled_at_ns": 1786279621019819800,
+        "sampled_at_utc": "2026-08-09T12:47:01.019819800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21358706688,
+        "sampled_at_ns": 1786279621227030600,
+        "sampled_at_utc": "2026-08-09T12:47:01.227030600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21361188864,
+        "sampled_at_ns": 1786279621430409000,
+        "sampled_at_utc": "2026-08-09T12:47:01.430409000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355511808,
+        "sampled_at_ns": 1786279621621450900,
+        "sampled_at_utc": "2026-08-09T12:47:01.621450900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21362786304,
+        "sampled_at_ns": 1786279621829841400,
+        "sampled_at_utc": "2026-08-09T12:47:01.829841400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21363007488,
+        "sampled_at_ns": 1786279622030382700,
+        "sampled_at_utc": "2026-08-09T12:47:02.030382700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21358288896,
+        "sampled_at_ns": 1786279622234293500,
+        "sampled_at_utc": "2026-08-09T12:47:02.234293500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21357522944,
+        "sampled_at_ns": 1786279622437119400,
+        "sampled_at_utc": "2026-08-09T12:47:02.437119400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21353168896,
+        "sampled_at_ns": 1786279622640912200,
+        "sampled_at_utc": "2026-08-09T12:47:02.640912200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21360807936,
+        "sampled_at_ns": 1786279622831434800,
+        "sampled_at_utc": "2026-08-09T12:47:02.831434800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21362106368,
+        "sampled_at_ns": 1786279623019337500,
+        "sampled_at_utc": "2026-08-09T12:47:03.019337500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355757568,
+        "sampled_at_ns": 1786279623224307600,
+        "sampled_at_utc": "2026-08-09T12:47:03.224307600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 7.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21357649920,
+        "sampled_at_ns": 1786279623425424500,
+        "sampled_at_utc": "2026-08-09T12:47:03.425424500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21350793216,
+        "sampled_at_ns": 1786279623628910400,
+        "sampled_at_utc": "2026-08-09T12:47:03.628910400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21353127936,
+        "sampled_at_ns": 1786279623831065300,
+        "sampled_at_utc": "2026-08-09T12:47:03.831065300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21351682048,
+        "sampled_at_ns": 1786279624021408700,
+        "sampled_at_utc": "2026-08-09T12:47:04.021408700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 5.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21348552704,
+        "sampled_at_ns": 1786279624227313400,
+        "sampled_at_utc": "2026-08-09T12:47:04.227313400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 5.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21346091008,
+        "sampled_at_ns": 1786279624432758800,
+        "sampled_at_utc": "2026-08-09T12:47:04.432758800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21391155200,
+        "sampled_at_ns": 1786279624637276300,
+        "sampled_at_utc": "2026-08-09T12:47:04.637276300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370003456,
+        "sampled_at_ns": 1786279624825788900,
+        "sampled_at_utc": "2026-08-09T12:47:04.825788900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21368913920,
+        "sampled_at_ns": 1786279625029608600,
+        "sampled_at_utc": "2026-08-09T12:47:05.029608600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21365440512,
+        "sampled_at_ns": 1786279625235785100,
+        "sampled_at_utc": "2026-08-09T12:47:05.235785100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370150912,
+        "sampled_at_ns": 1786279625424208700,
+        "sampled_at_utc": "2026-08-09T12:47:05.424208700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370220544,
+        "sampled_at_ns": 1786279625627887800,
+        "sampled_at_utc": "2026-08-09T12:47:05.627887800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21374115840,
+        "sampled_at_ns": 1786279625817142000,
+        "sampled_at_utc": "2026-08-09T12:47:05.817142000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21367775232,
+        "sampled_at_ns": 1786279626022487600,
+        "sampled_at_utc": "2026-08-09T12:47:06.022487600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371170816,
+        "sampled_at_ns": 1786279626228618700,
+        "sampled_at_utc": "2026-08-09T12:47:06.228618700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370904576,
+        "sampled_at_ns": 1786279626430292400,
+        "sampled_at_utc": "2026-08-09T12:47:06.430292400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370609664,
+        "sampled_at_ns": 1786279626634082300,
+        "sampled_at_utc": "2026-08-09T12:47:06.634082300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371199488,
+        "sampled_at_ns": 1786279626822506600,
+        "sampled_at_utc": "2026-08-09T12:47:06.822506600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21367529472,
+        "sampled_at_ns": 1786279627027280100,
+        "sampled_at_utc": "2026-08-09T12:47:07.027280100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370019840,
+        "sampled_at_ns": 1786279627233926800,
+        "sampled_at_utc": "2026-08-09T12:47:07.233926800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370376192,
+        "sampled_at_ns": 1786279627437604500,
+        "sampled_at_utc": "2026-08-09T12:47:07.437604500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370773504,
+        "sampled_at_ns": 1786279627627571300,
+        "sampled_at_utc": "2026-08-09T12:47:07.627571300Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21374021632,
+        "sampled_at_ns": 1786279627818033900,
+        "sampled_at_utc": "2026-08-09T12:47:07.818033900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371174912,
+        "sampled_at_ns": 1786279628022828400,
+        "sampled_at_utc": "2026-08-09T12:47:08.022828400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21373894656,
+        "sampled_at_ns": 1786279628225902200,
+        "sampled_at_utc": "2026-08-09T12:47:08.225902200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21366636544,
+        "sampled_at_ns": 1786279628430919800,
+        "sampled_at_utc": "2026-08-09T12:47:08.430919800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21364785152,
+        "sampled_at_ns": 1786279628635711700,
+        "sampled_at_utc": "2026-08-09T12:47:08.635711700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21367185408,
+        "sampled_at_ns": 1786279628825692200,
+        "sampled_at_utc": "2026-08-09T12:47:08.825692200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21362405376,
+        "sampled_at_ns": 1786279629029427000,
+        "sampled_at_utc": "2026-08-09T12:47:09.029427000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21359759360,
+        "sampled_at_ns": 1786279629233591400,
+        "sampled_at_utc": "2026-08-09T12:47:09.233591400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21365616640,
+        "sampled_at_ns": 1786279629439753800,
+        "sampled_at_utc": "2026-08-09T12:47:09.439753800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21363961856,
+        "sampled_at_ns": 1786279629627183900,
+        "sampled_at_utc": "2026-08-09T12:47:09.627183900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21373100032,
+        "sampled_at_ns": 1786279629829570900,
+        "sampled_at_utc": "2026-08-09T12:47:09.829570900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370126336,
+        "sampled_at_ns": 1786279630016921500,
+        "sampled_at_utc": "2026-08-09T12:47:10.016921500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371314176,
+        "sampled_at_ns": 1786279630235136100,
+        "sampled_at_utc": "2026-08-09T12:47:10.235136100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370941440,
+        "sampled_at_ns": 1786279630439757800,
+        "sampled_at_utc": "2026-08-09T12:47:10.439757800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370736640,
+        "sampled_at_ns": 1786279630629678800,
+        "sampled_at_utc": "2026-08-09T12:47:10.629678800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21373652992,
+        "sampled_at_ns": 1786279630829635600,
+        "sampled_at_utc": "2026-08-09T12:47:10.829635600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21369643008,
+        "sampled_at_ns": 1786279631019923100,
+        "sampled_at_utc": "2026-08-09T12:47:11.019923100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21375217664,
+        "sampled_at_ns": 1786279631222833100,
+        "sampled_at_utc": "2026-08-09T12:47:11.222833100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371310080,
+        "sampled_at_ns": 1786279631427445800,
+        "sampled_at_utc": "2026-08-09T12:47:11.427445800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370777600,
+        "sampled_at_ns": 1786279631630627900,
+        "sampled_at_utc": "2026-08-09T12:47:11.630627900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21367799808,
+        "sampled_at_ns": 1786279631821113700,
+        "sampled_at_utc": "2026-08-09T12:47:11.821113700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370515456,
+        "sampled_at_ns": 1786279632028641100,
+        "sampled_at_utc": "2026-08-09T12:47:12.028641100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21366525952,
+        "sampled_at_ns": 1786279632234692100,
+        "sampled_at_utc": "2026-08-09T12:47:12.234692100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371523072,
+        "sampled_at_ns": 1786279632438959400,
+        "sampled_at_utc": "2026-08-09T12:47:12.438959400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21370961920,
+        "sampled_at_ns": 1786279632629886800,
+        "sampled_at_utc": "2026-08-09T12:47:12.629886800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21368098816,
+        "sampled_at_ns": 1786279632818614700,
+        "sampled_at_utc": "2026-08-09T12:47:12.818614700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21371998208,
+        "sampled_at_ns": 1786279633022206900,
+        "sampled_at_utc": "2026-08-09T12:47:13.022206900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21364228096,
+        "sampled_at_ns": 1786279633227334500,
+        "sampled_at_utc": "2026-08-09T12:47:13.227334500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21359710208,
+        "sampled_at_ns": 1786279633431645100,
+        "sampled_at_utc": "2026-08-09T12:47:13.431645100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21362704384,
+        "sampled_at_ns": 1786279633636358700,
+        "sampled_at_utc": "2026-08-09T12:47:13.636358700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21357101056,
+        "sampled_at_ns": 1786279633838050700,
+        "sampled_at_utc": "2026-08-09T12:47:13.838050700Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21366317056,
+        "sampled_at_ns": 1786279634026152000,
+        "sampled_at_utc": "2026-08-09T12:47:14.026152000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21362532352,
+        "sampled_at_ns": 1786279634232318200,
+        "sampled_at_utc": "2026-08-09T12:47:14.232318200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355409408,
+        "sampled_at_ns": 1786279634437853900,
+        "sampled_at_utc": "2026-08-09T12:47:14.437853900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21353951232,
+        "sampled_at_ns": 1786279634641743400,
+        "sampled_at_utc": "2026-08-09T12:47:14.641743400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21350809600,
+        "sampled_at_ns": 1786279634828484200,
+        "sampled_at_utc": "2026-08-09T12:47:14.828484200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355003904,
+        "sampled_at_ns": 1786279635032390400,
+        "sampled_at_utc": "2026-08-09T12:47:15.032390400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355298816,
+        "sampled_at_ns": 1786279635237307000,
+        "sampled_at_utc": "2026-08-09T12:47:15.237307000Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355851776,
+        "sampled_at_ns": 1786279635422176200,
+        "sampled_at_utc": "2026-08-09T12:47:15.422176200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21354328064,
+        "sampled_at_ns": 1786279635643174900,
+        "sampled_at_utc": "2026-08-09T12:47:15.643174900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21351473152,
+        "sampled_at_ns": 1786279635831344800,
+        "sampled_at_utc": "2026-08-09T12:47:15.831344800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21353684992,
+        "sampled_at_ns": 1786279636018999500,
+        "sampled_at_utc": "2026-08-09T12:47:16.018999500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21357076480,
+        "sampled_at_ns": 1786279636219777200,
+        "sampled_at_utc": "2026-08-09T12:47:16.219777200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21356310528,
+        "sampled_at_ns": 1786279636424100400,
+        "sampled_at_utc": "2026-08-09T12:47:16.424100400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21354659840,
+        "sampled_at_ns": 1786279636629089800,
+        "sampled_at_utc": "2026-08-09T12:47:16.629089800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21349920768,
+        "sampled_at_ns": 1786279636817590100,
+        "sampled_at_utc": "2026-08-09T12:47:16.817590100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21352517632,
+        "sampled_at_ns": 1786279637019820600,
+        "sampled_at_utc": "2026-08-09T12:47:17.019820600Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21349842944,
+        "sampled_at_ns": 1786279637222865900,
+        "sampled_at_utc": "2026-08-09T12:47:17.222865900Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21354889216,
+        "sampled_at_ns": 1786279637428480500,
+        "sampled_at_utc": "2026-08-09T12:47:17.428480500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355347968,
+        "sampled_at_ns": 1786279637632317200,
+        "sampled_at_utc": "2026-08-09T12:47:17.632317200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21352091648,
+        "sampled_at_ns": 1786279637820042400,
+        "sampled_at_utc": "2026-08-09T12:47:17.820042400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21354102784,
+        "sampled_at_ns": 1786279638024870500,
+        "sampled_at_utc": "2026-08-09T12:47:18.024870500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21351219200,
+        "sampled_at_ns": 1786279638227114800,
+        "sampled_at_utc": "2026-08-09T12:47:18.227114800Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21355352064,
+        "sampled_at_ns": 1786279638433471200,
+        "sampled_at_utc": "2026-08-09T12:47:18.433471200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21356470272,
+        "sampled_at_ns": 1786279638637139400,
+        "sampled_at_utc": "2026-08-09T12:47:18.637139400Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21353848832,
+        "sampled_at_ns": 1786279638824025500,
+        "sampled_at_utc": "2026-08-09T12:47:18.824025500Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21356916736,
+        "sampled_at_ns": 1786279639025387200,
+        "sampled_at_utc": "2026-08-09T12:47:19.025387200Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      },
+      {
+        "gpu_index": 0,
+        "gpu_utilization_percent": 6.0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 21351567360,
+        "sampled_at_ns": 1786279639229792100,
+        "sampled_at_utc": "2026-08-09T12:47:19.229792100Z",
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2338.0
+      }
+    ]
+  },
+  "server_instance": {
+    "argv": [
+      "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8000",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "--disable-metadata"
+    ],
+    "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 32160,
+        "port": 8000
+      }
+    ],
+    "parent_pid": 32424,
+    "process_create_time": 1786279446.0966637,
+    "serving_pid": 32160
+  },
+  "sidecar_schema_version": 1,
+  "started_at_utc": "2026-08-09T12:46:49.201889600Z",
+  "status": "failed"
+}

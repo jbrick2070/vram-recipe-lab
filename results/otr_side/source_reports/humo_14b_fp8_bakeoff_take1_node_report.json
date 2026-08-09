@@ -1,0 +1,1 @@
+{"ok": true, "engine": "humo", "elapsed_s": 250.2, "clip": {"engine_id": "humo", "family": "audio_driven_face", "frame_count": 97, "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\tmp\\otr_humo_e7af_plg.mp4", "exists": true, "size": 469816}, "vram_used_mb": 2870}

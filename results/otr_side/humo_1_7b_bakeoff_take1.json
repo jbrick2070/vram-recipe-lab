@@ -1,0 +1,226 @@
+{
+  "artifact_bytes": 406854,
+  "artifact_sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9",
+  "audio_channels": 1,
+  "audio_codec": "aac",
+  "audio_duration_s": 5.155011,
+  "audio_sample_rate": 44100,
+  "baseline_host_ram_gb": 19.924583435058594,
+  "baseline_vram_gb": 2.267578125,
+  "boot_argv": [
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+    "<server-log>",
+    "HUMO"
+  ],
+  "boot_lane": "otr-headless-8000, HUMO, production-wrapper",
+  "cache_buster": 41,
+  "certification_scope": "measurement-only",
+  "command_duration_s": 240.578,
+  "container_duration_s": 5.16,
+  "duration_definition": "sidecar start through durable native artifact save",
+  "duration_s": 233.779852,
+  "encoded_fps": 25.0,
+  "encoded_frame_count": 129,
+  "encoded_height": 832,
+  "encoded_width": 480,
+  "engine": "humo_1.7B",
+  "engine_report_elapsed_s": null,
+  "engine_report_path": null,
+  "engine_report_preservation": "overwritten by required take 2; not load-bearing",
+  "engine_report_sha256": null,
+  "failed_preflight_attempt": {
+    "accepted_prompt": false,
+    "path": "results/otr_side/telemetry/humo_1_7b_bakeoff_take1.json",
+    "reason": "oom_index cache-buster 4201 exceeded live max 399",
+    "rendered": false,
+    "sha256": "516407f75a27f377af9323f1e67215729b14f2eaac10e88d7bfd1074ebc836ed"
+  },
+  "fixture_contract": {
+    "copy_chain": {
+      "comfy_input_portrait": {
+        "bytes": 688164,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\input\\humo_lab_portrait_3ce7b724.png",
+        "sha256": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+      },
+      "comfy_input_tts": {
+        "bytes": 882078,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\input\\humo_lab_tts_30c51f3f.wav",
+        "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "otr_stage_portrait": {
+        "bytes": 688164,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+        "sha256": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+      },
+      "otr_stage_tts": {
+        "bytes": 882078,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+        "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "source_portrait": {
+        "bytes": 688164,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\portrait.png",
+        "sha256": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+      },
+      "source_tts": {
+        "bytes": 882078,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\tts_dialogue.wav",
+        "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      }
+    },
+    "fixture_sha256s": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    },
+    "raw_tts_duration_s": 10.0
+  },
+  "fixture_sha256s": {
+    "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+    "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+  },
+  "gate_pass": null,
+  "human_verdicts": {
+    "identity": "PENDING_HUMAN",
+    "lips": "PENDING_HUMAN",
+    "onset": "PENDING_HUMAN"
+  },
+  "lab_gate_evaluated": false,
+  "marginal": null,
+  "measured": "otr-side production lane",
+  "model": "HuMo 1.7B fp16",
+  "monitor": {
+    "interval_s": 0.2,
+    "max_gap_s": 0.2716691,
+    "mean_gap_s": 0.20000783851913478,
+    "metric_host_ram": "psutil.virtual_memory().used system-wide",
+    "metric_vram": "nvidia-smi device-total memory.used",
+    "p95_gap_s": 0.2184413,
+    "sample_count": 1203,
+    "sample_error_count": 0,
+    "sidecar_sha256": "02340567db82c55449c6548e05a002cde9dc49f8942b481900dbca4494915f13",
+    "telemetry_path": "results/otr_side/telemetry/humo_1_7b_bakeoff_take1_attempt2.json",
+    "telemetry_sha256": "500db87942fbe49d9702987da85bb3199f392950822511ed1010a2dd7c8dbecc"
+  },
+  "native_and_review_video_stream_sha256": "15c57c73f0f0eaa9db9282cfc1596c9dedb0b4302b7d3f832e46d593f96ff47f",
+  "native_silent_artifact_bytes": 295531,
+  "native_silent_artifact_sha256": "5ddac26bf3c0ea9a1f725ccb0745079abcd94bd6678518d30eb144b560dff4c1",
+  "native_silent_output_path": "humo_1_7b_bakeoff_take1_native_silent.mp4",
+  "otr_git_dirty_at_entry": true,
+  "otr_git_head": "15f23044a6f1224a61a39dc38e1e60875a894dd6",
+  "otr_git_unchanged_relative_to_entry": true,
+  "otr_worktree_integrity_receipt": "results/otr_side/otr_worktree_integrity.json",
+  "otr_worktree_integrity_receipt_sha256": "660a60f06418821850417ad38def3c4254847cfa21332a53e3a01ca3b04062a7",
+  "output_path": "humo_1_7b_bakeoff_take1.mp4",
+  "pass": null,
+  "peak_host_ram_gb": 35.13619613647461,
+  "peak_vram_gb": 15.1181640625,
+  "profile_applied": false,
+  "profile_note": "Single-clip probe has no --profile; profile names identify equivalent production engine defaults only.",
+  "profile_reference": "otr_w45_humo_1_7b",
+  "promotion_ready": false,
+  "receipt_kind": "otr-side-production-measurement",
+  "receipt_schema_version": 3,
+  "recipe": "humo_1_7b_bakeoff_take1",
+  "render_argv": [
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "-u",
+    "scripts\\_otr_single_engine_smoke.py",
+    "--engine",
+    "humo_1.7B",
+    "--frames",
+    "129",
+    "--portrait",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_portrait_3ce7b724.png",
+    "--audio",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_humo_lab_bakeoff\\inputs\\humo_lab_tts_30c51f3f.wav",
+    "--cache-buster",
+    "41",
+    "--timeout",
+    "2400"
+  ],
+  "render_route": "_otr_single_engine_smoke.py -> OTR_VideoRenderBatch(mode=single) -> production HuMo wrapper",
+  "render_seconds_per_output_second": 45.306172868217054,
+  "requires_human_eyeball": true,
+  "review_audio_policy": "Exact tts_dialogue.wav muxed at t=0; native video stream copied without re-encode.",
+  "route_fingerprints": {
+    "config/profiles/otr_w45_humo_1_7b.json": {
+      "bytes": 2224,
+      "sha256": "729366096f4c0eee410314dcf9611639cbc4b0834d10b4582bb1c83329dab4ed"
+    },
+    "nodes/_otr_video_engines/eng_humo.py": {
+      "bytes": 64569,
+      "sha256": "77562728f09595082012c91a57ebcd878f7dc9b2f80b17e7b16b77e412b6bd6c"
+    },
+    "nodes/_otr_video_engines/render_driver.py": {
+      "bytes": 282795,
+      "sha256": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564"
+    },
+    "nodes/otr_video_render_batch.py": {
+      "bytes": 27719,
+      "sha256": "6be2d501610d151659dd73ec3c2613df0766a9843fc9ac62d0d2138bd4c9df2e"
+    },
+    "scripts/_otr_single_engine_smoke.py": {
+      "bytes": 5228,
+      "sha256": "6059e74bb8bbf63789450fc4055ae6edefd0433a2c7f4ab52d6601182878fb02"
+    },
+    "scripts/_otr_soak_server_launch.cmd": {
+      "bytes": 10558,
+      "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+    }
+  },
+  "run_count": 1,
+  "run_identity_sha256": "4f6c132a423baeb20af7aa2530cc8e225f2c730e20729258035bebde95fb2962",
+  "run_number": 1,
+  "seed_control_exposed": false,
+  "seed_effective": 7,
+  "seed_evidence": "render_driver.build_request(single_0000) deterministically derives request_seed=7",
+  "seed_requested": null,
+  "server_argv": [
+    "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+    "--port",
+    "8000",
+    "--cuda-malloc",
+    "--user-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI",
+    "--output-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+    "--extra-model-paths-config",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+    "--disable-metadata"
+  ],
+  "server_instance": {
+    "argv": [
+      "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8000",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "--disable-metadata"
+    ],
+    "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 32160,
+        "port": 8000
+      }
+    ],
+    "parent_pid": 32424,
+    "process_create_time": 1786279446.0966637,
+    "serving_pid": 32160
+  },
+  "status": "MEASURED OTR-SIDE; NOT LAB-GATED; PENDING_HUMAN",
+  "take": 1,
+  "timestamp": "2026-08-09T12:51:50.475992000Z",
+  "valid_measurement": true,
+  "video_codec": "h264",
+  "video_duration_s": 5.16,
+  "warm_pass": null
+}

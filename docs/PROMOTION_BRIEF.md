@@ -8,9 +8,10 @@ The machine campaign is complete, but no pending human decision is silently prom
 The strongest immediate recommendation is the LTX distilled video lane for sprint work:
 on the normalized same-canvas warm pair it rendered the identical workload
 **29.528986x faster** than WAN TI2V. The character lane remains the only open casting
-decision: H3 now has two technically valid speaking takes with visible articulation,
-but Jeffrey still needs to judge actual synchronization and seed-to-seed consistency
-against HuMo on the OTR side.
+decision: the OTR production lane now adds two HuMo 1.7B measurements and one HuMo 14B
+FP8 measurement to H3's two technically valid speaking takes. Measurement coverage is
+complete; Jeffrey still needs to judge lips, onset, and identity across the five clips.
+[Complete HuMo/H3 bakeoff](HUMO_BAKEOFF.md)
 
 The final evidence keeps four boundaries explicit:
 
@@ -25,8 +26,8 @@ The final evidence keeps four boundaries explicit:
 | Role | Recommendation | Evidence and remaining gate |
 |---|---|---|
 | Sprint lane | **LTX Video distilled 2B** for fast general-video iteration | Warm normalized winner at the controlled canvas and duration; quality still needs shot-specific review. [Normalized comparison receipt](../results/comparisons/general_video_speed_pair.json) |
-| Workhorse lips | **H3 Ref2VA candidate**, conditional on the OTR-side A/B | Two cold machine-gated speaking takes show articulation, but exact phoneme sync, pause settling, and consistency remain human-pending. [Two-take H3 package](../results/comparisons/h3_lipsync_ab_package.json) |
-| Hero lips | **HuMo incumbent** until the exact-fixture OTR A/B says otherwise | HuMo was deliberately not run in this lab because its wrapper is outside the whitelist. The corrected H3 package uses exactly `portrait.png` plus raw `tts_dialogue.wav`. [H3 lab-half package](../results/comparisons/h3_lipsync_ab_package.json) |
+| Workhorse lips | **H3 Ref2VA candidate**, conditional on the five-clip review | Two cold machine-gated H3 takes show articulation. The OTR-side HuMo legs are now measured, but exact phoneme sync, pause settling, onset, identity, and consistency remain human-pending. [Complete bakeoff](HUMO_BAKEOFF.md) |
+| Hero lips | **HuMo incumbent**, conditional on the same five-clip review | OTR measured two production HuMo 1.7B runs and one 14B FP8 run with the exact fixture bytes. This is measurement coverage, not a quality promotion or lab-gate pass. [Complete bakeoff](HUMO_BAKEOFF.md) |
 
 ## Normalized general-video speed crown
 
@@ -46,7 +47,7 @@ exact model were not supplied: **20.3 s / 25 frames** and **83.8 s / 193 frames*
 They are `UNNORMALIZED`, not counter-evidence to the controlled crown.
 [Unnormalized-row provenance](../results/comparisons/general_video_speed_pair.json)
 
-## Character-lane decider: H3 lab half complete
+## Character-lane decider: measurements complete, human verdict open
 
 The corrected action prompt produced two H3 Ref2VA takes using the same portrait and
 TTS fixture, with only the seed changing. Seed 42 completed in **305.3 seconds** at a
@@ -61,8 +62,36 @@ the OTR-side HuMo comparison.
 
 The technical screen sees speaking articulation. It does not decide whether mouth
 shapes truly track phonemes, settle through pauses, or remain consistent across both
-seeds. Jeffrey's full-clip eyes and ears decide those questions. HuMo must be rendered
-and compared OTR-side using the documented fixture hashes; it was not attempted here.
+seeds. Jeffrey's full-clip eyes and ears decide those questions.
+
+The production HuMo leg is now complete through OTR's existing wrapper. HuMo 1.7B
+delivered two **480x832, 129-frame, 25-fps / 5.160-second** clips in
+**233.779852** and **207.513477 seconds** to artifact save, at absolute VRAM peaks of
+**15.118164** and **15.231445 GiB**. HuMo 14B FP8 delivered **480x832, 97 frames at
+25 fps / 3.880 seconds** in **245.943975 seconds**, at a **14.984375 GiB** peak. These
+are OTR-side production-lane measurements and never receive a lab-gate `PASS`.
+[HuMo 1.7B take 1](../results/otr_side/humo_1_7b_bakeoff_take1.json),
+[take 2](../results/otr_side/humo_1_7b_bakeoff_take2.json), and
+[HuMo 14B receipt](../results/otr_side/humo_14b_fp8_bakeoff_take1.json)
+
+The byte-level input contract is exact, but the workload contract is not. The raw TTS
+fixture is **10.000 seconds**; H3 delivers **5.167 seconds**, HuMo 1.7B delivers
+**5.160 seconds**, and the production-capped HuMo 14B take delivers **3.880 seconds**.
+Canvas, frame rate, and frame count also differ. HuMo's production-policy native clips
+are silent, so the review copies mux the exact source audio from timestamp zero with a
+video stream-copy. See the receipt-bound [five-clip review sheet](HUMO_BAKEOFF.md).
+
+The HuMo 1.7B production probe exposes fixed request seed **7** rather than an
+alternate-seed control. Its two separately executed native artifacts are byte-identical.
+That is fixed-seed repeatability evidence; it does not substitute for an alternate-seed
+quality test. [Take receipts](HUMO_BAKEOFF.md#five-clip-measurement-table)
+
+All lips, onset, and identity columns remain `PENDING_HUMAN`. The historical F7 claim
+of a **100-200 ms audio lead** is only a listening target: OTR's later M1 measurement
+did not reproduce it and instead estimated a roughly **30-60 ms video lead**. The
+five-clip decision should therefore listen for offset in either direction rather than
+assume the older failure.
+[OTR M1 measurement](../../custom_nodes/ComfyUI-OldTimeRadio/docs/2026-08-02-MEASUREMENT-M1-humo-lipsync-offset.md)
 
 The earlier `defect:no_lipsync` verdict on the neutral wide-scene RefAudio clip remains
 retracted. That prompt did not ask the subject to speak or synchronize. The original
