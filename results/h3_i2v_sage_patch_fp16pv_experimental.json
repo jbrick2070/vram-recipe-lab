@@ -1,0 +1,257 @@
+{
+  "accepted_prompt": true,
+  "audio_receipt_sha256s": {},
+  "baseline_host_ram_gb": 17.44,
+  "baseline_vram_gb": 2.15,
+  "blocked": false,
+  "boot_lane": "lab-8199, sage-free, no-pinned, cache-classic, reserve-12gb",
+  "certification_scope": "machine-only",
+  "clamp_target_gib": null,
+  "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+  "config_run_count": 1,
+  "duration_s": 1801.5,
+  "execution_cache_control": {
+    "cache_event_found": false,
+    "cached_fresh_node_ids": [],
+    "cached_node_ids": [],
+    "fresh_execution_proved": false,
+    "fresh_node_ids": [
+      "5",
+      "8",
+      "9",
+      "10",
+      "12",
+      "15"
+    ],
+    "fresh_output_node_ids": [
+      "12"
+    ],
+    "mode": "pinned-undeclared-sampler-input",
+    "nonce": "h3-sage-fp16pv-E0",
+    "reachable_node_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16"
+    ],
+    "recipe_seed": 42,
+    "sampler_node_ids": [
+      "8"
+    ],
+    "seed_input": "noise_seed",
+    "source_class_type": "RandomNoise",
+    "source_node_id": "5",
+    "stable_node_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "6",
+      "7",
+      "11",
+      "13",
+      "14",
+      "16"
+    ]
+  },
+  "eyeball": "pending",
+  "final_server_instance": {},
+  "final_standalone_cache_runtime_sha256s": {
+    "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+    "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+    "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+    "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+    "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+    "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+    "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+  },
+  "final_suite_cache_runtime_sha256s": {},
+  "fixture_sha256s": {
+    "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+  },
+  "gate_pass": false,
+  "git_commit": "2f49535f0bd846ed609b372ad36a30f2ee499432",
+  "git_dirty": true,
+  "identity": {
+    "audio_receipt_sha256s": {},
+    "boot_lane": "lab-8199, sage-free, no-pinned, cache-classic, reserve-12gb",
+    "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+    "fixture_sha256s": {
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+    },
+    "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+    "model_fingerprints": {
+      "minimax_h3_audio_vae_fp32.safetensors": {
+        "bytes": 605254808,
+        "mtime_ns": 1786172708634123800,
+        "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+        "resolved": true
+      },
+      "minimax_h3_fl2va_pruned_int8_convrot.safetensors": {
+        "bytes": 20970379616,
+        "mtime_ns": 1786176933828821600,
+        "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "resolved": true
+      },
+      "minimax_h3_video_vae_fp16.safetensors": {
+        "bytes": 5207808496,
+        "mtime_ns": 1786173216118700500,
+        "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+        "resolved": true
+      },
+      "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+        "bytes": 15687142551,
+        "mtime_ns": 1786174937682140700,
+        "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "resolved": true
+      }
+    },
+    "recipe_sha256": "6a27480cfe0709eda17e8c8a57fa549e840589867aebb8a19603319081b6ab93",
+    "runner_sha256": "41d4b122645cf1f8ee8b6106bf2a34c4d62f6303550b1f72390dcd7e9f7d1726",
+    "server_argv": [
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-GGUF",
+      "ComfyUI-KJNodes",
+      "--reserve-vram",
+      "12",
+      "--disable-pinned-memory",
+      "--cache-classic"
+    ],
+    "server_instance": {
+      "process_create_time": 1786262313.845061,
+      "serving_pid": 46560
+    },
+    "standalone_cache_runtime_sha256s": {
+      "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+      "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+      "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+      "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+      "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+      "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+      "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+    }
+  },
+  "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+  "marginal": false,
+  "model_fingerprints": {
+    "minimax_h3_audio_vae_fp32.safetensors": {
+      "bytes": 605254808,
+      "mtime_ns": 1786172708634123800,
+      "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+      "resolved": true
+    },
+    "minimax_h3_fl2va_pruned_int8_convrot.safetensors": {
+      "bytes": 20970379616,
+      "mtime_ns": 1786176933828821600,
+      "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "resolved": true
+    },
+    "minimax_h3_video_vae_fp16.safetensors": {
+      "bytes": 5207808496,
+      "mtime_ns": 1786173216118700500,
+      "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+      "resolved": true
+    },
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+      "bytes": 15687142551,
+      "mtime_ns": 1786174937682140700,
+      "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "resolved": true
+    }
+  },
+  "orphan_cleanup": {
+    "had_receipt": true,
+    "listener_exited": true,
+    "pid": 46560,
+    "pid_verified": false,
+    "process_exited": true,
+    "reason": "recorded server was already stopped and port is clear",
+    "receipt_removed": true,
+    "success": true,
+    "termination_attempted": false,
+    "termination_reported_success": false
+  },
+  "output_path": "",
+  "pass": false,
+  "peak_host_ram_gb": 23.08,
+  "peak_vram_gb": 6.33,
+  "physical_total_vram_gib": 15.9208984375,
+  "promotion_ready": false,
+  "prompt_id": "42b690e1-f7e7-46df-aca9-3adf3d15c9c6",
+  "provenance_unchanged": false,
+  "provenance_validation_error": "Preflight Check #3 [Server identity] FAILED: Could not prove that the recorded lab PID is the active port-8199 listener",
+  "queued_prompt_sha256": "8214f9a73a2afd17ade5b0203ff751a0b2902031f01678fafc13d39e51ddb071",
+  "receipt_schema_version": 3,
+  "recipe": "h3_i2v_sage_patch_fp16pv_experimental",
+  "recipe_sha256": "6a27480cfe0709eda17e8c8a57fa549e840589867aebb8a19603319081b6ab93",
+  "requires_human_eyeball": true,
+  "reserve_vram_gib": 12.0,
+  "run_count": 1,
+  "run_identity_sha256": "831cad2243d32bcd7b20799e0f54a46a012f36026bdb2411e4bf9dbe4299f4f2",
+  "run_number": 1,
+  "runner_sha256": "41d4b122645cf1f8ee8b6106bf2a34c4d62f6303550b1f72390dcd7e9f7d1726",
+  "server_argv": [
+    "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+    "--port",
+    "8199",
+    "--cuda-malloc",
+    "--user-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI",
+    "--output-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+    "--extra-model-paths-config",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "--disable-metadata",
+    "--disable-all-custom-nodes",
+    "--whitelist-custom-nodes",
+    "ComfyUI-GGUF",
+    "ComfyUI-KJNodes",
+    "--reserve-vram",
+    "12",
+    "--disable-pinned-memory",
+    "--cache-classic"
+  ],
+  "server_instance": {
+    "process_create_time": 1786262313.845061,
+    "serving_pid": 46560
+  },
+  "server_instance_unchanged": false,
+  "standalone_cache_runtime_sha256s": {
+    "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+    "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+    "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+    "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+    "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+    "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+    "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+  },
+  "status": "TIMEOUT (exceeded 1800s; owned server shutdown proved)",
+  "suite_cache_runtime_sha256s": {},
+  "timestamp": "2026-08-09T08:28:48Z",
+  "valid_measurement": true,
+  "warm_pass": false
+}

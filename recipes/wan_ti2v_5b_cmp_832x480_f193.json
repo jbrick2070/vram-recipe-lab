@@ -1,0 +1,434 @@
+{
+  "name": "wan_ti2v_5b_cmp_832x480_f193",
+  "tier": "comparison",
+  "blocked": false,
+  "experiment": {
+    "campaign": "cross_engine_same_canvas_duration_v1",
+    "variant": "wan_ti2v_5b",
+    "comparison_controls": [
+      "scene_still.png",
+      "subtle natural motion, cinematic lighting, detailed",
+      "low quality, worst quality, blurry, distorted, watermark, text, static",
+      "seed=42",
+      "832x480",
+      "193 frames",
+      "25 fps",
+      "plain VAEDecode"
+    ],
+    "grid": "4n+1 (n=48)"
+  },
+  "contract": {
+    "engine": "wan_ti2v_5b",
+    "mode": "i2v",
+    "width": 832,
+    "height": 480,
+    "frames": 193,
+    "fps": 25.0,
+    "target_s": 7.72,
+    "duration_s": 7.72,
+    "delivered_s": 7.72,
+    "trim_frames": 0,
+    "requires_audio": false,
+    "required_boot_lane": "lab-8199, sage-free",
+    "vram_ceiling_gb": 14.5
+  },
+  "receipt_requirements": {
+    "warm_gate": {
+      "required_consecutive_runs": 2,
+      "passing_run": "second consecutive run",
+      "peak_vram_gb_lte": 14.5
+    },
+    "timing": {
+      "ffprobe_required": true,
+      "expected_frame_count": 193,
+      "expected_fps": 25.0,
+      "target_s": 7.72,
+      "absolute_duration_error_lte_s": 0.04
+    },
+    "quality": {
+      "human_eyeball_required": true
+    }
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "intent": "Wan 2.2 TI2V-5B same-canvas 193-frame comparison candidate",
+    "installed_schema": {
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+      "node_source": "comfy_extras/nodes_wan.py",
+      "node_source_sha256": "dcd8b81d1225d84e8b0c6743675d59772449899018e9f50bb27267dbb8962002"
+    },
+    "evidence": {
+      "otr_commit": "bf9f7fb11157be56b9aa6fac1115b49be68221e1",
+      "engine_source": "nodes/_otr_video_engines/eng_wan_ti2v.py",
+      "engine_source_git_blob_sha1": "8e77a1058cd653bd66242a8dc79cddf02007b576",
+      "bench_graph": "scripts/bench_graphs/arm_b_partial_wan_ti2v_gguf_unet_st_clip.json",
+      "bench_graph_git_blob_sha1": "7f9989a866ee527c129111eee7e6531a1b0e57f6",
+      "use": "read-only topology and frozen sampling evidence"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UnetLoaderGGUF",
+      "2": "ModelSamplingSD3",
+      "3": "CLIPLoader",
+      "4": "CLIPTextEncode",
+      "5": "CLIPTextEncode",
+      "6": "VAELoader",
+      "7": "LoadImage",
+      "8": "Wan22ImageToVideoLatent",
+      "9": "KSampler",
+      "10": "VAEDecode",
+      "11": "CreateVideo",
+      "12": "SaveVideo"
+    },
+    "required_class_types": [
+      "UnetLoaderGGUF",
+      "ModelSamplingSD3",
+      "CLIPLoader",
+      "CLIPTextEncode",
+      "VAELoader",
+      "LoadImage",
+      "Wan22ImageToVideoLatent",
+      "KSampler",
+      "VAEDecode",
+      "CreateVideo",
+      "SaveVideo"
+    ],
+    "required_connections": {
+      "2.model": [
+        "1",
+        0
+      ],
+      "4.clip": [
+        "3",
+        0
+      ],
+      "5.clip": [
+        "3",
+        0
+      ],
+      "8.vae": [
+        "6",
+        0
+      ],
+      "8.start_image": [
+        "7",
+        0
+      ],
+      "9.model": [
+        "2",
+        0
+      ],
+      "9.positive": [
+        "4",
+        0
+      ],
+      "9.negative": [
+        "5",
+        0
+      ],
+      "9.latent_image": [
+        "8",
+        0
+      ],
+      "10.samples": [
+        "9",
+        0
+      ],
+      "10.vae": [
+        "6",
+        0
+      ],
+      "11.images": [
+        "10",
+        0
+      ],
+      "12.video": [
+        "11",
+        0
+      ]
+    },
+    "required_input_values": [
+      {
+        "node": "1",
+        "input": "unet_name",
+        "equals": "Wan2.2-TI2V-5B-Q5_K_M.gguf"
+      },
+      {
+        "node": "2",
+        "input": "shift",
+        "equals": 5.0
+      },
+      {
+        "node": "3",
+        "input": "clip_name",
+        "equals": "umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+      },
+      {
+        "node": "3",
+        "input": "type",
+        "equals": "wan"
+      },
+      {
+        "node": "3",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "4",
+        "input": "text",
+        "equals": "subtle natural motion, cinematic lighting, detailed"
+      },
+      {
+        "node": "5",
+        "input": "text",
+        "equals": "low quality, worst quality, blurry, distorted, watermark, text, static"
+      },
+      {
+        "node": "6",
+        "input": "vae_name",
+        "equals": "wan2.2_vae.safetensors"
+      },
+      {
+        "node": "7",
+        "input": "image",
+        "equals": "scene_still.png"
+      },
+      {
+        "node": "8",
+        "input": "width",
+        "equals": 832
+      },
+      {
+        "node": "8",
+        "input": "height",
+        "equals": 480
+      },
+      {
+        "node": "8",
+        "input": "length",
+        "equals": 193
+      },
+      {
+        "node": "8",
+        "input": "batch_size",
+        "equals": 1
+      },
+      {
+        "node": "9",
+        "input": "seed",
+        "equals": 42
+      },
+      {
+        "node": "9",
+        "input": "steps",
+        "equals": 30
+      },
+      {
+        "node": "9",
+        "input": "cfg",
+        "equals": 5.0
+      },
+      {
+        "node": "9",
+        "input": "sampler_name",
+        "equals": "euler"
+      },
+      {
+        "node": "9",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "9",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "11",
+        "input": "fps",
+        "equals": 25.0
+      },
+      {
+        "node": "11",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "12",
+        "input": "filename_prefix",
+        "equals": "wan_ti2v_5b_cmp_832x480_f193_out"
+      },
+      {
+        "node": "12",
+        "input": "format",
+        "equals": "auto"
+      },
+      {
+        "node": "12",
+        "input": "codec",
+        "equals": "auto"
+      }
+    ],
+    "required_absent_inputs": [],
+    "forbidden_class_types": [
+      "EmptyLatentImage",
+      "VAEDecodeTiled",
+      "LoadAudio"
+    ],
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "Lab fixture scene_still.png replaces the OTR bench still",
+      "Length moves from the OTR capped bench ladder to the core-node-legal 193-frame 4n+1 rung",
+      "CreateVideo uses the native 25 fps conditioning clock for exact 7.72-second delivery",
+      "Plain VAEDecode follows the lab production-canvas no-tiling rule",
+      "OTR-only VRAM reset/probe nodes are omitted because run_recipe owns telemetry"
+    ],
+    "fixture_hashes": {
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+    }
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UnetLoaderGGUF",
+      "inputs": {
+        "unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"
+      }
+    },
+    "2": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "shift": 5.0
+      }
+    },
+    "3": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "subtle natural motion, cinematic lighting, detailed",
+        "clip": [
+          "3",
+          0
+        ]
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "low quality, worst quality, blurry, distorted, watermark, text, static",
+        "clip": [
+          "3",
+          0
+        ]
+      }
+    },
+    "6": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan2.2_vae.safetensors"
+      }
+    },
+    "7": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    },
+    "8": {
+      "class_type": "Wan22ImageToVideoLatent",
+      "inputs": {
+        "width": 832,
+        "height": 480,
+        "length": 193,
+        "batch_size": 1,
+        "vae": [
+          "6",
+          0
+        ],
+        "start_image": [
+          "7",
+          0
+        ]
+      }
+    },
+    "9": {
+      "class_type": "KSampler",
+      "inputs": {
+        "seed": 42,
+        "steps": 30,
+        "cfg": 5.0,
+        "sampler_name": "euler",
+        "scheduler": "simple",
+        "denoise": 1.0,
+        "model": [
+          "2",
+          0
+        ],
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "latent_image": [
+          "8",
+          0
+        ]
+      }
+    },
+    "10": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "9",
+          0
+        ],
+        "vae": [
+          "6",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "10",
+          0
+        ],
+        "fps": 25.0,
+        "bit_depth": 8
+      }
+    },
+    "12": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "11",
+          0
+        ],
+        "filename_prefix": "wan_ti2v_5b_cmp_832x480_f193_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  }
+}

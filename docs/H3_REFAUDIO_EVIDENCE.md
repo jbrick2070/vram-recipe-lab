@@ -1,7 +1,24 @@
 # MiniMax H3 Ref2VA external-audio evidence
 
-Status as of 2026-08-08: **valid cold TTS and opening-music cells completed;
-static control, warm certification, and human eye/ear review remain pending**.
+## Headline conclusion: RefAudio reconstructs; it does not compose
+
+H3's joint-latent RefAudio path largely **reconstructs its conditioning input**
+rather than composing a new soundtrack. In the opening-music cell, the first
+3.88 seconds of native decoded target audio strongly correlate with the supplied
+reference. The original approximately-0.94 finding is confirmed more strongly by a
+receipt-bound PCM recheck at 0.969528. The approximately 1.287-second continuation
+tail is the only portion outside the reference window and therefore the only portion
+unambiguously not within-window reconstruction; correlation alone does not prove that
+the aligned window contains no novel detail.
+This is not a source-file mux, but it is also not evidence of independent audio
+generation. Consequently, audio-conditioned H3 is **not the lab's audio-generator
+lane**. Mini Mime must be tested unconditioned: picture in, no `LoadAudio` reference,
+and only the model's own sampled audio out.
+
+Status as of 2026-08-09: **the original neutral-prompt TTS and opening-music cells
+remain cold evidence; the prompt-only speaking retest now has two cold machine-gated
+takes; exact lip sync, seed consistency, and all applicable human ear gates remain
+pending**. The static RefAudio control remains unrendered.
 
 This note records why the three `h3_r2v_refaudio_*` recipes are legitimate tests of
 MiniMax H3 reference-audio conditioning, what the available examples do and do not
@@ -26,11 +43,15 @@ JSON was copied into the recipes.
   passes. They used the same seed, images, prompt, graph, duration, and lane; only the
   receipt-bound reference WAV and output identity differ.
 - The music cell strongly reconstructs the 3.88-second reference in its native target
-  soundtrack (aligned waveform correlation about 0.94 and spectral cosine about
-  0.99), while the TTS cell preserves much less of its source waveform. This is not a
+  soundtrack (receipt-bound aligned waveform correlation 0.969528 and block-RMS
+  envelope correlation 0.964007), while the TTS cell preserves much less of its
+  source waveform. This is not a
   direct source mux: both tracks come exclusively from the sampled target latent.
-- Neither cold cell proves lip synchronization or audio-driven visual motion. Human
-  review remains required, and the static control remains unrendered.
+- The original TTS cell leaves lip-sync **untested**: its neutral wide-scene prompt
+  defined `<Picture 1>` and `<Audio 1>` but never instructed the subject to speak or
+  articulate to the audio. The earlier no-lipsync conclusion is retracted. Music is
+  `ok-experimental`, but its visual motion remains a steady camera push rather than
+  following the beat. The static control remains unrendered.
 
 ## Official semantics
 
@@ -210,8 +231,8 @@ warm pair, while the overall H3 suite remains failed on a separate T1 creep gate
 | Cell | Experimental role | Reference WAV | Runtime status |
 |---|---|---|---|
 | [`h3_r2v_refaudio_static_control`](../recipes/h3_r2v_refaudio_static_control.json) | static/control | `ltx_matrix_interstitial_static_3p88s_gain_0db.wav` | not run |
-| [`h3_r2v_refaudio_tts_dialogue`](../recipes/h3_r2v_refaudio_tts_dialogue.json) | speech condition and first smoke | `ltx_matrix_tts_dialogue_3p88s_gain_minus5db.wav` | cold machine gate pass; human pending |
-| [`h3_r2v_refaudio_music_opening`](../recipes/h3_r2v_refaudio_music_opening.json) | music condition | `ltx_matrix_music_opening_3p88s_gain_minus12db.wav` | cold machine gate pass; human pending |
+| [`h3_r2v_refaudio_tts_dialogue`](../recipes/h3_r2v_refaudio_tts_dialogue.json) | speech condition and first smoke | `ltx_matrix_tts_dialogue_3p88s_gain_minus5db.wav` | cold machine gate pass; human review: lip-sync untested because prompt omitted it |
+| [`h3_r2v_refaudio_music_opening`](../recipes/h3_r2v_refaudio_music_opening.json) | music condition | `ltx_matrix_music_opening_3p88s_gain_minus12db.wav` | cold machine gate pass; human `ok-experimental` (clean, steady push, no beat response) |
 
 All three WAVs are receipt-bound, 3.88-second, 32 kHz mono fixtures prepared for the
 same comparison window. H3 may resample supported inputs to its Audio VAE rate; these
@@ -300,25 +321,73 @@ The TTS and music run-1 receipts and artifacts now additionally prove:
 - the generated TTS target soundtrack is present at -21.4 LUFS, while the generated
   music soundtrack is present at -23.1 LUFS; and
 - the music target preserves its matched reference far more strongly than the TTS
-  target. A controlled analysis found aligned music waveform correlation 0.939,
-  RMS-envelope correlation 0.955, spectral-flux correlation 0.875, and mean spectral
-  cosine similarity 0.987. A direct AAC mux/encode control is materially closer, and
-  the generated track continues with a non-silent 1.29-second tail, confirming that
-  this is strong model-conditioned reconstruction rather than literal source muxing.
+  target. The original approximately-0.94 result is confirmed more strongly by a
+  reproducible PCM recheck: aligned waveform correlation 0.969528 and block-RMS
+  envelope correlation 0.964007. The generated track continues for approximately
+  1.287 seconds beyond the 3.88-second reference window, confirming strong
+  model-conditioned reconstruction rather than an independent composition.
+  [Receipt-bound analysis](../results/comparisons/h3_refaudio_reconstruction.json)
 
 Still not proven:
 
 - how either result differs from the static-control condition, which remains
   unrendered;
-- speech intelligibility or lip synchronization: the TTS clip has subtle lower-face
-  changes, but mouth-specific timing did not track its speech-active windows;
+- speech intelligibility or lip synchronization: the first TTS prompt did not request
+  a speaking performance or lip-sync, so its subtle lower-face motion is not a valid
+  capability test;
 - beat-synchronized visual behavior: camera-compensated music-motion correlation was
   weak and did not beat shifted controls convincingly, despite strong audio transfer;
 - absence of silence, noise, truncation, or duration anomalies in the decoded target
   soundtrack by human audition; and
 - a second consecutive warm-cache pass or any production/promotion claim.
 
-The TTS and music cells are therefore **cold machine evidence with human eye/ear
-pending**. The result supports H3 Ref2VA as a strong native music-transfer path, but
-does not establish lip sync or music-responsive visual motion. Static control remains
-unrendered; no warm repeat or promotion is implied.
+The TTS and music cells are therefore **cold machine evidence, with hash-bound human
+video annotations and ear review still pending**. The video annotations are frozen in
+[`h3_refaudio_human_reviews.json`](../results/comparisons/h3_refaudio_human_reviews.json).
+The result supports H3 Ref2VA as a strong native music-transfer path, but
+leaves lip-sync untested and does not establish music-responsive visual motion. Static
+control remains unrendered; no warm repeat or promotion is implied.
+
+## Prompt-only speaking retest after the retraction
+
+The retraction above led to a controlled prompt-only retest using a medium-close
+speaking instruction. The lab package contains two takes with identical fixture hashes
+and graph shape; only the seed and output identity differ:
+
+| Take | Seed | Machine result | Peak | Wall | Artifact/receipt evidence |
+|---|---:|---|---:|---:|---|
+| A | 42 | Cold machine gate pass | 6.71 GiB | 305.3 s | `results/h3_r2v_refaudio_tts_lipsync_exact_seed42_run1.json` |
+| B | 43 | Cold machine gate pass | 6.51 GiB | 297.8 s | `results/h3_r2v_refaudio_tts_lipsync_exact_seed43_run1.json` |
+
+Both rows, their immutable hashes, the shared fixture hashes, and the **864x480,
+124-frame, 24-fps** media contract are collected in
+[`h3_lipsync_ab_package.json`](../results/comparisons/h3_lipsync_ab_package.json).
+
+The technical visual screen sees articulation in the speaking takes. That is narrower
+than a lip-sync verdict. Jeffrey still must review full-clip mouth-shape timing, pause
+settling, and cross-seed consistency. The HuMo leg is deliberately outside this lab's
+whitelist and must run OTR-side against the exact fixture contract. The final H3 pair
+uses only `portrait.png` and raw `tts_dialogue.wav`; no second scene image or derived
+audio is present. Until that comparison,
+H3 is a character-lane candidate rather than a replacement claim.
+
+This retest does not restore the retracted verdict in either direction. It creates new
+evidence under the missing action instruction while preserving the original neutral
+clip as a separate, non-capability test.
+
+## Unconditioned Mini Mime follow-through
+
+The reconstruct-not-compose result directly changed the final Mime design. The new
+proof has no `LoadAudio` or external audio-conditioning socket: picture in, sampled
+joint latent, native audio out. It delivered **192 frames at 24 fps, exactly 8.000
+seconds**, with a cold **6.71 GiB** peak. The graph, ledger binding, artifact hash, and
+source receipt are frozen in
+[`h3_mime_unconditioned.json`](../results/comparisons/h3_mime_unconditioned.json).
+
+Objective FFmpeg 8.0.1 QA measured **-31.32 LUFS**, **1.00 LU** loudness range, and
+**-13.55 dBTP** true peak, with zero continuous-silence events in all three configured
+threshold/duration probes.
+[`h3_mime_audio_qa.json`](../results/comparisons/h3_mime_audio_qa.json) explicitly
+limits that finding to stream-level QA. Absence of any speech-like/vocal-like content,
+intelligible or otherwise, and coherent diegetic
+sync remain the inverted human ear gate; no promotion is inferred.

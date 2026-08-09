@@ -1,0 +1,10 @@
+  0%|          | 0/20 [00:00<?, ?it/s,   Model Initializing ...  ]Windows fatal exception: code 0x80000003
+
+Stack (most recent call first):
+  File "C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-KJNodes\nodes\model_optimization_nodes.py", line 35 in sage_func
+  File "C:\Users\jeffr\Documents\ComfyUI\.venv\Lib\site-packages\torch\_dynamo\eval_frame.py", line 1181 in _fn
+  File "C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-KJNodes\nodes\model_optimization_nodes.py", line 83 in attention_sage
+  File "C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-KJNodes\nodes\model_optimization_nodes.py", line 125 in attention_override_sage
+  File "C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\comfy\ldm\modules\attention.py", line 159 in wrapper
+  File "C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\comfy\ldm\minimax\model.py", line 171 in forward
+  File "C:\Users\jeffr\Documents\ComfyUI\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1787 in _call_impl

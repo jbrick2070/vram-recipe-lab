@@ -29,7 +29,11 @@
   "encoded_height": 480,
   "encoded_width": 864,
   "execution_cache_control": {},
-  "eyeball": "pending",
+  "eyeball": "ok-experimental",
+  "eyeball_source": "human",
+  "eyeball_reviewed_at": "2026-08-08T22:36:41-07:00",
+  "human_video_description": "Clean render; visual motion does not follow the beat and remains a steady camera push regardless of audio character.",
+  "human_video_scope": "Full RefAudio opening-music behavior verdict supplied by Jeffrey; acceptable experimental evidence only, not production promotion.",
   "final_server_instance": {
     "process_create_time": 1786248614.571649,
     "serving_pid": 32604

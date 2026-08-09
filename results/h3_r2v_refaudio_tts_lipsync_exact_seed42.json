@@ -1,0 +1,194 @@
+{
+  "accepted_prompt": true,
+  "artifact_bytes": 281691,
+  "artifact_bytes_per_frame": 2271.7,
+  "artifact_sha256": "925f406f779aeef26b75e84fe7b71944db8ae453d1aaca118d3a392c88cc4cb2",
+  "audio_bitrate": 132331,
+  "audio_codec": "aac",
+  "audio_duration_s": 5.167,
+  "audio_present": true,
+  "audio_receipt_sha256s": {
+    "tts_dialogue.wav": "55d82657863cb29a52d4aae60ff3f580195ce9bdd5035f65c6630e0600e991ae"
+  },
+  "audio_stream_bytes": 85994,
+  "baseline_host_ram_gb": 18.41,
+  "baseline_vram_gb": 2.15,
+  "bitrate_anomaly": false,
+  "bitrate_baseline_status": "provisional:0-of-3-clean-artifacts",
+  "blocked": false,
+  "boot_lane": "lab-8199, sage-free, no-pinned, reserve-12gb",
+  "certification_scope": "machine-only",
+  "clamp_target_gib": null,
+  "clean_baseline_sample_count": 0,
+  "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+  "config_run_count": 1,
+  "container_duration_s": 5.167,
+  "duration_s": 305.3,
+  "encoded_fps": 24.0,
+  "encoded_frame_count": 124,
+  "encoded_height": 480,
+  "encoded_width": 864,
+  "execution_cache_control": {},
+  "eyeball": "pending",
+  "final_server_instance": {
+    "process_create_time": 1786267942.129039,
+    "serving_pid": 22072
+  },
+  "final_standalone_cache_runtime_sha256s": {},
+  "final_suite_cache_runtime_sha256s": {},
+  "fixture_sha256s": {
+    "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+    "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+  },
+  "gate_pass": true,
+  "git_commit": "2f49535f0bd846ed609b372ad36a30f2ee499432",
+  "git_dirty": true,
+  "identity": {
+    "audio_receipt_sha256s": {
+      "tts_dialogue.wav": "55d82657863cb29a52d4aae60ff3f580195ce9bdd5035f65c6630e0600e991ae"
+    },
+    "boot_lane": "lab-8199, sage-free, no-pinned, reserve-12gb",
+    "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+    "fixture_sha256s": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    },
+    "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+    "model_fingerprints": {
+      "minimax_h3_audio_vae_fp32.safetensors": {
+        "bytes": 605254808,
+        "mtime_ns": 1786172708634123800,
+        "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+        "resolved": true
+      },
+      "minimax_h3_ref2va_pruned_int8_convrot.safetensors": {
+        "bytes": 20970379616,
+        "mtime_ns": 1786178589584574300,
+        "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "resolved": true
+      },
+      "minimax_h3_video_vae_fp16.safetensors": {
+        "bytes": 5207808496,
+        "mtime_ns": 1786173216118700500,
+        "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+        "resolved": true
+      },
+      "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+        "bytes": 15687142551,
+        "mtime_ns": 1786174937682140700,
+        "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "resolved": true
+      }
+    },
+    "recipe_sha256": "7b4364f86df260daeddc708547fcde4c61d4059e6cd29ff148d6eee9e08d479c",
+    "runner_sha256": "0f216d1d4f9083c67fbe1b0c9c763b93b919da999058424f778854d3903a4b9f",
+    "server_argv": [
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-GGUF",
+      "ComfyUI-KJNodes",
+      "--reserve-vram",
+      "12",
+      "--disable-pinned-memory"
+    ],
+    "server_instance": {
+      "process_create_time": 1786267942.129039,
+      "serving_pid": 22072
+    }
+  },
+  "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+  "marginal": false,
+  "model_fingerprints": {
+    "minimax_h3_audio_vae_fp32.safetensors": {
+      "bytes": 605254808,
+      "mtime_ns": 1786172708634123800,
+      "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+      "resolved": true
+    },
+    "minimax_h3_ref2va_pruned_int8_convrot.safetensors": {
+      "bytes": 20970379616,
+      "mtime_ns": 1786178589584574300,
+      "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "resolved": true
+    },
+    "minimax_h3_video_vae_fp16.safetensors": {
+      "bytes": 5207808496,
+      "mtime_ns": 1786173216118700500,
+      "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+      "resolved": true
+    },
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+      "bytes": 15687142551,
+      "mtime_ns": 1786174937682140700,
+      "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "resolved": true
+    }
+  },
+  "orphan_cleanup": {},
+  "output_path": "h3_r2v_refaudio_tts_lipsync_exact_seed42_out_00001_.mp4",
+  "pass": false,
+  "peak_host_ram_gb": 27.27,
+  "peak_vram_gb": 6.71,
+  "physical_total_vram_gib": 15.9208984375,
+  "pixel_format": "yuv420p",
+  "promotion_ready": false,
+  "prompt_id": "4f1ba607-df56-4966-a200-62032b0186a2",
+  "provenance_unchanged": true,
+  "provenance_validation_error": "",
+  "queued_prompt_sha256": "ef9773fabe3a001d76974b2bcf0bd8c3656e3f6c994a9ce3d769aa7dc0f20368",
+  "receipt_schema_version": 3,
+  "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed42",
+  "recipe_sha256": "7b4364f86df260daeddc708547fcde4c61d4059e6cd29ff148d6eee9e08d479c",
+  "requires_human_eyeball": true,
+  "reserve_vram_gib": 12.0,
+  "run_count": 1,
+  "run_identity_sha256": "9b5369f781a01d4f701fdfa83654db3b9adb71254ee93c743260d4d5fba7ac46",
+  "run_number": 1,
+  "runner_sha256": "0f216d1d4f9083c67fbe1b0c9c763b93b919da999058424f778854d3903a4b9f",
+  "server_argv": [
+    "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+    "--port",
+    "8199",
+    "--cuda-malloc",
+    "--user-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI",
+    "--output-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+    "--extra-model-paths-config",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "--disable-metadata",
+    "--disable-all-custom-nodes",
+    "--whitelist-custom-nodes",
+    "ComfyUI-GGUF",
+    "ComfyUI-KJNodes",
+    "--reserve-vram",
+    "12",
+    "--disable-pinned-memory"
+  ],
+  "server_instance": {
+    "process_create_time": 1786267942.129039,
+    "serving_pid": 22072
+  },
+  "server_instance_unchanged": true,
+  "standalone_cache_runtime_sha256s": {},
+  "status": "PASS (cold)",
+  "suite_cache_runtime_sha256s": {},
+  "timestamp": "2026-08-09T09:37:39Z",
+  "valid_measurement": true,
+  "video_codec": "h264",
+  "video_duration_s": 5.166667,
+  "video_stream_bytes": 190220,
+  "video_stream_bytes_per_frame": 1534.03,
+  "warm_pass": false
+}

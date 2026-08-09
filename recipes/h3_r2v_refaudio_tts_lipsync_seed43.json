@@ -1,0 +1,666 @@
+{
+  "name": "h3_r2v_refaudio_tts_lipsync_seed43",
+  "tier": "experiment",
+  "blocked": false,
+  "experiment": {
+    "campaign": "h3_ref2va_tts_seed_followup_v1",
+    "variant": "tts_lipsync_seed43",
+    "matrix_role": "prompt-identical alternate-seed lipsync take",
+    "independent_variable": "random_noise_seed",
+    "source_fixture": "tts_dialogue.wav",
+    "conditioning_fixture": "ltx_matrix_tts_dialogue_3p88s_gain_minus5db.wav",
+    "conditioning_sha256": "22489ae40a15ec181d72503f8e238dedf54fa1a803b2d27276b4f32baee5e828",
+    "conditioning_receipt": "fixtures/audio_receipts/ltx_matrix_tts_dialogue_3p88s_gain_minus5db.json",
+    "conditioning_receipt_sha256": "f8d38395c0cc5a313e4440a93662e61ed2e0d6206d3725327c5d1bbd07935928",
+    "window_start_s": 0.0,
+    "window_duration_s": 3.88,
+    "sample_rate_hz": 32000,
+    "sample_count": 124160,
+    "channels": 1,
+    "sample_format": "pcm_f32le",
+    "gain_db": -5,
+    "target_lufs": -25.8,
+    "measured_lufs": -25.5,
+    "prompt_policy": "Only the action prompt changes from the hash-pinned TTS dialogue recipe; graph, fixtures, seed, scheduler, dimensions, and audio paths stay exact",
+    "conditioning_policy": "LoadAudio feeds only Ref2VA ref_audios.ref_audio_0",
+    "output_audio_policy": "CreateVideo receives only VAEDecodeAudio decoded from the sampled target AV latent",
+    "external_source_mux": false,
+    "render_status": "unrendered",
+    "render_gate": "separately authorized alternate-seed follow-up",
+    "clone_source_recipe": "recipes/h3_r2v_refaudio_tts_lipsync.json",
+    "clone_source_recipe_sha256": "930289e8b719c59392a18b0e81ef40ce0ea8d1b5a19e80c30f929533e3bdf0c5",
+    "action_prompt": "medium close shot of <Picture 1> speaking to camera, with lip movements matching <Audio 1> precisely",
+    "behavioral_claim_status": "unrendered and unproven",
+    "execution_graph_diff_whitelist": [
+      "prompt.5.inputs.noise_seed",
+      "prompt.12.inputs.filename_prefix"
+    ],
+    "seed_policy": "The RandomNoise seed is the sole model-execution variable from the hash-pinned seed-42 lipsync take; the unique name and SaveVideo prefix only isolate artifacts",
+    "source_seed": 42,
+    "alternate_seed": 43
+  },
+  "contract": {
+    "engine": "minimax_h3",
+    "mode": "r2v_refaudio",
+    "width": 864,
+    "height": 480,
+    "frames": 124,
+    "fps": 24.0,
+    "duration_s": 5.17,
+    "reference_audio_duration_s": 3.88,
+    "requires_audio": true,
+    "required_boot_lane": "lab-8199, sage-free",
+    "vram_ceiling_gb": 14.5
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "profile": "minimax_h3_ref2va_external_audio_diagnostic_v1",
+    "intent": "Official Ref2VA conditioning and sampler topology with one standalone reference WAV; saved audio is model-native target latent decode only",
+    "origin": {
+      "builder": "scratch/build_h3_refaudio_matrix.py",
+      "base_recipe": "recipes/h3_r2v_best.json",
+      "base_recipe_sha256": "20e584cc016bdc5bdb857b00923c7ae838174724e3c20be0dfc322a809392eda",
+      "original_implementation": true,
+      "third_party_workflow_json_copied": false
+    },
+    "frozen_template": {
+      "path": "research/comfy_templates/video_minimax_h3_r2v.json",
+      "sha256": "099d24eda6263854818975c7209db6f29ebfd0339936c928f12293d5ab029ffb"
+    },
+    "installed_schema": {
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+      "node_source": "comfy_extras/nodes_minimax_h3.py",
+      "node_source_sha256": "f767df4074b908efb345f5a87c2fd263ba82c12e65bcca932846207cc213e064",
+      "schema_lines": "154-198",
+      "execution_lines": "200-280",
+      "reference_socket_paths": [
+        "ref_images.ref_image_0",
+        "ref_images.ref_image_1",
+        "ref_audios.ref_audio_0"
+      ]
+    },
+    "fixture_hashes": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UNETLoader",
+      "2": "CLIPLoader",
+      "3": "VAELoader",
+      "4": "VAELoader",
+      "5": "RandomNoise",
+      "6": "BasicGuider",
+      "7": "MiniMaxH3ReferenceToVideo",
+      "8": "SamplerCustomAdvanced",
+      "9": "VAEDecode",
+      "10": "CreateVideo",
+      "11": "LoadImage",
+      "12": "SaveVideo",
+      "13": "KSamplerSelect",
+      "14": "BasicScheduler",
+      "15": "VAEDecodeAudio",
+      "16": "LoadAudio",
+      "17": "LoadImage"
+    },
+    "required_class_types": [
+      "UNETLoader",
+      "CLIPLoader",
+      "VAELoader",
+      "RandomNoise",
+      "BasicGuider",
+      "MiniMaxH3ReferenceToVideo",
+      "SamplerCustomAdvanced",
+      "VAEDecode",
+      "CreateVideo",
+      "LoadImage",
+      "SaveVideo",
+      "KSamplerSelect",
+      "BasicScheduler",
+      "VAEDecodeAudio",
+      "LoadAudio"
+    ],
+    "required_connections": {
+      "6.model": [
+        "1",
+        0
+      ],
+      "6.conditioning": [
+        "7",
+        0
+      ],
+      "7.clip": [
+        "2",
+        0
+      ],
+      "7.vae": [
+        "3",
+        0
+      ],
+      "7.audio_vae": [
+        "4",
+        0
+      ],
+      "7.ref_images.ref_image_0": [
+        "11",
+        0
+      ],
+      "7.ref_images.ref_image_1": [
+        "17",
+        0
+      ],
+      "7.ref_audios.ref_audio_0": [
+        "16",
+        0
+      ],
+      "8.noise": [
+        "5",
+        0
+      ],
+      "8.guider": [
+        "6",
+        0
+      ],
+      "8.sampler": [
+        "13",
+        0
+      ],
+      "8.sigmas": [
+        "14",
+        0
+      ],
+      "8.latent_image": [
+        "7",
+        1
+      ],
+      "14.model": [
+        "1",
+        0
+      ],
+      "9.samples": [
+        "8",
+        0
+      ],
+      "9.vae": [
+        "3",
+        0
+      ],
+      "15.samples": [
+        "8",
+        0
+      ],
+      "15.vae": [
+        "4",
+        0
+      ],
+      "10.images": [
+        "9",
+        0
+      ],
+      "10.audio": [
+        "15",
+        0
+      ],
+      "12.video": [
+        "10",
+        0
+      ]
+    },
+    "required_absent_inputs": [
+      "7.ref_videos",
+      "7.ref_video_audios",
+      "7.first_frame",
+      "7.last_frame",
+      "7.ref_images.ref_image_2",
+      "7.ref_images.ref_image_3",
+      "7.ref_images.ref_image_4",
+      "7.ref_images.ref_image_5",
+      "7.ref_images.ref_image_6",
+      "7.ref_images.ref_image_7",
+      "7.ref_images.ref_image_8",
+      "7.ref_videos.ref_video_0",
+      "7.ref_videos.ref_video_1",
+      "7.ref_videos.ref_video_2",
+      "7.ref_video_audios.ref_video_audio_0",
+      "7.ref_video_audios.ref_video_audio_1",
+      "7.ref_video_audios.ref_video_audio_2",
+      "7.ref_audios.ref_audio_1",
+      "7.ref_audios.ref_audio_2"
+    ],
+    "required_absent_sockets": [
+      "7.ref_images.ref_image_2",
+      "7.ref_images.ref_image_3",
+      "7.ref_images.ref_image_4",
+      "7.ref_images.ref_image_5",
+      "7.ref_images.ref_image_6",
+      "7.ref_images.ref_image_7",
+      "7.ref_images.ref_image_8",
+      "7.ref_videos.ref_video_0",
+      "7.ref_videos.ref_video_1",
+      "7.ref_videos.ref_video_2",
+      "7.ref_video_audios.ref_video_audio_0",
+      "7.ref_video_audios.ref_video_audio_1",
+      "7.ref_video_audios.ref_video_audio_2",
+      "7.ref_audios.ref_audio_1",
+      "7.ref_audios.ref_audio_2"
+    ],
+    "required_input_values": [
+      {
+        "node": "1",
+        "input": "unet_name",
+        "equals": "minimax_h3_ref2va_pruned_int8_convrot.safetensors"
+      },
+      {
+        "node": "1",
+        "input": "weight_dtype",
+        "equals": "default"
+      },
+      {
+        "node": "2",
+        "input": "clip_name",
+        "equals": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+      },
+      {
+        "node": "2",
+        "input": "type",
+        "equals": "minimax"
+      },
+      {
+        "node": "2",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "3",
+        "input": "vae_name",
+        "equals": "minimax_h3_video_vae_fp16.safetensors"
+      },
+      {
+        "node": "4",
+        "input": "vae_name",
+        "equals": "minimax_h3_audio_vae_fp32.safetensors"
+      },
+      {
+        "node": "5",
+        "input": "noise_seed",
+        "equals": 43
+      },
+      {
+        "node": "7",
+        "input": "prompt",
+        "equals": "subject_definitions:\n<Picture 1> is the sole character identity and appearance reference.\n<Picture 2> is the sole environment, lighting, and composition reference.\n<Audio 1> is the sole dialogue and timing reference for the target audiovisual generation.\n\nsummary:\n[reference generation + audio reference] Create a medium close shot of <Picture 1> speaking directly to camera in the vintage radio control room from <Picture 2>, with lip movements matching <Audio 1> precisely.\n\nretention_analysis:\n<Picture 1>: fully_preserved - Preserve the face, hair, clothing, body proportions, and recognizable identity.\n<Picture 2>: fully_preserved - Preserve the room layout, analog equipment, warm lighting, and spatial composition.\n<Audio 1>: reference - Use its dialogue timing, phoneme pacing, pauses, vocal rhythm, and audible structure to guide the newly generated target audio and facial performance.\n\ndetailed_description:\nThe target video is one realistic, restrained medium close shot. [Shot 1] The person from <Picture 1> faces the camera and speaks naturally in the vintage radio control room from <Picture 2>. Keep the head, jaw, cheeks, and facial identity stable. Lip and mouth movements match <Audio 1> precisely throughout, including speech onset, phoneme changes, pauses, and the final mouth closure. Keep body motion subtle, maintain eye contact with the camera, and avoid cuts or camera motion that obscures the mouth.\n\noverall_soundscape:\nThe generated dialogue and restrained room ambience follow <Audio 1> and remain synchronized with the visible speaking performance.\n\nnon_diegetic_music:\nDo not add music or an unrelated score."
+      },
+      {
+        "node": "7",
+        "input": "width",
+        "equals": 864
+      },
+      {
+        "node": "7",
+        "input": "height",
+        "equals": 480
+      },
+      {
+        "node": "7",
+        "input": "length",
+        "equals": 124
+      },
+      {
+        "node": "7",
+        "input": "ref_image_size",
+        "equals": "match"
+      },
+      {
+        "node": "11",
+        "input": "image",
+        "equals": "portrait.png"
+      },
+      {
+        "node": "17",
+        "input": "image",
+        "equals": "scene_still.png"
+      },
+      {
+        "node": "13",
+        "input": "sampler_name",
+        "equals": "res_multistep"
+      },
+      {
+        "node": "14",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "14",
+        "input": "steps",
+        "equals": 20
+      },
+      {
+        "node": "14",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "10",
+        "input": "fps",
+        "equals": 24.0
+      },
+      {
+        "node": "10",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "12",
+        "input": "filename_prefix",
+        "equals": "h3_r2v_refaudio_tts_lipsync_seed43_out"
+      }
+    ],
+    "forbidden_class_types": [
+      "KSampler",
+      "CLIPTextEncode",
+      "TrimAudioDuration",
+      "AudioAdjustVolume",
+      "VHS_LoadAudio",
+      "H3ReferenceAudio",
+      "MiniMaxH3NativeAudioLock",
+      "VRGDG_MiniMaxH3AudioDrive"
+    ],
+    "audio_path_contract": {
+      "conditioning_source": "16.LoadAudio -> 7.ref_audios.ref_audio_0",
+      "sampled_target": "7.LATENT -> 8.SamplerCustomAdvanced -> 15.VAEDecodeAudio",
+      "delivery": "15.AUDIO -> 10.CreateVideo.audio",
+      "create_video_audio_required": [
+        "15",
+        0
+      ],
+      "create_video_audio_forbidden": [
+        "16",
+        0
+      ],
+      "external_source_mux": false
+    },
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "matrix_diff_whitelist": [
+      "name",
+      "experiment.*",
+      "prompt.16.inputs.audio",
+      "prompt.12.inputs.filename_prefix"
+    ],
+    "intentional_divergences": [
+      "The official UI subgraph is flattened to the pinned local API prompt",
+      "The 864x480 lab canvas and deterministic seed 42 replace best-lane dimensions",
+      "portrait.png and scene_still.png are ordered as Picture 1 and Picture 2",
+      "one receipt-bound 3.88-second WAV is ordered as Audio 1",
+      "optional reference videos and paired reference-video soundtracks are absent",
+      "source audio never connects to CreateVideo; only sampled target audio is decoded"
+    ],
+    "evidence": {
+      "official": [
+        {
+          "url": "https://docs.comfy.org/tutorials/video/minimax/minimax-h3",
+          "trust": "ComfyUI official documentation",
+          "use": "Ref2VA socket limits and exact-order reference tags"
+        },
+        {
+          "url": "https://github.com/Comfy-Org/ComfyUI/blob/fe4195f7f4275f2626cbafc703acc3ddde1e5490/comfy_extras/nodes_minimax_h3.py#L154-L280",
+          "trust": "installed official ComfyUI core source",
+          "license": "GPL-3.0",
+          "use": "autogrow reference sockets and genuine audio-latent conditioning"
+        },
+        {
+          "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3",
+          "trust": "MiniMax model-author model card",
+          "license": "MiniMax H3 Community License Agreement",
+          "use": "Ref2VA audio duration and mixed-input contract"
+        },
+        {
+          "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md",
+          "trust": "MiniMax model-author prompt guide",
+          "license": "MiniMax H3 Community License Agreement",
+          "use": "<Audio N> reference-versus-copy semantics"
+        },
+        {
+          "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/scripts/readme/reproducible-768p-ref2va-request.sh",
+          "trust": "MiniMax model-author reproducible Ref2VA request",
+          "license": "MiniMax H3 Community License Agreement",
+          "use": "reference-video soundtrack then standalone-audio label ordering"
+        },
+        {
+          "url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/video_minimax_h3_r2v.json",
+          "trust": "Comfy-Org official frozen topology",
+          "license": "MIT",
+          "use": "sampler and native target AV decode topology",
+          "caveat": "its audio sockets are present but unwired"
+        }
+      ],
+      "community_topology_evidence_only": [
+        {
+          "url": "https://github.com/sobaya-0141/Seedance_Madogiwa/blob/b27546d848121f2c5f3f687dea00bf4f37523cff/03_SCRIPTS/26_kansha_no_bug_ichimankai/ch8_workflow.json",
+          "license": "no repository license found",
+          "trust": "validator-accepted API graph; author reported no completed H3 render",
+          "use": "topology corroboration only",
+          "copied": false
+        },
+        {
+          "url": "https://github.com/jtydhr88/ComfyTV/blob/4d1f882e4793d3a22d86e6dec60d829ab16e2252/workflows/video/local-minimax-h3-r2v.json",
+          "license": "MIT",
+          "trust": "maintained community workflow",
+          "use": "paired reference-video soundtrack corroboration only",
+          "copied": false
+        }
+      ],
+      "rejected_as_implementation_source": [
+        {
+          "url": "https://github.com/Shrek3OnVH5/MiniMax-H3-NativeAudio-MusicVideo-Workflow",
+          "license": "no repository license found",
+          "reason": "custom NativeAudioLock and direct exact-audio mux confound conditioning",
+          "copied": false
+        }
+      ],
+      "no_license_caveat": "Unlicensed community JSON was inspected only to corroborate socket topology. This builder and every generated node/value originate from the pinned local h3_r2v_best recipe, official source contracts, and lab-owned fixtures."
+    }
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "type": "minimax",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+    },
+    "5": {
+      "class_type": "RandomNoise",
+      "inputs": {
+        "noise_seed": 43
+      }
+    },
+    "6": {
+      "class_type": "BasicGuider",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "conditioning": [
+          "7",
+          0
+        ]
+      }
+    },
+    "7": {
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "audio_vae": [
+          "4",
+          0
+        ],
+        "prompt": "subject_definitions:\n<Picture 1> is the sole character identity and appearance reference.\n<Picture 2> is the sole environment, lighting, and composition reference.\n<Audio 1> is the sole dialogue and timing reference for the target audiovisual generation.\n\nsummary:\n[reference generation + audio reference] Create a medium close shot of <Picture 1> speaking directly to camera in the vintage radio control room from <Picture 2>, with lip movements matching <Audio 1> precisely.\n\nretention_analysis:\n<Picture 1>: fully_preserved - Preserve the face, hair, clothing, body proportions, and recognizable identity.\n<Picture 2>: fully_preserved - Preserve the room layout, analog equipment, warm lighting, and spatial composition.\n<Audio 1>: reference - Use its dialogue timing, phoneme pacing, pauses, vocal rhythm, and audible structure to guide the newly generated target audio and facial performance.\n\ndetailed_description:\nThe target video is one realistic, restrained medium close shot. [Shot 1] The person from <Picture 1> faces the camera and speaks naturally in the vintage radio control room from <Picture 2>. Keep the head, jaw, cheeks, and facial identity stable. Lip and mouth movements match <Audio 1> precisely throughout, including speech onset, phoneme changes, pauses, and the final mouth closure. Keep body motion subtle, maintain eye contact with the camera, and avoid cuts or camera motion that obscures the mouth.\n\noverall_soundscape:\nThe generated dialogue and restrained room ambience follow <Audio 1> and remain synchronized with the visible speaking performance.\n\nnon_diegetic_music:\nDo not add music or an unrelated score.",
+        "width": 864,
+        "height": 480,
+        "length": 124,
+        "ref_image_size": "match",
+        "ref_images.ref_image_0": [
+          "11",
+          0
+        ],
+        "ref_images.ref_image_1": [
+          "17",
+          0
+        ],
+        "ref_audios.ref_audio_0": [
+          "16",
+          0
+        ]
+      }
+    },
+    "8": {
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+        "noise": [
+          "5",
+          0
+        ],
+        "guider": [
+          "6",
+          0
+        ],
+        "sampler": [
+          "13",
+          0
+        ],
+        "sigmas": [
+          "14",
+          0
+        ],
+        "latent_image": [
+          "7",
+          1
+        ]
+      }
+    },
+    "9": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "10": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "9",
+          0
+        ],
+        "fps": 24.0,
+        "bit_depth": 8,
+        "audio": [
+          "15",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "portrait.png"
+      }
+    },
+    "12": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "10",
+          0
+        ],
+        "filename_prefix": "h3_r2v_refaudio_tts_lipsync_seed43_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    },
+    "13": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "res_multistep"
+      }
+    },
+    "14": {
+      "class_type": "BasicScheduler",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
+      }
+    },
+    "15": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "4",
+          0
+        ]
+      }
+    },
+    "16": {
+      "class_type": "LoadAudio",
+      "inputs": {
+        "audio": "ltx_matrix_tts_dialogue_3p88s_gain_minus5db.wav"
+      }
+    },
+    "17": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  }
+}

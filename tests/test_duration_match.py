@@ -72,6 +72,16 @@ class DurationMatchTests(unittest.TestCase):
         self.assertEqual(plan["delivered_s"], Decimal("3.750"))
         self.assertEqual(plan["tail_trim_s"], 0)
 
+    def test_h3_eight_seconds_is_exact_192_frame_grid_point(self):
+        plan = duration_match(Decimal("8.000"), "h3")
+        self.assertEqual(plan["frame_count"], 192)
+        self.assertEqual(plan["delivered_frame_count"], 192)
+        self.assertEqual(plan["trim_frames"], 0)
+        self.assertEqual(plan["rendered_s"], Fraction(8, 1))
+        self.assertEqual(plan["whole_frame_delivery_s"], Fraction(8, 1))
+        self.assertEqual(plan["delivered_s"], Decimal("8.000"))
+        self.assertEqual(plan["tail_trim_s"], 0)
+
     def test_ltx_default_beat_renders_97_then_uses_exact_endpoint(self):
         plan = duration_match(Decimal("3.750"), "ltx")
         self.assertEqual(plan["frame_count"], 97)

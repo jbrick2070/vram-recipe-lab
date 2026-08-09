@@ -95,6 +95,110 @@ class TestRunnerProvenance(unittest.TestCase):
             run_recipe.SUITE_CACHE_RUNTIME_SOURCES,
         )
 
+    def test_standalone_cache_nonce_preserves_legacy_ksampler_seed(self):
+        prompt = {
+            "1": {"class_type": "UNETLoader", "inputs": {}},
+            "8": {
+                "class_type": "KSampler",
+                "inputs": {
+                    "model": ["1", 0],
+                    "seed": 42,
+                    "steps": 20,
+                    "cfg": 6.0,
+                    "sampler_name": "euler",
+                    "scheduler": "simple",
+                },
+            },
+            "9": {"class_type": "VAEDecode", "inputs": {"samples": ["8", 0]}},
+            "10": {"class_type": "CreateVideo", "inputs": {"images": ["9", 0]}},
+            "11": {"class_type": "SaveVideo", "inputs": {"video": ["10", 0]}},
+        }
+
+        queued, control = run_recipe.apply_standalone_cache_nonce(prompt, "pair:wan:W1")
+
+        self.assertEqual(prompt["8"]["inputs"]["seed"], 42)
+        self.assertNotIn(run_recipe.SUITE_CACHE_NONCE_INPUT, prompt["8"]["inputs"])
+        self.assertEqual(queued["8"]["inputs"]["seed"], 42)
+        self.assertEqual(
+            queued["8"]["inputs"][run_recipe.SUITE_CACHE_NONCE_INPUT],
+            "pair:wan:W1",
+        )
+        self.assertEqual(control["source_class_type"], "KSampler")
+        self.assertEqual(control["sampler_node_ids"], ["8"])
+        self.assertEqual(set(control["fresh_node_ids"]), {"8", "9", "10", "11"})
+        self.assertEqual(control["stable_node_ids"], ["1"])
+
+    def test_standalone_cache_nonce_supports_ltx_sampler_custom(self):
+        recipe = json.loads(
+            (
+                run_recipe.REPO_ROOT
+                / "recipes"
+                / "ltx_video_2b_distilled_cmp_832x480_f193.json"
+            ).read_text(encoding="utf-8")
+        )
+
+        queued, control = run_recipe.apply_standalone_cache_nonce(
+            recipe["prompt"], "pair:ltx:L1"
+        )
+
+        self.assertEqual(control["source_class_type"], "SamplerCustom")
+        self.assertEqual(control["sampler_node_ids"], ["9"])
+        self.assertEqual(queued["9"]["inputs"]["noise_seed"], 42)
+        self.assertEqual(
+            queued["9"]["inputs"][run_recipe.SUITE_CACHE_NONCE_INPUT],
+            "pair:ltx:L1",
+        )
+        self.assertTrue({"9", "10", "11", "12"}.issubset(control["fresh_node_ids"]))
+        self.assertIn("1", control["stable_node_ids"])
+
+    def test_standalone_cache_nonce_rejects_orphan_sampler_branch(self):
+        prompt = {
+            "1": {"class_type": "UNETLoader", "inputs": {}},
+            "8": {
+                "class_type": "KSampler",
+                "inputs": {"model": ["1", 0], "seed": 42},
+            },
+            "20": {"class_type": "CreateVideo", "inputs": {"images": ["1", 0]}},
+            "21": {"class_type": "SaveVideo", "inputs": {"video": ["20", 0]}},
+        }
+
+        with self.assertRaisesRegex(ValueError, "must feed a file-output sink"):
+            run_recipe.apply_standalone_cache_nonce(prompt, "pair:orphan:W1")
+
+    def test_standalone_cache_nonce_flag_is_strict_and_not_for_suite(self):
+        self.assertEqual(
+            run_recipe.parse_standalone_cache_nonce(
+                ["run_recipe.py", "recipe.json", "--executor-cache-nonce", "pair:L0"],
+                False,
+            ),
+            "pair:L0",
+        )
+        for argv, is_suite in (
+            (
+                [
+                    "run_recipe.py",
+                    "recipe.json",
+                    "--suite",
+                    "--executor-cache-nonce",
+                    "pair:L0",
+                ],
+                True,
+            ),
+            (["run_recipe.py", "recipe.json", "--executor-cache-nonce"], False),
+            (
+                ["run_recipe.py", "recipe.json", "--executor-cache-nonce", "bad/value"],
+                False,
+            ),
+        ):
+            with self.assertRaises(ValueError):
+                run_recipe.parse_standalone_cache_nonce(argv, is_suite)
+
+    def test_standalone_cache_runtime_sources_are_exactly_pinned(self):
+        self.assertEqual(
+            run_recipe.standalone_cache_runtime_sha256s(),
+            run_recipe.STANDALONE_CACHE_RUNTIME_SOURCES,
+        )
+
     def test_forbidden_lab_port_override_fails_before_network_or_gpu_query(self):
         with (
             mock.patch.dict(os.environ, {"LAB_PORT": "8188"}, clear=False),

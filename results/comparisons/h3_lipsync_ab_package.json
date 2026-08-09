@@ -1,0 +1,92 @@
+{
+  "comparison": "h3_lipsync_two_take_lab_package",
+  "fixture_contract": {
+    "actual_conditioning_inputs": [
+      "fixtures/portrait.png",
+      "fixtures/tts_dialogue.wav"
+    ],
+    "comparison_caveat": "None: this pair uses the ordered portrait plus raw-TTS contract exactly.",
+    "raw_tts_dialogue_path": "fixtures/tts_dialogue.wav",
+    "raw_tts_dialogue_sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+  },
+  "human_decision": "pending",
+  "lab_scope": "H3 only; HuMo wrapper is outside the lab whitelist and was not run",
+  "mean_h3_wall_seconds": 301.55,
+  "otr_side_open_decision": "Compare these exact portrait and raw-TTS hashes against HuMo outside this lab.",
+  "status": "LAB_HALF_COMPLETE_TWO_COLD_MACHINE_GATES",
+  "takes": [
+    {
+      "artifact_path": "outputs/h3_r2v_refaudio_tts_lipsync_exact_seed42_out_00001_.mp4",
+      "artifact_sha256": "925f406f779aeef26b75e84fe7b71944db8ae453d1aaca118d3a392c88cc4cb2",
+      "baseline_vram_gib": 2.15,
+      "delivered_seconds": 5.167,
+      "encoded_fps": 24.0,
+      "encoded_frames": 124,
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "height": 480,
+      "human_lipsync_verdict": "pending_jeffrey_full_clip_review",
+      "label": "A",
+      "machine_gate_pass": true,
+      "peak_vram_gib": 6.71,
+      "receipt_path": "results/h3_r2v_refaudio_tts_lipsync_exact_seed42_run1.json",
+      "receipt_sha256": "24fc96d2785c93e3a53c19cb39cf69dafd0907803b14eade3dc0d63ee4914711",
+      "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed42",
+      "recipe_sha256": "7b4364f86df260daeddc708547fcde4c61d4059e6cd29ff148d6eee9e08d479c",
+      "run_number": 1,
+      "seed": 42,
+      "status": "GATE PASS (cold-only)",
+      "wall_seconds": 305.3,
+      "warm_pass": false,
+      "width": 864
+    },
+    {
+      "artifact_path": "outputs/h3_r2v_refaudio_tts_lipsync_exact_seed43_out_00001_.mp4",
+      "artifact_sha256": "7212cfcef59a516371fbb406d4e1f8cf93baf993a5585eb4853833c3fa757101",
+      "baseline_vram_gib": 5.23,
+      "delivered_seconds": 5.167,
+      "encoded_fps": 24.0,
+      "encoded_frames": 124,
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "height": 480,
+      "human_lipsync_verdict": "pending_jeffrey_full_clip_review",
+      "label": "B",
+      "machine_gate_pass": true,
+      "peak_vram_gib": 6.51,
+      "receipt_path": "results/h3_r2v_refaudio_tts_lipsync_exact_seed43_run1.json",
+      "receipt_sha256": "f1a1505d50fcdc8bab41850d58b8d4e8dce6713b9573444ab27f552cc2325716",
+      "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed43",
+      "recipe_sha256": "159467e9e9d25b07b95e5cd46a16c8c45af0449f0ab838285697d259f7339712",
+      "run_number": 1,
+      "seed": 43,
+      "status": "GATE PASS (cold-only)",
+      "wall_seconds": 297.8,
+      "warm_pass": false,
+      "width": 864
+    }
+  ],
+  "technical_screen_review": {
+    "method": "Codex manual review of sampled-frame contact sheets",
+    "reviewed_at": "2026-08-09T02:51:09-07:00",
+    "scope": "Both receipt-bound artifacts show stable faces and visibly distinct mouth shapes in sampled frames. This is not a phoneme-sync, pause-settling, cross-seed-consistency, or human promotion verdict.",
+    "takes": [
+      {
+        "artifact_path": "outputs/h3_r2v_refaudio_tts_lipsync_exact_seed42_out_00001_.mp4",
+        "artifact_sha256": "925f406f779aeef26b75e84fe7b71944db8ae453d1aaca118d3a392c88cc4cb2",
+        "label": "A",
+        "observation": "Visible mouth-shape variation in sampled frames"
+      },
+      {
+        "artifact_path": "outputs/h3_r2v_refaudio_tts_lipsync_exact_seed43_out_00001_.mp4",
+        "artifact_sha256": "7212cfcef59a516371fbb406d4e1f8cf93baf993a5585eb4853833c3fa757101",
+        "label": "B",
+        "observation": "Visible mouth-shape variation in sampled frames"
+      }
+    ]
+  }
+}

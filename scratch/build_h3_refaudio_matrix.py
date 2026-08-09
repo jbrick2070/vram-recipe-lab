@@ -28,12 +28,20 @@ RECIPES = ROOT / "recipes"
 FIXTURES = ROOT / "fixtures"
 AUDIO_RECEIPTS = FIXTURES / "audio_receipts"
 BASE_RECIPE = RECIPES / "h3_r2v_best.json"
+TTS_DIALOGUE_RECIPE = RECIPES / "h3_r2v_refaudio_tts_dialogue.json"
+TTS_LIPSYNC_SEED42_RECIPE = RECIPES / "h3_r2v_refaudio_tts_lipsync.json"
 FROZEN_TEMPLATE = ROOT / "research" / "comfy_templates" / "video_minimax_h3_r2v.json"
 INSTALLED_COMFY_ROOT = Path.home() / "ComfyUI-Installs" / "ComfyUI" / "ComfyUI"
 INSTALLED_NODE_SOURCE = INSTALLED_COMFY_ROOT / "comfy_extras" / "nodes_minimax_h3.py"
 
 EXPECTED_BASE_RECIPE_SHA256 = (
     "20e584cc016bdc5bdb857b00923c7ae838174724e3c20be0dfc322a809392eda"
+)
+EXPECTED_TTS_DIALOGUE_RECIPE_SHA256 = (
+    "85e180b89d7d1adec88407fcc9e2b664d1a13bbbdc543e0c60d965903b62f437"
+)
+EXPECTED_TTS_LIPSYNC_SEED42_RECIPE_SHA256 = (
+    "930289e8b719c59392a18b0e81ef40ce0ea8d1b5a19e80c30f929533e3bdf0c5"
 )
 EXPECTED_FROZEN_TEMPLATE_SHA256 = (
     "099d24eda6263854818975c7209db6f29ebfd0339936c928f12293d5ab029ffb"
@@ -91,6 +99,41 @@ SHARED_PROMPT = (
     "<Audio 1> and remains synchronized with the restrained visual action.\n\n"
     "non_diegetic_music:\n"
     "Do not add an unrelated score; follow only the role present in <Audio 1>."
+)
+
+TTS_LIPSYNC_RECIPE_NAME = "h3_r2v_refaudio_tts_lipsync"
+TTS_LIPSYNC_OUTPUT_PREFIX = "h3_r2v_refaudio_tts_lipsync_out"
+TTS_LIPSYNC_SEED43_RECIPE_NAME = "h3_r2v_refaudio_tts_lipsync_seed43"
+TTS_LIPSYNC_SEED43_OUTPUT_PREFIX = "h3_r2v_refaudio_tts_lipsync_seed43_out"
+TTS_LIPSYNC_ALTERNATE_SEED = 43
+TTS_LIPSYNC_PROMPT = (
+    "subject_definitions:\n"
+    "<Picture 1> is the sole character identity and appearance reference.\n"
+    "<Picture 2> is the sole environment, lighting, and composition reference.\n"
+    "<Audio 1> is the sole dialogue and timing reference for the target audiovisual generation.\n\n"
+    "summary:\n"
+    "[reference generation + audio reference] Create a medium close shot of <Picture 1> "
+    "speaking directly to camera in the vintage radio control room from <Picture 2>, "
+    "with lip movements matching <Audio 1> precisely.\n\n"
+    "retention_analysis:\n"
+    "<Picture 1>: fully_preserved - Preserve the face, hair, clothing, body proportions, "
+    "and recognizable identity.\n"
+    "<Picture 2>: fully_preserved - Preserve the room layout, analog equipment, warm "
+    "lighting, and spatial composition.\n"
+    "<Audio 1>: reference - Use its dialogue timing, phoneme pacing, pauses, vocal rhythm, "
+    "and audible structure to guide the newly generated target audio and facial performance.\n\n"
+    "detailed_description:\n"
+    "The target video is one realistic, restrained medium close shot. [Shot 1] The person "
+    "from <Picture 1> faces the camera and speaks naturally in the vintage radio control "
+    "room from <Picture 2>. Keep the head, jaw, cheeks, and facial identity stable. Lip and "
+    "mouth movements match <Audio 1> precisely throughout, including speech onset, phoneme "
+    "changes, pauses, and the final mouth closure. Keep body motion subtle, maintain eye "
+    "contact with the camera, and avoid cuts or camera motion that obscures the mouth.\n\n"
+    "overall_soundscape:\n"
+    "The generated dialogue and restrained room ambience follow <Audio 1> and remain "
+    "synchronized with the visible speaking performance.\n\n"
+    "non_diegetic_music:\n"
+    "Do not add music or an unrelated score."
 )
 
 
@@ -707,12 +750,17 @@ def source_consumers(prompt: dict[str, Any], source_node: str) -> set[tuple[str,
     return consumers
 
 
-def validate_recipe(recipe: dict[str, Any], cell: Cell) -> None:
+def validate_recipe(
+    recipe: dict[str, Any],
+    cell: Cell,
+    expected_prompt: str = SHARED_PROMPT,
+    expected_name: str | None = None,
+) -> None:
     prompt = recipe.get("prompt", {})
     classes = {node_id: node.get("class_type") for node_id, node in prompt.items()}
     if classes != EXPERIMENT_NODE_CLASSES:
         raise RuntimeError(f"{cell.key}: exact node set mismatch: {classes!r}")
-    if recipe.get("name") != cell.recipe_name:
+    if recipe.get("name") != (expected_name or cell.recipe_name):
         raise RuntimeError(f"{cell.key}: recipe identity mismatch")
     if prompt["16"]["inputs"] != {"audio": cell.conditioning_fixture}:
         raise RuntimeError(f"{cell.key}: LoadAudio does not name the receipt-bound WAV")
@@ -729,11 +777,11 @@ def validate_recipe(recipe: dict[str, Any], cell: Cell) -> None:
         raise RuntimeError(f"{cell.key}: exact Picture ordering changed")
     if ref_inputs.get("ref_audios.ref_audio_0") != ["16", 0]:
         raise RuntimeError(f"{cell.key}: exact Audio ordering changed")
-    if ref_inputs.get("prompt") != SHARED_PROMPT:
-        raise RuntimeError(f"{cell.key}: shared prompt changed")
-    tags = set(re.findall(r"<(?:Picture|Video|Audio) \d+>", SHARED_PROMPT))
+    if ref_inputs.get("prompt") != expected_prompt:
+        raise RuntimeError(f"{cell.key}: expected action prompt changed")
+    tags = set(re.findall(r"<(?:Picture|Video|Audio) \d+>", expected_prompt))
     if tags != {"<Picture 1>", "<Picture 2>", "<Audio 1>"}:
-        raise RuntimeError(f"Shared reference tags changed: {tags}")
+        raise RuntimeError(f"Expected reference tags changed: {tags}")
 
     if source_consumers(prompt, "16") != {("7", "ref_audios.ref_audio_0")}:
         raise RuntimeError(f"{cell.key}: source WAV escapes the Ref2VA conditioning socket")
@@ -743,7 +791,7 @@ def validate_recipe(recipe: dict[str, Any], cell: Cell) -> None:
         raise RuntimeError(f"{cell.key}: CreateVideo.audio is not native target decode")
     if prompt["10"]["inputs"].get("audio") == ["16", 0]:
         raise RuntimeError(f"{cell.key}: forbidden source mux detected")
-    validate_dag(prompt, cell.recipe_name)
+    validate_dag(prompt, expected_name or cell.recipe_name)
 
 
 def normalized_recipe(recipe: dict[str, Any]) -> dict[str, Any]:
@@ -822,6 +870,181 @@ def build_matrix() -> list[dict[str, Any]]:
     return recipes
 
 
+def load_tts_dialogue_source() -> dict[str, Any]:
+    """Load and prove the exact immutable source recipe for the prompt-only clone."""
+    require_file_hash(
+        TTS_DIALOGUE_RECIPE,
+        EXPECTED_TTS_DIALOGUE_RECIPE_SHA256,
+        "h3_r2v_refaudio_tts_dialogue clone source",
+    )
+    source, _ = read_json(TTS_DIALOGUE_RECIPE)
+    generated = next(
+        recipe
+        for recipe in build_matrix()
+        if recipe["name"] == "h3_r2v_refaudio_tts_dialogue"
+    )
+    if source != generated:
+        raise RuntimeError("Committed TTS dialogue recipe is not its canonical builder output")
+    return source
+
+
+def build_tts_lipsync_prompt_clone() -> dict[str, Any]:
+    """Clone the proven TTS cell, changing only prompt experiment identity."""
+    source = load_tts_dialogue_source()
+    recipe = copy.deepcopy(source)
+    recipe["name"] = TTS_LIPSYNC_RECIPE_NAME
+
+    experiment = copy.deepcopy(source["experiment"])
+    experiment.update(
+        {
+            "campaign": "h3_ref2va_tts_prompt_followup_v1",
+            "variant": "tts_lipsync_prompt",
+            "matrix_role": "prompt-only speaking-to-camera follow-up",
+            "independent_variable": "action_prompt",
+            "prompt_policy": (
+                "Only the action prompt changes from the hash-pinned TTS dialogue "
+                "recipe; graph, fixtures, seed, scheduler, dimensions, and audio paths stay exact"
+            ),
+            "clone_source_recipe": "recipes/h3_r2v_refaudio_tts_dialogue.json",
+            "clone_source_recipe_sha256": EXPECTED_TTS_DIALOGUE_RECIPE_SHA256,
+            "action_prompt": (
+                "medium close shot of <Picture 1> speaking to camera, with lip "
+                "movements matching <Audio 1> precisely"
+            ),
+            "behavioral_claim_status": "unrendered and unproven",
+            "render_status": "unrendered",
+            "render_gate": "separately authorized prompt-only follow-up",
+            "execution_graph_diff_whitelist": [
+                "prompt.7.inputs.prompt",
+                "prompt.12.inputs.filename_prefix",
+            ],
+        }
+    )
+    recipe["experiment"] = experiment
+    recipe["prompt"]["7"]["inputs"]["prompt"] = TTS_LIPSYNC_PROMPT
+    recipe["prompt"]["12"]["inputs"][
+        "filename_prefix"
+    ] = TTS_LIPSYNC_OUTPUT_PREFIX
+
+    prompt_assertions = [
+        assertion
+        for assertion in recipe["topology_contract"]["required_input_values"]
+        if (assertion.get("node"), assertion.get("input")) == ("7", "prompt")
+    ]
+    if len(prompt_assertions) != 1:
+        raise RuntimeError(
+            f"Expected one mirrored prompt topology assertion, found {len(prompt_assertions)}"
+        )
+    prompt_assertions[0]["equals"] = TTS_LIPSYNC_PROMPT
+
+    cell = next(cell for cell in CELLS if cell.key == "tts_dialogue")
+    validate_recipe(
+        recipe,
+        cell,
+        expected_prompt=TTS_LIPSYNC_PROMPT,
+        expected_name=TTS_LIPSYNC_RECIPE_NAME,
+    )
+    return recipe
+
+
+def load_tts_lipsync_seed42_source() -> dict[str, Any]:
+    """Load and prove the exact immutable seed-42 lipsync recipe."""
+    require_file_hash(
+        TTS_LIPSYNC_SEED42_RECIPE,
+        EXPECTED_TTS_LIPSYNC_SEED42_RECIPE_SHA256,
+        "h3_r2v_refaudio_tts_lipsync seed-42 clone source",
+    )
+    source, _ = read_json(TTS_LIPSYNC_SEED42_RECIPE)
+    if source != build_tts_lipsync_prompt_clone():
+        raise RuntimeError(
+            "Committed seed-42 lipsync recipe is not its canonical builder output"
+        )
+    return source
+
+
+def build_tts_lipsync_seed43_clone() -> dict[str, Any]:
+    """Clone the lipsync take with seed as its sole model-execution variable."""
+    source = load_tts_lipsync_seed42_source()
+    recipe = copy.deepcopy(source)
+    recipe["name"] = TTS_LIPSYNC_SEED43_RECIPE_NAME
+
+    experiment = copy.deepcopy(source["experiment"])
+    experiment.update(
+        {
+            "campaign": "h3_ref2va_tts_seed_followup_v1",
+            "variant": "tts_lipsync_seed43",
+            "matrix_role": "prompt-identical alternate-seed lipsync take",
+            "independent_variable": "random_noise_seed",
+            "seed_policy": (
+                "The RandomNoise seed is the sole model-execution variable from the "
+                "hash-pinned seed-42 lipsync take; the unique name and SaveVideo prefix "
+                "only isolate artifacts"
+            ),
+            "clone_source_recipe": "recipes/h3_r2v_refaudio_tts_lipsync.json",
+            "clone_source_recipe_sha256": (
+                EXPECTED_TTS_LIPSYNC_SEED42_RECIPE_SHA256
+            ),
+            "source_seed": SEED,
+            "alternate_seed": TTS_LIPSYNC_ALTERNATE_SEED,
+            "behavioral_claim_status": "unrendered and unproven",
+            "render_status": "unrendered",
+            "render_gate": "separately authorized alternate-seed follow-up",
+            "execution_graph_diff_whitelist": [
+                "prompt.5.inputs.noise_seed",
+                "prompt.12.inputs.filename_prefix",
+            ],
+        }
+    )
+    recipe["experiment"] = experiment
+    recipe["prompt"]["5"]["inputs"]["noise_seed"] = TTS_LIPSYNC_ALTERNATE_SEED
+    recipe["prompt"]["12"]["inputs"][
+        "filename_prefix"
+    ] = TTS_LIPSYNC_SEED43_OUTPUT_PREFIX
+
+    seed_assertions = [
+        assertion
+        for assertion in recipe["topology_contract"]["required_input_values"]
+        if (assertion.get("node"), assertion.get("input"))
+        == ("5", "noise_seed")
+    ]
+    if len(seed_assertions) != 1:
+        raise RuntimeError(
+            "Expected one mirrored 5.noise_seed topology assertion, "
+            f"found {len(seed_assertions)}"
+        )
+    seed_assertions[0]["equals"] = TTS_LIPSYNC_ALTERNATE_SEED
+    recipe["topology_contract"]["required_input_values"].append(
+        {
+            "node": "12",
+            "input": "filename_prefix",
+            "equals": TTS_LIPSYNC_SEED43_OUTPUT_PREFIX,
+        }
+    )
+
+    execution_diff = difference_paths(source["prompt"], recipe["prompt"])
+    expected_diff = {
+        "5.inputs.noise_seed",
+        "12.inputs.filename_prefix",
+    }
+    if execution_diff != expected_diff:
+        raise RuntimeError(
+            f"Seed-43 lipsync execution drift is not isolated: {sorted(execution_diff)}"
+        )
+    if recipe["prompt"]["7"]["inputs"]["prompt"] != source["prompt"]["7"][
+        "inputs"
+    ]["prompt"]:
+        raise RuntimeError("Seed-43 lipsync action prompt changed from seed 42")
+
+    cell = next(cell for cell in CELLS if cell.key == "tts_dialogue")
+    validate_recipe(
+        recipe,
+        cell,
+        expected_prompt=TTS_LIPSYNC_PROMPT,
+        expected_name=TTS_LIPSYNC_SEED43_RECIPE_NAME,
+    )
+    return recipe
+
+
 def immutable_write(path: Path, payload: bytes) -> bool:
     if path.exists():
         if path.read_bytes() != payload:
@@ -845,10 +1068,44 @@ def write_all(output_dir: Path = RECIPES) -> dict[str, bool]:
     return results
 
 
+def write_tts_lipsync_prompt_clone(output_dir: Path = RECIPES) -> bool:
+    """Create the prompt-only follow-up once and reject any later byte drift."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    recipe = build_tts_lipsync_prompt_clone()
+    path = output_dir / f"{TTS_LIPSYNC_RECIPE_NAME}.json"
+    payload = canonical_json_bytes(recipe)
+    changed = immutable_write(path, payload)
+    parsed, raw = read_json(path)
+    if parsed != recipe or raw != payload:
+        raise RuntimeError(f"Generated prompt clone did not round-trip byte-exactly: {path}")
+    return changed
+
+
+def write_tts_lipsync_seed43_clone(output_dir: Path = RECIPES) -> bool:
+    """Create the prompt-identical alternate-seed take and reject byte drift."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    recipe = build_tts_lipsync_seed43_clone()
+    path = output_dir / f"{TTS_LIPSYNC_SEED43_RECIPE_NAME}.json"
+    payload = canonical_json_bytes(recipe)
+    changed = immutable_write(path, payload)
+    parsed, raw = read_json(path)
+    if parsed != recipe or raw != payload:
+        raise RuntimeError(
+            f"Generated seed-43 lipsync clone did not round-trip byte-exactly: {path}"
+        )
+    return changed
+
+
 def main() -> None:
     for name, changed in write_all().items():
         action = "created" if changed else "unchanged"
         print(f"{name}: {action}")
+    clone_changed = write_tts_lipsync_prompt_clone()
+    action = "created" if clone_changed else "unchanged"
+    print(f"{TTS_LIPSYNC_RECIPE_NAME}: {action}")
+    seed43_changed = write_tts_lipsync_seed43_clone()
+    action = "created" if seed43_changed else "unchanged"
+    print(f"{TTS_LIPSYNC_SEED43_RECIPE_NAME}: {action}")
 
 
 if __name__ == "__main__":

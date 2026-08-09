@@ -1,0 +1,43 @@
+{
+  "comparison": "h3_refaudio_human_review_amendments",
+  "reviews": [
+    {
+      "current_alias": {
+        "artifact_path": "outputs/h3_r2v_refaudio_tts_dialogue_out_00001_.mp4",
+        "artifact_sha256": "b1aa8382eb6dc77242fd664ce681b3138ce5a402319614585d3ff7657157fd4b",
+        "receipt_path": "results/h3_r2v_refaudio_tts_dialogue.json",
+        "receipt_sha256": "f2d38036b29945b76dfce3263e5cb62325db343dac64abaaa4b29a457c0a1e5f",
+        "recipe": "h3_r2v_refaudio_tts_dialogue",
+        "recipe_sha256": "85e180b89d7d1adec88407fcc9e2b664d1a13bbbdc543e0c60d965903b62f437",
+        "run_number": 1
+      },
+      "eyeball": "untested:prompt_did_not_request_lipsync",
+      "eyeball_reviewed_at": "2026-08-08T22:36:41-07:00",
+      "eyeball_source": "human",
+      "human_video_description": "Subtle mouth movement was observed, but the neutral wide-scene prompt did not request speaking articulation or lip-sync.",
+      "human_video_scope": "Behavioral conclusion retracted: valid machine/media evidence is preserved, while dialogue/lip-sync capability remains untested pending a prompt-only retest.",
+      "immutable_machine_receipt_path": "results/h3_r2v_refaudio_tts_dialogue_run1.json",
+      "immutable_machine_receipt_sha256": "5945067586c81ac8cc31063a9fdae6e313a1d052f338fd5d5dfedefc386b0625"
+    },
+    {
+      "current_alias": {
+        "artifact_path": "outputs/h3_r2v_refaudio_music_opening_out_00001_.mp4",
+        "artifact_sha256": "84fa5ae2029da529fd27c490c40b5bea736dbe9b201e974326ab2a92441ccf09",
+        "receipt_path": "results/h3_r2v_refaudio_music_opening.json",
+        "receipt_sha256": "fa0d7df681a8b65fceb169e0806de3ab60f677cb120744daed5ce6438494b096",
+        "recipe": "h3_r2v_refaudio_music_opening",
+        "recipe_sha256": "9952c8dc3bdd2ba2fe37b2a38291f918d42a4e4311b8909c2565c84ea5433a44",
+        "run_number": 1
+      },
+      "eyeball": "ok-experimental",
+      "eyeball_reviewed_at": "2026-08-08T22:36:41-07:00",
+      "eyeball_source": "human",
+      "human_video_description": "Clean render; visual motion does not follow the beat and remains a steady camera push regardless of audio character.",
+      "human_video_scope": "Full RefAudio opening-music behavior verdict supplied by Jeffrey; acceptable experimental evidence only, not production promotion.",
+      "immutable_machine_receipt_path": "results/h3_r2v_refaudio_music_opening_run1.json",
+      "immutable_machine_receipt_sha256": "ab91c3e720b4b12bfc4ebb54468e142c13e2326cc2c560644e6b61a885b14ff2"
+    }
+  ],
+  "scope": "Hash-bound human annotations on mutable current aliases; immutable machine run archives remain unchanged.",
+  "status": "HUMAN_REVIEW_FIELDS_FROZEN"
+}

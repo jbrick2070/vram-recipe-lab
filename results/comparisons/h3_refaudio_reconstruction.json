@@ -1,0 +1,29 @@
+{
+  "analysis": {
+    "alignment_lag_samples": -80,
+    "alignment_lag_seconds": -0.0025,
+    "analysis_sample_rate_hz": 32000,
+    "decoded_source_samples": 124160,
+    "decoded_target_samples": 165888,
+    "rms_envelope_block_samples": 1024,
+    "rms_envelope_pearson_r": 0.964007,
+    "waveform_pearson_r": 0.969528
+  },
+  "conclusion": "The original approximately-0.94 finding is confirmed more strongly by this receipt-bound PCM recheck: H3 largely reconstructs the conditioning music instead of composing an independent soundtrack.",
+  "continuation_tail_seconds_by_stream_duration": 1.287,
+  "decoder_command": "ffmpeg -v error -i <input> -ac 1 -ar 32000 -f f32le -",
+  "reference_window_seconds": 3.88,
+  "scope": "Objective audio similarity only; this does not establish visual beat response or a human listening verdict.",
+  "source_fixture_path": "fixtures/ltx_matrix_music_opening_3p88s_gain_minus12db.wav",
+  "source_fixture_sha256": "4a7a474bf92a08109b53a3b0422fca708e105295b6f1a6c4587434d4fa808ce0",
+  "source_run": {
+    "artifact_path": "outputs/h3_r2v_refaudio_music_opening_out_00001_.mp4",
+    "artifact_sha256": "84fa5ae2029da529fd27c490c40b5bea736dbe9b201e974326ab2a92441ccf09",
+    "receipt_path": "results/h3_r2v_refaudio_music_opening_run1.json",
+    "receipt_sha256": "ab91c3e720b4b12bfc4ebb54468e142c13e2326cc2c560644e6b61a885b14ff2",
+    "recipe": "h3_r2v_refaudio_music_opening",
+    "recipe_sha256": "9952c8dc3bdd2ba2fe37b2a38291f918d42a4e4311b8909c2565c84ea5433a44",
+    "run_number": 1
+  },
+  "status": "RECONSTRUCTION_CONFIRMED"
+}

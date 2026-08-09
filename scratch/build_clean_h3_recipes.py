@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate canonical MiniMax H3 lanes, Mini Mime variants, and the AV suite sentinel."""
 
+import hashlib
 import json
 import sys
 from decimal import Decimal
@@ -8,6 +9,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent.resolve()
 RECIPES_DIR = REPO_ROOT / "recipes"
+LEDGER_PATH = REPO_ROOT / "fixtures" / "ledger.json"
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -34,6 +36,9 @@ H3_NODE_SOURCE = "comfy_extras/nodes_minimax_h3.py"
 H3_NODE_SOURCE_SHA256 = (
     "f767df4074b908efb345f5a87c2fd263ba82c12e65bcca932846207cc213e064"
 )
+LEDGER_SHA256 = (
+    "df283c927f63ac91dcc9dbb4764ce8631bb1a829467b15567a40eeb8f9810dec"
+)
 SCENE_STILL_SHA256 = (
     "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
 )
@@ -47,6 +52,8 @@ H3_I2V_SUITE_SENTINEL_NAME = "h3_i2v_suite_sentinel"
 H3_I2V_SUITE_SENTINEL_PREFIX = "h3_i2v_suite_sentinel_out"
 H3_MIME_R2V_NAME = "h3_mime_r2v"
 H3_MIME_R2V_PREFIX = "h3_mime_r2v_out"
+H3_MIME_I2V_LEDGER_CLOSING_NAME = "h3_mime_i2v_ledger_music_closing_8s"
+H3_MIME_I2V_LEDGER_CLOSING_PREFIX = "h3_mime_i2v_ledger_music_closing_8s_out"
 H3_DEFAULT_PROMPT = (
     "cinematic camera motion across vintage radio control room, warm analog glow, 8k"
 )
@@ -96,6 +103,32 @@ def write_immutable_recipe(path: Path, recipe_data: dict) -> bool:
         return False
     path.write_bytes(payload)
     return True
+
+
+def ledger_music_closing_duration() -> Decimal:
+    """Return the exact duration of the hash-pinned real closing-music cue."""
+    raw = LEDGER_PATH.read_bytes()
+    actual_hash = hashlib.sha256(raw).hexdigest()
+    if actual_hash != LEDGER_SHA256:
+        raise RuntimeError(
+            f"Ledger hash changed: expected {LEDGER_SHA256}, found {actual_hash}"
+        )
+    ledger = json.loads(raw.decode("utf-8"), parse_float=Decimal)
+    matches = [cue for cue in ledger.get("music", []) if cue.get("cue_id") == "closing"]
+    if len(matches) != 1:
+        raise RuntimeError("Expected exactly one ledger music:closing entry")
+    row = matches[0]
+    if row.get("tts_engine") != "musicgen":
+        raise RuntimeError("Ledger music:closing is no longer a real music cue")
+    duration = row.get("dur_s")
+    if duration != Decimal("8.0"):
+        raise RuntimeError(f"Ledger music:closing duration changed: {duration!r}")
+    if row.get("generated_dur_s") != Decimal("8.1"):
+        raise RuntimeError("Ledger music:closing generated duration changed")
+    if row.get("audio_sample_hash") != "ec1d7904":
+        raise RuntimeError("Ledger music:closing audio sample hash changed")
+    return duration
+
 
 def make_h3_prompt(mode: str, width: int, height: int, frames: int, is_best: bool = False):
     """
@@ -476,6 +509,107 @@ def make_mime_topology_contract() -> dict:
     return topology
 
 
+def make_mime_i2v_ledger_closing_topology_contract() -> dict:
+    """Pin the exact-grid real closing-music duration to unconditioned Mini Mime."""
+    target = ledger_music_closing_duration()
+    timing = duration_match(target, "h3")
+    topology = make_mime_topology_contract()
+    topology["profile"] = "minimax_h3_mime_i2v_ledger_music_closing_8s_v1"
+    topology["intent"] = (
+        "Current low MiniMax H3 I2V native-A/V topology rendered and delivered at "
+        "the exact eight-second legal H3 grid point from the real music closing cue"
+    )
+    topology["installed_schema"] = {
+        "comfyui_version": COMFYUI_SCHEMA_VERSION,
+        "git_commit": COMFYUI_SCHEMA_COMMIT,
+        "node_source": H3_NODE_SOURCE,
+        "node_source_sha256": H3_NODE_SOURCE_SHA256,
+    }
+    topology["fixture_hashes"] = {"scene_still.png": SCENE_STILL_SHA256}
+    topology["ledger_contract"] = {
+        "path": "fixtures/ledger.json",
+        "sha256": LEDGER_SHA256,
+        "collection": "music",
+        "cue_id": "closing",
+        "description": "1940s old time radio closing sting",
+        "tts_engine": "musicgen",
+        "duration_field": "dur_s",
+        "duration_decimal": "8.0",
+        "generated_duration_decimal": "8.1",
+        "audio_sample_hash": "ec1d7904",
+        "json_pointer": "/music/1",
+        "binding_scope": "timing only; no ledger audio is loaded or muxed",
+    }
+    topology["required_input_values"] = [
+        assertion
+        for assertion in topology["required_input_values"]
+        if (assertion["node"], assertion["input"]) != ("7", "length")
+    ]
+    topology["required_input_values"].extend(
+        [
+            {
+                "node": "1",
+                "input": "unet_name",
+                "equals": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+            },
+            {"node": "1", "input": "weight_dtype", "equals": "default"},
+            {
+                "node": "2",
+                "input": "clip_name",
+                "equals": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+            },
+            {"node": "2", "input": "type", "equals": "minimax"},
+            {
+                "node": "3",
+                "input": "vae_name",
+                "equals": "minimax_h3_video_vae_fp16.safetensors",
+            },
+            {
+                "node": "4",
+                "input": "vae_name",
+                "equals": "minimax_h3_audio_vae_fp32.safetensors",
+            },
+            {"node": "5", "input": "noise_seed", "equals": 42},
+            {"node": "7", "input": "width", "equals": 864},
+            {"node": "7", "input": "height", "equals": 480},
+            {"node": "7", "input": "length", "equals": timing["frame_count"]},
+            {
+                "node": "12",
+                "input": "filename_prefix",
+                "equals": H3_MIME_I2V_LEDGER_CLOSING_PREFIX,
+            },
+            {"node": "12", "input": "format", "equals": "auto"},
+            {"node": "12", "input": "codec", "equals": "auto"},
+        ]
+    )
+    topology["delivery_contract"] = {
+        "model_frame_count": timing["frame_count"],
+        "delivered_frame_count": timing["delivered_frame_count"],
+        "trim_frames": timing["trim_frames"],
+        "rendered_s": float(timing["rendered_s"]),
+        "whole_frame_delivery_s": float(timing["whole_frame_delivery_s"]),
+        "tail_trim_s": float(timing["tail_trim_s"]),
+        "target_s": float(target),
+        "path": "10.CreateVideo -> 12.SaveVideo",
+        "exact_legal_grid_endpoint": True,
+        "video_slice_required": False,
+        "native_audio_retained": True,
+        "external_audio_mux": False,
+        "runner_changes_required": False,
+        "ffprobe_tolerance_s": 1 / 24,
+    }
+    topology["intentional_divergences"] = [
+        "The template subgraph is flattened to native API prompt nodes",
+        "The certified low I2V 864x480 canvas and deterministic seed 42 are retained",
+        "The real ledger music:closing duration 8.0 seconds replaces the synthetic 3.750-second default",
+        "The model renders and delivers 192 frames, exactly 17*11+5 and exactly eight seconds at 24 fps",
+        "No Video Slice or other trim node is needed, so the current exact frame, fps, and duration runner gate remains unchanged",
+        "scene_still.png is connected only as first_frame; last_frame is absent",
+        "No external audio loader, conditioning track, or replacement mux is permitted; the ledger cue binds timing only",
+    ]
+    return topology
+
+
 def make_mime_r2v_topology_contract() -> dict:
     """Pin portrait-only Mini Mime to the corrected low Ref2VA graph."""
     topology = make_topology_contract("r2v")
@@ -822,6 +956,183 @@ def make_h3_mime_i2v_recipe() -> dict:
     }
 
 
+def make_h3_mime_i2v_ledger_closing_recipe() -> dict:
+    """Build the exact-grid, real-ledger, unconditioned I2V Mini Mime recipe."""
+    target = ledger_music_closing_duration()
+    timing = duration_match(target, "h3")
+    expected = {
+        "frame_count": 192,
+        "delivered_frame_count": 192,
+        "trim_frames": 0,
+    }
+    for field, value in expected.items():
+        if timing[field] != value:
+            raise AssertionError(
+                f"Ledger music:closing H3 timing {field}={timing[field]!r}, "
+                f"expected {value!r}"
+            )
+    if timing["rendered_s"] != 8 or timing["tail_trim_s"] != 0:
+        raise AssertionError("Ledger music:closing must be an exact eight-second grid point")
+
+    prompt = make_h3_prompt(
+        "i2v", 864, 480, timing["frame_count"], is_best=False
+    )
+    prompt["2"]["inputs"]["device"] = "default"
+    prompt["7"]["inputs"]["prompt"] = MIME_PROMPT
+    prompt["15"] = {
+        "class_type": "VAEDecodeAudio",
+        "inputs": {"samples": ["8", 0], "vae": ["4", 0]},
+    }
+    prompt["10"]["inputs"]["audio"] = ["15", 0]
+    prompt["12"]["inputs"]["filename_prefix"] = H3_MIME_I2V_LEDGER_CLOSING_PREFIX
+    prompt = dict(sorted(prompt.items(), key=lambda item: int(item[0])))
+
+    one_frame_s = 1 / 24
+    return {
+        "name": H3_MIME_I2V_LEDGER_CLOSING_NAME,
+        "tier": "experiment",
+        "blocked": False,
+        "experiment": {
+            "campaign": "mini_mime",
+            "variant": "i2v_scene_still_native_audio_ledger_music_closing_8s",
+            "scope": "frozen real-ledger timing experiment",
+            "otr_integration": "explicitly deferred",
+            "ledger_binding": {
+                "path": "fixtures/ledger.json",
+                "sha256": LEDGER_SHA256,
+                "json_pointer": "/music/1",
+                "collection": "music",
+                "cue_id": "closing",
+                "description": "1940s old time radio closing sting",
+                "tts_engine": "musicgen",
+                "start_s_decimal": "38.61333333333334",
+                "duration_field": "dur_s",
+                "duration_decimal": "8.0",
+                "generated_duration_decimal": "8.1",
+                "audio_sample_hash": "ec1d7904",
+                "binding_scope": "timing only; no ledger audio is loaded or muxed",
+            },
+            "timing_plan": {
+                "planner": "duration_match.duration_match",
+                "mode": "h3_17k_plus_5_at_24fps",
+                "target_source": "fixtures/ledger.json#/music/1/dur_s",
+                "target_decimal": "8.0",
+                "target_s": float(timing["target_seconds"]),
+                "model_frame_count": timing["frame_count"],
+                "delivered_frame_count": timing["delivered_frame_count"],
+                "trim_frames": timing["trim_frames"],
+                "rendered_s": float(timing["rendered_s"]),
+                "whole_frame_delivery_s": float(timing["whole_frame_delivery_s"]),
+                "delivered_s": float(timing["delivered_s"]),
+                "tail_trim_s": float(timing["tail_trim_s"]),
+                "delivery_node": "12.SaveVideo",
+                "delivery_method": (
+                    "direct native-A/V delivery at 192 legal H3 frames; no slice, "
+                    "trim, shortened terminal frame, or external mux"
+                ),
+            },
+            "runner_support": {
+                "status": "supported_by_existing_media_contract",
+                "runner_changes_required": False,
+                "runner_files_changed_by_this_recipe": False,
+                "reason": (
+                    "192 encoded frames at 24 fps are exactly eight seconds and "
+                    "satisfy the existing exact frame, fps, and duration checks"
+                ),
+            },
+            "soundtrack_policy": {
+                "source": "MiniMax H3 jointly generated audio only",
+                "external_mux": False,
+                "allowed": "ambient/environmental room tone and synchronized diegetic SFX",
+                "forbidden": [
+                    "dialogue",
+                    "intelligible speech",
+                    "voices",
+                    "vocals",
+                    "humming",
+                    "music",
+                ],
+            },
+            "human_gate": {
+                "status": "pending",
+                "kind": "inverted ear gate",
+                "pass_requires": [
+                    "no intelligible speech-like or vocal-like content",
+                    "coherent diegetic synchronization",
+                    "one-line human soundscape description in the receipt",
+                ],
+            },
+        },
+        "contract": {
+            "engine": "minimax_h3",
+            "mode": "i2v_mime_ledger_music_closing",
+            "width": 864,
+            "height": 480,
+            "frames": timing["delivered_frame_count"],
+            "render_frames": timing["frame_count"],
+            "fps": 24.0,
+            "duration_s": float(timing["delivered_s"]),
+            "target_s": float(timing["target_seconds"]),
+            "trim_frames": timing["trim_frames"],
+            "tail_trim_s": float(timing["tail_trim_s"]),
+            "delivered_s": float(timing["delivered_s"]),
+            "requires_audio": True,
+            "required_boot_lane": "lab-8199, sage-free",
+            "vram_ceiling_gb": 14.5,
+        },
+        "receipt_requirements": {
+            "schema_version": 1,
+            "timing": {
+                "required_fields": [
+                    "target_s",
+                    "frame_count",
+                    "trim_frames",
+                    "rendered_s",
+                    "delivered_s",
+                    "duration_error_s",
+                    "duration_tolerance_s",
+                ],
+                "target_s": float(timing["target_seconds"]),
+                "render_frame_count": timing["frame_count"],
+                "required_encoded_frame_count": timing["delivered_frame_count"],
+                "required_encoded_fps": 24.0,
+                "ffprobe_required": True,
+                "absolute_duration_error_lte_s": one_frame_s,
+                "runner_gate": "existing_media_contract_unchanged",
+            },
+            "inverted_ear_gate": {
+                "status": "pending_human",
+                "required_fields": [
+                    "audio_ear",
+                    "audio_ear_source",
+                    "audio_ear_reviewed_at",
+                    "soundscape_description",
+                    "speech_or_vocal_like_content",
+                    "diegetic_sync",
+                ],
+                "pass_values": {
+                    "audio_ear": "ok",
+                    "audio_ear_source": "human",
+                    "speech_or_vocal_like_content": "none_intelligible",
+                    "diegetic_sync": "coherent",
+                },
+            },
+        },
+        "topology_contract": make_mime_i2v_ledger_closing_topology_contract(),
+        "prompt": prompt,
+        "workflow": {"nodes": [], "links": []},
+    }
+
+
+def write_h3_mime_i2v_ledger_closing(output_dir: Path = RECIPES_DIR) -> bool:
+    """Freeze the exact-grid real-ledger Mini Mime recipe and reject byte drift."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return write_immutable_recipe(
+        output_dir / f"{H3_MIME_I2V_LEDGER_CLOSING_NAME}.json",
+        make_h3_mime_i2v_ledger_closing_recipe(),
+    )
+
+
 def make_h3_mime_r2v_recipe() -> dict:
     """Build the immutable portrait-only 3.750-second R2V Mini Mime recipe."""
     timing = duration_match(Decimal("3.750"), "h3")
@@ -1013,6 +1324,16 @@ def build_all():
     mime_changed = write_recipe_if_changed(mime_path, make_h3_mime_i2v_recipe())
     mime_action = "Generated experiment recipe" if mime_changed else "Unchanged experiment recipe"
     print(f"{mime_action}: {mime_path.name}")
+
+    mime_closing_changed = write_h3_mime_i2v_ledger_closing()
+    mime_closing_action = (
+        "Generated immutable real-ledger experiment recipe"
+        if mime_closing_changed
+        else "Unchanged immutable real-ledger experiment recipe"
+    )
+    print(
+        f"{mime_closing_action}: {H3_MIME_I2V_LEDGER_CLOSING_NAME}.json"
+    )
 
     mime_r2v_changed = write_h3_mime_r2v()
     mime_r2v_action = (

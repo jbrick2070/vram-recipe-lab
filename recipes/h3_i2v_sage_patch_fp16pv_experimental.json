@@ -1,0 +1,656 @@
+{
+  "name": "h3_i2v_sage_patch_fp16pv_experimental",
+  "tier": "experiment",
+  "blocked": false,
+  "experiment": {
+    "campaign": "h3_per_model_sage_attention_v1",
+    "variant": "i2v_fp16pv_same_canvas",
+    "matrix_role": "same-canvas per-model attention comparison",
+    "independent_variable": "per_model_attention_override",
+    "baseline_recipe": "recipes/h3_i2v_suite_sentinel.json",
+    "baseline_recipe_sha256": "3a838a63521f6266293a3f5796e0f25d41187f3c47e3665493c8938779be2f53",
+    "comparison_contract": {
+      "same_prompt": true,
+      "same_seed": true,
+      "same_canvas": "864x480",
+      "same_frames": 124,
+      "same_scheduler": true,
+      "same_sampler": true,
+      "same_models": true,
+      "artifact_identity_only_difference": "h3_i2v_sage_patch_fp16pv_experimental_out"
+    },
+    "attention_patch": {
+      "class_type": "PathchSageAttentionKJ",
+      "node_id": "16",
+      "mode": "sageattn_qk_int8_pv_fp16_cuda",
+      "allow_compile": false,
+      "scope": "model.clone().model_options.transformer_options.optimized_attention_override",
+      "patched_model_consumers": [
+        "6.BasicGuider",
+        "14.BasicScheduler"
+      ],
+      "global_boot_flag_enabled": false,
+      "global_default_changed": false,
+      "boot_lane": "lab-8199, sage-free",
+      "boot_script": "boot_lab_server.cmd",
+      "boot_script_sha256": "5f9c313a050e2cec6356c9d31b54cb7e0f1825b0a5314ec7eec436466036ccb4"
+    },
+    "source_provenance": {
+      "kj_git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+      "kj_node_source": "custom_nodes/ComfyUI-KJNodes/nodes/model_optimization_nodes.py",
+      "kj_node_source_sha256": "910dfaa00c67238ca4227d9373ad0930a4e2c86880969dabe7de3cd8ce83f563",
+      "kj_registry_source": "custom_nodes/ComfyUI-KJNodes/__init__.py",
+      "kj_registry_source_sha256": "8da7e12f52cabd71b06e44d733ee359fba3ea3ec07cebcceaf29e9c24eaffec2",
+      "sage_core_source": ".venv/Lib/site-packages/sageattention/core.py",
+      "sage_core_source_sha256": "72cb42a7af2a643da5316887eee79dc2851a1e83746dfca2cc1adf6d7acec8be",
+      "sage_package_version": "2.2.0+cu130torch2.9.0andhigher.post4"
+    },
+    "execution_graph_diff_whitelist": [
+      "prompt.16",
+      "prompt.6.inputs.model",
+      "prompt.14.inputs.model",
+      "prompt.12.inputs.filename_prefix"
+    ],
+    "behavioral_claim_status": "unrendered and unproven",
+    "speed_stack_inventory": {
+      "evidence_scope": "offline manifest and actual local model directories",
+      "models_manifest": {
+        "path": "models_manifest.md",
+        "sha256": "7379b5fac6e087e28a5158622b491983f6718c00b1e6cc35725b1a452df653e6"
+      },
+      "current_h3_i2v_weight": {
+        "model_basename": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "model_subdir": "diffusion_models",
+        "bytes": 20970379616,
+        "sha256": "e889202c41dafb67b10d67b97f0d8541508036a6090af23425a5c2615d03c47a",
+        "quantization": {
+          "header_bytes": 95416,
+          "tensor_count": 932,
+          "dtype_counts": {
+            "BF16": 220,
+            "F16": 102,
+            "F32": 210,
+            "I8": 200,
+            "U8": 200
+          },
+          "quant_record_count": 200,
+          "quant_record": {
+            "format": "int8_tensorwise",
+            "convrot": true,
+            "convrot_groupsize": 256
+          }
+        },
+        "classification": "INT8 tensorwise ConvRot; not W4A8-mixed"
+      },
+      "kijai_h3_w4a8_mixed": {
+        "status": "BLOCKED_MISSING_WEIGHT",
+        "buildable": false,
+        "local_filename": null,
+        "sha256": null,
+        "reason": "No MiniMax H3 W4A8/mixed diffusion weight exists in the hash-pinned manifest or actual local diffusion_models directory"
+      },
+      "h3_lightx2v_four_step": {
+        "status": "BLOCKED_MISSING_LORA",
+        "buildable": false,
+        "local_filename": null,
+        "sha256": null,
+        "reason": "No MiniMax H3 LightX2V four-step distillation LoRA exists in the hash-pinned manifest or actual local loras directory",
+        "confusable_local_wan_lora": {
+          "model_basename": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "model_subdir": "loras",
+          "bytes": 738005744,
+          "sha256": "85c4a61c30e0497aa44b91d93a893b624708461a56fe5485183b28fa07e2dfb3",
+          "header_bytes": 214120,
+          "tensor_count": 1749,
+          "block_count": 40,
+          "block_range": [
+            0,
+            39
+          ],
+          "key_family_evidence": "diffusion_model.blocks.*.cross_attn.k_img.*",
+          "architecture": "Wan I2V 14B; incompatible with MiniMax H3"
+        }
+      },
+      "per_model_sage_fp16pv": {
+        "status": "BUILDABLE_UNRENDERED_HUMAN_GATE_REQUIRED",
+        "buildable": true,
+        "class_type": "PathchSageAttentionKJ",
+        "mode": "sageattn_qk_int8_pv_fp16_cuda",
+        "allow_compile": false,
+        "local_package_version": "2.2.0+cu130torch2.9.0andhigher.post4",
+        "sm120_source_evidence": "The hash-pinned SageAttention core contains an explicit sm120 dispatch branch; H3 visual correctness remains unproven until the human gate"
+      }
+    },
+    "human_gate": {
+      "status": "pending",
+      "mandatory": true,
+      "machine_pass_is_insufficient": true,
+      "compare_against": "h3_i2v_suite_sentinel same-canvas artifact",
+      "pass_requires": [
+        "human eyeball=ok with named human source and review timestamp",
+        "no noise field, corruption, color collapse, or attention artifacts",
+        "coherent subject, camera motion, and temporal continuity",
+        "native video and audio remain perceptually intact"
+      ]
+    }
+  },
+  "contract": {
+    "engine": "minimax_h3",
+    "mode": "i2v_sage_patch_fp16pv_experimental",
+    "width": 864,
+    "height": 480,
+    "frames": 124,
+    "fps": 24.0,
+    "duration_s": 5.17,
+    "requires_audio": true,
+    "required_boot_lane": "lab-8199, sage-free",
+    "vram_ceiling_gb": 14.5
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "intent": "Same-canvas official MiniMax H3 I2V sentinel with one explicit KJNodes per-model FP16-PV SageAttention override on a normal Sage-free lab boot",
+    "frozen_template": {
+      "path": "research/comfy_templates/video_minimax_h3_i2v.json",
+      "sha256": "bb71aecdd3c0b62e56eafe03acb14d1cfeabec7072eaed9cbdf473c2aaf73009"
+    },
+    "installed_schema": {
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+      "node_source": "comfy_extras/nodes_minimax_h3.py",
+      "node_source_sha256": "f767df4074b908efb345f5a87c2fd263ba82c12e65bcca932846207cc213e064"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UNETLoader",
+      "2": "CLIPLoader",
+      "3": "VAELoader",
+      "4": "VAELoader",
+      "5": "RandomNoise",
+      "6": "BasicGuider",
+      "7": "MiniMaxH3ImageToVideo",
+      "8": "SamplerCustomAdvanced",
+      "9": "VAEDecode",
+      "10": "CreateVideo",
+      "12": "SaveVideo",
+      "13": "KSamplerSelect",
+      "14": "BasicScheduler",
+      "15": "VAEDecodeAudio",
+      "11": "LoadImage",
+      "16": "PathchSageAttentionKJ"
+    },
+    "required_class_types": [
+      "UNETLoader",
+      "CLIPLoader",
+      "VAELoader",
+      "RandomNoise",
+      "BasicGuider",
+      "MiniMaxH3ImageToVideo",
+      "SamplerCustomAdvanced",
+      "VAEDecode",
+      "CreateVideo",
+      "SaveVideo",
+      "KSamplerSelect",
+      "BasicScheduler",
+      "VAEDecodeAudio",
+      "LoadImage",
+      "PathchSageAttentionKJ"
+    ],
+    "required_connections": {
+      "6.model": [
+        "16",
+        0
+      ],
+      "14.model": [
+        "16",
+        0
+      ],
+      "7.clip": [
+        "2",
+        0
+      ],
+      "7.vae": [
+        "3",
+        0
+      ],
+      "6.conditioning": [
+        "7",
+        0
+      ],
+      "8.noise": [
+        "5",
+        0
+      ],
+      "8.guider": [
+        "6",
+        0
+      ],
+      "8.sampler": [
+        "13",
+        0
+      ],
+      "8.sigmas": [
+        "14",
+        0
+      ],
+      "8.latent_image": [
+        "7",
+        1
+      ],
+      "9.samples": [
+        "8",
+        0
+      ],
+      "9.vae": [
+        "3",
+        0
+      ],
+      "15.samples": [
+        "8",
+        0
+      ],
+      "15.vae": [
+        "4",
+        0
+      ],
+      "10.images": [
+        "9",
+        0
+      ],
+      "10.audio": [
+        "15",
+        0
+      ],
+      "12.video": [
+        "10",
+        0
+      ],
+      "7.first_frame": [
+        "11",
+        0
+      ],
+      "16.model": [
+        "1",
+        0
+      ]
+    },
+    "required_absent_inputs": [
+      "7.last_frame"
+    ],
+    "required_input_values": [
+      {
+        "node": "2",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "13",
+        "input": "sampler_name",
+        "equals": "res_multistep"
+      },
+      {
+        "node": "14",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "14",
+        "input": "steps",
+        "equals": 20
+      },
+      {
+        "node": "14",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "10",
+        "input": "fps",
+        "equals": 24.0
+      },
+      {
+        "node": "10",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "1",
+        "input": "unet_name",
+        "equals": "minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+      },
+      {
+        "node": "1",
+        "input": "weight_dtype",
+        "equals": "default"
+      },
+      {
+        "node": "2",
+        "input": "clip_name",
+        "equals": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+      },
+      {
+        "node": "2",
+        "input": "type",
+        "equals": "minimax"
+      },
+      {
+        "node": "3",
+        "input": "vae_name",
+        "equals": "minimax_h3_video_vae_fp16.safetensors"
+      },
+      {
+        "node": "4",
+        "input": "vae_name",
+        "equals": "minimax_h3_audio_vae_fp32.safetensors"
+      },
+      {
+        "node": "5",
+        "input": "noise_seed",
+        "equals": 42
+      },
+      {
+        "node": "7",
+        "input": "prompt",
+        "equals": "cinematic camera motion across vintage radio control room, warm analog glow, 8k"
+      },
+      {
+        "node": "7",
+        "input": "width",
+        "equals": 864
+      },
+      {
+        "node": "7",
+        "input": "height",
+        "equals": 480
+      },
+      {
+        "node": "7",
+        "input": "length",
+        "equals": 124
+      },
+      {
+        "node": "11",
+        "input": "image",
+        "equals": "scene_still.png"
+      },
+      {
+        "node": "12",
+        "input": "filename_prefix",
+        "equals": "h3_i2v_sage_patch_fp16pv_experimental_out"
+      },
+      {
+        "node": "12",
+        "input": "format",
+        "equals": "auto"
+      },
+      {
+        "node": "12",
+        "input": "codec",
+        "equals": "auto"
+      },
+      {
+        "node": "16",
+        "input": "sage_attention",
+        "equals": "sageattn_qk_int8_pv_fp16_cuda"
+      },
+      {
+        "node": "16",
+        "input": "allow_compile",
+        "equals": false
+      }
+    ],
+    "forbidden_class_types": [
+      "KSampler",
+      "CLIPTextEncode",
+      "MiniMaxH3SigmaShift",
+      "LoadAudio"
+    ],
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "The current official I2V template subgraph is flattened to native API prompt nodes; UI-only notes and helpers are omitted",
+      "The official 16:9, 0.4-megapixel, multiple-of-32 selector result is pinned at 864x480",
+      "The official five-second duration-helper result is pinned at 124 H3 frames",
+      "The randomized template seed is pinned at 42 so the cache nonce remains execution-only",
+      "scene_still.png is hash-pinned and connected only as first_frame; last_frame is absent",
+      "The sampled target latent feeds both VAEDecode and VAEDecodeAudio, and only decoded target audio feeds CreateVideo.audio",
+      "No optional MiniMaxH3SigmaShift override is inserted; current ModelSamplingAV defaults remain model-native",
+      "The output filename prefix is unique to the AV-complete suite sentinel",
+      "Node 16 clones UNETLoader output and installs the explicit FP16-PV optimized-attention override",
+      "Both BasicGuider.model and BasicScheduler.model consume the same patched model clone",
+      "The lab boot remains Sage-free and no global attention flag or repository default changes",
+      "The unique SaveVideo prefix isolates the experimental artifact",
+      "A warm machine pass cannot promote this variant without the mandatory side-by-side human visual gate"
+    ],
+    "fixture_hashes": {
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+    },
+    "profile": "minimax_h3_i2v_per_model_sage_fp16pv_v1",
+    "supporting_node_sources": {
+      "custom_nodes/ComfyUI-KJNodes/nodes/model_optimization_nodes.py": "910dfaa00c67238ca4227d9373ad0930a4e2c86880969dabe7de3cd8ce83f563",
+      "custom_nodes/ComfyUI-KJNodes/__init__.py": "8da7e12f52cabd71b06e44d733ee359fba3ea3ec07cebcceaf29e9c24eaffec2",
+      ".venv/Lib/site-packages/sageattention/core.py": "72cb42a7af2a643da5316887eee79dc2851a1e83746dfca2cc1adf6d7acec8be",
+      "boot_lab_server.cmd": "5f9c313a050e2cec6356c9d31b54cb7e0f1825b0a5314ec7eec436466036ccb4"
+    },
+    "attention_patch_contract": {
+      "class_type": "PathchSageAttentionKJ",
+      "mode": "sageattn_qk_int8_pv_fp16_cuda",
+      "allow_compile": false,
+      "input_model": [
+        "1",
+        0
+      ],
+      "output_consumers": [
+        "6.model",
+        "14.model"
+      ],
+      "per_model_clone": true,
+      "global_boot_flag_enabled": false,
+      "global_default_changed": false,
+      "human_gate_required": true
+    }
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "type": "minimax",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+    },
+    "5": {
+      "class_type": "RandomNoise",
+      "inputs": {
+        "noise_seed": 42
+      }
+    },
+    "6": {
+      "class_type": "BasicGuider",
+      "inputs": {
+        "model": [
+          "16",
+          0
+        ],
+        "conditioning": [
+          "7",
+          0
+        ]
+      }
+    },
+    "7": {
+      "class_type": "MiniMaxH3ImageToVideo",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "prompt": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
+        "width": 864,
+        "height": 480,
+        "length": 124,
+        "first_frame": [
+          "11",
+          0
+        ]
+      }
+    },
+    "8": {
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+        "noise": [
+          "5",
+          0
+        ],
+        "guider": [
+          "6",
+          0
+        ],
+        "sampler": [
+          "13",
+          0
+        ],
+        "sigmas": [
+          "14",
+          0
+        ],
+        "latent_image": [
+          "7",
+          1
+        ]
+      }
+    },
+    "9": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "10": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "9",
+          0
+        ],
+        "fps": 24.0,
+        "bit_depth": 8,
+        "audio": [
+          "15",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    },
+    "12": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "10",
+          0
+        ],
+        "filename_prefix": "h3_i2v_sage_patch_fp16pv_experimental_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    },
+    "13": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "res_multistep"
+      }
+    },
+    "14": {
+      "class_type": "BasicScheduler",
+      "inputs": {
+        "model": [
+          "16",
+          0
+        ],
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
+      }
+    },
+    "15": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "4",
+          0
+        ]
+      }
+    },
+    "16": {
+      "class_type": "PathchSageAttentionKJ",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "sage_attention": "sageattn_qk_int8_pv_fp16_cuda",
+        "allow_compile": false
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  },
+  "receipt_requirements": {
+    "schema_version": 1,
+    "human_visual_gate": {
+      "status": "pending_human",
+      "required_fields": [
+        "eyeball",
+        "eyeball_source",
+        "eyeball_reviewed_at",
+        "human_video_description",
+        "human_video_scope"
+      ],
+      "pass_values": {
+        "eyeball": "ok",
+        "eyeball_source": "human",
+        "human_video_scope": "full artifact and same-canvas baseline comparison"
+      }
+    }
+  }
+}

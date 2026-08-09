@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "fixture": "ltx_hq_music_opening_7p72s_lufs_minus25p8.wav",
+  "sha256": "f952189e498b7e30ed46a6480c853359b77ebe1b17ae3af0125d6eb7279b7671",
+  "bytes": 988218,
+  "derived_from": {
+    "fixture": "music_opening.wav",
+    "sha256": "e3ab5b873ec48d6c99464aa7481bcf86b3c047df5194293664e6f2f3f164541a",
+    "bytes": 1548880,
+    "ear_receipt": "fixtures/audio_receipts/music_opening.json",
+    "ear_receipt_sha256": "73f8a9b6ee77cf495d9304a6f6a5213ac3586f82c249b5206ea03673703f6e27"
+  },
+  "derivation": {
+    "builder": "scratch/build_ltx_audio_hq_ladder.py",
+    "builder_sha256": "863d9c41a5b0f4fafecfd6bede51a05989316d00202f7ff67fc36422f95f6edc",
+    "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "command": "ffmpeg -nostdin -hide_banner -loglevel error -y -i fixtures/music_opening.wav -map_metadata -1 -af \"aresample=32000,atrim=start_sample=0:end_sample=247040,asetpts=N/SR/TB,volume=-12.4dB\" -ac 1 -ar 32000 -c:a pcm_f32le -fflags +bitexact -flags:a +bitexact fixtures/ltx_hq_music_opening_7p72s_lufs_minus25p8.wav",
+    "start_sample": 0,
+    "sample_count": 247040,
+    "sample_rate_hz": 32000,
+    "gain_db": -12.4
+  },
+  "ffprobe": {
+    "codec_name": "pcm_f32le",
+    "sample_fmt": "flt",
+    "sample_rate_hz": 32000,
+    "channels": 1,
+    "channel_layout": null,
+    "duration_s": 7.72,
+    "duration_samples": 247040,
+    "time_base": "1/32000"
+  },
+  "volumedetect": {
+    "mean_volume_db": -23.9,
+    "max_volume_db": -13.4
+  },
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true on the complete derived fixture",
+    "integrated_lufs": -25.6,
+    "lra_lu": 1.4,
+    "true_peak_dbtp": -13.4
+  },
+  "matrix_window": {
+    "method": "Derived bytes are exactly 247040 samples; measured with ffmpeg ebur128=peak=true",
+    "start_s": 0.0,
+    "duration_s": 7.72,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "gain_db": -12.4,
+    "matched_lufs": -25.6,
+    "matched_true_peak_dbtp": -13.4
+  },
+  "human_review": {
+    "reviewer": "Jeffrey",
+    "reviewed_at": "2026-08-08",
+    "content_class": "opening-music",
+    "description": "Episode opening music from the OTR source, with no intended narration.",
+    "basis": "Description inherited from the hash-bound, human ear-gated opening-music source. This HQ duration derivative takes the first 7.72 seconds, resamples to mono 32 kHz float PCM, and applies only the recorded loudness-match gain.",
+    "derived_bytes_separately_auditioned": false
+  },
+  "ear_gate_pass": true,
+  "ear_gate_basis": "inherited_from_hash_bound_source_receipt",
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_fmt,sample_rate,channels,channel_layout,duration,duration_ts,time_base:format=duration,size -of json fixtures/ltx_hq_music_opening_7p72s_lufs_minus25p8.wav",
+    "volumedetect": "ffmpeg -nostdin -hide_banner -nostats -i fixtures/ltx_hq_music_opening_7p72s_lufs_minus25p8.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -nostdin -hide_banner -nostats -i fixtures/ltx_hq_music_opening_7p72s_lufs_minus25p8.wav -af ebur128=peak=true -f null NUL",
+    "derivation": "ffmpeg -nostdin -hide_banner -loglevel error -y -i fixtures/music_opening.wav -map_metadata -1 -af \"aresample=32000,atrim=start_sample=0:end_sample=247040,asetpts=N/SR/TB,volume=-12.4dB\" -ac 1 -ar 32000 -c:a pcm_f32le -fflags +bitexact -flags:a +bitexact fixtures/ltx_hq_music_opening_7p72s_lufs_minus25p8.wav"
+  }
+}

@@ -29,7 +29,11 @@
   "encoded_height": 480,
   "encoded_width": 864,
   "execution_cache_control": {},
-  "eyeball": "pending",
+  "eyeball": "untested:prompt_did_not_request_lipsync",
+  "eyeball_source": "human",
+  "eyeball_reviewed_at": "2026-08-08T22:36:41-07:00",
+  "human_video_description": "Subtle mouth movement was observed, but the neutral wide-scene prompt did not request speaking articulation or lip-sync.",
+  "human_video_scope": "Behavioral conclusion retracted: valid machine/media evidence is preserved, while dialogue/lip-sync capability remains untested pending a prompt-only retest.",
   "final_server_instance": {
     "process_create_time": 1786245153.484989,
     "serving_pid": 5784

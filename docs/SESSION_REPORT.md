@@ -1,236 +1,177 @@
-# Session Report - Audio Conditioning, H3 Best, and Mini Mime
+# Session Report - Final Video-Lane Close-Out
 
-Date: 2026-08-08
+Date: 2026-08-09
 
 ## Completion status
 
-The authorized machine work for this lab session and its explicit RefAudio music
-follow-up is complete. The four-cell LTX audio experiment, LTX T2V close-out,
-corrected H3 best cold/warm suite, H3 RefAudio TTS and opening-music cold cells,
-one Mini Mime I2V proof, and the single user-approved R2V mime follow-up all have
-durable receipts and artifacts. No additional mime variant was rendered.
+The consolidated render campaign is machine-complete. It produced the normalized
+general-video speed pair, two H3 speaking takes, all three LTX Audio HQ rungs, the WAN
+I2V clamp exoneration pair, the H3 asset inventory, one failed per-model Sage probe,
+the complete LTX motion ladder, and one corrected unconditioned Mini Mime proof.
 
-The session is complete as a truthful lab milestone, not as a blanket promotion:
+This is a truthful lab milestone, not blanket promotion. The remaining work is human:
 
-- the newest H3 suite is a formal `MACHINE SUITE FAIL` on its frozen creep
-  tolerance even though all eleven children passed individually;
-- all H3 human video/audio gates remain pending unless separately noted by the
-  operator;
-- the LTX matrix is cold experimental evidence, not warm certification; and
-- Mini Mime is stopped after the one approved R2V proof; Jeffrey approved the
-  displayed visual appearance, while formal audio fields and soundscape
-  descriptions remain incomplete.
+- Jeffrey must rank the two H3 speaking takes for actual lip sync and consistency and
+  compare them with HuMo on the OTR side;
+- Jeffrey must approve the best LTX HQ clip and rank M0-M3 for motion and beat response;
+- Jeffrey must apply the Mini Mime inverted ear gate; and
+- no blocked weight download or additional experimental render is implied.
 
-The controlling promotion summary is [PROMOTION_BRIEF.md](PROMOTION_BRIEF.md).
+The controlling recommendation summary is
+[PROMOTION_BRIEF.md](PROMOTION_BRIEF.md).
 
-## Work completed
+## Consolidated-order outcomes
 
-### 1. Audio fixture truth and ear gate
+### 1. Same-canvas speed pair
 
-The former `fixtures/narration.wav` was identified by human audition as the
-episode's radio-static interstitial, not narration. Its bytes were preserved
-under `fixtures/interstitial_static.wav`, and historical speech claims were
-superseded rather than rewritten. New real fixtures include `tts_dialogue.wav`
-and `music_closing.wav`.
+WAN TI2V 5B and LTX Video distilled 2B both completed warm, nonce-proven executions at
+**832x480, 193 frames, 25 fps, and 7.72 delivered seconds**. WAN took **407.5 seconds**
+and measured **52.784974 render seconds per output second** and **0.189145
+megapixel-frames per second**. LTX took **13.8 seconds** and measured **1.787565** and
+**5.585252** on the same normalized metrics. LTX therefore won by **29.528986x** in
+warm wall clock. [Normalized speed-pair evidence](../results/comparisons/general_video_speed_pair.json)
 
-Every conditioning fixture now has a hash-bound audio receipt with ffprobe,
-volume/loudness evidence, and a human content description requirement. The LTX
-matrix uses deterministic 3.88-second, 32 kHz mono loudness-matched derivatives;
-delivery previews separately mux the untouched source fixture.
+The user-reported `ltx_8gb` **20.3 seconds / 25 frames** and `ltx_video`
+**83.8 seconds / 193 frames** rows remain `UNNORMALIZED` because canvas, steps, and
+exact model were not supplied. They were recorded but excluded from ranking.
+[Unnormalized-row provenance](../results/comparisons/general_video_speed_pair.json)
 
-Evidence:
+### 2. H3 speaking two-take package
 
-- [fixture corrections](AUDIO_FIXTURE_CORRECTIONS.md)
-- [fixture policy](../fixtures/FIXTURES.md)
-- [audio receipts](../fixtures/audio_receipts/)
+The H3 lab half used the working medium-close speaking prompt with the same portrait
+and TTS fixture. Seed 42 completed in **305.3 seconds** at **6.71 GiB** peak; seed 43
+completed in **297.8 seconds** at **6.51 GiB** peak. Both are **864x480, 124-frame,
+24-fps** cold machine-gated outputs. Artifact, recipe, fixture, and receipt hashes are
+packaged in [the H3 A/B evidence](../results/comparisons/h3_lipsync_ab_package.json).
 
-### 2. Four-condition LTX audio matrix
+The technical visual screen sees articulation, but true phoneme timing, pause settling,
+and cross-seed consistency remain `PENDING_HUMAN`. HuMo was not run because its wrapper
+is outside the lab whitelist. The exact-fixture HuMo comparison belongs OTR-side and
+is the sole open character-lane casting decision. The corrected H3 graph uses exactly
+`portrait.png` plus raw `tts_dialogue.wav`; their hashes are frozen in the package.
 
-All four cells ran exactly once on one reserve-12 GiB server identity. Each
-produced a valid 97-frame / 3.88-second conditioning diagnostic and a separately
-receipted source-delivery preview whose video elementary stream is unchanged.
+The earlier no-lipsync conclusion from the neutral wide-shot RefAudio test remains
+retracted: that prompt did not request mouth movement. The current speaking takes are
+the first valid prompt-level test; they do not retroactively change the old artifact.
 
-| Condition | Peak VRAM | Wall time | Diagnostic receipt | Source-delivery preview |
-|---|---:|---:|---|---|
-| Interstitial/static control | 9.25 GiB | 213.7 s | [receipt](../results/ltx_audio_gguf_interstitial_static.json) | [video](../outputs/ltx_audio_gguf_interstitial_static_SOURCE_DELIVERY.mp4) |
-| TTS dialogue | 7.82 GiB | 181.3 s | [receipt](../results/ltx_audio_gguf_tts_dialogue.json) | [video](../outputs/ltx_audio_gguf_tts_dialogue_SOURCE_DELIVERY.mp4) |
-| Opening music | 7.73 GiB | 185.3 s | [receipt](../results/ltx_audio_gguf_music_opening.json) | [video](../outputs/ltx_audio_gguf_music_opening_SOURCE_DELIVERY.mp4) |
-| Closing music | 7.89 GiB | 189.3 s | [receipt](../results/ltx_audio_gguf_music_closing.json) | [video](../outputs/ltx_audio_gguf_music_closing_SOURCE_DELIVERY.mp4) |
+### 3. LTX Audio HQ ladder
 
-These rows remain `PASS (cold)`, `1/2`, non-promotable, and human-pending. No
-rerender is authorized by this experiment. The open human question is whether
-motion character changes between static, speech, and the two music excerpts.
+Every rung passed a second consecutive true execution. H1 certified
+**1024x576 / 97 frames** at a **7.06 GiB** warm peak; H2 certified
+**832x480 / 193 frames** at **7.93 GiB**; H3 certified
+**1024x576 / 193 frames** at **7.36 GiB**. H3 is the best machine-certified
+configuration because it composes the independently fitting canvas and duration
+changes. Jeffrey's full-clip quality gate remains pending.
+[HQ ladder evidence](../results/comparisons/ltx_audio_hq_ladder.json)
 
-### 3. LTX T2V close-out
+### 4. WAN I2V 14B exoneration
 
-The three-attempt allowance was already exhausted. Scheduler-latent wiring, not
-plain VAE decode, was the material coherence fix; corrected scheduler plus the
-official tiled decode is the selected cell B. Its existing artifact peaked at
-15.04 GiB unreserved and remains human-pending. No fourth render was run.
+The corrected target-card clamp exonerated WAN I2V 14B at **832x480 / 33 frames**.
+The cold run used **11.90/12 GiB net allocation**, leaving only **0.10 GiB** clamp
+headroom; the warm run also passed. It is viable, but WAN TI2V remains the safer
+default recommendation because the cold clamp margin is tight.
+[WAN I2V exoneration evidence](../results/comparisons/wan_i2v_14b_exoneration.json)
 
-- [controlling escalation record](ESCALATE.md)
-- [selected cell B artifact](../outputs/ltx_t2v_gguf_b_scheduler_tiled_out_00001_.mp4)
+### 5. H3 turbo inventory
 
-### 4. H3 official-topology and harness repair
+The Kijai W4A8-mixed H3 diffusion weight and H3-compatible LightX2V four-step LoRA are
+both absent. The local LightX-named LoRA belongs to WAN I2V 14B and was not misapplied.
+The turbo variant is `BLOCKED_MISSING_BOTH_ASSETS`; no model was downloaded.
+[Inventory evidence and no-download proposal](../results/comparisons/h3_speed_stack_inventory.json)
 
-The best I2V/R2V recipes were aligned with the frozen official H3 sampler and
-native joint video/audio decode topology. The R2V audit then found a silent
-Comfy V3 integration defect: nested `ref_images` and `ref_audios` dictionaries
-were ignored. Five recipes were regenerated with flat dotted inputs such as
-`ref_images.ref_image_0` and `ref_audios.ref_audio_0`; runtime and paper guards
-now reject the broken nested form.
+If Jeffrey later authorizes downloads, the proposed next campaign is: quarantine the
+two H3 assets, hash them into the local manifest, then build and gate a new immutable
+turbo recipe. That proposal does not authorize a download in this session.
 
-The prior R2V artifacts are invalid as reference-conditioning evidence. A
-corrected low smoke and the corrected best pair visibly preserve the supplied
-portrait, and the warm receipt proves portrait loader node 11 is an executable
-cached ancestor.
+### 6. Per-model Sage probe
 
-The runner/suite was also hardened around port 8199 ownership, durable locks,
-queue quarantine, immutable archives, recipe/runner/helper hashes, exact
-fixture overwrite/readback, per-stream media duration, cache-nonce proof,
-suite final-boundary rehashing, and fail-closed cleanup. `--cache-classic` plus
-a pinned executor-only RandomNoise cache nonce forces fresh sampler/decode/
-output execution without changing seed 42 or official declared sockets.
+The explicit KJ per-model FP16-PV Sage variant failed with Windows exception
+`0x80000003` at sampler step zero. It timed out after **1801.5 seconds**, produced no
+artifact, and the owned server cleanup succeeded.
+[Sage probe evidence](../results/comparisons/h3_sage_patch_probe.json)
 
-### 5. Corrected H3 best suite
+The probe is a measured failure on sm_120 and must never become the default. It does
+not authorize the global Sage flag previously associated with silent-noise failure.
 
-The canonical sequence `W0,S0,T0,T1,S1,I0,I1,S2,R0,R1,S3` completed on one
-verified Sage-free, no-pinned, cache-classic, reserve-12 GiB server. All eleven
-children passed their own machine/media/provenance gates, and all candidate warm
-legs proved stable loader/conditioning hits with a fresh sampler/output branch.
+### 7. LTX motion ladder
 
-| Pair | Cold peak | Warm peak | Warm result |
-|---|---:|---:|---|
-| H3 T2V best | 8.81 GiB | 9.14 GiB | Individual warm machine pass; human pending |
-| H3 I2V best | 9.14 GiB | 9.15 GiB | Individual warm machine pass; human pending |
-| Corrected H3 R2V best | 9.20 GiB | 8.42 GiB | Individual warm machine pass; human pending |
+M0 through M3 all produced labeled cold machine-gated artifacts. The contact-sheet
+technical screen reads M0/M1/M2 as near-still and M3 as a slow camera
+translation/zoom. Jeffrey's full-clip ranking and beat-response judgment are pending,
+so the campaign does **not** conclude that LTX IA2V is inherently near-still.
+[Motion-ladder evidence](../results/comparisons/ltx_motion_ladder.json)
 
-The suite receipt remains `MACHINE SUITE FAIL`. T1 rose 0.330 GiB over T0,
-exceeding the frozen 0.250 GiB absolute-peak creep tolerance. Cross-run
-`net_peak_vram_gib` failures were later proven algebraically confounded by
-changing pre-run baselines and removed from future comparison logic, while net
-peak remains required diagnostic evidence. The immutable receipt was not
-rewritten; under the corrected evaluator it still fails on T1's real peak
-delta.
+### 8. Corrected unconditioned Mini Mime
 
-- [suite alias](../results/h3_best_suite.json)
-- [immutable suite archive](../results/h3_best_suite_20260809T005057.839368Z-9aad38bfd43c48da91e9853dc3e409d0.json)
-- receipt SHA-256:
-  `9cedbc3ab06e2ec056defa77fb1be5a679986b25570e2e3855644808f815666f`
+The final Mime graph has picture input and model-native audio output with no external
+audio-conditioning input. It binds a real ledger slot and delivered exactly
+**192 frames at 24 fps / 8.000 seconds**. The cold machine pass peaked at
+**6.71 GiB** and completed in **542.9 seconds**.
+[Mime machine evidence](../results/comparisons/h3_mime_unconditioned.json)
 
-### 6. H3 RefAudio TTS and opening-music cells
+FFmpeg 8.0.1 objective QA measured **-31.32 LUFS**, **1.00 LU** loudness range, and
+**-13.55 dBTP** true peak, with zero detected continuous-silence events at each tested
+threshold/duration pair. That supports a continuous, non-silent stream-level read at
+the tested thresholds, while explicitly leaving noise, distortion, speech/vocal
+absence, and diegetic synchronization to
+Jeffrey's ears. [Mime audio QA evidence](../results/comparisons/h3_mime_audio_qa.json)
 
-Two corrected standalone-audio Ref2VA cells ran with the same graph, seed, prompt,
-images, and duration. Static control remains held.
+The inverted ear gate remains `PENDING_HUMAN_AUDITION`. No speech-like or vocal-like
+content of any intelligibility and coherent diegetic sync must both be confirmed before any Mime
+promotion.
 
-- [receipt](../results/h3_r2v_refaudio_tts_dialogue.json)
-- [artifact](../outputs/h3_r2v_refaudio_tts_dialogue_out_00001_.mp4)
-- cold peak 7.15 GiB from a 2.46 GiB baseline; 249.0 seconds
-- 124 unique frames, 864x480, 24 fps; 5.167-second video and AAC audio
-- strong technical portrait-plus-scene conditioning
-- generated soundtrack approximately -21.4 LUFS
-- low best-aligned waveform correlation with the source derivative (about 0.23),
-  showing far less source preservation than the music cell; the graph topology
-  proves native target audio rather than source mux/copy
+### 9. Duration and feasibility intel
 
-This is a technical viability result, not proof that H3 followed the TTS's
-phonemes, timing, or character. Human eye/ear review remains pending.
+The duration matcher now treats **192 frames on H3's 17k+5 grid as exactly 8.000
+seconds at 24 fps**. The token estimator is explicitly limited to output visual tokens
+and is not a VRAM predictor. The two local checks pair **14,985 tokens / 6.71 GiB** and
+**23,085 tokens / 6.71 GiB** across different graphs; no memory ceiling is inferred.
+[Duration and token-budget evidence](../results/comparisons/h3_token_budget_check.json)
 
-The authorized opening-music comparison then completed:
+The public commenter result of **692x692 nominal / 192 frames in 210 seconds on an
+8 GB laptop** stays `EXTERNAL-REPORTED`. The same external source reports that vocal
+separation can improve synchronization; that was not measured locally. Reference image
+sizing remains `match`. [External claim and scope](../results/comparisons/h3_token_budget_check.json)
 
-- [receipt](../results/h3_r2v_refaudio_music_opening.json)
-- [artifact](../outputs/h3_r2v_refaudio_music_opening_out_00001_.mp4)
-- cold peak 7.18 GiB from a 2.46 GiB baseline; 249.0 seconds
-- 124 unique frames, 864x480, 24 fps; 5.167-second video and AAC audio
-- generated soundtrack approximately -23.1 LUFS
-- strong native reconstruction of the first 3.88 seconds of reference music
-  (aligned waveform correlation about 0.94; mean spectral cosine about 0.99)
-- weak camera-compensated beat-to-motion evidence, with no causal visual response
-  established
+## Historical evidence preserved
 
-The delivered music track still comes exclusively from the sampled target latent;
-there is no source-audio mux. Both cells remain cold and human-pending.
+- The original RefAudio no-lipsync verdict is retracted, with its prompt omission
+  recorded in [VIDEO_RECIPE_ATTEMPTS.md](VIDEO_RECIPE_ATTEMPTS.md).
+- The RefAudio reconstruct-not-compose conclusion remains the reason the final Mime
+  graph was unconditioned. [Receipt-bound reconstruction analysis](../results/comparisons/h3_refaudio_reconstruction.json)
+- The canonical H3 best suite remains a formal machine failure despite valid
+  individual warm pairs. [Immutable suite outcome](../results/h3_best_suite.json)
+- LTX T2V remains closed after the exhausted attempt allowance.
+  [Controlling escalation record](ESCALATE.md)
+- Previous human visual approvals and experimental verdicts remain in their original
+  receipts; none is generalized to a new recipe or seed.
 
-### 7. Mini Mime I2V and R2V proofs
+## Recommendation state
 
-One Mini Mime I2V clip rendered from `scene_still.png`. Jeffrey then explicitly
-approved continuing to one portrait-only R2V proof.
+The final recommended casting is provisional:
 
-- [receipt](../results/h3_mime_i2v.json)
-- [artifact](../outputs/h3_mime_i2v_out_00001_.mp4)
-- cold peak 7.28 GiB from a 2.52 GiB baseline; 178.9 seconds
-- exact target/rendered/delivered duration: 3.750 seconds
-- exact 90 frames at 864x480 and 24 fps; no trim or tail correction
-- valid native AAC soundtrack approximately -27.5 LUFS with no clipping
+- sprint/general video: LTX Video distilled 2B;
+- workhorse lips candidate: H3 Ref2VA if the OTR-side A/B confirms sync and
+  consistency; and
+- hero lips incumbent: HuMo until that same comparison supports a change.
 
-Objective I2V QA found 90 unique frames, no freeze/black event, and a non-silent
-native track. Jeffrey subsequently said the images look good and confirmed the
-visual approval used for the R2V continuation, but the formal I2V receipt still
-awaits his one-line soundscape description.
+LTX Audio HQ H3 (**1024x576 / 193 frames**) is the best machine-certified HQ recipe,
+pending Jeffrey's eyeball.
+[HQ recommendation evidence](../results/comparisons/ltx_audio_hq_ladder.json)
 
-The R2V follow-up is also a valid cold-only proof:
+## Environment seed and safety
 
-- [receipt](../results/h3_mime_r2v.json)
-- [artifact](../outputs/h3_mime_r2v_out_00001_.mp4)
-- cold peak 7.23 GiB from a 2.61 GiB baseline; 188.3 seconds
-- exact target/rendered/delivered duration: 3.750 seconds
-- exact 90 frames at 864x480 and 24 fps
-- strong objective portrait stability in representative frames
-- valid but very quiet native soundtrack near -40.5 LUFS
+Distribution seed 2.1 pins Windows 11 build `10.0.26200`, Python `3.12.11`, Torch
+`2.10.0+cu130`, CUDA runtime `13.0`, SageAttention
+`2.2.0+cu130torch2.9.0andhigher.post4`, driver `610.88`, and an RTX 5080 Laptop GPU at
+compute capability `12.0`. It pins ComfyUI `0.31.1` at commit
+`fe4195f7f4275f2626cbafc703acc3ddde1e5490`, ComfyUI-GGUF `1.1.10`, and
+ComfyUI-KJNodes `1.3.9` at commit
+`b7646ad70a7daa7aeb919ca542274758d26ba2df`. FlashAttention-2 is absent and
+unsupported. [Exact environment receipt](../results/comparisons/environment_2p1.json)
 
-R2V visual appearance is also human-approved; its ear review remains pending. No
-additional mime variant is authorized, and neither cold-only result is
-warm-certified or promoted.
-
-## Failures and stops preserved
-
-- The newest H3 suite remains a formal machine failure; individual child passes
-  are not presented as suite certification.
-- Earlier R2V/reference-audio evidence with nested V3 Autogrow inputs is
-  superseded and must not support conditioning claims.
-- LTX T2V is hard-closed after three attempts and exceeds the unreserved gate.
-- LTX matrix rows are single cold experiments, never warm passes.
-- RefAudio static control was not run; Mini Mime stopped after the one explicitly
-  approved R2V proof.
-- All open human eye/ear gates remain explicit; none were fabricated from
-  objective media measurements.
-
-## Review and verification
-
-- The requested driver-aware Kibitz R1-R4 campaign ran with the ComfyUI profile.
-  Codex Desktop acted as anchor and sole judge; Antigravity and Claude Code were
-  the independent local reviewers where their lanes returned usable output.
-  Artifacts are under `kibitz-runs/2026-08-08-vram-lab-final/`.
-- Four `codex exec review` attempts were launched during the campaign. Each
-  timed out without a usable verdict; none is represented as a successful
-  review. The final orphaned reviewer PID was verified by command line and
-  terminated without touching the Codex app or lab server.
-- A later read-only Antigravity review supplied by Jeffrey returned CLEAN on the
-  nonce/cache and corrected-sentinel scope, with two verified P2s subsequently
-  addressed (`live_schema_check.py` shutdown verification and `--high-ram`
-  classic-cache labeling).
-- Final frozen-tree verification: 185/185 offline tests passed; 33/33 recipes
-  paper-validated; strict UTF-8/no-BOM and `git diff --check` passed; no lab
-  PID, GPU/suite lock, quarantine file, or port-8199 listener remained.
-- The local-only commit follows this report; no push is authorized.
-
-## Human review queue
-
-1. Compare the four LTX loudness-matched diagnostics for motion character.
-2. Review H3 T2V/I2V/R2V best video and generated audio; note that corrected
-   R2V's native track is objectively near-silent.
-3. Review RefAudio TTS for audible speech character and human-visible lip sync;
-   objective analysis did not demonstrate synchronized articulation.
-4. Review RefAudio music for intended musical identity, its generated 1.29-second
-   tail, and whether any visible action actually feels music-responsive.
-5. Supply the one-line I2V soundscape description and review R2V Mini Mime for
-   absence of speech/vocal-like content and diegetic sync.
-
-Pending human review defers promotion and any further mime work, but it does not
-invalidate the completed machine evidence above.
-
-## Safety and repository state
-
-Every render used the owned `127.0.0.1:8199` lab lane and shut down its verified
-server. No model weights were downloaded. Port 8188 and OTR servers were not
-touched. The final commit is local only; no push is authorized.
+All campaign renders used the owned offline lab lane. No model weights were downloaded,
+the OTR repository and port 8188 were not touched, and no push is authorized. The
+driver reports the final offline test and paper-validation passes green. The local
+commit and final verified clean server/lock state remain the driver's administrative
+close-out steps; this report does not claim them before they occur.

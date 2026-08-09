@@ -1,0 +1,36 @@
+{
+  "download_performed": false,
+  "h3_lightx2v_4step": {
+    "buildable": false,
+    "confusable_local_wan_lora": {
+      "architecture": "Wan I2V 14B; incompatible with MiniMax H3",
+      "block_count": 40,
+      "block_range": [
+        0,
+        39
+      ],
+      "bytes": 738005744,
+      "header_bytes": 214120,
+      "key_family_evidence": "diffusion_model.blocks.*.cross_attn.k_img.*",
+      "model_basename": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+      "model_subdir": "loras",
+      "sha256": "85c4a61c30e0497aa44b91d93a893b624708461a56fe5485183b28fa07e2dfb3",
+      "tensor_count": 1749
+    },
+    "local_filename": null,
+    "reason": "No MiniMax H3 LightX2V four-step distillation LoRA exists in the hash-pinned manifest or actual local loras directory",
+    "sha256": null,
+    "status": "BLOCKED_MISSING_LORA"
+  },
+  "h3_w4a8_mixed": {
+    "buildable": false,
+    "local_filename": null,
+    "reason": "No MiniMax H3 W4A8/mixed diffusion weight exists in the hash-pinned manifest or actual local diffusion_models directory",
+    "sha256": null,
+    "status": "BLOCKED_MISSING_WEIGHT"
+  },
+  "proposal": "If Jeffrey authorizes downloads later, fetch the Kijai H3 W4A8-mixed FL2VA weight and the official/Kijai H3 LightX2V four-step LoRA into quarantine, hash them into models_manifest.md, then run a new immutable H3 I2V turbo campaign.",
+  "source_recipe_path": "recipes/h3_i2v_sage_patch_fp16pv_experimental.json",
+  "source_recipe_sha256": "6a27480cfe0709eda17e8c8a57fa549e840589867aebb8a19603319081b6ab93",
+  "status": "BLOCKED_MISSING_BOTH_ASSETS"
+}

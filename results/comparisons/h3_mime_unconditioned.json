@@ -1,0 +1,32 @@
+{
+  "comparison": "h3_unconditioned_mini_mime",
+  "human_inverted_ear_gate": {
+    "coherent_diegetic_sync": "pending",
+    "no_speech_like_or_vocal_like_content_of_any_intelligibility": "pending"
+  },
+  "ledger_binding": "fixtures/ledger.json#/music/1",
+  "machine_evidence": {
+    "artifact_path": "outputs/h3_mime_i2v_ledger_music_closing_8s_out_00001_.mp4",
+    "artifact_sha256": "82e051a5af3526f43d4e23472f0fa7b0fbec7ff0e57296de0c30518197db4f09",
+    "baseline_vram_gib": 2.15,
+    "delivered_seconds": 8.0,
+    "encoded_fps": 24.0,
+    "encoded_frames": 192,
+    "height": 480,
+    "machine_gate_pass": true,
+    "peak_vram_gib": 6.71,
+    "receipt_path": "results/h3_mime_i2v_ledger_music_closing_8s_run1.json",
+    "receipt_sha256": "75aadb094351446bba7804744d66901e96a1673e10d8be144287894241c7fd57",
+    "recipe": "h3_mime_i2v_ledger_music_closing_8s",
+    "recipe_sha256": "8c3d5f7b193b5006a895c2e153addb6032c36cbb01e3952ff98b1753bfb2e7ca",
+    "run_number": 1,
+    "status": "PASS (cold)",
+    "wall_seconds": 542.9,
+    "warm_pass": false,
+    "width": 864
+  },
+  "no_external_audio_conditioning": true,
+  "sampled_frame_technical_screen": "Coherent camera move from operators toward radio equipment; no obvious frame collapse",
+  "status": "ONE_COLD_MACHINE_PASS_HUMAN_EYES_AND_EARS_PENDING",
+  "strict_gate_amendment": "This comparison receipt supersedes the rendered recipe metadata's weaker none_intelligible wording. Any speech-like or vocal-like content fails, whether intelligible or not."
+}

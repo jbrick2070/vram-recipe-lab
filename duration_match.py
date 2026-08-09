@@ -89,7 +89,9 @@ def duration_match(
 
     ``h3`` uses the ``17k+5`` frame grid at 24 fps; ``ltx`` uses ``8n+1``
     at 25 fps.  ``frame_count`` is the smallest legal model render that covers
-    the requested endpoint.  ``trim_frames`` is the number of complete trailing
+    the requested endpoint.  ``delivered_frame_count`` is the number of encoded
+    frames retained through that endpoint, including a final partial-duration
+    frame when necessary.  ``trim_frames`` is the number of complete trailing
     frames removed.  ``tail_trim_s`` is the remaining timestamp/container trim
     and is always in ``[0, 1/fps)``.
 
@@ -137,8 +139,10 @@ def duration_match(
     return {
         "target_seconds": target,
         "frame_count": frame_count,
+        "delivered_frame_count": covered_frames,
         "trim_frames": trim_frames,
         "rendered_s": rendered_s,
+        "whole_frame_delivery_s": whole_frame_delivery_s,
         "delivered_s": target,
         "tail_trim_s": tail_trim_s,
         "delivery_quantization_error_s": Decimal("0"),

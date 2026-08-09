@@ -28,7 +28,11 @@
   "encoded_frame_count": 97,
   "encoded_height": 480,
   "encoded_width": 832,
-  "eyeball": "pending",
+  "eyeball": "ok",
+  "eyeball_source": "human",
+  "eyeball_reviewed_at": "2026-08-08T22:40:16-07:00",
+  "human_video_description": "Approved as the M0 motion-ladder control; clean production-canvas render that reads near-still.",
+  "human_video_scope": "Control approval supplied by Jeffrey for the LTX motion ladder; comparative motion ranking remains pending.",
   "final_server_instance": {
     "process_create_time": 1786221664.847659,
     "serving_pid": 45368

@@ -81,6 +81,13 @@ SUITE_CACHE_RUNTIME_SOURCES = {
     "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
     "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
 }
+STANDALONE_CACHE_RUNTIME_SOURCES = {
+    **SUITE_CACHE_RUNTIME_SOURCES,
+    "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a",
+    "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+    "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+    "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+}
 
 _MINIMAX_H3_REFERENCE_CLASS = "MiniMaxH3ReferenceToVideo"
 _MINIMAX_H3_AUTOGROW_SOCKET_SPECS = {
@@ -214,6 +221,32 @@ def parse_suite_cache_nonce(argv: List[str], is_suite: bool) -> Optional[str]:
     return nonce
 
 
+def parse_standalone_cache_nonce(argv: List[str], is_suite: bool) -> Optional[str]:
+    """Parse executor-only cache metadata for an ordinary lab run.
+
+    This is the standalone counterpart to the suite nonce.  It is deliberately
+    unavailable to suite children, whose parent supplies the stricter
+    ``--suite-cache-nonce`` contract.
+    """
+
+    positions = [index for index, value in enumerate(argv) if value == "--executor-cache-nonce"]
+    if len(positions) > 1:
+        raise ValueError("--executor-cache-nonce may be supplied only once")
+    if not positions:
+        return None
+    if is_suite:
+        raise ValueError("--executor-cache-nonce is not allowed for a --suite child")
+    index = positions[0]
+    if index + 1 >= len(argv) or argv[index + 1].startswith("--"):
+        raise ValueError("--executor-cache-nonce requires a value")
+    nonce = argv[index + 1]
+    if SUITE_CACHE_NONCE_PATTERN.fullmatch(nonce) is None:
+        raise ValueError(
+            "--executor-cache-nonce must be 1-160 characters from A-Z, a-z, 0-9, _ . : -"
+        )
+    return nonce
+
+
 def suite_cache_runtime_sha256s() -> Dict[str, str]:
     """Pin the exact Comfy core behavior used by the executor-only cache nonce.
 
@@ -232,6 +265,24 @@ def suite_cache_runtime_sha256s() -> Dict[str, str]:
         if digest != expected_hash:
             raise ValueError(
                 f"Suite cache runtime source changed: {relative_name} "
+                f"(expected {expected_hash}, found {digest})"
+            )
+        actual[relative_name] = digest
+    return actual
+
+
+def standalone_cache_runtime_sha256s() -> Dict[str, str]:
+    """Pin cache/filter behavior plus the legacy core KSampler implementation."""
+
+    actual: Dict[str, str] = {}
+    for relative_name, expected_hash in STANDALONE_CACHE_RUNTIME_SOURCES.items():
+        source = COMFYUI_ROOT / Path(relative_name)
+        if not source.is_file():
+            raise ValueError(f"Standalone cache runtime source is missing: {relative_name}")
+        digest = sha256_file(source)
+        if digest != expected_hash:
+            raise ValueError(
+                f"Standalone cache runtime source changed: {relative_name} "
                 f"(expected {expected_hash}, found {digest})"
             )
         actual[relative_name] = digest
@@ -337,6 +388,93 @@ def apply_suite_cache_nonce(
         "stable_node_ids": stable_node_ids,
         "reachable_node_ids": reachable_node_ids,
         "sampler_node_ids": sampler_ids,
+    }
+
+
+def apply_standalone_cache_nonce(
+    prompt: Dict[str, Any], nonce: str
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """Force a fresh sampler/output branch while preserving declared inputs.
+
+    The pinned Comfy executor hashes every raw API input but forwards only
+    declared inputs to V3 ``RandomNoise`` and the legacy ``KSampler`` /
+    ``SamplerCustom`` nodes.
+    Injecting this queue-only key therefore invalidates the sampler branch
+    without changing the seed, graph bytes, or node call arguments.
+    """
+
+    if SUITE_CACHE_NONCE_PATTERN.fullmatch(nonce) is None:
+        raise ValueError("Invalid standalone cache nonce")
+    if not isinstance(prompt, dict):
+        raise ValueError("Standalone prompt must be a dictionary")
+    candidates = [
+        (str(node_id), node.get("class_type"))
+        for node_id, node in prompt.items()
+        if isinstance(node, dict)
+        and node.get("class_type") in {"RandomNoise", "KSampler", "SamplerCustom"}
+    ]
+    if len(candidates) != 1:
+        raise ValueError(
+            "Standalone cache control requires exactly one RandomNoise, KSampler, "
+            "or SamplerCustom "
+            f"source node, found {candidates}"
+        )
+    source_id, source_class = candidates[0]
+    original_inputs = prompt[source_id].get("inputs")
+    if not isinstance(original_inputs, dict):
+        raise ValueError(f"{source_class} inputs must be a dictionary")
+    if SUITE_CACHE_NONCE_INPUT in original_inputs:
+        raise ValueError("Immutable recipe already contains executor cache metadata")
+
+    seed_key = "seed" if source_class == "KSampler" else "noise_seed"
+    if source_class == "RandomNoise" and set(original_inputs) != {seed_key}:
+        raise ValueError("RandomNoise must expose only its declared noise_seed")
+    recipe_seed = original_inputs.get(seed_key)
+    if isinstance(recipe_seed, bool) or not isinstance(recipe_seed, int):
+        raise ValueError(f"{source_class} {seed_key} must be an integer")
+
+    queued_prompt = copy.deepcopy(prompt)
+    queued_prompt[source_id]["inputs"][SUITE_CACHE_NONCE_INPUT] = nonce
+    fresh_node_ids = prompt_descendants(queued_prompt, source_id)
+    reachable_node_ids = prompt_output_ancestors(queued_prompt)
+    stable_node_ids = sorted(
+        (node_id for node_id in reachable_node_ids if node_id not in fresh_node_ids),
+        key=lambda value: (len(value), value),
+    )
+    if source_class == "RandomNoise":
+        sampler_ids = sorted(
+            node_id
+            for node_id in fresh_node_ids
+            if queued_prompt[node_id].get("class_type") == "SamplerCustomAdvanced"
+        )
+    else:
+        sampler_ids = [source_id]
+    if not sampler_ids:
+        raise ValueError(f"{source_class} does not reach a supported sampler node")
+    reachable = set(reachable_node_ids)
+    if source_id not in reachable or not set(sampler_ids).issubset(reachable):
+        raise ValueError(
+            f"{source_class} cache-control source and sampler must feed a file-output sink"
+        )
+    fresh_output_ids = [
+        node_id
+        for node_id in fresh_node_ids
+        if queued_prompt[node_id].get("class_type") in {"SaveImage", "SaveVideo"}
+    ]
+    if not fresh_output_ids:
+        raise ValueError(f"{source_class} does not reach a SaveImage or SaveVideo sink")
+    return queued_prompt, {
+        "mode": "pinned-undeclared-sampler-input",
+        "nonce": nonce,
+        "source_node_id": source_id,
+        "source_class_type": source_class,
+        "seed_input": seed_key,
+        "recipe_seed": recipe_seed,
+        "fresh_node_ids": fresh_node_ids,
+        "stable_node_ids": stable_node_ids,
+        "reachable_node_ids": reachable_node_ids,
+        "sampler_node_ids": sampler_ids,
+        "fresh_output_node_ids": fresh_output_ids,
     }
 
 
@@ -2840,9 +2978,11 @@ def main():
     tier = "suite" if is_suite else "smoke"
     try:
         suite_cache_nonce = parse_suite_cache_nonce(sys.argv, is_suite)
+        standalone_cache_nonce = parse_standalone_cache_nonce(sys.argv, is_suite)
     except ValueError as exc:
-        print(f"Error: invalid suite cache control: {exc}")
+        print(f"Error: invalid executor cache control: {exc}")
         return 2
+    executor_cache_nonce = suite_cache_nonce or standalone_cache_nonce
     
     reserve_vram_text = os.environ.get("LAB_RESERVE_VRAM_GB")
     reserve_vram_gib = None
@@ -2922,8 +3062,13 @@ def main():
             queued_cache_runtime_sha256s = (
                 suite_cache_runtime_sha256s() if suite_cache_nonce is not None else {}
             )
+            queued_standalone_cache_runtime_sha256s = (
+                standalone_cache_runtime_sha256s()
+                if standalone_cache_nonce is not None
+                else {}
+            )
         except ValueError as exc:
-            print(f"Error: suite cache runtime contract is not frozen: {exc}")
+            print(f"Error: executor cache runtime contract is not frozen: {exc}")
             return 1
         repo_git_commit = git_commit(REPO_ROOT)
         repo_git_dirty = git_dirty(REPO_ROOT)
@@ -2971,6 +3116,13 @@ def main():
             # not declared recipe state.  The pinned runtime semantics are part
             # of identity, while the recipe SHA continues to bind noise_seed.
             identity_payload["suite_cache_runtime_sha256s"] = queued_cache_runtime_sha256s
+        if queued_standalone_cache_runtime_sha256s:
+            # The nonce is deliberately excluded from identity.  It changes
+            # executor cache identity only; recipe bytes continue to bind the
+            # declared seed and graph.
+            identity_payload["standalone_cache_runtime_sha256s"] = (
+                queued_standalone_cache_runtime_sha256s
+            )
         run_identity_sha256 = stable_identity(identity_payload)
         result_file = RESULTS_DIR / f"{recipe_name}.json"
         try:
@@ -3011,6 +3163,15 @@ def main():
                 except ValueError as exc:
                     monitor.stop()
                     print(f"Error: suite cache nonce could not be applied safely: {exc}")
+                    return 1
+            elif standalone_cache_nonce is not None:
+                try:
+                    prompt_dict, cache_control = apply_standalone_cache_nonce(
+                        prompt_dict, standalone_cache_nonce
+                    )
+                except ValueError as exc:
+                    monitor.stop()
+                    print(f"Error: standalone cache nonce could not be applied safely: {exc}")
                     return 1
             queued_prompt_sha256 = stable_identity(prompt_dict)
             prompt_payload = {"prompt": prompt_dict}
@@ -3191,6 +3352,29 @@ def main():
             else:
                 final_cache_runtime_sha256s = {}
 
+            if queued_standalone_cache_runtime_sha256s:
+                try:
+                    final_standalone_cache_runtime_sha256s = (
+                        standalone_cache_runtime_sha256s()
+                    )
+                except ValueError as exc:
+                    final_standalone_cache_runtime_sha256s = {}
+                    provenance_unchanged = False
+                    if not final_provenance["error"]:
+                        final_provenance["error"] = str(exc)
+                else:
+                    if (
+                        final_standalone_cache_runtime_sha256s
+                        != queued_standalone_cache_runtime_sha256s
+                    ):
+                        provenance_unchanged = False
+                        if not final_provenance["error"]:
+                            final_provenance["error"] = (
+                                "Standalone cache runtime sources changed during render"
+                            )
+            else:
+                final_standalone_cache_runtime_sha256s = {}
+
             # gate_pass = this run individually passed the VRAM ceiling
             # warm_pass = two consecutive gate passes (the final certification)
             is_marginal = False
@@ -3218,12 +3402,18 @@ def main():
                 gate_pass = False
                 warm_pass = False
                 status = "INVALID (recipe, runner, fixture, model, or server instance changed during render)"
-            elif suite_cache_nonce is not None and cache_evidence.get(
+            elif executor_cache_nonce is not None and cache_evidence.get(
                 "fresh_execution_proved"
             ) is not True:
                 gate_pass = False
                 warm_pass = False
-                status = "INVALID (suite sampler/output cache bypass not proved)"
+                status = "INVALID (sampler/output cache bypass not proved)"
+            elif standalone_cache_nonce is not None and is_warm_cache and not set(
+                cache_evidence.get("stable_node_ids", [])
+            ).issubset(set(cache_evidence.get("cached_node_ids", []))):
+                gate_pass = False
+                warm_pass = False
+                status = "INVALID (warm stable-node cache hits not proved)"
             elif not is_measurement_valid:
                 gate_pass = False
                 warm_pass = False
@@ -3301,6 +3491,10 @@ def main():
                 "execution_cache_control": cache_evidence,
                 "suite_cache_runtime_sha256s": queued_cache_runtime_sha256s,
                 "final_suite_cache_runtime_sha256s": final_cache_runtime_sha256s,
+                "standalone_cache_runtime_sha256s": queued_standalone_cache_runtime_sha256s,
+                "final_standalone_cache_runtime_sha256s": (
+                    final_standalone_cache_runtime_sha256s
+                ),
                 "git_commit": repo_git_commit,
                 "git_dirty": repo_git_dirty,
                 "comfyui_git_commit": comfyui_git_commit,
@@ -3348,8 +3542,12 @@ def main():
             if requires_human_eyeball and gate_pass:
                 display_status += " (machine; human pending)"
             ledger_note = f"Run #{run_count}; boot lane: {boot_lane_str}"
-            if suite_cache_nonce is not None:
-                ledger_note += "; executor cache nonce; sampler/output execution proved"
+            if executor_cache_nonce is not None:
+                ledger_note += "; executor cache nonce"
+                if cache_evidence.get("fresh_execution_proved") is True:
+                    ledger_note += "; sampler/output execution proved"
+                else:
+                    ledger_note += "; sampler/output execution unproved"
             if media_metrics.get("bitrate_anomaly"):
                 ledger_note += "; bitrate-anomaly (priority eyeball, non-gating)"
             update_results_ledger(recipe_name, display_status, peak_vram_gb, baseline_vram_gb, duration_s, ledger_note)

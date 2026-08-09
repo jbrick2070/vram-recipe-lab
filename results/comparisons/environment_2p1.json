@@ -1,0 +1,36 @@
+{
+  "active_custom_node_whitelist": [
+    "ComfyUI-GGUF",
+    "ComfyUI-KJNodes"
+  ],
+  "comfyui": {
+    "commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+    "version": "0.31.1"
+  },
+  "comfyui_gguf": {
+    "nodes_py_sha256": "16be3b08b13de6279fc432addc628320019fcb24963cbc6b52b248de8f06316e",
+    "pyproject_sha256": "56e3a961454b48eaf90eab45055c6e8ccb4ec7de3ae6461064c69c2298e835fa",
+    "version": "1.1.10"
+  },
+  "cuda_runtime": "13.0",
+  "distribution_seed": "2.1",
+  "flashattention2": "absent and unsupported on this platform",
+  "gpu": {
+    "compute_capability": [
+      12,
+      0
+    ],
+    "driver": "610.88",
+    "memory_total": "16303 MiB",
+    "name": "NVIDIA GeForce RTX 5080 Laptop GPU"
+  },
+  "kj_nodes": {
+    "commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+    "pyproject_sha256": "c91028e05bc560f861eb55c3428f676a8dfc752173a11fb077ac5193f2de3c21",
+    "version": "1.3.9"
+  },
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.11",
+  "sageattention": "2.2.0+cu130torch2.9.0andhigher.post4",
+  "torch": "2.10.0+cu130"
+}

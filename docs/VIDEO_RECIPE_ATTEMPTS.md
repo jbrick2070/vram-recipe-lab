@@ -23,14 +23,14 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
     - Baseline VRAM: 1.39 GB | Peak VRAM: 7.41 GB (Net VRAM: 6.02 GB) | Wall Clock: 261.9 s
     - Boot Lane: `lab-8199, sage-free, clamp-14gb`
     - Status: **`PASS` (Warm Cache Certified - 2 consecutive passes)**
-    - Generated Video: [`outputs/ltx_audio_gguf_out_00001_.mp4`](file:///c:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/outputs/ltx_audio_gguf_out_00001_.mp4)
+    - Generated Video: [`outputs/ltx_audio_gguf_out_00001_.mp4`](../outputs/ltx_audio_gguf_out_00001_.mp4)
 
-- **Eyeball Verdict**: Pending Jeffrey's eyeball review of generated video [`outputs/ltx_audio_gguf_out_00001_.mp4`](file:///c:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/outputs/ltx_audio_gguf_out_00001_.mp4) to confirm whether removing the distilled LoRA and using 20-step `LTXVScheduler` eliminated the periodic flash defect (~every 0.4s).
+- **Eyeball Verdict**: Pending Jeffrey's eyeball review of generated video [`outputs/ltx_audio_gguf_out_00001_.mp4`](../outputs/ltx_audio_gguf_out_00001_.mp4) to confirm whether removing the distilled LoRA and using 20-step `LTXVScheduler` eliminated the periodic flash defect (~every 0.4s).
 
 ### Attempt #2: T2V Mesh Grid Defect Audit & Fix (`ltx_t2v_gguf`)
 - **Date**: 2026-08-08
 - **Target Recipe**: `ltx_t2v_gguf`
-- **Issue**: Regular lattice/mesh grid over textures (e.g. hillside) in rendered clip [`outputs/ltx_t2v_gguf_out_00001_.mp4`](file:///c:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/outputs/ltx_t2v_gguf_out_00001_.mp4) (`eyeball: defect:mesh_grid`).
+- **Issue**: Regular lattice/mesh grid over textures (e.g. hillside) in rendered clip [`outputs/ltx_t2v_gguf_out_00001_.mp4`](../outputs/ltx_t2v_gguf_out_00001_.mp4) (`eyeball: defect:mesh_grid`).
 - **Node-by-Node Diff Audit**:
   1. **Suspect (a) - Tiled VAE Decode Settings (`VAEDecodeTiled`)**:
      - `ltx_t2v_gguf.json` used `tile_size: 512`, `overlap: 64`, `temporal_size: 16`, `temporal_overlap: 4`.
@@ -154,6 +154,18 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
 
 ### H3 RefAudio: TTS and Opening-Music Cold Cells
 
+- **Retraction (2026-08-08):** the earlier `defect:no_lipsync` conclusion from
+  `h3_r2v_refaudio_tts_dialogue` was not a valid capability test. That recipe defined
+  the `<Picture 1>` and `<Audio 1>` references, but its neutral wide-scene prompt did
+  not instruct the subject to speak, articulate, or synchronize mouth motion. A public
+  [Skill Destiny 8 GB Ref2VA demonstration](https://www.youtube.com/watch?v=qc5C4P_5p6o)
+  (**EXTERNAL-REPORTED**) challenged the omission; the exact prompt-only action wording
+  used in this lab came from Jeffrey's consolidated order, not a quoted public prompt.
+  The lab therefore preserves the original
+  clip's valid media/VRAM evidence but replaces the dialogue verdict with
+  **UNTESTED - prompt did not request lip-sync**. Only a prompt-only retest may decide
+  whether H3 is a character-lane candidate.
+
 - Exactly one `h3_r2v_refaudio_tts_dialogue` smoke was rendered. It is a cold-only
   machine gate pass at 7.15 GB peak / 2.46 GB baseline in 249.0 s, with valid
   124-frame video and native generated audio over 5.167 seconds.
@@ -167,11 +179,13 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
   7.18 GB peak / 2.46 GB baseline in 249.0 s. It also contains valid 124-frame,
   5.167-second native A/V; its soundtrack measures -23.1 LUFS.
 - The first 3.88 seconds of the native music output strongly reconstruct the matched
-  reference (aligned waveform correlation about 0.94, RMS-envelope correlation 0.95,
-  and spectral cosine about 0.99) without any source-to-`CreateVideo` mux path.
-- Objective video analysis did not demonstrate beat-synchronized motion. The TTS
-  clip likewise contains subtle mouth motion but no convincing speech-timed
-  articulation. These are behavioral findings, not media failures.
+  reference. The original approximately-0.94 result is confirmed by a receipt-bound
+  PCM recheck at waveform r=0.969528 and block-RMS-envelope r=0.964007, without any
+  source-to-`CreateVideo` mux path. Evidence:
+  `results/comparisons/h3_refaudio_reconstruction.json`.
+- Objective video analysis did not demonstrate beat-synchronized motion. The first
+  TTS clip contains subtle mouth motion, but because its prompt did not request a
+  speaking performance it is not valid lip-sync evidence in either direction.
 - Static control remains unrendered. Both completed cells are cold experimental
   evidence, not warm certifications or promotion claims.
 
@@ -200,3 +214,87 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
   creep gate, and every best artifact remains human video/audio pending. Individual
   child passes are not an overall certification.
 - Continuation run 1 predates full embedded fixture/runner provenance and its exact transient recipe JSON was not preserved; run 2/current represents clip 3. Future continuation hops must use immutable recipe names instead of mutating one experiment file.
+
+### Attempt #4: Consolidated Same-Canvas, Character, HQ, and Mime Close-Out
+
+#### Normalized general-video crown
+
+- WAN TI2V 5B and LTX Video distilled 2B rendered the same **832x480 / 193-frame /
+  25-fps / 7.72-second** workload on second-consecutive true executions. LTX completed
+  in **13.8 seconds** versus WAN's **407.5 seconds**, a **29.528986x** warm wall-clock
+  advantage. Normalized throughput was **5.585252 versus 0.189145
+  megapixel-frames/second**. Evidence:
+  `results/comparisons/general_video_speed_pair.json`.
+- The separately reported **20.3-second / 25-frame** and **83.8-second / 193-frame**
+  LTX rows lack canvas, steps, and exact model information. They are recorded as
+  `UNNORMALIZED` and excluded from the crown. Evidence:
+  `results/comparisons/general_video_speed_pair.json`.
+
+#### H3 lip-sync retest after retraction
+
+- The earlier no-lipsync finding remains retracted for the reason recorded above: the
+  original wide-scene prompt did not request speech articulation.
+- The final exact-fixture speaking retest produced two cold machine-gated takes. Seed
+  42 used **305.3 seconds / 6.71 GiB peak**; seed 43 used **297.8 seconds / 6.51 GiB peak**.
+  Both artifact and fixture hashes are frozen in
+  `results/comparisons/h3_lipsync_ab_package.json`.
+- The technical visual screen sees articulation, but actual phoneme synchronization,
+  pause settling, and cross-seed consistency remain pending Jeffrey's full-clip
+  judgment. HuMo was not run in this lab; its wrapper is outside the whitelist. The
+  OTR-side HuMo leg remains the open character-lane decision. The corrected H3 package
+  uses exactly `portrait.png` and raw `tts_dialogue.wav`, with no second image or
+  derived audio; both fixture hashes are frozen for the OTR comparison.
+
+#### LTX Audio HQ ladder
+
+- H1 canvas-only, H2 duration-only, and composed H3 all completed valid warm pairs.
+  H3 at **1024x576 / 193 frames** is the best machine-certified HQ recommendation;
+  Jeffrey's full-clip eyeball remains pending. Evidence:
+  `results/comparisons/ltx_audio_hq_ladder.json`.
+
+#### WAN I2V 14B exoneration
+
+- The corrected target-card test passed cold and warm at the OTR production floor.
+  Cold net allocation was **11.90/12 GiB**, leaving **0.10 GiB** clamp headroom.
+  WAN I2V 14B is exonerated, but WAN TI2V remains the safer default recommendation.
+  Evidence: `results/comparisons/wan_i2v_14b_exoneration.json`.
+
+#### H3 speed-stack inventory and Sage stop
+
+- The required H3 W4A8-mixed weight and H3 four-step LightX2V LoRA are both absent.
+  The turbo variant is `BLOCKED`; no download occurred. The similarly named local
+  LoRA is for WAN I2V 14B and was not repurposed. Evidence:
+  `results/comparisons/h3_speed_stack_inventory.json`.
+- The explicit KJ per-model Sage probe failed at sampler step zero with Windows
+  exception `0x80000003`, timed out after **1801.5 seconds**, produced no output, and
+  proved owned-server cleanup. It must never be the default on the measured sm_120
+  environment. Evidence: `results/comparisons/h3_sage_patch_probe.json`.
+
+#### LTX Audio motion ladder
+
+- M0-M3 all produced labeled cold artifacts. The contact-sheet technical screen reads
+  M0/M1/M2 as near-still and M3 as a slow camera move. Jeffrey's ranking and
+  beat-response judgment remain pending, so the stronger "inherently near-still"
+  conclusion is not recorded. Evidence: `results/comparisons/ltx_motion_ladder.json`.
+
+#### Corrected unconditioned Mini Mime
+
+- The final Mime experiment is separate from the earlier short proofs. It removes all
+  external audio conditioning, binds a real ledger slot, and delivered exactly
+  **192 frames / 8.000 seconds** with native sampled audio. It is one cold machine
+  pass, not a warm certification. Evidence:
+  `results/comparisons/h3_mime_unconditioned.json`.
+- Objective FFmpeg QA found a continuous native audio stream at **-31.32 LUFS** with
+  **1.00 LU** loudness range and **-13.55 dBTP** true peak. This does not answer the
+  human questions of whether any speech-like/vocal-like content is present (intelligible
+  or otherwise) or whether diegetic synchronization is coherent. Evidence:
+  `results/comparisons/h3_mime_audio_qa.json`.
+
+#### External intel boundaries
+
+- The duration matcher now includes **192 = 17*11+5 frames = 8.000 seconds at
+  24 fps**. The token formula is output-visual-token feasibility only, not a VRAM
+  predictor. Evidence: `results/comparisons/h3_token_budget_check.json`.
+- The public **692x692 / 192-frame / 210-second / 8 GB** result and vocal-separation
+  advice remain `EXTERNAL-REPORTED`; neither is a local measurement. Reference image
+  sizing stays `match`. Evidence: `results/comparisons/h3_token_budget_check.json`.

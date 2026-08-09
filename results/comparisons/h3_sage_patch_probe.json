@@ -1,0 +1,42 @@
+{
+  "comparison": "h3_per_model_sage_fp16pv_probe",
+  "error_evidence": {
+    "captured_lines": [
+      "Windows fatal exception: code 0x80000003",
+      "File C:/Users/jeffr/Documents/ComfyUI/custom_nodes/ComfyUI-KJNodes/nodes/model_optimization_nodes.py, line 35 in sage_func",
+      "Exception Code: 0x80000003"
+    ],
+    "source_line_range": "server.log:81263-81325",
+    "source_log_sha256_at_capture": "d290df8d4a863f070c5edc76df8dedae04e9b539445245341fa989fcc5b75923",
+    "tracked_excerpt_path": "results/evidence/h3_sage_patch_failure_excerpt.txt",
+    "tracked_excerpt_sha256": "414fadabad02af2814d1b6d68f7f01d681a628209ba458767f033931ce160388"
+  },
+  "external_reported_scope": {
+    "claimed_speedup": "3x on sm_86, supplied as EXTERNAL-REPORTED challenge context; exact public wording was not independently verified",
+    "silent_noise_risk": "EXTERNAL-REPORTED failure mode for global Sage behavior; this experiment used a distinct per-model KJ patch",
+    "silent_noise_source": "https://github.com/Comfy-Org/ComfyUI/issues/15263"
+  },
+  "machine_evidence": {
+    "artifact_path": null,
+    "artifact_sha256": null,
+    "baseline_vram_gib": 2.15,
+    "delivered_seconds": null,
+    "encoded_fps": null,
+    "encoded_frames": null,
+    "height": null,
+    "machine_gate_pass": false,
+    "peak_vram_gib": 6.33,
+    "receipt_path": "results/h3_i2v_sage_patch_fp16pv_experimental_run1.json",
+    "receipt_sha256": "84929a4016904d4ab5d7c06bea67a5b59da268da9d94de4156f9aea0aa1b6387",
+    "recipe": "h3_i2v_sage_patch_fp16pv_experimental",
+    "recipe_sha256": "6a27480cfe0709eda17e8c8a57fa549e840589867aebb8a19603319081b6ab93",
+    "run_number": 1,
+    "status": "TIMEOUT (exceeded 1800s; owned server shutdown proved)",
+    "wall_seconds": 1801.5,
+    "warm_pass": false,
+    "width": null
+  },
+  "output_produced": false,
+  "status": "FAIL_KERNEL_EXCEPTION_TIMEOUT_CLEANUP_PROVED",
+  "verdict": "Do not enable this per-model Sage mode on the measured sm_120 environment"
+}

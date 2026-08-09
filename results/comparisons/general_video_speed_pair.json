@@ -1,0 +1,88 @@
+{
+  "comparison": "same_canvas_general_video_speed_pair",
+  "controls": {
+    "canvas": "832x480",
+    "delivered_seconds": 7.72,
+    "fps": 25,
+    "frames": 193,
+    "measurement": "second consecutive true execution with executor nonce"
+  },
+  "derived_formulae": {
+    "megapixel_frames": "width * height * encoded_frames / 1e6",
+    "megapixel_frames_per_second": "megapixel_frames / wall_seconds",
+    "render_seconds_per_output_second": "wall_seconds / delivered_seconds"
+  },
+  "lanes": [
+    {
+      "artifact_path": "outputs/wan_ti2v_5b_cmp_832x480_f193_out_00004_.mp4",
+      "artifact_sha256": "74258118a7233b08f33efb9f73d708d9a241077acc74f00d1c86244a02a2aac6",
+      "baseline_vram_gib": 7.08,
+      "delivered_seconds": 7.72,
+      "encoded_fps": 25.0,
+      "encoded_frames": 193,
+      "height": 480,
+      "machine_gate_pass": true,
+      "megapixel_frames": 77.07648,
+      "megapixel_frames_per_second": 0.189145,
+      "peak_vram_gib": 12.1,
+      "receipt_path": "results/wan_ti2v_5b_cmp_832x480_f193_run4.json",
+      "receipt_sha256": "56d64ed67dfee15ab840ef4563a4567b9d2c4d04df862b54501367b235046130",
+      "recipe": "wan_ti2v_5b_cmp_832x480_f193",
+      "recipe_sha256": "d7708f0fa739efbcfacbc1eec1d2afda2681df279fc1a6eed2a69b2e735a5b75",
+      "render_seconds_per_output_second": 52.784974,
+      "run_number": 4,
+      "status": "PASS",
+      "wall_seconds": 407.5,
+      "warm_pass": true,
+      "width": 832
+    },
+    {
+      "artifact_path": "outputs/ltx_video_2b_distilled_cmp_832x480_f193_out_00002_.mp4",
+      "artifact_sha256": "a9834b36579f644de5ee1f885946477d8aeb872718554f4b22034bfdacf76845",
+      "baseline_vram_gib": 8.28,
+      "delivered_seconds": 7.72,
+      "encoded_fps": 25.0,
+      "encoded_frames": 193,
+      "height": 480,
+      "machine_gate_pass": true,
+      "megapixel_frames": 77.07648,
+      "megapixel_frames_per_second": 5.585252,
+      "peak_vram_gib": 13.11,
+      "receipt_path": "results/ltx_video_2b_distilled_cmp_832x480_f193_run2.json",
+      "receipt_sha256": "76c40c491064891b08dd3184ba0ef311d673ed8f3f117e3226549837378662b5",
+      "recipe": "ltx_video_2b_distilled_cmp_832x480_f193",
+      "recipe_sha256": "81e60c1fa0865be31435abebb6a1b0666995bfb5ddfca417d2dd1fb27d588de2",
+      "render_seconds_per_output_second": 1.787565,
+      "run_number": 2,
+      "status": "PASS",
+      "wall_seconds": 13.8,
+      "warm_pass": true,
+      "width": 832
+    }
+  ],
+  "ltx_wall_clock_speedup_over_wan": 29.528986,
+  "status": "COMPLETE",
+  "unnormalized_reported_rows": [
+    {
+      "canvas": null,
+      "frames": 25,
+      "model": "ltx_8gb (details not supplied)",
+      "ranking_eligible": false,
+      "source": "Jeffrey consolidated order, 2026-08-09",
+      "status": "UNNORMALIZED",
+      "steps": null,
+      "wall_seconds": 20.3
+    },
+    {
+      "canvas": null,
+      "frames": 193,
+      "model": "ltx_video (details not supplied)",
+      "ranking_eligible": false,
+      "source": "Jeffrey consolidated order, 2026-08-09",
+      "status": "UNNORMALIZED",
+      "steps": null,
+      "wall_seconds": 83.8
+    }
+  ],
+  "winner_by_normalized_warm_wall_clock": "ltx_video_2b_distilled_cmp_832x480_f193"
+}

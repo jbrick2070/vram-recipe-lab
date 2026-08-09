@@ -1,0 +1,55 @@
+{
+  "external_reported_claim": {
+    "canvas_reported": "692x692 nominal; /32 execution estimate rounds to 704x704",
+    "frames": 192,
+    "gpu_vram_gib_reported": 8,
+    "output_visual_tokens_derived": 27588,
+    "source": "https://www.youtube.com/watch?v=qc5C4P_5p6o&lc=UgwaJdwHq6aaxVwX8-V4AaABAg",
+    "status": "EXTERNAL-REPORTED commenter anecdote; no memory ceiling inferred",
+    "wall_seconds_reported": 210
+  },
+  "feasibility_estimator": {
+    "formula": "(width/32) * (height/32) * video_latent_t",
+    "sources": [
+      "https://huggingface.co/MiniMaxAI/MiniMax-H3",
+      "ComfyUI 0.31.1 commit fe4195f7f4275f2626cbafc703acc3ddde1e5490"
+    ],
+    "status": "EXTERNAL-REPORTED/DERIVED feasibility estimator; not a VRAM law"
+  },
+  "local_checks": [
+    {
+      "artifact_sha256": "925f406f779aeef26b75e84fe7b71944db8ae453d1aaca118d3a392c88cc4cb2",
+      "canvas": "864x480",
+      "frames": 124,
+      "latent_t": 37,
+      "measured_peak_vram_gib": 6.71,
+      "output_visual_tokens": 14985,
+      "receipt_path": "results/h3_r2v_refaudio_tts_lipsync_exact_seed42_run1.json",
+      "receipt_sha256": "24fc96d2785c93e3a53c19cb39cf69dafd0907803b14eade3dc0d63ee4914711"
+    },
+    {
+      "artifact_sha256": "82e051a5af3526f43d4e23472f0fa7b0fbec7ff0e57296de0c30518197db4f09",
+      "canvas": "864x480",
+      "frames": 192,
+      "latent_t": 57,
+      "measured_peak_vram_gib": 6.71,
+      "output_visual_tokens": 23085,
+      "receipt_path": "results/h3_mime_i2v_ledger_music_closing_8s_run1.json",
+      "receipt_sha256": "75aadb094351446bba7804744d66901e96a1673e10d8be144287894241c7fd57"
+    }
+  ],
+  "ref_image_size_check": {
+    "receipt_path": "results/h3_r2v_refaudio_tts_lipsync_exact_seed42_run1.json",
+    "receipt_sha256": "24fc96d2785c93e3a53c19cb39cf69dafd0907803b14eade3dc0d63ee4914711",
+    "recipe_path": "recipes/h3_r2v_refaudio_tts_lipsync_exact_seed42.json",
+    "recipe_sha256": "7b4364f86df260daeddc708547fcde4c61d4059e6cd29ff148d6eee9e08d479c",
+    "value": "match"
+  },
+  "round_length_fact": "192 = 17*11+5 and 192/24 = 8.000 s; it is the only integer-second 17k+5 length in the documented 124-362 frame range",
+  "scope": "Output visual tokens only; excludes reference, audio, and text tokens and is a feasibility estimator rather than a VRAM predictor",
+  "vocal_separation_claim": {
+    "claim": "Vocal separation reportedly improves lip synchronization",
+    "source": "https://www.youtube.com/watch?v=qc5C4P_5p6o",
+    "status": "EXTERNAL-REPORTED creator advice; not measured locally"
+  }
+}

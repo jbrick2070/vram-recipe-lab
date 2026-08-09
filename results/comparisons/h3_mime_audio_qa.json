@@ -1,0 +1,38 @@
+{
+  "artifact_path": "outputs/h3_mime_i2v_ledger_music_closing_8s_out_00001_.mp4",
+  "artifact_sha256": "82e051a5af3526f43d4e23472f0fa7b0fbec7ff0e57296de0c30518197db4f09",
+  "commands": {
+    "loudness": "ffmpeg -hide_banner -nostats -i <artifact> -map 0:a:0 -af loudnorm=I=-24:LRA=7:TP=-2:print_format=json -f null NUL",
+    "silence": "ffmpeg -hide_banner -nostats -i <artifact> -map 0:a:0 -af silencedetect=noise=<threshold>dB:d=<duration> -f null NUL"
+  },
+  "ffmpeg_version": "8.0.1-full_build-www.gyan.dev",
+  "human_inverted_ear_gate": "pending",
+  "loudnorm_input_summary": {
+    "integrated_lufs": -31.32,
+    "loudness_range_lu": 1.0,
+    "threshold_lufs": -41.32,
+    "true_peak_dbtp": -13.55
+  },
+  "scope": "Objective stream-level QA only. It does not establish absence of speech/vocals or coherent diegetic synchronization.",
+  "silence_detect": {
+    "tests": [
+      {
+        "events": 0,
+        "minimum_duration_seconds": 0.1,
+        "threshold_db": -50
+      },
+      {
+        "events": 0,
+        "minimum_duration_seconds": 0.2,
+        "threshold_db": -40
+      },
+      {
+        "events": 0,
+        "minimum_duration_seconds": 0.2,
+        "threshold_db": -35
+      }
+    ]
+  },
+  "source_receipt_path": "results/h3_mime_i2v_ledger_music_closing_8s_run1.json",
+  "source_receipt_sha256": "75aadb094351446bba7804744d66901e96a1673e10d8be144287894241c7fd57"
+}
