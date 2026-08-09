@@ -57,6 +57,7 @@ This file records measured VRAM and runtime performance for every recipe variant
 | ltx_audio_motion_m3_double_duration | GATE PASS (cold-only) | 8.24 | 2.32 | 400.3 | Receipt: `results/ltx_audio_motion_m3_double_duration_run1.json`; executor cache nonce; sampler/output execution proved |
 | h3_mime_i2v_ledger_music_closing_8s | GATE PASS (cold-only) (machine; human pending) | 6.71 | 2.15 | 542.9 | Receipt: `results/h3_mime_i2v_ledger_music_closing_8s_run1.json`; executor cache nonce; sampler/output execution proved |
 | h3_i2v_turbo_w4a8_4step | **BLOCKED (missing both assets)** | 0.00 | 0.00 | 0.0 | No run and no download: H3 W4A8-mixed weight and H3 four-step LightX2V LoRA are absent. Evidence: `results/comparisons/h3_speed_stack_inventory.json` |
+| humo_1p7b_diet | **WARM MACHINE PASS AT CLAMP-13; HUMAN PARITY PENDING; LATER CLAMP-12 FAIL** | 12.84 winner; 14.47 current alias | 8.69 winner; 2.18 current alias | 243.0 winner; 259.8 current alias | Immutable [run #2](results/humo_1p7b_diet_run2.json) is the warm clamp-13 winner with zero generation-graph/widget changes. Later [run #3](results/humo_1p7b_diet_run3.json) failed clamp-12 at 12.28 GiB net and remains the [current alias](results/humo_1p7b_diet.json); no `--force` repeat. [Comparison](results/humo_diet/phase1_clamp_floor_comparison.json). |
 
 ## 2026-08-09 consolidated close-out
 

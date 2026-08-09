@@ -9,6 +9,12 @@ are measurements, not lab-gate passes. See
 [`docs/HUMO_BAKEOFF.md`](docs/HUMO_BAKEOFF.md) and
 `results/otr_side/humo_character_lane_bakeoff.json`.
 
+HuMo 1.7B's clamp floor is now also measured: immutable run 2 is a warm machine
+winner at **12.84 GiB**, while human quality parity remains pending. The later
+clamp-12 failure remains the truthful current alias.
+[HuMo diet report](docs/HUMO_DIET.md) and
+[Phase 1 comparison receipt](results/humo_diet/phase1_clamp_floor_comparison.json).
+
 | recipe | tier | status | peak VRAM (GB) | wall clock (s) | gated | pass consecutive | boot lane | last run | notes |
 |---|---|---|---|---|---|---|---|---|---|
 | t2i_low | smoke | PASS | 9.48 | 0.0 | yes | 2/2 | lab-8199, sage-free, clamp-8gb | 2026-08-08 | Warm cache (Run #13); boot lane: lab-8199, sage-free, clamp-8gb (Clamp Pass Line applied) |
@@ -64,6 +70,7 @@ are measurements, not lab-gate passes. See
 | h3_i2v_turbo_w4a8_4step | proposed turbo | **BLOCKED (missing both assets)** | 0.00 | 0.0 | no | 0/2 | not run | 2026-08-09 | No download; W4A8-mixed H3 weight and H3 four-step LoRA absent. Evidence: `results/comparisons/h3_speed_stack_inventory.json` |
 | humo_1_7b_bakeoff (OTR) | production-lane bakeoff | **MEASURED OTR-SIDE; HUMAN PENDING; NOT LAB-GATED** | 15.12-15.23 | 207.5-233.8 | no | 2 measured takes | otr-headless-8000, HUMO, production-wrapper | 2026-08-09 | Fixed request seed 7; 480x832x129 @ 25 fps / 5.160 s. Receipts: `results/otr_side/humo_1_7b_bakeoff_take1.json`, `results/otr_side/humo_1_7b_bakeoff_take2.json` |
 | humo_14b_fp8_bakeoff (OTR) | production-lane bakeoff | **MEASURED OTR-SIDE; HUMAN PENDING; NOT LAB-GATED** | 14.98 | 245.9 | no | 1 measured take | otr-headless-8000, HUMO, production-wrapper | 2026-08-09 | Production engine ID `humo`; 480x832x97 @ 25 fps / 3.880 s. Receipt: `results/otr_side/humo_14b_fp8_bakeoff_take1.json` |
+| humo_1p7b_diet | clamp-floor certification | **WARM MACHINE PASS AT CLAMP-13; HUMAN PARITY PENDING; CURRENT ALIAS CLAMP-12 FAIL** | 12.84 winner; 14.47 current alias | 243.0 winner; 259.8 current alias | yes | 2/2 at clamp-13 | lab-8199, sage-free, no-pinned, clamp-13gb (reserve-2.921gb) | 2026-08-09 | Zero generation-graph/widget changes. Immutable run 2 is the winner; run 3 remains the current alias and honestly records net 12.28 GiB > clamp-12. [Comparison receipt](results/humo_diet/phase1_clamp_floor_comparison.json) |
 
 ## Normalized speed ranking
 
@@ -95,6 +102,7 @@ Evidence: `results/comparisons/general_video_speed_pair.json`.
 | H3 reference audio | Opening-music RefAudio | Aligned PCM r=**0.969528** over the 3.88-second input | Reconstruction evidence; not an independent audio-generator lane | `results/comparisons/h3_refaudio_reconstruction.json` |
 | Hero lips | HuMo incumbent | Three OTR-side production-lane measurements complete; no lab gate | Remains the recommendation pending lips/onset/identity review of all five clips | `docs/HUMO_BAKEOFF.md`; `results/otr_side/humo_1_7b_bakeoff_take1.json`; `results/otr_side/humo_14b_fp8_bakeoff_take1.json` |
 | Character-lane bakeoff | HuMo 1.7B / HuMo 14B FP8 / H3 Ref2VA | Three OTR-side HuMo runs plus two lab H3 runs complete | `PENDING_HUMAN`; measurement coverage complete, casting decision open | `docs/HUMO_BAKEOFF.md`; `results/otr_side/humo_character_lane_bakeoff.json` |
+| HuMo 1.7B VRAM diet | Production generation graph + clamp-13/no-pinned boot variant | Warm machine pass at **12.84 GiB**; Phase 2 diet levers skipped | Quality parity and OTR integration remain `PENDING_HUMAN` / externally gated | [report](docs/HUMO_DIET.md); [comparison receipt](results/humo_diet/phase1_clamp_floor_comparison.json) |
 | LTX Audio HQ | H3 canvas+duration rung | Warm pass at **1024x576x193** | Best machine-certified HQ recommendation; Jeffrey eyeball pending | `results/comparisons/ltx_audio_hq_ladder.json` |
 | WAN image-to-video | WAN I2V 14B production floor | Warm pass; cold **11.90/12 GiB** net | Exonerated but tight; WAN TI2V remains safer default | `results/comparisons/wan_i2v_14b_exoneration.json` |
 | H3 turbo | W4A8-mixed + four-step LoRA | **BLOCKED**, both assets absent | No download; new campaign only after authorization | `results/comparisons/h3_speed_stack_inventory.json` |

@@ -14,6 +14,20 @@ from scratch import build_clean_h3_recipes
 
 
 class TestRunnerProvenance(unittest.TestCase):
+    def test_audio_encoder_is_part_of_model_identity(self):
+        recipe = {
+            "prompt": {
+                "1": {
+                    "class_type": "AudioEncoderLoader",
+                    "inputs": {"audio_encoder_name": "whisper_probe.safetensors"},
+                }
+            }
+        }
+        self.assertEqual(
+            run_recipe.referenced_model_names(recipe),
+            ["whisper_probe.safetensors"],
+        )
+
     def test_suite_cache_nonce_is_executor_only_and_preserves_seed_and_topology(self):
         recipe = json.loads(
             (run_recipe.REPO_ROOT / "recipes" / "h3_i2v_suite_sentinel.json").read_text(
@@ -2392,6 +2406,22 @@ class TestRunnerProvenance(unittest.TestCase):
         self.assertFalse(run_recipe.promotion_ready_for_run(True, True, False))
         self.assertFalse(run_recipe.promotion_ready_for_run(True, False, True))
         self.assertTrue(run_recipe.promotion_ready_for_run(True, False, False))
+
+        self.assertTrue(
+            run_recipe.recipe_requires_human_eyeball(
+                {"contract": {"requires_human_eyeball": True}}
+            )
+        )
+        self.assertTrue(
+            run_recipe.recipe_requires_human_eyeball(
+                {"contract": {"engine": "minimax_h3"}}
+            )
+        )
+        self.assertFalse(
+            run_recipe.recipe_requires_human_eyeball(
+                {"contract": {"requires_human_eyeball": False}}
+            )
+        )
 
         receipt = {
             "receipt_schema_version": 2,

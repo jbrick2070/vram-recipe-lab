@@ -1146,6 +1146,7 @@ def referenced_model_names(recipe_data: Dict[str, Any]) -> List[str]:
         "vae_name",
         "clip_name",
         "text_encoder",
+        "audio_encoder_name",
         "lora_name",
         "model_name",
     }
@@ -1469,6 +1470,17 @@ def promotion_ready_for_run(
 ) -> bool:
     """Only fully warm, non-marginal, non-human-pending evidence is promotable."""
     return bool(warm_pass and not is_marginal and not requires_human_eyeball)
+
+
+def recipe_requires_human_eyeball(recipe_data: Dict[str, Any]) -> bool:
+    """Honor explicit recipe gates while preserving the mandatory H3 gate."""
+    contract = recipe_data.get("contract", {})
+    if not isinstance(contract, dict):
+        return False
+    return bool(
+        contract.get("engine") == "minimax_h3"
+        or contract.get("requires_human_eyeball") is True
+    )
 
 
 class PreflightError(Exception):
@@ -3047,7 +3059,7 @@ def main():
             print(f"Error: Failed to parse recipe JSON: {e}")
             sys.exit(1)
         tier = str(recipe_data.get("tier", tier))
-        requires_human_eyeball = recipe_data.get("contract", {}).get("engine") == "minimax_h3"
+        requires_human_eyeball = recipe_requires_human_eyeball(recipe_data)
 
         # Check for BLOCKED status in recipe metadata
         if recipe_data.get("blocked", False):

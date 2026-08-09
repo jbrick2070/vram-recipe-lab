@@ -1,6 +1,6 @@
 # Models Manifest — Available Local Models
 
-Query timestamp: 2026-08-08 (Verified from live lab ComfyUI `GET /object_info` at `http://127.0.0.1:8199`)
+Query timestamp: 2026-08-09T17:17:38Z (Verified from the owned live lab ComfyUI via `GET /object_info` and `GET /models/audio_encoders` at `http://127.0.0.1:8199`; no prompt submitted; verified shutdown receipt: `results/humo_diet/phase0_lane_feasibility.json`)
 
 This manifest lists all models available on the local lab server (`http://127.0.0.1:8199`). Recipes in `recipes/` must ONLY reference models listed in this manifest.
 
@@ -48,6 +48,11 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `t5gemma_b_b_ul2.safetensors` | `text_encoders/` | T5 Gemma UL2 text encoder |
 | `umt5_xxl_fp8_e4m3fn_scaled.safetensors` | `text_encoders/` | UMT5 XXL FP8 text encoder |
 | `ltx-2.3-22b-dev_embeddings_connectors.safetensors` | `text_encoders/` | LTX Video 2.3 22B CLIP connectors |
+
+### Audio Encoders (`AudioEncoderLoader`)
+| Model Filename | Path / Store | Notes |
+|---|---|---|
+| `whisper_large_v3_fp16.safetensors` | `audio_encoders/` | HuMo Whisper Large V3 FP16 audio encoder |
 
 ### VAEs (`VAELoader`)
 | Model Filename | Path / Store | Notes |

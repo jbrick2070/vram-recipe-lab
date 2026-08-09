@@ -1,4 +1,4 @@
-# Session Report - Final Video-Lane Close-Out
+# Session Report - Final Video-Lane Close-Out and HuMo VRAM Diet
 
 Date: 2026-08-09
 
@@ -9,11 +9,16 @@ general-video speed pair, two H3 speaking takes, all three LTX Audio HQ rungs, t
 I2V clamp exoneration pair, the H3 asset inventory, one failed per-model Sage probe,
 the complete LTX motion ladder, one corrected unconditioned Mini Mime proof, and the
 final production-lane HuMo leg: two 1.7B runs plus one 14B FP8 run measured OTR-side.
+The follow-on HuMo 1.7B diet also reached its **13.5 GiB** machine target: an
+unchanged generation graph passed warm at **12.84 GiB** under the explicit clamp-13
+boot variant. [HuMo diet report](HUMO_DIET.md)
 
 This is a truthful lab milestone, not blanket promotion. The remaining work is human:
 
 - Jeffrey must judge lips, onset, and identity across the complete five-clip HuMo/H3
   package;
+- Jeffrey must judge production-vs-diet HuMo quality parity before the lower-VRAM
+  boot variant is integrated;
 - Jeffrey must approve the best LTX HQ clip and rank M0-M3 for motion and beat response;
 - Jeffrey must apply the Mini Mime inverted ear gate; and
 - no blocked weight download or additional experimental render is implied.
@@ -176,6 +181,46 @@ measurement did not reproduce it and instead estimated a roughly **30-60 ms vide
 lead**. The current review must listen for offset in either direction.
 [OTR M1 measurement](../../custom_nodes/ComfyUI-OldTimeRadio/docs/2026-08-02-MEASUREMENT-M1-humo-lipsync-offset.md)
 
+### 11. HuMo 1.7B VRAM diet
+
+Phase 0 verified the production lane without submitting a prompt. All **14** required
+ComfyUI core / `comfy_extras` classes and the exact Whisper audio encoder were live;
+no HuMo custom-node pack, whitelist extension, installation, or download was needed.
+[Live feasibility receipt](../results/humo_diet/phase0_lane_feasibility.json)
+
+Phase 1 kept every HuMo generation node, model, fixture, and widget at its production
+value. Clamp-13 run 1 was cold at **14.21 GiB / 223.0 seconds**. Run 2 was the second
+consecutive execution and passed warm at **12.84 GiB / 243.0 seconds**, below the
+**13.5 GiB** campaign target. The original OTR production takes were unclamped at
+**15.118164** and **15.231445 GiB**, so they measured what that lane chose to spend
+rather than the allocation floor. [Immutable clamp-floor comparison](../results/humo_diet/phase1_clamp_floor_comparison.json)
+
+The ordered clamp-12 probe then ran once on a fresh server and honestly failed at
+**14.47 GiB absolute / 12.28 GiB net** in **259.8 seconds**. The known-failure guard
+was respected: no unchanged `--force` run was submitted. Thus run 3 remains the
+current alias `FAIL`, while immutable run 2 remains the warm clamp-13 winner.
+[Run 2](../results/humo_1p7b_diet_run2.json),
+[run 3](../results/humo_1p7b_diet_run3.json), and
+[current alias](../results/humo_1p7b_diet.json)
+
+The winning boot-only delta is `--disable-pinned-memory` plus lab `--clamp 13`, which
+yielded live `--reserve-vram 2.921` on the measured host. The default boot remains
+unchanged. Phase 2 was skipped because the clamp floor already met target; no
+quantization swap, block swap, tiled decode, step LoRA, smaller canvas, install, or
+download was introduced. [Exact transcribable diff](HUMO_DIET.md#exact-otr-to-diet-settings-diff)
+
+Telemetry names the runtime pressure more precisely than model size alone. WanTE/UMT5
+was the largest staged weight at **6419 MB**, compared with **3320 MB** for the HuMo
+DiT, while the fresh-run overall peaks occurred during HuMo denoising and the warm
+overall peak occurred during decode. The receipt therefore assigns the hog to the
+combined denoise/decode working set and does not claim the text encoder remained
+resident. [Phase-linked evidence](../results/humo_diet/phase1_clamp_floor_comparison.json)
+
+The [production-vs-clamp-13-warm A/B](../outputs/humo_1p7b_diet_ab_production_vs_clamp13_warm.mp4)
+is packaged for Jeffrey. Machine certification is complete at clamp-13; lips, onset,
+identity, temporal stability, and overall quality parity remain `PENDING_HUMAN`.
+[Full HuMo diet report](HUMO_DIET.md)
+
 ## Historical evidence preserved
 
 - The original RefAudio no-lipsync verdict is retracted, with its prompt omission
@@ -196,10 +241,15 @@ The final recommended casting is provisional:
 - sprint/general video: LTX Video distilled 2B;
 - workhorse lips candidate: H3 Ref2VA if the five-clip review confirms sync and
   consistency; and
-- hero lips incumbent: HuMo until that same review supports a change.
+- hero lips incumbent: HuMo, with the clamp-13 HuMo 1.7B diet as a lower-VRAM boot
+  candidate only after Jeffrey confirms production-quality parity.
 
 Measurement coverage is **COMPLETE**; the character-lane decision remains
 `PENDING_HUMAN`. [HuMo/H3 bakeoff](HUMO_BAKEOFF.md)
+
+The HuMo diet is a warm machine pass at **12.84 GiB** with zero generation-graph
+changes, but its production-parity gate remains `PENDING_HUMAN`.
+[HuMo diet evidence](HUMO_DIET.md)
 
 LTX Audio HQ H3 (**1024x576 / 193 frames**) is the best machine-certified HQ recipe,
 pending Jeffrey's eyeball.

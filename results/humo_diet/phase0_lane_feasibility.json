@@ -1,0 +1,67 @@
+{
+  "audio_encoder_models": [
+    "whisper_large_v3_fp16.safetensors"
+  ],
+  "comfyui_version": "0.31.1",
+  "kind": "humo-diet-phase0-live-feasibility",
+  "measured": "local lab no-prompt schema and model-list query",
+  "missing_classes": [],
+  "model_list_url": "http://127.0.0.1:8199/models/audio_encoders",
+  "no_prompt_submitted": true,
+  "object_info_class_count": 1070,
+  "object_info_url": "http://127.0.0.1:8199/object_info",
+  "pytorch_version": "2.10.0+cu130",
+  "queried_at_utc": "2026-08-09T17:17:38Z",
+  "required_class_count": 14,
+  "required_classes": [
+    "UNETLoader",
+    "CLIPLoader",
+    "CLIPTextEncode",
+    "VAELoader",
+    "LoadAudio",
+    "AudioEncoderLoader",
+    "AudioEncoderEncode",
+    "LoadImage",
+    "WanHuMoImageToVideo",
+    "ModelSamplingSD3",
+    "KSampler",
+    "VAEDecode",
+    "CreateVideo",
+    "SaveVideo"
+  ],
+  "server_instance": {
+    "process_create_time": 1786295848.096801,
+    "serving_pid": 51228
+  },
+  "server_argv": [
+    "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+    "--port",
+    "8199",
+    "--cuda-malloc",
+    "--user-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI",
+    "--output-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+    "--extra-model-paths-config",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "--disable-metadata",
+    "--disable-all-custom-nodes",
+    "--whitelist-custom-nodes",
+    "ComfyUI-GGUF",
+    "ComfyUI-KJNodes"
+  ],
+  "shutdown_proof": {
+    "had_receipt": true,
+    "listener_exited": true,
+    "pid": 51228,
+    "pid_verified": true,
+    "process_exited": true,
+    "reason": "verified server process and listener exited",
+    "receipt_removed": true,
+    "success": true,
+    "termination_attempted": true,
+    "termination_reported_success": true
+  },
+  "status": "PASS",
+  "whisper_listed": true
+}

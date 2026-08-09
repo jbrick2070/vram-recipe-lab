@@ -1,0 +1,1598 @@
+{
+  "ab_review_package": {
+    "artifact": {
+      "bytes": 633940,
+      "path": "outputs/humo_1p7b_diet_ab_production_vs_clamp13_warm.mp4",
+      "sha256": "5d9e3b7ac916c44db5800715b2b97cba8b58b456c19bb327946f7c8dbe78f9d7"
+    },
+    "assembly_argv": [
+      "ffmpeg",
+      "-nostdin",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-n",
+      "-i",
+      "outputs\\humo_1_7b_bakeoff_take1.mp4",
+      "-i",
+      "outputs\\humo_1p7b_diet_out_00002_.mp4",
+      "-i",
+      "fixtures\\tts_dialogue.wav",
+      "-filter_complex",
+      "[0:v]drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='A  Production unclamped':fontcolor=white:fontsize=22:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-text_w)/2:y=18[left];[1:v]drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='B  Lab clamp-13 warm':fontcolor=white:fontsize=22:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-text_w)/2:y=18[right];[left][right]hstack=inputs=2[v]",
+      "-map",
+      "[v]",
+      "-map",
+      "2:a:0",
+      "-t",
+      "5.16",
+      "-r",
+      "25",
+      "-map_metadata",
+      "-1",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "18",
+      "-pix_fmt",
+      "yuv420p",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "192k",
+      "-movflags",
+      "+faststart",
+      "outputs\\humo_1p7b_diet_ab_production_vs_clamp13_warm.mp4"
+    ],
+    "policy": "Video A is the OTR production review mux; video B is the lab clamp-13 warm output. The exact raw TTS fixture is re-encoded once as shared mono AAC for onset/lip judgment. This is not model evidence or a promotion artifact.",
+    "probe": {
+      "audio_channels": 1,
+      "audio_codec": "aac",
+      "audio_duration_s": 5.16,
+      "audio_sample_rate_hz": 44100,
+      "container_duration_s": 5.16,
+      "fps": 25.0,
+      "frame_count": 129,
+      "height": 832,
+      "source_ref": "ab_review_artifact",
+      "video_codec": "h264",
+      "video_duration_s": 5.16,
+      "width": 960
+    },
+    "purpose": "PENDING_HUMAN quality-parity review only",
+    "source_refs": [
+      "production_take1_artifact",
+      "lab_clamp13_warm_artifact",
+      "tts_fixture",
+      "ab_review_artifact"
+    ]
+  },
+  "clamp12_stop": {
+    "absolute_peak_vram_gib": 14.47,
+    "clamp_target_gib": 12.0,
+    "cold_run_only": true,
+    "disposition": "STOP_NO_FORCE: the cold run failed the clamp-12 net gate; no identical forced warm retry is evidence-authorized. This does not invalidate the clamp-13 warm winner.",
+    "runner_reported_net_vram_gib": 12.28,
+    "source_refs": [
+      "lab_clamp12_cold_receipt",
+      "lab_clamp12_cold_telemetry",
+      "lab_clamp12_cold_artifact"
+    ],
+    "status": "FAIL (net VRAM 12.28 GB > clamp 12.0 GB)"
+  },
+  "comparison": "humo_1p7b_vram_diet_phase1_clamp_floor",
+  "controls": {
+    "canvas": {
+      "fps": 25.0,
+      "frames": 129,
+      "height": 832,
+      "width": 480
+    },
+    "clamp13_same_server_identity": true,
+    "fixture_sha256s": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    },
+    "graph_change_count": 0,
+    "human_quality_gate": "PENDING_HUMAN",
+    "same_recipe_sha256_all_lab_runs": "3db939db5df42cff1367e79dee0a350cc314c2083ce2c3f9afe0d0a92bee1850",
+    "single_changed_variable": "boot-lane target-card budget: clamp-13 then clamp-12",
+    "source_refs": [
+      "lab_clamp13_cold_receipt",
+      "lab_clamp13_warm_receipt",
+      "lab_clamp12_cold_receipt"
+    ]
+  },
+  "lab_runs": [
+    {
+      "artifact": {
+        "bytes": 189159,
+        "path": "outputs/humo_1p7b_diet_out_00001_.mp4",
+        "sha256": "5a89f88ee8140df2ad7ff6151df4b114bb4e36279bd97bc193068903645264a0"
+      },
+      "boot_lane": "lab-8199, sage-free, no-pinned, clamp-13gb (reserve-2.921gb)",
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "human_quality": "PENDING_HUMAN",
+      "machine_gate_pass": true,
+      "phase_analysis": {
+        "boundary_rule": "Half-open windows use first-observed complete server-log records; the final window includes child end. Log timestamps are observation times, not claimed causal timestamps.",
+        "phases": [
+          {
+            "duration_s": 13.417099,
+            "end_boundary": {
+              "at_ns": 1786296077338612000,
+              "event": {
+                "log_offsets": [
+                  6890626,
+                  6890654
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m got prompt",
+                "observed_at_ns": 1786296077338612000,
+                "observed_at_utc": "2026-08-09T17:21:17.338612000Z",
+                "occurrence": "observed",
+                "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0"
+              },
+              "label": "prompt_accepted"
+            },
+            "minimum_vram_gib": 1.994141,
+            "minimum_vram_mib": 2042.0,
+            "peak_host_ram_bytes": 23714205696,
+            "peak_host_ram_gib": 22.085575,
+            "peak_host_ram_sampled_at_ns": 1786296076345049800,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:21:16.345049800Z",
+            "peak_vram_gib": 2.170898,
+            "peak_vram_mib": 2223.0,
+            "peak_vram_sampled_at_ns": 1786296070342941700,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:21:10.342941700Z",
+            "phase": "runner_boot_and_preflight",
+            "sample_count": 67,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296063921512700,
+              "label": "sidecar_start"
+            }
+          },
+          {
+            "duration_s": 0.597507,
+            "end_boundary": {
+              "at_ns": 1786296077936119100,
+              "event": {
+                "log_offsets": [
+                  6924745,
+                  6924795
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WhisperLargeV3",
+                "observed_at_ns": 1786296077936119100,
+                "observed_at_utc": "2026-08-09T17:21:17.936119100Z",
+                "occurrence": "observed",
+                "raw_sha256": "04b9c75e35dc125f2cb90e949cd6d4f4ecfee9208e9c4a7f073f6e239e42250e"
+              },
+              "label": "whisper_requested"
+            },
+            "minimum_vram_gib": 2.161133,
+            "minimum_vram_mib": 2213.0,
+            "peak_host_ram_bytes": 23716184064,
+            "peak_host_ram_gib": 22.087418,
+            "peak_host_ram_sampled_at_ns": 1786296077732282400,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:21:17.732282400Z",
+            "peak_vram_gib": 2.161133,
+            "peak_vram_mib": 2213.0,
+            "peak_vram_sampled_at_ns": 1786296077338612000,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:21:17.338612000Z",
+            "phase": "prompt_setup",
+            "sample_count": 3,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296077338612000,
+              "event": {
+                "log_offsets": [
+                  6890626,
+                  6890654
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m got prompt",
+                "observed_at_ns": 1786296077338612000,
+                "observed_at_utc": "2026-08-09T17:21:17.338612000Z",
+                "occurrence": "observed",
+                "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0"
+              },
+              "label": "prompt_accepted"
+            }
+          },
+          {
+            "duration_s": 1.194889,
+            "end_boundary": {
+              "at_ns": 1786296079131007800,
+              "event": {
+                "log_offsets": [
+                  6925172,
+                  6925218
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanTEModel",
+                "observed_at_ns": 1786296079131007800,
+                "observed_at_utc": "2026-08-09T17:21:19.131007800Z",
+                "occurrence": "observed",
+                "raw_sha256": "5a77d35f2e5289c8e85be3707a41a1e41a2e50ef78dd55a1f1273ccaf686f619"
+              },
+              "label": "umt5_requested"
+            },
+            "minimum_vram_gib": 2.250977,
+            "minimum_vram_mib": 2305.0,
+            "peak_host_ram_bytes": 24760438784,
+            "peak_host_ram_gib": 23.059956,
+            "peak_host_ram_sampled_at_ns": 1786296078927376700,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:21:18.927376700Z",
+            "peak_vram_gib": 3.729492,
+            "peak_vram_mib": 3819.0,
+            "peak_vram_sampled_at_ns": 1786296078532183600,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:21:18.532183600Z",
+            "phase": "whisper_audio_conditioning",
+            "sample_count": 6,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296077936119100,
+              "event": {
+                "log_offsets": [
+                  6924745,
+                  6924795
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WhisperLargeV3",
+                "observed_at_ns": 1786296077936119100,
+                "observed_at_utc": "2026-08-09T17:21:17.936119100Z",
+                "occurrence": "observed",
+                "raw_sha256": "04b9c75e35dc125f2cb90e949cd6d4f4ecfee9208e9c4a7f073f6e239e42250e"
+              },
+              "label": "whisper_requested"
+            }
+          },
+          {
+            "duration_s": 1.21027,
+            "end_boundary": {
+              "at_ns": 1786296080341277700,
+              "event": {
+                "log_offsets": [
+                  6925500,
+                  6925542
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanVAE",
+                "observed_at_ns": 1786296080341277700,
+                "observed_at_utc": "2026-08-09T17:21:20.341277700Z",
+                "occurrence": "observed",
+                "raw_sha256": "4fa127d992eb78b2a8500790cafb9e8d11db868af822cff8b51537cff08154d5"
+              },
+              "label": "initial_vae_requested"
+            },
+            "minimum_vram_gib": 3.729492,
+            "minimum_vram_mib": 3819.0,
+            "peak_host_ram_bytes": 25725583360,
+            "peak_host_ram_gib": 23.958817,
+            "peak_host_ram_sampled_at_ns": 1786296080137443100,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:21:20.137443100Z",
+            "peak_vram_gib": 10.575195,
+            "peak_vram_mib": 10829.0,
+            "peak_vram_sampled_at_ns": 1786296080137443100,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:21:20.137443100Z",
+            "phase": "umt5_text_conditioning",
+            "sample_count": 6,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296079131007800,
+              "event": {
+                "log_offsets": [
+                  6925172,
+                  6925218
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanTEModel",
+                "observed_at_ns": 1786296079131007800,
+                "observed_at_utc": "2026-08-09T17:21:19.131007800Z",
+                "occurrence": "observed",
+                "raw_sha256": "5a77d35f2e5289c8e85be3707a41a1e41a2e50ef78dd55a1f1273ccaf686f619"
+              },
+              "label": "umt5_requested"
+            }
+          },
+          {
+            "duration_s": 0.39271,
+            "end_boundary": {
+              "at_ns": 1786296080733988100,
+              "event": {
+                "log_offsets": [
+                  6925779,
+                  6925825
+                ],
+                "match": "Requested to load WAN21_HuMo",
+                "observed_at_ns": 1786296080733988100,
+                "observed_at_utc": "2026-08-09T17:21:20.733988100Z",
+                "occurrence": "observed",
+                "raw_sha256": "58ac5474fb9fdc45086f17e9a3723b74714e3c3e07b28b5be5bbe394117afd7f"
+              },
+              "label": "humo_requested"
+            },
+            "minimum_vram_gib": 10.075195,
+            "minimum_vram_mib": 10317.0,
+            "peak_host_ram_bytes": 26047455232,
+            "peak_host_ram_gib": 24.258583,
+            "peak_host_ram_sampled_at_ns": 1786296080529223400,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:21:20.529223400Z",
+            "peak_vram_gib": 10.700195,
+            "peak_vram_mib": 10957.0,
+            "peak_vram_sampled_at_ns": 1786296080529223400,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:21:20.529223400Z",
+            "phase": "initial_vae_conditioning",
+            "sample_count": 2,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296080341277700,
+              "event": {
+                "log_offsets": [
+                  6925500,
+                  6925542
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanVAE",
+                "observed_at_ns": 1786296080341277700,
+                "observed_at_utc": "2026-08-09T17:21:20.341277700Z",
+                "occurrence": "observed",
+                "raw_sha256": "4fa127d992eb78b2a8500790cafb9e8d11db868af822cff8b51537cff08154d5"
+              },
+              "label": "initial_vae_requested"
+            }
+          },
+          {
+            "duration_s": 204.195649,
+            "end_boundary": {
+              "at_ns": 1786296284929637100,
+              "event": {
+                "log_offsets": [
+                  6927247,
+                  6927382
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 241MB Staged. 0 patches attached. Force pre-loaded 60 weights: 61 KB.",
+                "observed_at_ns": 1786296284929637100,
+                "observed_at_utc": "2026-08-09T17:24:44.929637100Z",
+                "occurrence": "observed",
+                "raw_sha256": "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+              },
+              "label": "post_sampler_vae_prepared"
+            },
+            "minimum_vram_gib": 10.356445,
+            "minimum_vram_mib": 10605.0,
+            "peak_host_ram_bytes": 27325521920,
+            "peak_host_ram_gib": 25.448875,
+            "peak_host_ram_sampled_at_ns": 1786296211935084500,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:23:31.935084500Z",
+            "peak_vram_gib": 14.209961,
+            "peak_vram_mib": 14551.0,
+            "peak_vram_sampled_at_ns": 1786296094332827000,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:21:34.332827000Z",
+            "phase": "humo_denoise",
+            "sample_count": 1021,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296080733988100,
+              "event": {
+                "log_offsets": [
+                  6925779,
+                  6925825
+                ],
+                "match": "Requested to load WAN21_HuMo",
+                "observed_at_ns": 1786296080733988100,
+                "observed_at_utc": "2026-08-09T17:21:20.733988100Z",
+                "occurrence": "observed",
+                "raw_sha256": "58ac5474fb9fdc45086f17e9a3723b74714e3c3e07b28b5be5bbe394117afd7f"
+              },
+              "label": "humo_requested"
+            }
+          },
+          {
+            "duration_s": 15.199511,
+            "end_boundary": {
+              "at_ns": 1786296300129148400,
+              "event": {
+                "log_offsets": [
+                  6927382,
+                  6927442
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 222.57 seconds\u001b[0m",
+                "observed_at_ns": 1786296300129148400,
+                "observed_at_utc": "2026-08-09T17:25:00.129148400Z",
+                "occurrence": "observed",
+                "raw_sha256": "94ef42eebd4b995c7812af44e79eb7f7a09b50c7483734272b5a1b8da0ca889e"
+              },
+              "label": "prompt_complete"
+            },
+            "minimum_vram_gib": 8.701172,
+            "minimum_vram_mib": 8910.0,
+            "peak_host_ram_bytes": 27938799616,
+            "peak_host_ram_gib": 26.020035,
+            "peak_host_ram_sampled_at_ns": 1786296299523054400,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:24:59.523054400Z",
+            "peak_vram_gib": 13.225586,
+            "peak_vram_mib": 13543.0,
+            "peak_vram_sampled_at_ns": 1786296293935578000,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:24:53.935578000Z",
+            "phase": "vae_decode_and_save",
+            "sample_count": 76,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296284929637100,
+              "event": {
+                "log_offsets": [
+                  6927247,
+                  6927382
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 241MB Staged. 0 patches attached. Force pre-loaded 60 weights: 61 KB.",
+                "observed_at_ns": 1786296284929637100,
+                "observed_at_utc": "2026-08-09T17:24:44.929637100Z",
+                "occurrence": "observed",
+                "raw_sha256": "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+              },
+              "label": "post_sampler_vae_prepared"
+            }
+          },
+          {
+            "duration_s": 0.666987,
+            "end_boundary": {
+              "at_ns": 1786296300796135900,
+              "label": "child_finished"
+            },
+            "minimum_vram_gib": 8.701172,
+            "minimum_vram_mib": 8910.0,
+            "peak_host_ram_bytes": 27845939200,
+            "peak_host_ram_gib": 25.933552,
+            "peak_host_ram_sampled_at_ns": 1786296300728536900,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:25:00.728536900Z",
+            "peak_vram_gib": 8.701172,
+            "peak_vram_mib": 8910.0,
+            "peak_vram_sampled_at_ns": 1786296300129148400,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:25:00.129148400Z",
+            "phase": "post_prompt_receipt",
+            "sample_count": 5,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296300129148400,
+              "event": {
+                "log_offsets": [
+                  6927382,
+                  6927442
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 222.57 seconds\u001b[0m",
+                "observed_at_ns": 1786296300129148400,
+                "observed_at_utc": "2026-08-09T17:25:00.129148400Z",
+                "occurrence": "observed",
+                "raw_sha256": "94ef42eebd4b995c7812af44e79eb7f7a09b50c7483734272b5a1b8da0ca889e"
+              },
+              "label": "prompt_complete"
+            }
+          }
+        ],
+        "source_ref": "lab_clamp13_cold_telemetry"
+      },
+      "promotion_ready": false,
+      "receipt_metrics": {
+        "baseline_host_ram_gib": 22.07,
+        "baseline_vram_gib": 2.16,
+        "clamp_target_gib": 13.0,
+        "container_duration_s": 5.16,
+        "encoded_fps": 25.0,
+        "encoded_frame_count": 129,
+        "encoded_height": 832,
+        "encoded_width": 480,
+        "peak_host_ram_gib": 26.2,
+        "peak_vram_gib": 14.21,
+        "physical_total_vram_gib": 15.9208984375,
+        "render_duration_s": 223.0,
+        "reserve_vram_gib": 2.9208984375,
+        "runner_reported_net_vram_gib": null,
+        "source_ref": "lab_clamp13_cold_receipt"
+      },
+      "recipe_sha256": "3db939db5df42cff1367e79dee0a350cc314c2083ce2c3f9afe0d0a92bee1850",
+      "run_id": "clamp13_cold",
+      "run_identity_sha256": "0d285fadb43341febc0e9627171b68417c52efec01d44d02f0f5071c546ccae3",
+      "run_number": 1,
+      "server_argv": [
+        "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+        "--port",
+        "8199",
+        "--cuda-malloc",
+        "--user-directory",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI",
+        "--output-directory",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+        "--extra-model-paths-config",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+        "--disable-metadata",
+        "--disable-all-custom-nodes",
+        "--whitelist-custom-nodes",
+        "ComfyUI-GGUF",
+        "ComfyUI-KJNodes",
+        "--reserve-vram",
+        "2.921",
+        "--disable-pinned-memory"
+      ],
+      "sidecar_metrics": {
+        "baseline_before_child_vram_mib": 2042.0,
+        "child_duration_s": 236.875,
+        "largest_coverage_gap_s": 0.219,
+        "peak_host_ram_bytes": 27938799616,
+        "peak_host_ram_gib": 26.020035,
+        "peak_vram_gib": 14.209961,
+        "peak_vram_mib": 14551.0,
+        "sample_count": 1186,
+        "sample_interval_s": 0.2,
+        "server_log_event_count": 148,
+        "server_log_new_bytes_sha256": "c114a70df1b0248cbefd63757c0f638ef8ded676ca07f46383c537e10081df66",
+        "source_ref": "lab_clamp13_cold_telemetry"
+      },
+      "source_refs": [
+        "lab_clamp13_cold_receipt",
+        "lab_clamp13_cold_telemetry",
+        "lab_clamp13_cold_artifact"
+      ],
+      "status": "PASS (cold)",
+      "warm_pass": false
+    },
+    {
+      "artifact": {
+        "bytes": 189159,
+        "path": "outputs/humo_1p7b_diet_out_00002_.mp4",
+        "sha256": "5a89f88ee8140df2ad7ff6151df4b114bb4e36279bd97bc193068903645264a0"
+      },
+      "boot_lane": "lab-8199, sage-free, no-pinned, clamp-13gb (reserve-2.921gb)",
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "human_quality": "PENDING_HUMAN",
+      "machine_gate_pass": true,
+      "phase_analysis": {
+        "boundary_rule": "Half-open windows use first-observed complete server-log records; the final window includes child end. Log timestamps are observation times, not claimed causal timestamps.",
+        "phases": [
+          {
+            "duration_s": 1.421051,
+            "end_boundary": {
+              "at_ns": 1786296318869833000,
+              "event": {
+                "log_offsets": [
+                  6927442,
+                  6927470
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m got prompt",
+                "observed_at_ns": 1786296318869833000,
+                "observed_at_utc": "2026-08-09T17:25:18.869833000Z",
+                "occurrence": "observed",
+                "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0"
+              },
+              "label": "prompt_accepted"
+            },
+            "minimum_vram_gib": 8.693359,
+            "minimum_vram_mib": 8902.0,
+            "peak_host_ram_bytes": 27850162176,
+            "peak_host_ram_gib": 25.937485,
+            "peak_host_ram_sampled_at_ns": 1786296318459256100,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:25:18.459256100Z",
+            "peak_vram_gib": 8.694336,
+            "peak_vram_mib": 8903.0,
+            "peak_vram_sampled_at_ns": 1786296317875772200,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:25:17.875772200Z",
+            "phase": "warm_runner_preflight",
+            "sample_count": 7,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296317448782200,
+              "label": "sidecar_start"
+            }
+          },
+          {
+            "duration_s": 0.205789,
+            "end_boundary": {
+              "at_ns": 1786296319075621900,
+              "event": {
+                "log_offsets": [
+                  6927470,
+                  6927612
+                ],
+                "match": "Model WAN21_HuMo prepared",
+                "observed_at_ns": 1786296319075621900,
+                "observed_at_utc": "2026-08-09T17:25:19.075621900Z",
+                "occurrence": "observed",
+                "raw_sha256": "99bf438aef31c030e368f237f8a75b14cba268335f83e9a73a82feda0bb547bf"
+              },
+              "label": "humo_prepared"
+            },
+            "minimum_vram_gib": 8.708008,
+            "minimum_vram_mib": 8917.0,
+            "peak_host_ram_bytes": 27910287360,
+            "peak_host_ram_gib": 25.993481,
+            "peak_host_ram_sampled_at_ns": 1786296318869833000,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:25:18.869833000Z",
+            "peak_vram_gib": 8.708008,
+            "peak_vram_mib": 8917.0,
+            "peak_vram_sampled_at_ns": 1786296318869833000,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:25:18.869833000Z",
+            "phase": "cached_conditioning_to_humo",
+            "sample_count": 1,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296318869833000,
+              "event": {
+                "log_offsets": [
+                  6927442,
+                  6927470
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m got prompt",
+                "observed_at_ns": 1786296318869833000,
+                "observed_at_utc": "2026-08-09T17:25:18.869833000Z",
+                "occurrence": "observed",
+                "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0"
+              },
+              "label": "prompt_accepted"
+            }
+          },
+          {
+            "duration_s": 227.193282,
+            "end_boundary": {
+              "at_ns": 1786296546268904100,
+              "event": {
+                "log_offsets": [
+                  6928892,
+                  6929027
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 241MB Staged. 0 patches attached. Force pre-loaded 60 weights: 61 KB.",
+                "observed_at_ns": 1786296546268904100,
+                "observed_at_utc": "2026-08-09T17:29:06.268904100Z",
+                "occurrence": "observed",
+                "raw_sha256": "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+              },
+              "label": "post_sampler_vae_prepared"
+            },
+            "minimum_vram_gib": 11.989258,
+            "minimum_vram_mib": 12277.0,
+            "peak_host_ram_bytes": 28308656128,
+            "peak_host_ram_gib": 26.364491,
+            "peak_host_ram_sampled_at_ns": 1786296450466000800,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:27:30.466000800Z",
+            "peak_vram_gib": 12.226562,
+            "peak_vram_mib": 12520.0,
+            "peak_vram_sampled_at_ns": 1786296526469980000,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:28:46.469980000Z",
+            "phase": "humo_denoise",
+            "sample_count": 1136,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296319075621900,
+              "event": {
+                "log_offsets": [
+                  6927470,
+                  6927612
+                ],
+                "match": "Model WAN21_HuMo prepared",
+                "observed_at_ns": 1786296319075621900,
+                "observed_at_utc": "2026-08-09T17:25:19.075621900Z",
+                "occurrence": "observed",
+                "raw_sha256": "99bf438aef31c030e368f237f8a75b14cba268335f83e9a73a82feda0bb547bf"
+              },
+              "label": "humo_prepared"
+            }
+          },
+          {
+            "duration_s": 14.999799,
+            "end_boundary": {
+              "at_ns": 1786296561268703600,
+              "event": {
+                "log_offsets": [
+                  6929027,
+                  6929087
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 242.43 seconds\u001b[0m",
+                "observed_at_ns": 1786296561268703600,
+                "observed_at_utc": "2026-08-09T17:29:21.268703600Z",
+                "occurrence": "observed",
+                "raw_sha256": "7241b902d08f598ec525e56165d581c22aade82ffdbd38de630a3e2f9cb29e21"
+              },
+              "label": "prompt_complete"
+            },
+            "minimum_vram_gib": 8.667969,
+            "minimum_vram_mib": 8876.0,
+            "peak_host_ram_bytes": 28887072768,
+            "peak_host_ram_gib": 26.903183,
+            "peak_host_ram_sampled_at_ns": 1786296560063345900,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:20.063345900Z",
+            "peak_vram_gib": 12.84082,
+            "peak_vram_mib": 13149.0,
+            "peak_vram_sampled_at_ns": 1786296551876135700,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:11.876135700Z",
+            "phase": "vae_decode_and_save",
+            "sample_count": 75,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296546268904100,
+              "event": {
+                "log_offsets": [
+                  6928892,
+                  6929027
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 241MB Staged. 0 patches attached. Force pre-loaded 60 weights: 61 KB.",
+                "observed_at_ns": 1786296546268904100,
+                "observed_at_utc": "2026-08-09T17:29:06.268904100Z",
+                "occurrence": "observed",
+                "raw_sha256": "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+              },
+              "label": "post_sampler_vae_prepared"
+            }
+          },
+          {
+            "duration_s": 3.217133,
+            "end_boundary": {
+              "at_ns": 1786296564485836800,
+              "label": "child_finished"
+            },
+            "minimum_vram_gib": 1.991211,
+            "minimum_vram_mib": 2039.0,
+            "peak_host_ram_bytes": 28328640512,
+            "peak_host_ram_gib": 26.383102,
+            "peak_host_ram_sampled_at_ns": 1786296561862389000,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:21.862389000Z",
+            "peak_vram_gib": 8.667969,
+            "peak_vram_mib": 8876.0,
+            "peak_vram_sampled_at_ns": 1786296561268703600,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:21.268703600Z",
+            "phase": "post_prompt_receipt",
+            "sample_count": 17,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296561268703600,
+              "event": {
+                "log_offsets": [
+                  6929027,
+                  6929087
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 242.43 seconds\u001b[0m",
+                "observed_at_ns": 1786296561268703600,
+                "observed_at_utc": "2026-08-09T17:29:21.268703600Z",
+                "occurrence": "observed",
+                "raw_sha256": "7241b902d08f598ec525e56165d581c22aade82ffdbd38de630a3e2f9cb29e21"
+              },
+              "label": "prompt_complete"
+            }
+          }
+        ],
+        "source_ref": "lab_clamp13_warm_telemetry"
+      },
+      "promotion_ready": false,
+      "receipt_metrics": {
+        "baseline_host_ram_gib": 25.92,
+        "baseline_vram_gib": 8.69,
+        "clamp_target_gib": 13.0,
+        "container_duration_s": 5.16,
+        "encoded_fps": 25.0,
+        "encoded_frame_count": 129,
+        "encoded_height": 832,
+        "encoded_width": 480,
+        "peak_host_ram_gib": 26.63,
+        "peak_vram_gib": 12.84,
+        "physical_total_vram_gib": 15.9208984375,
+        "render_duration_s": 243.0,
+        "reserve_vram_gib": 2.9208984375,
+        "runner_reported_net_vram_gib": null,
+        "source_ref": "lab_clamp13_warm_receipt"
+      },
+      "recipe_sha256": "3db939db5df42cff1367e79dee0a350cc314c2083ce2c3f9afe0d0a92bee1850",
+      "run_id": "clamp13_warm",
+      "run_identity_sha256": "0d285fadb43341febc0e9627171b68417c52efec01d44d02f0f5071c546ccae3",
+      "run_number": 2,
+      "server_argv": [
+        "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+        "--port",
+        "8199",
+        "--cuda-malloc",
+        "--user-directory",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI",
+        "--output-directory",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+        "--extra-model-paths-config",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+        "--disable-metadata",
+        "--disable-all-custom-nodes",
+        "--whitelist-custom-nodes",
+        "ComfyUI-GGUF",
+        "ComfyUI-KJNodes",
+        "--reserve-vram",
+        "2.921",
+        "--disable-pinned-memory"
+      ],
+      "sidecar_metrics": {
+        "baseline_before_child_vram_mib": 8902.0,
+        "child_duration_s": 247.032,
+        "largest_coverage_gap_s": 0.219,
+        "peak_host_ram_bytes": 28887072768,
+        "peak_host_ram_gib": 26.903183,
+        "peak_vram_gib": 12.84082,
+        "peak_vram_mib": 13149.0,
+        "sample_count": 1237,
+        "sample_interval_s": 0.2,
+        "server_log_event_count": 5,
+        "server_log_new_bytes_sha256": "75c793ab4090566c4670b2d65bcfae6243d71264091aeca03dde5c27138a2c6d",
+        "source_ref": "lab_clamp13_warm_telemetry"
+      },
+      "source_refs": [
+        "lab_clamp13_warm_receipt",
+        "lab_clamp13_warm_telemetry",
+        "lab_clamp13_warm_artifact"
+      ],
+      "status": "PASS",
+      "warm_pass": true
+    },
+    {
+      "artifact": {
+        "bytes": 189159,
+        "path": "outputs/humo_1p7b_diet_out_00003_.mp4",
+        "sha256": "5a89f88ee8140df2ad7ff6151df4b114bb4e36279bd97bc193068903645264a0"
+      },
+      "boot_lane": "lab-8199, sage-free, no-pinned, clamp-12gb (reserve-3.921gb)",
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "human_quality": "PENDING_HUMAN",
+      "machine_gate_pass": false,
+      "phase_analysis": {
+        "boundary_rule": "Half-open windows use first-observed complete server-log records; the final window includes child end. Log timestamps are observation times, not claimed causal timestamps.",
+        "phases": [
+          {
+            "duration_s": 13.414036,
+            "end_boundary": {
+              "at_ns": 1786296592348462000,
+              "event": {
+                "log_offsets": [
+                  6942405,
+                  6942433
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m got prompt",
+                "observed_at_ns": 1786296592348462000,
+                "observed_at_utc": "2026-08-09T17:29:52.348462000Z",
+                "occurrence": "observed",
+                "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0"
+              },
+              "label": "prompt_accepted"
+            },
+            "minimum_vram_gib": 2.005859,
+            "minimum_vram_mib": 2054.0,
+            "peak_host_ram_bytes": 23604224000,
+            "peak_host_ram_gib": 21.983147,
+            "peak_host_ram_sampled_at_ns": 1786296590153445300,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:50.153445300Z",
+            "peak_vram_gib": 2.199219,
+            "peak_vram_mib": 2252.0,
+            "peak_vram_sampled_at_ns": 1786296587539675300,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:47.539675300Z",
+            "phase": "runner_boot_and_preflight",
+            "sample_count": 67,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296578934426500,
+              "label": "sidecar_start"
+            }
+          },
+          {
+            "duration_s": 0.594302,
+            "end_boundary": {
+              "at_ns": 1786296592942763900,
+              "event": {
+                "log_offsets": [
+                  6976524,
+                  6976574
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WhisperLargeV3",
+                "observed_at_ns": 1786296592942763900,
+                "observed_at_utc": "2026-08-09T17:29:52.942763900Z",
+                "occurrence": "observed",
+                "raw_sha256": "04b9c75e35dc125f2cb90e949cd6d4f4ecfee9208e9c4a7f073f6e239e42250e"
+              },
+              "label": "whisper_requested"
+            },
+            "minimum_vram_gib": 2.183594,
+            "minimum_vram_mib": 2236.0,
+            "peak_host_ram_bytes": 23592595456,
+            "peak_host_ram_gib": 21.972317,
+            "peak_host_ram_sampled_at_ns": 1786296592739707800,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:52.739707800Z",
+            "peak_vram_gib": 2.183594,
+            "peak_vram_mib": 2236.0,
+            "peak_vram_sampled_at_ns": 1786296592348462000,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:52.348462000Z",
+            "phase": "prompt_setup",
+            "sample_count": 3,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296592348462000,
+              "event": {
+                "log_offsets": [
+                  6942405,
+                  6942433
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m got prompt",
+                "observed_at_ns": 1786296592348462000,
+                "observed_at_utc": "2026-08-09T17:29:52.348462000Z",
+                "occurrence": "observed",
+                "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0"
+              },
+              "label": "prompt_accepted"
+            }
+          },
+          {
+            "duration_s": 1.413051,
+            "end_boundary": {
+              "at_ns": 1786296594355815200,
+              "event": {
+                "log_offsets": [
+                  6976951,
+                  6976997
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanTEModel",
+                "observed_at_ns": 1786296594355815200,
+                "observed_at_utc": "2026-08-09T17:29:54.355815200Z",
+                "occurrence": "observed",
+                "raw_sha256": "5a77d35f2e5289c8e85be3707a41a1e41a2e50ef78dd55a1f1273ccaf686f619"
+              },
+              "label": "umt5_requested"
+            },
+            "minimum_vram_gib": 2.273438,
+            "minimum_vram_mib": 2328.0,
+            "peak_host_ram_bytes": 24664805376,
+            "peak_host_ram_gib": 22.97089,
+            "peak_host_ram_sampled_at_ns": 1786296593947569100,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:53.947569100Z",
+            "peak_vram_gib": 3.734375,
+            "peak_vram_mib": 3824.0,
+            "peak_vram_sampled_at_ns": 1786296593538945200,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:53.538945200Z",
+            "phase": "whisper_audio_conditioning",
+            "sample_count": 7,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296592942763900,
+              "event": {
+                "log_offsets": [
+                  6976524,
+                  6976574
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WhisperLargeV3",
+                "observed_at_ns": 1786296592942763900,
+                "observed_at_utc": "2026-08-09T17:29:52.942763900Z",
+                "occurrence": "observed",
+                "raw_sha256": "04b9c75e35dc125f2cb90e949cd6d4f4ecfee9208e9c4a7f073f6e239e42250e"
+              },
+              "label": "whisper_requested"
+            }
+          },
+          {
+            "duration_s": 1.190051,
+            "end_boundary": {
+              "at_ns": 1786296595545866600,
+              "event": {
+                "log_offsets": [
+                  6977279,
+                  6977321
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanVAE",
+                "observed_at_ns": 1786296595545866600,
+                "observed_at_utc": "2026-08-09T17:29:55.545866600Z",
+                "occurrence": "observed",
+                "raw_sha256": "4fa127d992eb78b2a8500790cafb9e8d11db868af822cff8b51537cff08154d5"
+              },
+              "label": "initial_vae_requested"
+            },
+            "minimum_vram_gib": 5.688477,
+            "minimum_vram_mib": 5825.0,
+            "peak_host_ram_bytes": 25726427136,
+            "peak_host_ram_gib": 23.959602,
+            "peak_host_ram_sampled_at_ns": 1786296595357481100,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:55.357481100Z",
+            "peak_vram_gib": 10.59668,
+            "peak_vram_mib": 10851.0,
+            "peak_vram_sampled_at_ns": 1786296595153508300,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:55.153508300Z",
+            "phase": "umt5_text_conditioning",
+            "sample_count": 6,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296594355815200,
+              "event": {
+                "log_offsets": [
+                  6976951,
+                  6976997
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanTEModel",
+                "observed_at_ns": 1786296594355815200,
+                "observed_at_utc": "2026-08-09T17:29:54.355815200Z",
+                "occurrence": "observed",
+                "raw_sha256": "5a77d35f2e5289c8e85be3707a41a1e41a2e50ef78dd55a1f1273ccaf686f619"
+              },
+              "label": "umt5_requested"
+            }
+          },
+          {
+            "duration_s": 0.408708,
+            "end_boundary": {
+              "at_ns": 1786296595954575100,
+              "event": {
+                "log_offsets": [
+                  6977558,
+                  6977604
+                ],
+                "match": "Requested to load WAN21_HuMo",
+                "observed_at_ns": 1786296595954575100,
+                "observed_at_utc": "2026-08-09T17:29:55.954575100Z",
+                "occurrence": "observed",
+                "raw_sha256": "58ac5474fb9fdc45086f17e9a3723b74714e3c3e07b28b5be5bbe394117afd7f"
+              },
+              "label": "humo_requested"
+            },
+            "minimum_vram_gib": 10.09668,
+            "minimum_vram_mib": 10339.0,
+            "peak_host_ram_bytes": 26016878592,
+            "peak_host_ram_gib": 24.230106,
+            "peak_host_ram_sampled_at_ns": 1786296595749867900,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:29:55.749867900Z",
+            "peak_vram_gib": 10.22168,
+            "peak_vram_mib": 10467.0,
+            "peak_vram_sampled_at_ns": 1786296595749867900,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:29:55.749867900Z",
+            "phase": "initial_vae_conditioning",
+            "sample_count": 2,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296595545866600,
+              "event": {
+                "log_offsets": [
+                  6977279,
+                  6977321
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Requested to load WanVAE",
+                "observed_at_ns": 1786296595545866600,
+                "observed_at_utc": "2026-08-09T17:29:55.545866600Z",
+                "occurrence": "observed",
+                "raw_sha256": "4fa127d992eb78b2a8500790cafb9e8d11db868af822cff8b51537cff08154d5"
+              },
+              "label": "initial_vae_requested"
+            }
+          },
+          {
+            "duration_s": 241.195386,
+            "end_boundary": {
+              "at_ns": 1786296837149960900,
+              "event": {
+                "log_offsets": [
+                  6979062,
+                  6979197
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 241MB Staged. 0 patches attached. Force pre-loaded 60 weights: 61 KB.",
+                "observed_at_ns": 1786296837149960900,
+                "observed_at_utc": "2026-08-09T17:33:57.149960900Z",
+                "occurrence": "observed",
+                "raw_sha256": "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+              },
+              "label": "post_sampler_vae_prepared"
+            },
+            "minimum_vram_gib": 10.94043,
+            "minimum_vram_mib": 11203.0,
+            "peak_host_ram_bytes": 27430772736,
+            "peak_host_ram_gib": 25.546898,
+            "peak_host_ram_sampled_at_ns": 1786296780354266600,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:33:00.354266600Z",
+            "peak_vram_gib": 14.46582,
+            "peak_vram_mib": 14813.0,
+            "peak_vram_sampled_at_ns": 1786296602949821400,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:30:02.949821400Z",
+            "phase": "humo_denoise",
+            "sample_count": 1206,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296595954575100,
+              "event": {
+                "log_offsets": [
+                  6977558,
+                  6977604
+                ],
+                "match": "Requested to load WAN21_HuMo",
+                "observed_at_ns": 1786296595954575100,
+                "observed_at_utc": "2026-08-09T17:29:55.954575100Z",
+                "occurrence": "observed",
+                "raw_sha256": "58ac5474fb9fdc45086f17e9a3723b74714e3c3e07b28b5be5bbe394117afd7f"
+              },
+              "label": "humo_requested"
+            }
+          },
+          {
+            "duration_s": 14.800203,
+            "end_boundary": {
+              "at_ns": 1786296851950164200,
+              "event": {
+                "log_offsets": [
+                  6979197,
+                  6979257
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 259.49 seconds\u001b[0m",
+                "observed_at_ns": 1786296851950164200,
+                "observed_at_utc": "2026-08-09T17:34:11.950164200Z",
+                "occurrence": "observed",
+                "raw_sha256": "39828be77599ff83c8c0489005eefe91130c9ebeb014ed65fb9219e49254f743"
+              },
+              "label": "prompt_complete"
+            },
+            "minimum_vram_gib": 8.672852,
+            "minimum_vram_mib": 8881.0,
+            "peak_host_ram_bytes": 28139728896,
+            "peak_host_ram_gib": 26.207165,
+            "peak_host_ram_sampled_at_ns": 1786296850946427500,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:34:10.946427500Z",
+            "peak_vram_gib": 13.404297,
+            "peak_vram_mib": 13726.0,
+            "peak_vram_sampled_at_ns": 1786296848350413800,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:34:08.350413800Z",
+            "phase": "vae_decode_and_save",
+            "sample_count": 74,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296837149960900,
+              "event": {
+                "log_offsets": [
+                  6979062,
+                  6979197
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 241MB Staged. 0 patches attached. Force pre-loaded 60 weights: 61 KB.",
+                "observed_at_ns": 1786296837149960900,
+                "observed_at_utc": "2026-08-09T17:33:57.149960900Z",
+                "occurrence": "observed",
+                "raw_sha256": "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+              },
+              "label": "post_sampler_vae_prepared"
+            }
+          },
+          {
+            "duration_s": 0.711969,
+            "end_boundary": {
+              "at_ns": 1786296852662133600,
+              "label": "child_finished"
+            },
+            "minimum_vram_gib": 8.654297,
+            "minimum_vram_mib": 8862.0,
+            "peak_host_ram_bytes": 28035489792,
+            "peak_host_ram_gib": 26.110085,
+            "peak_host_ram_sampled_at_ns": 1786296852548410400,
+            "peak_host_ram_sampled_at_utc": "2026-08-09T17:34:12.548410400Z",
+            "peak_vram_gib": 8.658203,
+            "peak_vram_mib": 8866.0,
+            "peak_vram_sampled_at_ns": 1786296851950164200,
+            "peak_vram_sampled_at_utc": "2026-08-09T17:34:11.950164200Z",
+            "phase": "post_prompt_receipt",
+            "sample_count": 5,
+            "source_metric": "200 ms nvidia-smi device-total memory.used plus psutil system RAM",
+            "start_boundary": {
+              "at_ns": 1786296851950164200,
+              "event": {
+                "log_offsets": [
+                  6979197,
+                  6979257
+                ],
+                "match": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 259.49 seconds\u001b[0m",
+                "observed_at_ns": 1786296851950164200,
+                "observed_at_utc": "2026-08-09T17:34:11.950164200Z",
+                "occurrence": "observed",
+                "raw_sha256": "39828be77599ff83c8c0489005eefe91130c9ebeb014ed65fb9219e49254f743"
+              },
+              "label": "prompt_complete"
+            }
+          }
+        ],
+        "source_ref": "lab_clamp12_cold_telemetry"
+      },
+      "promotion_ready": false,
+      "receipt_metrics": {
+        "baseline_host_ram_gib": 21.95,
+        "baseline_vram_gib": 2.18,
+        "clamp_target_gib": 12.0,
+        "container_duration_s": 5.16,
+        "encoded_fps": 25.0,
+        "encoded_frame_count": 129,
+        "encoded_height": 832,
+        "encoded_width": 480,
+        "peak_host_ram_gib": 26.56,
+        "peak_vram_gib": 14.47,
+        "physical_total_vram_gib": 15.9208984375,
+        "render_duration_s": 259.8,
+        "reserve_vram_gib": 3.9208984375,
+        "runner_reported_net_vram_gib": 12.28,
+        "source_ref": "lab_clamp12_cold_receipt"
+      },
+      "recipe_sha256": "3db939db5df42cff1367e79dee0a350cc314c2083ce2c3f9afe0d0a92bee1850",
+      "run_id": "clamp12_cold",
+      "run_identity_sha256": "9695609e87cbb2a850fd7bcd9f7cc82d721502b2b253c56e8ee2b1dda61f6823",
+      "run_number": 3,
+      "server_argv": [
+        "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+        "--port",
+        "8199",
+        "--cuda-malloc",
+        "--user-directory",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI",
+        "--output-directory",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+        "--extra-model-paths-config",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+        "--disable-metadata",
+        "--disable-all-custom-nodes",
+        "--whitelist-custom-nodes",
+        "ComfyUI-GGUF",
+        "ComfyUI-KJNodes",
+        "--reserve-vram",
+        "3.921",
+        "--disable-pinned-memory"
+      ],
+      "sidecar_metrics": {
+        "baseline_before_child_vram_mib": 2080.0,
+        "child_duration_s": 273.718,
+        "largest_coverage_gap_s": 0.219,
+        "peak_host_ram_bytes": 28139728896,
+        "peak_host_ram_gib": 26.207165,
+        "peak_vram_gib": 14.46582,
+        "peak_vram_mib": 14813.0,
+        "sample_count": 1370,
+        "sample_interval_s": 0.2,
+        "server_log_event_count": 149,
+        "server_log_new_bytes_sha256": "dc27e754af5fa23dcd5b21587d41390845d280c56849b5db1991a74ff2c928dd",
+        "source_ref": "lab_clamp12_cold_telemetry"
+      },
+      "source_refs": [
+        "lab_clamp12_cold_receipt",
+        "lab_clamp12_cold_telemetry",
+        "lab_clamp12_cold_artifact"
+      ],
+      "status": "FAIL (net VRAM 12.28 GB > clamp 12.0 GB)",
+      "warm_pass": false
+    }
+  ],
+  "machine_verdict": {
+    "absolute_peak_vram_gib": 12.84,
+    "comparison_source_refs": [
+      "production_take1_receipt",
+      "production_take1_telemetry",
+      "production_take1_artifact",
+      "production_take2_receipt",
+      "production_take2_telemetry",
+      "production_take2_artifact"
+    ],
+    "diet_target_headroom_gib": 0.66,
+    "diet_target_peak_vram_gib": 13.5,
+    "global_gate_headroom_gib": 1.66,
+    "global_gate_peak_vram_gib": 14.5,
+    "human_quality": "PENDING_HUMAN",
+    "metric_sources": {
+      "production_peak_range": [
+        "production_take1_receipt",
+        "production_take2_receipt"
+      ],
+      "winner_exact_200ms_curve": "lab_clamp13_warm_telemetry",
+      "winner_peak_and_gate": "lab_clamp13_warm_receipt"
+    },
+    "phase1_winner": "clamp13_warm",
+    "production_unclamped_peak_range_gib": [
+      15.1181640625,
+      15.2314453125
+    ],
+    "promotion_ready": false,
+    "qualification": "Machine VRAM and warm-cache requirements pass at clamp-13. Full quality parity and promotion remain blocked on Jeffrey's A/B judgment.",
+    "reduction_vs_production_range_gib": [
+      2.278164,
+      2.391445
+    ],
+    "result": "ZERO_GRAPH_CHANGE_MACHINE_WINNER",
+    "warm_gate_pass": true,
+    "winner_source_refs": [
+      "lab_clamp13_warm_receipt",
+      "lab_clamp13_warm_telemetry",
+      "lab_clamp13_warm_artifact"
+    ]
+  },
+  "measurement_scope": "Local lab Phase-0 schema check plus three immutable Phase-1 runs, their independent 200 ms sidecars, and two OTR-side production comparator receipts.",
+  "memory_hog_finding": {
+    "conclusion": "The static weight hog is WanTEModel/UMT5, but it is not by itself the observed peak phase. Both cold runs peak during HuMo denoising; the warm winner peaks during VAE decode. The defensible diagnosis is combined dynamic pipeline/working-set pressure, not the 3.32 GB logged DiT stage alone. These observations do not prove that UMT5 weights remain GPU-resident during denoising.",
+    "largest_staged_weight_component": {
+      "humo_dit_staged_size_mb_as_logged": 3320,
+      "interpretation": "WanTEModel/UMT5 is the largest single staged weight payload and is 1.93x the logged HuMo DiT size. The logged MB values are staging reports, not direct device-residency measurements.",
+      "model": "WanTEModel (UMT5 text encoder)",
+      "size_ratio_vs_humo_dit": 1.933434,
+      "staged_size_mb_as_logged": 6419
+    },
+    "observed_peak_phases": {
+      "clamp12_cold": "humo_denoise",
+      "clamp13_cold": "humo_denoise",
+      "clamp13_warm": "vae_decode_and_save"
+    },
+    "staged_model_evidence": [
+      {
+        "models": {
+          "WAN21_HuMo": {
+            "event_raw_sha256s": [
+              "99bf438aef31c030e368f237f8a75b14cba268335f83e9a73a82feda0bb547bf"
+            ],
+            "first_observed_at_ns": 1786296080733988100,
+            "first_observed_at_utc": "2026-08-09T17:21:20.733988100Z",
+            "model": "WAN21_HuMo",
+            "observation_count": 1,
+            "staged_size_mb": 3320
+          },
+          "WanTEModel": {
+            "event_raw_sha256s": [
+              "bb0e6676911d727a7cdc2a8e72919a8c312e528f12aab24e8f2e89b6e12b7e74",
+              "bb0e6676911d727a7cdc2a8e72919a8c312e528f12aab24e8f2e89b6e12b7e74"
+            ],
+            "first_observed_at_ns": 1786296079333716400,
+            "first_observed_at_utc": "2026-08-09T17:21:19.333716400Z",
+            "model": "WanTEModel",
+            "observation_count": 2,
+            "staged_size_mb": 6419
+          },
+          "WanVAE": {
+            "event_raw_sha256s": [
+              "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117",
+              "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+            ],
+            "first_observed_at_ns": 1786296080341277700,
+            "first_observed_at_utc": "2026-08-09T17:21:20.341277700Z",
+            "model": "WanVAE",
+            "observation_count": 2,
+            "staged_size_mb": 241
+          },
+          "WhisperLargeV3": {
+            "event_raw_sha256s": [
+              "64cdada1e5db21a1caf836424a407828e48687456c23fc06957bde2318c24f2e"
+            ],
+            "first_observed_at_ns": 1786296077936119100,
+            "first_observed_at_utc": "2026-08-09T17:21:17.936119100Z",
+            "model": "WhisperLargeV3",
+            "observation_count": 1,
+            "staged_size_mb": 1214
+          }
+        },
+        "run_id": "clamp13_cold",
+        "source_ref": "lab_clamp13_cold_telemetry"
+      },
+      {
+        "models": {
+          "WAN21_HuMo": {
+            "event_raw_sha256s": [
+              "99bf438aef31c030e368f237f8a75b14cba268335f83e9a73a82feda0bb547bf"
+            ],
+            "first_observed_at_ns": 1786296595954575100,
+            "first_observed_at_utc": "2026-08-09T17:29:55.954575100Z",
+            "model": "WAN21_HuMo",
+            "observation_count": 1,
+            "staged_size_mb": 3320
+          },
+          "WanTEModel": {
+            "event_raw_sha256s": [
+              "bb0e6676911d727a7cdc2a8e72919a8c312e528f12aab24e8f2e89b6e12b7e74",
+              "bb0e6676911d727a7cdc2a8e72919a8c312e528f12aab24e8f2e89b6e12b7e74"
+            ],
+            "first_observed_at_ns": 1786296594355815200,
+            "first_observed_at_utc": "2026-08-09T17:29:54.355815200Z",
+            "model": "WanTEModel",
+            "observation_count": 2,
+            "staged_size_mb": 6419
+          },
+          "WanVAE": {
+            "event_raw_sha256s": [
+              "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117",
+              "c2874e366856a73f98f2dd63d83f5e4ce0882071b640d54f04e6957e65292117"
+            ],
+            "first_observed_at_ns": 1786296595545866600,
+            "first_observed_at_utc": "2026-08-09T17:29:55.545866600Z",
+            "model": "WanVAE",
+            "observation_count": 2,
+            "staged_size_mb": 241
+          },
+          "WhisperLargeV3": {
+            "event_raw_sha256s": [
+              "64cdada1e5db21a1caf836424a407828e48687456c23fc06957bde2318c24f2e"
+            ],
+            "first_observed_at_ns": 1786296592942763900,
+            "first_observed_at_utc": "2026-08-09T17:29:52.942763900Z",
+            "model": "WhisperLargeV3",
+            "observation_count": 1,
+            "staged_size_mb": 1214
+          }
+        },
+        "run_id": "clamp12_cold",
+        "source_ref": "lab_clamp12_cold_telemetry"
+      }
+    ]
+  },
+  "numeric_provenance_policy": "Receipt metrics cite a pinned receipt source_ref; phase metrics are recomputed from the pinned telemetry source_ref; media metrics come from ffprobe of a hash-pinned artifact.",
+  "phase0": {
+    "measured": "local lab no-prompt schema and model-list query",
+    "missing_class_count": 0,
+    "no_prompt_submitted": true,
+    "required_class_count": 14,
+    "server_shutdown_proved": true,
+    "source_ref": "phase0",
+    "status": "PASS",
+    "whisper_listed": true
+  },
+  "production_comparators": [
+    {
+      "artifact": {
+        "bytes": 406854,
+        "path": "outputs/humo_1_7b_bakeoff_take1.mp4",
+        "sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9"
+      },
+      "boot_lane": "otr-headless-8000, HUMO, production-wrapper",
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "human_quality": "PENDING_HUMAN",
+      "measurement_scope": "otr-side production lane",
+      "metrics": {
+        "baseline_host_ram_gib": 19.924583435058594,
+        "baseline_vram_gib": 2.267578125,
+        "container_duration_s": 5.16,
+        "encoded_fps": 25.0,
+        "encoded_frame_count": 129,
+        "encoded_height": 832,
+        "encoded_width": 480,
+        "peak_host_ram_gib": 35.13619613647461,
+        "peak_vram_gib": 15.1181640625,
+        "render_duration_s": 233.779852,
+        "source_ref": "production_take1_receipt",
+        "telemetry_sample_count": 1203,
+        "telemetry_sample_interval_s": 0.2
+      },
+      "run_id": "production_take1",
+      "source_refs": [
+        "production_take1_receipt",
+        "production_take1_telemetry",
+        "production_take1_artifact"
+      ],
+      "status": "MEASURED OTR-SIDE; NOT LAB-GATED; PENDING_HUMAN"
+    },
+    {
+      "artifact": {
+        "bytes": 406854,
+        "path": "outputs/humo_1_7b_bakeoff_take2.mp4",
+        "sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9"
+      },
+      "boot_lane": "otr-headless-8000, HUMO, production-wrapper",
+      "fixture_sha256s": {
+        "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+        "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+      },
+      "human_quality": "PENDING_HUMAN",
+      "measurement_scope": "otr-side production lane",
+      "metrics": {
+        "baseline_host_ram_gib": 21.523788452148438,
+        "baseline_vram_gib": 2.26171875,
+        "container_duration_s": 5.16,
+        "encoded_fps": 25.0,
+        "encoded_frame_count": 129,
+        "encoded_height": 832,
+        "encoded_width": 480,
+        "peak_host_ram_gib": 36.07855987548828,
+        "peak_vram_gib": 15.2314453125,
+        "render_duration_s": 207.513477,
+        "source_ref": "production_take2_receipt",
+        "telemetry_sample_count": 1079,
+        "telemetry_sample_interval_s": 0.2
+      },
+      "run_id": "production_take2",
+      "source_refs": [
+        "production_take2_receipt",
+        "production_take2_telemetry",
+        "production_take2_artifact"
+      ],
+      "status": "MEASURED OTR-SIDE; NOT LAB-GATED; PENDING_HUMAN"
+    }
+  ],
+  "schema_version": 1,
+  "source_refs": {
+    "ab_review_artifact": {
+      "bytes": 633940,
+      "path": "outputs/humo_1p7b_diet_ab_production_vs_clamp13_warm.mp4",
+      "sha256": "5d9e3b7ac916c44db5800715b2b97cba8b58b456c19bb327946f7c8dbe78f9d7"
+    },
+    "lab_clamp12_cold_artifact": {
+      "bytes": 189159,
+      "path": "outputs/humo_1p7b_diet_out_00003_.mp4",
+      "sha256": "5a89f88ee8140df2ad7ff6151df4b114bb4e36279bd97bc193068903645264a0"
+    },
+    "lab_clamp12_cold_receipt": {
+      "bytes": 10138,
+      "path": "results/humo_1p7b_diet_run3.json",
+      "sha256": "484e8b8b4d5761ae88f0eb54d435b21eb04e8f33da3a6dd44db47f70448b180d"
+    },
+    "lab_clamp12_cold_telemetry": {
+      "bytes": 684375,
+      "path": "results/humo_diet/telemetry/humo_1p7b_diet_clamp12_run1.json",
+      "sha256": "c8ffcd056a044998cfb432417ff769dcda7b62aa471add89b8a56f2828dd42fb"
+    },
+    "lab_clamp13_cold_artifact": {
+      "bytes": 189159,
+      "path": "outputs/humo_1p7b_diet_out_00001_.mp4",
+      "sha256": "5a89f88ee8140df2ad7ff6151df4b114bb4e36279bd97bc193068903645264a0"
+    },
+    "lab_clamp13_cold_receipt": {
+      "bytes": 10107,
+      "path": "results/humo_1p7b_diet_run1.json",
+      "sha256": "0d9e407aaa70915ebe3a59ad77467b59f0c17729c8a4e81a8b0f792db1ca2fa0"
+    },
+    "lab_clamp13_cold_telemetry": {
+      "bytes": 618055,
+      "path": "results/humo_diet/telemetry/humo_1p7b_diet_clamp13_run1.json",
+      "sha256": "5470b86499082d86b1eadf63aa79362f1dc00b7e9fca91549b0c5d094746706d"
+    },
+    "lab_clamp13_warm_artifact": {
+      "bytes": 189159,
+      "path": "outputs/humo_1p7b_diet_out_00002_.mp4",
+      "sha256": "5a89f88ee8140df2ad7ff6151df4b114bb4e36279bd97bc193068903645264a0"
+    },
+    "lab_clamp13_warm_receipt": {
+      "bytes": 10226,
+      "path": "results/humo_1p7b_diet_run2.json",
+      "sha256": "2efbf36ebfd49fffb3244da750e40e1e15b924277d83476bbd0c974dddb8a935"
+    },
+    "lab_clamp13_warm_telemetry": {
+      "bytes": 463297,
+      "path": "results/humo_diet/telemetry/humo_1p7b_diet_clamp13_run2.json",
+      "sha256": "774602841c104f073efbfe1c420d401b0d55ce9306ee8149db6102af59155471"
+    },
+    "phase0": {
+      "bytes": 1897,
+      "path": "results/humo_diet/phase0_lane_feasibility.json",
+      "sha256": "2077d9c05bbc9065c6454dd8cf5b20f387a299a20c9617ac22e601602d118609"
+    },
+    "portrait_fixture": {
+      "bytes": 688164,
+      "path": "fixtures/portrait.png",
+      "sha256": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+    },
+    "production_take1_artifact": {
+      "bytes": 406854,
+      "path": "outputs/humo_1_7b_bakeoff_take1.mp4",
+      "sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9"
+    },
+    "production_take1_receipt": {
+      "bytes": 9380,
+      "path": "results/otr_side/humo_1_7b_bakeoff_take1.json",
+      "sha256": "05c9208a85bf41e8057e5776b23831d79be3880fa6b16041926738d7739680cb"
+    },
+    "production_take1_telemetry": {
+      "bytes": 422999,
+      "path": "results/otr_side/telemetry/humo_1_7b_bakeoff_take1_attempt2.json",
+      "sha256": "500db87942fbe49d9702987da85bb3199f392950822511ed1010a2dd7c8dbecc"
+    },
+    "production_take2_artifact": {
+      "bytes": 406854,
+      "path": "outputs/humo_1_7b_bakeoff_take2.mp4",
+      "sha256": "e35527b7cb72a1d113ba27f944badda7b80d104c077a94de762223d9f86b56d9"
+    },
+    "production_take2_receipt": {
+      "bytes": 9190,
+      "path": "results/otr_side/humo_1_7b_bakeoff_take2.json",
+      "sha256": "b2ef2069a545bd44ab3f496af671d5257224313c549160569f3b548b79da7063"
+    },
+    "production_take2_telemetry": {
+      "bytes": 380116,
+      "path": "results/otr_side/telemetry/humo_1_7b_bakeoff_take2.json",
+      "sha256": "4273d090723b09dd6296b1a5dddc0467f32b5f9c3d9adaf8d699bf1cbc14cbb7"
+    },
+    "tts_fixture": {
+      "bytes": 882078,
+      "path": "fixtures/tts_dialogue.wav",
+      "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    }
+  }
+}

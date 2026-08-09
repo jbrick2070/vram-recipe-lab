@@ -56,7 +56,7 @@
       "evidence_scope": "offline manifest and actual local model directories",
       "models_manifest": {
         "path": "models_manifest.md",
-        "sha256": "7379b5fac6e087e28a5158622b491983f6718c00b1e6cc35725b1a452df653e6"
+        "sha256": "a0124883545b7f693ced351d6e110bc210c46114f2eed32cb3c8846980e4208d"
       },
       "current_h3_i2v_weight": {
         "model_basename": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",

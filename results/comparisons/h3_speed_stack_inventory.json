@@ -31,6 +31,6 @@
   },
   "proposal": "If Jeffrey authorizes downloads later, fetch the Kijai H3 W4A8-mixed FL2VA weight and the official/Kijai H3 LightX2V four-step LoRA into quarantine, hash them into models_manifest.md, then run a new immutable H3 I2V turbo campaign.",
   "source_recipe_path": "recipes/h3_i2v_sage_patch_fp16pv_experimental.json",
-  "source_recipe_sha256": "6a27480cfe0709eda17e8c8a57fa549e840589867aebb8a19603319081b6ab93",
+  "source_recipe_sha256": "118ff13ed9f86969be03b7e975e314f7017a60484f2174ae081b33f388adecc0",
   "status": "BLOCKED_MISSING_BOTH_ASSETS"
 }
