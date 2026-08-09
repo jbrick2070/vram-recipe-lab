@@ -12,6 +12,180 @@
     "duration_s": 5.17,
     "vram_ceiling_gb": 14.5
   },
+  "topology_contract": {
+    "schema_version": 1,
+    "intent": "Frozen official MiniMax H3 sampler and native joint video/audio output topology",
+    "frozen_template": {
+      "path": "research/comfy_templates/video_minimax_h3_i2v.json",
+      "sha256": "bb71aecdd3c0b62e56eafe03acb14d1cfeabec7072eaed9cbdf473c2aaf73009"
+    },
+    "installed_schema": {
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UNETLoader",
+      "2": "CLIPLoader",
+      "3": "VAELoader",
+      "4": "VAELoader",
+      "5": "RandomNoise",
+      "6": "BasicGuider",
+      "7": "MiniMaxH3ImageToVideo",
+      "8": "SamplerCustomAdvanced",
+      "9": "VAEDecode",
+      "10": "CreateVideo",
+      "12": "SaveVideo",
+      "13": "KSamplerSelect",
+      "14": "BasicScheduler",
+      "15": "VAEDecodeAudio",
+      "11": "LoadImage"
+    },
+    "required_class_types": [
+      "UNETLoader",
+      "CLIPLoader",
+      "VAELoader",
+      "RandomNoise",
+      "BasicGuider",
+      "MiniMaxH3ImageToVideo",
+      "SamplerCustomAdvanced",
+      "VAEDecode",
+      "CreateVideo",
+      "SaveVideo",
+      "KSamplerSelect",
+      "BasicScheduler",
+      "VAEDecodeAudio",
+      "LoadImage"
+    ],
+    "required_connections": {
+      "6.model": [
+        "1",
+        0
+      ],
+      "14.model": [
+        "1",
+        0
+      ],
+      "7.clip": [
+        "2",
+        0
+      ],
+      "7.vae": [
+        "3",
+        0
+      ],
+      "6.conditioning": [
+        "7",
+        0
+      ],
+      "8.noise": [
+        "5",
+        0
+      ],
+      "8.guider": [
+        "6",
+        0
+      ],
+      "8.sampler": [
+        "13",
+        0
+      ],
+      "8.sigmas": [
+        "14",
+        0
+      ],
+      "8.latent_image": [
+        "7",
+        1
+      ],
+      "9.samples": [
+        "8",
+        0
+      ],
+      "9.vae": [
+        "3",
+        0
+      ],
+      "15.samples": [
+        "8",
+        0
+      ],
+      "15.vae": [
+        "4",
+        0
+      ],
+      "10.images": [
+        "9",
+        0
+      ],
+      "10.audio": [
+        "15",
+        0
+      ],
+      "12.video": [
+        "10",
+        0
+      ],
+      "7.first_frame": [
+        "11",
+        0
+      ]
+    },
+    "required_absent_inputs": [
+      "7.last_frame"
+    ],
+    "required_input_values": [
+      {
+        "node": "2",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "13",
+        "input": "sampler_name",
+        "equals": "res_multistep"
+      },
+      {
+        "node": "14",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "14",
+        "input": "steps",
+        "equals": 20
+      },
+      {
+        "node": "14",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "10",
+        "input": "fps",
+        "equals": 24.0
+      },
+      {
+        "node": "10",
+        "input": "bit_depth",
+        "equals": 8
+      }
+    ],
+    "forbidden_class_types": [
+      "KSampler",
+      "CLIPTextEncode"
+    ],
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "The template subgraph is flattened to native API prompt nodes; UI-only notes, selectors, and duration helpers are omitted",
+      "The OTR prompt and deterministic seed 42 replace template demonstration content and randomized seeds",
+      "The best lane fixes the canvas at 1344x768 and length at 124 frames",
+      "The output filename prefix is lab-local",
+      "scene_still.png replaces the template example image and is connected only as first_frame",
+      "last_frame is intentionally absent"
+    ]
+  },
   "prompt": {
     "1": {
       "class_type": "UNETLoader",
@@ -24,7 +198,8 @@
       "class_type": "CLIPLoader",
       "inputs": {
         "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
-        "type": "minimax"
+        "type": "minimax",
+        "device": "default"
       }
     },
     "3": {
@@ -141,6 +316,19 @@
         ]
       }
     },
+    "15": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "4",
+          0
+        ]
+      }
+    },
     "10": {
       "class_type": "CreateVideo",
       "inputs": {
@@ -148,7 +336,12 @@
           "9",
           0
         ],
-        "fps": 24.0
+        "fps": 24.0,
+        "bit_depth": 8,
+        "audio": [
+          "15",
+          0
+        ]
       }
     },
     "12": {

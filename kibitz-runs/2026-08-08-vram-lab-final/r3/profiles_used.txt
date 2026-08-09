@@ -1,0 +1,2 @@
+comfyui: C:\Users\jeffr\.codex\skills\kibitz\references\profiles\comfyui.md
+.kibitz\comfyui.local.md: C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\.kibitz\comfyui.local.md

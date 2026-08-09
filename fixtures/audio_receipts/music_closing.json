@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "fixture": "music_closing.wav",
+  "sha256": "449b9964c1d3efea751ecf26310c6240a28f07dad985d9e3093e5a1354625545",
+  "bytes": 1036880,
+  "ffprobe": {
+    "codec_name": "pcm_f32le",
+    "sample_rate_hz": 32000,
+    "channels": 1,
+    "channel_layout": null,
+    "duration_s": 8.1
+  },
+  "volumedetect": {
+    "mean_volume_db": -17.4,
+    "max_volume_db": -1.0
+  },
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true",
+    "integrated_lufs": -17.4,
+    "true_peak_dbtp": -1.0,
+    "lra_lu": 3.6
+  },
+  "matrix_window": {
+    "method": "ffmpeg -t 3.88 -af ebur128=peak=true summary",
+    "start_s": 0.0,
+    "duration_s": 3.88,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "input_lufs": -15.9,
+    "gain_db": -10,
+    "matched_lufs": -25.9,
+    "matched_true_peak_dbtp": -11.0
+  },
+  "human_review": {
+    "reviewer": "Jeffrey",
+    "reviewed_at": "2026-08-08",
+    "content_class": "closing-music",
+    "description": "Episode closing music from the OTR source, with no intended narration."
+  },
+  "ear_gate_pass": true,
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate,channels,channel_layout,duration:format=duration -of json fixtures/music_closing.wav",
+    "volumedetect": "ffmpeg -hide_banner -nostats -i fixtures/music_closing.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -hide_banner -nostats -t 3.88 -i fixtures/music_closing.wav -af volume=-10dB,ebur128=peak=true -f null NUL"
+  }
+}

@@ -22,8 +22,8 @@ TWO TEST TIERS, both driven by run_recipe.py:
 - SMOKE: one single clip per recipe. Fast gate for iterating on settings.
 - SUITE: a hearty multi-clip sequence run back-to-back (still sequential, one
   clip at a time): several image-to-video clips from scene_still.png, at least
-  one audio-conditioned clip using narration.wav, and at least one lip-sync
-  clip (portrait.png + narration.wav through the face lane). The suite records
+  one audio-conditioned clip using a receipt-verified audio fixture, and at least one lip-sync
+  clip (portrait.png + tts_dialogue.wav through the face lane). The suite records
   peak VRAM PER CLIP and flags VRAM CREEP — if peak or post-clip allocated
   VRAM climbs clip over clip, that is a FAIL even if every clip fits. Creep is
   how real multi-beat episodes die mid-render.

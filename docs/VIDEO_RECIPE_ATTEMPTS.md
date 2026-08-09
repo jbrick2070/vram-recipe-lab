@@ -65,17 +65,41 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
 - Corrected artifact: coherent through the final frame, 5,246 video bytes/frame, mean frame delta 9.171, frame-zero SSIM 0.847 / PSNR 29.00 dB against the node-resized still.
 - Two consecutive corrected renders were byte-identical (`9908f357...`) and passed the machine/VRAM gate at 7.07/7.15 GB. Machine warm-cache status: **PASS**; promotion remains pending Jeffrey's full-video eyeball under the H3 human-review rule. The second full run took 239.5 s with Legion performance mode active.
 
-### LTX IA2V: Speech vs Music Behavior
+### LTX IA2V: Static Interstitial vs Music (Speech Interpretation Superseded)
 
 - Corrected audio guide mask from 1.0 to the official frozen-guide value 0.0 and connected the scheduler latent.
-- Input preservation check: aligned waveform correlation is only 0.055 because the Audio VAE reconstructs phase, but log-spectral correlation with narration is 0.790 versus 0.066 for the old mask-1 output. Mask 0 therefore preserves conditioning content but not an authoritative waveform.
+- Fixture-truth correction: the input then named `narration.wav` was later identified by Jeffrey as the episode static interstitial with near-zero intelligible speech. It is now `interstitial_static.wav`; see `docs/AUDIO_FIXTURE_CORRECTIONS.md`.
+- Input preservation check: aligned waveform correlation is only 0.055 because the Audio VAE reconstructs phase, but log-spectral correlation with the static interstitial is 0.790 versus 0.066 for the old mask-1 output. Mask 0 therefore preserves conditioning content but not an authoritative waveform.
 - Frozen real-OTR controls, same still/seed/prompt/trim:
-  - speech: mean frame delta 0.09349; 1,606 video bytes/frame
+  - static interstitial control: mean frame delta 0.09349; 1,606 video bytes/frame
   - music raw: 0.10704; 1,683 video bytes/frame
   - music -12 dB: 0.11583; 1,757 video bytes/frame
-- Both music conditions differed from speech, including after removing the measured ~12.1 LU level gap. The response is subtle but not explained by loudness alone.
+- Both music conditions differed from the static control, including after the recorded level adjustment. The response is subtle, but this evidence does not compare music with speech and does not establish speech-conditioning behavior.
 - **Production policy**: use real TTS/music to condition motion, discard VAE-reconstructed audio, and externally mux the untouched source track. Generated model audio, if ever retained, is a separately screened ambience/SFX stem and must never replace narration.
-- The selected canonical speech recipe was then run twice unchanged on the direct `reserve-12gb` lane. It passed cold at 9.06 GB / 197.1 s and warm at 8.55 GB / 185.1 s. Both MP4s are byte-identical (`76134eb5...`), their video stream exactly matches the earlier speech-conditioning diagnostic, and decoded source-vs-mux audio PSNR is 169.663 dB. Warm-cache status: **PASS**.
+- The historical static-control recipe was then run twice unchanged on the direct `reserve-12gb` lane. It passed cold at 9.06 GB / 197.1 s and warm at 8.55 GB / 185.1 s. Both MP4s are byte-identical (`76134eb5...`), their video stream exactly matches the earlier static-control diagnostic, and decoded source-vs-mux audio PSNR is 169.663 dB. That pair remains valid machine evidence for its historical identity, not speech evidence.
+- **Conclusion superseded**: no speech-versus-music conclusion survives this fixture correction. A new four-condition, loudness-matched matrix using static, verified TTS dialogue, opening music, and closing music is required; all four clips remain pending eyeball and ear review.
+
+### LTX IA2V: Four-Condition Matrix Execution
+
+- The corrected matrix was subsequently rendered exactly once per cell, in the
+  prescribed order, on one `lab-8199, sage-free, reserve-12gb` server instance.
+  Every diagnostic artifact contains 97 frames and valid 3.88-second video and
+  audio streams. These are intentionally cold experimental results, not warm
+  certifications.
+
+| condition | peak / baseline VRAM | wall clock | machine result |
+|---|---|---|---|
+| static interstitial control | 9.25 / 2.59 GB | 213.7 s | cold gate pass |
+| verified TTS dialogue | 7.82 / 2.97 GB | 181.3 s | cold gate pass |
+| opening music | 7.73 / 3.14 GB | 185.3 s | cold gate pass |
+| closing music | 7.89 / 2.87 GB | 189.3 s | cold gate pass |
+
+- Each cell also has a passing source-delivery mux receipt. Those previews copy the
+  exact diagnostic video stream and mux the untouched source fixture; they do not
+  replace the loudness-matched conditioning diagnostic as the experiment of record.
+- All four human eyeball/ear comparisons remain pending. The unresolved question is
+  whether motion character changes with static, speech, opening music, and closing
+  music. No second matrix render is authorized by this exactly-once experiment.
 
 ### H3 I2V: Last-Frame Continuation Chain
 
@@ -85,19 +109,85 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
 - Clip 2 -> 3 seam: SSIM 0.900289 / PSNR 33.45 dB. Contact-sheet review shows a coherent rightward glide from the control-room operators into the analog meter wall with no flash, cut, or corruption.
 - Clip 2 measured 7.06 GB peak and 246.1 s; clip 3 measured 6.80 GB and 252.3 s. Both were valid cold passes on the direct `reserve-12gb` lane. They are intentionally different recipe identities, so they are not a two-run warm certification pair.
 - Assembly removes frame zero from clips 2 and 3 to avoid holding the handoff frame twice. The resulting sequence is 370 frames / 15.417 s at 24 fps.
-- Preview policy follows the audio finding: the model clips remain silent. `h3_multiclip_1_to_3_music_mux.mp4` uses the real frozen music excerpt, while `h3_multiclip_1_to_3_otr_mix.mp4` uses that real music at -12 dB plus the untouched real narration beginning at the clip-2 boundary. No generated vocals are used.
+- Preview policy follows the audio finding: the model clips remain silent. `h3_multiclip_1_to_3_music_mux.mp4` uses the real frozen music excerpt, while the historically named `h3_multiclip_1_to_3_otr_mix.mp4` uses that music at -12 dB plus the untouched static interstitial beginning at the clip-2 boundary. It does not contain narration; the visual continuation evidence is unaffected.
 - This proves last-frame chaining is viable for controlled pans and environmental shots. It does not prove identity lock for faces, fast action, or arbitrary scene changes; those need their own seam campaign.
 
-### H3 R2V: Correct Ref2VA and Generated-Audio Check
+### H3 R2V: V3 Dotted-Socket Correction and Supersession
 
-- The earlier 492 KB clip that Jeffrey marked visually `ok` was not valid R2V evidence: it loaded the FL2VA UNET and omitted the required `<Picture 1>` prompt assignment. Its visual verdict is retained in the run-2 receipt, but its R2V certification is revoked.
-- Corrected `h3_r2v_low` to the installed official topology: Ref2VA weights, explicit `<Picture 1>` identity assignment, official `res_multistep`/`simple`-20 sampler stack, video decode, and separate joint-latent audio decode.
-- The corrected clip keeps the supplied portrait identity and facial geometry stable across the full camera move. Two consecutive renders are byte-identical (`f8ae5635...`). Cold: 6.73 GB / 208.1 s. Warm: 6.56 GB / 206.6 s. Machine warm-cache status: **PASS**; human video/audio approval is still pending.
-- Generated audio is present at -32.7 dB mean / -14.3 dB peak. Its spectrogram contains broadband and harmonic structure, so metrics alone cannot rule out speech-like or vocal-like material. Treat it as an unknown, audition-required model stem, not as approved ambience.
-- Two audition-only previews preserve the real OTR sources: `h3_r2v_otr_source_mix.mp4` uses real narration plus real music; `h3_r2v_otr_source_mix_with_generated_stem_AUDITION_ONLY.mp4` adds the H3 stem at -6 dB beneath that source mix. The second file is explicitly quarantined from delivery until Jeffrey confirms there is no unwanted speech/vocal content.
+- The earlier 492 KB clip that Jeffrey marked visually `ok` remains invalid R2V
+  evidence: it loaded the FL2VA UNET and omitted the required `<Picture 1>` prompt
+  assignment. Its historical visual verdict remains in the immutable run-2 receipt,
+  but it is not R2V certification.
+- Runs 3/4, previously described here as a corrected warm pair, used the obsolete
+  nested-container encoding for a `COMFY_AUTOGROW_V3` image input. Optional V3 inputs
+  fail silently when encoded that way, so their byte-identical artifact and generated
+  audio measurements are superseded as Ref2VA evidence. The receipts remain immutable,
+  but the former warm-pass interpretation is withdrawn.
+- Current `h3_r2v_low` run 5 uses the installed V3 API spelling
+  `ref_images.ref_image_0`, Ref2VA weights, `<Picture 1>`, the official sampler stack,
+  and native joint video/audio decode. It is a valid **cold-only** machine gate pass at
+  7.20 GB peak / 2.84 GB baseline in 260.6 s. Human video/audio review remains pending;
+  it is not a warm pair or a promotion.
+- The current `h3_r2v_best` R0/R1 receipts likewise use the flat dotted V3 socket and
+  form a valid individual cold/warm pair. That pair supersedes the older best-recipe
+  socket evidence, but remains human-pending and does not override the overall H3 suite
+  failure below.
+- The old audition-only previews remain historical static/music mixes, not narration,
+  dialogue, or current dotted-socket Ref2VA evidence. No generated H3 stem is approved
+  for delivery without a separate human audition.
+
+### H3 Best Suite: Child Passes, Overall Machine Failure
+
+- The newest canonical sequence completed all 11 children on one
+  `lab-8199, sage-free, no-pinned, cache-classic, reserve-12gb` server. Every child
+  cleared its own media, provenance, execution, and 14.5 GB gate; T0/T1, I0/I1, and
+  R0/R1 are valid individual cold/warm recipe pairs.
+- The overall receipt remains **`MACHINE SUITE FAIL`**. T1 rose from 8.81 GB at T0 to
+  9.14 GB, an absolute-peak increase of 0.330 GiB against the 0.250 GiB creep limit.
+- The immutable receipt also preserves the broader net-peak failure list emitted at
+  run time. The corrected policy no longer compares net peak across cache-classic
+  children whose resident pre-run baselines differ, so those net deltas are diagnostic
+  rather than formal failures. The T1 absolute-peak failure remains and is sufficient
+  to keep the suite failed.
+- Human video and native-audio review is pending for every H3 best artifact. Individual
+  warm evidence must not be summarized as an overall suite pass or promotion.
+
+### H3 RefAudio: TTS Dialogue Smoke
+
+- Exactly one `h3_r2v_refaudio_tts_dialogue` smoke was rendered. It is a cold-only
+  machine gate pass at 7.15 GB peak / 2.46 GB baseline in 249.0 s, with valid
+  124-frame video and native generated audio over 5.167 seconds.
+- Objective image-conditioning checks are strong. This establishes that the corrected
+  V3 dotted image-reference path is active; it is not a human quality verdict and does
+  not by itself prove useful audio-reference behavior.
+- The model-native generated soundtrack measures -21.4 LUFS. Human eye/ear review is
+  still required for identity quality, intelligibility, synchronization, unwanted
+  vocals/noise, and whether the TTS reference had a useful behavioral effect.
+- Static-control and music-opening RefAudio cells were not rendered. The single cold
+  TTS smoke is not a warm certification and does not authorize a promotion claim.
+
+### H3 Mini Mime: One I2V Proof
+
+- Exactly one `h3_mime_i2v` clip was rendered at 7.28 GB peak / 2.52 GB baseline in
+  178.9 s. The artifact is exactly 90 frames and 3.750 seconds with valid native H3
+  audio measuring -27.5 LUFS.
+- This is cold-only experimental evidence. Jeffrey explicitly approved continuing to
+  one R2V mime after reviewing the I2V clip. The formal I2V receipt fields still need
+  his one-line soundscape description; that detail is not inferred from objective QA.
+- The single authorized `h3_mime_r2v` follow-up then passed its cold machine gate at
+  7.23 GB peak / 2.61 GB baseline in 188.3 s. It is also exactly 90 frames and
+  3.750 seconds. Representative frames show strong portrait identity stability with
+  no obvious sampled collapse; the native soundtrack is very quiet at about
+  -40.5 LUFS.
+- R2V human eye/ear review remains pending. No more mime variants are authorized, and
+  neither cold artifact is warm-certified or promoted.
 
 ### H3 Topology Scope
 
 - I2V and R2V now follow the frozen official sampler bundle. The already human-approved H3 T2V low lane intentionally remains the legacy Euler/CFG-6 control; changing it would create a new campaign rather than preserve the approved baseline.
-- All three H3 `*_best` recipes remain **UNMEASURED/PENDING**, not certified high-resolution recipes. I2V/R2V contain the corrected official topology; T2V intentionally preserves the legacy control topology.
+- All three H3 `*_best` recipes now have valid individual cold/warm machine pairs from
+  the canonical suite. R2V's current evidence uses the required V3 flat dotted socket.
+  The overall suite nevertheless remains **MACHINE SUITE FAIL** on the T1 absolute-peak
+  creep gate, and every best artifact remains human video/audio pending. Individual
+  child passes are not an overall certification.
 - Continuation run 1 predates full embedded fixture/runner provenance and its exact transient recipe JSON was not preserved; run 2/current represents clip 3. Future continuation hops must use immutable recipe names instead of mutating one experiment file.

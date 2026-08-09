@@ -1,0 +1,10 @@
+STDOUT:
+I have completed the Round 4 adversarial review of the plan document `input.md` and written the complete review to [antigravity.md](file:///C:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/kibitz-runs/2026-08-08-vram-lab-final/r4/antigravity.md).
+
+### Review Summary
+
+- **VERDICT**: `yes-with-fixes`. The plan is sound and well-grounded in the existing codebase (`run_recipe.py`, `run_h3_suite.py`, `validate_recipes.py`), but requires minor specification tightening in P5 (external source preview muxing execution/receipt details) and P7/P8 (VRAM baseline pinning and duration tolerance operationalization) prior to build lock.
+- **Key Must-Fixes**:
+  1. `[P5]`: Specify the exact post-processing command line and JSON receipt structure for external source-delivery video stream copy preview muxing.
+  2. `[P7]`: Explicitly pin `S0` as the reference baseline for all sentinel VRAM creep checks (`S1`, `S2`, `S3`).
+  3. `[P8]`: Clarify that Mini Mime duration tolerance enforcement relies on the `contract.frames` (90) and `contract.fps` (24) fields validated in `media_artifact_is_valid()`.

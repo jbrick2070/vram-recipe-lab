@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "fixture": "tts_dialogue.wav",
+  "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1",
+  "bytes": 882078,
+  "ffprobe": {
+    "codec_name": "pcm_s16le",
+    "sample_rate_hz": 44100,
+    "channels": 1,
+    "channel_layout": null,
+    "duration_s": 10.0
+  },
+  "volumedetect": {
+    "mean_volume_db": -21.8,
+    "max_volume_db": -4.8
+  },
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true",
+    "integrated_lufs": -19.7,
+    "true_peak_dbtp": -4.8,
+    "lra_lu": 4.8
+  },
+  "matrix_window": {
+    "method": "ffmpeg -t 3.88 -af ebur128=peak=true summary",
+    "start_s": 0.0,
+    "duration_s": 3.88,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "input_lufs": -20.6,
+    "gain_db": -5,
+    "matched_lufs": -25.6,
+    "matched_true_peak_dbtp": -11.2
+  },
+  "human_review": {
+    "reviewer": "Jeffrey",
+    "reviewed_at": "2026-08-08",
+    "content_class": "tts-dialogue",
+    "description": "Real character TTS dialogue with clearly intelligible speech."
+  },
+  "ear_gate_pass": true,
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate,channels,channel_layout,duration:format=duration -of json fixtures/tts_dialogue.wav",
+    "volumedetect": "ffmpeg -hide_banner -nostats -i fixtures/tts_dialogue.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -hide_banner -nostats -t 3.88 -i fixtures/tts_dialogue.wav -af volume=-5dB,ebur128=peak=true -f null NUL"
+  }
+}

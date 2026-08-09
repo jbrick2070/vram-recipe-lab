@@ -42,13 +42,13 @@
     "5": {
       "class_type": "LoadAudio",
       "inputs": {
-        "audio": "narration.wav"
+        "audio": "tts_dialogue.wav"
       }
     },
     "6": {
       "class_type": "CLIPTextEncode",
       "inputs": {
-        "text": "portrait character speaking aligned with narration track",
+        "text": "portrait character speaking aligned with the verified TTS dialogue track",
         "clip": [
           "2",
           0

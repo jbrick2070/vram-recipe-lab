@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "fixture": "music_opening.wav",
+  "sha256": "e3ab5b873ec48d6c99464aa7481bcf86b3c047df5194293664e6f2f3f164541a",
+  "bytes": 1548880,
+  "ffprobe": {
+    "codec_name": "pcm_f32le",
+    "sample_rate_hz": 32000,
+    "channels": 1,
+    "channel_layout": null,
+    "duration_s": 12.1
+  },
+  "volumedetect": {
+    "mean_volume_db": -12.5,
+    "max_volume_db": -1.0
+  },
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true",
+    "integrated_lufs": -14.2,
+    "true_peak_dbtp": -1.0,
+    "lra_lu": 4.2
+  },
+  "matrix_window": {
+    "method": "ffmpeg -t 3.88 -af ebur128=peak=true summary",
+    "start_s": 0.0,
+    "duration_s": 3.88,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "input_lufs": -13.6,
+    "gain_db": -12,
+    "matched_lufs": -25.6,
+    "matched_true_peak_dbtp": -13.0
+  },
+  "human_review": {
+    "reviewer": "Jeffrey",
+    "reviewed_at": "2026-08-08",
+    "content_class": "opening-music",
+    "description": "Episode opening music from the OTR source, with no intended narration."
+  },
+  "ear_gate_pass": true,
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate,channels,channel_layout,duration:format=duration -of json fixtures/music_opening.wav",
+    "volumedetect": "ffmpeg -hide_banner -nostats -i fixtures/music_opening.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -hide_banner -nostats -t 3.88 -i fixtures/music_opening.wav -af volume=-12dB,ebur128=peak=true -f null NUL"
+  }
+}

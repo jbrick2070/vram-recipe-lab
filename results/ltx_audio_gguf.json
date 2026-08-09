@@ -3,11 +3,14 @@
   "recipe": "ltx_audio_gguf",
   "run_number": 10,
   "config_run_count": 2,
-  "status": "PASS",
-  "gate_pass": true,
-  "pass": true,
-  "warm_pass": true,
-  "eyeball": "pending",
+  "status": "STALE/SUPERSEDED (static interstitial was mislabeled as narration)",
+  "gate_pass": false,
+  "pass": false,
+  "warm_pass": false,
+  "eyeball": "not-applicable-to-speech-claim",
+  "promotion_ready": false,
+  "historical_machine_pass": true,
+  "superseded_by": "docs/AUDIO_FIXTURE_CORRECTIONS.md and the four audio_conditioning_matrix_v1 recipes",
   "recipe_sha256": "48f6b1dadaf431be517cca60d27fd355a3b6b2d240478ff1bf91be53dd7e04ba",
   "runner_sha256": "e58fbc0806e9d6dbe3879152b1258b045d32fe617991cfbc5a2ecda8c025ea41",
   "fixture_sha256s": {
@@ -95,5 +98,6 @@
   "agent_visual_assessment": "clean: byte-identical to configuration run 1",
   "video_stream_sha256": "827479360d0925156a8e14d47513ee415c79679aacc552ef46f918e00e08873e",
   "source_audio_mux_psnr_db": 169.663,
-  "audio_policy": "original narration muxed; generated/VAE audio is not delivered"
+  "audio_policy": "historical artifact muxed the original static interstitial; generated/VAE audio was not delivered",
+  "fixture_truth_correction": "The bytes formerly named narration.wav are the non-speech interstitial_static.wav control. This current alias no longer certifies the renamed on-disk recipe. Historical run receipts remain immutable."
 }

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "fixture": "ltx_matrix_interstitial_static_3p88s_gain_0db.wav",
+  "sha256": "ecbcf9a38fb3f6c047ab2fd9ac8b4fdccdaa940e5e5e4d2b2c377f29e904177e",
+  "bytes": 496698,
+  "derived_from": {
+    "fixture": "interstitial_static.wav",
+    "sha256": "182ba04d0dc1b4ff6cb21f1748f6b682c58e67d581971d0d9b83700d7e45bfc1",
+    "bytes": 524880,
+    "ear_receipt": "fixtures/audio_receipts/interstitial_static.json",
+    "ear_receipt_sha256": "636501e5f0b4aac4103ea476eaee77841447c6242185c58a4d6dffa9f807707d"
+  },
+  "derivation": {
+    "builder": "scratch/build_ltx_audio_matrix.py",
+    "builder_sha256": "9a7b420c8c2e1f675527aae8b106af8448c9464ff411e8116e1fbbf3020c68be",
+    "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "command": "ffmpeg -nostdin -hide_banner -loglevel error -y -i fixtures/interstitial_static.wav -map_metadata -1 -af \"aresample=32000,atrim=start_sample=0:end_sample=124160,asetpts=N/SR/TB,volume=0dB\" -ac 1 -ar 32000 -c:a pcm_f32le -fflags +bitexact -flags:a +bitexact fixtures/ltx_matrix_interstitial_static_3p88s_gain_0db.wav",
+    "start_sample": 0,
+    "sample_count": 124160,
+    "sample_rate_hz": 32000,
+    "gain_db": 0
+  },
+  "ffprobe": {
+    "codec_name": "pcm_f32le",
+    "sample_fmt": "flt",
+    "sample_rate_hz": 32000,
+    "channels": 1,
+    "channel_layout": null,
+    "duration_s": 3.88,
+    "duration_samples": 124160,
+    "time_base": "1/32000"
+  },
+  "volumedetect": {
+    "mean_volume_db": -29.3,
+    "max_volume_db": -1.0
+  },
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true on the complete derived fixture",
+    "integrated_lufs": -25.8,
+    "lra_lu": 1.6,
+    "true_peak_dbtp": -0.7
+  },
+  "matrix_window": {
+    "method": "Derived bytes are exactly 124160 samples; measured with ffmpeg ebur128=peak=true",
+    "start_s": 0.0,
+    "duration_s": 3.88,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "input_lufs": -25.8,
+    "gain_db": 0,
+    "matched_lufs": -25.8,
+    "matched_true_peak_dbtp": -0.7
+  },
+  "human_review": {
+    "reviewer": "Jeffrey",
+    "reviewed_at": "2026-08-08",
+    "content_class": "non-speech-control",
+    "description": "Episode interstitial with radio static/noise texture and near-zero intelligible speech.",
+    "basis": "Description inherited from the hash-bound, human ear-gated source receipt. The derivation only takes the first 3.88 seconds, resamples to mono 32 kHz float PCM, and applies the recorded gain.",
+    "derived_bytes_separately_auditioned": false
+  },
+  "ear_gate_pass": true,
+  "ear_gate_basis": "inherited_from_hash_bound_source_receipt",
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_fmt,sample_rate,channels,channel_layout,duration,duration_ts,time_base:format=duration,size -of json fixtures/ltx_matrix_interstitial_static_3p88s_gain_0db.wav",
+    "volumedetect": "ffmpeg -nostdin -hide_banner -nostats -i fixtures/ltx_matrix_interstitial_static_3p88s_gain_0db.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -nostdin -hide_banner -nostats -i fixtures/ltx_matrix_interstitial_static_3p88s_gain_0db.wav -af ebur128=peak=true -f null NUL",
+    "derivation": "ffmpeg -nostdin -hide_banner -loglevel error -y -i fixtures/interstitial_static.wav -map_metadata -1 -af \"aresample=32000,atrim=start_sample=0:end_sample=124160,asetpts=N/SR/TB,volume=0dB\" -ac 1 -ar 32000 -c:a pcm_f32le -fflags +bitexact -flags:a +bitexact fixtures/ltx_matrix_interstitial_static_3p88s_gain_0db.wav"
+  }
+}

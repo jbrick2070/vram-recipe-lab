@@ -1,5 +1,9 @@
 outputs/
 server.log
 .gpu.lock
+.suite.lock
+.coordinator.mutex
+.queue.quarantine.json
+results/delivery/.*.lock
 .server.pid
 __pycache__/

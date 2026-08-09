@@ -1,0 +1,44 @@
+VERDICT: yes-with-fixes. The plan's structural sequencing and gate invariants are solid, but exact code verification against `run_h3_suite.py` and `run_recipe.py` reveals several critical wiring gaps, receipt identity mismatches, missing verification fallbacks, and lock race conditions.
+
+MUST-FIX BEFORE BUILD:
+
+1. [P7 / `run_h3_suite.py` + `run_recipe.py`] **Suite lock inheritance leaves child processes vulnerable to standalone lock rejection and stale state.**
+   - *Defect*: `run_h3_suite.py` acquires `SuiteLock` (`.suite.lock`) and launches `run_recipe.py` as a subprocess. `run_recipe.py`'s `LockManager.acquire()` checks `LAB_SUITE_OWNER_PID` against `suite_info.get("pid")` (lines 564–574 of `run_recipe.py`), but does NOT pass a suite nonce or verify the child process start/creation time. If `run_h3_suite.py` crashes or is killed and its PID is recycled by Windows before `.suite.lock` is unlinked, an unrelated `run_recipe.py` run could incorrectly inherit authorization. Furthermore, `run_recipe.py` does not pass `LAB_SUITE_OWNER_PID` into the sub-environment if `boot_lab_server.cmd` re-executes.
+   - *Concrete Fix*: Add a `suite_nonce` and `owner_create_time` (using `psutil.Process(pid).create_time()`) to `SuiteLock` payload and export `LAB_SUITE_NONCE` and `LAB_SUITE_CREATE_TIME` in `os.environ` within `run_h3_suite.py`. Update `LockManager.acquire()` in `run_recipe.py` to validate `LAB_SUITE_NONCE` and `create_time` before bypassing the suite lock check.
+
+2. [P5 / `run_recipe.py`] **External source-mux video stream verification lacks exact stream-hash integrity assertions in receipt generation.**
+   - *Defect*: P5 specifies: "Separately make a clearly named source-delivery preview by copying its exact video stream and externally muxing the original... Preserve a mux receipt and prove the video stream hash did not change." `run_recipe.py` calculates media metrics via `probe_media_metrics()` using `ffprobe` (line 387), but does not compute or compare the raw video stream packet hash (e.g., via `ffmpeg -i <file> -map 0:v -f streamhash -hash sha256 -`) between the raw ComfyUI output diagnostic video and the muxed preview artifact.
+   - *Concrete Fix*: Add `extract_video_stream_hash(path: Path) -> str` using `ffmpeg -i <path> -map 0:v -c copy -f streamhash -hash sha256 -` to `run_recipe.py`. In the P5 audio matrix execution path, compute stream hashes for both the diagnostic artifact and the source-muxed preview, assert equality, and fail the run if they differ before writing the final receipt payload.
+
+3. [P7 / `run_h3_suite.py`] **Suite settlement VRAM sampling loop ignores settled VRAM baseline offsets.**
+   - *Defect*: P7 states: "After every child, wait two seconds and sample two seconds of settled VRAM... Fail on any... >0.25 GiB rise in candidate repeat or sentinel peak/net/settled median." `run_h3_suite.py` calls `settle_samples(manifest)` (line 313), which sleeps for 2 seconds and polls VRAM every 200ms. However, `settle_samples` in `run_h3_suite.py` does not track GPU VRAM baseline before child execution vs post-child execution to check for un-evicted PyTorch cache memory.
+   - *Concrete Fix*: Ensure `child_summary()` computes `settled_delta_gib = post_settle_median_gib - pre_run_settled_median_gib` by sampling pre-run baseline VRAM prior to launching `run_recipe.py` subprocess, and include `pre_run_settled_median_gib` in `payload["children"]`.
+
+4. [P8 / `run_recipe.py` + `recipes/h3_mime_i2v.json`] **Mini Mime contract validation missing exact `target_s` vs `delivered_s` delta bound check in recipe runner.**
+   - *Defect*: P8 states: "The timing plan is the documented OTR default 3.750 seconds: 90 H3 frames, no trim. Verify encoded frames... and delivered duration within one 24-fps frame while retaining exact `target_s` and `delivered_s` receipt fields." `media_artifact_is_valid()` in `run_recipe.py` (line 513) checks `encoded_frame_count`, `width`, `height`, and `fps`, but does not validate that `abs(delivered_s - target_s) <= (1.0 / fps)`.
+   - *Concrete Fix*: Update `media_artifact_is_valid()` in `run_recipe.py` to explicitly calculate `delivered_s = encoded_frame_count / encoded_fps` and enforce `abs(delivered_s - target_s) <= (1.0 / expected_fps) + 1e-4` when `target_s` is present in the recipe contract.
+
+5. [P7 / `run_recipe.py` + `run_h3_suite.py`] **Server shutdown in `finally` block of `run_h3_suite.py` can kill the server before the final archival suite receipt write completes.**
+   - *Defect*: In `run_h3_suite.py` (lines 336–353), `run_recipe.shutdown_lab_server()` is called inside `finally:` BEFORE `write_receipt(payload, archival_path)` in the outer `finally:` block. If `shutdown_lab_server()` hangs or raises an uncaught exception (or if server process cleanup takes longer than expected), `write_receipt()` may fail or be interrupted, leaving the archival receipt unwritten or corrupted.
+   - *Concrete Fix*: Move `write_receipt(payload, archival_path)` to occur inside `main()` BEFORE `run_recipe.shutdown_lab_server()`, and catch exceptions in `shutdown_lab_server()` so receipt persistence is guaranteed.
+
+SHOULD-FIX:
+
+1. [P5 / P7 / `run_recipe.py`] **Hardcoded Windows execution path references without fallback handling.**
+   - *Defect*: `run_recipe.py` references `COMFYUI_ROOT = Path(r"C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI")` and fixed model paths. If execution environment variables differ slightly or `extra_model_paths.yaml` overrides locations, `model_fingerprints()` returns `resolved: False`.
+   - *Concrete Fix*: Thread `COMFYUI_ROOT` and model search roots via environment variables (e.g. `COMFYUI_ROOT_DIR`) with fallback to the local path defaults.
+
+2. [P7 / `run_h3_suite.py`] **Sentinel post-settle monotonic trend check false positive on equal values.**
+   - *Defect*: Line 194 of `run_h3_suite.py` checks `if sentinel_medians[-1] - sentinel_medians[0] > tolerance + 1e-9: failures.append(...)`. If medians oscillate slightly within tolerance but finish lower, it passes, but intermediate sentinel spikes between S0 and S3 are not validated for step-wise monotonicity.
+   - *Concrete Fix*: Iterate through `sentinel_medians` and check `sentinel_medians[i] - sentinel_medians[0] > tolerance + 1e-9` for all $i \in \{1, 2, 3\}$.
+
+OPTIONAL / NICE-TO-HAVE:
+
+1. [P4 / `docs/SESSION_REPORT.md`] **Automate schema validation call for `.kibitz/comfyui.local.md` overlay integrity before render kick-off.**
+
+CUT THESE (over-engineering):
+
+1. [P5 / Audio Matrix] **Do NOT add live gain-adjustment or re-normalization nodes into the LTX IA2V ComfyUI graphs.**
+   - *Why safe to cut*: P3 explicitly confirms all four 3.88s WAV fixtures are already frozen near -25.8 LUFS offline. Modifying the ComfyUI workflow graph to add runtime volume normalization introduces unnecessary graph divergence across the 4 matrix conditions.
+
+[ASSUMPTION]: Inferred that `ffmpeg` and `ffprobe` are available on system `%PATH%` based on `probe_audio_fixture()` calls in `run_recipe.py`.

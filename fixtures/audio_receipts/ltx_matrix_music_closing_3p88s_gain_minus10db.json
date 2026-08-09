@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "fixture": "ltx_matrix_music_closing_3p88s_gain_minus10db.wav",
+  "sha256": "740f5f310dc89592903c814d40dcaa545747590eba7df1d3a478a7b95a0413d8",
+  "bytes": 496698,
+  "derived_from": {
+    "fixture": "music_closing.wav",
+    "sha256": "449b9964c1d3efea751ecf26310c6240a28f07dad985d9e3093e5a1354625545",
+    "bytes": 1036880,
+    "ear_receipt": "fixtures/audio_receipts/music_closing.json",
+    "ear_receipt_sha256": "8837300fa681b9d4adb8300f2c6e01d88bafb787c11c553f326a412aa2ab699c"
+  },
+  "derivation": {
+    "builder": "scratch/build_ltx_audio_matrix.py",
+    "builder_sha256": "9a7b420c8c2e1f675527aae8b106af8448c9464ff411e8116e1fbbf3020c68be",
+    "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "command": "ffmpeg -nostdin -hide_banner -loglevel error -y -i fixtures/music_closing.wav -map_metadata -1 -af \"aresample=32000,atrim=start_sample=0:end_sample=124160,asetpts=N/SR/TB,volume=-10dB\" -ac 1 -ar 32000 -c:a pcm_f32le -fflags +bitexact -flags:a +bitexact fixtures/ltx_matrix_music_closing_3p88s_gain_minus10db.wav",
+    "start_sample": 0,
+    "sample_count": 124160,
+    "sample_rate_hz": 32000,
+    "gain_db": -10
+  },
+  "ffprobe": {
+    "codec_name": "pcm_f32le",
+    "sample_fmt": "flt",
+    "sample_rate_hz": 32000,
+    "channels": 1,
+    "channel_layout": null,
+    "duration_s": 3.88,
+    "duration_samples": 124160,
+    "time_base": "1/32000"
+  },
+  "volumedetect": {
+    "mean_volume_db": -26.0,
+    "max_volume_db": -11.0
+  },
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true on the complete derived fixture",
+    "integrated_lufs": -25.9,
+    "lra_lu": 1.2,
+    "true_peak_dbtp": -11.0
+  },
+  "matrix_window": {
+    "method": "Derived bytes are exactly 124160 samples; measured with ffmpeg ebur128=peak=true",
+    "start_s": 0.0,
+    "duration_s": 3.88,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "input_lufs": -15.9,
+    "gain_db": -10,
+    "matched_lufs": -25.9,
+    "matched_true_peak_dbtp": -11.0
+  },
+  "human_review": {
+    "reviewer": "Jeffrey",
+    "reviewed_at": "2026-08-08",
+    "content_class": "closing-music",
+    "description": "Episode closing music from the OTR source, with no intended narration.",
+    "basis": "Description inherited from the hash-bound, human ear-gated source receipt. The derivation only takes the first 3.88 seconds, resamples to mono 32 kHz float PCM, and applies the recorded gain.",
+    "derived_bytes_separately_auditioned": false
+  },
+  "ear_gate_pass": true,
+  "ear_gate_basis": "inherited_from_hash_bound_source_receipt",
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_fmt,sample_rate,channels,channel_layout,duration,duration_ts,time_base:format=duration,size -of json fixtures/ltx_matrix_music_closing_3p88s_gain_minus10db.wav",
+    "volumedetect": "ffmpeg -nostdin -hide_banner -nostats -i fixtures/ltx_matrix_music_closing_3p88s_gain_minus10db.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -nostdin -hide_banner -nostats -i fixtures/ltx_matrix_music_closing_3p88s_gain_minus10db.wav -af ebur128=peak=true -f null NUL",
+    "derivation": "ffmpeg -nostdin -hide_banner -loglevel error -y -i fixtures/music_closing.wav -map_metadata -1 -af \"aresample=32000,atrim=start_sample=0:end_sample=124160,asetpts=N/SR/TB,volume=-10dB\" -ac 1 -ar 32000 -c:a pcm_f32le -fflags +bitexact -flags:a +bitexact fixtures/ltx_matrix_music_closing_3p88s_gain_minus10db.wav"
+  }
+}

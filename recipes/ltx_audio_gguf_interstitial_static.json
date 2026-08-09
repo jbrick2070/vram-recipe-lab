@@ -1,0 +1,470 @@
+{
+  "name": "ltx_audio_gguf_interstitial_static",
+  "tier": "gguf",
+  "status": "ACTIVE",
+  "experiment": {
+    "campaign": "audio_conditioning_matrix_v1",
+    "variant": "interstitial_static",
+    "matrix_role": "non-speech-control",
+    "source_fixture": "interstitial_static.wav",
+    "source_sha256": "182ba04d0dc1b4ff6cb21f1748f6b682c58e67d581971d0d9b83700d7e45bfc1",
+    "conditioning_fixture": "ltx_matrix_interstitial_static_3p88s_gain_0db.wav",
+    "conditioning_sha256": "ecbcf9a38fb3f6c047ab2fd9ac8b4fdccdaa940e5e5e4d2b2c377f29e904177e",
+    "conditioning_receipt": "fixtures/audio_receipts/ltx_matrix_interstitial_static_3p88s_gain_0db.json",
+    "window_start_s": 0.0,
+    "window_duration_s": 3.88,
+    "sample_rate_hz": 32000,
+    "channels": 1,
+    "sample_format": "pcm_f32le",
+    "gain_db": 0,
+    "target_lufs": -25.8,
+    "measured_lufs": -25.8,
+    "audio_guide_mask": 0.0,
+    "scheduler_latent": "connected_pre_sampler_av",
+    "output_audio_policy": "CreateVideo muxes the exact loudness-matched source-derived fixture used for conditioning. LTXV Audio VAE reconstruction is discarded and is never authoritative delivery audio.",
+    "delivery_audio_policy": "Diagnostic clips mux the matched conditioning derivative. Delivery must externally mux the untouched original source fixture; derived audio and Audio-VAE audio are not delivery authority.",
+    "source_preservation_policy": "The original hash-bound source fixture remains intact; the matrix uses only the receipt-bound trim/resample/gain derivative."
+  },
+  "contract": {
+    "engine": "ltx_audio",
+    "mode": "ia2v",
+    "width": 832,
+    "height": 480,
+    "frames": 97,
+    "fps": 25.0,
+    "duration_s": 3.88,
+    "vram_ceiling_gb": 14.5
+  },
+  "prompt": {
+    "1": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "ltx-2.3-22b-dev_video_vae.safetensors"
+      }
+    },
+    "2": {
+      "class_type": "LTXVAudioVAELoader",
+      "inputs": {
+        "ckpt_name": "ltx-2.3-22b-dev.safetensors"
+      }
+    },
+    "999": {
+      "class_type": "UnetLoaderGGUF",
+      "inputs": {
+        "unet_name": "ltx-2.3-22b-dev-Q3_K_M.gguf"
+      }
+    },
+    "3": {
+      "class_type": "LTXAVTextEncoderLoader",
+      "inputs": {
+        "text_encoder": "gemma_3_12B_it_fp4_mixed.safetensors",
+        "ckpt_name": "ltx-2.3-22b-dev.safetensors",
+        "device": "default"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "3",
+          0
+        ],
+        "text": "retro-futuristic radio control room matching the supplied image, locked camera, subtle natural movement in instrument meters and indicator lights, no scene change, high quality"
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": [
+          "3",
+          0
+        ],
+        "text": "negative prompt, low quality, blurry, distorted"
+      }
+    },
+    "18": {
+      "class_type": "FloatConstant",
+      "inputs": {
+        "value": 25.0
+      }
+    },
+    "6": {
+      "class_type": "LTXVConditioning",
+      "inputs": {
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "frame_rate": [
+          "18",
+          0
+        ]
+      }
+    },
+    "7": {
+      "class_type": "LTXVScheduler",
+      "inputs": {
+        "steps": 20,
+        "max_shift": 2.05,
+        "base_shift": 0.95,
+        "stretch": true,
+        "terminal": 0.1,
+        "latent": [
+          "30",
+          0
+        ]
+      }
+    },
+    "8": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "euler"
+      }
+    },
+    "9": {
+      "class_type": "RandomNoise",
+      "inputs": {
+        "noise_seed": 42
+      }
+    },
+    "10": {
+      "class_type": "CFGGuider",
+      "inputs": {
+        "model": [
+          "999",
+          0
+        ],
+        "positive": [
+          "6",
+          0
+        ],
+        "negative": [
+          "6",
+          1
+        ],
+        "cfg": 3.0
+      }
+    },
+    "11": {
+      "class_type": "EmptyLTXVLatentVideo",
+      "inputs": {
+        "width": 832,
+        "height": 480,
+        "length": 97,
+        "batch_size": 1
+      }
+    },
+    "13": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    },
+    "14": {
+      "class_type": "ResizeImageMaskNode",
+      "inputs": {
+        "input": [
+          "13",
+          0
+        ],
+        "resize_type": "scale dimensions",
+        "resize_type.width": 832,
+        "resize_type.height": 480,
+        "resize_type.crop": "center",
+        "scale_method": "lanczos"
+      }
+    },
+    "15": {
+      "class_type": "LTXVPreprocess",
+      "inputs": {
+        "image": [
+          "14",
+          0
+        ],
+        "img_compression": 0.0
+      }
+    },
+    "16": {
+      "class_type": "LTXVImgToVideoInplace",
+      "inputs": {
+        "vae": [
+          "1",
+          0
+        ],
+        "image": [
+          "15",
+          0
+        ],
+        "latent": [
+          "11",
+          0
+        ],
+        "bypass": false,
+        "strength": 1.0
+      }
+    },
+    "20": {
+      "class_type": "LoadAudio",
+      "inputs": {
+        "audio": "ltx_matrix_interstitial_static_3p88s_gain_0db.wav"
+      }
+    },
+    "21": {
+      "class_type": "TrimAudioDuration",
+      "inputs": {
+        "audio": [
+          "20",
+          0
+        ],
+        "duration": 3.88,
+        "start_index": 0.0
+      }
+    },
+    "22": {
+      "class_type": "LTXVAudioVAEEncode",
+      "inputs": {
+        "audio": [
+          "21",
+          0
+        ],
+        "audio_vae": [
+          "2",
+          0
+        ]
+      }
+    },
+    "23": {
+      "class_type": "SolidMask",
+      "inputs": {
+        "width": 832,
+        "height": 480,
+        "value": 0.0
+      }
+    },
+    "24": {
+      "class_type": "SetLatentNoiseMask",
+      "inputs": {
+        "samples": [
+          "22",
+          0
+        ],
+        "mask": [
+          "23",
+          0
+        ]
+      }
+    },
+    "30": {
+      "class_type": "LTXVConcatAVLatent",
+      "inputs": {
+        "video_latent": [
+          "16",
+          0
+        ],
+        "audio_latent": [
+          "24",
+          0
+        ]
+      }
+    },
+    "31": {
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+        "noise": [
+          "9",
+          0
+        ],
+        "guider": [
+          "10",
+          0
+        ],
+        "sampler": [
+          "8",
+          0
+        ],
+        "sigmas": [
+          "7",
+          0
+        ],
+        "latent_image": [
+          "30",
+          0
+        ]
+      }
+    },
+    "32": {
+      "class_type": "LTXVSeparateAVLatent",
+      "inputs": {
+        "av_latent": [
+          "31",
+          0
+        ]
+      }
+    },
+    "33": {
+      "class_type": "VAEDecodeTiled",
+      "inputs": {
+        "samples": [
+          "32",
+          0
+        ],
+        "vae": [
+          "1",
+          0
+        ],
+        "tile_size": 768,
+        "overlap": 64,
+        "temporal_size": 4096,
+        "temporal_overlap": 4
+      }
+    },
+    "35": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "33",
+          0
+        ],
+        "audio": [
+          "21",
+          0
+        ],
+        "fps": [
+          "18",
+          0
+        ],
+        "bit_depth": 8
+      }
+    },
+    "75": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "35",
+          0
+        ],
+        "format": "auto",
+        "codec": "auto",
+        "filename_prefix": "ltx_audio_gguf_interstitial_static_out"
+      }
+    }
+  },
+  "topology_contract": {
+    "profile": "official_ltx_ia2v_source_delivery_v1",
+    "required_connections": {
+      "6.positive": [
+        "4",
+        0
+      ],
+      "6.negative": [
+        "5",
+        0
+      ],
+      "6.frame_rate": [
+        "18",
+        0
+      ],
+      "7.latent": [
+        "30",
+        0
+      ],
+      "14.input": [
+        "13",
+        0
+      ],
+      "15.image": [
+        "14",
+        0
+      ],
+      "16.vae": [
+        "1",
+        0
+      ],
+      "16.image": [
+        "15",
+        0
+      ],
+      "16.latent": [
+        "11",
+        0
+      ],
+      "21.audio": [
+        "20",
+        0
+      ],
+      "22.audio": [
+        "21",
+        0
+      ],
+      "22.audio_vae": [
+        "2",
+        0
+      ],
+      "24.samples": [
+        "22",
+        0
+      ],
+      "24.mask": [
+        "23",
+        0
+      ],
+      "30.video_latent": [
+        "16",
+        0
+      ],
+      "30.audio_latent": [
+        "24",
+        0
+      ],
+      "31.latent_image": [
+        "30",
+        0
+      ],
+      "32.av_latent": [
+        "31",
+        0
+      ],
+      "33.samples": [
+        "32",
+        0
+      ],
+      "35.images": [
+        "33",
+        0
+      ],
+      "35.audio": [
+        "21",
+        0
+      ],
+      "35.fps": [
+        "18",
+        0
+      ],
+      "75.video": [
+        "35",
+        0
+      ]
+    },
+    "required_class_types": [
+      "LoadAudio",
+      "TrimAudioDuration",
+      "LTXVAudioVAEEncode",
+      "SolidMask",
+      "SetLatentNoiseMask",
+      "LTXVConcatAVLatent",
+      "LTXVScheduler",
+      "SamplerCustomAdvanced",
+      "LTXVSeparateAVLatent",
+      "CreateVideo",
+      "SaveVideo"
+    ],
+    "forbidden_class_types": [
+      "AudioAdjustVolume"
+    ],
+    "require_all_nodes_reachable": true
+  }
+}

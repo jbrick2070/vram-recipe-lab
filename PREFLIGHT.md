@@ -1,32 +1,108 @@
 # Preflight Checklist
 
-Run BEFORE queuing every clip — implemented in code inside `run_recipe.py`, not performed by hand. Any failed check aborts the run with a named reason; nothing gets queued on a failed preflight.
+Run this checklist before queuing every clip. It describes checks enforced by
+`run_recipe.py` and `run_h3_suite.py`; it is not a manual substitute for them.
+Any failed preflight aborts before `POST /prompt`. Post-render gates are called
+out separately below.
 
-Context: OTR shipped three engines whose VRAM preflight guard (`assert_frame_affordable`) was written but never called — every coverage-planned segment renders unchecked, and an in-process CUDA OOM corrupts the allocator (see `research/2026-08-03-PROBLEM-STATEMENT-minimax-h3.md`, section 4, F1). This lab does not repeat that mistake. The preflight is wired in from day one and `run_recipe.py` refuses to queue without it.
+The lab exists because OTR's original VRAM guard was written but never called,
+allowing unchecked renders and allocator-corrupting CUDA OOMs. This runner must
+prove ownership, isolation, inputs, identity, and queue state before allocation.
 
-1. **Lock** — `.gpu.lock` does not exist. Create it atomically (`O_CREAT | O_EXCL`); store PID and timestamp; remove on exit, even on error.
-2. **GPU idle & Host RAM tracking** — before booting the owned lab server, `nvidia-smi` shows under **3.0 GB (3072 MB)** allocated VRAM. This accommodates measured Windows/Legion desktop-compositor fluctuation around 2.5 GB; it does not change the independent 14.5 GB render gate. System Host RAM (`psutil.virtual_memory()`) is recorded as baseline host RAM and tracked concurrently at 200ms intervals throughout execution. If unrelated GPU allocation is at least 3.0 GB, abort; do not queue behind it.
-3. **Server up / Lab Server Ownership** — `GET /system_stats` answers at `127.0.0.1:8199`.
-   - If port 8199 answers BUT no PID receipt (`.server.pid`) exists from this session, abort with reason: `Unrecognized server answering on 8199 without PID receipt` (do NOT adopt or kill it).
-   - If port 8199 is down, launch `boot_lab_server.cmd` detached, write `.server.pid`, and health-check `GET http://127.0.0.1:8199/system_stats` every 3s up to 120s. On boot failure, read tail of `server.log` and report real error.
-4. **Nodes exist** — every `class_type` in the recipe appears in `GET /object_info` at `127.0.0.1:8199`. Missing node = BLOCKED, never an install.
-5. **Models exist** — every model file the recipe references appears in `models_manifest.md`. Missing model = BLOCKED, never a download.
-6. **Widget integrity** — recipe JSON parses; every node's widget count matches its `widgets_values` length.
-7. **Affordability estimate** — before the first-ever run of a recipe, estimate VRAM from weights size + resolution x frame count and record it in the results entry. After a measured run exists, the measured peak replaces the estimate and the preflight refuses configurations whose last measured peak exceeded 14.5 GB (no re-running known-failing configs unchanged).
-8. **Fixtures uploaded** — discover literal `LoadImage` and `LoadAudio` references from the recipe, require only those files, and upload them to the server input directory via `POST /upload/image` with `overwrite=true`. The server must return the exact requested input basename, and a `/view` readback must match the queued bytes' SHA-256. Rename, upload, or readback mismatch aborts. Never regenerate a fixture.
-9. **Boot lane** — confirm boot lane is `lab-8199, sage-free` (server started without `--use-sage-attention`) and verify the live argv contains the requested reserve value, if any. Record the complete argv and lane in the receipt.
-10. **Disk** — at least 5 GB free on the output drive.
+## Before any prompt
 
-After execution, `ffprobe` must confirm the exact contract frame count,
-dimensions, and FPS, plus a nonempty audio stream when the graph requires one.
-Current warm receipts use an explicit schema version and must recompute their
-identity/artifact hashes; these checks are gates, while bitrate anomaly remains
-eyeball-priority metadata only.
+1. **Port isolation first** — `LAB_PORT` is pinned in code to literal `8199`.
+   Reject any inherited value other than `8199`—especially `8188`—before any
+   network request, GPU query, or process action. All ComfyUI requests target
+   `127.0.0.1:8199`; port 8188 is never queried or touched.
+2. **Windows coordinator and nonce-bound leases** — a standalone run holds the
+   OS byte lock on `.coordinator.mutex` for its full GPU lease and creates a
+   `.gpu.lock` receipt bound to PID, process creation time, nonce, and role.
+   Stale receipts may be reaped only while the coordinator is held, and release
+   removes only the still-matching nonce owner. A suite holds the coordinator
+   plus matching `.suite.lock` and `.gpu.lock` receipts for its full lifetime.
+   A `--suite` runner may re-enter only as the direct child of the live suite
+   owner when owner PID/create-time/nonce from its environment match both
+   receipts; the child never releases the parent's leases. A child watchdog
+   shuts down owned work if that verified parent disappears.
+3. **GPU idle and host-RAM tracking** — before booting a new owned server,
+   `nvidia-smi` must report less than 3072 MiB allocated VRAM. An already-owned
+   healthy lab server does not repeat this desktop-idle test. Record baseline
+   VRAM and host RAM immediately before the prompt, then sample both every
+   200 ms through execution. The independent render ceiling remains 14.5 GiB.
+4. **Owned server and empty queue** — port 8199 must either be down or be served
+   by the expected ComfyUI command, output directory, listener PID, and valid
+   `.server.pid`. Never adopt or kill an answering unreceipted or mismatched
+   server. If down, boot with `boot_lab_server.cmd`, verify the launched process
+   tree owns the listener, and replace the bootstrap PID receipt with the actual
+   serving PID. After ownership is proved, require no
+   `.queue.quarantine.json` and empty `queue_running` and `queue_pending` lists.
+   Any discovered work writes the durable quarantine marker and aborts. Recheck
+   queue idle under the lease immediately before `POST /prompt`; the runner does
+   not clear quarantine automatically.
+5. **Recipe, node, model, and topology validity** — parse the recipe; verify
+   every class and installed input schema against `/object_info`; enforce link,
+   required-input, output-slot, declared topology, and contract-requested
+   reachability checks; and require each referenced model in
+   `models_manifest.md`. Missing nodes or weights are BLOCKED, never installed or
+   downloaded.
+6. **Receipt history is append-only** — audit the mutable current alias and all
+   `results/<recipe>_runN.json` archives before allocating a run number. Abort on
+   malformed/BOM receipts, unexpected archive names, filename/payload or recipe
+   mismatches, duplicate numbers, alias rollback, a modern alias without its
+   archive, or an occupied target archive. Derive the next run number from all
+   preserved evidence, then re-audit before writing.
+7. **Affordability** — when the current receipt matches the exact recipe SHA and
+   boot lane, refuse an unchanged configuration whose last known run failed a
+   VRAM gate. Only an explicitly authorized `--force` run bypasses this
+   known-failure guard.
+8. **Exact fixtures and ear gate** — discover only literal `LoadImage` and
+   `LoadAudio` basenames, capture their bytes, and validate every audio fixture's
+   hash-bound probe/volume/description receipt. Upload each fixture with
+   `overwrite=true`; require the returned name, empty subfolder, and input type
+   to match exactly; then perform a no-cache `/view` readback whose SHA-256 must
+   equal the captured bytes. A rename, overwrite, receipt, or readback mismatch
+   aborts. Never regenerate a fixture during a run.
+9. **Exact live boot lane** — require sage-free argv and bidirectionally verify
+   reserve and pinned-memory state. A requested reserve must appear as the exact
+   live `--reserve-vram` value, while an unrequested reserve must be absent. A
+   no-pinned lane must contain `--disable-pinned-memory`, while every other lane
+   must omit it. Record the full argv and lane.
+10. **Disk and frozen execution identity** — require at least 5 GiB free. Bind
+    the run identity to recipe and runner bytes, fixture and audio-receipt hashes,
+    model fingerprints, boot lane and server argv, ComfyUI commit, and verified
+    server instance (`serving_pid` plus process creation time). Recompute
+    provenance and server identity after rendering; any change invalidates the
+    run and prevents a changed server from inheriting warm-cache state.
+
+## Prompt resolution and post-render gates
+
+- If prompt acceptance is uncertain, or an accepted prompt never reaches
+  terminal history, stop the owned server to prove no unresolved GPU work
+  survives. If process/listener cleanup cannot be proved, atomically write
+  `.queue.quarantine.json`; the outer finalizer repeats unresolved-prompt cleanup
+  before releasing the coordinator. No later run may queue while quarantined.
+- `ffprobe` must prove a nonempty video stream, contract frame count, dimensions,
+  and FPS. When a target duration is declared, both container and video-stream
+  durations must be within one video frame. If audio is required, its stream
+  must be nonempty and its own duration must independently be within one frame.
+  Bitrate anomaly remains priority-review metadata, not a gate.
+- Write each run receipt by exclusive creation of the immutable
+  `results/<recipe>_runN.json` archive, then atomically replace the current alias
+  with the same serialized bytes. A suite re-reads every child and proves exact
+  archive/current-alias byte parity. Suite receipts likewise use a unique run ID,
+  an exclusively created archive, and an atomically replaced current alias.
+- `shutdown_lab_server()` returns structured proof including receipt presence,
+  PID verification, termination attempt/result, process exit, listener exit,
+  receipt removal, and reason. It retains `.server.pid` whenever proof is
+  incomplete. The suite records this object, requires `success: true` for a
+  machine pass, writes its final failure/pass checkpoint while still holding the
+  coordinator, and only then releases its leases.
 
 ## Offline validation commands
 
-Use the ComfyUI virtual environment; the system Python does not carry the
-runner's `psutil` dependency.
+Use the ComfyUI virtual environment; system Python does not carry the runner's
+`psutil` dependency.
 
     $env:PYTHONDONTWRITEBYTECODE='1'
     & C:\Users\jeffr\Documents\ComfyUI\.venv\Scripts\python.exe -m unittest discover -s tests -v

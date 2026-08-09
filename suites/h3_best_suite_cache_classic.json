@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "name": "h3_best_suite",
+  "description": "Official-topology H3 best warm-pair certification with seed-preserving executor cache nonces and an AV-complete FL2VA I2V sentinel after every candidate pair.",
+  "boot_lane": {
+    "reserve_vram_gib": 12.0,
+    "disable_pinned_memory": true,
+    "cache_mode": "classic",
+    "note": "Direct reserve pressure; this is not a simulated 12 GiB card. Classic cache plus a pinned executor-only nonce preserves loader/conditioning hits while forcing fresh sampler/output execution."
+  },
+  "creep_tolerance_gib": 0.25,
+  "settle_before_sampling_s": 2.0,
+  "settle_sample_duration_s": 2.0,
+  "settle_sample_interval_s": 0.2,
+  "sequence": [
+    {"label": "W0", "recipe": "h3_i2v_suite_sentinel", "role": "warmup"},
+    {"label": "S0", "recipe": "h3_i2v_suite_sentinel", "role": "sentinel_reference"},
+    {"label": "T0", "recipe": "h3_t2v_best", "role": "candidate_cold"},
+    {"label": "T1", "recipe": "h3_t2v_best", "role": "candidate_warm"},
+    {"label": "S1", "recipe": "h3_i2v_suite_sentinel", "role": "sentinel"},
+    {"label": "I0", "recipe": "h3_i2v_best", "role": "candidate_cold"},
+    {"label": "I1", "recipe": "h3_i2v_best", "role": "candidate_warm"},
+    {"label": "S2", "recipe": "h3_i2v_suite_sentinel", "role": "sentinel"},
+    {"label": "R0", "recipe": "h3_r2v_best", "role": "candidate_cold"},
+    {"label": "R1", "recipe": "h3_r2v_best", "role": "candidate_warm"},
+    {"label": "S3", "recipe": "h3_i2v_suite_sentinel", "role": "sentinel"}
+  ]
+}

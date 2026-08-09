@@ -11,7 +11,6 @@ queries GET http://127.0.0.1:8199/object_info, and validates:
 import json
 import os
 import sys
-import subprocess
 import time
 import urllib.request
 from pathlib import Path
@@ -19,7 +18,6 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent.resolve()
 RECIPES_DIR = REPO_ROOT / "recipes"
 SERVER_URL = "http://127.0.0.1:8199"
-SERVER_PID_FILE = REPO_ROOT / ".server.pid"
 BOOT_CMD = REPO_ROOT / "boot_lab_server.cmd"
 
 REQUIRED_RECIPES = [
@@ -51,14 +49,14 @@ def boot_server():
 
 
 def shutdown_server():
-    if SERVER_PID_FILE.exists():
-        try:
-            pid = int(SERVER_PID_FILE.read_text(encoding="utf-8").strip())
-            print(f"[SERVER] Shutting down recorded lab server process PID {pid}...")
-            subprocess.run(["taskkill", "/F", "/PID", str(pid)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            SERVER_PID_FILE.unlink(missing_ok=True)
-        except Exception as e:
-            print(f"[SERVER] Warning during shutdown: {e}")
+    import run_recipe
+
+    result = run_recipe.shutdown_lab_server()
+    if result.get("success") is not True:
+        raise RuntimeError(
+            "Verified lab-server shutdown failed; ownership receipt was retained: "
+            f"{result.get('reason', 'unknown reason')}"
+        )
 
 
 def fetch_object_info() -> dict:
