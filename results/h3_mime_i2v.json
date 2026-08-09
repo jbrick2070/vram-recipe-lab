@@ -39,7 +39,11 @@
   "encoded_height": 480,
   "encoded_width": 864,
   "execution_cache_control": {},
-  "eyeball": "pending",
+  "eyeball": "ok",
+  "eyeball_source": "human",
+  "eyeball_reviewed_at": "2026-08-08T21:21:30-07:00",
+  "human_video_description": "Jeffrey: those images look good.",
+  "human_video_scope": "Visual appearance approved for the displayed Mini Mime result; formal audio and soundscape review remains pending.",
   "final_server_instance": {
     "process_create_time": 1786245503.156966,
     "serving_pid": 20196

@@ -152,7 +152,7 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
 - Human video and native-audio review is pending for every H3 best artifact. Individual
   warm evidence must not be summarized as an overall suite pass or promotion.
 
-### H3 RefAudio: TTS Dialogue Smoke
+### H3 RefAudio: TTS and Opening-Music Cold Cells
 
 - Exactly one `h3_r2v_refaudio_tts_dialogue` smoke was rendered. It is a cold-only
   machine gate pass at 7.15 GB peak / 2.46 GB baseline in 249.0 s, with valid
@@ -163,8 +163,17 @@ This document logs all rendering attempts, parameter changes, measured VRAM perf
 - The model-native generated soundtrack measures -21.4 LUFS. Human eye/ear review is
   still required for identity quality, intelligibility, synchronization, unwanted
   vocals/noise, and whether the TTS reference had a useful behavioral effect.
-- Static-control and music-opening RefAudio cells were not rendered. The single cold
-  TTS smoke is not a warm certification and does not authorize a promotion claim.
+- Exactly one matching `h3_r2v_refaudio_music_opening` cell then rendered at
+  7.18 GB peak / 2.46 GB baseline in 249.0 s. It also contains valid 124-frame,
+  5.167-second native A/V; its soundtrack measures -23.1 LUFS.
+- The first 3.88 seconds of the native music output strongly reconstruct the matched
+  reference (aligned waveform correlation about 0.94, RMS-envelope correlation 0.95,
+  and spectral cosine about 0.99) without any source-to-`CreateVideo` mux path.
+- Objective video analysis did not demonstrate beat-synchronized motion. The TTS
+  clip likewise contains subtle mouth motion but no convincing speech-timed
+  articulation. These are behavioral findings, not media failures.
+- Static control remains unrendered. Both completed cells are cold experimental
+  evidence, not warm certifications or promotion claims.
 
 ### H3 Mini Mime: One I2V Proof
 

@@ -1,21 +1,18 @@
 {
   "accepted_prompt": true,
-  "artifact_bytes": 369898,
-  "artifact_bytes_per_frame": 4109.98,
-  "artifact_sha256": "0b1ad7e35045478d8b7097c3ec8012e1fe465ae8683942841b51556d73a1fbfb",
-  "audio_bitrate": 128334,
+  "artifact_bytes": 687523,
+  "artifact_bytes_per_frame": 5544.54,
+  "artifact_sha256": "84fa5ae2029da529fd27c490c40b5bea736dbe9b201e974326ab2a92441ccf09",
+  "audio_bitrate": 128324,
   "audio_codec": "aac",
-  "audio_delivered_s": 3.75,
-  "audio_duration_error_s": 0.0,
-  "audio_duration_s": 3.75,
-  "audio_ear": "pending",
-  "audio_ear_reviewed_at": null,
-  "audio_ear_source": "pending_human",
+  "audio_duration_s": 5.167,
   "audio_present": true,
-  "audio_receipt_sha256s": {},
-  "audio_stream_bytes": 60670,
-  "baseline_host_ram_gb": 20.51,
-  "baseline_vram_gb": 2.61,
+  "audio_receipt_sha256s": {
+    "ltx_matrix_music_opening_3p88s_gain_minus12db.wav": "7ddc592d2b35e521ad2de09323b779cc19f88dac143af33fb6e486db4da9e194"
+  },
+  "audio_stream_bytes": 83390,
+  "baseline_host_ram_gb": 18.96,
+  "baseline_vram_gb": 2.46,
   "bitrate_anomaly": false,
   "bitrate_baseline_status": "provisional:0-of-3-clean-artifacts",
   "blocked": false,
@@ -25,43 +22,37 @@
   "clean_baseline_sample_count": 0,
   "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
   "config_run_count": 1,
-  "container_delivered_s": 3.75,
-  "container_duration_s": 3.75,
-  "delivered_s": 3.75,
-  "diegetic_sync": "pending",
-  "duration_error_s": 0.0,
-  "duration_measurement_source": "ffprobe format.duration plus per-stream duration",
-  "duration_s": 188.3,
-  "duration_tolerance_s": 0.041666666666666664,
-  "duration_within_tolerance": true,
+  "container_duration_s": 5.167,
+  "duration_s": 249.0,
   "encoded_fps": 24.0,
-  "encoded_frame_count": 90,
+  "encoded_frame_count": 124,
   "encoded_height": 480,
   "encoded_width": 864,
   "execution_cache_control": {},
-  "eyeball": "ok",
-  "eyeball_source": "human",
-  "eyeball_reviewed_at": "2026-08-08T21:21:30-07:00",
-  "human_video_description": "Jeffrey: those images look good.",
-  "human_video_scope": "Visual appearance approved for the displayed Mini Mime result; formal audio and soundscape review remains pending.",
+  "eyeball": "pending",
   "final_server_instance": {
-    "process_create_time": 1786247621.221711,
-    "serving_pid": 50440
+    "process_create_time": 1786248614.571649,
+    "serving_pid": 32604
   },
   "final_suite_cache_runtime_sha256s": {},
   "fixture_sha256s": {
-    "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+    "ltx_matrix_music_opening_3p88s_gain_minus12db.wav": "4a7a474bf92a08109b53a3b0422fca708e105295b6f1a6c4587434d4fa808ce0",
+    "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+    "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
   },
-  "frame_count": 90,
   "gate_pass": true,
-  "git_commit": "b4fb869c8bc98bb5b9d1c713a3428f5e1ff698d4",
-  "git_dirty": true,
+  "git_commit": "2de34f2f20b37f0a1508be02013c71a948a3e267",
+  "git_dirty": false,
   "identity": {
-    "audio_receipt_sha256s": {},
+    "audio_receipt_sha256s": {
+      "ltx_matrix_music_opening_3p88s_gain_minus12db.wav": "7ddc592d2b35e521ad2de09323b779cc19f88dac143af33fb6e486db4da9e194"
+    },
     "boot_lane": "lab-8199, sage-free, no-pinned, reserve-12gb",
     "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
     "fixture_sha256s": {
-      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+      "ltx_matrix_music_opening_3p88s_gain_minus12db.wav": "4a7a474bf92a08109b53a3b0422fca708e105295b6f1a6c4587434d4fa808ce0",
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
     },
     "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
     "model_fingerprints": {
@@ -90,7 +81,7 @@
         "resolved": true
       }
     },
-    "recipe_sha256": "14c3bc4a5981db0d566c9e8f46dd7643102979c2c098cc71e09563acbf8e0a99",
+    "recipe_sha256": "9952c8dc3bdd2ba2fe37b2a38291f918d42a4e4311b8909c2565c84ea5433a44",
     "runner_sha256": "d42cea9d4acd0c6122f8e564bc1950acb319206505d849eda7835039ba7914f7",
     "server_argv": [
       "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
@@ -113,11 +104,10 @@
       "--disable-pinned-memory"
     ],
     "server_instance": {
-      "process_create_time": 1786247621.221711,
-      "serving_pid": 50440
+      "process_create_time": 1786248614.571649,
+      "serving_pid": 32604
     }
   },
-  "inverted_ear_gate_pass": false,
   "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
   "marginal": false,
   "model_fingerprints": {
@@ -147,26 +137,24 @@
     }
   },
   "orphan_cleanup": {},
-  "output_path": "h3_mime_r2v_out_00001_.mp4",
+  "output_path": "h3_r2v_refaudio_music_opening_out_00001_.mp4",
   "pass": false,
-  "peak_host_ram_gb": 27.93,
-  "peak_vram_gb": 7.23,
+  "peak_host_ram_gb": 29.05,
+  "peak_vram_gb": 7.18,
   "physical_total_vram_gib": 15.9208984375,
   "pixel_format": "yuv420p",
-  "planned_delivered_s": 3.75,
   "promotion_ready": false,
-  "prompt_id": "a6e4e106-523f-4f4e-a950-3736b60e5cc4",
+  "prompt_id": "4c65c65b-a112-4550-9045-17c23a54ec9d",
   "provenance_unchanged": true,
   "provenance_validation_error": "",
-  "queued_prompt_sha256": "a46bdff84b85f1ea4c8545d5c77dd1f9318efbdad252b1d07ca78d0485e270f5",
+  "queued_prompt_sha256": "d44857b70b38406acbaf95f0ef408cc4fe4341ee29209722b5e0f4be085c0532",
   "receipt_schema_version": 3,
-  "recipe": "h3_mime_r2v",
-  "recipe_sha256": "14c3bc4a5981db0d566c9e8f46dd7643102979c2c098cc71e09563acbf8e0a99",
-  "rendered_s": 3.75,
+  "recipe": "h3_r2v_refaudio_music_opening",
+  "recipe_sha256": "9952c8dc3bdd2ba2fe37b2a38291f918d42a4e4311b8909c2565c84ea5433a44",
   "requires_human_eyeball": true,
   "reserve_vram_gib": 12.0,
   "run_count": 1,
-  "run_identity_sha256": "f03ff7da0f722dc2382aee66460e2d6c5daaf7699f7f58a64943ba58ead0679a",
+  "run_identity_sha256": "6e7d78880b687e0e3c50aaffd66454a78501d2527035cba3d75892e293f4c32a",
   "run_number": 1,
   "runner_sha256": "d42cea9d4acd0c6122f8e564bc1950acb319206505d849eda7835039ba7914f7",
   "server_argv": [
@@ -190,24 +178,17 @@
     "--disable-pinned-memory"
   ],
   "server_instance": {
-    "process_create_time": 1786247621.221711,
-    "serving_pid": 50440
+    "process_create_time": 1786248614.571649,
+    "serving_pid": 32604
   },
   "server_instance_unchanged": true,
-  "soundscape_description": "",
-  "speech_or_vocal_like_content": "pending",
   "status": "PASS (cold)",
   "suite_cache_runtime_sha256s": {},
-  "tail_trim_s": 0.0,
-  "target_s": 3.75,
-  "timestamp": "2026-08-09T03:57:00Z",
-  "trim_frames": 0,
+  "timestamp": "2026-08-09T04:14:34Z",
   "valid_measurement": true,
   "video_codec": "h264",
-  "video_delivered_s": 3.75,
-  "video_duration_error_s": 0.0,
-  "video_duration_s": 3.75,
-  "video_stream_bytes": 304851,
-  "video_stream_bytes_per_frame": 3387.23,
+  "video_duration_s": 5.166667,
+  "video_stream_bytes": 598720,
+  "video_stream_bytes_per_frame": 4828.39,
   "warm_pass": false
 }

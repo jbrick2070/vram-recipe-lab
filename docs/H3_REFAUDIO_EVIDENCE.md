@@ -1,7 +1,7 @@
 # MiniMax H3 Ref2VA external-audio evidence
 
-Status as of 2026-08-08: **one valid cold TTS smoke completed; comparative
-behavior, warm certification, and human eye/ear review remain pending**.
+Status as of 2026-08-08: **valid cold TTS and opening-music cells completed;
+static control, warm certification, and human eye/ear review remain pending**.
 
 This note records why the three `h3_r2v_refaudio_*` recipes are legitimate tests of
 MiniMax H3 reference-audio conditioning, what the available examples do and do not
@@ -22,10 +22,15 @@ JSON was copied into the recipes.
 - Official material establishes the socket and prompt semantics, but the official
   ComfyUI R2V template leaves its audio-reference sockets unwired. Community graphs
   corroborate the wiring; they do not establish successful behavior on this rig.
-- The first authorized runtime test, one TTS-dialogue smoke, completed as a valid
-  cold machine gate pass: 7.15 GB peak / 2.46 GB baseline, 249.0 seconds, and valid
-  124-frame/5.167-second video plus native generated audio. It is not a warm pass or
-  a human quality verdict. Static-control and music-opening were not rendered.
+- The TTS-dialogue and opening-music cells each completed as valid cold machine gate
+  passes. They used the same seed, images, prompt, graph, duration, and lane; only the
+  receipt-bound reference WAV and output identity differ.
+- The music cell strongly reconstructs the 3.88-second reference in its native target
+  soundtrack (aligned waveform correlation about 0.94 and spectral cosine about
+  0.99), while the TTS cell preserves much less of its source waveform. This is not a
+  direct source mux: both tracks come exclusively from the sampled target latent.
+- Neither cold cell proves lip synchronization or audio-driven visual motion. Human
+  review remains required, and the static control remains unrendered.
 
 ## Official semantics
 
@@ -206,7 +211,7 @@ warm pair, while the overall H3 suite remains failed on a separate T1 creep gate
 |---|---|---|---|
 | [`h3_r2v_refaudio_static_control`](../recipes/h3_r2v_refaudio_static_control.json) | static/control | `ltx_matrix_interstitial_static_3p88s_gain_0db.wav` | not run |
 | [`h3_r2v_refaudio_tts_dialogue`](../recipes/h3_r2v_refaudio_tts_dialogue.json) | speech condition and first smoke | `ltx_matrix_tts_dialogue_3p88s_gain_minus5db.wav` | cold machine gate pass; human pending |
-| [`h3_r2v_refaudio_music_opening`](../recipes/h3_r2v_refaudio_music_opening.json) | music condition | `ltx_matrix_music_opening_3p88s_gain_minus12db.wav` | not run |
+| [`h3_r2v_refaudio_music_opening`](../recipes/h3_r2v_refaudio_music_opening.json) | music condition | `ltx_matrix_music_opening_3p88s_gain_minus12db.wav` | cold machine gate pass; human pending |
 
 All three WAVs are receipt-bound, 3.88-second, 32 kHz mono fixtures prepared for the
 same comparison window. H3 may resample supported inputs to its Audio VAE rate; these
@@ -281,32 +286,39 @@ Topology and provenance proven before rendering:
 - fixture and evidence hashes are pinned; and
 - the builder is byte-idempotent and the full local unit suite passes.
 
-The TTS run-1 receipt and artifact now additionally prove:
+The TTS and music run-1 receipts and artifacts now additionally prove:
 
 - the installed standalone-audio path executes to completion on the isolated
   `lab-8199, sage-free, no-pinned, reserve-12gb` lane;
-- peak/baseline VRAM are 7.15/2.46 GB and wall time is 249.0 seconds, below the
-  14.5 GB global gate for this cold run;
-- the output contains 124 encoded frames, 5.166667 seconds of video, and 5.167
+- TTS peak/baseline VRAM are 7.15/2.46 GB and music peak/baseline VRAM are
+  7.18/2.46 GB; each took 249.0 seconds and remained below the 14.5 GB global gate;
+- each output contains 124 encoded frames, 5.166667 seconds of video, and 5.167
   seconds of native generated audio in a 5.167-second container;
 - objective image-conditioning checks are strong, establishing that the corrected
   V3 dotted image-reference path is active without substituting for a human verdict;
   and
-- the generated target soundtrack is present and measures -21.4 LUFS. It is decoded
-  from the sampled target latent, not copied or muxed from the 3.88-second TTS WAV.
+- the generated TTS target soundtrack is present at -21.4 LUFS, while the generated
+  music soundtrack is present at -23.1 LUFS; and
+- the music target preserves its matched reference far more strongly than the TTS
+  target. A controlled analysis found aligned music waveform correlation 0.939,
+  RMS-envelope correlation 0.955, spectral-flux correlation 0.875, and mean spectral
+  cosine similarity 0.987. A direct AAC mux/encode control is materially closer, and
+  the generated track continues with a non-silent 1.29-second tail, confirming that
+  this is strong model-conditioned reconstruction rather than literal source muxing.
 
 Still not proven:
 
-- that dialogue, music, and control waveforms produce measurably different target
-  audio or appropriate visual behavior, because static-control and music-opening
-  have not been rendered;
-- speech intelligibility, lip synchronization, musical adherence, or useful degree
-  of reference transfer;
+- how either result differs from the static-control condition, which remains
+  unrendered;
+- speech intelligibility or lip synchronization: the TTS clip has subtle lower-face
+  changes, but mouth-specific timing did not track its speech-active windows;
+- beat-synchronized visual behavior: camera-compensated music-motion correlation was
+  weak and did not beat shifted controls convincingly, despite strong audio transfer;
 - absence of silence, noise, truncation, or duration anomalies in the decoded target
   soundtrack by human audition; and
 - a second consecutive warm-cache pass or any production/promotion claim.
 
-The TTS smoke is therefore **cold machine evidence with human eye/ear pending**.
-Static-control and music-opening remain unrendered; this reconciliation does not
-authorize or imply those cells, a warm repeat, or promotion. Hearing and viewing the
-existing TTS artifact is the next decision point.
+The TTS and music cells are therefore **cold machine evidence with human eye/ear
+pending**. The result supports H3 Ref2VA as a strong native music-transfer path, but
+does not establish lip sync or music-responsive visual motion. Static control remains
+unrendered; no warm repeat or promotion is implied.

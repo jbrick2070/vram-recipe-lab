@@ -4,11 +4,11 @@ Date: 2026-08-08
 
 ## Completion status
 
-The authorized machine work for this lab session is complete. The four-cell LTX
-audio experiment, LTX T2V close-out, corrected H3 best cold/warm suite, one H3
-RefAudio TTS smoke, one Mini Mime I2V proof, and the single user-approved R2V
-mime follow-up all have durable receipts and artifacts. No additional mime
-variant was rendered.
+The authorized machine work for this lab session and its explicit RefAudio music
+follow-up is complete. The four-cell LTX audio experiment, LTX T2V close-out,
+corrected H3 best cold/warm suite, H3 RefAudio TTS and opening-music cold cells,
+one Mini Mime I2V proof, and the single user-approved R2V mime follow-up all have
+durable receipts and artifacts. No additional mime variant was rendered.
 
 The session is complete as a truthful lab milestone, not as a blanket promotion:
 
@@ -17,8 +17,9 @@ The session is complete as a truthful lab milestone, not as a blanket promotion:
 - all H3 human video/audio gates remain pending unless separately noted by the
   operator;
 - the LTX matrix is cold experimental evidence, not warm certification; and
-- Mini Mime is stopped after the one approved R2V proof; formal human eye/ear
-  fields and soundscape descriptions remain incomplete.
+- Mini Mime is stopped after the one approved R2V proof; Jeffrey approved the
+  displayed visual appearance, while formal audio fields and soundscape
+  descriptions remain incomplete.
 
 The controlling promotion summary is [PROMOTION_BRIEF.md](PROMOTION_BRIEF.md).
 
@@ -117,10 +118,10 @@ delta.
 - receipt SHA-256:
   `9cedbc3ab06e2ec056defa77fb1be5a679986b25570e2e3855644808f815666f`
 
-### 6. H3 RefAudio TTS smoke
+### 6. H3 RefAudio TTS and opening-music cells
 
-One corrected standalone-audio Ref2VA smoke ran; static and music cells were
-intentionally held.
+Two corrected standalone-audio Ref2VA cells ran with the same graph, seed, prompt,
+images, and duration. Static control remains held.
 
 - [receipt](../results/h3_r2v_refaudio_tts_dialogue.json)
 - [artifact](../outputs/h3_r2v_refaudio_tts_dialogue_out_00001_.mp4)
@@ -128,11 +129,27 @@ intentionally held.
 - 124 unique frames, 864x480, 24 fps; 5.167-second video and AAC audio
 - strong technical portrait-plus-scene conditioning
 - generated soundtrack approximately -21.4 LUFS
-- near-zero zero-lag waveform correlation with the source derivative, proving
-  the delivered audio is native target audio rather than source mux/copy
+- low best-aligned waveform correlation with the source derivative (about 0.23),
+  showing far less source preservation than the music cell; the graph topology
+  proves native target audio rather than source mux/copy
 
 This is a technical viability result, not proof that H3 followed the TTS's
 phonemes, timing, or character. Human eye/ear review remains pending.
+
+The authorized opening-music comparison then completed:
+
+- [receipt](../results/h3_r2v_refaudio_music_opening.json)
+- [artifact](../outputs/h3_r2v_refaudio_music_opening_out_00001_.mp4)
+- cold peak 7.18 GiB from a 2.46 GiB baseline; 249.0 seconds
+- 124 unique frames, 864x480, 24 fps; 5.167-second video and AAC audio
+- generated soundtrack approximately -23.1 LUFS
+- strong native reconstruction of the first 3.88 seconds of reference music
+  (aligned waveform correlation about 0.94; mean spectral cosine about 0.99)
+- weak camera-compensated beat-to-motion evidence, with no causal visual response
+  established
+
+The delivered music track still comes exclusively from the sampled target latent;
+there is no source-audio mux. Both cells remain cold and human-pending.
 
 ### 7. Mini Mime I2V and R2V proofs
 
@@ -147,8 +164,9 @@ approved continuing to one portrait-only R2V proof.
 - valid native AAC soundtrack approximately -27.5 LUFS with no clipping
 
 Objective I2V QA found 90 unique frames, no freeze/black event, and a non-silent
-native track. Jeffrey's approval authorized the R2V continuation, but the formal
-I2V receipt still awaits his one-line soundscape description.
+native track. Jeffrey subsequently said the images look good and confirmed the
+visual approval used for the R2V continuation, but the formal I2V receipt still
+awaits his one-line soundscape description.
 
 The R2V follow-up is also a valid cold-only proof:
 
@@ -160,8 +178,9 @@ The R2V follow-up is also a valid cold-only proof:
 - strong objective portrait stability in representative frames
 - valid but very quiet native soundtrack near -40.5 LUFS
 
-R2V human eye/ear review remains pending. No additional mime variant is
-authorized, and neither cold-only result is warm-certified or promoted.
+R2V visual appearance is also human-approved; its ear review remains pending. No
+additional mime variant is authorized, and neither cold-only result is
+warm-certified or promoted.
 
 ## Failures and stops preserved
 
@@ -171,8 +190,8 @@ authorized, and neither cold-only result is warm-certified or promoted.
   superseded and must not support conditioning claims.
 - LTX T2V is hard-closed after three attempts and exceeds the unreserved gate.
 - LTX matrix rows are single cold experiments, never warm passes.
-- RefAudio static/music variants were not run; Mini Mime stopped after the one
-  explicitly approved R2V proof.
+- RefAudio static control was not run; Mini Mime stopped after the one explicitly
+  approved R2V proof.
 - All open human eye/ear gates remain explicit; none were fabricated from
   objective media measurements.
 
@@ -200,8 +219,11 @@ authorized, and neither cold-only result is warm-certified or promoted.
 1. Compare the four LTX loudness-matched diagnostics for motion character.
 2. Review H3 T2V/I2V/R2V best video and generated audio; note that corrected
    R2V's native track is objectively near-silent.
-3. Review the RefAudio TTS smoke for useful reference behavior.
-4. Supply the one-line I2V soundscape description and review R2V Mini Mime for
+3. Review RefAudio TTS for audible speech character and human-visible lip sync;
+   objective analysis did not demonstrate synchronized articulation.
+4. Review RefAudio music for intended musical identity, its generated 1.29-second
+   tail, and whether any visible action actually feels music-responsive.
+5. Supply the one-line I2V soundscape description and review R2V Mini Mime for
    absence of speech/vocal-like content and diegetic sync.
 
 Pending human review defers promotion and any further mime work, but it does not

@@ -17,9 +17,10 @@ retains its required human video/audio gate.
 | `h3_r2v_best` | Corrected flat-V3-socket cold/warm pair passed; 8.42 GiB warm peak | Video pending; native audio is objectively near-silent | Not promoted; overall suite failed |
 | LTX four-condition audio matrix | Four valid cold diagnostics and source-delivery previews | Comparative eye/ear review pending in receipts | Experimental evidence only |
 | `ltx_t2v_gguf` selected cell B | Best existing candidate, but 15.04 GiB unreserved and attempt limit exhausted | Video pending | Campaign closed without certification |
-| `h3_r2v_refaudio_tts_dialogue` | One valid 7.15 GiB cold smoke; native target audio, not source mux | Eye/ear behavior pending | Experimental; static/music cells held |
-| `h3_mime_i2v` | One valid 7.28 GiB cold proof; exact 90 frames / 3.750 s | Jeffrey approved one continuation; formal soundscape line pending | Experimental; not warm/promoted |
-| `h3_mime_r2v` | One valid 7.23 GiB cold proof; exact 90 frames / 3.750 s | Video and inverted ear gate pending | Final authorized mime render; not warm/promoted |
+| `h3_r2v_refaudio_tts_dialogue` | One valid 7.15 GiB cold smoke; native target audio, not source mux | No convincing objective lip sync; human eye/ear pending | Experimental; not warm/promoted |
+| `h3_r2v_refaudio_music_opening` | One valid 7.18 GiB cold smoke; strong native music reconstruction | Beat-to-motion evidence weak; human eye/ear pending | Experimental; static control held |
+| `h3_mime_i2v` | One valid 7.28 GiB cold proof; exact 90 frames / 3.750 s | Human visual approval recorded; formal soundscape line pending | Experimental; not warm/promoted |
+| `h3_mime_r2v` | One valid 7.23 GiB cold proof; exact 90 frames / 3.750 s | Human visual approval recorded; inverted ear gate pending | Final authorized mime render; not warm/promoted |
 
 ## H3 best evidence
 
@@ -77,7 +78,7 @@ corrected, officially tiled cell B artifact is
 recipe bytes were not preserved. [ESCALATE.md](ESCALATE.md) is the controlling
 close-out; no fourth quality or certification render is authorized.
 
-## H3 RefAudio proof
+## H3 RefAudio TTS/music comparison
 
 The corrected TTS smoke is a narrow technical success:
 
@@ -87,12 +88,26 @@ The corrected TTS smoke is a narrow technical success:
 - 7.15 GiB peak from a 2.46 GiB baseline; 249.0 seconds
 - strong objective portrait-plus-scene conditioning in sampled frames
 - generated audio at approximately -21.4 LUFS
-- near-zero zero-lag waveform correlation with the input derivative, confirming
+- low best-aligned waveform correlation with the input derivative (about 0.23),
+  showing far less source preservation than the music cell; graph topology proves
   the delivered track is native target audio rather than source mux/copy
 
-One artifact cannot prove that speech character or timing causally follows the
-TTS reference. Human eye/ear review remains required, and the static and music
-RefAudio cells stay held until that result is judged useful.
+The TTS clip has subtle lower-face changes, but objective mouth-specific motion did
+not start and stop with the speech-active windows. It therefore does not demonstrate
+lip sync.
+
+The matching opening-music cell adds a second narrow technical success:
+
+- [cold receipt](../results/h3_r2v_refaudio_music_opening.json)
+- [artifact](../outputs/h3_r2v_refaudio_music_opening_out_00001_.mp4)
+- 7.18 GiB peak from a 2.46 GiB baseline; 249.0 seconds
+- valid 124-frame/5.167-second native A/V, with generated audio at -23.1 LUFS
+- strong reconstruction of the 3.88-second reference in the native target audio:
+  aligned waveform correlation about 0.94 and mean spectral cosine about 0.99
+- no objective proof that music accents control body, face, or camera motion
+
+Human eye/ear review remains required for both cells. The static control remains
+held, and neither cold result is warm-certified or promoted.
 
 ## Mini Mime opportunity
 
