@@ -1,46 +1,63 @@
-# RTX 4060 next action: write, commit, push, stop
+# RTX 4060: update, check, commit, push, stop
 
-The laptop has no approved video-model assets. Its only job now is to make a
-redacted, commit-ready proof of the physical hardware. It must **write the
-report, commit it, and push it**; a chat summary alone is not the deliverable.
+This is one small task. The laptop has an older checkout and no video models.
+Its job is to update safely, record its physical hardware, commit that finding,
+push it, and stop.
 
-## Execute exactly this
+## 1. Make the old checkout clean, without losing its preflight edit
 
-From the separate laptop checkout:
+Run these commands from the laptop repository root:
 
 ```powershell
+git stash push -u -m "preserve-old-4060-preflight-before-update" -- eightgb_bench/preflight_4060.py
 git pull --ff-only origin main
-& <any-already-installed-python.exe> -B .\eightgb_bench\preflight_4060.py hardware-inventory --write-receipt --write-public-report
+git status --short
+```
+
+The stash safely preserves the old `preflight_4060.py` change. Do **not** run
+`git stash pop`; the pulled version is the new instruction set. The last
+command should print nothing. If it prints anything, or if any of these three
+commands fails, stop and return its complete output—do not use `reset`,
+`checkout`, `clean`, or force push.
+
+## 2. Create the laptop's one finding
+
+Use any already-installed local Python; do not install Python for this task:
+
+```powershell
+& <already-installed-python.exe> -B .\eightgb_bench\preflight_4060.py hardware-inventory --write-public-report
+```
+
+It reads only `nvidia-smi` and Windows RAM. It does **not** download models,
+install packages, boot ComfyUI, open a port, or render. A successful command
+creates exactly this redacted finding:
+
+```text
+eightgb_bench/reports/physical-rtx4060-8gb-hardware.json
+```
+
+If the command fails or does not print `public_report_path`, stop and return
+the error. Do not make a profile or fix missing models.
+
+## 3. Commit and push only that finding
+
+```powershell
 git status --short
 git add -- eightgb_bench/reports/physical-rtx4060-8gb-hardware.json
-$staged = @(git diff --cached --name-only)
-if ($staged.Count -ne 1 -or $staged[0] -ne 'eightgb_bench/reports/physical-rtx4060-8gb-hardware.json') { throw "Refusing to commit anything except the one redacted 4060 hardware report." }
 git diff --cached --check
+git diff --cached --name-only
 git commit -m "Record physical RTX 4060 hardware inventory"
 git push origin main
 git log -1 --oneline
 ```
 
-Use only an already-installed Python. Do not install Python for this task.
-The inventory command writes a raw, timestamped receipt under the ignored
-`eightgb_bench/local/` directory and writes one redacted report under
-`eightgb_bench/reports/`. The raw GPU UUID and any stable GPU identifier must
-remain local; the tracked report binds only the opaque SHA-256 of that local
-receipt.
+Before `git add`, `git status --short` must show only the new hardware report.
+Before the commit, `git diff --cached --name-only` must show exactly one path:
+`eightgb_bench/reports/physical-rtx4060-8gb-hardware.json`. If either command
+shows anything else, stop and return the output.
 
-## Commit gate
+## 4. Stop and report
 
-Commit and push only if the command succeeds and prints both
-`"status": "HARDWARE_OBSERVED_NOT_ENROLLED"` and `public_report_path`.
-The report creator also requires exactly one `NVIDIA GeForce RTX 4060 Laptop
-GPU`, 7,800 through 8,192 MiB total VRAM, and at least 30 GiB physical host
-RAM. If it exits nonzero or produces no `public_report_path`, do not stage or
-commit anything: return the exact error instead.
-
-## Stop condition
-
-After the push, report the commit hash, the report path, and the reported GPU
-and RAM values, then stop. Do not download or install anything, boot ComfyUI,
-open port 8199, transfer model files, create a profile, run `preflight`, or
-render. The committed report is hardware proof only, not a model admission or
-render authorization.
+Return only the pushed commit hash and the redacted report path. The result is
+hardware evidence only—not model admission, a ComfyUI authorization, or an
+8 GB video-model claim.

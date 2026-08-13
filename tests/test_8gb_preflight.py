@@ -25,6 +25,8 @@ class Physical4060StaticContractTests(unittest.TestCase):
         self.assertEqual(result["receipt_schema_version"], 1)
         self.assertEqual(result["gpus"], [gpu])
         self.assertEqual(result["network_or_gpu_actions"], bench.READ_ONLY_GPU_INVENTORY_ACTIONS)
+        self.assertIn("commit only", result["next_action"])
+        self.assertNotIn("profile", result["next_action"].casefold())
 
     def test_hardware_inventory_cli_can_write_only_an_isolated_local_receipt(self):
         with tempfile.TemporaryDirectory() as directory:

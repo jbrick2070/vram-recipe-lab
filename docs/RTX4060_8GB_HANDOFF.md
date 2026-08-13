@@ -45,8 +45,9 @@ creating a profile or considering any model.
    Read AGENTS.md, BOOT.md, PREFLIGHT.md, and docs/RTX4060_8GB_HANDOFF.md.
    Work only in this laptop checkout. Do not download/install anything, do not
    touch a 5080 or OTR path, and do not boot ComfyUI yet. Follow
-   docs/RTX4060_8GB_NEXT_ACTION.md exactly: write the redacted hardware report,
-   commit only that report, push it, report its commit hash, then stop.
+   docs/RTX4060_8GB_NEXT_ACTION.md exactly: update the old checkout safely,
+   create the redacted hardware finding, commit only that finding, push it,
+   report its commit hash, then stop.
    ```
 
 4. Do **not** create a profile or run `preflight` in this first task. Those

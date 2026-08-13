@@ -690,7 +690,7 @@ def hardware_inventory() -> dict[str, Any]:
         "preflight_script_sha256": sha256_file(Path(__file__).resolve()),
         "gpus": query_nvidia_smi(),
         "host_ram": host_ram_snapshot(),
-        "next_action": "Copy the exact matching GPU UUID into the laptop-local profile template, then declare real local ComfyUI and model paths.",
+        "next_action": "Write the redacted public hardware finding, commit only it, push it, then await a later written instruction.",
         "network_or_gpu_actions": READ_ONLY_GPU_INVENTORY_ACTIONS,
     }
 
