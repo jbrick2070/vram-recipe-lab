@@ -103,6 +103,8 @@ class Physical4060RunnerPureTests(unittest.TestCase):
             self.assertTrue(cell.is_dir())
             self.assertTrue(staged.is_file())
             self.assertTrue((cell / "base").is_dir())
+            self.assertTrue((cell / "base" / "custom_nodes").is_dir())
+            self.assertEqual(list((cell / "base" / "custom_nodes").iterdir()), [])
             self.assertEqual(fixture_hashes, {"scene_still.png": plan["video_contract"]["fixture_sha256"]})
             self.assertFalse((cell / "input" / "fixtures").exists())
             yaml = (cell / "model_paths.yaml").read_text(encoding="utf-8")

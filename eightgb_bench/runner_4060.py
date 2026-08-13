@@ -1583,6 +1583,14 @@ def create_cell(run_id: str) -> Path:
 def prepare_cell(admission: Mapping[str, Any], cell: Path) -> dict[str, str]:
     for name in ("input", "output", "user", "logs", "base"):
         _safe_local_child(cell, name).mkdir(parents=True, exist_ok=False)
+    # ComfyUI 0.32 performs its pre-startup custom-node scan against the
+    # base-directory's default custom_nodes path before it incorporates the
+    # extra model-paths configuration.  Keep that default root empty and
+    # private to this cell; the only admitted provider remains the separately
+    # validated KJNodes directory named in model_paths.yaml below.
+    _safe_local_child(_safe_local_child(cell, "base"), "custom_nodes").mkdir(
+        parents=False, exist_ok=False
+    )
     model_yaml = _safe_local_child(cell, "model_paths.yaml")
     model_yaml.write_text(
         build_model_paths_yaml(
