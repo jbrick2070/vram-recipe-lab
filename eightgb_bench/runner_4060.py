@@ -432,7 +432,10 @@ def sanitized_environment(*, gpu_uuid: str | None = None) -> dict[str, str]:
     allowed = {
         "appdata", "comspec", "homedrive", "homepath", "localappdata", "path",
         "pathext", "programdata", "programfiles", "systemroot", "temp", "tmp",
-        "userprofile", "windir",
+        # PyTorch's Windows compiler-cache path calls getpass.getuser().  Its
+        # normal Windows fallback is USERNAME; without it the stdlib falls
+        # through to the Unix-only pwd module before ComfyUI can boot.
+        "username", "userprofile", "windir",
     }
     environment = {key: value for key, value in source.items() if key.casefold() in allowed}
     environment.update(

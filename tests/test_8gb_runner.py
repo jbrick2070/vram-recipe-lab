@@ -120,10 +120,12 @@ class Physical4060RunnerPureTests(unittest.TestCase):
             "HF_TOKEN": "private",
             "HTTPS_PROXY": "private",
             "PYTHONPATH": "private",
+            "USERNAME": "bench-user",
         }
         with mock.patch.dict(os.environ, parent, clear=True):
             environment = runner.sanitized_environment(gpu_uuid="GPU-laptop-4060")
         self.assertEqual(environment["PATH"], "safe-path")
+        self.assertEqual(environment["USERNAME"], "bench-user")
         self.assertEqual(environment["CUDA_VISIBLE_DEVICES"], "GPU-laptop-4060")
         for forbidden in ("LAB_RESERVE_VRAM_GB", "HF_TOKEN", "HTTPS_PROXY", "PYTHONPATH"):
             self.assertNotIn(forbidden, environment)
