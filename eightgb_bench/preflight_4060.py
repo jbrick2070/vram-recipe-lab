@@ -32,6 +32,9 @@ PROFILE_ID_RE = re.compile(r"physical-rtx4060-8gb\Z")
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 SCOPE = "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION"
 READY_STATUS = "READY_FOR_HUMAN_BOOT_APPROVAL"
+READ_ONLY_GPU_INVENTORY_ACTIONS = (
+    "network: none; gpu: read-only nvidia-smi inventory; gpu_allocation: none"
+)
 
 
 class PreflightError(ValueError):
@@ -107,10 +110,10 @@ def _require_int(value: Mapping[str, Any], key: str, label: str) -> int:
     return result
 
 
-def _profile_path(profile_id: str) -> Path:
+def _profile_path(profile_id: str, local_root: Path | None = None) -> Path:
     if not PROFILE_ID_RE.fullmatch(profile_id):
         raise PreflightError("profile ID is not enrolled for this physical bench")
-    return LOCAL_ROOT / f"{profile_id}{PROFILE_SUFFIX}"
+    return (LOCAL_ROOT if local_root is None else local_root) / f"{profile_id}{PROFILE_SUFFIX}"
 
 
 def _reject_placeholder(value: str, label: str) -> None:
@@ -160,6 +163,40 @@ def _validated_path(value: str, label: str, kind: str) -> Path:
             break
         probe = probe.parent
     return resolved
+
+
+def _same_path(left: Path, right: Path) -> bool:
+    return os.path.normcase(str(left)) == os.path.normcase(str(right))
+
+
+def _validated_local_root(*, create: bool) -> Path:
+    """Return only the exact non-reparse local state namespace for this bench."""
+    bench_root = _validated_path(str(BENCH_ROOT), "physical 4060 bench root", "directory")
+    expected = BENCH_ROOT / "local"
+    if not _same_path(LOCAL_ROOT, expected):
+        raise PreflightError("physical 4060 local state root drifted from eightgb_bench/local")
+    if not LOCAL_ROOT.exists():
+        if not create:
+            raise PreflightError("physical 4060 local state root is absent")
+        try:
+            LOCAL_ROOT.mkdir(parents=False, exist_ok=False)
+        except OSError as exc:
+            raise PreflightError(f"cannot create physical 4060 local state root: {exc}") from exc
+    local_root = _validated_path(str(LOCAL_ROOT), "physical 4060 local state root", "directory")
+    if local_root.parent != bench_root:
+        raise PreflightError("physical 4060 local state root escaped the bench root")
+    return local_root
+
+
+def _validated_child_file(root: Path, basename: str, label: str) -> Path | None:
+    """Reject a missing or redirected file derived from an enrolled root."""
+    candidate = root / basename
+    if not candidate.exists():
+        return None
+    checked = _validated_path(str(candidate), label, "file")
+    if not checked.is_relative_to(root):
+        raise PreflightError(f"{label} escaped its declared parent root")
+    return checked
 
 
 def _validated_optional_sha256(value: Any, label: str) -> str:
@@ -219,7 +256,7 @@ def readonly_environment(parent: Mapping[str, str] | None = None) -> dict[str, s
     return result
 
 
-def _run_readonly(argv: Sequence[str], label: str) -> str:
+def _run_readonly(argv: Sequence[str], label: str, *, timeout_s: float = 20.0) -> str:
     try:
         completed = subprocess.run(
             list(argv),
@@ -229,7 +266,10 @@ def _run_readonly(argv: Sequence[str], label: str) -> str:
             encoding="utf-8",
             errors="strict",
             env=readonly_environment(),
+            timeout=timeout_s,
         )
+    except subprocess.TimeoutExpired as exc:
+        raise PreflightError(f"{label} timed out after {timeout_s:g} seconds") from exc
     except OSError as exc:
         raise PreflightError(f"cannot run {label}: {exc}") from exc
     if completed.returncode != 0:
@@ -238,10 +278,38 @@ def _run_readonly(argv: Sequence[str], label: str) -> str:
     return completed.stdout.strip()
 
 
+def _windows_system_directory() -> Path:
+    if os.name != "nt":
+        raise PreflightError("physical 4060 preflight only supports Windows")
+    buffer = ctypes.create_unicode_buffer(32768)
+    copied = ctypes.windll.kernel32.GetSystemDirectoryW(buffer, len(buffer))
+    if copied == 0 or copied >= len(buffer):
+        raise PreflightError("cannot determine the trusted Windows system directory")
+    return _validated_path(buffer.value, "trusted Windows system directory", "directory")
+
+
+def _trusted_nvidia_smi_path() -> Path:
+    candidate = _windows_system_directory() / "nvidia-smi.exe"
+    return _validated_path(str(candidate), "trusted nvidia-smi", "file")
+
+
+def _trusted_git_path() -> Path:
+    system_directory = _windows_system_directory()
+    drive_root = Path(system_directory.anchor)
+    candidates = (
+        drive_root / "Program Files" / "Git" / "cmd" / "git.exe",
+        drive_root / "Program Files" / "Git" / "bin" / "git.exe",
+    )
+    for candidate in candidates:
+        if candidate.is_file():
+            return _validated_path(str(candidate), "trusted Git executable", "file")
+    raise PreflightError("trusted Git executable was not found under Program Files")
+
+
 def query_nvidia_smi() -> list[dict[str, Any]]:
     stdout = _run_readonly(
         [
-            "nvidia-smi",
+            str(_trusted_nvidia_smi_path()),
             "--query-gpu=uuid,name,memory.total,driver_version,driver_model.current",
             "--format=csv,noheader,nounits",
         ],
@@ -298,11 +366,12 @@ def host_ram_snapshot() -> dict[str, float]:
 
 
 def _git_identity(comfyui_root: Path) -> dict[str, Any]:
-    commit = _run_readonly(["git", "-C", str(comfyui_root), "rev-parse", "HEAD"], "ComfyUI Git")
+    git = str(_trusted_git_path())
+    commit = _run_readonly([git, "-C", str(comfyui_root), "rev-parse", "HEAD"], "ComfyUI Git")
     if not re.fullmatch(r"[0-9a-f]{40}", commit):
         raise PreflightError("ComfyUI Git returned an invalid commit")
     dirty = bool(
-        _run_readonly(["git", "-C", str(comfyui_root), "status", "--porcelain"], "ComfyUI Git status")
+        _run_readonly([git, "-C", str(comfyui_root), "status", "--porcelain"], "ComfyUI Git status")
     )
     return {"commit": commit, "dirty": dirty}
 
@@ -372,6 +441,7 @@ def _validate_plan(plan: Mapping[str, Any]) -> None:
             "engine",
             "video_contract",
             "required_core_nodes",
+            "future_node_provider_policy",
             "follow_up_ladder",
             "blockers_before_launch",
         },
@@ -385,6 +455,27 @@ def _validate_plan(plan: Mapping[str, Any]) -> None:
         raise PreflightError("plan must remain blocked before local model admission")
     if _require_string(plan, "scope", "plan") != SCOPE:
         raise PreflightError("plan scope is not the physical 4060 scope")
+    orientation = plan.get("orientation_only_source")
+    if not isinstance(orientation, dict):
+        raise PreflightError("plan.orientation_only_source must be an object")
+    _require_exact_keys(
+        orientation,
+        {"recipe", "recipe_sha256", "receipt", "receipt_sha256", "observed_on_other_machine"},
+        "plan.orientation_only_source",
+    )
+    if _require_string(orientation, "recipe", "plan.orientation_only_source") != "recipes/h3_mime_i2v.json":
+        raise PreflightError("plan orientation recipe path drifted")
+    if _require_string(orientation, "receipt", "plan.orientation_only_source") != "results/h3_mime_i2v_run1.json":
+        raise PreflightError("plan orientation receipt path drifted")
+    if _validated_optional_sha256(orientation.get("recipe_sha256"), "plan orientation recipe SHA") != "fde5775b64ac207ebd33761de18a5ac3a899c57c2880776b66691d6dc23c77c9":
+        raise PreflightError("plan orientation recipe SHA drifted")
+    if _validated_optional_sha256(orientation.get("receipt_sha256"), "plan orientation receipt SHA") != "b1bb6a4e5df65c4acd890d39093b7b88ee3f1df00b71a763a43b54673fb60be7":
+        raise PreflightError("plan orientation receipt SHA drifted")
+    orientation_values = orientation.get("observed_on_other_machine")
+    if not isinstance(orientation_values, dict):
+        raise PreflightError("plan orientation observed values must be an object")
+    if orientation_values.get("peak_vram_gib") != 7.28 or orientation_values.get("peak_host_ram_gib") != 27.56:
+        raise PreflightError("plan orientation measurement values drifted")
     video = plan.get("video_contract")
     if not isinstance(video, dict):
         raise PreflightError("plan.video_contract must be an object")
@@ -425,8 +516,119 @@ def _validate_plan(plan: Mapping[str, Any]) -> None:
     if actual_assets != expected_assets:
         raise PreflightError("plan asset set drifted")
     required_nodes = plan.get("required_core_nodes")
-    if not isinstance(required_nodes, list) or "MiniMaxH3ImageToVideo" not in required_nodes:
-        raise PreflightError("plan must require the native MiniMax H3 image-to-video node")
+    expected_nodes = {
+        "UNETLoader",
+        "CLIPLoader",
+        "VAELoader",
+        "RandomNoise",
+        "BasicGuider",
+        "LoadImage",
+        "MiniMaxH3ImageToVideo",
+        "SamplerCustomAdvanced",
+        "BasicScheduler",
+        "KSamplerSelect",
+        "VAEDecode",
+        "VAEDecodeAudio",
+        "CreateVideo",
+        "SaveVideo",
+    }
+    if not isinstance(required_nodes, list) or set(required_nodes) != expected_nodes or len(required_nodes) != len(expected_nodes):
+        raise PreflightError("plan required node set drifted from the bound H3 MIME source")
+    provider_policy = plan.get("future_node_provider_policy")
+    if not isinstance(provider_policy, dict):
+        raise PreflightError("plan future node provider policy must be an object")
+    if provider_policy.get("status") != "NOT_ADMITTED_UNTIL_A_LAPTOP_OWNED_SERVER_PROVES_NODE_SOURCE_AND_COMMIT":
+        raise PreflightError("plan node provider policy is not fail-closed")
+    whitelist = provider_policy.get("custom_node_whitelist")
+    if whitelist != [{"id": "ComfyUI-KJNodes", "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df", "role": "expected MiniMax H3 custom-node provider"}]:
+        raise PreflightError("plan custom node whitelist drifted")
+    proofs = provider_policy.get("required_live_proof")
+    if not isinstance(proofs, list) or len(proofs) < 3:
+        raise PreflightError("plan must retain future live node-provider proof requirements")
+
+
+def _bound_orientation_source(plan: Mapping[str, Any]) -> dict[str, Any]:
+    orientation = plan["orientation_only_source"]
+    repo_root = _validated_path(str(REPO_ROOT), "repository root", "directory")
+    recipe_path = _validated_path(
+        str(REPO_ROOT / orientation["recipe"]), "bound orientation recipe", "file"
+    )
+    receipt_path = _validated_path(
+        str(REPO_ROOT / orientation["receipt"]), "bound orientation receipt", "file"
+    )
+    if not recipe_path.is_relative_to(repo_root) or not receipt_path.is_relative_to(repo_root):
+        raise PreflightError("bound orientation evidence escaped the repository")
+    recipe = _read_json(recipe_path, "bound orientation recipe")
+    receipt = _read_json(receipt_path, "bound orientation receipt")
+    if sha256_file(recipe_path) != orientation["recipe_sha256"]:
+        raise PreflightError("bound orientation recipe bytes do not match the plan")
+    if sha256_file(receipt_path) != orientation["receipt_sha256"]:
+        raise PreflightError("bound orientation receipt bytes do not match the plan")
+    if recipe.get("name") != "h3_mime_i2v" or receipt.get("recipe") != "h3_mime_i2v":
+        raise PreflightError("bound orientation source names do not match H3 MIME")
+    contract = recipe.get("contract")
+    if not isinstance(contract, dict):
+        raise PreflightError("bound orientation recipe has no contract")
+    expected_recipe_contract = {
+        "width": 864,
+        "height": 480,
+        "frames": 90,
+        "fps": 24.0,
+        "duration_s": 3.75,
+        "requires_audio": True,
+    }
+    for key, value in expected_recipe_contract.items():
+        if contract.get(key) != value:
+            raise PreflightError(f"bound orientation recipe contract drifted at {key}")
+    prompt = recipe.get("prompt")
+    if not isinstance(prompt, dict):
+        raise PreflightError("bound orientation recipe has no prompt graph")
+    source_nodes = {node.get("class_type") for node in prompt.values() if isinstance(node, dict)}
+    if source_nodes != set(plan["required_core_nodes"]):
+        raise PreflightError("bound orientation source nodes do not match the plan")
+    expected_receipt = {
+        "status": "PASS (cold)",
+        "gate_pass": True,
+        "pass": False,
+        "warm_pass": False,
+        "peak_vram_gb": 7.28,
+        "peak_host_ram_gb": 27.56,
+        "physical_total_vram_gib": 15.9208984375,
+        "reserve_vram_gib": 12.0,
+        "frame_count": 90,
+        "encoded_width": 864,
+        "encoded_height": 480,
+        "encoded_fps": 24.0,
+        "audio_present": True,
+        "config_run_count": 1,
+    }
+    for key, value in expected_receipt.items():
+        if receipt.get(key) != value:
+            raise PreflightError(f"bound orientation receipt drifted at {key}")
+    if receipt.get("recipe_sha256") != orientation["recipe_sha256"]:
+        raise PreflightError("bound orientation receipt does not bind the expected source recipe")
+    lane = receipt.get("boot_lane")
+    if not isinstance(lane, str) or "sage-free" not in lane or "no-pinned" not in lane or "reserve-12gb" not in lane:
+        raise PreflightError("bound orientation receipt does not preserve its Sage-free reserve-pressure caveat")
+    if receipt.get("audio_ear") != "pending" or receipt.get("audio_ear_source") != "pending_human":
+        raise PreflightError("bound orientation receipt human-audio status drifted")
+    return {
+        "recipe_path": orientation["recipe"],
+        "recipe_sha256": orientation["recipe_sha256"],
+        "receipt_path": orientation["receipt"],
+        "receipt_sha256": orientation["receipt_sha256"],
+        "measurement": {
+            "peak_vram_gib": receipt["peak_vram_gb"],
+            "peak_host_ram_gib": receipt["peak_host_ram_gb"],
+            "physical_total_vram_gib": receipt["physical_total_vram_gib"],
+            "reserve_vram_gib": receipt["reserve_vram_gib"],
+            "status": receipt["status"],
+            "gate_pass": receipt["gate_pass"],
+            "pass": receipt["pass"],
+            "warm_pass": receipt["warm_pass"],
+            "human_audio": receipt["audio_ear"],
+        },
+    }
 
 
 def static_check() -> dict[str, Any]:
@@ -434,8 +636,11 @@ def static_check() -> dict[str, Any]:
     plan = _read_json(PLAN_PATH, "plan")
     _validate_contract(contract)
     _validate_plan(plan)
-    fixture = REPO_ROOT / "fixtures" / "scene_still.png"
-    if not fixture.is_file() or sha256_file(fixture) != plan["video_contract"]["fixture_sha256"]:
+    orientation = _bound_orientation_source(plan)
+    fixture = _validated_path(
+        str(REPO_ROOT / "fixtures" / "scene_still.png"), "checked-in scene_still fixture", "file"
+    )
+    if sha256_file(fixture) != plan["video_contract"]["fixture_sha256"]:
         raise PreflightError("checked-in scene_still fixture does not match the declared plan")
     return {
         "status": "STATIC_CONTRACT_VALID",
@@ -443,6 +648,7 @@ def static_check() -> dict[str, Any]:
         "contract_sha256": sha256_file(CONTRACT_PATH),
         "plan_sha256": sha256_file(PLAN_PATH),
         "fixture_sha256": sha256_file(fixture),
+        "orientation_only_source": orientation,
         "network_or_gpu_actions": "none",
     }
 
@@ -462,7 +668,7 @@ def hardware_inventory() -> dict[str, Any]:
         "gpus": query_nvidia_smi(),
         "host_ram": host_ram_snapshot(),
         "next_action": "Copy the exact matching GPU UUID into the laptop-local profile template, then declare real local ComfyUI and model paths.",
-        "network_or_gpu_actions": "none",
+        "network_or_gpu_actions": READ_ONLY_GPU_INVENTORY_ACTIONS,
     }
 
 
@@ -492,7 +698,7 @@ def _validate_profile(profile: Mapping[str, Any], profile_id: str) -> None:
     paths = profile.get("paths")
     if not isinstance(paths, dict):
         raise PreflightError("profile.paths must be an object")
-    _require_exact_keys(paths, {"python", "comfyui_root", "model_paths_config", "model_roots"}, "profile.paths")
+    _require_exact_keys(paths, {"python", "comfyui_root", "model_roots"}, "profile.paths")
     roots = paths.get("model_roots")
     if not isinstance(roots, dict):
         raise PreflightError("profile.paths.model_roots must be an object")
@@ -502,10 +708,10 @@ def _validate_profile(profile: Mapping[str, Any], profile_id: str) -> None:
         raise PreflightError("profile.identity must be an object")
     _require_exact_keys(
         identity,
-        {"python_sha256", "python_major_minor", "comfyui_git_commit", "comfyui_main_py_sha256", "model_paths_config_sha256", "model_sha256s"},
+        {"python_sha256", "python_major_minor", "comfyui_git_commit", "comfyui_main_py_sha256", "model_sha256s"},
         "profile.identity",
     )
-    for key in ("python_sha256", "comfyui_main_py_sha256", "model_paths_config_sha256"):
+    for key in ("python_sha256", "comfyui_main_py_sha256"):
         _validated_optional_sha256(identity.get(key), f"profile.identity.{key}")
     python_major_minor = _require_string(identity, "python_major_minor", "profile.identity")
     if python_major_minor and python_major_minor not in {"3.10", "3.12"}:
@@ -550,11 +756,14 @@ def _profile_paths(profile: Mapping[str, Any]) -> dict[str, Path]:
     return {
         "python": _validated_path(paths["python"], "profile.paths.python", "file"),
         "comfyui_root": _validated_path(paths["comfyui_root"], "profile.paths.comfyui_root", "directory"),
-        "model_paths_config": _validated_path(paths["model_paths_config"], "profile.paths.model_paths_config", "file"),
         "diffusion_models": _validated_path(roots["diffusion_models"], "profile model root diffusion_models", "directory"),
         "text_encoders": _validated_path(roots["text_encoders"], "profile model root text_encoders", "directory"),
         "vae": _validated_path(roots["vae"], "profile model root vae", "directory"),
     }
+
+
+def _running_python_major_minor() -> str:
+    return f"{sys.version_info.major}.{sys.version_info.minor}"
 
 
 def _selected_gpu(rows: list[dict[str, Any]], expected_gpu: Mapping[str, Any], blockers: list[dict[str, str]]) -> dict[str, Any] | None:
@@ -588,85 +797,13 @@ def _selected_gpu(rows: list[dict[str, Any]], expected_gpu: Mapping[str, Any], b
     return selected
 
 
-def preflight(profile_id: str) -> dict[str, Any]:
-    static = static_check()
-    profile_path = _profile_path(profile_id)
-    profile = _read_json(profile_path, "laptop-local profile")
-    _validate_profile(profile, profile_id)
-    paths = _profile_paths(profile)
-    blockers: list[dict[str, str]] = []
-    observed: dict[str, Any] = {}
-
-    gpu_rows = query_nvidia_smi()
-    selected_gpu = _selected_gpu(gpu_rows, profile["expected_gpu"], blockers)
-    observed["gpus"] = gpu_rows
-    observed["selected_gpu"] = selected_gpu
-
-    ram = host_ram_snapshot()
-    observed["host_ram"] = ram
-    if ram["total_gib"] < 30:
-        blockers.append(_block("BLOCKED_HOST_RAM_TOTAL", f"expected at least 30 GiB; observed {ram['total_gib']} GiB"))
-    if ram["available_gib"] < 8:
-        blockers.append(_block("BLOCKED_HOST_RAM_AVAILABLE", f"need 8 GiB free before any later boot; observed {ram['available_gib']} GiB"))
-
-    identity = profile["identity"]
-    python_observed = _observed_file(paths["python"])
-    python_major_minor = _run_readonly(
-        [str(paths["python"]), "-I", "-S", "-c", "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"],
-        "declared Python identity",
-    )
-    observed["python"] = {**python_observed, "major_minor": python_major_minor}
-    if python_major_minor not in profile["policy"]["allowed_python_major_minors"]:
-        blockers.append(_block("BLOCKED_PYTHON_VERSION", f"observed {python_major_minor}"))
-    _identity_check(blockers, "PYTHON_SHA256", identity["python_sha256"], python_observed["sha256"])
-    _identity_check(blockers, "PYTHON_VERSION", identity["python_major_minor"], python_major_minor)
-
-    main_py = paths["comfyui_root"] / "main.py"
-    if not main_py.is_file():
-        blockers.append(_block("BLOCKED_COMFYUI_MAIN_MISSING", f"missing {main_py}"))
-        observed["comfyui"] = {"root": str(paths["comfyui_root"]), "main_py": None}
-    else:
-        main_observed = _observed_file(main_py)
-        git_observed = _git_identity(paths["comfyui_root"])
-        observed["comfyui"] = {"root": str(paths["comfyui_root"]), "main_py": main_observed, **git_observed}
-        _identity_check(blockers, "COMFYUI_COMMIT", identity["comfyui_git_commit"], git_observed["commit"])
-        _identity_check(blockers, "COMFYUI_MAIN_SHA256", identity["comfyui_main_py_sha256"], main_observed["sha256"])
-        if profile["policy"]["require_clean_comfyui_git"] and git_observed["dirty"]:
-            blockers.append(_block("BLOCKED_COMFYUI_DIRTY", "declared ComfyUI checkout has uncommitted changes"))
-
-    config_observed = _observed_file(paths["model_paths_config"])
-    observed["model_paths_config"] = config_observed
-    _identity_check(blockers, "MODEL_PATHS_CONFIG_SHA256", identity["model_paths_config_sha256"], config_observed["sha256"])
-
-    plan = _read_json(PLAN_PATH, "plan")
-    model_observed: dict[str, Any] = {}
-    for asset in plan["engine"]["required_assets"]:
-        category = asset["category"]
-        filename = asset["filename"]
-        key = f"{category}/{filename}"
-        path = paths[category] / filename
-        if not path.is_file():
-            blockers.append(_block("BLOCKED_MODEL_MISSING", key))
-            model_observed[key] = {"path": str(path), "exists": False}
-            continue
-        file_observed = _observed_file(path)
-        model_observed[key] = {"exists": True, **file_observed}
-        if file_observed["bytes"] != asset["expected_bytes"]:
-            blockers.append(
-                _block(
-                    "BLOCKED_MODEL_BYTES_DRIFT",
-                    f"{key}: expected {asset['expected_bytes']}; observed {file_observed['bytes']}",
-                )
-            )
-        _identity_check(blockers, "MODEL_SHA256", identity["model_sha256s"][key], file_observed["sha256"])
-    observed["models"] = model_observed
-
-    fixture = REPO_ROOT / "fixtures" / "scene_still.png"
-    fixture_sha256 = sha256_file(fixture)
-    observed["fixture"] = {"path": str(fixture), "sha256": fixture_sha256}
-    if fixture_sha256 != plan["video_contract"]["fixture_sha256"]:
-        blockers.append(_block("BLOCKED_FIXTURE_SHA256_DRIFT", fixture_sha256))
-
+def _preflight_payload(
+    static: Mapping[str, Any],
+    profile_id: str,
+    profile_path: Path,
+    blockers: list[dict[str, str]],
+    observed: Mapping[str, Any],
+) -> dict[str, Any]:
     return {
         "receipt_schema_version": 1,
         "kind": "physical_4060_8gb_inventory_preflight",
@@ -685,13 +822,117 @@ def preflight(profile_id: str) -> dict[str, Any]:
             if not blockers
             else "Fix only the stated local identity or asset blockers, then repeat this inventory-only preflight."
         ),
-        "network_or_gpu_actions": "none",
+        "network_or_gpu_actions": READ_ONLY_GPU_INVENTORY_ACTIONS,
     }
 
 
+def preflight(profile_id: str) -> dict[str, Any]:
+    # Validate the selected ID before even examining a local-state directory.
+    # An arbitrary ID must never redirect this command toward another profile.
+    _profile_path(profile_id)
+    static = static_check()
+    local_root = _validated_local_root(create=False)
+    profile_path = _validated_path(
+        str(_profile_path(profile_id, local_root)), "laptop-local profile", "file"
+    )
+    profile = _read_json(profile_path, "laptop-local profile")
+    _validate_profile(profile, profile_id)
+    blockers: list[dict[str, str]] = []
+    observed: dict[str, Any] = {}
+
+    gpu_rows = query_nvidia_smi()
+    selected_gpu = _selected_gpu(gpu_rows, profile["expected_gpu"], blockers)
+    observed["gpus"] = gpu_rows
+    observed["selected_gpu"] = selected_gpu
+    ram = host_ram_snapshot()
+    observed["host_ram"] = ram
+    if ram["total_gib"] < 30:
+        blockers.append(_block("BLOCKED_HOST_RAM_TOTAL", f"expected at least 30 GiB; observed {ram['total_gib']} GiB"))
+    if ram["available_gib"] < 8:
+        blockers.append(_block("BLOCKED_HOST_RAM_AVAILABLE", f"need 8 GiB free before any later boot; observed {ram['available_gib']} GiB"))
+    if blockers:
+        return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+
+    identity = profile["identity"]
+    declared_python = _validated_path(profile["paths"]["python"], "profile.paths.python", "file")
+    running_python = _validated_path(str(Path(sys.executable)), "executing Python", "file")
+    python_major_minor = _running_python_major_minor()
+    python_observed = _observed_file(running_python)
+    observed["python"] = {**python_observed, "major_minor": python_major_minor}
+    if not _same_path(declared_python, running_python):
+        blockers.append(
+            _block(
+                "BLOCKED_EXECUTING_PYTHON_PATH_DRIFT",
+                f"profile declares {declared_python}; executing {running_python}",
+            )
+        )
+        return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+    if python_major_minor not in profile["policy"]["allowed_python_major_minors"]:
+        blockers.append(_block("BLOCKED_PYTHON_VERSION", f"observed {python_major_minor}"))
+    _identity_check(blockers, "PYTHON_SHA256", identity["python_sha256"], python_observed["sha256"])
+    _identity_check(blockers, "PYTHON_VERSION", identity["python_major_minor"], python_major_minor)
+
+    paths = _profile_paths(profile)
+    main_py = _validated_child_file(paths["comfyui_root"], "main.py", "declared ComfyUI main.py")
+    if main_py is None:
+        blockers.append(_block("BLOCKED_COMFYUI_MAIN_MISSING", f"missing {paths['comfyui_root'] / 'main.py'}"))
+        observed["comfyui"] = {"root": str(paths["comfyui_root"]), "main_py": None}
+    else:
+        main_observed = _observed_file(main_py)
+        observed["comfyui"] = {"root": str(paths["comfyui_root"]), "main_py": main_observed}
+        _identity_check(blockers, "COMFYUI_MAIN_SHA256", identity["comfyui_main_py_sha256"], main_observed["sha256"])
+        try:
+            git_observed = _git_identity(paths["comfyui_root"])
+        except PreflightError as exc:
+            blockers.append(_block("BLOCKED_COMFYUI_GIT_IDENTITY", str(exc)))
+        else:
+            observed["comfyui"].update(git_observed)
+            _identity_check(blockers, "COMFYUI_COMMIT", identity["comfyui_git_commit"], git_observed["commit"])
+            if profile["policy"]["require_clean_comfyui_git"] and git_observed["dirty"]:
+                blockers.append(_block("BLOCKED_COMFYUI_DIRTY", "declared ComfyUI checkout has uncommitted changes"))
+
+    plan = _read_json(PLAN_PATH, "plan")
+    model_observed: dict[str, Any] = {}
+    for asset in plan["engine"]["required_assets"]:
+        category = asset["category"]
+        filename = asset["filename"]
+        key = f"{category}/{filename}"
+        path = _validated_child_file(paths[category], filename, f"declared model {key}")
+        if path is None:
+            blockers.append(_block("BLOCKED_MODEL_MISSING", key))
+            model_observed[key] = {"path": str(paths[category] / filename), "exists": False}
+            continue
+        file_observed = _observed_file(path)
+        model_observed[key] = {"exists": True, **file_observed}
+        if file_observed["bytes"] != asset["expected_bytes"]:
+            blockers.append(
+                _block(
+                    "BLOCKED_MODEL_BYTES_DRIFT",
+                    f"{key}: expected {asset['expected_bytes']}; observed {file_observed['bytes']}",
+                )
+            )
+        _identity_check(blockers, "MODEL_SHA256", identity["model_sha256s"][key], file_observed["sha256"])
+    observed["models"] = model_observed
+
+    fixture = REPO_ROOT / "fixtures" / "scene_still.png"
+    fixture_sha256 = sha256_file(fixture)
+    observed["fixture"] = {"path": str(fixture), "sha256": fixture_sha256}
+    if fixture_sha256 != plan["video_contract"]["fixture_sha256"]:
+        blockers.append(_block("BLOCKED_FIXTURE_SHA256_DRIFT", fixture_sha256))
+    return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+
+
 def write_receipt(payload: Mapping[str, Any]) -> Path:
-    receipt_dir = LOCAL_ROOT / "receipts"
-    receipt_dir.mkdir(parents=True, exist_ok=True)
+    local_root = _validated_local_root(create=True)
+    receipt_dir = local_root / "receipts"
+    if not receipt_dir.exists():
+        try:
+            receipt_dir.mkdir(parents=False, exist_ok=False)
+        except OSError as exc:
+            raise PreflightError(f"cannot create physical 4060 receipt directory: {exc}") from exc
+    receipt_dir = _validated_path(str(receipt_dir), "physical 4060 receipt directory", "directory")
+    if receipt_dir.parent != local_root:
+        raise PreflightError("physical 4060 receipt directory escaped the local state root")
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     nonce = hashlib.sha256(canonical_bytes(payload)).hexdigest()[:12]
     path = receipt_dir / f"preflight-{now}-{nonce}.json"

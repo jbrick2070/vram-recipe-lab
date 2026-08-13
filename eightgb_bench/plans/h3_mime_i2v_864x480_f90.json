@@ -6,7 +6,9 @@
   "purpose": "First physical 8 GB candidate: a small MiniMax H3 image-to-video clip with native audio. It is a hypothesis, not a compatibility claim.",
   "orientation_only_source": {
     "recipe": "recipes/h3_mime_i2v.json",
+    "recipe_sha256": "fde5775b64ac207ebd33761de18a5ac3a899c57c2880776b66691d6dc23c77c9",
     "receipt": "results/h3_mime_i2v_run1.json",
+    "receipt_sha256": "b1bb6a4e5df65c4acd890d39093b7b88ee3f1df00b71a763a43b54673fb60be7",
     "observed_on_other_machine": {
       "peak_vram_gib": 7.28,
       "peak_host_ram_gib": 27.56,
@@ -60,10 +62,28 @@
     "LoadImage",
     "MiniMaxH3ImageToVideo",
     "SamplerCustomAdvanced",
+    "BasicScheduler",
+    "KSamplerSelect",
+    "VAEDecode",
     "VAEDecodeAudio",
     "CreateVideo",
     "SaveVideo"
   ],
+  "future_node_provider_policy": {
+    "status": "NOT_ADMITTED_UNTIL_A_LAPTOP_OWNED_SERVER_PROVES_NODE_SOURCE_AND_COMMIT",
+    "custom_node_whitelist": [
+      {
+        "id": "ComfyUI-KJNodes",
+        "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+        "role": "expected MiniMax H3 custom-node provider"
+      }
+    ],
+    "required_live_proof": [
+      "object_info must expose every required_core_nodes class.",
+      "The direct runner must bind each custom-node provider's root, Git commit, and source hash into the laptop receipt.",
+      "No Manager, SageAttention flag, reserve-vram flag, or unwhitelisted custom node is admitted."
+    ]
+  },
   "follow_up_ladder": [
     {
       "id": "h3-i2v-low-video-only",

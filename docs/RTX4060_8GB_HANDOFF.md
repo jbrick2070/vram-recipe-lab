@@ -48,13 +48,14 @@ The H3 and Wan receipts are useful orientation only:
    profile template, then copy `eightgb_bench/profile-template.json` to the
    ignored path described in its README and fill only real absolute paths.
    Run `static-check`, then the inventory-only `preflight` command.
-5. Pin every observed Python, ComfyUI, config, and model hash in the local
-   profile and rerun it. Do not proceed until it says
+5. Pin every observed Python, ComfyUI, and model hash in the local profile and
+   rerun it. Do not proceed until it says
    `READY_FOR_HUMAN_BOOT_APPROVAL`.
 
-The initial inventory calls only `nvidia-smi`, Git, the declared Python
-executable, and filesystem reads. It does not start a server, contact a port,
-or allocate a model.
+`hardware-inventory` only reads `nvidia-smi` and Windows RAM state. The later
+profile preflight reads local paths, the already-running Python, and ComfyUI
+Git only after hardware identity passes. Neither starts a server, contacts a
+port, or allocates a model.
 
 ## Future render gate
 

@@ -22,9 +22,6 @@ Copy the UUID for the exact `NVIDIA GeForce RTX 4060 Laptop GPU` row into the
 profile below. If it reports a different GPU name, VRAM size, or less than
 30 GiB total RAM, stop: it is not the declared test hardware.
 
-Then copy `profile-template.json` to the ignored local location and replace every
-`REPLACE_...` value with a real absolute laptop path:
-
 Copy `profile-template.json` to the ignored local location and replace every
 `REPLACE_...` value with a real absolute laptop path:
 
@@ -45,7 +42,9 @@ acquire a GPU lock, or render.
 `READY_FOR_HUMAN_BOOT_APPROVAL` only means the laptop is ready for a reviewed
 future server-admission step; it is never a render pass. Blank identity hashes
 are expected on the first profile run: it reports the observed values, which
-must be pinned in the ignored profile before it can become ready.
+must be pinned in the ignored profile before it can become ready. This
+inventory deliberately does not accept a model-paths config: a future direct
+runner must generate and attest a private one inside `eightgb_bench/local`.
 
 Do not download or install a model to make this check pass. Missing or wrong
 files are useful `BLOCKED_*` results. A later physical run requires a cold

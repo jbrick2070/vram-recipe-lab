@@ -48,14 +48,12 @@
     "state": "all PID, lock, output, log, receipt, and model-manifest state is under eightgb_bench/local on the laptop checkout"
   },
   "explicitly_not_used": [
-    "run_recipe.py",
-    "boot_lab_server.cmd",
-    "front_office.py",
-    "labctl.py",
+    "the 5080 run_recipe.py execution path",
+    "the 5080 boot_lab_server.cmd execution path",
+    "the Front Office dispatcher seam",
     "bench_profiles/",
     "campaigns/",
-    "recipes/",
-    "results/",
+    "top-level 5080 results aliases and ledgers",
     "RESULTS.md",
     "ENGINE_MATRIX_BETA.md"
   ]

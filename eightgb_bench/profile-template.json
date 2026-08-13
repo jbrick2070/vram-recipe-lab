@@ -11,10 +11,10 @@
   "paths": {
     "python": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_COMFY_VENV_PYTHON.EXE",
     "comfyui_root": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_COMFYUI_ROOT",
-    "model_paths_config": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_MODEL_PATHS_YAML",
     "model_roots": {
-      "checkpoints": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_CHECKPOINTS_ROOT",
-      "text_encoders": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_TEXT_ENCODERS_ROOT"
+      "diffusion_models": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_DIFFUSION_MODELS_ROOT",
+      "text_encoders": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_TEXT_ENCODERS_ROOT",
+      "vae": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_VAE_ROOT"
     }
   },
   "identity": {
@@ -22,7 +22,6 @@
     "python_major_minor": "",
     "comfyui_git_commit": "",
     "comfyui_main_py_sha256": "",
-    "model_paths_config_sha256": "",
     "model_sha256s": {
       "diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors": "",
       "text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": "",
