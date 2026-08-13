@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "h3-mime-i2v-864x480-f90",
+  "status": "BLOCKED_LOCAL_MODEL_ADMISSION",
+  "scope": "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION",
+  "purpose": "First physical 8 GB candidate: a small MiniMax H3 image-to-video clip with native audio. It is a hypothesis, not a compatibility claim.",
+  "orientation_only_source": {
+    "recipe": "recipes/h3_mime_i2v.json",
+    "receipt": "results/h3_mime_i2v_run1.json",
+    "observed_on_other_machine": {
+      "peak_vram_gib": 7.28,
+      "peak_host_ram_gib": 27.56,
+      "notes": "One cold 15.92 GiB RTX 5080 run with reserve pressure; it is not physical 8 GB certification."
+    }
+  },
+  "engine": {
+    "family": "MiniMax H3 FL2VA I2V native audio",
+    "required_assets": [
+      {
+        "category": "diffusion_models",
+        "filename": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "expected_bytes": 20970379616
+      },
+      {
+        "category": "text_encoders",
+        "filename": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "expected_bytes": 15687142551
+      },
+      {
+        "category": "vae",
+        "filename": "minimax_h3_video_vae_fp16.safetensors",
+        "expected_bytes": 5207808496
+      },
+      {
+        "category": "vae",
+        "filename": "minimax_h3_audio_vae_fp32.safetensors",
+        "expected_bytes": 605254808
+      }
+    ]
+  },
+  "video_contract": {
+    "mode": "image-to-video with native audio",
+    "fixture": "fixtures/scene_still.png",
+    "fixture_sha256": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596",
+    "width": 864,
+    "height": 480,
+    "frames": 90,
+    "fps": 24,
+    "duration_s": 3.75,
+    "steps": 20,
+    "audio": true,
+    "seed": 42
+  },
+  "required_core_nodes": [
+    "UNETLoader",
+    "CLIPLoader",
+    "VAELoader",
+    "RandomNoise",
+    "BasicGuider",
+    "LoadImage",
+    "MiniMaxH3ImageToVideo",
+    "SamplerCustomAdvanced",
+    "VAEDecodeAudio",
+    "CreateVideo",
+    "SaveVideo"
+  ],
+  "follow_up_ladder": [
+    {
+      "id": "h3-i2v-low-video-only",
+      "source_recipe": "recipes/h3_i2v_low.json",
+      "status": "only after H3 MIME passes",
+      "caveat": "A newer 5080 cold receipt reached 33.34 GiB host RAM, so it must earn its own 4060 result."
+    },
+    {
+      "id": "h3-mime-i2v-ledger-8s",
+      "source_recipe": "recipes/h3_mime_i2v_ledger_music_closing_8s.json",
+      "status": "only after the short native-audio candidate passes"
+    }
+  ],
+  "blockers_before_launch": [
+    "The laptop-local inventory receipt must have status READY_FOR_HUMAN_BOOT_APPROVAL.",
+    "A later admission step must query the laptop-owned server and prove all required models and nodes are present.",
+    "The later direct runner must be separately implemented and reviewed; this JSON never queues a prompt."
+  ]
+}

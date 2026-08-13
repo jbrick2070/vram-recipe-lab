@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "physical-rtx4060-8gb",
+  "scope": "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION",
+  "expected_gpu": {
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "uuid": "",
+    "memory_total_mib_min": 7800,
+    "memory_total_mib_max": 8192
+  },
+  "paths": {
+    "python": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_COMFY_VENV_PYTHON.EXE",
+    "comfyui_root": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_COMFYUI_ROOT",
+    "model_paths_config": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_MODEL_PATHS_YAML",
+    "model_roots": {
+      "checkpoints": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_CHECKPOINTS_ROOT",
+      "text_encoders": "REPLACE_WITH_ABSOLUTE_PATH_TO_THE_LAPTOP_TEXT_ENCODERS_ROOT"
+    }
+  },
+  "identity": {
+    "python_sha256": "",
+    "python_major_minor": "",
+    "comfyui_git_commit": "",
+    "comfyui_main_py_sha256": "",
+    "model_paths_config_sha256": "",
+    "model_sha256s": {
+      "diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors": "",
+      "text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": "",
+      "vae/minimax_h3_video_vae_fp16.safetensors": "",
+      "vae/minimax_h3_audio_vae_fp32.safetensors": ""
+    }
+  },
+  "policy": {
+    "require_clean_comfyui_git": true,
+    "allowed_python_major_minors": [
+      "3.10",
+      "3.12"
+    ],
+    "sage_attention": false,
+    "manager": false,
+    "reserve_vram": "forbidden",
+    "network": "offline"
+  }
+}

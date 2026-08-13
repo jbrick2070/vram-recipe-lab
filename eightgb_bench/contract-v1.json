@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "physical-rtx4060-8gb-v1",
+  "scope": "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION",
+  "status": "PREPARED_LOCAL_INVENTORY_REQUIRED",
+  "purpose": "Establish a reproducible physical RTX 4060 Laptop GPU video benchmark without reusing 5080 runner state or receipts.",
+  "public_claim_policy": {
+    "not_yet_claimable": "No present evidence proves that this or every 8 GB GPU can run a video model.",
+    "claim_after_pass": "This exact physical RTX 4060 Laptop GPU configuration ran the named candidate at the measured settings.",
+    "never_infer": [
+      "5080 reserve-vram or clamp evidence is not physical 8 GB evidence.",
+      "One cold run is not a reliable 8 GB result.",
+      "A result for one laptop is not a result for every 8 GB GPU."
+    ]
+  },
+  "required_hardware": {
+    "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "vram_total_mib_min": 7800,
+    "vram_total_mib_max": 8192,
+    "host_ram_total_gib_min": 30,
+    "host_ram_available_gib_min_before_boot": 8,
+    "vram_headroom_mib_min": 512,
+    "host_ram_available_gib_min_during_run": 4
+  },
+  "acceptance_gates": {
+    "absolute_peak_vram_gib_lte": 7.5,
+    "absolute_peak_host_ram_gib_lte": 28,
+    "required_sequence": [
+      "cold",
+      "warm-1",
+      "warm-2"
+    ],
+    "required_media_checks": [
+      "exact frame count, dimensions, FPS, and duration",
+      "no black, grid, tile, colour, or audio defect applicable to the plan",
+      "human review"
+    ]
+  },
+  "future_boot_policy": {
+    "port": 8199,
+    "listener": "127.0.0.1 only",
+    "argv": "direct argv list only; never cmd.exe or a shell command string",
+    "sage_attention": "forbidden",
+    "manager": "forbidden",
+    "reserve_vram": "forbidden",
+    "pinned_memory": "disabled",
+    "network": "offline",
+    "state": "all PID, lock, output, log, receipt, and model-manifest state is under eightgb_bench/local on the laptop checkout"
+  },
+  "explicitly_not_used": [
+    "run_recipe.py",
+    "boot_lab_server.cmd",
+    "front_office.py",
+    "labctl.py",
+    "bench_profiles/",
+    "campaigns/",
+    "recipes/",
+    "results/",
+    "RESULTS.md",
+    "ENGINE_MATRIX_BETA.md"
+  ]
+}

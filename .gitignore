@@ -10,3 +10,4 @@ __pycache__/
 .runtime/
 .front_office_state/
 logs/
+eightgb_bench/local/
