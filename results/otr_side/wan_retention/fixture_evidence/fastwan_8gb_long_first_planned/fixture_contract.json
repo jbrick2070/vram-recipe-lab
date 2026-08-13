@@ -1,0 +1,62 @@
+{
+  "comparison_scope": "neutral production-tail diagnostic, not shipping-profile qualification",
+  "coverage_plans": [
+    {
+      "join_mode": "chain",
+      "segments": [
+        {
+          "drop_head": 0,
+          "index": 0,
+          "render_frames": 177,
+          "trim_tail": 0
+        },
+        {
+          "drop_head": 1,
+          "index": 1,
+          "render_frames": 25,
+          "trim_tail": 1
+        }
+      ],
+      "target_visible_frames": 200
+    },
+    {
+      "join_mode": "single",
+      "segments": [
+        {
+          "drop_head": 0,
+          "index": 0,
+          "render_frames": 65,
+          "trim_tail": 0
+        }
+      ],
+      "target_visible_frames": 65
+    }
+  ],
+  "engine": "fastwan_8gb",
+  "engine_binding": "baked_ledger.video.shots[].engine_id",
+  "notes": [
+    "No OTR source, profile, budget, margin, or production recipe was edited.",
+    "The target/order/assets are identical to the WAN Phase-1 fixture.",
+    "Only engine_id changes; coverage lengths follow the selected adapter's declared frame contract.",
+    "HuMo is excluded because its JOIN_JUMP soft-reference topology is not strict-chain comparable."
+  ],
+  "order": "long_then_small",
+  "otr_repo_head_at_build": "5fdf93f16c3d3daa32b5fd4867093213b9405fb9",
+  "purpose": "Phase-3 engine-only inter-shot retention comparison",
+  "schema_version": 1,
+  "source_bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned",
+  "source_ledger_sha256": "5e9eec1dc2c1161c50e1704e3d84cddc29dc9691fab02225c9df4f6c2759638f",
+  "source_master_sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444",
+  "source_sha256s": {
+    "coverage_plan.py": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60",
+    "engine.py": "0eed2747308d0bc3fc9225f43cc1c8dcef15c28a858c45f4b968fc95dfb6a889",
+    "otr_visual_smoke.py": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f",
+    "render_driver.py": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564",
+    "wan_parent.py": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183"
+  },
+  "targets": [
+    200,
+    65
+  ],
+  "topology": "strict-first-frame two-segment long beat followed by one small beat"
+}

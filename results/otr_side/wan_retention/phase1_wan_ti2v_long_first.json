@@ -1,0 +1,588 @@
+{
+  "artifacts": {
+    "artifacts": [],
+    "caveat": "The production wrapper refused the follow-on shot, so no complete diagnostic artifact set exists.",
+    "status": "NO_DURABLE_CLIP_BY_DESIGN"
+  },
+  "boot_lane": "OTR production WAN, unclamped, fresh server, exact historical coverage plan",
+  "engine": "wan_ti2v",
+  "engine_binding_caveat": "Legacy Phase-1/Phase-4 telemetry serialized server_bound_force_map from its --engine argument; it did not inspect the already-running server's environment. New telemetry correctly leaves that field null. This reducer never trusts it: engine identity is proved from both baked-ledger shot rows plus engine-specific log/refusal evidence where present.",
+  "expected_outcome": "refusal",
+  "fixture_contract": {
+    "asset_sha256s": [
+      "031c893569ef0a19c191d542d751e9bb8c78006d8311bd20c4dd9db494e273cb",
+      "278a11326753bfd8ebbe5e784a4fff0b728691de5f1d52865208aa1103ddd373",
+      "30f7b7351f8015d864f3a0835d977c8f1e22e5ae8a0717f1fcb411aa9b257faa",
+      "39ccf93d25ae7dd7a9b326e8a24c964bd637ea4827dd310792d255ca8ccc1c7f",
+      "5f61ad62408af2e94e18828529700c52b2f99c6be6720c03a4aa155e960a6e69",
+      "67de9ec65a42056ce0597e0f1e33a24c6ff1784676a016d3321c25ad81da9f8b",
+      "6df23aa8ee0ea4004d2cf7e22a71dfecf277342234c8c9dd277dae440113f568",
+      "9b087c003df6c93bcfb9afb2bc6c83ee99dc7ca095ddb078481387d1547f86af",
+      "c812ba4f239905615a96a4707b71e50127e2e28c276e1863a4133954d2179279",
+      "d0ea80e4e221e5d66bf31d14f0f95374cc17220c0db889f14b806114bb857622",
+      "d8bdc8938e98904854994563379f7ef000d0ad09670a827520cd65dc239cf37b",
+      "da19b11798d5e576b6a6c976bd8cb8ae542093bfae14c78f238f3b914972bdcb"
+    ],
+    "comparison_scope": "exact WAN problem reconstruction",
+    "contract_class": "phase1_or_phase4_wan_reconstruction",
+    "control_origin_ledger_sha256": "5e9eec1dc2c1161c50e1704e3d84cddc29dc9691fab02225c9df4f6c2759638f",
+    "engine_authority": "baked_ledger.video.shots[*].engine_id",
+    "harness_sha256": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f",
+    "ledger_engine_ids": [
+      "wan_ti2v"
+    ],
+    "load_bearing_shared_source_sha256s": {
+      "nodes/_otr_video_engines/coverage_plan.py": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60",
+      "nodes/_otr_video_engines/eng_wan_ti2v.py": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183",
+      "nodes/_otr_video_engines/render_driver.py": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564",
+      "scripts/otr_visual_smoke.py": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f"
+    },
+    "long_chain": [
+      {
+        "drop_head": 0,
+        "index": 0,
+        "render_frames": 177,
+        "trim_tail": 0
+      },
+      {
+        "drop_head": 1,
+        "index": 1,
+        "render_frames": 25,
+        "trim_tail": 1
+      }
+    ],
+    "raw_sidecar_source_binding": {
+      "bytes": 17605,
+      "caveat": "Phase-1/Phase-4 legacy raw receipts predate the self-hash field. The session ledger externally recorded this sidecar SHA; the raw JSON itself does not prove it, but the exact source bytes are preserved at this repo-local evidence path.",
+      "path": "results/otr_side/wan_retention/evidence/wan_retention_sidecar_phase1_phase4_v1.py",
+      "sha256": "b98fac3468ef6c805df5ab9bb341b42b475802cc8772d3a4b6f552955b5bcaec",
+      "status": "LEGACY_EXTERNAL_BINDING_ARCHIVED_IN_LAB_EVIDENCE"
+    },
+    "request_seeds_in_order": [
+      0,
+      0
+    ],
+    "shot_control_sha256": "a7c06b5219d3af0b76ec3a88112d73f725b63022c4373b82efcb329a9b4696db",
+    "sidecar_declared_force_map": "*=wan_ti2v",
+    "sidecar_force_map_status": "LEGACY_INCORRECT_DECLARATIVE_LABEL_NOT_SERVER_ENV_PROOF",
+    "small_single": [
+      {
+        "drop_head": 0,
+        "index": 0,
+        "render_frames": 65,
+        "trim_tail": 0
+      }
+    ],
+    "source_capture_sha256": "9c7222027177d151c5828893888f94d28bac27308086be762a9b007984f4582b",
+    "target_frames_in_order": [
+      200,
+      65
+    ]
+  },
+  "fixture_order": "long_then_small",
+  "gate_status": "NOT_A_LAB_GATE",
+  "gpu_lease": {
+    "owner": {
+      "created_at_unix": 1786305714.013855,
+      "lock_schema_version": 1,
+      "nonce": "da75d7ec4ee19aa720b4f4c7c4dad23245447018df8022165492ec4b1081e7c4",
+      "pid": 13688,
+      "process_create_time": 1786305713.94262,
+      "role": "standalone"
+    },
+    "release": {
+      "error": "",
+      "success": true
+    }
+  },
+  "interpretation_guardrail": "NVIDIA/psutil sidecar values are measured at 200 ms. The wrapper's per-segment peak/post MB counters are preserved alongside them but are a different measurement surface and must not be substituted for inter-shot nvidia-smi residency. Post-terminal cleanup is not the inter-shot boundary.",
+  "kind": "wan-inter-shot-retention-leg-receipt",
+  "leg_id": "phase1_wan_ti2v_long_first",
+  "measured": "otr-side production wrapper",
+  "metrics": {
+    "baseline": {
+      "host_ram_used_bytes": 25506250752,
+      "host_ram_used_gib": 23.754547,
+      "sampled_at_ns": 1786305714029159300,
+      "sampled_at_utc": "2026-08-09T20:01:54.029159300Z",
+      "vram_used_gib": 1.151367,
+      "vram_used_mib": 1179.0
+    },
+    "child_process_duration_s": 514.64,
+    "clock_semantics": "server-log and child-stdout timestamps are observation times, not producer timestamps",
+    "inter_shot_boundary": {
+      "definition": "last 200 ms sidecar sample at or before the second-shot lease/admission event",
+      "event": {
+        "event_index": 47,
+        "log_offsets": [
+          41851,
+          41924
+        ],
+        "observed_at_ns": 1786306225095498400,
+        "observed_at_utc": "2026-08-09T20:10:25.095498400Z",
+        "raw_sha256": "92dbfe238a594eb4722b8191d6eaae59d8ccd443006aef1095a652d288e0a0b6"
+      },
+      "host_ram_used_bytes": 25762234368,
+      "host_ram_used_gib": 23.99295,
+      "retained_above_start_baseline_gib": 5.109375,
+      "sampled_at_ns": 1786306225095498400,
+      "sampled_at_utc": "2026-08-09T20:10:25.095498400Z",
+      "vram_used_gib": 6.260742,
+      "vram_used_mib": 6411.0
+    },
+    "post_terminal_cleanup_window": {
+      "duration_s": 12.073158,
+      "first": {
+        "host_ram_used_bytes": 25470873600,
+        "host_ram_used_gib": 23.7216,
+        "sampled_at_ns": 1786306228889889800,
+        "sampled_at_utc": "2026-08-09T20:10:28.889889800Z",
+        "vram_used_gib": 1.260742,
+        "vram_used_mib": 1291.0
+      },
+      "last": {
+        "host_ram_used_bytes": 25561010176,
+        "host_ram_used_gib": 23.805546,
+        "sampled_at_ns": 1786306240726923900,
+        "sampled_at_utc": "2026-08-09T20:10:40.726923900Z",
+        "vram_used_gib": 1.260742,
+        "vram_used_mib": 1291.0
+      },
+      "maximum": {
+        "host_ram_used_bytes": 25470873600,
+        "host_ram_used_gib": 23.7216,
+        "sampled_at_ns": 1786306228889889800,
+        "sampled_at_utc": "2026-08-09T20:10:28.889889800Z",
+        "vram_used_gib": 1.260742,
+        "vram_used_mib": 1291.0
+      },
+      "minimum": {
+        "host_ram_used_bytes": 25528975360,
+        "host_ram_used_gib": 23.775711,
+        "sampled_at_ns": 1786306230880719300,
+        "sampled_at_utc": "2026-08-09T20:10:30.880719300Z",
+        "vram_used_gib": 1.231445,
+        "vram_used_mib": 1261.0
+      },
+      "sample_count": 61
+    },
+    "refusal": {
+      "affordable_frames": 20,
+      "event": {
+        "event_index": 51,
+        "log_offsets": [
+          42098,
+          42426
+        ],
+        "observed_at_ns": 1786306227298512800,
+        "observed_at_utc": "2026-08-09T20:10:27.298512800Z",
+        "raw_sha256": "9cc64e521ba9e066eaf4dfc1af77a571f30395b05252f349ffc8749b8a35af80"
+      },
+      "free_mb_reported_by_cost_model": 9665,
+      "margin": 0.85,
+      "requested_frames": 65,
+      "sample_at_or_after_event": {
+        "host_ram_used_bytes": 25747902464,
+        "host_ram_used_gib": 23.979603,
+        "sampled_at_ns": 1786306227298512800,
+        "sampled_at_utc": "2026-08-09T20:10:27.298512800Z",
+        "vram_used_gib": 1.262695,
+        "vram_used_mib": 1293.0
+      },
+      "sample_immediately_before_event": {
+        "host_ram_used_bytes": 25762975744,
+        "host_ram_used_gib": 23.993641,
+        "sampled_at_ns": 1786306227094386700,
+        "sampled_at_utc": "2026-08-09T20:10:27.094386700Z",
+        "vram_used_gib": 6.262695,
+        "vram_used_mib": 6413.0
+      },
+      "shot_id": "shot_b003",
+      "snapped_frames": 65
+    },
+    "render_segments": [
+      {
+        "boundary_sample_at_or_after": {
+          "host_ram_used_bytes": 30736392192,
+          "host_ram_used_gib": 28.625496,
+          "sampled_at_ns": 1786306145294119500,
+          "sampled_at_utc": "2026-08-09T20:09:05.294119500Z",
+          "vram_used_gib": 6.275391,
+          "vram_used_mib": 6426.0
+        },
+        "phase_boundary": {
+          "event_index": 27,
+          "log_offsets": [
+            38014,
+            38098
+          ],
+          "observed_at_ns": 1786306145294119500,
+          "observed_at_utc": "2026-08-09T20:09:05.294119500Z",
+          "raw_sha256": "5ee0a80e9e3ac44594fcdc39d7db57a7aae4d827f3124404f5eb5ab8d68a66e8"
+        },
+        "segment_index": 0,
+        "shot_id": "shot_b001",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786306145294119500,
+          "observation_span_s": 428.407071,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 33601736704,
+            "host_ram_used_gib": 31.294056,
+            "sampled_at_ns": 1786305734489201300,
+            "sampled_at_utc": "2026-08-09T20:02:14.489201300Z",
+            "vram_used_gib": 1.150391,
+            "vram_used_mib": 1178.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 28091879424,
+            "host_ram_used_gib": 26.162601,
+            "sampled_at_ns": 1786305992285412500,
+            "sampled_at_utc": "2026-08-09T20:06:32.285412500Z",
+            "vram_used_gib": 8.811523,
+            "vram_used_mib": 9023.0
+          },
+          "sample_count": 2143,
+          "start_observed_at_ns": 1786305716887048400
+        },
+        "wrapper_logged_peak_mb": 9324,
+        "wrapper_logged_post_mb": 6725
+      },
+      {
+        "boundary_sample_at_or_after": {
+          "host_ram_used_bytes": 26156294144,
+          "host_ram_used_gib": 24.359947,
+          "sampled_at_ns": 1786306221498405800,
+          "sampled_at_utc": "2026-08-09T20:10:21.498405800Z",
+          "vram_used_gib": 6.276367,
+          "vram_used_mib": 6427.0
+        },
+        "phase_boundary": {
+          "event_index": 43,
+          "log_offsets": [
+            41311,
+            41396
+          ],
+          "observed_at_ns": 1786306221498405800,
+          "observed_at_utc": "2026-08-09T20:10:21.498405800Z",
+          "raw_sha256": "5da6f5700ca4e0d8909aa08f9dbbb97921a83a82d02c03b0f1876d56f05f3440"
+        },
+        "segment_index": 1,
+        "shot_id": "shot_b001",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786306221498405800,
+          "observation_span_s": 76.204286,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 36683444224,
+            "host_ram_used_gib": 34.16412,
+            "sampled_at_ns": 1786306162091987600,
+            "sampled_at_utc": "2026-08-09T20:09:22.091987600Z",
+            "vram_used_gib": 6.267578,
+            "vram_used_mib": 6418.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 28341555200,
+            "host_ram_used_gib": 26.39513,
+            "sampled_at_ns": 1786306167284051200,
+            "sampled_at_utc": "2026-08-09T20:09:27.284051200Z",
+            "vram_used_gib": 12.428711,
+            "vram_used_mib": 12727.0
+          },
+          "sample_count": 382,
+          "start_observed_at_ns": 1786306145294119500
+        },
+        "wrapper_logged_peak_mb": 13026,
+        "wrapper_logged_post_mb": 8102
+      }
+    ],
+    "sampler_interval_s": 0.2,
+    "shot_windows": [
+      {
+        "outcome": "completed",
+        "shot_id": "shot_b001",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786306225095498400,
+          "observation_span_s": 508.20845,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 36683444224,
+            "host_ram_used_gib": 34.16412,
+            "sampled_at_ns": 1786306162091987600,
+            "sampled_at_utc": "2026-08-09T20:09:22.091987600Z",
+            "vram_used_gib": 6.267578,
+            "vram_used_mib": 6418.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 28341555200,
+            "host_ram_used_gib": 26.39513,
+            "sampled_at_ns": 1786306167284051200,
+            "sampled_at_utc": "2026-08-09T20:09:27.284051200Z",
+            "vram_used_gib": 12.428711,
+            "vram_used_mib": 12727.0
+          },
+          "sample_count": 2542,
+          "start_observed_at_ns": 1786305716887048400
+        }
+      },
+      {
+        "outcome": "refused_at_admission",
+        "shot_id": "shot_b003",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786306227298512800,
+          "observation_span_s": 2.203014,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 25764126720,
+            "host_ram_used_gib": 23.994713,
+            "sampled_at_ns": 1786306225885733700,
+            "sampled_at_utc": "2026-08-09T20:10:25.885733700Z",
+            "vram_used_gib": 6.233398,
+            "vram_used_mib": 6383.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 25762291712,
+            "host_ram_used_gib": 23.993004,
+            "sampled_at_ns": 1786306226089853300,
+            "sampled_at_utc": "2026-08-09T20:10:26.089853300Z",
+            "vram_used_gib": 6.262695,
+            "vram_used_mib": 6413.0
+          },
+          "sample_count": 12,
+          "start_observed_at_ns": 1786306225095498400
+        }
+      }
+    ],
+    "telemetry_sample_count": 2635,
+    "whole_child_window": {
+      "end_observed_at_ns": 1786306228701745400,
+      "observation_span_s": 514.633245,
+      "peak_host_ram": {
+        "host_ram_used_bytes": 36683444224,
+        "host_ram_used_gib": 34.16412,
+        "sampled_at_ns": 1786306162091987600,
+        "sampled_at_utc": "2026-08-09T20:09:22.091987600Z",
+        "vram_used_gib": 6.267578,
+        "vram_used_mib": 6418.0
+      },
+      "peak_vram": {
+        "host_ram_used_bytes": 28341555200,
+        "host_ram_used_gib": 26.39513,
+        "sampled_at_ns": 1786306167284051200,
+        "sampled_at_utc": "2026-08-09T20:09:27.284051200Z",
+        "vram_used_gib": 12.428711,
+        "vram_used_mib": 12727.0
+      },
+      "sample_count": 2574,
+      "start_observed_at_ns": 1786305714068500600
+    }
+  },
+  "observed_outcome": "refusal",
+  "offline_policy": {
+    "caveat": "This field only reports URL-bearing lines in the appended server log; it is not a network audit.",
+    "model_weight_download_observed_in_appended_log": false,
+    "observed_incidents": [],
+    "status": "NO_NETWORK_URL_OBSERVED_IN_APPENDED_LOG"
+  },
+  "production_state_snapshots": {
+    "manifest_after": {
+      "bytes": 7966,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849861801961,
+      "mtime_ns": 1786303096171891700,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+      "sha256": "b832e264acc5cb70f9d4862c2d7dba3baf7cd54da86f7fd1c242449154140f7a"
+    },
+    "manifest_before": {
+      "bytes": 7966,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849861801961,
+      "mtime_ns": 1786303096171891700,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+      "sha256": "b832e264acc5cb70f9d4862c2d7dba3baf7cd54da86f7fd1c242449154140f7a"
+    },
+    "policy": "A successful existing node92 replay is expected to advance its output report/manifest; a refused replay must leave them unchanged. These are metadata/hash snapshots, not captured file contents.",
+    "report_after": {
+      "bytes": 4933,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 2814749769320194,
+      "mtime_ns": 1786303096170385300,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+      "sha256": "911c801f7a463c09d5191b8298e992694f0c7bcc78281f0b78564dec3c672f42"
+    },
+    "report_before": {
+      "bytes": 4933,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 2814749769320194,
+      "mtime_ns": 1786303096170385300,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+      "sha256": "911c801f7a463c09d5191b8298e992694f0c7bcc78281f0b78564dec3c672f42"
+    }
+  },
+  "schema_version": 1,
+  "server_instance": {
+    "argv": [
+      "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8000",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "--disable-metadata"
+    ],
+    "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 28016,
+        "port": 8000
+      }
+    ],
+    "parent_pid": 37556,
+    "process_create_time": 1786305222.9791484,
+    "serving_pid": 28016
+  },
+  "source_binding": {
+    "caveat": "The fixture contract binds the OTR commit and the sidecar binds the existing harness byte hash. The server loaded the live OTR worktree through its ComfyUI custom_nodes path, but the complete dirty-worktree status and every loaded Python byte hash were not snapshotted at render start. These committed-source hashes are therefore a reproducible baseline, not proof that no dirty override existed. Numeric telemetry remains bound to the immutable raw sidecar SHA.",
+    "committed_sources": {
+      "nodes/_otr_video_engines/beat_session.py": {
+        "bytes": 17637,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/beat_session.py",
+        "sha256": "f79db3d992b8ed799402522f4596c24e4fe8c899a951573f8c833946ee939d2f"
+      },
+      "nodes/_otr_video_engines/coverage_plan.py": {
+        "bytes": 34004,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/coverage_plan.py",
+        "sha256": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60"
+      },
+      "nodes/_otr_video_engines/eng_fastwan_8gb.py": {
+        "bytes": 15152,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/eng_fastwan_8gb.py",
+        "sha256": "0eed2747308d0bc3fc9225f43cc1c8dcef15c28a858c45f4b968fc95dfb6a889"
+      },
+      "nodes/_otr_video_engines/eng_ltx_video.py": {
+        "bytes": 84826,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/eng_ltx_video.py",
+        "sha256": "fc01c8b9983dad68e62638f0eb224ae4d68f9da966ebd64f5c7b17a15d9cb0a8"
+      },
+      "nodes/_otr_video_engines/eng_wan_ti2v.py": {
+        "bytes": 68875,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/eng_wan_ti2v.py",
+        "sha256": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183"
+      },
+      "nodes/_otr_video_engines/motion_common.py": {
+        "bytes": 33061,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/motion_common.py",
+        "sha256": "6935658896c93b75e71dff766ca30cd9ba029572e9b28b12e2619f3ba9725e00"
+      },
+      "nodes/_otr_video_engines/render_driver.py": {
+        "bytes": 282795,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/render_driver.py",
+        "sha256": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564"
+      },
+      "nodes/otr_video_render_batch.py": {
+        "bytes": 27221,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/otr_video_render_batch.py",
+        "sha256": "2f7a363f64fddcf9e25eb5cff08595c444be9c71acd01bc65940d9a5897c83b2"
+      },
+      "scripts/otr_visual_smoke.py": {
+        "bytes": 18751,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:scripts/otr_visual_smoke.py",
+        "sha256": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f"
+      }
+    },
+    "otr_head_at_fixture_build": "6530ed84d8d00fd82eccabeeee88a50d4b09f663",
+    "worktree_at_render": "NOT_CAPTURED"
+  },
+  "source_refs": {
+    "baked_ledger": {
+      "bytes": 62734,
+      "path": "results/otr_side/wan_retention/fixture_evidence/long_first_planned/baked_ledger.json",
+      "sha256": "5e9eec1dc2c1161c50e1704e3d84cddc29dc9691fab02225c9df4f6c2759638f"
+    },
+    "bundle_manifest": {
+      "bytes": 9427,
+      "path": "results/otr_side/wan_retention/fixture_evidence/long_first_planned/bundle_manifest.json",
+      "sha256": "bd8a4b69c815fa32a3750f32ba3aa1d7a8dec078ae32194a20286a607f10ec33"
+    },
+    "fixture_contract": {
+      "bytes": 1649,
+      "path": "results/otr_side/wan_retention/fixture_evidence/long_first_planned/fixture_contract.json",
+      "sha256": "26cbbf15badb8f0701ef14ebd378a13fecf71832dbdb964c778e7516a1995e61"
+    },
+    "master_audio": {
+      "binding": "HASH_ONLY_FROM_DURABLE_BUNDLE_MANIFEST_AND_RAW_COMMAND",
+      "bytes": null,
+      "path": null,
+      "sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444"
+    },
+    "raw_telemetry": {
+      "bytes": 1015949,
+      "path": "results/otr_side/wan_retention/telemetry/phase1_wan_ti2v_long_first_planned.json",
+      "sha256": "03cf440d2860024f7b512577b023e97b4c0194c84c1a421458a940746ff958b1"
+    },
+    "render_time_bundle_observation": {
+      "binding": "OBSERVED_PATH_ONLY_NOT_PRIMARY_DURABLE_EVIDENCE",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned"
+    }
+  },
+  "status": "MEASURED_DIAGNOSTIC",
+  "topology_proof": {
+    "engine_execution_evidence": {
+      "completed_segment_count": 2,
+      "kind": "wan_ti2v render-phase and refusal labels"
+    },
+    "long_assembly_event": {
+      "event_index": 44,
+      "log_offsets": [
+        41396,
+        41532
+      ],
+      "observed_at_ns": 1786306225095498400,
+      "observed_at_utc": "2026-08-09T20:10:25.095498400Z",
+      "raw_sha256": "82b2191d43d92692c644562ef6256189f7ac4864aac526a0469f95f6a6315215"
+    },
+    "long_chain_200_completed": true,
+    "no_silent_resize_refusal": {
+      "affordable_frames": 20,
+      "event": {
+        "event_index": 51,
+        "log_offsets": [
+          42098,
+          42426
+        ],
+        "observed_at_ns": 1786306227298512800,
+        "observed_at_utc": "2026-08-09T20:10:27.298512800Z",
+        "raw_sha256": "9cc64e521ba9e066eaf4dfc1af77a571f30395b05252f349ffc8749b8a35af80"
+      },
+      "free_mb_reported_by_cost_model": 9665,
+      "margin": 0.85,
+      "requested_frames": 65,
+      "sample_at_or_after_event": {
+        "host_ram_used_bytes": 25747902464,
+        "host_ram_used_gib": 23.979603,
+        "sampled_at_ns": 1786306227298512800,
+        "sampled_at_utc": "2026-08-09T20:10:27.298512800Z",
+        "vram_used_gib": 1.262695,
+        "vram_used_mib": 1293.0
+      },
+      "sample_immediately_before_event": {
+        "host_ram_used_bytes": 25762975744,
+        "host_ram_used_gib": 23.993641,
+        "sampled_at_ns": 1786306227094386700,
+        "sampled_at_utc": "2026-08-09T20:10:27.094386700Z",
+        "vram_used_gib": 6.262695,
+        "vram_used_mib": 6413.0
+      },
+      "shot_id": "shot_b003",
+      "snapped_frames": 65
+    },
+    "render_phase_count": 2,
+    "small_65_completed": false
+  }
+}

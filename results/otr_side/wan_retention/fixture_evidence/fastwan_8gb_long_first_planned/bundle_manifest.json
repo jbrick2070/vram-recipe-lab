@@ -1,0 +1,134 @@
+{
+  "assets": {
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\announcer_6ad6cf4dce7b.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\announcer_6ad6cf4dce7b.png",
+      "sha256": "6df23aa8ee0ea4004d2cf7e22a71dfecf277342234c8c9dd277dae440113f568",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\announcer_6ad6cf4dce7b.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\c01_b3eecde9ac24.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\c01_b3eecde9ac24.png",
+      "sha256": "278a11326753bfd8ebbe5e784a4fff0b728691de5f1d52865208aa1103ddd373",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\c01_b3eecde9ac24.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\c02_4e7d0f90dc15.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\c02_4e7d0f90dc15.png",
+      "sha256": "d8bdc8938e98904854994563379f7ef000d0ad09670a827520cd65dc239cf37b",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\c02_4e7d0f90dc15.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\c03_a39fc9c59dd0.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\c03_a39fc9c59dd0.png",
+      "sha256": "da19b11798d5e576b6a6c976bd8cb8ae542093bfae14c78f238f3b914972bdcb",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\c03_a39fc9c59dd0.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b000_music_open_3d2d30e715d3.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_b000_music_open_3d2d30e715d3.png",
+      "sha256": "67de9ec65a42056ce0597e0f1e33a24c6ff1784676a016d3321c25ad81da9f8b",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b000_music_open_3d2d30e715d3.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b001_4d32f3b29fb4.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_b001_4d32f3b29fb4.png",
+      "sha256": "39ccf93d25ae7dd7a9b326e8a24c964bd637ea4827dd310792d255ca8ccc1c7f",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b001_4d32f3b29fb4.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b002_ab11134e8dbf.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_b002_ab11134e8dbf.png",
+      "sha256": "30f7b7351f8015d864f3a0835d977c8f1e22e5ae8a0717f1fcb411aa9b257faa",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b002_ab11134e8dbf.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b003_4d0c2070655e.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_b003_4d0c2070655e.png",
+      "sha256": "c812ba4f239905615a96a4707b71e50127e2e28c276e1863a4133954d2179279",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b003_4d0c2070655e.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b004_3970323a1fac.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_b004_3970323a1fac.png",
+      "sha256": "9b087c003df6c93bcfb9afb2bc6c83ee99dc7ca095ddb078481387d1547f86af",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b004_3970323a1fac.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b005_5b8a2311668b.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_b005_5b8a2311668b.png",
+      "sha256": "031c893569ef0a19c191d542d751e9bb8c78006d8311bd20c4dd9db494e273cb",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_b005_5b8a2311668b.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_music_closing_001_a153a17c74b4.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_music_closing_001_a153a17c74b4.png",
+      "sha256": "5f61ad62408af2e94e18828529700c52b2f99c6be6720c03a4aa155e960a6e69",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_music_closing_001_a153a17c74b4.png"
+    },
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_music_opening_001_6f1e3b07e249.png": {
+      "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\assets\\still_music_opening_001_6f1e3b07e249.png",
+      "sha256": "d0ea80e4e221e5d66bf31d14f0f95374cc17220c0db889f14b806114bb857622",
+      "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\assets\\still_music_opening_001_6f1e3b07e249.png"
+    }
+  },
+  "baked_ledger": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\baked_ledger.json",
+  "baked_master": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\master.wav",
+  "master": {
+    "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\fastwan_8gb_long_first_planned\\master.wav",
+    "sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444",
+    "src": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned\\master.wav"
+  },
+  "missing": [],
+  "wan_retention_measurement_contract": {
+    "comparison_scope": "neutral production-tail diagnostic, not shipping-profile qualification",
+    "coverage_plans": [
+      {
+        "join_mode": "chain",
+        "segments": [
+          {
+            "drop_head": 0,
+            "index": 0,
+            "render_frames": 177,
+            "trim_tail": 0
+          },
+          {
+            "drop_head": 1,
+            "index": 1,
+            "render_frames": 25,
+            "trim_tail": 1
+          }
+        ],
+        "target_visible_frames": 200
+      },
+      {
+        "join_mode": "single",
+        "segments": [
+          {
+            "drop_head": 0,
+            "index": 0,
+            "render_frames": 65,
+            "trim_tail": 0
+          }
+        ],
+        "target_visible_frames": 65
+      }
+    ],
+    "engine": "fastwan_8gb",
+    "engine_binding": "baked_ledger.video.shots[].engine_id",
+    "notes": [
+      "No OTR source, profile, budget, margin, or production recipe was edited.",
+      "The target/order/assets are identical to the WAN Phase-1 fixture.",
+      "Only engine_id changes; coverage lengths follow the selected adapter's declared frame contract.",
+      "HuMo is excluded because its JOIN_JUMP soft-reference topology is not strict-chain comparable."
+    ],
+    "order": "long_then_small",
+    "otr_repo_head_at_build": "5fdf93f16c3d3daa32b5fd4867093213b9405fb9",
+    "purpose": "Phase-3 engine-only inter-shot retention comparison",
+    "schema_version": 1,
+    "source_bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first_planned",
+    "source_ledger_sha256": "5e9eec1dc2c1161c50e1704e3d84cddc29dc9691fab02225c9df4f6c2759638f",
+    "source_master_sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444",
+    "source_sha256s": {
+      "coverage_plan.py": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60",
+      "engine.py": "0eed2747308d0bc3fc9225f43cc1c8dcef15c28a858c45f4b968fc95dfb6a889",
+      "otr_visual_smoke.py": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f",
+      "render_driver.py": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564",
+      "wan_parent.py": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183"
+    },
+    "targets": [
+      200,
+      65
+    ],
+    "topology": "strict-first-frame two-segment long beat followed by one small beat"
+  }
+}

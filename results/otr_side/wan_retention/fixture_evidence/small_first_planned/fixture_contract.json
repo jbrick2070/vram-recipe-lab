@@ -1,0 +1,24 @@
+{
+  "existing_otr_harness": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\otr_visual_smoke.py",
+  "existing_otr_harness_sha256": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f",
+  "notes": [
+    "No OTR source or production recipe was edited.",
+    "The stale captured master path was rebound to the unique renamed episode file with identical basename.",
+    "Only shot selection/order, target-frame shape, exact historical coverage stamps, and removal of the route freeze were derived for diagnosis.",
+    "The long plan is the historical 177+25 chain: drop successor head 1 and trim final tail 1 to deliver exactly 200 frames.",
+    "Each engine run must use a fresh server; OTR_FORCE_ENGINE_MAP is the only engine variable."
+  ],
+  "order": "small_then_long",
+  "otr_repo_head_at_build": "6530ed84d8d00fd82eccabeeee88a50d4b09f663",
+  "purpose": "wan_ti2v inter-shot VRAM retention measurement only",
+  "resolved_master_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first\\master.wav",
+  "resolved_master_sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444",
+  "schema_version": 1,
+  "source_capture": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_input.json",
+  "source_capture_sha256": "9c7222027177d151c5828893888f94d28bac27308086be762a9b007984f4582b",
+  "source_master_path_as_captured": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\long_first\\master.wav",
+  "target_frames": [
+    65,
+    200
+  ]
+}

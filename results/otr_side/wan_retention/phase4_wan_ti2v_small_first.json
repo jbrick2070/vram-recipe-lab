@@ -1,0 +1,1199 @@
+{
+  "artifacts": {
+    "artifacts": [
+      {
+        "audio_stream_count": 0,
+        "bytes": 680309,
+        "codec": "h264",
+        "duration_s": 2.6,
+        "frame_count": 65,
+        "frame_rate": "25/1",
+        "height": 480,
+        "path": "outputs/otr_side/wan_retention/phase4_wan_small65.mp4",
+        "pixel_format": "yuv420p",
+        "production_source": {
+          "bytes": 680309,
+          "mtime_ns": 1786306680400299500,
+          "mtime_within_raw_child_window": true,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\wan_retention_wan_small_first_planned_20260809\\clips\\shot_b003_character_video_wan_ti2v.mp4",
+          "raw_child_window_ns": [
+            1786306523991515700,
+            1786307184046519000
+          ],
+          "sha256": "538c15b04dd63a27e1dcbd85bfe3b0fcaf09a6d27fff96e06d73c41b39c13e45",
+          "source_matches_lab_copy": true
+        },
+        "sha256": "538c15b04dd63a27e1dcbd85bfe3b0fcaf09a6d27fff96e06d73c41b39c13e45",
+        "validation": "SHA256_BYTES_AND_FFPROBE_EXACT_SHAPE",
+        "width": 832
+      },
+      {
+        "audio_stream_count": 0,
+        "bytes": 885221,
+        "codec": "h264",
+        "duration_s": 8.0,
+        "frame_count": 200,
+        "frame_rate": "25/1",
+        "height": 480,
+        "path": "outputs/otr_side/wan_retention/phase4_wan_long200.mp4",
+        "pixel_format": "yuv420p",
+        "production_source": {
+          "bytes": 885221,
+          "mtime_ns": 1786307181794219600,
+          "mtime_within_raw_child_window": true,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\wan_retention_wan_small_first_planned_20260809\\clips\\shot_b001_announcer_visual_wan_ti2v.mp4",
+          "raw_child_window_ns": [
+            1786306523991515700,
+            1786307184046519000
+          ],
+          "sha256": "ebd227ceaafeb698ef83a2365d07a348e9f776324d20589dcd26b1457fca2aed",
+          "source_matches_lab_copy": true
+        },
+        "sha256": "ebd227ceaafeb698ef83a2365d07a348e9f776324d20589dcd26b1457fca2aed",
+        "validation": "SHA256_BYTES_AND_FFPROBE_EXACT_SHAPE",
+        "width": 832
+      }
+    ],
+    "caveat": "Artifacts prove delivered media shape and bytes; they do not add a visual-quality gate.",
+    "status": "DURABLE_SUCCESS_ARTIFACTS_BOUND"
+  },
+  "boot_lane": "OTR production WAN, unclamped, fresh server, exact historical coverage plans, reverse order",
+  "engine": "wan_ti2v",
+  "engine_binding_caveat": "Legacy Phase-1/Phase-4 telemetry serialized server_bound_force_map from its --engine argument; it did not inspect the already-running server's environment. New telemetry correctly leaves that field null. This reducer never trusts it: engine identity is proved from both baked-ledger shot rows plus engine-specific log/refusal evidence where present.",
+  "expected_outcome": "success",
+  "fixture_contract": {
+    "asset_sha256s": [
+      "031c893569ef0a19c191d542d751e9bb8c78006d8311bd20c4dd9db494e273cb",
+      "278a11326753bfd8ebbe5e784a4fff0b728691de5f1d52865208aa1103ddd373",
+      "30f7b7351f8015d864f3a0835d977c8f1e22e5ae8a0717f1fcb411aa9b257faa",
+      "39ccf93d25ae7dd7a9b326e8a24c964bd637ea4827dd310792d255ca8ccc1c7f",
+      "5f61ad62408af2e94e18828529700c52b2f99c6be6720c03a4aa155e960a6e69",
+      "67de9ec65a42056ce0597e0f1e33a24c6ff1784676a016d3321c25ad81da9f8b",
+      "6df23aa8ee0ea4004d2cf7e22a71dfecf277342234c8c9dd277dae440113f568",
+      "9b087c003df6c93bcfb9afb2bc6c83ee99dc7ca095ddb078481387d1547f86af",
+      "c812ba4f239905615a96a4707b71e50127e2e28c276e1863a4133954d2179279",
+      "d0ea80e4e221e5d66bf31d14f0f95374cc17220c0db889f14b806114bb857622",
+      "d8bdc8938e98904854994563379f7ef000d0ad09670a827520cd65dc239cf37b",
+      "da19b11798d5e576b6a6c976bd8cb8ae542093bfae14c78f238f3b914972bdcb"
+    ],
+    "comparison_scope": "exact WAN problem reconstruction",
+    "contract_class": "phase1_or_phase4_wan_reconstruction",
+    "control_origin_ledger_sha256": "ae8f360616912591296d0ccff256813b8cc1a4098bcc61c9210595ab73c5ffb6",
+    "engine_authority": "baked_ledger.video.shots[*].engine_id",
+    "harness_sha256": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f",
+    "ledger_engine_ids": [
+      "wan_ti2v"
+    ],
+    "load_bearing_shared_source_sha256s": {
+      "nodes/_otr_video_engines/coverage_plan.py": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60",
+      "nodes/_otr_video_engines/eng_wan_ti2v.py": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183",
+      "nodes/_otr_video_engines/render_driver.py": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564",
+      "scripts/otr_visual_smoke.py": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f"
+    },
+    "long_chain": [
+      {
+        "drop_head": 0,
+        "index": 0,
+        "render_frames": 177,
+        "trim_tail": 0
+      },
+      {
+        "drop_head": 1,
+        "index": 1,
+        "render_frames": 25,
+        "trim_tail": 1
+      }
+    ],
+    "raw_sidecar_source_binding": {
+      "bytes": 17605,
+      "caveat": "Phase-1/Phase-4 legacy raw receipts predate the self-hash field. The session ledger externally recorded this sidecar SHA; the raw JSON itself does not prove it, but the exact source bytes are preserved at this repo-local evidence path.",
+      "path": "results/otr_side/wan_retention/evidence/wan_retention_sidecar_phase1_phase4_v1.py",
+      "sha256": "b98fac3468ef6c805df5ab9bb341b42b475802cc8772d3a4b6f552955b5bcaec",
+      "status": "LEGACY_EXTERNAL_BINDING_ARCHIVED_IN_LAB_EVIDENCE"
+    },
+    "request_seeds_in_order": [
+      0,
+      0
+    ],
+    "shot_control_sha256": "a7c06b5219d3af0b76ec3a88112d73f725b63022c4373b82efcb329a9b4696db",
+    "sidecar_declared_force_map": "*=wan_ti2v",
+    "sidecar_force_map_status": "LEGACY_INCORRECT_DECLARATIVE_LABEL_NOT_SERVER_ENV_PROOF",
+    "small_single": [
+      {
+        "drop_head": 0,
+        "index": 0,
+        "render_frames": 65,
+        "trim_tail": 0
+      }
+    ],
+    "source_capture_sha256": "9c7222027177d151c5828893888f94d28bac27308086be762a9b007984f4582b",
+    "target_frames_in_order": [
+      65,
+      200
+    ]
+  },
+  "fixture_order": "small_then_long",
+  "gate_status": "NOT_A_LAB_GATE",
+  "gpu_lease": {
+    "owner": {
+      "created_at_unix": 1786306523.922948,
+      "lock_schema_version": 1,
+      "nonce": "2a7d3a6a4dba9963c714e11e9809eb46c5df77a703d31e5c774fa32047b66189",
+      "pid": 27212,
+      "process_create_time": 1786306523.8547485,
+      "role": "standalone"
+    },
+    "release": {
+      "error": "",
+      "success": true
+    }
+  },
+  "interpretation_guardrail": "NVIDIA/psutil sidecar values are measured at 200 ms. The wrapper's per-segment peak/post MB counters are preserved alongside them but are a different measurement surface and must not be substituted for inter-shot nvidia-smi residency. Post-terminal cleanup is not the inter-shot boundary.",
+  "kind": "wan-inter-shot-retention-leg-receipt",
+  "leg_id": "phase4_wan_ti2v_small_first",
+  "measured": "otr-side production wrapper",
+  "metrics": {
+    "baseline": {
+      "host_ram_used_bytes": 25200787456,
+      "host_ram_used_gib": 23.470062,
+      "sampled_at_ns": 1786306523938608100,
+      "sampled_at_utc": "2026-08-09T20:15:23.938608100Z",
+      "vram_used_gib": 1.083984,
+      "vram_used_mib": 1110.0
+    },
+    "child_process_duration_s": 660.062,
+    "clock_semantics": "server-log and child-stdout timestamps are observation times, not producer timestamps",
+    "inter_shot_boundary": {
+      "definition": "last 200 ms sidecar sample at or before the second-shot lease/admission event",
+      "event": {
+        "event_index": 38,
+        "log_offsets": [
+          29851,
+          29923
+        ],
+        "observed_at_ns": 1786306683411036000,
+        "observed_at_utc": "2026-08-09T20:18:03.411036000Z",
+        "raw_sha256": "0ac3333b3055ac965de5b8d4cf330666143e38880356f05096671af2085c897a"
+      },
+      "host_ram_used_bytes": 27236036608,
+      "host_ram_used_gib": 25.365536,
+      "retained_above_start_baseline_gib": 5.170899,
+      "sampled_at_ns": 1786306683411036000,
+      "sampled_at_utc": "2026-08-09T20:18:03.411036000Z",
+      "vram_used_gib": 6.254883,
+      "vram_used_mib": 6405.0
+    },
+    "post_terminal_cleanup_window": {
+      "duration_s": 12.052695,
+      "first": {
+        "host_ram_used_bytes": 28011655168,
+        "host_ram_used_gib": 26.087887,
+        "sampled_at_ns": 1786307184224009900,
+        "sampled_at_utc": "2026-08-09T20:26:24.224009900Z",
+        "vram_used_gib": 1.223633,
+        "vram_used_mib": 1253.0
+      },
+      "last": {
+        "host_ram_used_bytes": 27928559616,
+        "host_ram_used_gib": 26.010498,
+        "sampled_at_ns": 1786307196052526700,
+        "sampled_at_utc": "2026-08-09T20:26:36.052526700Z",
+        "vram_used_gib": 1.279297,
+        "vram_used_mib": 1310.0
+      },
+      "maximum": {
+        "host_ram_used_bytes": 27987259392,
+        "host_ram_used_gib": 26.065166,
+        "sampled_at_ns": 1786307194609502900,
+        "sampled_at_utc": "2026-08-09T20:26:34.609502900Z",
+        "vram_used_gib": 1.283203,
+        "vram_used_mib": 1314.0
+      },
+      "minimum": {
+        "host_ram_used_bytes": 27914706944,
+        "host_ram_used_gib": 25.997597,
+        "sampled_at_ns": 1786307186221313200,
+        "sampled_at_utc": "2026-08-09T20:26:26.221313200Z",
+        "vram_used_gib": 1.203125,
+        "vram_used_mib": 1232.0
+      },
+      "sample_count": 61
+    },
+    "refusal": null,
+    "render_segments": [
+      {
+        "boundary_sample_at_or_after": {
+          "host_ram_used_bytes": 27639992320,
+          "host_ram_used_gib": 25.741749,
+          "sampled_at_ns": 1786306680616585700,
+          "sampled_at_utc": "2026-08-09T20:18:00.616585700Z",
+          "vram_used_gib": 6.254883,
+          "vram_used_mib": 6405.0
+        },
+        "phase_boundary": {
+          "event_index": 34,
+          "log_offsets": [
+            29310,
+            29394
+          ],
+          "observed_at_ns": 1786306680616585700,
+          "observed_at_utc": "2026-08-09T20:18:00.616585700Z",
+          "raw_sha256": "a46a988c5dc589f0d2974629adc939639449328a00a2b0fc9d7cb812836aba0e"
+        },
+        "segment_index": 0,
+        "shot_id": "shot_b003",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786306680616585700,
+          "observation_span_s": 153.810184,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 33756000256,
+            "host_ram_used_gib": 31.437725,
+            "sampled_at_ns": 1786306543008520000,
+            "sampled_at_utc": "2026-08-09T20:15:43.008520000Z",
+            "vram_used_gib": 1.103516,
+            "vram_used_mib": 1130.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 26834501632,
+            "host_ram_used_gib": 24.991577,
+            "sampled_at_ns": 1786306548612787300,
+            "sampled_at_utc": "2026-08-09T20:15:48.612787300Z",
+            "vram_used_gib": 7.455078,
+            "vram_used_mib": 7634.0
+          },
+          "sample_count": 770,
+          "start_observed_at_ns": 1786306526806401500
+        },
+        "wrapper_logged_peak_mb": 7933,
+        "wrapper_logged_post_mb": 6704
+      },
+      {
+        "boundary_sample_at_or_after": {
+          "host_ram_used_bytes": 28207321088,
+          "host_ram_used_gib": 26.270115,
+          "sampled_at_ns": 1786307106006267100,
+          "sampled_at_utc": "2026-08-09T20:25:06.006267100Z",
+          "vram_used_gib": 6.238281,
+          "vram_used_mib": 6388.0
+        },
+        "phase_boundary": {
+          "event_index": 78,
+          "log_offsets": [
+            34203,
+            34288
+          ],
+          "observed_at_ns": 1786307106006267100,
+          "observed_at_utc": "2026-08-09T20:25:06.006267100Z",
+          "raw_sha256": "84bcc0176173547390b29a53fcf7908e03c734d192d95151e9a38e51c85a80e1"
+        },
+        "segment_index": 0,
+        "shot_id": "shot_b001",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786307106006267100,
+          "observation_span_s": 422.595231,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 35912704000,
+            "host_ram_used_gib": 33.446312,
+            "sampled_at_ns": 1786306700014102300,
+            "sampled_at_utc": "2026-08-09T20:18:20.014102300Z",
+            "vram_used_gib": 6.254883,
+            "vram_used_mib": 6405.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 29449977856,
+            "host_ram_used_gib": 27.427429,
+            "sampled_at_ns": 1786306883418150400,
+            "sampled_at_utc": "2026-08-09T20:21:23.418150400Z",
+            "vram_used_gib": 10.520508,
+            "vram_used_mib": 10773.0
+          },
+          "sample_count": 2114,
+          "start_observed_at_ns": 1786306683411036000
+        },
+        "wrapper_logged_peak_mb": 11070,
+        "wrapper_logged_post_mb": 8063
+      },
+      {
+        "boundary_sample_at_or_after": {
+          "host_ram_used_bytes": 28821590016,
+          "host_ram_used_gib": 26.842197,
+          "sampled_at_ns": 1786307178615369800,
+          "sampled_at_utc": "2026-08-09T20:26:18.615369800Z",
+          "vram_used_gib": 6.170898,
+          "vram_used_mib": 6319.0
+        },
+        "phase_boundary": {
+          "event_index": 94,
+          "log_offsets": [
+            37501,
+            37586
+          ],
+          "observed_at_ns": 1786307178615369800,
+          "observed_at_utc": "2026-08-09T20:26:18.615369800Z",
+          "raw_sha256": "3006c108d32f67f7dc0eeafa90dab8e65b1333ae8e896bfc28925f1182cf4e0d"
+        },
+        "segment_index": 1,
+        "shot_id": "shot_b001",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786307178615369800,
+          "observation_span_s": 72.609103,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 36234702848,
+            "host_ram_used_gib": 33.746197,
+            "sampled_at_ns": 1786307122607857200,
+            "sampled_at_utc": "2026-08-09T20:25:22.607857200Z",
+            "vram_used_gib": 6.25293,
+            "vram_used_mib": 6403.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 28688367616,
+            "host_ram_used_gib": 26.718124,
+            "sampled_at_ns": 1786307127005405900,
+            "sampled_at_utc": "2026-08-09T20:25:27.005405900Z",
+            "vram_used_gib": 12.378906,
+            "vram_used_mib": 12676.0
+          },
+          "sample_count": 364,
+          "start_observed_at_ns": 1786307106006267100
+        },
+        "wrapper_logged_peak_mb": 12975,
+        "wrapper_logged_post_mb": 7994
+      }
+    ],
+    "sampler_interval_s": 0.2,
+    "shot_windows": [
+      {
+        "outcome": "completed",
+        "shot_id": "shot_b003",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786306683411036000,
+          "observation_span_s": 156.604635,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 33756000256,
+            "host_ram_used_gib": 31.437725,
+            "sampled_at_ns": 1786306543008520000,
+            "sampled_at_utc": "2026-08-09T20:15:43.008520000Z",
+            "vram_used_gib": 1.103516,
+            "vram_used_mib": 1130.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 26834501632,
+            "host_ram_used_gib": 24.991577,
+            "sampled_at_ns": 1786306548612787300,
+            "sampled_at_utc": "2026-08-09T20:15:48.612787300Z",
+            "vram_used_gib": 7.455078,
+            "vram_used_mib": 7634.0
+          },
+          "sample_count": 784,
+          "start_observed_at_ns": 1786306526806401500
+        }
+      },
+      {
+        "outcome": "completed",
+        "shot_id": "shot_b001",
+        "sidecar_200ms": {
+          "end_observed_at_ns": 1786307182006270700,
+          "observation_span_s": 498.595235,
+          "peak_host_ram": {
+            "host_ram_used_bytes": 36234702848,
+            "host_ram_used_gib": 33.746197,
+            "sampled_at_ns": 1786307122607857200,
+            "sampled_at_utc": "2026-08-09T20:25:22.607857200Z",
+            "vram_used_gib": 6.25293,
+            "vram_used_mib": 6403.0
+          },
+          "peak_vram": {
+            "host_ram_used_bytes": 28688367616,
+            "host_ram_used_gib": 26.718124,
+            "sampled_at_ns": 1786307127005405900,
+            "sampled_at_utc": "2026-08-09T20:25:27.005405900Z",
+            "vram_used_gib": 12.378906,
+            "vram_used_mib": 12676.0
+          },
+          "sample_count": 2494,
+          "start_observed_at_ns": 1786306683411036000
+        }
+      }
+    ],
+    "telemetry_sample_count": 3362,
+    "whole_child_window": {
+      "end_observed_at_ns": 1786307184046519000,
+      "observation_span_s": 660.055003,
+      "peak_host_ram": {
+        "host_ram_used_bytes": 36234702848,
+        "host_ram_used_gib": 33.746197,
+        "sampled_at_ns": 1786307122607857200,
+        "sampled_at_utc": "2026-08-09T20:25:22.607857200Z",
+        "vram_used_gib": 6.25293,
+        "vram_used_mib": 6403.0
+      },
+      "peak_vram": {
+        "host_ram_used_bytes": 28688367616,
+        "host_ram_used_gib": 26.718124,
+        "sampled_at_ns": 1786307127005405900,
+        "sampled_at_utc": "2026-08-09T20:25:27.005405900Z",
+        "vram_used_gib": 12.378906,
+        "vram_used_mib": 12676.0
+      },
+      "sample_count": 3301,
+      "start_observed_at_ns": 1786306523991515700
+    }
+  },
+  "observed_outcome": "success",
+  "offline_policy": {
+    "caveat": "The appended production server log shows automatic ComfyUI-Manager registry fetches. No model weight download line appears in the appended render log, but this is not a complete network audit. The incident violates the lab's offline operating rule and is disclosed without altering the immutable measurement.",
+    "model_weight_download_observed_in_appended_log": false,
+    "observed_incidents": [
+      {
+        "classification": "AUTOMATIC_COMFYUI_MANAGER_REGISTRY_NETWORK_ACTIVITY",
+        "event": {
+          "event_index": 10,
+          "log_offsets": [
+            25526,
+            25664
+          ],
+          "observed_at_ns": 1786306531211762600,
+          "observed_at_utc": "2026-08-09T20:15:31.211762600Z",
+          "raw_sha256": "141e68114c43cb05f47644485f6ad6fe7979fa87e5a28fbb42c78894035293b5"
+        },
+        "urls": [
+          "https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json"
+        ]
+      },
+      {
+        "classification": "AUTOMATIC_COMFYUI_MANAGER_REGISTRY_NETWORK_ACTIVITY",
+        "event": {
+          "event_index": 15,
+          "log_offsets": [
+            25957,
+            26095
+          ],
+          "observed_at_ns": 1786306542209743400,
+          "observed_at_utc": "2026-08-09T20:15:42.209743400Z",
+          "raw_sha256": "e2f9be5e03507c855b086e9b4024e7763db3c7babc9172529ca617696a5de2ef"
+        },
+        "urls": [
+          "https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 26,
+          "log_offsets": [
+            26841,
+            26980
+          ],
+          "observed_at_ns": 1786306554010578300,
+          "observed_at_utc": "2026-08-09T20:15:54.010578300Z",
+          "raw_sha256": "a22bd018d862e0a201fc4572f0a45d6e00d30bb367569f8d4f45ff94b08d8e77"
+        },
+        "marker": "FETCH ComfyRegistry Data: 5/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 27,
+          "log_offsets": [
+            26980,
+            27456
+          ],
+          "observed_at_ns": 1786306568613354900,
+          "observed_at_utc": "2026-08-09T20:16:08.613354900Z",
+          "raw_sha256": "71a585bd18d201758253f365ae13531efbdb048c28a6d08fcf9dd45b9da8ede2"
+        },
+        "marker": "FETCH ComfyRegistry Data: 10/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 28,
+          "log_offsets": [
+            27456,
+            27812
+          ],
+          "observed_at_ns": 1786306588420045800,
+          "observed_at_utc": "2026-08-09T20:16:28.420045800Z",
+          "raw_sha256": "eca017939d69936ea25bc7d5745054503eb7872efd6e0fe6d258a2a4b645093d"
+        },
+        "marker": "FETCH ComfyRegistry Data: 15/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 29,
+          "log_offsets": [
+            27812,
+            28256
+          ],
+          "observed_at_ns": 1786306612008687800,
+          "observed_at_utc": "2026-08-09T20:16:52.008687800Z",
+          "raw_sha256": "246d73332e1be4d4fa119e39b9dcdf7ebf1735c662e09a9ac9e2070a5993d37a"
+        },
+        "marker": "FETCH ComfyRegistry Data: 20/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 32,
+          "log_offsets": [
+            29242,
+            29276
+          ],
+          "observed_at_ns": 1786306654423112100,
+          "observed_at_utc": "2026-08-09T20:17:34.423112100Z",
+          "raw_sha256": "1f357de84708535e0856ed513d038bbe4b092d8b60687b2ad5973b4fa5a188c2"
+        },
+        "marker": "FETCH ComfyRegistry Data: 25/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 33,
+          "log_offsets": [
+            29276,
+            29310
+          ],
+          "observed_at_ns": 1786306675215984100,
+          "observed_at_utc": "2026-08-09T20:17:55.215984100Z",
+          "raw_sha256": "6a4551ba57eb8951010d99d94b7c8eb874d43155092f57a403e023afbbefccb9"
+        },
+        "marker": "FETCH ComfyRegistry Data: 30/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 56,
+          "log_offsets": [
+            31136,
+            31434
+          ],
+          "observed_at_ns": 1786306721419604900,
+          "observed_at_utc": "2026-08-09T20:18:41.419604900Z",
+          "raw_sha256": "19290f97ee83558a59ec72fcdad4ddd8837ad612de818a96e9410352c03d00a6"
+        },
+        "marker": "FETCH ComfyRegistry Data: 35/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 57,
+          "log_offsets": [
+            31434,
+            31601
+          ],
+          "observed_at_ns": 1786306738413227800,
+          "observed_at_utc": "2026-08-09T20:18:58.413227800Z",
+          "raw_sha256": "6ad6701107d5b9895731e06aefb188f3066b080fdf2278d99f5b24430cb35dca"
+        },
+        "marker": "FETCH ComfyRegistry Data: 40/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 58,
+          "log_offsets": [
+            31601,
+            31735
+          ],
+          "observed_at_ns": 1786306751816739900,
+          "observed_at_utc": "2026-08-09T20:19:11.816739900Z",
+          "raw_sha256": "650cd879cbe21e4c1cccd354b866c6743a434866a789a4c68b26eb84f0262770"
+        },
+        "marker": "FETCH ComfyRegistry Data: 45/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 59,
+          "log_offsets": [
+            31735,
+            31820
+          ],
+          "observed_at_ns": 1786306767219563800,
+          "observed_at_utc": "2026-08-09T20:19:27.219563800Z",
+          "raw_sha256": "a161f48d841d6a71b2a646e2fef66fcfc855456eabca28feb6377dfda4cc6fa5"
+        },
+        "marker": "FETCH ComfyRegistry Data: 50/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 60,
+          "log_offsets": [
+            31820,
+            31905
+          ],
+          "observed_at_ns": 1786306782417869000,
+          "observed_at_utc": "2026-08-09T20:19:42.417869000Z",
+          "raw_sha256": "8d3200088d6258fd43c213a0c49465c6b335c65e044863a82fccba431e0692cf"
+        },
+        "marker": "FETCH ComfyRegistry Data: 55/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 61,
+          "log_offsets": [
+            31905,
+            32045
+          ],
+          "observed_at_ns": 1786306800610446600,
+          "observed_at_utc": "2026-08-09T20:20:00.610446600Z",
+          "raw_sha256": "89930c9fc726b5142ae0b1e709054ec5e2c48e3c7c976c2e5aea714253cba754"
+        },
+        "marker": "FETCH ComfyRegistry Data: 60/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 62,
+          "log_offsets": [
+            32045,
+            32132
+          ],
+          "observed_at_ns": 1786306813814674700,
+          "observed_at_utc": "2026-08-09T20:20:13.814674700Z",
+          "raw_sha256": "4efdc8668787f80dc8a17a89f7b20419f2f2dc2059c9905faefa7805dab82ac3"
+        },
+        "marker": "FETCH ComfyRegistry Data: 65/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 63,
+          "log_offsets": [
+            32132,
+            32278
+          ],
+          "observed_at_ns": 1786306830605250500,
+          "observed_at_utc": "2026-08-09T20:20:30.605250500Z",
+          "raw_sha256": "635a291d21e301f6171de9548fa9b9077fda45963cfd254010cfd5c93b6a8692"
+        },
+        "marker": "FETCH ComfyRegistry Data: 70/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 64,
+          "log_offsets": [
+            32278,
+            32426
+          ],
+          "observed_at_ns": 1786306850415519000,
+          "observed_at_utc": "2026-08-09T20:20:50.415519000Z",
+          "raw_sha256": "fc785a78f2f3944c5985f741c80154c28902c9fc5e35399eb1061a7cb537c732"
+        },
+        "marker": "FETCH ComfyRegistry Data: 75/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 65,
+          "log_offsets": [
+            32426,
+            32518
+          ],
+          "observed_at_ns": 1786306866603175100,
+          "observed_at_utc": "2026-08-09T20:21:06.603175100Z",
+          "raw_sha256": "33d6d56c3b84725ebcbb69d1f4118dc6b4b68309d9f1114d2e9388a17085c267"
+        },
+        "marker": "FETCH ComfyRegistry Data: 80/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 66,
+          "log_offsets": [
+            32518,
+            32670
+          ],
+          "observed_at_ns": 1786306880403978100,
+          "observed_at_utc": "2026-08-09T20:21:20.403978100Z",
+          "raw_sha256": "f6e7de592d5959f21243903021c603833f801cf2c21ad4f5eff5db9d52795304"
+        },
+        "marker": "FETCH ComfyRegistry Data: 85/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 67,
+          "log_offsets": [
+            32670,
+            32764
+          ],
+          "observed_at_ns": 1786306897423820800,
+          "observed_at_utc": "2026-08-09T20:21:37.423820800Z",
+          "raw_sha256": "d50d44c17f945963503a98558235d88d69a4bac3dd4778f6337d306220e2c2fd"
+        },
+        "marker": "FETCH ComfyRegistry Data: 90/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 68,
+          "log_offsets": [
+            32764,
+            32858
+          ],
+          "observed_at_ns": 1786306910423131300,
+          "observed_at_utc": "2026-08-09T20:21:50.423131300Z",
+          "raw_sha256": "7739dc608b4509264b0927473c7bfb80248b054529f0e00c78e69881c244b543"
+        },
+        "marker": "FETCH ComfyRegistry Data: 95/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 69,
+          "log_offsets": [
+            32858,
+            33017
+          ],
+          "observed_at_ns": 1786306930613486400,
+          "observed_at_utc": "2026-08-09T20:22:10.613486400Z",
+          "raw_sha256": "df6cc471d25e2d6426afb879ad33bde49660992c6907267e86bcdc6aec927c2a"
+        },
+        "marker": "FETCH ComfyRegistry Data: 100/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 70,
+          "log_offsets": [
+            33017,
+            33178
+          ],
+          "observed_at_ns": 1786306946010777800,
+          "observed_at_utc": "2026-08-09T20:22:26.010777800Z",
+          "raw_sha256": "cf342bc26c8e985fafa8fc442203b367932f6b0306c566de0cefd490631d7ae8"
+        },
+        "marker": "FETCH ComfyRegistry Data: 105/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 71,
+          "log_offsets": [
+            33178,
+            33277
+          ],
+          "observed_at_ns": 1786306962017599800,
+          "observed_at_utc": "2026-08-09T20:22:42.017599800Z",
+          "raw_sha256": "f841fdd3d6ee456a0224ca7e785ea917d37f2f5d87b9a0b9b02b2be15c52a0cd"
+        },
+        "marker": "FETCH ComfyRegistry Data: 110/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "COMFY_REGISTRY_PAGED_FETCH",
+        "endpoint_source_binding": {
+          "endpoint": "https://api.comfy.org/nodes",
+          "git_object": "491f847bbc286588175695ea43fa4e13cd14a437:glob/cnr_utils.py",
+          "semantics": "The pinned source issues uncached page requests to api.comfy.org/nodes and emits the captured FETCH ComfyRegistry Data marker every fifth page.",
+          "sha256": "4a378c111dccacd2bc4c4082c8b7aae248859259a6b29596173f03e1eb3306f6"
+        },
+        "event": {
+          "event_index": 72,
+          "log_offsets": [
+            33277,
+            33442
+          ],
+          "observed_at_ns": 1786306976415397500,
+          "observed_at_utc": "2026-08-09T20:22:56.415397500Z",
+          "raw_sha256": "6e0f11181a72091659e386588e8b672dc0edfc7405a86f050c72446544b933ba"
+        },
+        "marker": "FETCH ComfyRegistry Data: 115/170",
+        "urls": [
+          "https://api.comfy.org/nodes"
+        ]
+      },
+      {
+        "classification": "AUTOMATIC_COMFYUI_MANAGER_REGISTRY_NETWORK_ACTIVITY",
+        "event": {
+          "event_index": 74,
+          "log_offsets": [
+            33676,
+            33984
+          ],
+          "observed_at_ns": 1786307027210666500,
+          "observed_at_utc": "2026-08-09T20:23:47.210666500Z",
+          "raw_sha256": "7c31f13e87f985e360f6db7f56b826911945db7884176368b80def079030866a"
+        },
+        "urls": [
+          "https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json"
+        ]
+      }
+    ],
+    "status": "INCIDENT"
+  },
+  "production_state_snapshots": {
+    "manifest_after": {
+      "bytes": 2588,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849861801961,
+      "mtime_ns": 1786307182083738200,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+      "sha256": "f79e4084525631648ed782b22a2464c3a19b0e3e2410cca30126a42aeaa5a697"
+    },
+    "manifest_before": {
+      "bytes": 7966,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849861801961,
+      "mtime_ns": 1786303096171891700,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+      "sha256": "b832e264acc5cb70f9d4862c2d7dba3baf7cd54da86f7fd1c242449154140f7a"
+    },
+    "policy": "A successful existing node92 replay is expected to advance its output report/manifest; a refused replay must leave them unchanged. These are metadata/hash snapshots, not captured file contents.",
+    "report_after": {
+      "bytes": 1457,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 2814749769320194,
+      "mtime_ns": 1786307182083738200,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+      "sha256": "69e984e7735f1ba0da4c1a4b711d233fa3251e4b94afdedf5abd66256dab747d"
+    },
+    "report_before": {
+      "bytes": 4933,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 2814749769320194,
+      "mtime_ns": 1786303096170385300,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+      "sha256": "911c801f7a463c09d5191b8298e992694f0c7bcc78281f0b78564dec3c672f42"
+    }
+  },
+  "schema_version": 1,
+  "server_instance": {
+    "argv": [
+      "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8000",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "--disable-metadata"
+    ],
+    "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 2148,
+        "port": 8000
+      }
+    ],
+    "parent_pid": 41256,
+    "process_create_time": 1786306472.6852975,
+    "serving_pid": 2148
+  },
+  "source_binding": {
+    "caveat": "The fixture contract binds the OTR commit and the sidecar binds the existing harness byte hash. The server loaded the live OTR worktree through its ComfyUI custom_nodes path, but the complete dirty-worktree status and every loaded Python byte hash were not snapshotted at render start. These committed-source hashes are therefore a reproducible baseline, not proof that no dirty override existed. Numeric telemetry remains bound to the immutable raw sidecar SHA.",
+    "committed_sources": {
+      "nodes/_otr_video_engines/beat_session.py": {
+        "bytes": 17637,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/beat_session.py",
+        "sha256": "f79db3d992b8ed799402522f4596c24e4fe8c899a951573f8c833946ee939d2f"
+      },
+      "nodes/_otr_video_engines/coverage_plan.py": {
+        "bytes": 34004,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/coverage_plan.py",
+        "sha256": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60"
+      },
+      "nodes/_otr_video_engines/eng_fastwan_8gb.py": {
+        "bytes": 15152,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/eng_fastwan_8gb.py",
+        "sha256": "0eed2747308d0bc3fc9225f43cc1c8dcef15c28a858c45f4b968fc95dfb6a889"
+      },
+      "nodes/_otr_video_engines/eng_ltx_video.py": {
+        "bytes": 84826,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/eng_ltx_video.py",
+        "sha256": "fc01c8b9983dad68e62638f0eb224ae4d68f9da966ebd64f5c7b17a15d9cb0a8"
+      },
+      "nodes/_otr_video_engines/eng_wan_ti2v.py": {
+        "bytes": 68875,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/eng_wan_ti2v.py",
+        "sha256": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183"
+      },
+      "nodes/_otr_video_engines/motion_common.py": {
+        "bytes": 33061,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/motion_common.py",
+        "sha256": "6935658896c93b75e71dff766ca30cd9ba029572e9b28b12e2619f3ba9725e00"
+      },
+      "nodes/_otr_video_engines/render_driver.py": {
+        "bytes": 282795,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/_otr_video_engines/render_driver.py",
+        "sha256": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564"
+      },
+      "nodes/otr_video_render_batch.py": {
+        "bytes": 27221,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:nodes/otr_video_render_batch.py",
+        "sha256": "2f7a363f64fddcf9e25eb5cff08595c444be9c71acd01bc65940d9a5897c83b2"
+      },
+      "scripts/otr_visual_smoke.py": {
+        "bytes": 18751,
+        "git_object": "6530ed84d8d00fd82eccabeeee88a50d4b09f663:scripts/otr_visual_smoke.py",
+        "sha256": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f"
+      }
+    },
+    "otr_head_at_fixture_build": "6530ed84d8d00fd82eccabeeee88a50d4b09f663",
+    "worktree_at_render": "NOT_CAPTURED"
+  },
+  "source_refs": {
+    "baked_ledger": {
+      "bytes": 62747,
+      "path": "results/otr_side/wan_retention/fixture_evidence/small_first_planned/baked_ledger.json",
+      "sha256": "ae8f360616912591296d0ccff256813b8cc1a4098bcc61c9210595ab73c5ffb6"
+    },
+    "bundle_manifest": {
+      "bytes": 9442,
+      "path": "results/otr_side/wan_retention/fixture_evidence/small_first_planned/bundle_manifest.json",
+      "sha256": "c45f6a32c7eea94c0debd3330d9879672b2c20f5f59563ce440366ab161360e4"
+    },
+    "fixture_contract": {
+      "bytes": 1649,
+      "path": "results/otr_side/wan_retention/fixture_evidence/small_first_planned/fixture_contract.json",
+      "sha256": "95e4c3d7eb976d837ed2309446002cbec318a7a6dddafe5f31de72d9ebd39d91"
+    },
+    "master_audio": {
+      "binding": "HASH_ONLY_FROM_DURABLE_BUNDLE_MANIFEST_AND_RAW_COMMAND",
+      "bytes": null,
+      "path": null,
+      "sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444"
+    },
+    "raw_telemetry": {
+      "bytes": 1268407,
+      "path": "results/otr_side/wan_retention/telemetry/phase4_wan_ti2v_small_first_planned.json",
+      "sha256": "8382a33338bd39582495f719e909d266d93dd97721170ecbb6611e754178c8c5"
+    },
+    "render_time_bundle_observation": {
+      "binding": "OBSERVED_PATH_ONLY_NOT_PRIMARY_DURABLE_EVIDENCE",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_retention_measurement\\small_first_planned"
+    }
+  },
+  "status": "MEASURED_DIAGNOSTIC",
+  "topology_proof": {
+    "engine_execution_evidence": {
+      "completed_segment_count": 3,
+      "kind": "wan_ti2v render-phase and refusal labels"
+    },
+    "long_assembly_event": {
+      "event_index": 95,
+      "log_offsets": [
+        37586,
+        37722
+      ],
+      "observed_at_ns": 1786307182006270700,
+      "observed_at_utc": "2026-08-09T20:26:22.006270700Z",
+      "raw_sha256": "2ecb0181a147381b4310993c877fad90fec4a13eb1581d2f9e9a17b16fc36d3f"
+    },
+    "long_chain_200_completed": true,
+    "no_silent_resize_refusal": null,
+    "render_phase_count": 3,
+    "small_65_completed": true
+  }
+}
