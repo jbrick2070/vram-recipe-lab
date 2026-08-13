@@ -32,7 +32,8 @@ PUBLIC_REPORT_REPO_PATH = Path("eightgb_bench") / "reports" / "physical-rtx4060-
 CONTRACT_PATH = BENCH_ROOT / "contract-v1.json"
 SENTINEL_PLAN_ID = "h3-mime-i2v-864x480-f90"
 MOTION_DEMO_PLAN_ID = "h3-mime-i2v-motion-demo-f90"
-PLAN_IDS = (SENTINEL_PLAN_ID, MOTION_DEMO_PLAN_ID)
+ACTION_DEMO_PLAN_ID = "h3-mime-i2v-action-demo-f90"
+PLAN_IDS = (SENTINEL_PLAN_ID, MOTION_DEMO_PLAN_ID, ACTION_DEMO_PLAN_ID)
 # Keep this alias for the original sentinel and existing evidence tests.  All
 # new selection goes through the registry below; no caller supplies a path.
 PLAN_PATH = BENCH_ROOT / "plans" / "h3_mime_i2v_864x480_f90.json"
@@ -56,6 +57,16 @@ PLAN_REGISTRY: dict[str, dict[str, str]] = {
         "source_prompt_sha256": "6567fed1820de2ce300c93c068bc0d7ece277e3bb205ec90af6bf6a17d8c38c7",
         "status": "PREPARED_FRESH_SEQUENCE_REQUIRED",
         "launch_config_filename": "runner-4060-motion-demo-launch.json",
+    },
+    ACTION_DEMO_PLAN_ID: {
+        "plan_filename": "h3_mime_i2v_action_demo_f90.json",
+        "source_recipe": "eightgb_bench/recipes/h3_mime_i2v_action_demo.json",
+        "source_name": "h3_mime_i2v_action_demo",
+        "source_recipe_sha256": "0e8108a9b7699456f5e26198fb32fe306d2a36d7fb1918609d05d2d8f1a5b140",
+        "source_graph_sha256": "626a97b32fca7579f7615535cb7db23d3189ceffe04aead9b2c8d9e5586b96ac",
+        "source_prompt_sha256": "ddbf1066e917792c78873a339623746e5aba84f505aef27b63561b6a6b53c127",
+        "status": "PREPARED_FRESH_SEQUENCE_REQUIRED",
+        "launch_config_filename": "runner-4060-action-demo-launch.json",
     },
 }
 PROFILE_SUFFIX = ".profile.json"
@@ -570,11 +581,11 @@ def _validate_plan(plan: Mapping[str, Any], plan_id: str) -> None:
     else:
         source = plan.get("source_recipe")
         if not isinstance(source, dict):
-            raise PreflightError("motion plan.source_recipe must be an object")
+            raise PreflightError("derived prompt plan.source_recipe must be an object")
         _require_exact_keys(
             source,
             {"path", "name", "recipe_sha256", "graph_sha256", "prompt_sha256"},
-            "motion plan.source_recipe",
+            "derived prompt plan.source_recipe",
         )
         expected_source = {
             "path": spec["source_recipe"],
@@ -584,18 +595,18 @@ def _validate_plan(plan: Mapping[str, Any], plan_id: str) -> None:
             "prompt_sha256": spec["source_prompt_sha256"],
         }
         if source != expected_source:
-            raise PreflightError("motion plan source recipe binding drifted from its enrolled registry entry")
+            raise PreflightError("derived prompt plan source recipe binding drifted from its enrolled registry entry")
         baseline = plan.get("baseline_sentinel")
         if not isinstance(baseline, dict):
-            raise PreflightError("motion plan.baseline_sentinel must be an object")
+            raise PreflightError("derived prompt plan.baseline_sentinel must be an object")
         _require_exact_keys(
-            baseline, {"plan_id", "recipe", "recipe_sha256", "scope"}, "motion plan.baseline_sentinel"
+            baseline, {"plan_id", "recipe", "recipe_sha256", "scope"}, "derived prompt plan.baseline_sentinel"
         )
         if baseline.get("plan_id") != SENTINEL_PLAN_ID or baseline.get("recipe") != PLAN_REGISTRY[SENTINEL_PLAN_ID]["source_recipe"] or baseline.get("recipe_sha256") != PLAN_REGISTRY[SENTINEL_PLAN_ID]["source_recipe_sha256"]:
-            raise PreflightError("motion plan sentinel baseline binding drifted")
+            raise PreflightError("derived prompt plan sentinel baseline binding drifted")
         scope = baseline.get("scope")
         if not isinstance(scope, str) or "does not measure" not in scope or "must never be reused" not in scope:
-            raise PreflightError("motion plan must disclose that sentinel warmth is not reusable")
+            raise PreflightError("derived prompt plan must disclose that sentinel warmth is not reusable")
     video = plan.get("video_contract")
     if not isinstance(video, dict):
         raise PreflightError("plan.video_contract must be an object")
@@ -798,18 +809,18 @@ def bound_source_recipe(plan: Mapping[str, Any], plan_id: str) -> dict[str, Any]
     source_nodes = {node.get("class_type") for node in graph.values() if isinstance(node, dict)}
     if source_nodes != set(plan["required_core_nodes"]):
         raise PreflightError("bound physical source nodes do not match the plan")
-    if plan_id == MOTION_DEMO_PLAN_ID:
+    if plan_id != SENTINEL_PLAN_ID:
         sentinel_recipe = _read_json(
             source_recipe_path_for_id(SENTINEL_PLAN_ID), "bound sentinel source recipe"
         )
         sentinel_graph = sentinel_recipe.get("prompt")
         if not isinstance(sentinel_graph, dict):
             raise PreflightError("bound sentinel source recipe has no prompt graph")
-        expected_motion_graph = json.loads(json.dumps(sentinel_graph, ensure_ascii=False))
-        expected_motion_graph["7"]["inputs"]["prompt"] = prompt
-        if graph != expected_motion_graph:
+        expected_derived_graph = json.loads(json.dumps(sentinel_graph, ensure_ascii=False))
+        expected_derived_graph["7"]["inputs"]["prompt"] = prompt
+        if graph != expected_derived_graph:
             raise PreflightError(
-                "motion-demo graph must differ from the sentinel only at node 7 prompt text"
+                "derived prompt plan graph must differ from the sentinel only at node 7 prompt text"
             )
     return {
         "recipe_path": spec["source_recipe"],

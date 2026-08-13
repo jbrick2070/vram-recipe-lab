@@ -21,12 +21,15 @@ media defect, ownership drift, or failed shutdown proof.
 
 Each enrolled candidate is fixed: MiniMax H3 native-audio I2V, 864x480, 90
 frames, 24 fps, 20 steps, seed 42. `h3-mime-i2v-864x480-f90` is the immutable
-sentinel. `h3-mime-i2v-motion-demo-f90` is a separate fixed prompt-only motion
-demo whose graph differs only at H3 node 7 prompt text. The 5080 result is
-sentinel orientation only; it is not prompt-matched motion-demo evidence.
+sentinel. `h3-mime-i2v-motion-demo-f90` and
+`h3-mime-i2v-action-demo-f90` are separate fixed prompt-only demos whose
+graphs differ from the sentinel only at H3 node 7 prompt text. The latter is a
+short nuclear-control-room alarm story, not a baseline replacement. The 5080
+result is sentinel orientation only; it is not prompt-matched evidence for
+either derived demo.
 
-Never reuse a prior plan's cache warmth, receipt, output, or human review. The
-motion demo requires its own newly admitted cold/warm-1/warm-2 sequence.
+Never reuse a prior plan's cache warmth, receipt, output, or human review. Each
+derived demo requires its own newly admitted cold/warm-1/warm-2 sequence.
 
 ## 4. Interpret
 

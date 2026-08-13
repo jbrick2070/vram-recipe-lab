@@ -53,6 +53,7 @@ SCOPE = "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION"
 PROFILE_ID = "physical-rtx4060-8gb"
 PLAN_ID = inventory.SENTINEL_PLAN_ID
 MOTION_DEMO_PLAN_ID = inventory.MOTION_DEMO_PLAN_ID
+ACTION_DEMO_PLAN_ID = inventory.ACTION_DEMO_PLAN_ID
 PLAN_IDS = inventory.PLAN_IDS
 PORT = 18299
 LISTENER = "127.0.0.1"
@@ -271,25 +272,27 @@ def load_launch_config(profile_id: str, plan_id: str = PLAN_ID) -> tuple[dict[st
     return config, sha256_file(config_path)
 
 
-def stage_motion_launch_config(profile_id: str) -> dict[str, str]:
-    """Create exactly one private motion-demo config from the validated sentinel.
+def _stage_derived_launch_config(profile_id: str, plan_id: str, label: str) -> dict[str, str]:
+    """Create one fixed private derived-prompt config from the sentinel.
 
-    This is deliberately not a general config editor.  It writes only the
-    fixed ignored filename beneath ``eightgb_bench/local`` and never accepts a
-    root, prompt, argv, or plan path from a caller.
+    This is deliberately not a general config editor. It accepts only a
+    code-owned enrolled derived plan, writes only its fixed ignored filename,
+    and never accepts a root, prompt, argv, or plan path from a caller.
     """
+    if plan_id not in {MOTION_DEMO_PLAN_ID, ACTION_DEMO_PLAN_ID}:
+        raise RunnerError("only enrolled derived-prompt plans may receive a derived launch config")
     sentinel, _ = load_launch_config(profile_id, PLAN_ID)
     expected = dict(sentinel)
-    expected["plan_id"] = MOTION_DEMO_PLAN_ID
+    expected["plan_id"] = plan_id
     expected_bytes = canonical_bytes(expected)
-    expected_path = _launch_config_path(profile_id, MOTION_DEMO_PLAN_ID)
+    expected_path = _launch_config_path(profile_id, plan_id)
     if expected_path.exists():
-        existing, existing_sha = load_launch_config(profile_id, MOTION_DEMO_PLAN_ID)
+        existing, existing_sha = load_launch_config(profile_id, plan_id)
         if canonical_bytes(existing) != expected_bytes:
-            raise RunnerError("existing motion-demo launch config differs from the exact sentinel-derived config")
+            raise RunnerError(f"existing {label} launch config differs from the exact sentinel-derived config")
         return {
-            "status": "MOTION_DEMO_LAUNCH_CONFIG_ALREADY_STAGED",
-            "plan_id": MOTION_DEMO_PLAN_ID,
+            "status": f"{label.upper().replace('-', '_')}_LAUNCH_CONFIG_ALREADY_STAGED",
+            "plan_id": plan_id,
             "launch_config_relative_path": str(expected_path.relative_to(_safe_local_root(create=False))),
             "launch_config_sha256": existing_sha,
         }
@@ -297,15 +300,25 @@ def stage_motion_launch_config(profile_id: str) -> dict[str, str]:
         with expected_path.open("xb") as handle:
             handle.write(expected_bytes)
     except FileExistsError as exc:
-        raise RunnerError("motion-demo launch config appeared during exclusive staging; inspect it before retrying") from exc
+        raise RunnerError(f"{label} launch config appeared during exclusive staging; inspect it before retrying") from exc
     except OSError as exc:
-        raise RunnerError(f"cannot stage motion-demo launch config: {exc}") from exc
+        raise RunnerError(f"cannot stage {label} launch config: {exc}") from exc
     return {
-        "status": "MOTION_DEMO_LAUNCH_CONFIG_STAGED",
-        "plan_id": MOTION_DEMO_PLAN_ID,
+        "status": f"{label.upper().replace('-', '_')}_LAUNCH_CONFIG_STAGED",
+        "plan_id": plan_id,
         "launch_config_relative_path": str(expected_path.relative_to(_safe_local_root(create=False))),
         "launch_config_sha256": sha256_file(expected_path),
     }
+
+
+def stage_motion_launch_config(profile_id: str) -> dict[str, str]:
+    """Create only the fixed private motion-demo config from the sentinel."""
+    return _stage_derived_launch_config(profile_id, MOTION_DEMO_PLAN_ID, "motion-demo")
+
+
+def stage_action_launch_config(profile_id: str) -> dict[str, str]:
+    """Create only the fixed private action-story config from the sentinel."""
+    return _stage_derived_launch_config(profile_id, ACTION_DEMO_PLAN_ID, "action-demo")
 
 
 def _profile_payload(profile_id: str) -> tuple[dict[str, Any], Path, str]:
@@ -1978,10 +1991,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="create only the fixed private motion-demo config from the validated sentinel config",
     )
     stage_parser.add_argument("--profile", required=True, help="only physical-rtx4060-8gb is accepted")
+    action_stage_parser = subparsers.add_parser(
+        "stage-action-config",
+        help="create only the fixed private action-demo config from the validated sentinel config",
+    )
+    action_stage_parser.add_argument("--profile", required=True, help="only physical-rtx4060-8gb is accepted")
     args = parser.parse_args(argv)
     try:
         if args.command == "stage-motion-config":
             result = stage_motion_launch_config(args.profile)
+        elif args.command == "stage-action-config":
+            result = stage_action_launch_config(args.profile)
         else:
             result = execute(args.profile, run_sequence=args.command == "run", plan_id=args.plan)
     except (RunnerError, LeaseError) as exc:

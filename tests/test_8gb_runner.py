@@ -112,11 +112,13 @@ class Physical4060RunnerPureTests(unittest.TestCase):
             self.assertIn("custom_nodes:", yaml)
             self.assertIn(str(comfy_root / "custom_nodes").replace("\\", "/"), yaml)
 
-    def test_only_the_two_fixed_plan_ids_and_separate_cell_namespaces_are_accepted(self):
+    def test_only_the_three_fixed_plan_ids_and_separate_cell_namespaces_are_accepted(self):
         sentinel, _ = runner.load_plan(runner.PLAN_ID)
         motion, _ = runner.load_plan(runner.MOTION_DEMO_PLAN_ID)
+        action, _ = runner.load_plan(runner.ACTION_DEMO_PLAN_ID)
         self.assertEqual(sentinel["id"], runner.PLAN_ID)
         self.assertEqual(motion["id"], runner.MOTION_DEMO_PLAN_ID)
+        self.assertEqual(action["id"], runner.ACTION_DEMO_PLAN_ID)
         with self.assertRaisesRegex(runner.RunnerError, "plan ID is not enrolled"):
             runner.load_plan("arbitrary-plan")
         with tempfile.TemporaryDirectory() as directory:
@@ -125,20 +127,25 @@ class Physical4060RunnerPureTests(unittest.TestCase):
             with mock.patch.object(runner, "_safe_local_root", return_value=local):
                 sentinel_cell = runner.create_cell("sentinel", runner.PLAN_ID)
                 motion_cell = runner.create_cell("motion", runner.MOTION_DEMO_PLAN_ID)
+                action_cell = runner.create_cell("action", runner.ACTION_DEMO_PLAN_ID)
             self.assertNotEqual(sentinel_cell.parent, motion_cell.parent)
+            self.assertNotEqual(motion_cell.parent, action_cell.parent)
             self.assertEqual(sentinel_cell.parent.name, runner.PLAN_ID)
             self.assertEqual(motion_cell.parent.name, runner.MOTION_DEMO_PLAN_ID)
+            self.assertEqual(action_cell.parent.name, runner.ACTION_DEMO_PLAN_ID)
 
-    def test_motion_live_source_proof_binds_its_fixed_recipe_and_prompt_hash(self):
-        plan, _ = runner.load_plan(runner.MOTION_DEMO_PLAN_ID)
-        proof = runner.validate_live_source_prompt(
-            plan, _object_info_for_source_graph(runner.MOTION_DEMO_PLAN_ID)
-        )
-        self.assertEqual(proof["source_recipe_path"], "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json")
-        self.assertEqual(
-            proof["source_prompt_sha256"],
-            runner.inventory.PLAN_REGISTRY[runner.MOTION_DEMO_PLAN_ID]["source_prompt_sha256"],
-        )
+    def test_derived_live_source_proofs_bind_their_fixed_recipe_and_prompt_hashes(self):
+        for plan_id, recipe_path in (
+            (runner.MOTION_DEMO_PLAN_ID, "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json"),
+            (runner.ACTION_DEMO_PLAN_ID, "eightgb_bench/recipes/h3_mime_i2v_action_demo.json"),
+        ):
+            plan, _ = runner.load_plan(plan_id)
+            proof = runner.validate_live_source_prompt(plan, _object_info_for_source_graph(plan_id))
+            self.assertEqual(proof["source_recipe_path"], recipe_path)
+            self.assertEqual(
+                proof["source_prompt_sha256"],
+                runner.inventory.PLAN_REGISTRY[plan_id]["source_prompt_sha256"],
+            )
 
     def test_motion_config_staging_copies_only_the_validated_sentinel_config(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -154,11 +161,18 @@ class Physical4060RunnerPureTests(unittest.TestCase):
             with mock.patch.object(runner, "_safe_local_root", return_value=local), mock.patch.object(runner, "LAUNCH_CONFIG_PATH", sentinel_path):
                 staged = runner.stage_motion_launch_config(runner.PROFILE_ID)
                 staged_again = runner.stage_motion_launch_config(runner.PROFILE_ID)
+                action_staged = runner.stage_action_launch_config(runner.PROFILE_ID)
+                action_staged_again = runner.stage_action_launch_config(runner.PROFILE_ID)
                 motion, _ = runner.load_launch_config(runner.PROFILE_ID, runner.MOTION_DEMO_PLAN_ID)
+                action, _ = runner.load_launch_config(runner.PROFILE_ID, runner.ACTION_DEMO_PLAN_ID)
             self.assertEqual(staged["status"], "MOTION_DEMO_LAUNCH_CONFIG_STAGED")
             self.assertEqual(staged_again["status"], "MOTION_DEMO_LAUNCH_CONFIG_ALREADY_STAGED")
             self.assertEqual(motion["plan_id"], runner.MOTION_DEMO_PLAN_ID)
             self.assertEqual(motion["profile_id"], runner.PROFILE_ID)
+            self.assertEqual(action_staged["status"], "ACTION_DEMO_LAUNCH_CONFIG_STAGED")
+            self.assertEqual(action_staged_again["status"], "ACTION_DEMO_LAUNCH_CONFIG_ALREADY_STAGED")
+            self.assertEqual(action["plan_id"], runner.ACTION_DEMO_PLAN_ID)
+            self.assertEqual(action["profile_id"], runner.PROFILE_ID)
             self.assertEqual(sentinel_path.read_bytes(), sentinel_bytes)
 
     def test_cli_rejects_an_unknown_plan_before_execute(self):
