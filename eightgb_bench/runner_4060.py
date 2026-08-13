@@ -43,13 +43,17 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 BENCH_ROOT = REPO_ROOT / "eightgb_bench"
 LOCAL_ROOT = BENCH_ROOT / "local"
 CONTRACT_PATH = BENCH_ROOT / "contract-v1.json"
-PLAN_PATH = BENCH_ROOT / "plans" / "h3_mime_i2v_864x480_f90.json"
+# Sentinel aliases remain for compatibility; all selection goes through the
+# preflight registry so callers can never supply a workflow/config path.
+PLAN_PATH = inventory.PLAN_PATH
 LAUNCH_CONFIG_PATH = LOCAL_ROOT / "runner-4060-launch.json"
 RUNNER_PATH = Path(__file__).resolve()
 
 SCOPE = "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION"
 PROFILE_ID = "physical-rtx4060-8gb"
-PLAN_ID = "h3-mime-i2v-864x480-f90"
+PLAN_ID = inventory.SENTINEL_PLAN_ID
+MOTION_DEMO_PLAN_ID = inventory.MOTION_DEMO_PLAN_ID
+PLAN_IDS = inventory.PLAN_IDS
 PORT = 18299
 LISTENER = "127.0.0.1"
 SERVER_URL = f"http://{LISTENER}:{PORT}"
@@ -192,18 +196,30 @@ def _json_path_text(path: Path) -> str:
     return json.dumps(str(path).replace("\\", "/"), ensure_ascii=False)
 
 
-def load_plan() -> tuple[dict[str, Any], str]:
-    plan = _read_json(PLAN_PATH, "physical 4060 plan")
-    if plan.get("schema_version") != 1 or plan.get("id") != PLAN_ID:
-        raise RunnerError("checked-in physical plan identity drifted")
-    if plan.get("scope") != SCOPE:
-        raise RunnerError("physical plan scope drifted")
-    return plan, sha256_utf8_text_file(PLAN_PATH)
+def load_plan(plan_id: str = PLAN_ID) -> tuple[dict[str, Any], str]:
+    try:
+        return inventory.load_checked_in_plan(plan_id)
+    except inventory.PreflightError as exc:
+        raise RunnerError(str(exc)) from exc
 
 
-def load_launch_config(profile_id: str) -> tuple[dict[str, Any], str]:
+def _launch_config_path(profile_id: str, plan_id: str) -> Path:
+    if profile_id != PROFILE_ID:
+        raise RunnerError("only physical-rtx4060-8gb is enrolled")
+    try:
+        spec = inventory._plan_spec(plan_id)
+    except inventory.PreflightError as exc:
+        raise RunnerError(str(exc)) from exc
     local_root = _safe_local_root(create=False)
-    expected = local_root / "runner-4060-launch.json"
+    if plan_id == PLAN_ID:
+        # Preserve the fixed original filename and its compatibility alias.
+        return LAUNCH_CONFIG_PATH
+    return _safe_local_child(local_root, spec["launch_config_filename"])
+
+
+def load_launch_config(profile_id: str, plan_id: str = PLAN_ID) -> tuple[dict[str, Any], str]:
+    local_root = _safe_local_root(create=False)
+    expected = _launch_config_path(profile_id, plan_id)
     try:
         config_path = inventory._validated_path(str(expected), "4060 launch config", "file")
     except inventory.PreflightError as exc:
@@ -214,8 +230,8 @@ def load_launch_config(profile_id: str) -> tuple[dict[str, Any], str]:
         raise RunnerError("launch config schema_version must be 1")
     if _require_string(config, "profile_id", "launch config") != profile_id:
         raise RunnerError("launch config may select only the enrolled profile")
-    if _require_string(config, "plan_id", "launch config") != PLAN_ID:
-        raise RunnerError("launch config may select only the H3 MIME plan")
+    if _require_string(config, "plan_id", "launch config") != plan_id:
+        raise RunnerError("launch config plan ID does not match its fixed enrolled file")
     if _require_int(config, "port", "launch config") != PORT:
         raise RunnerError(f"launch config port must be the isolated {PORT}")
     comfy = config.get("comfyui")
@@ -253,6 +269,43 @@ def load_launch_config(profile_id: str) -> tuple[dict[str, Any], str]:
     if _require_string(policy, "network", "launch config.policy") != "offline":
         raise RunnerError("physical H3 lane must retain offline policy")
     return config, sha256_file(config_path)
+
+
+def stage_motion_launch_config(profile_id: str) -> dict[str, str]:
+    """Create exactly one private motion-demo config from the validated sentinel.
+
+    This is deliberately not a general config editor.  It writes only the
+    fixed ignored filename beneath ``eightgb_bench/local`` and never accepts a
+    root, prompt, argv, or plan path from a caller.
+    """
+    sentinel, _ = load_launch_config(profile_id, PLAN_ID)
+    expected = dict(sentinel)
+    expected["plan_id"] = MOTION_DEMO_PLAN_ID
+    expected_bytes = canonical_bytes(expected)
+    expected_path = _launch_config_path(profile_id, MOTION_DEMO_PLAN_ID)
+    if expected_path.exists():
+        existing, existing_sha = load_launch_config(profile_id, MOTION_DEMO_PLAN_ID)
+        if canonical_bytes(existing) != expected_bytes:
+            raise RunnerError("existing motion-demo launch config differs from the exact sentinel-derived config")
+        return {
+            "status": "MOTION_DEMO_LAUNCH_CONFIG_ALREADY_STAGED",
+            "plan_id": MOTION_DEMO_PLAN_ID,
+            "launch_config_relative_path": str(expected_path.relative_to(_safe_local_root(create=False))),
+            "launch_config_sha256": existing_sha,
+        }
+    try:
+        with expected_path.open("xb") as handle:
+            handle.write(expected_bytes)
+    except FileExistsError as exc:
+        raise RunnerError("motion-demo launch config appeared during exclusive staging; inspect it before retrying") from exc
+    except OSError as exc:
+        raise RunnerError(f"cannot stage motion-demo launch config: {exc}") from exc
+    return {
+        "status": "MOTION_DEMO_LAUNCH_CONFIG_STAGED",
+        "plan_id": MOTION_DEMO_PLAN_ID,
+        "launch_config_relative_path": str(expected_path.relative_to(_safe_local_root(create=False))),
+        "launch_config_sha256": sha256_file(expected_path),
+    }
 
 
 def _profile_payload(profile_id: str) -> tuple[dict[str, Any], Path, str]:
@@ -342,16 +395,21 @@ def verify_model_manifest(
     return manifest
 
 
-def validate_admission_inputs(profile_id: str) -> dict[str, Any]:
+def validate_admission_inputs(profile_id: str, plan_id: str = PLAN_ID) -> dict[str, Any]:
     """Do every non-server admission check before any process starts."""
     if profile_id != PROFILE_ID:
         raise RunnerError("only physical-rtx4060-8gb is enrolled")
-    plan, plan_hash = load_plan()
-    launch, launch_hash = load_launch_config(profile_id)
+    try:
+        inventory._plan_spec(plan_id)
+    except inventory.PreflightError as exc:
+        raise RunnerError(str(exc)) from exc
+    plan, plan_hash = load_plan(plan_id)
+    launch, launch_hash = load_launch_config(profile_id, plan_id)
     profile, profile_path, profile_hash = _profile_payload(profile_id)
     try:
         inventory._validate_profile(profile, profile_id)
-        preflight = inventory.preflight(profile_id)
+        preflight = inventory.preflight(profile_id, plan_id)
+        source_recipe = inventory.bound_source_recipe(plan, plan_id)
     except inventory.PreflightError as exc:
         raise RunnerError(f"laptop-local profile preflight failed: {exc}") from exc
     if preflight.get("status") != inventory.READY_STATUS:
@@ -411,8 +469,11 @@ def validate_admission_inputs(profile_id: str) -> dict[str, Any]:
     if not isinstance(selected_gpu, dict) or not isinstance(selected_gpu.get("uuid"), str) or not selected_gpu["uuid"]:
         raise RunnerError("profile preflight did not bind one physical GPU UUID")
     return {
+        "profile_id": profile_id,
+        "plan_id": plan_id,
         "plan": plan,
         "plan_sha256": plan_hash,
+        "source_recipe": source_recipe,
         "launch": launch,
         "launch_sha256": launch_hash,
         "profile": profile,
@@ -717,6 +778,17 @@ def _schema_option_values(
     return list(values)
 
 
+def _bound_source_for_plan(plan: Mapping[str, Any]) -> tuple[dict[str, Any], Path]:
+    plan_id = plan.get("id")
+    if not isinstance(plan_id, str):
+        raise RunnerError("physical plan has no enrolled ID")
+    try:
+        source = inventory.bound_source_recipe(plan, plan_id)
+    except inventory.PreflightError as exc:
+        raise RunnerError(str(exc)) from exc
+    return source, inventory.source_recipe_path_for_id(plan_id)
+
+
 def validate_live_source_prompt(
     plan: Mapping[str, Any], object_info: Mapping[str, Any]
 ) -> dict[str, Any]:
@@ -726,9 +798,9 @@ def validate_live_source_prompt(
     pinned executor behavior, not a silent relaxation of the ordinary graph
     schema.
     """
-    source_path = REPO_ROOT / "recipes" / "h3_mime_i2v.json"
-    expected_hash = plan.get("orientation_only_source", {}).get("recipe_sha256")
-    if not isinstance(expected_hash, str) or sha256_utf8_text_file(source_path) != expected_hash:
+    source_binding, source_path = _bound_source_for_plan(plan)
+    expected_hash = source_binding["recipe_sha256"]
+    if sha256_utf8_text_file(source_path) != expected_hash:
         raise RunnerError("bound H3 source recipe bytes drifted before live schema validation")
     recipe = _read_json(source_path, "bound H3 source recipe")
     graph = recipe.get("prompt")
@@ -772,12 +844,12 @@ def validate_live_source_prompt(
             )
         for value in inputs.values():
             for source_id, output_index in _iter_prompt_link_pairs(value):
-                source = graph.get(source_id)
-                if not isinstance(source, Mapping):
+                source_node = graph.get(source_id)
+                if not isinstance(source_node, Mapping):
                     raise RunnerError(
                         f"bound H3 source node {node_id} links missing source {source_id}"
                     )
-                source_class = source.get("class_type")
+                source_class = source_node.get("class_type")
                 outputs = object_info.get(source_class, {}).get("output", [])
                 if not isinstance(outputs, list) or not outputs:
                     raise RunnerError(
@@ -823,7 +895,10 @@ def validate_live_source_prompt(
             "input": input_name,
         }
     return {
+        "source_recipe_path": source_binding["recipe_path"],
         "source_recipe_sha256": expected_hash,
+        "source_graph_sha256": source_binding["graph_sha256"],
+        "source_prompt_sha256": source_binding["prompt_sha256"],
         "source_node_count": len(graph),
         "model_option_proof": model_options,
     }
@@ -1549,9 +1624,10 @@ def _run_leg(
     prompt = plan.get("source_prompt")
     if prompt is not None:
         raise RunnerError("physical plan must not carry a mutable alternate prompt")
-    recipe = _read_json(REPO_ROOT / "recipes" / "h3_mime_i2v.json", "bound H3 source recipe")
-    expected_hash = plan.get("orientation_only_source", {}).get("recipe_sha256")
-    if sha256_utf8_text_file(REPO_ROOT / "recipes" / "h3_mime_i2v.json") != expected_hash:
+    source, source_path = _bound_source_for_plan(plan)
+    recipe = _read_json(source_path, "bound H3 source recipe")
+    expected_hash = source["recipe_sha256"]
+    if sha256_utf8_text_file(source_path) != expected_hash:
         raise RunnerError("bound H3 source recipe bytes drifted")
     graph = recipe.get("prompt")
     if not isinstance(graph, dict):
@@ -1601,11 +1677,15 @@ def _run_leg(
     }
 
 
-def create_cell(run_id: str) -> Path:
+def create_cell(run_id: str, plan_id: str = PLAN_ID) -> Path:
+    try:
+        inventory._plan_spec(plan_id)
+    except inventory.PreflightError as exc:
+        raise RunnerError(str(exc)) from exc
     local_root = _safe_local_root(create=True)
     cells_root = _safe_local_child(local_root, "cells")
     cells_root.mkdir(parents=True, exist_ok=True)
-    plan_root = _safe_local_child(cells_root, PLAN_ID)
+    plan_root = _safe_local_child(cells_root, plan_id)
     plan_root.mkdir(parents=True, exist_ok=True)
     cell = _safe_local_child(plan_root, run_id)
     cell.mkdir(parents=False, exist_ok=False)
@@ -1651,8 +1731,9 @@ def _admission_receipt(
         "status": "ADMITTED_NO_PROMPT_QUEUED",
         "profile_id": PROFILE_ID,
         "profile_sha256": admission["profile_sha256"],
-        "plan_id": PLAN_ID,
+        "plan_id": admission.get("plan_id", PLAN_ID),
         "plan_sha256": admission["plan_sha256"],
+        "source_recipe": dict(admission.get("source_recipe", {})),
         "launch_config_sha256": admission["launch_sha256"],
         "runner_sha256": sha256_file(RUNNER_PATH),
         "lock_runner_sha256": sha256_file(Path(__file__).with_name("locks_4060.py")),
@@ -1687,6 +1768,7 @@ def finalize_cell_receipts(
     result: Mapping[str, Any],
     canonical_argv: Sequence[str] | None,
     live: Mapping[str, Any] | None,
+    admission_identity: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Write terminal immutable receipts only after shutdown has been attempted.
 
@@ -1720,12 +1802,20 @@ def finalize_cell_receipts(
         else:
             finalized.update({"admission_sha256": admission_sha, "shutdown": dict(shutdown)})
         return finalized
+    identity = admission_identity if isinstance(admission_identity, Mapping) else {}
+    source_recipe = identity.get("source_recipe")
     failure = {
         "receipt_schema_version": 1,
         "kind": "physical_4060_h3_failure",
         "scope": SCOPE,
         "status": "BLOCKED_OR_FAILED",
         "run_id": run_id,
+        "profile_id": identity.get("profile_id"),
+        "profile_sha256": identity.get("profile_sha256"),
+        "plan_id": identity.get("plan_id"),
+        "plan_sha256": identity.get("plan_sha256"),
+        "source_recipe": dict(source_recipe) if isinstance(source_recipe, Mapping) else None,
+        "launch_config_sha256": identity.get("launch_sha256"),
         "error": str(caught) if caught is not None else "owned server shutdown proof failed",
         "shutdown": dict(shutdown),
         "shutdown_sha256": shutdown_sha,
@@ -1747,8 +1837,8 @@ def finalize_cell_receipts(
     }
 
 
-def execute(profile_id: str, *, run_sequence: bool) -> dict[str, Any]:
-    admission = validate_admission_inputs(profile_id)
+def execute(profile_id: str, *, run_sequence: bool, plan_id: str = PLAN_ID) -> dict[str, Any]:
+    admission = validate_admission_inputs(profile_id, plan_id)
     run_id = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid.uuid4().hex[:12]
     cell: Path | None = None
     server: OwnedServer | None = None
@@ -1762,7 +1852,7 @@ def execute(profile_id: str, *, run_sequence: bool) -> dict[str, Any]:
     fixture_sha256s: dict[str, str] | None = None
     with BenchLease(_safe_local_root(create=True)):
         try:
-            cell = create_cell(run_id)
+            cell = create_cell(run_id, plan_id)
             fixture_sha256s = prepare_cell(admission, cell)
             canonical_argv = build_launch_argv(admission, cell)
             server = OwnedServer(
@@ -1820,8 +1910,9 @@ def execute(profile_id: str, *, run_sequence: bool) -> dict[str, Any]:
                     "run_id": run_id,
                     "profile_id": PROFILE_ID,
                     "profile_sha256": admission["profile_sha256"],
-                    "plan_id": PLAN_ID,
+                    "plan_id": admission.get("plan_id", plan_id),
                     "plan_sha256": admission["plan_sha256"],
+                    "source_recipe": dict(admission.get("source_recipe", {})),
                     "launch_config_sha256": admission["launch_sha256"],
                     "runner_sha256": sha256_file(RUNNER_PATH),
                     "sequence_required": list(SEQUENCE),
@@ -1861,6 +1952,7 @@ def execute(profile_id: str, *, run_sequence: bool) -> dict[str, Any]:
                     result=result,
                     canonical_argv=canonical_argv,
                     live=live,
+                    admission_identity=admission,
                 )
     if caught is not None:
         raise caught
@@ -1880,9 +1972,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     for command, help_text in (("admit", "boot and prove the 4060 lane, then shut down without a prompt"), ("run", "admit then run cold/warm-1/warm-2 H3 MIME sequence")):
         child = subparsers.add_parser(command, help=help_text)
         child.add_argument("--profile", required=True, help="only physical-rtx4060-8gb is accepted")
+        child.add_argument("--plan", choices=PLAN_IDS, default=PLAN_ID, help="only a checked-in enrolled physical 4060 plan")
+    stage_parser = subparsers.add_parser(
+        "stage-motion-config",
+        help="create only the fixed private motion-demo config from the validated sentinel config",
+    )
+    stage_parser.add_argument("--profile", required=True, help="only physical-rtx4060-8gb is accepted")
     args = parser.parse_args(argv)
     try:
-        result = execute(args.profile, run_sequence=args.command == "run")
+        if args.command == "stage-motion-config":
+            result = stage_motion_launch_config(args.profile)
+        else:
+            result = execute(args.profile, run_sequence=args.command == "run", plan_id=args.plan)
     except (RunnerError, LeaseError) as exc:
         parser.exit(2, f"physical-4060 runner: {exc}\n")
     print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))

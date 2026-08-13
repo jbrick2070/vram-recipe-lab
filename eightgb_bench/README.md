@@ -12,10 +12,16 @@ using the laptop bridge or this runner.
 
 ## Candidate and evidence standard
 
-The first physical candidate is MiniMax H3 MIME image-to-video with native
-audio: 864x480, 90 frames, 24 fps, 20 steps, seed 42. Its 5080 orientation
-receipt measured 7.28 GiB VRAM and 27.56 GiB host RAM. That is a reason to
-try the laptop, not a laptop result.
+The sentinel candidate is MiniMax H3 MIME image-to-video with native audio:
+864x480, 90 frames, 24 fps, 20 steps, seed 42. Its 5080 orientation receipt
+measured 7.28 GiB VRAM and 27.56 GiB host RAM. That is a reason to try the
+laptop, not a laptop result.
+
+The separately enrolled `h3-mime-i2v-motion-demo-f90` is a **prompt-only**
+motion demonstration: an existing console alert, a seated operator's reaction,
+and a monitor response. It has its own source recipe, plan, cell namespace,
+admission, and cold/warm-1/warm-2 sequence. It does not reuse the sentinel's
+warmth, receipts, or historical orientation measurement.
 
 Only an immutable receipt from `runner_4060.py` counts as physical evidence.
 Screenshots, agent messages, model-download logs, and reserve-vram results do
@@ -24,8 +30,12 @@ contract checks, shutdown proof, and human audio/visual review.
 
 ## Fixed safety boundary
 
-- Only profile ID `physical-rtx4060-8gb` and plan
-  `h3-mime-i2v-864x480-f90` are accepted.
+- Only profile ID `physical-rtx4060-8gb` and these plan IDs are accepted:
+  `h3-mime-i2v-864x480-f90` and
+  `h3-mime-i2v-motion-demo-f90`.
+- There is no free-text prompt, workflow, root, or config argument. The motion
+  graph is checked against the sentinel and may differ only at H3 node 7's
+  prompt text.
 - The runner starts ComfyUI only with a direct argument list at
   `127.0.0.1:18299`; it never starts a shell command.
 - SageAttention, Manager, reserve-vram, pinned memory, inherited CUDA
@@ -82,6 +92,22 @@ them; do not reset, force-push, or discard them.
    writes a failure receipt and stops. It does not queue a video prompt.
 7. The lead controller reviews the admission receipt before authorizing the
    three-leg render command. Do not issue ad-hoc ComfyUI commands.
+
+### Motion-demo sequence
+
+The sentinel's existing receipts remain immutable. To prepare the distinct
+motion demo, derive its one fixed local config from the already validated
+sentinel config, then select its exact plan ID on each command:
+
+```powershell
+& <laptop-Comfy-python.exe> -B .\eightgb_bench\runner_4060.py stage-motion-config --profile physical-rtx4060-8gb
+& <laptop-Comfy-python.exe> -B .\eightgb_bench\preflight_4060.py preflight --profile physical-rtx4060-8gb --plan h3-mime-i2v-motion-demo-f90 --write-receipt
+& <laptop-Comfy-python.exe> -B .\eightgb_bench\runner_4060.py admit --profile physical-rtx4060-8gb --plan h3-mime-i2v-motion-demo-f90
+```
+
+Only after the new admission has been reviewed may the lead controller run the
+motion plan's fresh `cold`, `warm-1`, `warm-2` sequence. It is an entertaining
+demo cell, not a generic “all 8 GB cards” claim.
 
 ## How to describe a result
 

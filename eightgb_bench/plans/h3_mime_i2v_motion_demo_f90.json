@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "h3-mime-i2v-motion-demo-f90",
+  "status": "PREPARED_FRESH_SEQUENCE_REQUIRED",
+  "scope": "PHYSICAL_4060_8GB_EXPLORATORY_NOT_5080_CERTIFICATION",
+  "purpose": "Prompt-only motion demonstration: the starting radio-room image receives a clear alert, operator reaction, and display response while all model, graph, seed, audio, frame, and sampler settings remain fixed.",
+  "source_recipe": {
+    "path": "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json",
+    "name": "h3_mime_i2v_motion_demo",
+    "recipe_sha256": "73c4a2e62f947ac62f3463a3cff2ec853fee57ac09377a20603a2e76b52bb2ca",
+    "graph_sha256": "fe9458566bc5dee8450619fd68e358d2bfb2ca2100372d3c68e2786fa14b02e4",
+    "prompt_sha256": "6567fed1820de2ce300c93c068bc0d7ece277e3bb205ec90af6bf6a17d8c38c7"
+  },
+  "baseline_sentinel": {
+    "plan_id": "h3-mime-i2v-864x480-f90",
+    "recipe": "recipes/h3_mime_i2v.json",
+    "recipe_sha256": "fde5775b64ac207ebd33761de18a5ac3a899c57c2880776b66691d6dc23c77c9",
+    "scope": "Engine and settings orientation only; this sentinel does not measure the motion-demo prompt and its warmth must never be reused."
+  },
+  "engine": {
+    "family": "MiniMax H3 FL2VA I2V native audio",
+    "required_assets": [
+      {"category": "diffusion_models", "filename": "minimax_h3_fl2va_pruned_int8_convrot.safetensors", "expected_bytes": 20970379616},
+      {"category": "text_encoders", "filename": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors", "expected_bytes": 15687142551},
+      {"category": "vae", "filename": "minimax_h3_video_vae_fp16.safetensors", "expected_bytes": 5207808496},
+      {"category": "vae", "filename": "minimax_h3_audio_vae_fp32.safetensors", "expected_bytes": 605254808}
+    ]
+  },
+  "video_contract": {
+    "mode": "image-to-video with native audio",
+    "fixture": "fixtures/scene_still.png",
+    "fixture_sha256": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596",
+    "width": 864,
+    "height": 480,
+    "frames": 90,
+    "fps": 24,
+    "duration_s": 3.75,
+    "steps": 20,
+    "audio": true,
+    "seed": 42
+  },
+  "required_core_nodes": [
+    "UNETLoader",
+    "CLIPLoader",
+    "VAELoader",
+    "RandomNoise",
+    "BasicGuider",
+    "LoadImage",
+    "MiniMaxH3ImageToVideo",
+    "SamplerCustomAdvanced",
+    "BasicScheduler",
+    "KSamplerSelect",
+    "VAEDecode",
+    "VAEDecodeAudio",
+    "CreateVideo",
+    "SaveVideo"
+  ],
+  "future_node_provider_policy": {
+    "status": "NOT_ADMITTED_UNTIL_A_LAPTOP_OWNED_SERVER_PROVES_NODE_SOURCE_AND_COMMIT",
+    "custom_node_whitelist": [
+      {"id": "ComfyUI-KJNodes", "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df", "role": "expected MiniMax H3 custom-node provider"}
+    ],
+    "required_live_proof": [
+      "object_info must expose every required_core_nodes class.",
+      "The direct runner must bind each custom-node provider's root, Git commit, and source hash into the laptop receipt.",
+      "No Manager, SageAttention flag, reserve-vram flag, or unwhitelisted custom node is admitted."
+    ]
+  },
+  "follow_up_ladder": [],
+  "blockers_before_launch": [
+    "A fresh no-prompt admission must prove the laptop-owned H3 nodes, exact assets, direct argv, and shutdown path for this plan.",
+    "Run a new cold, warm-1, warm-2 sequence under this plan. Do not reuse the sentinel's historical receipt or its thermal/cache state.",
+    "Human visual-and-audio review remains required before any public 8 GB statement."
+  ]
+}

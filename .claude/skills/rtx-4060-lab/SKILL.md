@@ -17,9 +17,14 @@ render.
 - Work only in the laptop checkout and `eightgb_bench/local/` for mutable 4060
   state. Never touch the 5080 runner, port 8199, its locks, outputs, receipts,
   or OTR.
-- Select only profile `physical-rtx4060-8gb` and plan
-  `h3-mime-i2v-864x480-f90`. Never accept an arbitrary root, Python executable,
-  port, environment, or shell command.
+- Select only profile `physical-rtx4060-8gb` and one of two enrolled plans:
+  `h3-mime-i2v-864x480-f90` (the immutable sentinel) or
+  `h3-mime-i2v-motion-demo-f90` (a separate prompt-only demo). Never accept an
+  arbitrary root, Python executable, port, environment, shell command, source
+  workflow, or free-text prompt.
+- The motion-demo plan uses its own fixed checked-in recipe and private local
+  launch-config filename. It must earn a new cold/warm-1/warm-2 sequence; it
+  never inherits sentinel warmth or historical receipts.
 - Mutate the 4060 only through `eightgb_bench/runner_4060.py`. Do not issue
   ad-hoc ComfyUI commands.
 - Prefer `gpt-5.3-codex-spark` for bounded remote work. Escalate only for an

@@ -19,8 +19,14 @@ Only the lead agent may authorize the H3 MIME campaign. Run one owned server
 and one leg at a time: `cold`, `warm-1`, then `warm-2`. Stop after any OOM,
 media defect, ownership drift, or failed shutdown proof.
 
-The candidate is fixed: MiniMax H3 native-audio I2V, 864x480, 90 frames,
-24 fps, 20 steps, seed 42. The 5080 result is only orientation.
+Each enrolled candidate is fixed: MiniMax H3 native-audio I2V, 864x480, 90
+frames, 24 fps, 20 steps, seed 42. `h3-mime-i2v-864x480-f90` is the immutable
+sentinel. `h3-mime-i2v-motion-demo-f90` is a separate fixed prompt-only motion
+demo whose graph differs only at H3 node 7 prompt text. The 5080 result is
+sentinel orientation only; it is not prompt-matched motion-demo evidence.
+
+Never reuse a prior plan's cache warmth, receipt, output, or human review. The
+motion demo requires its own newly admitted cold/warm-1/warm-2 sequence.
 
 ## 4. Interpret
 

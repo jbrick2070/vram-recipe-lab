@@ -17,6 +17,25 @@ class Physical4060StaticContractTests(unittest.TestCase):
         self.assertFalse(result["orientation_only_source"]["measurement"]["pass"])
         self.assertFalse(result["orientation_only_source"]["measurement"]["warm_pass"])
 
+    def test_static_check_validates_exactly_the_two_enrolled_plans(self):
+        result = bench.static_check_all()
+        self.assertEqual(result["plan_ids"], list(bench.PLAN_IDS))
+        motion = result["plans"][bench.MOTION_DEMO_PLAN_ID]
+        self.assertEqual(motion["plan_id"], bench.MOTION_DEMO_PLAN_ID)
+        self.assertEqual(motion["source_recipe"]["recipe_path"], "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json")
+        self.assertNotIn("orientation_only_source", motion)
+
+    def test_motion_source_graph_is_prompt_only_relative_to_the_sentinel(self):
+        sentinel = json.loads(
+            (bench.REPO_ROOT / "recipes" / "h3_mime_i2v.json").read_text(encoding="utf-8")
+        )["prompt"]
+        motion = json.loads(
+            (bench.REPO_ROOT / "eightgb_bench" / "recipes" / "h3_mime_i2v_motion_demo.json").read_text(encoding="utf-8")
+        )["prompt"]
+        expected = json.loads(json.dumps(sentinel))
+        expected["7"]["inputs"]["prompt"] = motion["7"]["inputs"]["prompt"]
+        self.assertEqual(motion, expected)
+
     def test_hardware_inventory_needs_no_profile_or_comfyui_path(self):
         gpu = {"uuid": "GPU-laptop", "name": "NVIDIA GeForce RTX 4060 Laptop GPU", "memory_total_mib": 8188, "driver_version": "999.0", "driver_model_current": "WDDM"}
         with mock.patch.object(bench, "query_nvidia_smi", return_value=[gpu]), mock.patch.object(bench, "host_ram_snapshot", return_value={"total_gib": 31.7, "available_gib": 12.0}):
@@ -339,6 +358,8 @@ class Physical4060ProfileTests(unittest.TestCase):
             payload = bench.preflight("physical-rtx4060-8gb")
         self.assertEqual(payload["status"], bench.READY_STATUS)
         self.assertEqual(payload["scope"], bench.SCOPE)
+        self.assertEqual(payload["receipt_schema_version"], 2)
+        self.assertEqual(payload["plan_id"], bench.SENTINEL_PLAN_ID)
         self.assertEqual(payload["network_or_gpu_actions"], bench.READ_ONLY_GPU_INVENTORY_ACTIONS)
         self.assertIn("separately reviewed", payload["next_action"])
         self.assertEqual(payload["observed"]["selected_gpu"]["uuid"], "GPU-test-4060")
@@ -382,6 +403,19 @@ class Physical4060ProfileTests(unittest.TestCase):
             with self.assertRaisesRegex(bench.PreflightError, "not enrolled"):
                 bench.preflight("anything-else")
         nvidia.assert_not_called()
+
+    def test_arbitrary_plan_id_is_rejected_before_any_inventory_probe(self):
+        with mock.patch.object(bench, "query_nvidia_smi") as nvidia:
+            with self.assertRaisesRegex(bench.PreflightError, "plan ID is not enrolled"):
+                bench.preflight("physical-rtx4060-8gb", "not-a-plan")
+        nvidia.assert_not_called()
+
+    def test_motion_preflight_receipt_binds_the_selected_plan(self):
+        patches = self._preflight_patches()
+        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8], patches[9], mock.patch.object(bench, "load_checked_in_plan", return_value=(self.plan, "f" * 64)):
+            payload = bench.preflight("physical-rtx4060-8gb", bench.MOTION_DEMO_PLAN_ID)
+        self.assertEqual(payload["status"], bench.READY_STATUS)
+        self.assertEqual(payload["plan_id"], bench.MOTION_DEMO_PLAN_ID)
 
     def test_local_receipt_is_exclusive_and_stays_below_the_ignored_local_root(self):
         payload = {"status": "BLOCKED_MODEL_MISSING", "scope": bench.SCOPE}

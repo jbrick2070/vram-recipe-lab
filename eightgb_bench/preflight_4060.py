@@ -30,7 +30,34 @@ LOCAL_ROOT = BENCH_ROOT / "local"
 REPORTS_ROOT = BENCH_ROOT / "reports"
 PUBLIC_REPORT_REPO_PATH = Path("eightgb_bench") / "reports" / "physical-rtx4060-8gb-hardware.json"
 CONTRACT_PATH = BENCH_ROOT / "contract-v1.json"
+SENTINEL_PLAN_ID = "h3-mime-i2v-864x480-f90"
+MOTION_DEMO_PLAN_ID = "h3-mime-i2v-motion-demo-f90"
+PLAN_IDS = (SENTINEL_PLAN_ID, MOTION_DEMO_PLAN_ID)
+# Keep this alias for the original sentinel and existing evidence tests.  All
+# new selection goes through the registry below; no caller supplies a path.
 PLAN_PATH = BENCH_ROOT / "plans" / "h3_mime_i2v_864x480_f90.json"
+PLAN_REGISTRY: dict[str, dict[str, str]] = {
+    SENTINEL_PLAN_ID: {
+        "plan_filename": "h3_mime_i2v_864x480_f90.json",
+        "source_recipe": "recipes/h3_mime_i2v.json",
+        "source_name": "h3_mime_i2v",
+        "source_recipe_sha256": "fde5775b64ac207ebd33761de18a5ac3a899c57c2880776b66691d6dc23c77c9",
+        "source_graph_sha256": "10ecc48db9bd12faba0a3e1485bd699606073221824ba24e238fa8b60b7a4e09",
+        "source_prompt_sha256": "17571e18e68017eef580e3007b15c6ef91e55f5e4380f70f5613535258e5debb",
+        "status": "BLOCKED_LOCAL_MODEL_ADMISSION",
+        "launch_config_filename": "runner-4060-launch.json",
+    },
+    MOTION_DEMO_PLAN_ID: {
+        "plan_filename": "h3_mime_i2v_motion_demo_f90.json",
+        "source_recipe": "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json",
+        "source_name": "h3_mime_i2v_motion_demo",
+        "source_recipe_sha256": "73c4a2e62f947ac62f3463a3cff2ec853fee57ac09377a20603a2e76b52bb2ca",
+        "source_graph_sha256": "fe9458566bc5dee8450619fd68e358d2bfb2ca2100372d3c68e2786fa14b02e4",
+        "source_prompt_sha256": "6567fed1820de2ce300c93c068bc0d7ece277e3bb205ec90af6bf6a17d8c38c7",
+        "status": "PREPARED_FRESH_SEQUENCE_REQUIRED",
+        "launch_config_filename": "runner-4060-motion-demo-launch.json",
+    },
+}
 PROFILE_SUFFIX = ".profile.json"
 PROFILE_ID_RE = re.compile(r"physical-rtx4060-8gb\Z")
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
@@ -43,6 +70,26 @@ READ_ONLY_GPU_INVENTORY_ACTIONS = (
 
 class PreflightError(ValueError):
     """A local laptop profile or static benchmark input is invalid."""
+
+
+def _plan_spec(plan_id: str) -> Mapping[str, str]:
+    """Return only a code-owned enrolled plan; never accept a path from input."""
+    try:
+        return PLAN_REGISTRY[plan_id]
+    except KeyError as exc:
+        raise PreflightError("plan ID is not enrolled for this physical bench") from exc
+
+
+def plan_path_for_id(plan_id: str) -> Path:
+    _plan_spec(plan_id)
+    # Preserve the monkeypatchable sentinel alias used by legacy static tests.
+    if plan_id == SENTINEL_PLAN_ID:
+        return PLAN_PATH
+    return BENCH_ROOT / "plans" / _plan_spec(plan_id)["plan_filename"]
+
+
+def source_recipe_path_for_id(plan_id: str) -> Path:
+    return REPO_ROOT / _plan_spec(plan_id)["source_recipe"]
 
 
 def canonical_bytes(value: object) -> bytes:
@@ -466,54 +513,89 @@ def _validate_contract(contract: Mapping[str, Any]) -> None:
             raise PreflightError(f"contract future boot policy drifted at {key}")
 
 
-def _validate_plan(plan: Mapping[str, Any]) -> None:
+def _validate_plan(plan: Mapping[str, Any], plan_id: str) -> None:
+    spec = _plan_spec(plan_id)
+    plan_keys = {
+        "schema_version",
+        "id",
+        "status",
+        "scope",
+        "purpose",
+        "engine",
+        "video_contract",
+        "required_core_nodes",
+        "future_node_provider_policy",
+        "follow_up_ladder",
+        "blockers_before_launch",
+    }
+    if plan_id == SENTINEL_PLAN_ID:
+        plan_keys.add("orientation_only_source")
+    else:
+        plan_keys.update({"source_recipe", "baseline_sentinel"})
     _require_exact_keys(
         plan,
-        {
-            "schema_version",
-            "id",
-            "status",
-            "scope",
-            "purpose",
-            "orientation_only_source",
-            "engine",
-            "video_contract",
-            "required_core_nodes",
-            "future_node_provider_policy",
-            "follow_up_ladder",
-            "blockers_before_launch",
-        },
+        plan_keys,
         "plan",
     )
     if _require_int(plan, "schema_version", "plan") != 1:
         raise PreflightError("plan schema_version must be 1")
-    if _require_string(plan, "id", "plan") != "h3-mime-i2v-864x480-f90":
-        raise PreflightError("only the declared first physical H3 MIME cell is allowed")
-    if _require_string(plan, "status", "plan") != "BLOCKED_LOCAL_MODEL_ADMISSION":
-        raise PreflightError("plan must remain blocked before local model admission")
+    if _require_string(plan, "id", "plan") != plan_id:
+        raise PreflightError("checked-in physical plan ID drifted from its enrolled registry entry")
+    if _require_string(plan, "status", "plan") != spec["status"]:
+        raise PreflightError("checked-in physical plan status drifted from its enrolled registry entry")
     if _require_string(plan, "scope", "plan") != SCOPE:
         raise PreflightError("plan scope is not the physical 4060 scope")
-    orientation = plan.get("orientation_only_source")
-    if not isinstance(orientation, dict):
-        raise PreflightError("plan.orientation_only_source must be an object")
-    _require_exact_keys(
-        orientation,
-        {"recipe", "recipe_sha256", "receipt", "receipt_sha256", "observed_on_other_machine"},
-        "plan.orientation_only_source",
-    )
-    if _require_string(orientation, "recipe", "plan.orientation_only_source") != "recipes/h3_mime_i2v.json":
-        raise PreflightError("plan orientation recipe path drifted")
-    if _require_string(orientation, "receipt", "plan.orientation_only_source") != "results/h3_mime_i2v_run1.json":
-        raise PreflightError("plan orientation receipt path drifted")
-    if _validated_optional_sha256(orientation.get("recipe_sha256"), "plan orientation recipe SHA") != "fde5775b64ac207ebd33761de18a5ac3a899c57c2880776b66691d6dc23c77c9":
-        raise PreflightError("plan orientation recipe SHA drifted")
-    if _validated_optional_sha256(orientation.get("receipt_sha256"), "plan orientation receipt SHA") != "b1bb6a4e5df65c4acd890d39093b7b88ee3f1df00b71a763a43b54673fb60be7":
-        raise PreflightError("plan orientation receipt SHA drifted")
-    orientation_values = orientation.get("observed_on_other_machine")
-    if not isinstance(orientation_values, dict):
-        raise PreflightError("plan orientation observed values must be an object")
-    if orientation_values.get("peak_vram_gib") != 7.28 or orientation_values.get("peak_host_ram_gib") != 27.56:
-        raise PreflightError("plan orientation measurement values drifted")
+    if plan_id == SENTINEL_PLAN_ID:
+        orientation = plan.get("orientation_only_source")
+        if not isinstance(orientation, dict):
+            raise PreflightError("plan.orientation_only_source must be an object")
+        _require_exact_keys(
+            orientation,
+            {"recipe", "recipe_sha256", "receipt", "receipt_sha256", "observed_on_other_machine"},
+            "plan.orientation_only_source",
+        )
+        if _require_string(orientation, "recipe", "plan.orientation_only_source") != spec["source_recipe"]:
+            raise PreflightError("plan orientation recipe path drifted")
+        if _require_string(orientation, "receipt", "plan.orientation_only_source") != "results/h3_mime_i2v_run1.json":
+            raise PreflightError("plan orientation receipt path drifted")
+        if _validated_optional_sha256(orientation.get("recipe_sha256"), "plan orientation recipe SHA") != spec["source_recipe_sha256"]:
+            raise PreflightError("plan orientation recipe SHA drifted")
+        if _validated_optional_sha256(orientation.get("receipt_sha256"), "plan orientation receipt SHA") != "b1bb6a4e5df65c4acd890d39093b7b88ee3f1df00b71a763a43b54673fb60be7":
+            raise PreflightError("plan orientation receipt SHA drifted")
+        orientation_values = orientation.get("observed_on_other_machine")
+        if not isinstance(orientation_values, dict):
+            raise PreflightError("plan orientation observed values must be an object")
+        if orientation_values.get("peak_vram_gib") != 7.28 or orientation_values.get("peak_host_ram_gib") != 27.56:
+            raise PreflightError("plan orientation measurement values drifted")
+    else:
+        source = plan.get("source_recipe")
+        if not isinstance(source, dict):
+            raise PreflightError("motion plan.source_recipe must be an object")
+        _require_exact_keys(
+            source,
+            {"path", "name", "recipe_sha256", "graph_sha256", "prompt_sha256"},
+            "motion plan.source_recipe",
+        )
+        expected_source = {
+            "path": spec["source_recipe"],
+            "name": spec["source_name"],
+            "recipe_sha256": spec["source_recipe_sha256"],
+            "graph_sha256": spec["source_graph_sha256"],
+            "prompt_sha256": spec["source_prompt_sha256"],
+        }
+        if source != expected_source:
+            raise PreflightError("motion plan source recipe binding drifted from its enrolled registry entry")
+        baseline = plan.get("baseline_sentinel")
+        if not isinstance(baseline, dict):
+            raise PreflightError("motion plan.baseline_sentinel must be an object")
+        _require_exact_keys(
+            baseline, {"plan_id", "recipe", "recipe_sha256", "scope"}, "motion plan.baseline_sentinel"
+        )
+        if baseline.get("plan_id") != SENTINEL_PLAN_ID or baseline.get("recipe") != PLAN_REGISTRY[SENTINEL_PLAN_ID]["source_recipe"] or baseline.get("recipe_sha256") != PLAN_REGISTRY[SENTINEL_PLAN_ID]["source_recipe_sha256"]:
+            raise PreflightError("motion plan sentinel baseline binding drifted")
+        scope = baseline.get("scope")
+        if not isinstance(scope, str) or "does not measure" not in scope or "must never be reused" not in scope:
+            raise PreflightError("motion plan must disclose that sentinel warmth is not reusable")
     video = plan.get("video_contract")
     if not isinstance(video, dict):
         raise PreflightError("plan.video_contract must be an object")
@@ -669,12 +751,89 @@ def _bound_orientation_source(plan: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def static_check() -> dict[str, Any]:
+def _graph_sha256(graph: Mapping[str, Any]) -> str:
+    return sha256_bytes(canonical_bytes(dict(graph)))
+
+
+def bound_source_recipe(plan: Mapping[str, Any], plan_id: str) -> dict[str, Any]:
+    """Validate the code-owned graph that an enrolled physical plan may queue."""
+    spec = _plan_spec(plan_id)
+    repo_root = _validated_path(str(REPO_ROOT), "repository root", "directory")
+    source_path = _validated_path(
+        str(source_recipe_path_for_id(plan_id)), "bound physical source recipe", "file"
+    )
+    if not source_path.is_relative_to(repo_root):
+        raise PreflightError("bound physical source recipe escaped the repository")
+    if sha256_utf8_text_file(source_path) != spec["source_recipe_sha256"]:
+        raise PreflightError("bound physical source recipe bytes do not match the enrolled registry")
+    recipe = _read_json(source_path, "bound physical source recipe")
+    if recipe.get("name") != spec["source_name"]:
+        raise PreflightError("bound physical source recipe name drifted")
+    graph = recipe.get("prompt")
+    if not isinstance(graph, dict):
+        raise PreflightError("bound physical source recipe has no prompt graph")
+    node_seven = graph.get("7")
+    inputs = node_seven.get("inputs") if isinstance(node_seven, dict) else None
+    prompt = inputs.get("prompt") if isinstance(inputs, dict) else None
+    if not isinstance(prompt, str) or not prompt:
+        raise PreflightError("bound physical source recipe node 7 prompt is malformed")
+    graph_sha256 = _graph_sha256(graph)
+    prompt_sha256 = sha256_bytes(prompt.encode("utf-8"))
+    if graph_sha256 != spec["source_graph_sha256"] or prompt_sha256 != spec["source_prompt_sha256"]:
+        raise PreflightError("bound physical source graph or prompt drifted from the enrolled registry")
+    contract = recipe.get("contract")
+    if not isinstance(contract, dict):
+        raise PreflightError("bound physical source recipe has no contract")
+    expected_contract = {
+        "width": 864,
+        "height": 480,
+        "frames": 90,
+        "fps": 24.0,
+        "duration_s": 3.75,
+        "requires_audio": True,
+    }
+    for key, value in expected_contract.items():
+        if contract.get(key) != value:
+            raise PreflightError(f"bound physical source recipe contract drifted at {key}")
+    source_nodes = {node.get("class_type") for node in graph.values() if isinstance(node, dict)}
+    if source_nodes != set(plan["required_core_nodes"]):
+        raise PreflightError("bound physical source nodes do not match the plan")
+    if plan_id == MOTION_DEMO_PLAN_ID:
+        sentinel_recipe = _read_json(
+            source_recipe_path_for_id(SENTINEL_PLAN_ID), "bound sentinel source recipe"
+        )
+        sentinel_graph = sentinel_recipe.get("prompt")
+        if not isinstance(sentinel_graph, dict):
+            raise PreflightError("bound sentinel source recipe has no prompt graph")
+        expected_motion_graph = json.loads(json.dumps(sentinel_graph, ensure_ascii=False))
+        expected_motion_graph["7"]["inputs"]["prompt"] = prompt
+        if graph != expected_motion_graph:
+            raise PreflightError(
+                "motion-demo graph must differ from the sentinel only at node 7 prompt text"
+            )
+    return {
+        "recipe_path": spec["source_recipe"],
+        "recipe_name": spec["source_name"],
+        "recipe_sha256": spec["source_recipe_sha256"],
+        "graph_sha256": graph_sha256,
+        "prompt_sha256": prompt_sha256,
+    }
+
+
+def load_checked_in_plan(plan_id: str) -> tuple[dict[str, Any], str]:
+    plan_path = plan_path_for_id(plan_id)
+    plan = _read_json(plan_path, "plan")
+    _validate_plan(plan, plan_id)
+    return plan, sha256_utf8_text_file(plan_path)
+
+
+def static_check(plan_id: str = SENTINEL_PLAN_ID) -> dict[str, Any]:
+    _plan_spec(plan_id)
     contract = _read_json(CONTRACT_PATH, "contract")
-    plan = _read_json(PLAN_PATH, "plan")
+    plan, plan_sha256 = load_checked_in_plan(plan_id)
     _validate_contract(contract)
-    _validate_plan(plan)
-    orientation = _bound_orientation_source(plan)
+    orientation = _bound_orientation_source(plan) if plan_id == SENTINEL_PLAN_ID else None
+    source = bound_source_recipe(plan, plan_id)
     fixture = _validated_path(
         str(REPO_ROOT / "fixtures" / "scene_still.png"), "checked-in scene_still fixture", "file"
     )
@@ -683,10 +842,24 @@ def static_check() -> dict[str, Any]:
     return {
         "status": "STATIC_CONTRACT_VALID",
         "scope": SCOPE,
+        "plan_id": plan_id,
         "contract_sha256": sha256_file(CONTRACT_PATH),
-        "plan_sha256": sha256_file(PLAN_PATH),
+        "plan_sha256": plan_sha256,
         "fixture_sha256": sha256_file(fixture),
-        "orientation_only_source": orientation,
+        "source_recipe": source,
+        **({"orientation_only_source": orientation} if orientation is not None else {}),
+        "network_or_gpu_actions": "none",
+    }
+
+
+def static_check_all() -> dict[str, Any]:
+    """Validate every enrolled plan without selecting a profile or GPU."""
+    results = {plan_id: static_check(plan_id) for plan_id in PLAN_IDS}
+    return {
+        "status": "STATIC_CONTRACT_VALID",
+        "scope": SCOPE,
+        "plan_ids": list(PLAN_IDS),
+        "plans": results,
         "network_or_gpu_actions": "none",
     }
 
@@ -697,7 +870,7 @@ def hardware_inventory() -> dict[str, Any]:
     This is intentionally useful even when ComfyUI or any candidate model is
     absent.  It is not an enrollment or a render authorization.
     """
-    static = static_check()
+    static = static_check_all()["plans"][SENTINEL_PLAN_ID]
     return {
         "receipt_schema_version": 1,
         "kind": "physical_4060_8gb_hardware_inventory",
@@ -1057,17 +1230,19 @@ def _selected_gpu(rows: list[dict[str, Any]], expected_gpu: Mapping[str, Any], b
 def _preflight_payload(
     static: Mapping[str, Any],
     profile_id: str,
+    plan_id: str,
     profile_path: Path,
     blockers: list[dict[str, str]],
     observed: Mapping[str, Any],
 ) -> dict[str, Any]:
     return {
-        "receipt_schema_version": 1,
+        "receipt_schema_version": 2,
         "kind": "physical_4060_8gb_inventory_preflight",
         "checked_at_utc": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
         "status": READY_STATUS if not blockers else blockers[0]["code"],
         "scope": SCOPE,
         "profile_id": profile_id,
+        "plan_id": plan_id,
         "contract_sha256": static["contract_sha256"],
         "plan_sha256": static["plan_sha256"],
         "profile_sha256": sha256_file(profile_path),
@@ -1083,11 +1258,13 @@ def _preflight_payload(
     }
 
 
-def preflight(profile_id: str) -> dict[str, Any]:
+def preflight(profile_id: str, plan_id: str = SENTINEL_PLAN_ID) -> dict[str, Any]:
     # Validate the selected ID before even examining a local-state directory.
-    # An arbitrary ID must never redirect this command toward another profile.
+    # An arbitrary ID must never redirect this command toward another profile,
+    # plan, source graph, or hardware probe.
     _profile_path(profile_id)
-    static = static_check()
+    _plan_spec(plan_id)
+    static = static_check(plan_id)
     local_root = _validated_local_root(create=False)
     profile_path = _validated_path(
         str(_profile_path(profile_id, local_root)), "laptop-local profile", "file"
@@ -1108,7 +1285,7 @@ def preflight(profile_id: str) -> dict[str, Any]:
     if ram["available_gib"] < 8:
         blockers.append(_block("BLOCKED_HOST_RAM_AVAILABLE", f"need 8 GiB free before any later boot; observed {ram['available_gib']} GiB"))
     if blockers:
-        return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+        return _preflight_payload(static, profile_id, plan_id, profile_path, blockers, observed)
 
     identity = profile["identity"]
     declared_python = _validated_path(profile["paths"]["python"], "profile.paths.python", "file")
@@ -1123,7 +1300,7 @@ def preflight(profile_id: str) -> dict[str, Any]:
                 f"profile declares {declared_python}; executing {running_python}",
             )
         )
-        return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+        return _preflight_payload(static, profile_id, plan_id, profile_path, blockers, observed)
     if python_major_minor not in profile["policy"]["allowed_python_major_minors"]:
         blockers.append(_block("BLOCKED_PYTHON_VERSION", f"observed {python_major_minor}"))
     _identity_check(blockers, "PYTHON_SHA256", identity["python_sha256"], python_observed["sha256"])
@@ -1149,7 +1326,7 @@ def preflight(profile_id: str) -> dict[str, Any]:
             else:
                 observed["ffprobe"]["version"] = first_line
     if blockers:
-        return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+        return _preflight_payload(static, profile_id, plan_id, profile_path, blockers, observed)
     main_py = _validated_child_file(paths["comfyui_root"], "main.py", "declared ComfyUI main.py")
     if main_py is None:
         blockers.append(_block("BLOCKED_COMFYUI_MAIN_MISSING", f"missing {paths['comfyui_root'] / 'main.py'}"))
@@ -1168,7 +1345,7 @@ def preflight(profile_id: str) -> dict[str, Any]:
             if profile["policy"]["require_clean_comfyui_git"] and git_observed["dirty"]:
                 blockers.append(_block("BLOCKED_COMFYUI_DIRTY", "declared ComfyUI checkout has uncommitted changes"))
 
-    plan = _read_json(PLAN_PATH, "plan")
+    plan, _ = load_checked_in_plan(plan_id)
     model_observed: dict[str, Any] = {}
     for asset in plan["engine"]["required_assets"]:
         category = asset["category"]
@@ -1196,7 +1373,7 @@ def preflight(profile_id: str) -> dict[str, Any]:
     observed["fixture"] = {"path": str(fixture), "sha256": fixture_sha256}
     if fixture_sha256 != plan["video_contract"]["fixture_sha256"]:
         blockers.append(_block("BLOCKED_FIXTURE_SHA256_DRIFT", fixture_sha256))
-    return _preflight_payload(static, profile_id, profile_path, blockers, observed)
+    return _preflight_payload(static, profile_id, plan_id, profile_path, blockers, observed)
 
 
 def write_receipt(payload: Mapping[str, Any]) -> Path:
@@ -1232,7 +1409,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="Inventory-only physical RTX 4060 / 8 GB preflight; never boots ComfyUI or renders."
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
-    subparsers.add_parser("static-check", help="validate the checked-in physical 4060 contract and plan")
+    subparsers.add_parser("static-check", help="validate the checked-in physical 4060 contract and every enrolled plan")
     hardware_parser = subparsers.add_parser(
         "hardware-inventory", help="read only the installed GPU and RAM; no profile or server is needed"
     )
@@ -1248,6 +1425,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     preflight_parser = subparsers.add_parser("preflight", help="inspect one fixed laptop-local enrolled profile")
     preflight_parser.add_argument("--profile", required=True, help="only physical-rtx4060-8gb is enrolled")
+    preflight_parser.add_argument(
+        "--plan", choices=PLAN_IDS, default=SENTINEL_PLAN_ID,
+        help="only a checked-in enrolled physical 4060 plan",
+    )
     preflight_parser.add_argument("--write-receipt", action="store_true", help="write an immutable receipt beneath eightgb_bench/local only")
     return parser
 
@@ -1257,7 +1438,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         args = parser.parse_args(argv)
         if args.command == "static-check":
-            print(format_json(static_check()), end="")
+            print(format_json(static_check_all()), end="")
             return 0
         if args.command == "hardware-inventory":
             payload = hardware_inventory()
@@ -1283,7 +1464,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(format_json(payload), end="")
             return 0
         if args.command == "preflight":
-            payload = preflight(args.profile)
+            payload = preflight(args.profile, args.plan)
             if args.write_receipt:
                 payload = dict(payload)
                 payload["receipt_path"] = str(write_receipt(payload))

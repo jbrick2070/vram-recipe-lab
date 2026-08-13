@@ -11,12 +11,13 @@ from eightgb_bench import locks_4060
 from eightgb_bench import runner_4060 as runner
 
 
-def _source_graph():
-    return json.loads((runner.REPO_ROOT / "recipes" / "h3_mime_i2v.json").read_text(encoding="utf-8"))["prompt"]
+def _source_graph(plan_id=runner.PLAN_ID):
+    path = runner.inventory.source_recipe_path_for_id(plan_id)
+    return json.loads(path.read_text(encoding="utf-8"))["prompt"]
 
 
-def _object_info_for_source_graph():
-    graph = _source_graph()
+def _object_info_for_source_graph(plan_id=runner.PLAN_ID):
+    graph = _source_graph(plan_id)
     info = {}
     for node in graph.values():
         class_type = node["class_type"]
@@ -110,6 +111,71 @@ class Physical4060RunnerPureTests(unittest.TestCase):
             yaml = (cell / "model_paths.yaml").read_text(encoding="utf-8")
             self.assertIn("custom_nodes:", yaml)
             self.assertIn(str(comfy_root / "custom_nodes").replace("\\", "/"), yaml)
+
+    def test_only_the_two_fixed_plan_ids_and_separate_cell_namespaces_are_accepted(self):
+        sentinel, _ = runner.load_plan(runner.PLAN_ID)
+        motion, _ = runner.load_plan(runner.MOTION_DEMO_PLAN_ID)
+        self.assertEqual(sentinel["id"], runner.PLAN_ID)
+        self.assertEqual(motion["id"], runner.MOTION_DEMO_PLAN_ID)
+        with self.assertRaisesRegex(runner.RunnerError, "plan ID is not enrolled"):
+            runner.load_plan("arbitrary-plan")
+        with tempfile.TemporaryDirectory() as directory:
+            local = Path(directory) / "local"
+            local.mkdir()
+            with mock.patch.object(runner, "_safe_local_root", return_value=local):
+                sentinel_cell = runner.create_cell("sentinel", runner.PLAN_ID)
+                motion_cell = runner.create_cell("motion", runner.MOTION_DEMO_PLAN_ID)
+            self.assertNotEqual(sentinel_cell.parent, motion_cell.parent)
+            self.assertEqual(sentinel_cell.parent.name, runner.PLAN_ID)
+            self.assertEqual(motion_cell.parent.name, runner.MOTION_DEMO_PLAN_ID)
+
+    def test_motion_live_source_proof_binds_its_fixed_recipe_and_prompt_hash(self):
+        plan, _ = runner.load_plan(runner.MOTION_DEMO_PLAN_ID)
+        proof = runner.validate_live_source_prompt(
+            plan, _object_info_for_source_graph(runner.MOTION_DEMO_PLAN_ID)
+        )
+        self.assertEqual(proof["source_recipe_path"], "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json")
+        self.assertEqual(
+            proof["source_prompt_sha256"],
+            runner.inventory.PLAN_REGISTRY[runner.MOTION_DEMO_PLAN_ID]["source_prompt_sha256"],
+        )
+
+    def test_motion_config_staging_copies_only_the_validated_sentinel_config(self):
+        with tempfile.TemporaryDirectory() as directory:
+            local = Path(directory) / "local"
+            local.mkdir()
+            sentinel_path = local / "runner-4060-launch.json"
+            config = json.loads(
+                (runner.BENCH_ROOT / "runner-4060-launch-template.json").read_text(encoding="utf-8")
+            )
+            config["kjnodes"]["init_py_sha256"] = "a" * 64
+            sentinel_path.write_bytes(runner.canonical_bytes(config))
+            sentinel_bytes = sentinel_path.read_bytes()
+            with mock.patch.object(runner, "_safe_local_root", return_value=local), mock.patch.object(runner, "LAUNCH_CONFIG_PATH", sentinel_path):
+                staged = runner.stage_motion_launch_config(runner.PROFILE_ID)
+                staged_again = runner.stage_motion_launch_config(runner.PROFILE_ID)
+                motion, _ = runner.load_launch_config(runner.PROFILE_ID, runner.MOTION_DEMO_PLAN_ID)
+            self.assertEqual(staged["status"], "MOTION_DEMO_LAUNCH_CONFIG_STAGED")
+            self.assertEqual(staged_again["status"], "MOTION_DEMO_LAUNCH_CONFIG_ALREADY_STAGED")
+            self.assertEqual(motion["plan_id"], runner.MOTION_DEMO_PLAN_ID)
+            self.assertEqual(motion["profile_id"], runner.PROFILE_ID)
+            self.assertEqual(sentinel_path.read_bytes(), sentinel_bytes)
+
+    def test_cli_rejects_an_unknown_plan_before_execute(self):
+        with mock.patch.object(runner, "execute") as execute:
+            with contextlib.redirect_stderr(None), self.assertRaises(SystemExit):
+                runner.main(["admit", "--profile", runner.PROFILE_ID, "--plan", "arbitrary-plan"])
+        execute.assert_not_called()
+
+    def test_cli_has_no_free_text_prompt_argument(self):
+        with mock.patch.object(runner, "execute") as execute:
+            with contextlib.redirect_stderr(None), self.assertRaises(SystemExit):
+                runner.main([
+                    "admit", "--profile", runner.PROFILE_ID,
+                    "--plan", runner.MOTION_DEMO_PLAN_ID,
+                    "--prompt", "make it move",
+                ])
+        execute.assert_not_called()
 
     def test_sanitized_environment_strips_inherited_selectors_and_sets_only_the_enrolled_gpu(self):
         parent = {
@@ -445,16 +511,25 @@ class Physical4060TerminalReceiptTests(unittest.TestCase):
             cell = local / "cells" / runner.PLAN_ID / "test-run"
             cell.mkdir(parents=True)
             admission = {
+                "profile_id": runner.PROFILE_ID,
+                "plan_id": runner.MOTION_DEMO_PLAN_ID,
                 "plan": {}, "gpu_uuid": "GPU-laptop-4060", "profile_sha256": "a" * 64,
                 "plan_sha256": "b" * 64, "launch_sha256": "c" * 64,
+                "source_recipe": {"recipe_path": "eightgb_bench/recipes/h3_mime_i2v_motion_demo.json", "recipe_sha256": "d" * 64},
                 "model_roots": {}, "model_manifest": [],
                 "profile": {"identity": {"model_sha256s": {}}},
             }
             with mock.patch.object(runner, "validate_admission_inputs", return_value=admission), mock.patch.object(runner, "_safe_local_root", return_value=local), mock.patch.object(runner, "create_cell", return_value=cell), mock.patch.object(runner, "prepare_cell", return_value={}), mock.patch.object(runner, "build_launch_argv", return_value=["python", "main.py"]), mock.patch.object(runner, "OwnedServer", FailingShutdownServer), mock.patch.object(runner, "_verify_fixture_readback"), mock.patch.object(runner, "_admission_receipt", return_value={"status": "ADMITTED_NO_PROMPT_QUEUED"}), mock.patch.object(runner, "verify_model_manifest", return_value=[]):
                 with self.assertRaisesRegex(runner.RunnerError, "cleanup was not proved"):
-                    runner.execute(runner.PROFILE_ID, run_sequence=False)
+                    runner.execute(runner.PROFILE_ID, run_sequence=False, plan_id=runner.MOTION_DEMO_PLAN_ID)
             failures = list(cell.glob("failure.json"))
             self.assertEqual(len(failures), 1)
+            failure = json.loads(failures[0].read_text(encoding="utf-8"))
+            self.assertEqual(failure["profile_id"], runner.PROFILE_ID)
+            self.assertEqual(failure["plan_id"], runner.MOTION_DEMO_PLAN_ID)
+            self.assertEqual(failure["plan_sha256"], "b" * 64)
+            self.assertEqual(failure["launch_config_sha256"], "c" * 64)
+            self.assertEqual(failure["source_recipe"], admission["source_recipe"])
             self.assertFalse((cell / "admission.json").exists())
             self.assertFalse((cell / "run.json").exists())
 
