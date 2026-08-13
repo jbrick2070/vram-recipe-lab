@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "document_type": "runner_division_front_office_proposal",
+  "created_at": "2026-08-12T00:00:00-07:00",
+  "status": "PROPOSED_WITH_MINIMAL_ACTIVE_SCOPE",
+  "authoritative_report": "docs/RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md",
+  "lab_snapshot": "e7398fdae74a10512a16004f7499575e68d5c882",
+  "otr_snapshot": "c06128daa181ff802bc3bf79112e539eda1d8a02",
+  "census_receipt": "research/handoff_census_2026-08-12.json",
+  "decision": "Keep the existing safety engine as the floor runner and add a sealed profile-selecting front office, evidence office, and promotion desk.",
+  "why_now": {
+    "checked_in_recipes": 82,
+    "same_name_current_aliases": 70,
+    "recipes_without_same_name_alias": 12,
+    "orphan_aliases_for_removed_recipes": 6,
+    "modern_receipt_schema_aliases": 58,
+    "legacy_receipt_schema_aliases": 12,
+    "aliases_appearing_warm": 29,
+    "promotion_ready_aliases": 6,
+    "current_runner_sha256": "6d6ac785b1e2cdd38505cdc5f418478855ec50d370213b29d8b0ade585682776",
+    "current_runner_bound_aliases": 2,
+    "promotion_ready_aliases_binding_current_runner": 0,
+    "otr_shipping_profile_rows": 32,
+    "otr_unique_video_engine_ids": 22,
+    "otr_h3_profile_rows": 4,
+    "otr_unique_h3_engine_ids": 2,
+    "otr_lane_receipt_packets_closed": 21,
+    "otr_h3_lane_receipt_packets_closed": 3,
+    "finding": "Zero promotion-ready aliases bind the active runner hash, and hard-coded ComfyUI/Python roots prevent a clean 0.31.1-versus-0.32.0 comparison. OTR production is Sage-free: profile launch.sage_attention is dead, unwired metadata and must not justify Runner Division architecture."
+  },
+  "active_mission_scope": {
+    "front_office_in_scope": [
+      "enrolled profile IDs only; never arbitrary roots or inherited-environment selection",
+      "profile pins for Python executable, ComfyUI root/version/commit, custom-node whitelist/commits, model-paths config, and canonical argv",
+      "direct argv subprocess launch",
+      "profile identity and launch-spec hash in every new receipt",
+      "per-cell output, result, and log namespaces",
+      "computed STALE_FOR_ACTIVE_RUNNER display classification without rewriting old receipt bytes"
+    ],
+    "preserved_floor_runner_controls": [
+      "127.0.0.1:8199 ownership",
+      "existing atomic .gpu.lock",
+      "/object_info validation",
+      "fixture and media gates",
+      "VRAM monitoring",
+      "append-only receipts",
+      "cleanup proof"
+    ],
+    "explicitly_deferred": [
+      "ACL-protected GPU-UUID mutex",
+      "model content-admission manifests",
+      "receipt schema v4 full field set",
+      "cross-clone contention tests",
+      "recipe schema v2"
+    ],
+    "h3_lip_txt_exception": "H3-LIP-TXT is eligible on the current runner after its transcript-window receipt because prompt text is its only independent variable; H3-C032 remains gated on the minimal enrolled-profile front office."
+  },
+  "tracked_dead_metadata": [
+    {
+      "id": "OTR-SAGE-ATTENTION-DEAD-METADATA",
+      "field": "launch.sage_attention",
+      "status": "DEAD_UNWIRED_PROFILE_METADATA",
+      "evidence": "OTR nodes/_otr_shared/boot_contracts.py:171-175 at c06128daa181ff802bc3bf79112e539eda1d8a02",
+      "finding": "No OTR launcher passes --use-sage-attention; production runs Sage-free. The separate assert_sage_not_patched runtime safeguard remains live.",
+      "required_resolution": "DELETE_FROM_PROFILE_SCHEMA_OR_WIRE_END_TO_END",
+      "may_justify_runner_architecture": false
+    }
+  ],
+  "divisions": [
+    {
+      "name": "front_office",
+      "proposed_file": "labctl.py",
+      "responsibility": "select an enrolled campaign, cell, profile, and run order and emit one sealed launch specification"
+    },
+    {
+      "name": "bench_registry",
+      "proposed_root": "bench_profiles/",
+      "responsibility": "attest exact Python, ComfyUI, package, node, model, boot, path, cache, and hardware surfaces"
+    },
+    {
+      "name": "floor_runner",
+      "proposed_files": [
+        "runner_engine.py",
+        "run_recipe.py"
+      ],
+      "responsibility": "validate and execute one sealed cell while preserving port, GPU, queue, media, provenance, and cleanup gates"
+    },
+    {
+      "name": "evidence_office",
+      "responsibility": "verify append-only machine receipts, immutable human-review bindings, deterministic comparisons, and staleness views"
+    },
+    {
+      "name": "promotion_desk",
+      "responsibility": "produce an OTR proposal only after a campaign passes; never edit OTR during lab execution"
+    }
+  ],
+  "selection_contract": {
+    "profile_id_required": true,
+    "automatic_or_heuristic_profile_selection": false,
+    "caller_supplied_arbitrary_root": false,
+    "inherited_environment_selects_profile": false,
+    "port": 8199,
+    "port_is_profile_field": false,
+    "direct_argv_launch_without_shell": true,
+    "minimal_typed_child_environment": true,
+    "same_runner_bundle_required_for_comparison": true
+  },
+  "security_boundary": {
+    "in_process_controls_sandbox_arbitrary_code": false,
+    "trusted_profile_enrollment_required": true,
+    "community_roots_before_enrollment": "INSPECT_ONLY",
+    "untrusted_execution": "DISPOSABLE_LOW_PRIVILEGE_OS_SANDBOX_OR_VM_WITH_NETWORK_AND_PRIVATE_PATHS_DENIED",
+    "recipe_json_treated_as_executable_policy": true,
+    "trusted_non_reparse_recipe_root_required": true,
+    "node_input_resource_allowlist_required": true
+  },
+  "profile_required_bindings": [
+    "profile ID and canonical JSON SHA-256",
+    "Python executable, version, executable hash, venv config, and package inventory",
+    "ComfyUI root, version, full commit, clean-state policy, and version-specific core source hashes",
+    "custom-node whitelist, roots, commits, tree/source manifests, licenses, and native-library identities",
+    "profile-specific model-path config and model content-admission manifest",
+    "run-private user, input, output, temp, log, and compiled-kernel cache roots",
+    "canonical fixed argv, typed cell modifiers, forbidden flags, and attention policy",
+    "GPU UUID, model, physical VRAM, driver, CUDA runtime, OS, and monitoring contract"
+  ],
+  "attention_policy": {
+    "per_profile_and_engine_family": true,
+    "h3_global_sage": false,
+    "h3_per_model_exception_campaign": "H3-SAGE-AUTO",
+    "otr_profile_launch_sage_attention": "DEAD_UNWIRED_PROFILE_METADATA; production parity is Sage-free",
+    "h3_runtime_sage_patch_refusal_remains_live": true,
+    "cross_attention_policy_comparison_without_declared_delta": "NOT_COMPARABLE"
+  },
+  "global_ownership": {
+    "active_gpu_lock": "preserve the existing atomic .gpu.lock unchanged",
+    "gpu_uuid_acl_mutex": "DEFERRED until bench friction proves the need",
+    "mutex_may_live_under_selected_profile_or_repo_clone": false,
+    "single_gpu_lease": true,
+    "single_server_lease": true,
+    "listener": "exactly one loopback listener on 127.0.0.1:8199",
+    "http_before_complete_server_identity_proof": false
+  },
+  "server_receipt_v2_required_fields": [
+    "state: booting or serving",
+    "boot nonce",
+    "campaign, cell, profile ID, and profile SHA-256",
+    "bootstrap and serving PID plus process creation time",
+    "exact executable, cwd, canonical argv, sanitized environment, and their hashes",
+    "ComfyUI, user, input, output, temp, log, model-config, and custom-node roots",
+    "GPU UUID and listener address",
+    "launch-spec and runner-bundle hashes"
+  ],
+  "run_private_state": [
+    "user directory",
+    "input directory",
+    "output directory",
+    "temporary directory",
+    "server log",
+    "Python bytecode cache",
+    "HF, Torch, Triton, CUDA-extension, and custom-node caches"
+  ],
+  "receipt_schema_v4_additions": [
+    "front-office and full runner-bundle hashes",
+    "profile ID/hash and complete environment/surface digest",
+    "launch-spec, launch-argv, sanitized-environment, and server-receipt hashes",
+    "Python/package/core/custom-node/model-admission/GPU identities",
+    "campaign, cell, control/candidate role, and paired-control identity",
+    "result/output namespace and server/cache lineage",
+    "monitor coverage, sample/error counts, GPU UUID, and maximum sampling gap",
+    "boot, model-load, conditioning, sampling, decode, mux, and total timing when instrumented",
+    "artifact set and exact sink causality",
+    "cleanup/quarantine proof",
+    "baseline/candidate surface digests, independent-variable path allowlist, and full diff",
+    "deterministic comparison-builder and immutable human-review references"
+  ],
+  "historical_receipt_policy": {
+    "modify_old_receipt_bytes": false,
+    "display_when_runner_bundle_differs": "STALE_FOR_ACTIVE_RUNNER",
+    "display_pre_cutover": "PRE_RUNNER_DIVISION_HISTORY",
+    "may_supply_new_control_measurement": false,
+    "may_support_historical_statement": true
+  },
+  "regression_plan": [
+    {
+      "tier": "R0",
+      "scope": "all 82 recipes and every receipt plus exact OTR shipping mappings",
+      "gpu": false,
+      "purpose": "schema, topology, fixture, manifest, profile compatibility, graph diff, orphan, and stale-runner census"
+    },
+    {
+      "tier": "R1",
+      "scope": [
+        "t2i_low",
+        "wan_ti2v_5b_cmp_832x480_f193",
+        "wan_i2v_14b_exoneration_832x480_f33",
+        "ltx_video_2b_distilled_cmp_832x480_f193",
+        "ltx_audio_hq_h3_1024x576_193f",
+        "h3_i2v_suite_sentinel",
+        "h3_r2v_refaudio_tts_lipsync_exact_seed42"
+      ],
+      "purpose": "front-office parity across image, GGUF, clamp, video, native A/V, H3, ordered audio reference, and human-review behavior"
+    },
+    {
+      "tier": "R2",
+      "known_promotion_backed_recipes": [
+        "ltx_audio_hq_h1_1024x576",
+        "ltx_audio_hq_h2_193f",
+        "ltx_audio_hq_h3_1024x576_193f",
+        "ltx_video_2b_distilled_cmp_832x480_f193",
+        "wan_i2v_14b_exoneration_832x480_f33",
+        "wan_ti2v_5b_cmp_832x480_f193"
+      ],
+      "plus": "every source-hash-mapped OTR shipping contract",
+      "deduplication": "render aliases once only when resolved launch, graph, recipe, model, and profile hashes are identical",
+      "h3_unique_engine_contracts": [
+        "h3_low_video",
+        "h3_low_audio_in"
+      ]
+    },
+    {
+      "tier": "R3",
+      "scope": "11-leg H3 creep suite",
+      "when": "runner release-candidate stability or a cache/offload behavior change",
+      "purpose": "late certification, not early front-office debugging"
+    }
+  ],
+  "rerun_exclusions_unless_a_new_campaign_claims_a_fix": [
+    "known failures",
+    "superseded experiments",
+    "missing-asset recipes",
+    "orphaned legacy aliases"
+  ],
+  "comparison_schedule": {
+    "default": [
+      "control fresh process cold",
+      "control warm 1",
+      "control warm 2",
+      "verified shutdown",
+      "candidate fresh process cold",
+      "candidate warm 1",
+      "candidate warm 2",
+      "verified shutdown",
+      "compare warm 2"
+    ],
+    "near_threshold": "A-B-B-A fresh-boot counterbalance",
+    "plugin_campaign_control": "plugin present but bypassed",
+    "undeclared_surface_diff": "NOT_COMPARABLE"
+  },
+  "poison_and_quarantine_policy": {
+    "events": [
+      "CUDA illegal access",
+      "kernel exception",
+      "fatal exception",
+      "OOM",
+      "timeout",
+      "uncertain prompt state",
+      "unproved cleanup"
+    ],
+    "actions": [
+      "terminate and prove the owned process/listener exit",
+      "discard run-private scratch state",
+      "quarantine the profile-specific compiled-kernel cache",
+      "never reuse that process for a baseline lane"
+    ]
+  },
+  "implementation_phases": [
+    "add strict schemas and unit tests for profiles, campaigns, and sealed launch specs",
+    "enroll the exact current control surface without changing execution",
+    "extract hard-coded roots and core hashes into an immutable RunnerContext",
+    "replace command-shell boot with direct argv and structured booting-to-serving receipt",
+    "add run-private namespaces and profile-aware artifact causality",
+    "add model content-admission and complete node/package/source manifests",
+    "separate logical recipe schema v2 from bench attestation while retaining fail-closed schema-v1 reads",
+    "add receipt schema v4 and deterministic comparison/human-review bindings",
+    "reconcile BOOT.md port text and lock-reaping documentation with actual policy",
+    "run all tests and the all-82-recipe R0 census before a Runner Division live boot",
+    "boot/audit/shutdown the control profile without a prompt",
+    "run R1 and freeze Runner Division v1",
+    "run the H3 R2 slice, then the matched 0.31.1 versus 0.32.0 campaign"
+  ],
+  "minimum_fail_closed_tests": [
+    "unregistered, relative, UNC, network, removable, symlink, junction, reparse, overlapping, dirty, or wrong-commit root rejection",
+    "cross-clone contention on the same GPU UUID",
+    "forged, malformed, reused-PID, wrong-executable, wrong-argv, wrong-GPU, wrong-listener, or wrong-profile server rejection before HTTP",
+    "poisonous inherited environment removal and exact typed boolean behavior",
+    "model same-size/mtime byte replacement, duplicate basename, node/native-library drift, and mid-run mutation invalidation",
+    "preexisting, unexpected, multiple, hardlinked, escaped, or mutated output rejection with exact sink causality",
+    "profile/recipe/result alias namespace collision and crash-safe archive/alias parity",
+    "cache-domain isolation and no warm inheritance across profile, model, node, driver, attention, or patch-chain changes",
+    "monitor continuity on the explicit GPU UUID with foreign-process detection",
+    "full comparison surface diff and approximate-versus-exact algorithm-class separation"
+  ]
+}

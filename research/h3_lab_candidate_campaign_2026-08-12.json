@@ -1,0 +1,471 @@
+{
+  "schema_version": 2,
+  "document_type": "h3_material_candidate_campaign",
+  "created_at": "2026-08-12T00:00:00-07:00",
+  "research_cutoff": "2026-08-12",
+  "status": "DESIGN_READY_MINIMAL_FRONT_OFFICE_FOR_C032; H3-LIP-TXT_CURRENT_RUNNER_ELIGIBLE_AFTER_WINDOW_RECEIPT",
+  "authoritative_report": "docs/H3_LAB_CANDIDATE_HANDOFF_2026-08-12.md",
+  "runner_division_proposal": "docs/RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md",
+  "active_campaign_count": 5,
+  "repo_snapshots": {
+    "vram_recipe_lab": {
+      "branch": "main",
+      "commit": "e7398fdae74a10512a16004f7499575e68d5c882"
+    },
+    "otr": {
+      "branch": "v2.0-alpha",
+      "commit": "c06128daa181ff802bc3bf79112e539eda1d8a02"
+    },
+    "official_workflows": {
+      "repository": "Comfy-Org/workflow_templates",
+      "commit": "5c75d9f137bb27706a70dd337dac6249b2e51ded"
+    },
+    "official_comfy_repack": {
+      "repository": "Comfy-Org/MiniMax-H3",
+      "revision": "014cd40f7e177756c6b2473c0d93b1c89a790dd2"
+    },
+    "minimax_model_card": {
+      "repository": "MiniMaxAI/MiniMax-H3",
+      "revision": "939557dc319dd91227e30195a763f272ba7f8765"
+    }
+  },
+  "operator_contract": {
+    "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
+    "physical_vram_mib": 16303,
+    "global_pass_ceiling_gib": 14.5,
+    "platform": "Windows 11 / Python 3.12 or 3.10 / PyTorch 2.10.0+cu130 / sm_120",
+    "port": 8199,
+    "offline_only": true,
+    "sequential_only": true,
+    "runner_may_download_or_install": false,
+    "h3_global_sage_boot_forbidden": true,
+    "per_model_sage_exception_campaign": "H3-SAGE-AUTO",
+    "basic_repository_pass": "second consecutive same-identity run",
+    "campaign_measurement_requirement": "one cold-classified run plus two warm measurements",
+    "human_h3_review_required": true,
+    "otr_mutation_authorized": false
+  },
+  "active_mission_scope": {
+    "minimal_front_office_before_h3_c032": [
+      "enrolled profile ID selection only",
+      "pinned Python executable, ComfyUI root/version/commit, custom-node whitelist/commits, model-paths config, and canonical argv",
+      "direct argv subprocess launch",
+      "profile identity and launch-spec hash in each new receipt",
+      "per-cell output/result/log namespaces",
+      "computed STALE_FOR_ACTIVE_RUNNER display status"
+    ],
+    "preserve_existing_floor_safety": [
+      "port 8199 ownership",
+      "existing .gpu.lock",
+      "/object_info validation",
+      "fixture/media gates",
+      "VRAM monitoring",
+      "append-only receipts",
+      "cleanup proof"
+    ],
+    "deferred": [
+      "ACL-protected GPU-UUID mutex",
+      "model content-admission manifests",
+      "receipt schema v4 full field set",
+      "cross-clone contention tests",
+      "recipe schema v2"
+    ]
+  },
+  "otr_sage_metadata_correction": {
+    "field": "launch.sage_attention",
+    "status": "DEAD_UNWIRED_PROFILE_METADATA",
+    "evidence": "OTR nodes/_otr_shared/boot_contracts.py:171-175 at c06128daa181ff802bc3bf79112e539eda1d8a02",
+    "finding": "No OTR launcher passes --use-sage-attention. Production runs Sage-free, so the lab Sage-free boot is production parity. Keep the live assert_sage_not_patched runtime safeguard.",
+    "required_resolution": "DELETE_FROM_PROFILE_SCHEMA_OR_WIRE_END_TO_END",
+    "may_justify_runner_architecture": false
+  },
+  "historical_evidence_policy": {
+    "prior_receipts_are_orientation_only": true,
+    "prior_receipts_are_new_campaign_controls": false,
+    "receipt_bytes_must_remain_immutable": true,
+    "front_office_display_classification": "PRE_RUNNER_DIVISION_HISTORY",
+    "fresh_control_required_for_every_candidate": true,
+    "audit": {
+      "census_receipt": "research/handoff_census_2026-08-12.json",
+      "checked_in_recipe_count": 82,
+      "same_name_current_alias_count": 70,
+      "recipes_without_same_name_alias_count": 12,
+      "orphan_alias_count": 6,
+      "modern_receipt_schema_alias_count": 58,
+      "legacy_receipt_schema_alias_count": 12,
+      "aliases_appearing_warm": 29,
+      "promotion_ready_alias_count": 6,
+      "current_runner_bound_alias_count": 2,
+      "current_runner_promotion_ready_count": 0
+    },
+    "selected_historical_orientation": [
+      {
+        "recipe": "h3_i2v_suite_sentinel",
+        "absolute_peak_vram_gib": 7.44,
+        "wall_seconds": 218.9
+      },
+      {
+        "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed42",
+        "absolute_peak_vram_gib": 6.71,
+        "wall_seconds": 305.3,
+        "seed": 42
+      },
+      {
+        "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed43",
+        "absolute_peak_vram_gib": 6.51,
+        "wall_seconds": 297.8,
+        "seed": 43
+      }
+    ]
+  },
+  "runner_division_gate": {
+    "must_pass_before_h3_campaigns": false,
+    "must_pass_before": [
+      "H3-C032",
+      "H3-KJ-EXACT",
+      "H3-SAGE-AUTO",
+      "H3-T8"
+    ],
+    "h3_lip_txt_current_runner_exception": "Allowed after a fresh native control and unambiguous transcript-window receipt because prompt text is the only independent variable; it does not wait for the front office.",
+    "required_stages": [
+      "R0 static census for all 82 recipe definitions",
+      "R1 representative runner-parity panel",
+      "fresh certification of the two unique H3 shipping contracts"
+    ],
+    "same_runner_bundle_for_pairs": true,
+    "separate_enrolled_profiles": [
+      "h3-comfy0311-kj139-control",
+      "h3-comfy0320-kj139-candidate",
+      "h3-comfy0320-kj6ab7-experimental"
+    ],
+    "profile_must_bind": [
+      "Python executable",
+      "ComfyUI root, version, and commit",
+      "custom-node whitelist and commits",
+      "model-paths config",
+      "canonical argv",
+      "profile identity and launch-spec hash",
+      "per-cell output, result, and log namespaces"
+    ],
+    "full_profile_attestation_deferred": [
+      "model content-admission manifest",
+      "complete package/core/custom-node source manifests",
+      "GPU UUID/driver/CUDA full contract",
+      "run-private cache namespace",
+      "receipt schema v4 full field set"
+    ],
+    "comparison_policy": {
+      "full_surface_diff_required": true,
+      "undeclared_delta_status": "NOT_COMPARABLE",
+      "compare_measurement": "second warm run",
+      "near_threshold_repeat_order": "A-B-B-A with fresh process boundaries"
+    }
+  },
+  "significance_gates": {
+    "vram": {
+      "absolute_reduction_gib_at_least": 0.5,
+      "or_same_surface_percent_reduction_at_least": 10.0,
+      "maximum_wall_time_penalty_percent": 10.0
+    },
+    "sage_speed": {
+      "end_to_end_wall_reduction_percent_at_least": 25.0,
+      "maximum_absolute_peak_increase_gib": 0.25
+    },
+    "turbo_speed": {
+      "end_to_end_wall_reduction_percent_at_least": 40.0
+    },
+    "core_migration": {
+      "maximum_absolute_peak_increase_gib": 0.25,
+      "maximum_wall_time_increase_percent": 5.0
+    },
+    "lip_sync": {
+      "fixed_seeds": [
+        42,
+        43
+      ],
+      "human_better_or_noninferior_both_seeds": true,
+      "review_dimensions": [
+        "speech onset",
+        "phoneme and consonant closures",
+        "vowels",
+        "pauses and phrase boundaries",
+        "final mouth closure",
+        "identity stability",
+        "extra or dropped speech",
+        "audio artifacts"
+      ]
+    }
+  },
+  "campaigns": [
+    {
+      "id": "H3-C032",
+      "priority": 0,
+      "title": "Native ComfyUI 0.32 matched migration",
+      "materiality_verdict": "YES_TEST",
+      "status": "QUEUED_AFTER_MINIMAL_FRONT_OFFICE_AND_ALL_82_RECIPE_R0",
+      "expected_gain_surface": [
+        "H3 VAE peak and residency",
+        "overall peak-memory lifetime",
+        "H3 decode and runtime stability"
+      ],
+      "materiality_reason": "First-party H3 fixes and the prerequisite baseline for every later candidate.",
+      "independent_variable": "comfyui_core_profile",
+      "control_profile": "0.31.1@fe4195f7f4275f2626cbafc703acc3ddde1e5490 / KJ 1.3.9@b7646ad70a7daa7aeb919ca542274758d26ba2df",
+      "candidate_profile": "0.32.0@c2bcbecd82ec5ae66594340b395c24ef0217b238 / same KJ pin",
+      "logical_recipe_surfaces": [
+        "H3 I2V 864x480 124-frame sentinel",
+        "H3 Ref2VA exact seed 42",
+        "H3 Ref2VA exact seed 43",
+        "official 1344x768 I2V control after smaller cells pass"
+      ],
+      "schedule": "fresh control cold+warm1+warm2, fresh candidate cold+warm1+warm2, compare warm2; counterbalance if near threshold",
+      "required_checks": [
+        "identical resolved prompt hash",
+        "complete declared profile/core diff and no other surface delta",
+        "exact frames, fps, dimensions, stream durations, and artifact integrity",
+        "native video and audio decode",
+        "no black, tile, grid, color, or audio corruption",
+        "human full-clip and ear review"
+      ],
+      "promotion_condition": "Pass the core migration gate, then establish the lab baseline; OTR still requires separate lane smokes."
+    },
+    {
+      "id": "H3-LIP-TXT",
+      "priority": 0,
+      "title": "Hash-bound transcript-aware Ref2VA",
+      "materiality_verdict": "YES_TEST",
+      "status": "QUEUED_AFTER_TRANSCRIPT_WINDOW_RECEIPT",
+      "expected_gain_surface": [
+        "lip synchronization",
+        "phrase timing",
+        "final mouth closure"
+      ],
+      "materiality_reason": "Targets the largest unresolved OTR H3 quality question without a new runtime dependency.",
+      "independent_variable": "prompt_text_only_after_window_verification",
+      "source_fixture": {
+        "path": "fixtures/tts_dialogue.wav",
+        "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1",
+        "duration_s": 10.0
+      },
+      "target_duration": {
+        "frames": 124,
+        "fps": 24.0,
+        "seconds": 5.166667
+      },
+      "proposed_transcript_receipt": "fixtures/audio_receipts/tts_dialogue_h3_target_window_transcript.json",
+      "transcript_receipt_must_bind": [
+        "source fixture SHA-256",
+        "fresh native-control artifact and run receipt SHA-256",
+        "sliding-correlation aligned source start/end samples and seconds",
+        "human ear confirmation",
+        "verbatim transcript UTF-8 text and SHA-256",
+        "reviewer, date, method, and confidence"
+      ],
+      "ambiguous_alignment_action": "STOP_CAMPAIGN",
+      "current_runner_allowed_before_front_office": true,
+      "fixed_surface": [
+        "seeds 42 and 43",
+        "portrait and full source-audio fixture",
+        "864x480, 124 frames, 24 fps",
+        "ref_image_size=match",
+        "res_multistep, simple, 20 steps",
+        "models and graph links"
+      ],
+      "external_topology_evidence": "https://github.com/tlano-z/ComfyUI-MiniMax-H3-Workflows-For3060/blob/359ea78cb7eeb0d52ee13487bca014ade312c8ef/MiniMax-H3_R2V_Turbo_Lip-sync/MiniMax-H3_R2V_Turbo_Lip-sync.json",
+      "promotion_condition": "Both identical-seed human A/Bs improve or remain noninferior and OTR preserves untouched source-audio muxing."
+    },
+    {
+      "id": "H3-KJ-EXACT",
+      "priority": 1,
+      "title": "KJ exact H3 low-memory nodes",
+      "materiality_verdict": "YES_TEST",
+      "status": "QUEUED_AFTER_PINNED_PROFILE_ENROLLMENT_AND_LIVE_SCHEMA_VALIDATION",
+      "expected_gain_surface": [
+        "sampling peak VRAM"
+      ],
+      "materiality_reason": "Exact token/head chunking directly targets transient sampling memory within the existing KJ dependency family.",
+      "source": {
+        "repository": "https://github.com/kijai/ComfyUI-KJNodes",
+        "commit": "6ab7e8130e449ed2c0037589bcf84146ceb7fc9c",
+        "required_security_ancestor": "073efb07419f56cc714e099a82e49fbc23ad9263"
+      },
+      "fresh_cells_in_order": [
+        "plugin-present/bypassed 0.32 sentinel control",
+        "MiniMaxChunkFeedForward chunks=2 seq_threshold=4096 only",
+        "MiniMaxLowVRAMAttention head_chunks=4 only",
+        "pair only after both individual cells pass"
+      ],
+      "observational_node": "MiniMaxH3TokenCounter",
+      "fresh_process_per_ordered_patch_chain": true,
+      "promotion_condition": "Pass the VRAM significance and exact A/V quality gates on two warm campaign measurements."
+    },
+    {
+      "id": "H3-SAGE-AUTO",
+      "priority": 1,
+      "title": "Generic per-model KJ Sage auto challenger",
+      "materiality_verdict": "YES_CONTROLLED_HIGH_RISK_TEST",
+      "status": "QUEUED_AFTER_PINNED_PROFILE_ENROLLMENT_AND_I2V_PREFLIGHT",
+      "expected_gain_surface": [
+        "sampling wall time",
+        "render seconds per delivered second"
+      ],
+      "materiality_reason": "The official-style generic per-model route is materially different from the failed explicit FP16-PV probe and could produce a large speed win.",
+      "source": {
+        "repository": "https://github.com/kijai/ComfyUI-KJNodes",
+        "commit": "6ab7e8130e449ed2c0037589bcf84146ceb7fc9c",
+        "required_security_ancestor": "073efb07419f56cc714e099a82e49fbc23ad9263",
+        "ui_node": "Patch Sage Attention KJ",
+        "class_type": "PathchSageAttentionKJ"
+      },
+      "settings": {
+        "sage_attention": "auto",
+        "allow_compile": false,
+        "global_sage_boot_flag": false
+      },
+      "preflight": [
+        "pin SageAttention package and full environment inventory",
+        "validate class and inputs through live /object_info",
+        "run MiniMaxH3TokenCounter and abort on unsafe range warning",
+        "run plugin-present/bypassed SDPA control first"
+      ],
+      "escalation_ladder": [
+        "864x480 124-frame I2V fixed-seed probe without reference audio",
+        "cold/JIT-classified run with 600 second hard ceiling plus two clean warm measurements",
+        "Ref2VA seed 42 only after clean I2V",
+        "Ref2VA seed 43 only after clean seed 42"
+      ],
+      "isolation": [
+        "no global Sage flag",
+        "no explicit FP16-PV or H3-specific Sage patch",
+        "no Turbo, Spectrum, FirstBlockCache, or KJ exact-memory nodes",
+        "fresh process and cache domain for this patch chain"
+      ],
+      "immediate_abort_conditions": [
+        "fatal exception or CUDA illegal access",
+        "OOM or 600 second timeout",
+        "black, noise, grid, or corrupt video",
+        "audio corruption",
+        "foreign queue state or uncertain prompt status",
+        "unproved process/listener cleanup"
+      ],
+      "poisoned_process_action": "TEARDOWN_AND_QUARANTINE_COMPILED_KERNEL_CACHE",
+      "promotion_condition": "At least 25 percent faster end-to-end with clean I2V and both Ref2VA speech seeds, two warm receipts, and human A/V review."
+    },
+    {
+      "id": "H3-T8",
+      "priority": 1,
+      "title": "Turbo v4 eight-step speed campaign",
+      "materiality_verdict": "YES_TEST_AFTER_ASSET_ADMISSION",
+      "status": "UNQUEUED_ASSET_NOT_ADMITTED",
+      "expected_gain_surface": [
+        "end-to-end wall time",
+        "render seconds per delivered second"
+      ],
+      "materiality_reason": "Strongest credible large speed-gain thesis with pinned code, complete example graphs, and output evidence.",
+      "preferred_source": {
+        "repository": "https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo",
+        "commit": "546b5028f4934f5129eb6c7142c2f3e461dfddbf",
+        "weights": "https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora",
+        "recommended_artifact": "minimax_h3_turbo_v4_step600_ema.safetensors",
+        "steps": 8,
+        "strength": 1.0
+      },
+      "compatibility_references": [
+        "https://huggingface.co/drbaph/MiniMax-H3-Turbo-Lora-ComfyUI/blob/498f1e2ca02e10a598f21267739f30073f68eb10/fl_minimax_h3_turbo_lora_example_workflow.json",
+        "https://github.com/tlano-z/ComfyUI-MiniMax-H3-Workflows-For3060/blob/359ea78cb7eeb0d52ee13487bca014ade312c8ef/MiniMax-H3_R2V_Turbo_Lip-sync/MiniMax-H3_R2V_Turbo_Lip-sync.json"
+      ],
+      "admission_before_queue": [
+        "separate operator decision consistent with repository no-download policy",
+        "creator-license and H3-grant review",
+        "one selected provenance route",
+        "expected bytes and SHA-256",
+        "quarantine/source inspection",
+        "profile-specific model-manifest admission"
+      ],
+      "fresh_cells": [
+        "I2V native 20-step control versus Turbo 8",
+        "Ref2VA seed 42 native versus Turbo 8 after H3-LIP-TXT",
+        "Ref2VA seed 43 native versus Turbo 8 after H3-LIP-TXT"
+      ],
+      "promotion_condition": "At least 40 percent faster end-to-end with both speech seeds and identity, motion, duration, and audio human-noninferior."
+    }
+  ],
+  "working_source_registry": [
+    {
+      "name": "Official T2V control",
+      "url": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/5c75d9f137bb27706a70dd337dac6249b2e51ded/templates/video_minimax_h3_t2v.json",
+      "use": "pinned first-party control topology"
+    },
+    {
+      "name": "Official I2V control",
+      "url": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/5c75d9f137bb27706a70dd337dac6249b2e51ded/templates/video_minimax_h3_i2v.json",
+      "use": "pinned first-party FL2VA control topology"
+    },
+    {
+      "name": "Official R2V control",
+      "url": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/5c75d9f137bb27706a70dd337dac6249b2e51ded/templates/video_minimax_h3_r2v.json",
+      "use": "pinned first-party Ref2VA control topology"
+    },
+    {
+      "name": "Tlano Ref2VA Turbo lip-sync",
+      "url": "https://github.com/tlano-z/ComfyUI-MiniMax-H3-Workflows-For3060/blob/359ea78cb7eeb0d52ee13487bca014ade312c8ef/MiniMax-H3_R2V_Turbo_Lip-sync/MiniMax-H3_R2V_Turbo_Lip-sync.json",
+      "use": "transcript pattern and Turbo compatibility evidence only; never direct execution"
+    },
+    {
+      "name": "Larry Turbo example",
+      "url": "https://raw.githubusercontent.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo/546b5028f4934f5129eb6c7142c2f3e461dfddbf/example_workflows/minimax_h3_t2v_turbo.json",
+      "use": "custom sampler topology; resolve selector against pinned v4 artifact"
+    },
+    {
+      "name": "drbaph pruned Turbo conversion",
+      "url": "https://huggingface.co/drbaph/MiniMax-H3-Turbo-Lora-ComfyUI/blob/498f1e2ca02e10a598f21267739f30073f68eb10/fl_minimax_h3_turbo_lora_example_workflow.json",
+      "use": "labeled compatibility alternative with example output"
+    },
+    {
+      "name": "Official Comfy H3 Sage topology guidance",
+      "url": "https://docs.comfy.org/tutorials/video/minimax/minimax-h3",
+      "use": "derive the generic per-model patch from the trusted lab sentinel"
+    }
+  ],
+  "official_comfy_repack_hashes": {
+    "minimax_h3_fl2va_pruned_int8_convrot.safetensors": "e889202c41dafb67b10d67b97f0d8541508036a6090af23425a5c2615d03c47a",
+    "minimax_h3_ref2va_pruned_int8_convrot.safetensors": "9255f52b6677845ad238f20dfaafa94727053694127ab7f255c048f0f9365779",
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": "35a88d51044231fe332301d7a62aa81e3f2cba62febeb446e2c1e3e0ef76f2c6",
+    "minimax_h3_video_vae_fp16.safetensors": "7c1f131492e7eddacaac9069a61b81bdd39de5cc96561e677c5eab1cdce5e522",
+    "minimax_h3_audio_vae_fp32.safetensors": "8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+  },
+  "otr_promotion_contract": {
+    "snapshot": "c06128daa181ff802bc3bf79112e539eda1d8a02",
+    "shipping_profile_rows": 32,
+    "unique_video_engine_ids": 22,
+    "h3_shipping_profile_rows": 4,
+    "unique_h3_shipping_engines": [
+      "h3_low_video",
+      "h3_low_audio_in"
+    ],
+    "closed_lane_receipt_packets": 21,
+    "closed_h3_lane_packets": [
+      "lane19 h3_low_video registered adapter",
+      "lane20 h3_low_audio_in registered adapter",
+      "lane21 h3_low_mime standalone runner, not registered"
+    ],
+    "new_experimental_profile_first": true,
+    "shipping_lane_in_place_mutation": false,
+    "source_audio_remains_authoritative": true,
+    "separate_otr_authorization_and_live_smoke_required": true
+  },
+  "license_gate": {
+    "upstream_default_excludes_operator_territory": true,
+    "operator_specific_grant_record": "docs/H3_LICENSE_GRANT.md",
+    "exact_named_grantee": "Blueberrky Kale Yoga Books",
+    "grantee_spelling_confirmation_recommended": true,
+    "license_and_grant_non_transferable": true,
+    "operator_scope_assumed": "named grantee local offline noncommercial no hosting no weight redistribution, conditioned on the full request",
+    "grant_authenticity_independently_verified": false,
+    "redistribution_of_weights_or_derivatives_authorized": false,
+    "public_machine_generation_disclosure_required": true,
+    "public_output_territory_scope_verified": false,
+    "workflow_and_receipt_sharing": "not weight redistribution by itself; sharing remains subject to the grant request, each repository license, territorial limits, AUP disclosure, and review of whether the packaged integration constitutes an H3 Work",
+    "legal_advice": false
+  }
+}
