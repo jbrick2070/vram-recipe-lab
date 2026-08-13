@@ -1,6 +1,6 @@
 # Runner Division: dynamic lab front office
 
-- **Status:** architecture proposal; a deliberately minimal front-office implementation is authorized, while GPU execution remains separate lab work
+- **Status:** static enrollment and planning layer implemented; direct runner integration remains deliberately deferred until the current-runner H3-LIP-TXT A/B closes
 - **Date:** 2026-08-12
 - **Repository snapshot:** `e7398fdae74a10512a16004f7499575e68d5c882`
 - **Purpose:** let the lab compare pinned ComfyUI environments without weakening the existing ownership, isolation, evidence, or GPU-safety rules
@@ -23,6 +23,27 @@ The fix is a division of responsibility:
 | Promotion Desk | decide whether a passed result may be proposed to OTR | mutate OTR during a lab campaign |
 
 The old runner is not discarded. Its safety machinery becomes the floor runner under a stricter, machine-readable front office.
+
+### Current static milestone (2026-08-12)
+
+The repository now contains the safe, non-executing half of this design:
+`front_office.py`, `labctl.py`, strict v1 profile/campaign schemas, one verified
+`comfy0311-h3` bridge profile, sealed static launch specifications, derived
+per-cell namespaces, an all-recipe offline census, and an immutable
+`STALE_FOR_ACTIVE_RUNNER` display index. `labctl launch` fails closed with
+`DIRECT_LAUNCH_NOT_INTEGRATED`; it cannot boot ComfyUI, acquire the GPU, or
+queue a prompt.
+
+This is intentional. Changing `run_recipe.py`, `boot_lab_server.cmd`, or the
+receipt identity now would turn the promised H3-LIP-TXT prompt-only comparison
+into a runner-change comparison. After that A/B closes, the next small change
+will connect these sealed plans to the floor runner with direct argv launch,
+receipt binding, and real namespaces.
+
+Only the genuine 0.31.1 bridge profile is enrolled. No local 0.32.0 checkout
+or requested `c2bcbecd82ec5ae66594340b395c24ef0217b238` object exists, so
+`campaigns/h3-c032.json` is explicitly `BLOCKED_PROFILE_ENROLLMENT`, not a
+placeholder profile or a download request.
 
 ## Active 2026-08-12 mission scope
 

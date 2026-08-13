@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "front-office-static-h3",
+  "status": "STATIC_ONLY",
+  "purpose": "Offline proof that the H3 bridge surface can be selected only by enrolled profile ID and sealed into a non-executing plan.",
+  "independent_variable": "None. This campaign is static planning only and has no GPU execution path.",
+  "profiles": [
+    "comfy0311-h3"
+  ],
+  "cells": [
+    {
+      "id": "h3-ref2va-seed42",
+      "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed42.json",
+      "role": "static",
+      "phase": "static-plan",
+      "profiles": [
+        "comfy0311-h3"
+      ]
+    }
+  ]
+}

@@ -7,3 +7,6 @@ server.log
 results/delivery/.*.lock
 .server.pid
 __pycache__/
+.runtime/
+.front_office_state/
+logs/
