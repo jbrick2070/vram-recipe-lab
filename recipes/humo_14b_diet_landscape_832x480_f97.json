@@ -1,0 +1,761 @@
+{
+  "name": "humo_14b_diet_landscape_832x480_f97",
+  "tier": "experiment",
+  "blocked": false,
+  "experiment": {
+    "campaign": "envelope_ladders_job_a_v1",
+    "job": "A",
+    "variant": "landscape",
+    "conceptual_pair_variable": "render_orientation",
+    "graph_pair_difference": [
+      "10.width",
+      "10.height",
+      "16.filename_prefix (delivery identity only)"
+    ],
+    "generation_graph_change_vs_production": "none",
+    "production_comparator_receipt": "results/otr_side/humo_14b_fp8_bakeoff_take1.json",
+    "production_comparator_clip": null,
+    "render_status": "unrendered",
+    "behavioral_claim_status": "unmeasured"
+  },
+  "contract": {
+    "engine_id": "humo_14B_169",
+    "mode": "audio_driven_face",
+    "orientation": "landscape",
+    "width": 832,
+    "height": 480,
+    "frames": 97,
+    "fps": 25.0,
+    "duration_s": 3.88,
+    "seed": 7,
+    "requires_audio": true,
+    "requires_human_eyeball": true,
+    "vram_ceiling_gb": 14.5,
+    "warm_runs_required": 2,
+    "diet_boot": {
+      "semantics": "direct ComfyUI reserve/offload pressure; not clamp target-card emulation",
+      "reserve_vram_gib": 2.921,
+      "disable_pinned_memory": true,
+      "comfyui_argv_delta": [
+        "--reserve-vram",
+        "2.921",
+        "--disable-pinned-memory"
+      ],
+      "runner_environment": {
+        "LAB_RESERVE_VRAM_GB": "2.921"
+      },
+      "runner_argument": "--disable-pinned-memory",
+      "expected_lane": "lab-8199, sage-free, no-pinned, reserve-2.921gb",
+      "manager_network_mode_before_boot": "offline",
+      "default_boot_unchanged": true
+    },
+    "execution_plan": [
+      {
+        "role": "cold",
+        "recipe": "recipes/humo_14b_diet_landscape_832x480_f97.json",
+        "fresh_server": true,
+        "same_server_as_previous": false,
+        "executor_cache_nonce": "job-a-humo_14b_diet_landscape_832x480_f97-cold"
+      },
+      {
+        "role": "warm",
+        "recipe": "recipes/humo_14b_diet_landscape_832x480_f97.json",
+        "fresh_server": false,
+        "same_server_as_previous": true,
+        "executor_cache_nonce": "job-a-humo_14b_diet_landscape_832x480_f97-warm"
+      }
+    ],
+    "fresh_server_per_orientation": true,
+    "same_server_consecutive_runs": 2,
+    "unique_executor_cache_nonce_per_run": true,
+    "shutdown_after_warm": true
+  },
+  "receipt_requirements": {
+    "cold_and_warm": true,
+    "warm_definition": "second consecutive run of byte-identical recipe on the same owned server",
+    "record": [
+      "baseline_vram_gb",
+      "peak_vram_gb",
+      "peak_host_ram_gb",
+      "duration_s",
+      "boot_lane",
+      "server_argv",
+      "cache_evidence",
+      "artifact_sha256",
+      "fixture_sha256s"
+    ],
+    "quality_gate": {
+      "status": "PENDING_HUMAN",
+      "portrait_comparator": "outputs/humo_14b_fp8_bakeoff_take1.mp4",
+      "review_audio": "exact fixtures/tts_dialogue.wav from t=0"
+    }
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "profile": "otr_humo_14B_169_production_graph_diet_reserve_2p921_v1",
+    "intent": "Exact OTR HuMo 14B generation graph plus lab-only exact-source-audio review delivery",
+    "origin": {
+      "builder": "scratch/build_humo_14b_diet.py",
+      "seed_rule": "OTR HuMoEngine._build_graph specialized with render_driver single_0000 request seed 7",
+      "third_party_workflow_json_copied": false,
+      "custom_node_pack_required": false
+    },
+    "source_graph_evidence": {
+      "otr_bakeoff_commit": "15f23044a6f1224a61a39dc38e1e60875a894dd6",
+      "identity_policy": "Pinned bakeoff blobs and current source bytes must match; unrelated OTR HEAD movement is excluded",
+      "engine_source": "nodes/_otr_video_engines/eng_humo.py",
+      "engine_source_sha256": "77562728f09595082012c91a57ebcd878f7dc9b2f80b17e7b16b77e412b6bd6c",
+      "request_source": "nodes/_otr_video_engines/render_driver.py",
+      "request_source_sha256": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564",
+      "dimension_source": "nodes/_otr_shared/aspect.py",
+      "dimension_source_sha256": "2815d3e6d07f46a6e6e115690fb1319d91f2f1087bfe0c39b8c401ec6da07caf",
+      "source_method": "HuMoEngine._build_graph",
+      "source_specialization": "humo_14B_169",
+      "source_to_lab_node_pairs": {
+        "unet": {
+          "lab_node": "1",
+          "class_type": "UNETLoader",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "clip": {
+          "lab_node": "2",
+          "class_type": "CLIPLoader",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "pos": {
+          "lab_node": "3",
+          "class_type": "CLIPTextEncode",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "neg": {
+          "lab_node": "4",
+          "class_type": "CLIPTextEncode",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "vae": {
+          "lab_node": "5",
+          "class_type": "VAELoader",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "loadaudio": {
+          "lab_node": "6",
+          "class_type": "LoadAudio",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "audioenc_loader": {
+          "lab_node": "7",
+          "class_type": "AudioEncoderLoader",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "audioenc": {
+          "lab_node": "8",
+          "class_type": "AudioEncoderEncode",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "loadimage": {
+          "lab_node": "9",
+          "class_type": "LoadImage",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "humo": {
+          "lab_node": "10",
+          "class_type": "WanHuMoImageToVideo",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "lora": {
+          "lab_node": "11",
+          "class_type": "LoraLoaderModelOnly",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "modelsampling": {
+          "lab_node": "12",
+          "class_type": "ModelSamplingSD3",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "ksampler": {
+          "lab_node": "13",
+          "class_type": "KSampler",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        },
+        "vaedecode": {
+          "lab_node": "14",
+          "class_type": "VAEDecode",
+          "comparison": "exact class and inputs after symbolic Wire links are concretized"
+        }
+      },
+      "source_graph_projection_sha256": "4ec241bee8a0c1514f36deaa1ef8867fe83abdd636c96f4cc2e8a2d22b6950b9",
+      "source_graph_node_count": 14,
+      "lora": {
+        "source_value": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+        "node_present": true,
+        "strength_model": 1.0
+      },
+      "lab_only_delivery_nodes": {
+        "15": "CreateVideo",
+        "16": "SaveVideo"
+      }
+    },
+    "installed_schema": {
+      "verification_mode": "offline static; live runner preflight remains authoritative",
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+      "node_sources_sha256": {
+        "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a",
+        "comfy_extras/nodes_wan.py": "dcd8b81d1225d84e8b0c6743675d59772449899018e9f50bb27267dbb8962002",
+        "comfy_extras/nodes_audio_encoder.py": "ad290791fe4dc79a59d511ace2ff1c8df732a7b3cf5a01c61cfe6579192872c2",
+        "comfy_extras/nodes_audio.py": "82bb9dcf191a84cb0695bc2533602f7956e29a81a1176965556350b02e1bd67e",
+        "comfy_extras/nodes_model_advanced.py": "ffa70c4bb3568537ba13b368092d2599b861db7c83b1bcfa41347058b40dcba7",
+        "comfy_extras/nodes_video.py": "727653159de9a6e9d5b37b1101d3ece5df7dce8fc6a5a3a1f27e260afcfa6c14"
+      },
+      "class_sources": {
+        "UNETLoader": "nodes.py",
+        "LoraLoaderModelOnly": "nodes.py",
+        "CLIPLoader": "nodes.py",
+        "CLIPTextEncode": "nodes.py",
+        "VAELoader": "nodes.py",
+        "LoadAudio": "comfy_extras/nodes_audio.py",
+        "AudioEncoderLoader": "comfy_extras/nodes_audio_encoder.py",
+        "AudioEncoderEncode": "comfy_extras/nodes_audio_encoder.py",
+        "LoadImage": "nodes.py",
+        "WanHuMoImageToVideo": "comfy_extras/nodes_wan.py",
+        "ModelSamplingSD3": "comfy_extras/nodes_model_advanced.py",
+        "KSampler": "nodes.py",
+        "VAEDecode": "nodes.py",
+        "CreateVideo": "comfy_extras/nodes_video.py",
+        "SaveVideo": "comfy_extras/nodes_video.py"
+      },
+      "models_manifest_sha256": "a0124883545b7f693ced351d6e110bc210c46114f2eed32cb3c8846980e4208d",
+      "model_inventory": {
+        "Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors": {
+          "manifest_present": true,
+          "disk_present": true,
+          "model_store": "diffusion_models",
+          "filename": "Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors",
+          "bytes": 17892294098,
+          "loader": "UNETLoader"
+        },
+        "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors": {
+          "manifest_present": true,
+          "disk_present": true,
+          "model_store": "loras",
+          "filename": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "bytes": 738005744,
+          "loader": "LoraLoaderModelOnly"
+        },
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors": {
+          "manifest_present": true,
+          "disk_present": true,
+          "model_store": "text_encoders",
+          "filename": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+          "bytes": 6735906897,
+          "loader": "CLIPLoader"
+        },
+        "wan_2.1_vae.safetensors": {
+          "manifest_present": true,
+          "disk_present": true,
+          "model_store": "vae",
+          "filename": "wan_2.1_vae.safetensors",
+          "bytes": 253815318,
+          "loader": "VAELoader"
+        },
+        "whisper_large_v3_fp16.safetensors": {
+          "manifest_present": true,
+          "disk_present": true,
+          "model_store": "audio_encoders",
+          "filename": "whisper_large_v3_fp16.safetensors",
+          "bytes": 3087130976,
+          "loader": "AudioEncoderLoader"
+        }
+      }
+    },
+    "fixture_hashes": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UNETLoader",
+      "2": "CLIPLoader",
+      "3": "CLIPTextEncode",
+      "4": "CLIPTextEncode",
+      "5": "VAELoader",
+      "6": "LoadAudio",
+      "7": "AudioEncoderLoader",
+      "8": "AudioEncoderEncode",
+      "9": "LoadImage",
+      "10": "WanHuMoImageToVideo",
+      "11": "LoraLoaderModelOnly",
+      "12": "ModelSamplingSD3",
+      "13": "KSampler",
+      "14": "VAEDecode",
+      "15": "CreateVideo",
+      "16": "SaveVideo"
+    },
+    "required_class_types": [
+      "AudioEncoderEncode",
+      "AudioEncoderLoader",
+      "CLIPLoader",
+      "CLIPTextEncode",
+      "CreateVideo",
+      "KSampler",
+      "LoadAudio",
+      "LoadImage",
+      "LoraLoaderModelOnly",
+      "ModelSamplingSD3",
+      "SaveVideo",
+      "UNETLoader",
+      "VAEDecode",
+      "VAELoader",
+      "WanHuMoImageToVideo"
+    ],
+    "required_connections": {
+      "3.clip": [
+        "2",
+        0
+      ],
+      "4.clip": [
+        "2",
+        0
+      ],
+      "8.audio_encoder": [
+        "7",
+        0
+      ],
+      "8.audio": [
+        "6",
+        0
+      ],
+      "10.positive": [
+        "3",
+        0
+      ],
+      "10.negative": [
+        "4",
+        0
+      ],
+      "10.vae": [
+        "5",
+        0
+      ],
+      "10.audio_encoder_output": [
+        "8",
+        0
+      ],
+      "10.ref_image": [
+        "9",
+        0
+      ],
+      "11.model": [
+        "1",
+        0
+      ],
+      "12.model": [
+        "11",
+        0
+      ],
+      "13.model": [
+        "12",
+        0
+      ],
+      "13.positive": [
+        "10",
+        0
+      ],
+      "13.negative": [
+        "10",
+        1
+      ],
+      "13.latent_image": [
+        "10",
+        2
+      ],
+      "14.samples": [
+        "13",
+        0
+      ],
+      "14.vae": [
+        "5",
+        0
+      ],
+      "15.images": [
+        "14",
+        0
+      ],
+      "15.audio": [
+        "6",
+        0
+      ],
+      "16.video": [
+        "15",
+        0
+      ]
+    },
+    "required_input_values": [
+      {
+        "node": "1",
+        "input": "unet_name",
+        "equals": "Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors"
+      },
+      {
+        "node": "1",
+        "input": "weight_dtype",
+        "equals": "default"
+      },
+      {
+        "node": "2",
+        "input": "clip_name",
+        "equals": "umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+      },
+      {
+        "node": "2",
+        "input": "type",
+        "equals": "wan"
+      },
+      {
+        "node": "2",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "3",
+        "input": "text",
+        "equals": "a 1940s radio studio, on air sign illuminated, period broadcast set"
+      },
+      {
+        "node": "4",
+        "input": "text",
+        "equals": "low quality, worst quality, blurry, jpeg artifacts, distorted, deformed, extra fingers, bad hands, bad face, static, watermark, text"
+      },
+      {
+        "node": "5",
+        "input": "vae_name",
+        "equals": "wan_2.1_vae.safetensors"
+      },
+      {
+        "node": "6",
+        "input": "audio",
+        "equals": "tts_dialogue.wav"
+      },
+      {
+        "node": "7",
+        "input": "audio_encoder_name",
+        "equals": "whisper_large_v3_fp16.safetensors"
+      },
+      {
+        "node": "9",
+        "input": "image",
+        "equals": "portrait.png"
+      },
+      {
+        "node": "10",
+        "input": "width",
+        "equals": 832
+      },
+      {
+        "node": "10",
+        "input": "height",
+        "equals": 480
+      },
+      {
+        "node": "10",
+        "input": "length",
+        "equals": 97
+      },
+      {
+        "node": "10",
+        "input": "batch_size",
+        "equals": 1
+      },
+      {
+        "node": "11",
+        "input": "lora_name",
+        "equals": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors"
+      },
+      {
+        "node": "11",
+        "input": "strength_model",
+        "equals": 1.0
+      },
+      {
+        "node": "12",
+        "input": "shift",
+        "equals": 8.0
+      },
+      {
+        "node": "13",
+        "input": "seed",
+        "equals": 7
+      },
+      {
+        "node": "13",
+        "input": "steps",
+        "equals": 6
+      },
+      {
+        "node": "13",
+        "input": "cfg",
+        "equals": 1.0
+      },
+      {
+        "node": "13",
+        "input": "sampler_name",
+        "equals": "uni_pc"
+      },
+      {
+        "node": "13",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "13",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "15",
+        "input": "fps",
+        "equals": 25.0
+      },
+      {
+        "node": "15",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "16",
+        "input": "filename_prefix",
+        "equals": "humo_14b_diet_landscape_832x480_f97_out"
+      },
+      {
+        "node": "16",
+        "input": "format",
+        "equals": "auto"
+      },
+      {
+        "node": "16",
+        "input": "codec",
+        "equals": "auto"
+      }
+    ],
+    "required_absent_inputs": [
+      "10.start_image",
+      "10.clip_vision_output"
+    ],
+    "forbidden_class_types": [
+      "VAEDecodeTiled",
+      "WanImageToVideo",
+      "EmptyLatentImage"
+    ],
+    "audio_path_contract": {
+      "conditioning": "6.LoadAudio -> 8.AudioEncoderEncode.audio; 7.AudioEncoderLoader -> 8.audio_encoder -> 10.WanHuMoImageToVideo.audio_encoder_output",
+      "delivery": "6.LoadAudio -> 15.CreateVideo.audio",
+      "same_source_node_for_conditioning_and_delivery": true,
+      "production_native_output": "silent by OTR policy",
+      "lab_review_output": "exact source TTS delivered from t=0",
+      "delivery_tail_changes_generation": false
+    },
+    "terminal_node": "16",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "Lab fixture basenames replace hash-identical OTR staging filenames",
+      "CreateVideo and SaveVideo are appended after the exact OTR generation graph",
+      "Source TTS is delivered on the lab review artifact; OTR native clips remain silent",
+      "Reserve and no-pinned settings are boot controls, never graph nodes"
+    ]
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "type": "wan",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "a 1940s radio studio, on air sign illuminated, period broadcast set",
+        "clip": [
+          "2",
+          0
+        ]
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "low quality, worst quality, blurry, jpeg artifacts, distorted, deformed, extra fingers, bad hands, bad face, static, watermark, text",
+        "clip": [
+          "2",
+          0
+        ]
+      }
+    },
+    "5": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "wan_2.1_vae.safetensors"
+      }
+    },
+    "6": {
+      "class_type": "LoadAudio",
+      "inputs": {
+        "audio": "tts_dialogue.wav"
+      }
+    },
+    "7": {
+      "class_type": "AudioEncoderLoader",
+      "inputs": {
+        "audio_encoder_name": "whisper_large_v3_fp16.safetensors"
+      }
+    },
+    "8": {
+      "class_type": "AudioEncoderEncode",
+      "inputs": {
+        "audio_encoder": [
+          "7",
+          0
+        ],
+        "audio": [
+          "6",
+          0
+        ]
+      }
+    },
+    "9": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "portrait.png"
+      }
+    },
+    "10": {
+      "class_type": "WanHuMoImageToVideo",
+      "inputs": {
+        "width": 832,
+        "height": 480,
+        "length": 97,
+        "batch_size": 1,
+        "positive": [
+          "3",
+          0
+        ],
+        "negative": [
+          "4",
+          0
+        ],
+        "vae": [
+          "5",
+          0
+        ],
+        "audio_encoder_output": [
+          "8",
+          0
+        ],
+        "ref_image": [
+          "9",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+        "lora_name": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+        "strength_model": 1.0,
+        "model": [
+          "1",
+          0
+        ]
+      }
+    },
+    "12": {
+      "class_type": "ModelSamplingSD3",
+      "inputs": {
+        "shift": 8.0,
+        "model": [
+          "11",
+          0
+        ]
+      }
+    },
+    "13": {
+      "class_type": "KSampler",
+      "inputs": {
+        "seed": 7,
+        "steps": 6,
+        "cfg": 1.0,
+        "sampler_name": "uni_pc",
+        "scheduler": "simple",
+        "denoise": 1.0,
+        "model": [
+          "12",
+          0
+        ],
+        "positive": [
+          "10",
+          0
+        ],
+        "negative": [
+          "10",
+          1
+        ],
+        "latent_image": [
+          "10",
+          2
+        ]
+      }
+    },
+    "14": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "13",
+          0
+        ],
+        "vae": [
+          "5",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "14",
+          0
+        ],
+        "fps": 25.0,
+        "bit_depth": 8,
+        "audio": [
+          "6",
+          0
+        ]
+      }
+    },
+    "16": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "15",
+          0
+        ],
+        "filename_prefix": "humo_14b_diet_landscape_832x480_f97_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  }
+}

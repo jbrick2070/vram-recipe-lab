@@ -1,0 +1,3641 @@
+{
+  "aggregation": "maximum of five conjunctively quiescent WDDM samples",
+  "blocking_nvidia_processes": [],
+  "gpu_index": 0,
+  "gpu_lease_owner": {
+    "created_at_unix": 1786323828.2795959,
+    "lock_schema_version": 1,
+    "nonce": "50f566152fbc5f8b08bde8ea196afc03bb41cfb0330372587b41e4c146ce9811",
+    "pid": 45352,
+    "process_create_time": 1786323828.2169657,
+    "role": "standalone"
+  },
+  "gpu_lease_release": {
+    "error": "",
+    "success": true
+  },
+  "gpu_lock_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+  "kind": "wan-cost-ladder-quiescent-desktop-baseline",
+  "manager_config": {
+    "authority": "advisory filesystem precondition; server log is authoritative",
+    "config": {
+      "bytes": 460,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849860737885,
+      "key": "network_mode",
+      "mtime_ns": 1786320736274345500,
+      "network_mode": "offline",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "section": "default",
+      "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+    },
+    "config_is_runtime_authority": false,
+    "derivation": {
+      "authority": "literal --user-directory in exact OTR launcher source",
+      "launcher": {
+        "bytes": 10558,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 63613344737203552,
+        "mtime_ns": 1785857769805265100,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+        "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+      },
+      "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+    },
+    "manager_source": {
+      "comfy_folder_paths_source": {
+        "bytes": 23156,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 7599824371845827,
+        "mtime_ns": 1785816261419028100,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+        "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+      },
+      "comfy_required_token": "def get_system_user_directory",
+      "derivation": "<effective --user-directory>/__manager/config.ini",
+      "manager_core_required_tokens": [
+        "'network_mode': 'public',   # public | private | offline",
+        "def get_config():"
+      ],
+      "manager_core_source": {
+        "bytes": 131406,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249301773195,
+        "mtime_ns": 1777140876094016400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+        "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+      },
+      "manager_server_required_tokens": [
+        "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+        "[ComfyUI-Manager] All startup tasks have been completed.",
+        "[ComfyUI-Manager] default cache updated:",
+        "[ComfyUI-Manager] Failed to perform initial fetching",
+        "Start fetching...",
+        "Fetching done."
+      ],
+      "manager_server_source": {
+        "bytes": 73639,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5066549581245383,
+        "mtime_ns": 1777140876095535900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+        "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+      },
+      "mode_authority_contract": {
+        "authority": "exactly one server-log resolved network_mode announcement",
+        "config_role": "preboot advisory only; missing config defaults public",
+        "manager_core_default_source_line": 1774,
+        "manager_server_source_line": 29
+      },
+      "offline_credential_environment_contract": {
+        "scrub_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "TRANSFORMERS_OFFLINE": "1"
+        }
+      },
+      "otr_hf_token_required_tokens": [
+        "token = os.environ.get(\"HF_TOKEN\") or None",
+        "token = _read_from_winreg()",
+        "source = \"HKCU\\\\Environment\"",
+        "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+      ],
+      "otr_hf_token_source": {
+        "bytes": 3703,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 2814749767578241,
+        "mtime_ns": 1780669043385039700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+        "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+      },
+      "required_tokens": [
+        "folder_paths.get_user_directory(), '__manager'",
+        "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+      ],
+      "source": {
+        "bytes": 30389,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 18858823440126191,
+        "mtime_ns": 1773849424839527300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+        "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+      }
+    },
+    "phase": "preboot"
+  },
+  "max_gpu_utilization_percent": 6.0,
+  "max_memory_utilization_percent": 2.0,
+  "measured": "local nvidia-smi before owned OTR server boot",
+  "nvidia_process_observation_count": 5,
+  "port_8000_listener_pids_after": [],
+  "port_8000_listener_pids_before": [],
+  "quiescence_policy": {
+    "max_gpu_utilization_percent": 15.0,
+    "max_memory_utilization_percent": 10.0,
+    "max_vram_used_mib": 2048.0,
+    "model_workload_markers": [
+      "main.py",
+      "run_recipe.py",
+      "torchrun",
+      "stable-diffusion",
+      "automatic1111",
+      "invokeai",
+      "diffusers",
+      "text-generation",
+      "vllm",
+      "ollama",
+      "kobold",
+      "eng_wan_",
+      "eng_fastwan_",
+      "eng_humo",
+      "minimax"
+    ],
+    "numeric_or_unknown_process_memory_tokens_block": true,
+    "port_8000_listener_required_absent": true,
+    "process_identity_and_desktop_graphics_signal_required": true,
+    "recognized_unmetered_wddm_memory_token": "[N/A]",
+    "required_display_active": "Enabled",
+    "required_driver_model": "WDDM",
+    "same_gpu_lease_required_each_sample": true
+  },
+  "sample_count": 5,
+  "samples": [
+    {
+      "display_active": "Enabled",
+      "driver_model_current": "WDDM",
+      "forbidden_process_scan": {
+        "blocking_processes": [],
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "scanned_process_count": 411
+      },
+      "gpu_index": 0,
+      "gpu_lock": {
+        "matches_acquired_owner": true,
+        "owner": {
+          "created_at_unix": 1786323828.2795959,
+          "lock_schema_version": 1,
+          "nonce": "50f566152fbc5f8b08bde8ea196afc03bb41cfb0330372587b41e4c146ce9811",
+          "pid": 45352,
+          "process_create_time": 1786323828.2169657,
+          "role": "standalone"
+        },
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+        "receipt": {
+          "bytes": 212,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 10977524092681324,
+          "mtime_ns": 1786323828279595800,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+          "sha256": "a80a83c9af9ad6235c4dc42fd2b08d46e12b66e1bc7c7cc50c112a3245678d06"
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "gpu_utilization_percent": 6.0,
+      "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+      "host_ram_total_bytes": 68112736256,
+      "host_ram_used_bytes": 21560594432,
+      "memory_utilization_percent": 2.0,
+      "nvidia_process_evidence": {
+        "blocking_rows": [],
+        "query_argv": [
+          "nvidia-smi",
+          "-i",
+          "0",
+          "--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "raw_stdout_sha256": "e484de6a1757be5399eca98bd230cc0da5261e3859434446df987964f11c4cfa",
+        "row_count": 22,
+        "rows": [
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_desktop_compositor"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "[Insufficient Permissions]",
+            "pid": 2300,
+            "process_identity": {
+              "command_line": null,
+              "executable": "C:\\Windows\\System32\\dwm.exe",
+              "exists": true,
+              "identity_errors": [
+                "command_line: AccessDenied: (pid=2300, name='dwm.exe')"
+              ],
+              "name": "dwm.exe",
+              "pid": 2300,
+              "process_create_time": 1786084213.3196616
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 3264,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\Explorer.EXE"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 3264,
+              "process_create_time": 1786084217.6747437
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+            "pid": 13520,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+                "/tileid",
+                "MicrosoftWindows.Client.CBS_cw5n1h2txyewy!CrossDeviceResumeApp"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "CrossDeviceResume.exe",
+              "pid": 13520,
+              "process_create_time": 1786084218.4293017
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+            "pid": 7852,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+                "-ServerName:FullTrustApp.AppXykjsye98af63ez2annt9djke8trg8stn.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "StartMenuExperienceHost.exe",
+              "pid": 7852,
+              "process_create_time": 1786084220.774464
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+            "pid": 5760,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+                "-ServerName:CortanaUI.AppXstmwaab17q5s3y22tp6apqz7a45vwv65.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SearchHost.exe",
+              "pid": 5760,
+              "process_create_time": 1786084220.7728186
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+            "pid": 19240,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; Cortana 1.18.9.23723; 10.0.0.0.26200.8973) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.26200 IsWebView2/True (WebView2Version 151.0.4129.59)",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=SearchHost.exe",
+                "--webview-exe-version=2606.30004.100.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--always-read-main-dll",
+                "--metrics-shmem-handle=1996,i,634602316024221747,15782805387055062814,262144",
+                "--field-trial-handle=2068,i,8294631163672514431,1770244750053304744,262144",
+                "--enable-features=msEdgeFluentOverlayScrollbar",
+                "--disable-features=msSmartScreenProtection",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2000,i,1183367012736726515,12676920820985322813,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2060",
+                "/prefetch:2",
+                "/pfhostedapp:bdf470a7fd05d6f6a5ceabe0f9ad6b0830bfde22"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 19240,
+              "process_create_time": 1786084222.5821695
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+            "pid": 22940,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+                "-ServerName:InputApp.AppXk0k6mrh4r2q0ct33a9wgbez0x7v9cz5y.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "TextInputHost.exe",
+              "pid": 22940,
+              "process_create_time": 1786084230.5335171
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+            "pid": 28628,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "MicrosoftSecurityApp.exe",
+              "pid": 28628,
+              "process_create_time": 1786084252.9116857
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+            "pid": 18040,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+                "-ServerName:App.AppXtk181tbxbce2qsex02s8tw7hfxa9xb3t.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellExperienceHost.exe",
+              "pid": 18040,
+              "process_create_time": 1786084592.1662831
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+            "pid": 23212,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+                "/X"
+              ],
+              "executable": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SnagitEditor.exe",
+              "pid": 23212,
+              "process_create_time": 1786084235.0329113
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 36136,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1996",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 36136,
+              "process_create_time": 1786145175.7787874
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_video_capture_service",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 46400,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=utility",
+                "--utility-sub-type=video_capture.mojom.VideoCaptureService",
+                "--lang=en-US",
+                "--service-sandbox-type=none",
+                "--video-capture-use-gpu-memory-buffer",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app",
+                "--secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc",
+                "--bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc",
+                "--cors-schemes=claude-simulator,sentry-ipc",
+                "--fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc",
+                "--service-worker-schemes=app",
+                "--streaming-schemes=cowork-file,claude-media,claude-simulator",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708999430457380",
+                "--mojo-platform-channel-handle=5204",
+                "/prefetch:14"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 46400,
+              "process_create_time": 1786145179.286482
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 36004,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 36004,
+              "process_create_time": 1786145178.009258
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 38204,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 38204,
+              "process_create_time": 1786145177.7158637
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+            "pid": 33052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--start-stack-profiler",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=2128,i,2843607730460369022,14285740484584896094,262144",
+                "--field-trial-handle=2144,i,14908098308950797215,10109469526454732579,262144",
+                "--enable-features=OwlHistory,OwlPrinting,ReportStuckThrottle",
+                "--disable-features=DropInputEventsWhilePaintHolding,OwlExtensions,OwlOpenAIGoLinks",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2180,i,15118132390230036,5810064430007656015,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2168",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ChatGPT.exe",
+              "pid": 33052,
+              "process_create_time": 1786196013.3010497
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "pid": 30052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=1808,i,1313695710703468054,2932596959892514179,262144",
+                "--field-trial-handle=1860,i,14768227060615657748,17774477011506766137,262144",
+                "--variations-seed-version=20260808-030039.458000-production",
+                "--pseudonymization-salt-handle=1928,i,3607585236044145857,3774579574682165176,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1852",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "chrome.exe",
+              "pid": 30052,
+              "process_create_time": 1786212399.655699
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ShellHost.exe",
+            "pid": 49392,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\System32\\ShellHost.exe"
+              ],
+              "executable": "C:\\Windows\\System32\\ShellHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellHost.exe",
+              "pid": 49392,
+              "process_create_time": 1786229467.2232356
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+            "pid": 22500,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\system32\\ApplicationFrameHost.exe",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ApplicationFrameHost.exe",
+              "pid": 22500,
+              "process_create_time": 1786084732.9267216
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+            "pid": 53172,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+                "-ServerName:microsoft.windows.immersivecontrolpanel"
+              ],
+              "executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SystemSettings.exe",
+              "pid": 53172,
+              "process_create_time": 1786234813.964148
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+            "pid": 13556,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Antigravity",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=1636,i,17713691149535380171,8932839571100699759,262144",
+                "--enable-features=EnableTransparentHwndEnlargement,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=1640,i,13735389994162845513,11895577347255560488,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1612",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "Antigravity.exe",
+              "pid": 13556,
+              "process_create_time": 1786294427.2870176
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 47416,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\explorer.exe",
+                "/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 47416,
+              "process_create_time": 1786295454.383926
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+            "pid": 40944,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=Widgets.exe",
+                "--webview-exe-version=526.17301.10.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--startup-read-main-dll",
+                "--metrics-shmem-handle=2012,i,2930125756025685448,5047759174824291791,262144",
+                "--field-trial-handle=2068,i,15803345691222586311,9996133554675954508,262144",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2088,i,7724156776255186731,10763694607183372076,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2064",
+                "/prefetch:2",
+                "/pfhostedapp:54ea5e2135ccb469a4b4fb2eeeed280b7421d611"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 40944,
+              "process_create_time": 1786314688.277351
+            },
+            "used_gpu_memory_token": "[N/A]"
+          }
+        ],
+        "target_gpu_index": 0,
+        "target_gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a"
+      },
+      "performance_state": "P0",
+      "port_8000_listener_pids": [],
+      "query_argv": [
+        "nvidia-smi",
+        "-i",
+        "0",
+        "--query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu,utilization.memory,pstate,driver_model.current,display_active",
+        "--format=csv,noheader,nounits"
+      ],
+      "quiescence_errors": [],
+      "quiescent": true,
+      "raw_stdout_sha256": "1a4aa03942b361aae92b1947cde48c26efbce04fc37ac27d1040f813478e5f10",
+      "sample_index": 0,
+      "sampled_at_ns": 1786323828338181300,
+      "sampled_at_utc": "2026-08-10T01:03:48.338181300Z",
+      "sampled_monotonic_ns": 239637968000000,
+      "vram_total_mib": 16303.0,
+      "vram_used_mib": 1202.0
+    },
+    {
+      "display_active": "Enabled",
+      "driver_model_current": "WDDM",
+      "forbidden_process_scan": {
+        "blocking_processes": [],
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "scanned_process_count": 411
+      },
+      "gpu_index": 0,
+      "gpu_lock": {
+        "matches_acquired_owner": true,
+        "owner": {
+          "created_at_unix": 1786323828.2795959,
+          "lock_schema_version": 1,
+          "nonce": "50f566152fbc5f8b08bde8ea196afc03bb41cfb0330372587b41e4c146ce9811",
+          "pid": 45352,
+          "process_create_time": 1786323828.2169657,
+          "role": "standalone"
+        },
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+        "receipt": {
+          "bytes": 212,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 10977524092681324,
+          "mtime_ns": 1786323828279595800,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+          "sha256": "a80a83c9af9ad6235c4dc42fd2b08d46e12b66e1bc7c7cc50c112a3245678d06"
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "gpu_utilization_percent": 6.0,
+      "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+      "host_ram_total_bytes": 68112736256,
+      "host_ram_used_bytes": 21561122816,
+      "memory_utilization_percent": 2.0,
+      "nvidia_process_evidence": {
+        "blocking_rows": [],
+        "query_argv": [
+          "nvidia-smi",
+          "-i",
+          "0",
+          "--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "raw_stdout_sha256": "e484de6a1757be5399eca98bd230cc0da5261e3859434446df987964f11c4cfa",
+        "row_count": 22,
+        "rows": [
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_desktop_compositor"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "[Insufficient Permissions]",
+            "pid": 2300,
+            "process_identity": {
+              "command_line": null,
+              "executable": "C:\\Windows\\System32\\dwm.exe",
+              "exists": true,
+              "identity_errors": [
+                "command_line: AccessDenied: (pid=2300, name='dwm.exe')"
+              ],
+              "name": "dwm.exe",
+              "pid": 2300,
+              "process_create_time": 1786084213.3196616
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 3264,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\Explorer.EXE"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 3264,
+              "process_create_time": 1786084217.6747437
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+            "pid": 13520,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+                "/tileid",
+                "MicrosoftWindows.Client.CBS_cw5n1h2txyewy!CrossDeviceResumeApp"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "CrossDeviceResume.exe",
+              "pid": 13520,
+              "process_create_time": 1786084218.4293017
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+            "pid": 7852,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+                "-ServerName:FullTrustApp.AppXykjsye98af63ez2annt9djke8trg8stn.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "StartMenuExperienceHost.exe",
+              "pid": 7852,
+              "process_create_time": 1786084220.774464
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+            "pid": 5760,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+                "-ServerName:CortanaUI.AppXstmwaab17q5s3y22tp6apqz7a45vwv65.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SearchHost.exe",
+              "pid": 5760,
+              "process_create_time": 1786084220.7728186
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+            "pid": 19240,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; Cortana 1.18.9.23723; 10.0.0.0.26200.8973) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.26200 IsWebView2/True (WebView2Version 151.0.4129.59)",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=SearchHost.exe",
+                "--webview-exe-version=2606.30004.100.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--always-read-main-dll",
+                "--metrics-shmem-handle=1996,i,634602316024221747,15782805387055062814,262144",
+                "--field-trial-handle=2068,i,8294631163672514431,1770244750053304744,262144",
+                "--enable-features=msEdgeFluentOverlayScrollbar",
+                "--disable-features=msSmartScreenProtection",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2000,i,1183367012736726515,12676920820985322813,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2060",
+                "/prefetch:2",
+                "/pfhostedapp:bdf470a7fd05d6f6a5ceabe0f9ad6b0830bfde22"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 19240,
+              "process_create_time": 1786084222.5821695
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+            "pid": 22940,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+                "-ServerName:InputApp.AppXk0k6mrh4r2q0ct33a9wgbez0x7v9cz5y.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "TextInputHost.exe",
+              "pid": 22940,
+              "process_create_time": 1786084230.5335171
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+            "pid": 28628,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "MicrosoftSecurityApp.exe",
+              "pid": 28628,
+              "process_create_time": 1786084252.9116857
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+            "pid": 18040,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+                "-ServerName:App.AppXtk181tbxbce2qsex02s8tw7hfxa9xb3t.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellExperienceHost.exe",
+              "pid": 18040,
+              "process_create_time": 1786084592.1662831
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+            "pid": 23212,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+                "/X"
+              ],
+              "executable": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SnagitEditor.exe",
+              "pid": 23212,
+              "process_create_time": 1786084235.0329113
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 36136,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1996",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 36136,
+              "process_create_time": 1786145175.7787874
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_video_capture_service",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 46400,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=utility",
+                "--utility-sub-type=video_capture.mojom.VideoCaptureService",
+                "--lang=en-US",
+                "--service-sandbox-type=none",
+                "--video-capture-use-gpu-memory-buffer",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app",
+                "--secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc",
+                "--bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc",
+                "--cors-schemes=claude-simulator,sentry-ipc",
+                "--fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc",
+                "--service-worker-schemes=app",
+                "--streaming-schemes=cowork-file,claude-media,claude-simulator",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708999430457380",
+                "--mojo-platform-channel-handle=5204",
+                "/prefetch:14"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 46400,
+              "process_create_time": 1786145179.286482
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 36004,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 36004,
+              "process_create_time": 1786145178.009258
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 38204,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 38204,
+              "process_create_time": 1786145177.7158637
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+            "pid": 33052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--start-stack-profiler",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=2128,i,2843607730460369022,14285740484584896094,262144",
+                "--field-trial-handle=2144,i,14908098308950797215,10109469526454732579,262144",
+                "--enable-features=OwlHistory,OwlPrinting,ReportStuckThrottle",
+                "--disable-features=DropInputEventsWhilePaintHolding,OwlExtensions,OwlOpenAIGoLinks",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2180,i,15118132390230036,5810064430007656015,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2168",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ChatGPT.exe",
+              "pid": 33052,
+              "process_create_time": 1786196013.3010497
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "pid": 30052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=1808,i,1313695710703468054,2932596959892514179,262144",
+                "--field-trial-handle=1860,i,14768227060615657748,17774477011506766137,262144",
+                "--variations-seed-version=20260808-030039.458000-production",
+                "--pseudonymization-salt-handle=1928,i,3607585236044145857,3774579574682165176,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1852",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "chrome.exe",
+              "pid": 30052,
+              "process_create_time": 1786212399.655699
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ShellHost.exe",
+            "pid": 49392,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\System32\\ShellHost.exe"
+              ],
+              "executable": "C:\\Windows\\System32\\ShellHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellHost.exe",
+              "pid": 49392,
+              "process_create_time": 1786229467.2232356
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+            "pid": 22500,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\system32\\ApplicationFrameHost.exe",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ApplicationFrameHost.exe",
+              "pid": 22500,
+              "process_create_time": 1786084732.9267216
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+            "pid": 53172,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+                "-ServerName:microsoft.windows.immersivecontrolpanel"
+              ],
+              "executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SystemSettings.exe",
+              "pid": 53172,
+              "process_create_time": 1786234813.964148
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+            "pid": 13556,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Antigravity",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=1636,i,17713691149535380171,8932839571100699759,262144",
+                "--enable-features=EnableTransparentHwndEnlargement,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=1640,i,13735389994162845513,11895577347255560488,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1612",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "Antigravity.exe",
+              "pid": 13556,
+              "process_create_time": 1786294427.2870176
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 47416,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\explorer.exe",
+                "/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 47416,
+              "process_create_time": 1786295454.383926
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+            "pid": 40944,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=Widgets.exe",
+                "--webview-exe-version=526.17301.10.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--startup-read-main-dll",
+                "--metrics-shmem-handle=2012,i,2930125756025685448,5047759174824291791,262144",
+                "--field-trial-handle=2068,i,15803345691222586311,9996133554675954508,262144",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2088,i,7724156776255186731,10763694607183372076,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2064",
+                "/prefetch:2",
+                "/pfhostedapp:54ea5e2135ccb469a4b4fb2eeeed280b7421d611"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 40944,
+              "process_create_time": 1786314688.277351
+            },
+            "used_gpu_memory_token": "[N/A]"
+          }
+        ],
+        "target_gpu_index": 0,
+        "target_gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a"
+      },
+      "performance_state": "P0",
+      "port_8000_listener_pids": [],
+      "query_argv": [
+        "nvidia-smi",
+        "-i",
+        "0",
+        "--query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu,utilization.memory,pstate,driver_model.current,display_active",
+        "--format=csv,noheader,nounits"
+      ],
+      "quiescence_errors": [],
+      "quiescent": true,
+      "raw_stdout_sha256": "1a4aa03942b361aae92b1947cde48c26efbce04fc37ac27d1040f813478e5f10",
+      "sample_index": 1,
+      "sampled_at_ns": 1786323830082151900,
+      "sampled_at_utc": "2026-08-10T01:03:50.082151900Z",
+      "sampled_monotonic_ns": 239639718000000,
+      "vram_total_mib": 16303.0,
+      "vram_used_mib": 1202.0
+    },
+    {
+      "display_active": "Enabled",
+      "driver_model_current": "WDDM",
+      "forbidden_process_scan": {
+        "blocking_processes": [],
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "scanned_process_count": 411
+      },
+      "gpu_index": 0,
+      "gpu_lock": {
+        "matches_acquired_owner": true,
+        "owner": {
+          "created_at_unix": 1786323828.2795959,
+          "lock_schema_version": 1,
+          "nonce": "50f566152fbc5f8b08bde8ea196afc03bb41cfb0330372587b41e4c146ce9811",
+          "pid": 45352,
+          "process_create_time": 1786323828.2169657,
+          "role": "standalone"
+        },
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+        "receipt": {
+          "bytes": 212,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 10977524092681324,
+          "mtime_ns": 1786323828279595800,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+          "sha256": "a80a83c9af9ad6235c4dc42fd2b08d46e12b66e1bc7c7cc50c112a3245678d06"
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "gpu_utilization_percent": 6.0,
+      "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+      "host_ram_total_bytes": 68112736256,
+      "host_ram_used_bytes": 21577560064,
+      "memory_utilization_percent": 2.0,
+      "nvidia_process_evidence": {
+        "blocking_rows": [],
+        "query_argv": [
+          "nvidia-smi",
+          "-i",
+          "0",
+          "--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "raw_stdout_sha256": "e484de6a1757be5399eca98bd230cc0da5261e3859434446df987964f11c4cfa",
+        "row_count": 22,
+        "rows": [
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_desktop_compositor"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "[Insufficient Permissions]",
+            "pid": 2300,
+            "process_identity": {
+              "command_line": null,
+              "executable": "C:\\Windows\\System32\\dwm.exe",
+              "exists": true,
+              "identity_errors": [
+                "command_line: AccessDenied: (pid=2300, name='dwm.exe')"
+              ],
+              "name": "dwm.exe",
+              "pid": 2300,
+              "process_create_time": 1786084213.3196616
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 3264,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\Explorer.EXE"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 3264,
+              "process_create_time": 1786084217.6747437
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+            "pid": 13520,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+                "/tileid",
+                "MicrosoftWindows.Client.CBS_cw5n1h2txyewy!CrossDeviceResumeApp"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "CrossDeviceResume.exe",
+              "pid": 13520,
+              "process_create_time": 1786084218.4293017
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+            "pid": 7852,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+                "-ServerName:FullTrustApp.AppXykjsye98af63ez2annt9djke8trg8stn.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "StartMenuExperienceHost.exe",
+              "pid": 7852,
+              "process_create_time": 1786084220.774464
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+            "pid": 5760,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+                "-ServerName:CortanaUI.AppXstmwaab17q5s3y22tp6apqz7a45vwv65.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SearchHost.exe",
+              "pid": 5760,
+              "process_create_time": 1786084220.7728186
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+            "pid": 19240,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; Cortana 1.18.9.23723; 10.0.0.0.26200.8973) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.26200 IsWebView2/True (WebView2Version 151.0.4129.59)",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=SearchHost.exe",
+                "--webview-exe-version=2606.30004.100.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--always-read-main-dll",
+                "--metrics-shmem-handle=1996,i,634602316024221747,15782805387055062814,262144",
+                "--field-trial-handle=2068,i,8294631163672514431,1770244750053304744,262144",
+                "--enable-features=msEdgeFluentOverlayScrollbar",
+                "--disable-features=msSmartScreenProtection",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2000,i,1183367012736726515,12676920820985322813,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2060",
+                "/prefetch:2",
+                "/pfhostedapp:bdf470a7fd05d6f6a5ceabe0f9ad6b0830bfde22"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 19240,
+              "process_create_time": 1786084222.5821695
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+            "pid": 22940,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+                "-ServerName:InputApp.AppXk0k6mrh4r2q0ct33a9wgbez0x7v9cz5y.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "TextInputHost.exe",
+              "pid": 22940,
+              "process_create_time": 1786084230.5335171
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+            "pid": 28628,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "MicrosoftSecurityApp.exe",
+              "pid": 28628,
+              "process_create_time": 1786084252.9116857
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+            "pid": 18040,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+                "-ServerName:App.AppXtk181tbxbce2qsex02s8tw7hfxa9xb3t.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellExperienceHost.exe",
+              "pid": 18040,
+              "process_create_time": 1786084592.1662831
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+            "pid": 23212,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+                "/X"
+              ],
+              "executable": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SnagitEditor.exe",
+              "pid": 23212,
+              "process_create_time": 1786084235.0329113
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 36136,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1996",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 36136,
+              "process_create_time": 1786145175.7787874
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_video_capture_service",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 46400,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=utility",
+                "--utility-sub-type=video_capture.mojom.VideoCaptureService",
+                "--lang=en-US",
+                "--service-sandbox-type=none",
+                "--video-capture-use-gpu-memory-buffer",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app",
+                "--secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc",
+                "--bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc",
+                "--cors-schemes=claude-simulator,sentry-ipc",
+                "--fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc",
+                "--service-worker-schemes=app",
+                "--streaming-schemes=cowork-file,claude-media,claude-simulator",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708999430457380",
+                "--mojo-platform-channel-handle=5204",
+                "/prefetch:14"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 46400,
+              "process_create_time": 1786145179.286482
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 36004,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 36004,
+              "process_create_time": 1786145178.009258
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 38204,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 38204,
+              "process_create_time": 1786145177.7158637
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+            "pid": 33052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--start-stack-profiler",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=2128,i,2843607730460369022,14285740484584896094,262144",
+                "--field-trial-handle=2144,i,14908098308950797215,10109469526454732579,262144",
+                "--enable-features=OwlHistory,OwlPrinting,ReportStuckThrottle",
+                "--disable-features=DropInputEventsWhilePaintHolding,OwlExtensions,OwlOpenAIGoLinks",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2180,i,15118132390230036,5810064430007656015,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2168",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ChatGPT.exe",
+              "pid": 33052,
+              "process_create_time": 1786196013.3010497
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "pid": 30052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=1808,i,1313695710703468054,2932596959892514179,262144",
+                "--field-trial-handle=1860,i,14768227060615657748,17774477011506766137,262144",
+                "--variations-seed-version=20260808-030039.458000-production",
+                "--pseudonymization-salt-handle=1928,i,3607585236044145857,3774579574682165176,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1852",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "chrome.exe",
+              "pid": 30052,
+              "process_create_time": 1786212399.655699
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ShellHost.exe",
+            "pid": 49392,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\System32\\ShellHost.exe"
+              ],
+              "executable": "C:\\Windows\\System32\\ShellHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellHost.exe",
+              "pid": 49392,
+              "process_create_time": 1786229467.2232356
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+            "pid": 22500,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\system32\\ApplicationFrameHost.exe",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ApplicationFrameHost.exe",
+              "pid": 22500,
+              "process_create_time": 1786084732.9267216
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+            "pid": 53172,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+                "-ServerName:microsoft.windows.immersivecontrolpanel"
+              ],
+              "executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SystemSettings.exe",
+              "pid": 53172,
+              "process_create_time": 1786234813.964148
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+            "pid": 13556,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Antigravity",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=1636,i,17713691149535380171,8932839571100699759,262144",
+                "--enable-features=EnableTransparentHwndEnlargement,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=1640,i,13735389994162845513,11895577347255560488,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1612",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "Antigravity.exe",
+              "pid": 13556,
+              "process_create_time": 1786294427.2870176
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 47416,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\explorer.exe",
+                "/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 47416,
+              "process_create_time": 1786295454.383926
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+            "pid": 40944,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=Widgets.exe",
+                "--webview-exe-version=526.17301.10.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--startup-read-main-dll",
+                "--metrics-shmem-handle=2012,i,2930125756025685448,5047759174824291791,262144",
+                "--field-trial-handle=2068,i,15803345691222586311,9996133554675954508,262144",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2088,i,7724156776255186731,10763694607183372076,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2064",
+                "/prefetch:2",
+                "/pfhostedapp:54ea5e2135ccb469a4b4fb2eeeed280b7421d611"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 40944,
+              "process_create_time": 1786314688.277351
+            },
+            "used_gpu_memory_token": "[N/A]"
+          }
+        ],
+        "target_gpu_index": 0,
+        "target_gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a"
+      },
+      "performance_state": "P0",
+      "port_8000_listener_pids": [],
+      "query_argv": [
+        "nvidia-smi",
+        "-i",
+        "0",
+        "--query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu,utilization.memory,pstate,driver_model.current,display_active",
+        "--format=csv,noheader,nounits"
+      ],
+      "quiescence_errors": [],
+      "quiescent": true,
+      "raw_stdout_sha256": "1a4aa03942b361aae92b1947cde48c26efbce04fc37ac27d1040f813478e5f10",
+      "sample_index": 2,
+      "sampled_at_ns": 1786323830411674700,
+      "sampled_at_utc": "2026-08-10T01:03:50.411674700Z",
+      "sampled_monotonic_ns": 239640046000000,
+      "vram_total_mib": 16303.0,
+      "vram_used_mib": 1202.0
+    },
+    {
+      "display_active": "Enabled",
+      "driver_model_current": "WDDM",
+      "forbidden_process_scan": {
+        "blocking_processes": [],
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "scanned_process_count": 411
+      },
+      "gpu_index": 0,
+      "gpu_lock": {
+        "matches_acquired_owner": true,
+        "owner": {
+          "created_at_unix": 1786323828.2795959,
+          "lock_schema_version": 1,
+          "nonce": "50f566152fbc5f8b08bde8ea196afc03bb41cfb0330372587b41e4c146ce9811",
+          "pid": 45352,
+          "process_create_time": 1786323828.2169657,
+          "role": "standalone"
+        },
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+        "receipt": {
+          "bytes": 212,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 10977524092681324,
+          "mtime_ns": 1786323828279595800,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+          "sha256": "a80a83c9af9ad6235c4dc42fd2b08d46e12b66e1bc7c7cc50c112a3245678d06"
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "gpu_utilization_percent": 5.0,
+      "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+      "host_ram_total_bytes": 68112736256,
+      "host_ram_used_bytes": 21525770240,
+      "memory_utilization_percent": 2.0,
+      "nvidia_process_evidence": {
+        "blocking_rows": [],
+        "query_argv": [
+          "nvidia-smi",
+          "-i",
+          "0",
+          "--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "raw_stdout_sha256": "e484de6a1757be5399eca98bd230cc0da5261e3859434446df987964f11c4cfa",
+        "row_count": 22,
+        "rows": [
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_desktop_compositor"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "[Insufficient Permissions]",
+            "pid": 2300,
+            "process_identity": {
+              "command_line": null,
+              "executable": "C:\\Windows\\System32\\dwm.exe",
+              "exists": true,
+              "identity_errors": [
+                "command_line: AccessDenied: (pid=2300, name='dwm.exe')"
+              ],
+              "name": "dwm.exe",
+              "pid": 2300,
+              "process_create_time": 1786084213.3196616
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 3264,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\Explorer.EXE"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 3264,
+              "process_create_time": 1786084217.6747437
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+            "pid": 13520,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+                "/tileid",
+                "MicrosoftWindows.Client.CBS_cw5n1h2txyewy!CrossDeviceResumeApp"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "CrossDeviceResume.exe",
+              "pid": 13520,
+              "process_create_time": 1786084218.4293017
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+            "pid": 7852,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+                "-ServerName:FullTrustApp.AppXykjsye98af63ez2annt9djke8trg8stn.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "StartMenuExperienceHost.exe",
+              "pid": 7852,
+              "process_create_time": 1786084220.774464
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+            "pid": 5760,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+                "-ServerName:CortanaUI.AppXstmwaab17q5s3y22tp6apqz7a45vwv65.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SearchHost.exe",
+              "pid": 5760,
+              "process_create_time": 1786084220.7728186
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+            "pid": 19240,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; Cortana 1.18.9.23723; 10.0.0.0.26200.8973) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.26200 IsWebView2/True (WebView2Version 151.0.4129.59)",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=SearchHost.exe",
+                "--webview-exe-version=2606.30004.100.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--always-read-main-dll",
+                "--metrics-shmem-handle=1996,i,634602316024221747,15782805387055062814,262144",
+                "--field-trial-handle=2068,i,8294631163672514431,1770244750053304744,262144",
+                "--enable-features=msEdgeFluentOverlayScrollbar",
+                "--disable-features=msSmartScreenProtection",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2000,i,1183367012736726515,12676920820985322813,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2060",
+                "/prefetch:2",
+                "/pfhostedapp:bdf470a7fd05d6f6a5ceabe0f9ad6b0830bfde22"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 19240,
+              "process_create_time": 1786084222.5821695
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+            "pid": 22940,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+                "-ServerName:InputApp.AppXk0k6mrh4r2q0ct33a9wgbez0x7v9cz5y.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "TextInputHost.exe",
+              "pid": 22940,
+              "process_create_time": 1786084230.5335171
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+            "pid": 28628,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "MicrosoftSecurityApp.exe",
+              "pid": 28628,
+              "process_create_time": 1786084252.9116857
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+            "pid": 18040,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+                "-ServerName:App.AppXtk181tbxbce2qsex02s8tw7hfxa9xb3t.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellExperienceHost.exe",
+              "pid": 18040,
+              "process_create_time": 1786084592.1662831
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+            "pid": 23212,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+                "/X"
+              ],
+              "executable": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SnagitEditor.exe",
+              "pid": 23212,
+              "process_create_time": 1786084235.0329113
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 36136,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1996",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 36136,
+              "process_create_time": 1786145175.7787874
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_video_capture_service",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 46400,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=utility",
+                "--utility-sub-type=video_capture.mojom.VideoCaptureService",
+                "--lang=en-US",
+                "--service-sandbox-type=none",
+                "--video-capture-use-gpu-memory-buffer",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app",
+                "--secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc",
+                "--bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc",
+                "--cors-schemes=claude-simulator,sentry-ipc",
+                "--fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc",
+                "--service-worker-schemes=app",
+                "--streaming-schemes=cowork-file,claude-media,claude-simulator",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708999430457380",
+                "--mojo-platform-channel-handle=5204",
+                "/prefetch:14"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 46400,
+              "process_create_time": 1786145179.286482
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 36004,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 36004,
+              "process_create_time": 1786145178.009258
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 38204,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 38204,
+              "process_create_time": 1786145177.7158637
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+            "pid": 33052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--start-stack-profiler",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=2128,i,2843607730460369022,14285740484584896094,262144",
+                "--field-trial-handle=2144,i,14908098308950797215,10109469526454732579,262144",
+                "--enable-features=OwlHistory,OwlPrinting,ReportStuckThrottle",
+                "--disable-features=DropInputEventsWhilePaintHolding,OwlExtensions,OwlOpenAIGoLinks",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2180,i,15118132390230036,5810064430007656015,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2168",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ChatGPT.exe",
+              "pid": 33052,
+              "process_create_time": 1786196013.3010497
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "pid": 30052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=1808,i,1313695710703468054,2932596959892514179,262144",
+                "--field-trial-handle=1860,i,14768227060615657748,17774477011506766137,262144",
+                "--variations-seed-version=20260808-030039.458000-production",
+                "--pseudonymization-salt-handle=1928,i,3607585236044145857,3774579574682165176,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1852",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "chrome.exe",
+              "pid": 30052,
+              "process_create_time": 1786212399.655699
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ShellHost.exe",
+            "pid": 49392,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\System32\\ShellHost.exe"
+              ],
+              "executable": "C:\\Windows\\System32\\ShellHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellHost.exe",
+              "pid": 49392,
+              "process_create_time": 1786229467.2232356
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+            "pid": 22500,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\system32\\ApplicationFrameHost.exe",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ApplicationFrameHost.exe",
+              "pid": 22500,
+              "process_create_time": 1786084732.9267216
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+            "pid": 53172,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+                "-ServerName:microsoft.windows.immersivecontrolpanel"
+              ],
+              "executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SystemSettings.exe",
+              "pid": 53172,
+              "process_create_time": 1786234813.964148
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+            "pid": 13556,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Antigravity",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=1636,i,17713691149535380171,8932839571100699759,262144",
+                "--enable-features=EnableTransparentHwndEnlargement,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=1640,i,13735389994162845513,11895577347255560488,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1612",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "Antigravity.exe",
+              "pid": 13556,
+              "process_create_time": 1786294427.2870176
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 47416,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\explorer.exe",
+                "/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 47416,
+              "process_create_time": 1786295454.383926
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+            "pid": 40944,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=Widgets.exe",
+                "--webview-exe-version=526.17301.10.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--startup-read-main-dll",
+                "--metrics-shmem-handle=2012,i,2930125756025685448,5047759174824291791,262144",
+                "--field-trial-handle=2068,i,15803345691222586311,9996133554675954508,262144",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2088,i,7724156776255186731,10763694607183372076,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2064",
+                "/prefetch:2",
+                "/pfhostedapp:54ea5e2135ccb469a4b4fb2eeeed280b7421d611"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 40944,
+              "process_create_time": 1786314688.277351
+            },
+            "used_gpu_memory_token": "[N/A]"
+          }
+        ],
+        "target_gpu_index": 0,
+        "target_gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a"
+      },
+      "performance_state": "P4",
+      "port_8000_listener_pids": [],
+      "query_argv": [
+        "nvidia-smi",
+        "-i",
+        "0",
+        "--query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu,utilization.memory,pstate,driver_model.current,display_active",
+        "--format=csv,noheader,nounits"
+      ],
+      "quiescence_errors": [],
+      "quiescent": true,
+      "raw_stdout_sha256": "370edfc6c42eb2accfe77f7e9dd2ca6e41aa1e2ca09bccc94739e5f17f15a021",
+      "sample_index": 3,
+      "sampled_at_ns": 1786323830741012400,
+      "sampled_at_utc": "2026-08-10T01:03:50.741012400Z",
+      "sampled_monotonic_ns": 239640375000000,
+      "vram_total_mib": 16303.0,
+      "vram_used_mib": 1202.0
+    },
+    {
+      "display_active": "Enabled",
+      "driver_model_current": "WDDM",
+      "forbidden_process_scan": {
+        "blocking_processes": [],
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "scanned_process_count": 411
+      },
+      "gpu_index": 0,
+      "gpu_lock": {
+        "matches_acquired_owner": true,
+        "owner": {
+          "created_at_unix": 1786323828.2795959,
+          "lock_schema_version": 1,
+          "nonce": "50f566152fbc5f8b08bde8ea196afc03bb41cfb0330372587b41e4c146ce9811",
+          "pid": 45352,
+          "process_create_time": 1786323828.2169657,
+          "role": "standalone"
+        },
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+        "receipt": {
+          "bytes": 212,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 10977524092681324,
+          "mtime_ns": 1786323828279595800,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.gpu.lock",
+          "sha256": "a80a83c9af9ad6235c4dc42fd2b08d46e12b66e1bc7c7cc50c112a3245678d06"
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "gpu_utilization_percent": 5.0,
+      "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+      "host_ram_total_bytes": 68112736256,
+      "host_ram_used_bytes": 21524426752,
+      "memory_utilization_percent": 2.0,
+      "nvidia_process_evidence": {
+        "blocking_rows": [],
+        "query_argv": [
+          "nvidia-smi",
+          "-i",
+          "0",
+          "--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "raw_stdout_sha256": "e484de6a1757be5399eca98bd230cc0da5261e3859434446df987964f11c4cfa",
+        "row_count": 22,
+        "rows": [
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_desktop_compositor"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "[Insufficient Permissions]",
+            "pid": 2300,
+            "process_identity": {
+              "command_line": null,
+              "executable": "C:\\Windows\\System32\\dwm.exe",
+              "exists": true,
+              "identity_errors": [
+                "command_line: AccessDenied: (pid=2300, name='dwm.exe')"
+              ],
+              "name": "dwm.exe",
+              "pid": 2300,
+              "process_create_time": 1786084213.3196616
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 3264,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\Explorer.EXE"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 3264,
+              "process_create_time": 1786084217.6747437
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+            "pid": 13520,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+                "/tileid",
+                "MicrosoftWindows.Client.CBS_cw5n1h2txyewy!CrossDeviceResumeApp"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "CrossDeviceResume.exe",
+              "pid": 13520,
+              "process_create_time": 1786084218.4293017
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+            "pid": 7852,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+                "-ServerName:FullTrustApp.AppXykjsye98af63ez2annt9djke8trg8stn.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "StartMenuExperienceHost.exe",
+              "pid": 7852,
+              "process_create_time": 1786084220.774464
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+            "pid": 5760,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+                "-ServerName:CortanaUI.AppXstmwaab17q5s3y22tp6apqz7a45vwv65.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SearchHost.exe",
+              "pid": 5760,
+              "process_create_time": 1786084220.7728186
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+            "pid": 19240,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; Cortana 1.18.9.23723; 10.0.0.0.26200.8973) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.26200 IsWebView2/True (WebView2Version 151.0.4129.59)",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=SearchHost.exe",
+                "--webview-exe-version=2606.30004.100.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--always-read-main-dll",
+                "--metrics-shmem-handle=1996,i,634602316024221747,15782805387055062814,262144",
+                "--field-trial-handle=2068,i,8294631163672514431,1770244750053304744,262144",
+                "--enable-features=msEdgeFluentOverlayScrollbar",
+                "--disable-features=msSmartScreenProtection",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2000,i,1183367012736726515,12676920820985322813,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2060",
+                "/prefetch:2",
+                "/pfhostedapp:bdf470a7fd05d6f6a5ceabe0f9ad6b0830bfde22"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.59\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 19240,
+              "process_create_time": 1786084222.5821695
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+            "pid": 22940,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+                "-ServerName:InputApp.AppXk0k6mrh4r2q0ct33a9wgbez0x7v9cz5y.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "TextInputHost.exe",
+              "pid": 22940,
+              "process_create_time": 1786084230.5335171
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+            "pid": 28628,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Microsoft.6365217CE6EB4_102.2504.16004.0_x64__8wekyb3d8bbwe\\MicrosoftSecurityApp\\MicrosoftSecurityApp.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "MicrosoftSecurityApp.exe",
+              "pid": 28628,
+              "process_create_time": 1786084252.9116857
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "windows_system_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+            "pid": 18040,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+                "-ServerName:App.AppXtk181tbxbce2qsex02s8tw7hfxa9xb3t.mca"
+              ],
+              "executable": "C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellExperienceHost.exe",
+              "pid": 18040,
+              "process_create_time": 1786084592.1662831
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+            "pid": 23212,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+                "/X"
+              ],
+              "executable": "C:\\Program Files\\TechSmith\\Snagit\\SnagitEditor.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SnagitEditor.exe",
+              "pid": 23212,
+              "process_create_time": 1786084235.0329113
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 36136,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1996",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 36136,
+              "process_create_time": 1786145175.7787874
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_video_capture_service",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+            "pid": 46400,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\Claude.exe",
+                "--type=utility",
+                "--utility-sub-type=video_capture.mojom.VideoCaptureService",
+                "--lang=en-US",
+                "--service-sandbox-type=none",
+                "--video-capture-use-gpu-memory-buffer",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Claude",
+                "--standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app",
+                "--secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc",
+                "--bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc",
+                "--cors-schemes=claude-simulator,sentry-ipc",
+                "--fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc",
+                "--service-worker-schemes=app",
+                "--streaming-schemes=cowork-file,claude-media,claude-simulator",
+                "--field-trial-handle=2000,i,13288234149478073763,5707556601440750990,262144",
+                "--enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2004,i,10504121656975743895,12828899427302094919,4",
+                "--trace-process-track-uuid=3190708999430457380",
+                "--mojo-platform-channel-handle=5204",
+                "/prefetch:14"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\Claude_1.26832.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "claude.exe",
+              "pid": 46400,
+              "process_create_time": 1786145179.286482
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 36004,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 36004,
+              "process_create_time": 1786145178.009258
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "desktop_control_helper"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+            "pid": 38204,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\python.exe",
+                "C:\\Users\\jeffr\\AppData\\Roaming\\Claude\\Claude Extensions\\ant.dir.cursortouch.windows-mcp\\.venv\\Scripts\\windows-mcp.exe"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.13.12-windows-x86_64-none\\python.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "python.exe",
+              "pid": 38204,
+              "process_create_time": 1786145177.7158637
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process",
+              "packaged_windows_ui"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+            "pid": 33052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--start-stack-profiler",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=2128,i,2843607730460369022,14285740484584896094,262144",
+                "--field-trial-handle=2144,i,14908098308950797215,10109469526454732579,262144",
+                "--enable-features=OwlHistory,OwlPrinting,ReportStuckThrottle",
+                "--disable-features=DropInputEventsWhilePaintHolding,OwlExtensions,OwlOpenAIGoLinks",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2180,i,15118132390230036,5810064430007656015,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2168",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.803.5235.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ChatGPT.exe",
+              "pid": 33052,
+              "process_create_time": 1786196013.3010497
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "pid": 30052,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                "--type=gpu-process",
+                "--no-pre-read-main-dll",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--metrics-shmem-handle=1808,i,1313695710703468054,2932596959892514179,262144",
+                "--field-trial-handle=1860,i,14768227060615657748,17774477011506766137,262144",
+                "--variations-seed-version=20260808-030039.458000-production",
+                "--pseudonymization-salt-handle=1928,i,3607585236044145857,3774579574682165176,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1852",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "chrome.exe",
+              "pid": 30052,
+              "process_create_time": 1786212399.655699
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ShellHost.exe",
+            "pid": 49392,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\System32\\ShellHost.exe"
+              ],
+              "executable": "C:\\Windows\\System32\\ShellHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ShellHost.exe",
+              "pid": 49392,
+              "process_create_time": 1786229467.2232356
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+            "pid": 22500,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\system32\\ApplicationFrameHost.exe",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\System32\\ApplicationFrameHost.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "ApplicationFrameHost.exe",
+              "pid": 22500,
+              "process_create_time": 1786084732.9267216
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+            "pid": 53172,
+            "process_identity": {
+              "command_line": [
+                "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+                "-ServerName:microsoft.windows.immersivecontrolpanel"
+              ],
+              "executable": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "SystemSettings.exe",
+              "pid": 53172,
+              "process_create_time": 1786234813.964148
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+            "pid": 13556,
+            "process_identity": {
+              "command_line": [
+                "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+                "--type=gpu-process",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Roaming\\Antigravity",
+                "--gpu-preferences=SAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA==",
+                "--field-trial-handle=1636,i,17713691149535380171,8932839571100699759,262144",
+                "--enable-features=EnableTransparentHwndEnlargement,PdfUseShowSaveFilePicker",
+                "--disable-features=DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,NetworkServiceSandbox,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=1640,i,13735389994162845513,11895577347255560488,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=1612",
+                "/prefetch:2"
+              ],
+              "executable": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Antigravity\\Antigravity.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "Antigravity.exe",
+              "pid": 13556,
+              "process_create_time": 1786294427.2870176
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "interactive_desktop_application"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Windows\\explorer.exe",
+            "pid": 47416,
+            "process_identity": {
+              "command_line": [
+                "C:\\WINDOWS\\explorer.exe",
+                "/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}",
+                "-Embedding"
+              ],
+              "executable": "C:\\Windows\\explorer.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "explorer.exe",
+              "pid": 47416,
+              "process_create_time": 1786295454.383926
+            },
+            "used_gpu_memory_token": "[N/A]"
+          },
+          {
+            "blocking_reasons": [],
+            "classification": "allowed_unmetered_wddm_desktop_client",
+            "desktop_graphics_signals": [
+              "chromium_or_electron_gpu_process"
+            ],
+            "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+            "nvidia_process_name": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+            "pid": 40944,
+            "process_identity": {
+              "command_line": [
+                "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+                "--type=gpu-process",
+                "--noerrdialogs",
+                "--user-data-dir=C:\\Users\\jeffr\\AppData\\Local\\Packages\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\\LocalState\\EBWebView",
+                "--webview-exe-name=Widgets.exe",
+                "--webview-exe-version=526.17301.10.0",
+                "--embedded-browser-webview=1",
+                "--gpu-preferences=WAAAAAAAAADgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAAEAAAAAIAAAABAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA=",
+                "--startup-read-main-dll",
+                "--metrics-shmem-handle=2012,i,2930125756025685448,5047759174824291791,262144",
+                "--field-trial-handle=2068,i,15803345691222586311,9996133554675954508,262144",
+                "--variations-seed-version",
+                "--pseudonymization-salt-handle=2088,i,7724156776255186731,10763694607183372076,4",
+                "--trace-process-track-uuid=3190708988185955192",
+                "--mojo-platform-channel-handle=2064",
+                "/prefetch:2",
+                "/pfhostedapp:54ea5e2135ccb469a4b4fb2eeeed280b7421d611"
+              ],
+              "executable": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\151.0.4129.72\\msedgewebview2.exe",
+              "exists": true,
+              "identity_errors": [],
+              "name": "msedgewebview2.exe",
+              "pid": 40944,
+              "process_create_time": 1786314688.277351
+            },
+            "used_gpu_memory_token": "[N/A]"
+          }
+        ],
+        "target_gpu_index": 0,
+        "target_gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a"
+      },
+      "performance_state": "P4",
+      "port_8000_listener_pids": [],
+      "query_argv": [
+        "nvidia-smi",
+        "-i",
+        "0",
+        "--query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu,utilization.memory,pstate,driver_model.current,display_active",
+        "--format=csv,noheader,nounits"
+      ],
+      "quiescence_errors": [],
+      "quiescent": true,
+      "raw_stdout_sha256": "370edfc6c42eb2accfe77f7e9dd2ca6e41aa1e2ca09bccc94739e5f17f15a021",
+      "sample_index": 4,
+      "sampled_at_ns": 1786323831056035200,
+      "sampled_at_utc": "2026-08-10T01:03:51.056035200Z",
+      "sampled_monotonic_ns": 239640687000000,
+      "vram_total_mib": 16303.0,
+      "vram_used_mib": 1202.0
+    }
+  ],
+  "sampling_interval_s": 0.2,
+  "schema_version": 2,
+  "source": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\capture_wan_cost_baseline.py",
+    "sha256": "08f743ec8b5846ab3c0629fb6a700dbbda239362ab549dda8a95c4053194a308"
+  },
+  "status": "measured",
+  "target_gpu": {
+    "display_active": "Enabled",
+    "driver_model_current": "WDDM",
+    "gpu_index": 0,
+    "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+    "gpu_uuid": "GPU-eae6058d-650d-3a41-59fc-3343f231694a",
+    "query_argv": [
+      "nvidia-smi",
+      "-i",
+      "0",
+      "--query-gpu=index,uuid,name,memory.total,driver_model.current,display_active",
+      "--format=csv,noheader,nounits"
+    ],
+    "raw_stdout_sha256": "4a33fd6ee45c1e828471ace100cc3273df983d1cf4816ac80c6856bbda084c9f",
+    "vram_total_mib": 16303.0
+  },
+  "vram_used_mib": 1202.0
+}

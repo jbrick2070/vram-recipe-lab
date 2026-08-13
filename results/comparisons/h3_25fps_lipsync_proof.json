@@ -1,0 +1,974 @@
+{
+  "schema_version": 1,
+  "kind": "h3_25fps_lipsync_delivery_proof_receipt",
+  "measurement_status": "NOT_A_MODEL_MEASUREMENT",
+  "evidence_scope": "local deterministic delivery transform; model measurements come only from the hash-bound run_recipe receipt",
+  "plan": {
+    "schema_version": 1,
+    "kind": "h3_25fps_lipsync_delivery_proof_plan",
+    "source_recipe": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_jobd_lipsync_refaudio_seed43_f192.json",
+    "source_recipe_sha256": "510bd4e6dc96d635460d65f975652bf15f2862f098de2b7e7f2b6964cce23eb7",
+    "source_video": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_jobd_lipsync_refaudio_seed43_f192_out_00001_.mp4",
+    "source_run_receipt": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_jobd_lipsync_refaudio_seed43_f192_run1.json",
+    "conditioning_audio": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\tts_dialogue.wav",
+    "conditioning_audio_sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1",
+    "source_contract": {
+      "width": 832,
+      "height": 480,
+      "frames": 192,
+      "fps": 24.0,
+      "duration_s": 8.0,
+      "seed": 43,
+      "evidence_role": "authorized cold review source only; noncertifying",
+      "expected_run_number": 1,
+      "expected_gate_pass": true,
+      "expected_pass": false,
+      "expected_warm_pass": false
+    },
+    "delivery_contract": {
+      "fps": 25.0,
+      "raw_frames": 192,
+      "raw_duration_s": 7.68,
+      "fixed_frames": 200,
+      "fixed_duration_s": 8.0,
+      "fixed_resample_policy": "ffmpeg fps filter, nearest source frame",
+      "audio_policy": "discard source audio; mux exact raw tts_dialogue.wav from timestamp zero",
+      "human_review": "PENDING_HUMAN",
+      "judgment_policy": "packager makes no lip-sync judgment",
+      "certification_status": "NONCERTIFYING_REVIEW_COPIES"
+    },
+    "variants": [
+      {
+        "label": "raw_192_frames_labeled_25fps_drift",
+        "frames": 192,
+        "duration_s": 7.68,
+        "video_filter": "settb=AVTB,setpts=N/(25*TB)",
+        "basename": "h3_ref2va_seed43_raw_192f_at25_drift.mp4",
+        "duration_fraction": "192/25",
+        "output": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_raw_192f_at25_drift.mp4",
+        "command": [
+          "ffmpeg",
+          "-nostdin",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-n",
+          "-i",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_jobd_lipsync_refaudio_seed43_f192_out_00001_.mp4",
+          "-i",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\tts_dialogue.wav",
+          "-map",
+          "0:v:0",
+          "-map",
+          "1:a:0",
+          "-vf",
+          "settb=AVTB,setpts=N/(25*TB)",
+          "-frames:v",
+          "192",
+          "-r",
+          "25",
+          "-fps_mode",
+          "cfr",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "slow",
+          "-crf",
+          "18",
+          "-pix_fmt",
+          "yuv420p",
+          "-x264-params",
+          "scenecut=0:open-gop=0",
+          "-af",
+          "atrim=start=0:end=7.680000,asetpts=PTS-STARTPTS",
+          "-c:a",
+          "aac",
+          "-b:a",
+          "192k",
+          "-ar",
+          "48000",
+          "-ac",
+          "2",
+          "-t",
+          "7.680000",
+          "-movflags",
+          "+faststart",
+          "-map_metadata",
+          "-1",
+          "-metadata:s:v:0",
+          "title=raw_192_frames_labeled_25fps_drift",
+          "-metadata:s:a:0",
+          "title=clean_tts_dialogue_from_t0",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_raw_192f_at25_drift.mp4"
+        ]
+      },
+      {
+        "label": "nearest_resample_200_frames_25fps_duration_fix",
+        "frames": 200,
+        "duration_s": 8.0,
+        "video_filter": "fps=fps=25:start_time=0:round=near",
+        "basename": "h3_ref2va_seed43_resampled_200f_at25_fix.mp4",
+        "duration_fraction": "8/1",
+        "output": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_resampled_200f_at25_fix.mp4",
+        "command": [
+          "ffmpeg",
+          "-nostdin",
+          "-hide_banner",
+          "-loglevel",
+          "error",
+          "-n",
+          "-i",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_jobd_lipsync_refaudio_seed43_f192_out_00001_.mp4",
+          "-i",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\tts_dialogue.wav",
+          "-map",
+          "0:v:0",
+          "-map",
+          "1:a:0",
+          "-vf",
+          "fps=fps=25:start_time=0:round=near",
+          "-frames:v",
+          "200",
+          "-r",
+          "25",
+          "-fps_mode",
+          "cfr",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "slow",
+          "-crf",
+          "18",
+          "-pix_fmt",
+          "yuv420p",
+          "-x264-params",
+          "scenecut=0:open-gop=0",
+          "-af",
+          "atrim=start=0:end=8.000000,asetpts=PTS-STARTPTS",
+          "-c:a",
+          "aac",
+          "-b:a",
+          "192k",
+          "-ar",
+          "48000",
+          "-ac",
+          "2",
+          "-t",
+          "8.000000",
+          "-movflags",
+          "+faststart",
+          "-map_metadata",
+          "-1",
+          "-metadata:s:v:0",
+          "title=nearest_resample_200_frames_25fps_duration_fix",
+          "-metadata:s:a:0",
+          "title=clean_tts_dialogue_from_t0",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_resampled_200f_at25_fix.mp4"
+        ]
+      }
+    ]
+  },
+  "source_video_sha256": "2afc918a93dc2e38288bf6b59fc307cd5b17fdde0a124d9f40157eb3fb1df23e",
+  "source_run_receipt": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_jobd_lipsync_refaudio_seed43_f192_run1.json",
+    "sha256": "64b978d70b54f536c2c28ca90ab8b2eb8362e764989eac8f5c1c78afba8682f5",
+    "recipe": "h3_jobd_lipsync_refaudio_seed43_f192",
+    "recipe_sha256": "510bd4e6dc96d635460d65f975652bf15f2862f098de2b7e7f2b6964cce23eb7",
+    "artifact_sha256": "2afc918a93dc2e38288bf6b59fc307cd5b17fdde0a124d9f40157eb3fb1df23e",
+    "gate_pass": true,
+    "pass": false,
+    "boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb",
+    "server_argv": [
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-GGUF",
+      "ComfyUI-KJNodes",
+      "ComfyUI-Manager",
+      "--reserve-vram",
+      "12",
+      "--disable-pinned-memory",
+      "--cache-classic"
+    ],
+    "run_number": 1,
+    "run_count": 1,
+    "config_run_count": 1,
+    "warm_pass": false,
+    "fixture_sha256s": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    },
+    "manager_offline_pre_queue": {
+      "advisory_config": {
+        "authority": "advisory precondition; server log is runtime authority",
+        "network_mode": "offline",
+        "snapshot": {
+          "bytes": 460,
+          "device": 1356286727840300467,
+          "inode": 1688849860737885,
+          "mtime_ns": 1786320736274345500,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+        }
+      },
+      "enabled": true,
+      "guard_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_short_jobs\\server_logs\\h3short-jobd-20260811T005836Z-f0f7fb71-jobd.log",
+      "log_scan": {
+        "atomically_precreated_empty_required": true,
+        "authoritative_server_reported_mode": {
+          "announcement_count": 1,
+          "first_execution_line_number": null,
+          "mode_line_number": 106,
+          "mode_precedes_first_execution": true,
+          "mode_precedes_startup_completion": true,
+          "observed_values": [
+            "offline"
+          ],
+          "required_mode": "offline",
+          "resolved_mode": "offline",
+          "startup_complete_line_number": 109
+        },
+        "config_announcements": [
+          {
+            "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+            "line_number": 58,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+          }
+        ],
+        "current_prestartup_state": {
+          "dependency_imports": {
+            "chardet": {
+              "bytes": 4797,
+              "device": 1356286727840300467,
+              "inode": 281474977009640,
+              "mtime_ns": 1772691972102495000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+              "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+            },
+            "git": {
+              "bytes": 8899,
+              "device": 1356286727840300467,
+              "inode": 281474977008730,
+              "mtime_ns": 1772691971770212000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+              "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+            },
+            "rich": {
+              "bytes": 6131,
+              "device": 1356286727840300467,
+              "inode": 3096224743826856,
+              "mtime_ns": 1776637389041712100,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+              "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+            },
+            "toml": {
+              "bytes": 723,
+              "device": 1356286727840300467,
+              "inode": 281474977009844,
+              "mtime_ns": 1772691972176384000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+              "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+            }
+          },
+          "kind": "h3-manager-prestartup-noop-state",
+          "manager_config": {
+            "network_mode": "offline",
+            "pip_list_route": "exact interpreter -m pip list",
+            "snapshot": {
+              "bytes": 460,
+              "device": 1356286727840300467,
+              "inode": 1688849860737885,
+              "mtime_ns": 1786320736274345500,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+              "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+            },
+            "use_uv": false
+          },
+          "manager_files": {
+            "device": 1356286727840300467,
+            "entries": [
+              "cache",
+              "channels.list",
+              "config.ini",
+              "snapshots",
+              "startup-scripts"
+            ],
+            "entry_count": 5,
+            "inode": 2533274790869444,
+            "mtime_ns": 1776467101916065900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+          },
+          "manager_pip_list": {
+            "command": [
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+              "-m",
+              "pip",
+              "list"
+            ],
+            "offline_environment": {
+              "scrubbed_key_names": [
+                "HUGGINGFACE_HUB_TOKEN",
+                "HF_API_TOKEN"
+              ],
+              "set_nonsecret": {
+                "GIT_TERMINAL_PROMPT": "0",
+                "HF_HUB_OFFLINE": "1",
+                "HF_TOKEN": "offline-disabled",
+                "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                "PIP_NO_INDEX": "1",
+                "TRANSFORMERS_OFFLINE": "1",
+                "UV_OFFLINE": "1"
+              },
+              "values_are_nonsecret": true
+            },
+            "relevant_versions": {
+              "comfy": null,
+              "comfyui_frontend_package": "1.48.7",
+              "opencv_contrib_python": null,
+              "opencv_contrib_python_headless": null,
+              "opencv_python": "4.13.0.92",
+              "opencv_python_headless": "4.13.0.92",
+              "torch": "2.10.0+cu130",
+              "torchaudio": "2.10.0+cu130",
+              "torchvision": "0.25.0+cu130"
+            },
+            "returncode": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+          },
+          "pip_fixer_noop": {
+            "conditions": {
+              "comfy_distribution_absent": true,
+              "frontend_distribution_present": true,
+              "opencv_variants_already_same_version": true,
+              "pip_auto_fix_absent": true,
+              "torch_trio_present_and_stable": true
+            },
+            "opencv_versions": [
+              "4.13.0.92"
+            ],
+            "relevant_distributions": {
+              "comfy": [],
+              "comfyui_frontend_package": [
+                {
+                  "distribution_name": "comfyui_frontend_package",
+                  "version": "1.48.7"
+                }
+              ],
+              "opencv_contrib_python": [],
+              "opencv_contrib_python_headless": [],
+              "opencv_python": [
+                {
+                  "distribution_name": "opencv-python",
+                  "version": "4.13.0.92"
+                }
+              ],
+              "opencv_python_headless": [
+                {
+                  "distribution_name": "opencv-python-headless",
+                  "version": "4.13.0.92"
+                }
+              ],
+              "torch": [
+                {
+                  "distribution_name": "torch",
+                  "version": "2.10.0+cu130"
+                }
+              ],
+              "torchaudio": [
+                {
+                  "distribution_name": "torchaudio",
+                  "version": "2.10.0+cu130"
+                }
+              ],
+              "torchvision": [
+                {
+                  "distribution_name": "torchvision",
+                  "version": "0.25.0+cu130"
+                }
+              ]
+            }
+          },
+          "python": {
+            "bytes": 262144,
+            "device": 1356286727840300467,
+            "inode": 562949953716875,
+            "mtime_ns": 1772691956859914100,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+          },
+          "scheduled_mutation_inputs": {
+            "install_scripts": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+            },
+            "pip_auto_fix": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+            },
+            "restore_snapshot": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+            }
+          },
+          "schema_version": 1,
+          "startup_scripts": {
+            "device": 1356286727840300467,
+            "entries": [],
+            "entry_count": 0,
+            "inode": 1970324837448461,
+            "mtime_ns": 1776467101898738000,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+          },
+          "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+          "user_directory": {
+            "device": 1356286727840300467,
+            "inode": 1970324837254298,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+          }
+        },
+        "errors": [],
+        "execution_markers": [],
+        "expected_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "expected_gui_url": "http://127.0.0.1:8199",
+        "kind": "h3-manager-offline-probe-log-scan",
+        "log": {
+          "bytes": 19516,
+          "device": 1356286727840300467,
+          "inode": 4503599628750282,
+          "mtime_ns": 1786409935305165500,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_short_jobs\\server_logs\\h3short-jobd-20260811T005836Z-f0f7fb71-jobd.log",
+          "sha256": "13bfe350e511cadb9b422bb21eeafbe873822e65e5b45ead41013e25f8646922"
+        },
+        "mutation_markers": [],
+        "network_markers": [],
+        "preboot_record_starts_at_byte_zero": true,
+        "preboot_records": [
+          {
+            "line_number": 1,
+            "line_sha256": "fda901f0e10dd6352c83322fda0744c31042fee4d6794c8833b8685b7a0ec14d",
+            "record": {
+              "kind": "h3-manager-preboot-record",
+              "offline_environment": {
+                "scrubbed_key_names": [
+                  "HUGGINGFACE_HUB_TOKEN",
+                  "HF_API_TOKEN"
+                ],
+                "set_nonsecret": {
+                  "GIT_TERMINAL_PROMPT": "0",
+                  "HF_HUB_OFFLINE": "1",
+                  "HF_TOKEN": "offline-disabled",
+                  "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                  "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                  "PIP_NO_INDEX": "1",
+                  "TRANSFORMERS_OFFLINE": "1",
+                  "UV_OFFLINE": "1"
+                },
+                "values_are_nonsecret": true
+              },
+              "prestartup_state": {
+                "dependency_imports": {
+                  "chardet": {
+                    "bytes": 4797,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009640,
+                    "mtime_ns": 1772691972102495000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+                    "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+                  },
+                  "git": {
+                    "bytes": 8899,
+                    "device": 1356286727840300467,
+                    "inode": 281474977008730,
+                    "mtime_ns": 1772691971770212000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+                    "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+                  },
+                  "rich": {
+                    "bytes": 6131,
+                    "device": 1356286727840300467,
+                    "inode": 3096224743826856,
+                    "mtime_ns": 1776637389041712100,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+                    "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+                  },
+                  "toml": {
+                    "bytes": 723,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009844,
+                    "mtime_ns": 1772691972176384000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+                    "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+                  }
+                },
+                "kind": "h3-manager-prestartup-noop-state",
+                "manager_config": {
+                  "network_mode": "offline",
+                  "pip_list_route": "exact interpreter -m pip list",
+                  "snapshot": {
+                    "bytes": 460,
+                    "device": 1356286727840300467,
+                    "inode": 1688849860737885,
+                    "mtime_ns": 1786320736274345500,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                    "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+                  },
+                  "use_uv": false
+                },
+                "manager_files": {
+                  "device": 1356286727840300467,
+                  "entries": [
+                    "cache",
+                    "channels.list",
+                    "config.ini",
+                    "snapshots",
+                    "startup-scripts"
+                  ],
+                  "entry_count": 5,
+                  "inode": 2533274790869444,
+                  "mtime_ns": 1776467101916065900,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+                },
+                "manager_pip_list": {
+                  "command": [
+                    "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                    "-m",
+                    "pip",
+                    "list"
+                  ],
+                  "offline_environment": {
+                    "scrubbed_key_names": [
+                      "HUGGINGFACE_HUB_TOKEN",
+                      "HF_API_TOKEN"
+                    ],
+                    "set_nonsecret": {
+                      "GIT_TERMINAL_PROMPT": "0",
+                      "HF_HUB_OFFLINE": "1",
+                      "HF_TOKEN": "offline-disabled",
+                      "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                      "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                      "PIP_NO_INDEX": "1",
+                      "TRANSFORMERS_OFFLINE": "1",
+                      "UV_OFFLINE": "1"
+                    },
+                    "values_are_nonsecret": true
+                  },
+                  "relevant_versions": {
+                    "comfy": null,
+                    "comfyui_frontend_package": "1.48.7",
+                    "opencv_contrib_python": null,
+                    "opencv_contrib_python_headless": null,
+                    "opencv_python": "4.13.0.92",
+                    "opencv_python_headless": "4.13.0.92",
+                    "torch": "2.10.0+cu130",
+                    "torchaudio": "2.10.0+cu130",
+                    "torchvision": "0.25.0+cu130"
+                  },
+                  "returncode": 0,
+                  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+                },
+                "pip_fixer_noop": {
+                  "conditions": {
+                    "comfy_distribution_absent": true,
+                    "frontend_distribution_present": true,
+                    "opencv_variants_already_same_version": true,
+                    "pip_auto_fix_absent": true,
+                    "torch_trio_present_and_stable": true
+                  },
+                  "opencv_versions": [
+                    "4.13.0.92"
+                  ],
+                  "relevant_distributions": {
+                    "comfy": [],
+                    "comfyui_frontend_package": [
+                      {
+                        "distribution_name": "comfyui_frontend_package",
+                        "version": "1.48.7"
+                      }
+                    ],
+                    "opencv_contrib_python": [],
+                    "opencv_contrib_python_headless": [],
+                    "opencv_python": [
+                      {
+                        "distribution_name": "opencv-python",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "opencv_python_headless": [
+                      {
+                        "distribution_name": "opencv-python-headless",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "torch": [
+                      {
+                        "distribution_name": "torch",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchaudio": [
+                      {
+                        "distribution_name": "torchaudio",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchvision": [
+                      {
+                        "distribution_name": "torchvision",
+                        "version": "0.25.0+cu130"
+                      }
+                    ]
+                  }
+                },
+                "python": {
+                  "bytes": 262144,
+                  "device": 1356286727840300467,
+                  "inode": 562949953716875,
+                  "mtime_ns": 1772691956859914100,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                  "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+                },
+                "scheduled_mutation_inputs": {
+                  "install_scripts": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+                  },
+                  "pip_auto_fix": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+                  },
+                  "restore_snapshot": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+                  }
+                },
+                "schema_version": 1,
+                "startup_scripts": {
+                  "device": 1356286727840300467,
+                  "entries": [],
+                  "entry_count": 0,
+                  "inode": 1970324837448461,
+                  "mtime_ns": 1776467101898738000,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+                },
+                "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+                "user_directory": {
+                  "device": 1356286727840300467,
+                  "inode": 1970324837254298,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+                }
+              },
+              "record_sha256": "f32c76479e685091c6e248675a41f434af4f228f5d30ff4ec7caee893eda113f",
+              "schema_version": 1
+            }
+          }
+        ],
+        "prefix_bytes": 19516,
+        "prefix_sha256": "13bfe350e511cadb9b422bb21eeafbe873822e65e5b45ead41013e25f8646922",
+        "require_pre_prompt": true,
+        "schema_version": 1,
+        "source_proof": {
+          "authority": "attempt-unique server log; config is advisory only",
+          "comfy_folder_paths": {
+            "bytes": 23156,
+            "device": 1356286727840300467,
+            "inode": 7599824371845827,
+            "mtime_ns": 1785816261419028100,
+            "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+            "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+          },
+          "fail_open_default": "public",
+          "manager_core": {
+            "bytes": 131406,
+            "device": 1356286727840300467,
+            "inode": 8444249301773195,
+            "mtime_ns": 1777140876094016400,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+            "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+          },
+          "manager_prestartup": {
+            "bytes": 30389,
+            "device": 1356286727840300467,
+            "inode": 18858823440126191,
+            "mtime_ns": 1773849424839527300,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+            "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+          },
+          "manager_server": {
+            "bytes": 73639,
+            "device": 1356286727840300467,
+            "inode": 5066549581245383,
+            "mtime_ns": 1777140876095535900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+            "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+          },
+          "manager_util": {
+            "bytes": 22368,
+            "device": 1356286727840300467,
+            "inode": 3659174697692109,
+            "mtime_ns": 1773849424298987600,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_util.py",
+            "sha256": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+          },
+          "required_tokens": {
+            "core": [
+              "'network_mode': 'public',   # public | private | offline",
+              "def get_config():"
+            ],
+            "folder_paths": [
+              "def get_system_user_directory"
+            ],
+            "manager_util": [
+              "def get_pip_cmd(force_uv=False):",
+              "def get_installed_packages(renew=False):",
+              "class PIPFixer:",
+              "def fix_broken(self):",
+              "if 'comfy' in new_pip_versions:",
+              "torch_rollback(self.prev_pip_versions['torch'])",
+              "if 'comfyui_frontend_package' not in new_pip_versions:",
+              "pip_auto_fix_path = os.path.join(self.manager_files_path, \"pip_auto_fix.list\")"
+            ],
+            "prestartup": [
+              "folder_paths.get_user_directory(), '__manager'",
+              "manager_config_path = os.path.join(manager_files_path, 'config.ini')",
+              "def ensure_dependencies():",
+              "restore_snapshot_path = os.path.join(manager_files_path, \"startup-scripts\", \"restore-snapshot.json\")",
+              "script_list_path = os.path.join(manager_files_path, \"startup-scripts\", \"install-scripts.txt\")",
+              "pip_fixer = manager_util.PIPFixer",
+              "pip_fixer.fix_broken()"
+            ],
+            "server": [
+              "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+              "[ComfyUI-Manager] All startup tasks have been completed."
+            ]
+          }
+        },
+        "start_offset": 0,
+        "startup_complete_markers": [
+          {
+            "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+            "line_number": 109
+          }
+        ],
+        "status": "pass",
+        "unique_attempt_log_required": true
+      },
+      "offline_environment": {
+        "scrubbed_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "GIT_TERMINAL_PROMPT": "0",
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INDEX": "1",
+          "TRANSFORMERS_OFFLINE": "1",
+          "UV_OFFLINE": "1"
+        },
+        "values_are_nonsecret": true
+      },
+      "recipe_scope": {
+        "log_root": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_short_jobs\\server_logs",
+        "match_type": "exact",
+        "match_value": "h3_jobd_lipsync_refaudio_seed43_f192",
+        "scope": "h3-short-jobs"
+      },
+      "require_no_prior_prompt": true,
+      "serving_pid": 34728,
+      "serving_process_create_time_ns": 1786409923022074624,
+      "test_boot_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      "valid": true,
+      "verified_before_this_prompt": true
+    }
+  },
+  "source_probe": {
+    "width": 832,
+    "height": 480,
+    "frames": 192,
+    "fps": 24.0,
+    "duration_s": 8.0,
+    "container_duration_s": 8.0
+  },
+  "conditioning_audio_sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1",
+  "conditioning_audio_probe": {
+    "codec": "pcm_s16le",
+    "sample_rate_hz": 44100,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "duration_s": 10.0
+  },
+  "packager_sha256": "ccea54cde1396ef5b1e832c9e7e4dab92bc03f4f2b53e4d279f5d7b7d3b6ac00",
+  "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "outputs": [
+    {
+      "label": "raw_192_frames_labeled_25fps_drift",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_raw_192f_at25_drift.mp4",
+      "sha256": "ed615f6c38aaa9236ae63c793f1ae9e14b6f62e781be5f9922028d83a7880159",
+      "ffprobe": {
+        "width": 832,
+        "height": 480,
+        "frames": 192,
+        "fps": 25.0,
+        "duration_s": 7.68,
+        "audio_duration_s": 7.68,
+        "audio_codec": "aac",
+        "audio_sample_rate_hz": 48000,
+        "audio_channels": 2,
+        "audio_start_time_s": 0.0,
+        "container_duration_s": 7.68
+      },
+      "command": [
+        "ffmpeg",
+        "-nostdin",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-n",
+        "-i",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_jobd_lipsync_refaudio_seed43_f192_out_00001_.mp4",
+        "-i",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\tts_dialogue.wav",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0",
+        "-vf",
+        "settb=AVTB,setpts=N/(25*TB)",
+        "-frames:v",
+        "192",
+        "-r",
+        "25",
+        "-fps_mode",
+        "cfr",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "slow",
+        "-crf",
+        "18",
+        "-pix_fmt",
+        "yuv420p",
+        "-x264-params",
+        "scenecut=0:open-gop=0",
+        "-af",
+        "atrim=start=0:end=7.680000,asetpts=PTS-STARTPTS",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-t",
+        "7.680000",
+        "-movflags",
+        "+faststart",
+        "-map_metadata",
+        "-1",
+        "-metadata:s:v:0",
+        "title=raw_192_frames_labeled_25fps_drift",
+        "-metadata:s:a:0",
+        "title=clean_tts_dialogue_from_t0",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_raw_192f_at25_drift.mp4"
+      ]
+    },
+    {
+      "label": "nearest_resample_200_frames_25fps_duration_fix",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_resampled_200f_at25_fix.mp4",
+      "sha256": "162e290e55549d16f1851685718876d7474e619644e00c6bb545787eaeac8dc1",
+      "ffprobe": {
+        "width": 832,
+        "height": 480,
+        "frames": 200,
+        "fps": 25.0,
+        "duration_s": 8.0,
+        "audio_duration_s": 8.0,
+        "audio_codec": "aac",
+        "audio_sample_rate_hz": 48000,
+        "audio_channels": 2,
+        "audio_start_time_s": 0.0,
+        "container_duration_s": 8.0
+      },
+      "command": [
+        "ffmpeg",
+        "-nostdin",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-n",
+        "-i",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_jobd_lipsync_refaudio_seed43_f192_out_00001_.mp4",
+        "-i",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\fixtures\\tts_dialogue.wav",
+        "-map",
+        "0:v:0",
+        "-map",
+        "1:a:0",
+        "-vf",
+        "fps=fps=25:start_time=0:round=near",
+        "-frames:v",
+        "200",
+        "-r",
+        "25",
+        "-fps_mode",
+        "cfr",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "slow",
+        "-crf",
+        "18",
+        "-pix_fmt",
+        "yuv420p",
+        "-x264-params",
+        "scenecut=0:open-gop=0",
+        "-af",
+        "atrim=start=0:end=8.000000,asetpts=PTS-STARTPTS",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "192k",
+        "-ar",
+        "48000",
+        "-ac",
+        "2",
+        "-t",
+        "8.000000",
+        "-movflags",
+        "+faststart",
+        "-map_metadata",
+        "-1",
+        "-metadata:s:v:0",
+        "title=nearest_resample_200_frames_25fps_duration_fix",
+        "-metadata:s:a:0",
+        "title=clean_tts_dialogue_from_t0",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_ref2va_seed43_resampled_200f_at25_fix.mp4"
+      ]
+    }
+  ],
+  "human_review": "PENDING_HUMAN",
+  "judgment": null
+}

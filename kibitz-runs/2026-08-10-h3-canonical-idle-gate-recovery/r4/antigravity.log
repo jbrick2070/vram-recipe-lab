@@ -1,0 +1,10 @@
+STDOUT:
+I have completed the Round 4 adversarial review for the **H3 canonical Job C idle-gate recovery plan** and written the complete report to [`C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\kibitz-runs\2026-08-10-h3-canonical-idle-gate-recovery\r4\antigravity.md`](file:///C:/Users/jeffr/Documents/ComfyUI/vram-recipe-lab/kibitz-runs/2026-08-10-h3-canonical-idle-gate-recovery/r4/antigravity.md).
+
+### Review Summary
+- **Verdict**: `yes-with-fixes`.
+- **Must-Fix Items Identified**:
+  1. `[Section 4, Item 1 & Item 4]`: Disambiguate token-aware matching rules to separate script target tokens from CLI option flags/values (`--*`), and explicitly support multiple allowed process exclusions (current runner PID + owned server PID) to avoid prequeue scan regressions.
+  2. `[Section 4, Item 3]`: Standardize the SHA-256 byte encoding input (`hashlib.sha256(" ".join(cmdline).encode("utf-8")).hexdigest()`) and redacted blocker exception message format.
+  3. `[Section 4, Item 2]`: Define the key schema (`advisory_unreadable_processes`) returned by `_idle_forbidden_process_scan` for unreadable Python processes so they are retained as audit evidence without raising `GpuIdleGateError`.
+- **Verification Checklist**: Flags process precision, true blocker detection, prequeue owned server pass-through, Sage-free port 8199 rules, and 14.5 GiB VRAM peak budget checks.

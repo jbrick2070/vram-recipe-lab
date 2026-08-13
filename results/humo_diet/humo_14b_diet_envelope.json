@@ -1,0 +1,578 @@
+{
+  "builder": {
+    "bytes": 30307,
+    "path": "scratch/build_humo_14b_diet_evidence.py",
+    "sha256": "2dbd496db794491845dbef49719738e565ca3315d7adc6ad7e1c7a118cfb2bce"
+  },
+  "comparison": "humo_14b_diet_envelope_job_a",
+  "diet_pairs": {
+    "landscape": {
+      "canvas": {
+        "duration_s": 3.88,
+        "fps": 25.0,
+        "frames": 97,
+        "height": 480,
+        "width": 832
+      },
+      "controls": {
+        "direct_reserve_vram_gib": 2.921,
+        "disable_pinned_memory": true,
+        "fixture_sha256s": {
+          "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+          "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+        },
+        "same_owned_server": true,
+        "same_recipe_sha256": "af27ea377c55129ed2400ac63c1cfd6d92a0732e6226f53cb1858c3a8802d232",
+        "seed": 7,
+        "unique_executor_nonce_per_leg": true
+      },
+      "engine_id": "humo_14B_169",
+      "orientation": "landscape",
+      "recipe": "humo_14b_diet_landscape_832x480_f97",
+      "recipe_source": {
+        "bytes": 20855,
+        "path": "recipes/humo_14b_diet_landscape_832x480_f97.json",
+        "sha256": "af27ea377c55129ed2400ac63c1cfd6d92a0732e6226f53cb1858c3a8802d232"
+      },
+      "runs": [
+        {
+          "boot_lane": "lab-8199, sage-free, no-pinned, reserve-2.921gb",
+          "config_run_count": 1,
+          "executor_cache_nonce": "job-a-humo_14b_diet_landscape_832x480_f97-cold",
+          "gate_pass": true,
+          "human_quality": "PENDING_HUMAN",
+          "marginal": false,
+          "media_probe": {
+            "audio_channels": 1,
+            "audio_codec": "aac",
+            "audio_duration_s": 3.88,
+            "audio_sample_rate_hz": 44100,
+            "container_duration_s": 3.88,
+            "fps": 25.0,
+            "frame_count": 97,
+            "height": 480,
+            "video_codec": "h264",
+            "video_duration_s": 3.88,
+            "width": 832
+          },
+          "metrics": {
+            "baseline_host_ram_gib": 19.41,
+            "baseline_vram_gib": 1.29,
+            "container_duration_s": 3.88,
+            "numeric_source": "results/humo_14b_diet_landscape_832x480_f97_run1.json",
+            "peak_host_ram_gib": 26.52,
+            "peak_vram_gib": 13.17,
+            "wall_time_s": 287.8
+          },
+          "promotion_pass": false,
+          "recipe_sha256": "af27ea377c55129ed2400ac63c1cfd6d92a0732e6226f53cb1858c3a8802d232",
+          "role": "cold",
+          "run_identity_sha256": "81e63ae27893b2b4d2b906f74a69e1d30e3c9bdc8c73b0528d7565edeac68ef4",
+          "run_number": 1,
+          "server_argv": [
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "2.921",
+            "--disable-pinned-memory"
+          ],
+          "server_instance": {
+            "process_create_time": 1786317919.822459,
+            "serving_pid": 2872
+          },
+          "source_refs": {
+            "artifact": {
+              "bytes": 349089,
+              "path": "outputs/humo_14b_diet_landscape_832x480_f97_out_00001_.mp4",
+              "sha256": "db613036632dfef6082435ef017a8af2f3e3632ef729a555adcd3136103430ee"
+            },
+            "receipt": {
+              "bytes": 10817,
+              "path": "results/humo_14b_diet_landscape_832x480_f97_run1.json",
+              "sha256": "1928315e4e1a676de3679ffebc72d07b4c109b6bcef069eebfde492b068e7266"
+            }
+          },
+          "status": "PASS (cold)",
+          "valid_measurement": true,
+          "warm_pass": false
+        },
+        {
+          "boot_lane": "lab-8199, sage-free, no-pinned, reserve-2.921gb",
+          "config_run_count": 2,
+          "executor_cache_nonce": "job-a-humo_14b_diet_landscape_832x480_f97-warm",
+          "gate_pass": true,
+          "human_quality": "PENDING_HUMAN",
+          "marginal": false,
+          "media_probe": {
+            "audio_channels": 1,
+            "audio_codec": "aac",
+            "audio_duration_s": 3.88,
+            "audio_sample_rate_hz": 44100,
+            "container_duration_s": 3.88,
+            "fps": 25.0,
+            "frame_count": 97,
+            "height": 480,
+            "video_codec": "h264",
+            "video_duration_s": 3.88,
+            "width": 832
+          },
+          "metrics": {
+            "baseline_host_ram_gib": 26.56,
+            "baseline_vram_gib": 7.09,
+            "container_duration_s": 3.88,
+            "numeric_source": "results/humo_14b_diet_landscape_832x480_f97_run2.json",
+            "peak_host_ram_gib": 27.53,
+            "peak_vram_gib": 13.06,
+            "wall_time_s": 288.6
+          },
+          "promotion_pass": true,
+          "recipe_sha256": "af27ea377c55129ed2400ac63c1cfd6d92a0732e6226f53cb1858c3a8802d232",
+          "role": "warm",
+          "run_identity_sha256": "81e63ae27893b2b4d2b906f74a69e1d30e3c9bdc8c73b0528d7565edeac68ef4",
+          "run_number": 2,
+          "server_argv": [
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "2.921",
+            "--disable-pinned-memory"
+          ],
+          "server_instance": {
+            "process_create_time": 1786317919.822459,
+            "serving_pid": 2872
+          },
+          "source_refs": {
+            "artifact": {
+              "bytes": 375250,
+              "path": "outputs/humo_14b_diet_landscape_832x480_f97_out_00002_.mp4",
+              "sha256": "74f5263e88963d7c0a91db7220757734c143b7b56a2d414f5eaaa079d0bf245b"
+            },
+            "receipt": {
+              "bytes": 10947,
+              "path": "results/humo_14b_diet_landscape_832x480_f97_run2.json",
+              "sha256": "75254dd40368f3ed3fc197208863d9a6e41494b3a547b3e94269ab5d871d7686"
+            }
+          },
+          "status": "PASS",
+          "valid_measurement": true,
+          "warm_pass": true
+        }
+      ],
+      "warm_vram_verdict": {
+        "fits_under_14p5": true,
+        "gate_gib": 14.5,
+        "headroom_gib": 1.44,
+        "lab_gate_pass": true,
+        "marginal": false,
+        "numeric_source": "results/humo_14b_diet_landscape_832x480_f97_run2.json",
+        "peak_vram_gib": 13.06,
+        "plain_answer": "YES: warm landscape peak 13.06 GiB is at or below 14.5 GiB.",
+        "warm_machine_pass": true
+      }
+    },
+    "portrait": {
+      "canvas": {
+        "duration_s": 3.88,
+        "fps": 25.0,
+        "frames": 97,
+        "height": 832,
+        "width": 480
+      },
+      "controls": {
+        "direct_reserve_vram_gib": 2.921,
+        "disable_pinned_memory": true,
+        "fixture_sha256s": {
+          "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+          "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+        },
+        "same_owned_server": true,
+        "same_recipe_sha256": "ed4db54cb792733c87a09eeb75fb55d19364422305694bd19768e2a5c11a69c9",
+        "seed": 7,
+        "unique_executor_nonce_per_leg": true
+      },
+      "engine_id": "humo",
+      "orientation": "portrait",
+      "recipe": "humo_14b_diet_portrait_480x832_f97",
+      "recipe_source": {
+        "bytes": 20858,
+        "path": "recipes/humo_14b_diet_portrait_480x832_f97.json",
+        "sha256": "ed4db54cb792733c87a09eeb75fb55d19364422305694bd19768e2a5c11a69c9"
+      },
+      "runs": [
+        {
+          "boot_lane": "lab-8199, sage-free, no-pinned, reserve-2.921gb",
+          "config_run_count": 1,
+          "executor_cache_nonce": "job-a-humo_14b_diet_portrait_480x832_f97-cold",
+          "gate_pass": true,
+          "human_quality": "PENDING_HUMAN",
+          "marginal": false,
+          "media_probe": {
+            "audio_channels": 1,
+            "audio_codec": "aac",
+            "audio_duration_s": 3.88,
+            "audio_sample_rate_hz": 44100,
+            "container_duration_s": 3.88,
+            "fps": 25.0,
+            "frame_count": 97,
+            "height": 832,
+            "video_codec": "h264",
+            "video_duration_s": 3.88,
+            "width": 480
+          },
+          "metrics": {
+            "baseline_host_ram_gib": 19.92,
+            "baseline_vram_gib": 1.42,
+            "container_duration_s": 3.88,
+            "numeric_source": "results/humo_14b_diet_portrait_480x832_f97_run1.json",
+            "peak_host_ram_gib": 25.31,
+            "peak_vram_gib": 13.14,
+            "wall_time_s": 294.1
+          },
+          "promotion_pass": false,
+          "recipe_sha256": "ed4db54cb792733c87a09eeb75fb55d19364422305694bd19768e2a5c11a69c9",
+          "role": "cold",
+          "run_identity_sha256": "32484af30be316d3baa916cf9ab30fc2ca8837875971e11dc5b9bea772369a97",
+          "run_number": 1,
+          "server_argv": [
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "2.921",
+            "--disable-pinned-memory"
+          ],
+          "server_instance": {
+            "process_create_time": 1786316995.17043,
+            "serving_pid": 54568
+          },
+          "source_refs": {
+            "artifact": {
+              "bytes": 308023,
+              "path": "outputs/humo_14b_diet_portrait_480x832_f97_out_00001_.mp4",
+              "sha256": "444e3db468caa036ca8dced8e55eb4671cd0f567da9616b005459e2b7e8b4e63"
+            },
+            "receipt": {
+              "bytes": 10814,
+              "path": "results/humo_14b_diet_portrait_480x832_f97_run1.json",
+              "sha256": "ce27eba4e7d9faffbb691f22af68310ed83a3f3587c8bc2086acb6f8d1cfdda5"
+            }
+          },
+          "status": "PASS (cold)",
+          "valid_measurement": true,
+          "warm_pass": false
+        },
+        {
+          "boot_lane": "lab-8199, sage-free, no-pinned, reserve-2.921gb",
+          "config_run_count": 2,
+          "executor_cache_nonce": "job-a-humo_14b_diet_portrait_480x832_f97-warm",
+          "gate_pass": true,
+          "human_quality": "PENDING_HUMAN",
+          "marginal": false,
+          "media_probe": {
+            "audio_channels": 1,
+            "audio_codec": "aac",
+            "audio_duration_s": 3.88,
+            "audio_sample_rate_hz": 44100,
+            "container_duration_s": 3.88,
+            "fps": 25.0,
+            "frame_count": 97,
+            "height": 832,
+            "video_codec": "h264",
+            "video_duration_s": 3.88,
+            "width": 480
+          },
+          "metrics": {
+            "baseline_host_ram_gib": 24.57,
+            "baseline_vram_gib": 6.87,
+            "container_duration_s": 3.88,
+            "numeric_source": "results/humo_14b_diet_portrait_480x832_f97_run2.json",
+            "peak_host_ram_gib": 25.05,
+            "peak_vram_gib": 13.22,
+            "wall_time_s": 285.3
+          },
+          "promotion_pass": true,
+          "recipe_sha256": "ed4db54cb792733c87a09eeb75fb55d19364422305694bd19768e2a5c11a69c9",
+          "role": "warm",
+          "run_identity_sha256": "32484af30be316d3baa916cf9ab30fc2ca8837875971e11dc5b9bea772369a97",
+          "run_number": 2,
+          "server_argv": [
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "2.921",
+            "--disable-pinned-memory"
+          ],
+          "server_instance": {
+            "process_create_time": 1786316995.17043,
+            "serving_pid": 54568
+          },
+          "source_refs": {
+            "artifact": {
+              "bytes": 299590,
+              "path": "outputs/humo_14b_diet_portrait_480x832_f97_out_00002_.mp4",
+              "sha256": "ab26d00df511f8ace62b1b00a646ea8b40a89b890d38a2930aacad4252c6c14d"
+            },
+            "receipt": {
+              "bytes": 10944,
+              "path": "results/humo_14b_diet_portrait_480x832_f97_run2.json",
+              "sha256": "87ddd92834a1ba14544c102623407f8a849ebaa9007a51b11192abe92a19a234"
+            }
+          },
+          "status": "PASS",
+          "valid_measurement": true,
+          "warm_pass": true
+        }
+      ],
+      "warm_vram_verdict": {
+        "fits_under_14p5": true,
+        "gate_gib": 14.5,
+        "headroom_gib": 1.28,
+        "lab_gate_pass": true,
+        "marginal": false,
+        "numeric_source": "results/humo_14b_diet_portrait_480x832_f97_run2.json",
+        "peak_vram_gib": 13.22,
+        "plain_answer": "YES: warm portrait peak 13.22 GiB is at or below 14.5 GiB.",
+        "warm_machine_pass": true
+      }
+    }
+  },
+  "fixture_sources": {
+    "portrait.png": {
+      "bytes": 688164,
+      "path": "fixtures/portrait.png",
+      "sha256": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+    },
+    "tts_dialogue.wav": {
+      "bytes": 882078,
+      "path": "fixtures/tts_dialogue.wav",
+      "sha256": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    }
+  },
+  "human_review_pending": [
+    "outputs/humo_14b_diet_ab_production_vs_reserve2p921_warm.mp4"
+  ],
+  "job_a_plain_answer": "YES: warm landscape peak 13.06 GiB is at or below 14.5 GiB.",
+  "measurement_scope": "Four immutable lab runner receipts (portrait and landscape cold/warm), their hash-bound artifacts, and the immutable OTR-side production comparator.",
+  "numeric_provenance_policy": "Every measured number carries a numeric_source receipt path; derived headroom is computed only from the cited warm receipt peak and the repository's 14.5 GiB gate.",
+  "portrait_production_vs_diet_ab": {
+    "artifact": {
+      "bytes": 919150,
+      "path": "outputs/humo_14b_diet_ab_production_vs_reserve2p921_warm.mp4",
+      "sha256": "9c510be670ce8742f749400037c016b5a7724cc193f5b9f2b5996244ec211c7e"
+    },
+    "assembly_argv": [
+      "ffmpeg",
+      "-nostdin",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-n",
+      "-i",
+      "outputs\\humo_14b_fp8_bakeoff_take1.mp4",
+      "-i",
+      "outputs\\humo_14b_diet_portrait_480x832_f97_out_00002_.mp4",
+      "-i",
+      "fixtures\\tts_dialogue.wav",
+      "-filter_complex",
+      "[0:v]setpts=PTS-STARTPTS,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='A  Production unclamped 14B':fontcolor=white:fontsize=22:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-text_w)/2:y=18[left];[1:v]setpts=PTS-STARTPTS,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='B  Diet reserve-2.921 warm':fontcolor=white:fontsize=22:box=1:boxcolor=black@0.65:boxborderw=8:x=(w-text_w)/2:y=18[right];[left][right]hstack=inputs=2[v]",
+      "-map",
+      "[v]",
+      "-map",
+      "2:a:0",
+      "-t",
+      "3.88",
+      "-r",
+      "25",
+      "-map_metadata",
+      "-1",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "18",
+      "-pix_fmt",
+      "yuv420p",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "192k",
+      "-ac",
+      "1",
+      "-ar",
+      "44100",
+      "-movflags",
+      "+faststart",
+      "outputs\\humo_14b_diet_ab_production_vs_reserve2p921_warm.mp4"
+    ],
+    "audio_policy": "Both source audio streams are ignored. The exact raw fixtures/tts_dialogue.wav is mapped once from timestamp zero and encoded as the one shared mono AAC review track.",
+    "human_review": {
+      "categories": [
+        "lips",
+        "onset",
+        "identity",
+        "temporal stability",
+        "overall quality"
+      ],
+      "status": "PENDING_HUMAN"
+    },
+    "media_probe": {
+      "audio_channels": 1,
+      "audio_codec": "aac",
+      "audio_duration_s": 3.88,
+      "audio_sample_rate_hz": 44100,
+      "container_duration_s": 3.88,
+      "fps": 25.0,
+      "frame_count": 97,
+      "height": 832,
+      "video_codec": "h264",
+      "video_duration_s": 3.88,
+      "width": 960
+    },
+    "not_model_evidence": true,
+    "purpose": "PENDING_HUMAN production-vs-diet portrait quality review",
+    "source_paths": {
+      "left_video": "outputs/humo_14b_fp8_bakeoff_take1.mp4",
+      "right_video": "outputs/humo_14b_diet_portrait_480x832_f97_out_00002_.mp4",
+      "shared_audio": "fixtures/tts_dialogue.wav"
+    }
+  },
+  "portrait_warm_cleanup_incident": {
+    "certification_effect": "The run-2 measurement remains machine evidence. This receipt records the separate cleanup incident and must not be represented as normal runner shutdown proof.",
+    "dead_gpu_owner": {
+      "created_at_unix": 1786317440.8814194,
+      "lock_schema_version": 1,
+      "nonce": "d4574f1ff2e9d6528c8ad63eedd1350ba4934db98c83b59d1e2e245285fe1516",
+      "pid": 56224,
+      "process_create_time": 1786317440.6762924,
+      "process_identity_live_before_recovery": false,
+      "role": "standalone"
+    },
+    "incident": "The command-host timeout detached the warm runner. The model run completed and wrote its immutable run-2 receipt, but the runner process exited before its normal shutdown and lease-release finalizer completed.",
+    "measurement_receipt_status": "PASS",
+    "measurement_remains_valid": true,
+    "normal_runner_shutdown_proved": false,
+    "owned_server_shutdown": {
+      "had_receipt": true,
+      "listener_exited": true,
+      "pid": 54568,
+      "pid_verified": true,
+      "process_exited": true,
+      "reason": "verified server process and listener exited",
+      "receipt_removed": true,
+      "success": true,
+      "termination_attempted": true,
+      "termination_reported_success": true
+    },
+    "postconditions": {
+      "gpu_lock_absent": true,
+      "server_pid_receipt_absent": true,
+      "suite_lock_absent": true
+    },
+    "recovery_guards": {
+      "foreign_server_adopted_or_killed": false,
+      "gpu_receipt_unlinked_only_after_exact_nonce_and_owner_match": true,
+      "os_coordinator_acquired_nonblocking": true,
+      "render_or_prompt_submitted": false
+    },
+    "source_ref": {
+      "bytes": 1961,
+      "path": "results/humo_diet/humo_14b_diet_portrait_480x832_f97_run2_recovery.json",
+      "sha256": "bfdd829c766562c8e85d1799ea5c4206ef5c4911ad40b31f443a51af20b4019d"
+    },
+    "status": "RECOVERED_SUCCESSFULLY"
+  },
+  "production_portrait_comparator": {
+    "boot_lane": "otr-headless-8000, HUMO, production-wrapper",
+    "fixture_sha256s": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad",
+      "tts_dialogue.wav": "30c51f3ffa7a422d8cdda6e1ad3fb50b9380c0c5128117d083de9f02e4748ae1"
+    },
+    "measurement_scope": "otr-side production lane",
+    "media_probe": {
+      "audio_channels": 1,
+      "audio_codec": "aac",
+      "audio_duration_s": 3.877007,
+      "audio_sample_rate_hz": 44100,
+      "container_duration_s": 3.88,
+      "fps": 25.0,
+      "frame_count": 97,
+      "height": 832,
+      "video_codec": "h264",
+      "video_duration_s": 3.88,
+      "width": 480
+    },
+    "metrics": {
+      "baseline_vram_gib": 1.78125,
+      "numeric_source": "results/otr_side/humo_14b_fp8_bakeoff_take1.json",
+      "peak_host_ram_gib": 51.62986373901367,
+      "peak_vram_gib": 14.984375,
+      "wall_time_s": 245.943975
+    },
+    "seed": 7,
+    "source_refs": {
+      "artifact": {
+        "bytes": 550119,
+        "path": "outputs/humo_14b_fp8_bakeoff_take1.mp4",
+        "sha256": "796ca4b15b1bd44eb0860ccbe192854f970962986ac0710bfaa04d643c801de0"
+      },
+      "receipt": {
+        "bytes": 9194,
+        "path": "results/otr_side/humo_14b_fp8_bakeoff_take1.json",
+        "sha256": "ed53c2249b3a23d64bf6b2e06833aef9d7a787c8ae8a05ccd2f915ccfb2d5938"
+      }
+    }
+  },
+  "schema_version": 1
+}

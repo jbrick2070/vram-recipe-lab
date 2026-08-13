@@ -1,0 +1,6 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 34996)
+--- Running Preflight Checks for h3_i2v_canonical_832x480_f107 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+
+[PREFLIGHT ABORT] Preflight Check #2 [GPU idle] FAILED: Five-sample WDDM idle gate failed: GpuIdleGateError: GPU is not quiescent: sample 0: independent process scan found 1 forbidden/unknown workload(s); sample 1: independent process scan found 1 forbidden/unknown workload(s); sample 2: independent process scan found 1 forbidden/unknown workload(s); sample 3: independent process scan found 1 forbidden/unknown workload(s); sample 4: independent process scan found 1 forbidden/unknown workload(s); redacted_blocking_processes=[{"argv_sha256":"22bd8bb9c71121bba5966b7a85ebadd55d2abf55aa56c6312fe76e90d8eba2ec","executable_basename":"python.exe","match_basis":["python_script_target"],"matched_markers":["run_recipe.py"],"pid":228,"process_basename":"python.exe","process_create_time":1786389271.6581366,"target_basename":"run_recipe.py"}]
+[LOCK] Released .gpu.lock and coordinator

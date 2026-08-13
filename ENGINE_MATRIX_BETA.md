@@ -116,3 +116,7 @@ The H3 token estimate remains a feasibility indicator, not a VRAM predictor. The
 `results/comparisons/h3_token_budget_check.json`.
 
 Distribution seed 2.1 is pinned in `results/comparisons/environment_2p1.json`.
+| humo_14b_diet_portrait_480x832_f97 | experiment | PASS (cold) (machine; human pending) | 13.14 | 294.1 | yes | 1/2 | lab-8199, sage-free, no-pinned, reserve-2.921gb | 2026-08-09 | Measured on box (PASS (cold) (machine; human pending)) |
+| humo_14b_diet_landscape_832x480_f97 | experiment | PASS (machine; human pending) | 13.06 | 288.6 | yes | 2/2 | lab-8199, sage-free, no-pinned, reserve-2.921gb | 2026-08-09 | Measured on box (PASS (machine; human pending)) |
+| h3_i2v_canonical_832x480_f107 | measurement | FAIL (VRAM 15.39 GB > 14.5 GB) | 15.39 | 178.8 | yes | 0/2 | lab-8199, sage-free, manager-offline-test, no-pinned | 2026-08-10 | Measured on box (FAIL (VRAM 15.39 GB > 14.5 GB)); elevated-baseline lane, operator-authorized 2026-08-10 |
+| h3_jobd_lipsync_refaudio_seed43_f192 | experiment | PASS (cold) (machine; human pending) | 6.88 | 436.0 | yes | 1/2 | lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb | 2026-08-10 | Measured on box (PASS (cold) (machine; human pending)); elevated-baseline lane, operator-authorized 2026-08-10 |

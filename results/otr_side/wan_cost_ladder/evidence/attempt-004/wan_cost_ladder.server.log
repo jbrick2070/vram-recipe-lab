@@ -1,0 +1,854 @@
+[32m[INFO][0m setup plugin alembic.autogenerate.schemas
+[32m[INFO][0m setup plugin alembic.autogenerate.tables
+[32m[INFO][0m setup plugin alembic.autogenerate.types
+[32m[INFO][0m setup plugin alembic.autogenerate.constraints
+[32m[INFO][0m setup plugin alembic.autogenerate.defaults
+[32m[INFO][0m setup plugin alembic.autogenerate.comments
+[32m[INFO][0m Adding extra search path checkpoints C:\ComfyUI-Models\checkpoints
+[32m[INFO][0m Adding extra search path clip C:\ComfyUI-Models\clip
+[32m[INFO][0m Adding extra search path clip_vision C:\ComfyUI-Models\clip_vision
+[32m[INFO][0m Adding extra search path configs C:\ComfyUI-Models\configs
+[32m[INFO][0m Adding extra search path controlnet C:\ComfyUI-Models\controlnet
+[32m[INFO][0m Adding extra search path diffusers C:\ComfyUI-Models\diffusers
+[32m[INFO][0m Adding extra search path diffusion_models C:\ComfyUI-Models\diffusion_models
+[32m[INFO][0m Adding extra search path embeddings C:\ComfyUI-Models\embeddings
+[32m[INFO][0m Adding extra search path gligen C:\ComfyUI-Models\gligen
+[32m[INFO][0m Adding extra search path hypernetworks C:\ComfyUI-Models\hypernetworks
+[32m[INFO][0m Adding extra search path loras C:\ComfyUI-Models\loras
+[32m[INFO][0m Adding extra search path photomaker C:\ComfyUI-Models\photomaker
+[32m[INFO][0m Adding extra search path style_models C:\ComfyUI-Models\style_models
+[32m[INFO][0m Adding extra search path text_encoders C:\ComfyUI-Models\text_encoders
+[32m[INFO][0m Adding extra search path unet C:\ComfyUI-Models\unet
+[32m[INFO][0m Adding extra search path upscale_models C:\ComfyUI-Models\upscale_models
+[32m[INFO][0m Adding extra search path vae C:\ComfyUI-Models\vae
+[32m[INFO][0m Adding extra search path vae_approx C:\ComfyUI-Models\vae_approx
+[32m[INFO][0m Adding extra search path audio_encoders C:\ComfyUI-Models\audio_encoders
+[32m[INFO][0m Adding extra search path model_patches C:\ComfyUI-Models\model_patches
+[32m[INFO][0m Adding extra search path download_model_base C:\ComfyUI-Models
+[32m[INFO][0m Adding extra search path custom_nodes C:\Users\jeffr\Documents\ComfyUI\custom_nodes
+[32m[INFO][0m Adding extra search path checkpoints C:\ComfyUI-Models\checkpoints
+[32m[INFO][0m Adding extra search path text_encoders C:\ComfyUI-Models\text_encoders
+[32m[INFO][0m Adding extra search path text_encoders C:\ComfyUI-Models\clip
+[32m[INFO][0m Adding extra search path clip_vision C:\ComfyUI-Models\clip_vision
+[32m[INFO][0m Adding extra search path configs C:\ComfyUI-Models\configs
+[32m[INFO][0m Adding extra search path controlnet C:\ComfyUI-Models\controlnet
+[32m[INFO][0m Adding extra search path diffusion_models C:\ComfyUI-Models\diffusion_models
+[32m[INFO][0m Adding extra search path diffusion_models C:\ComfyUI-Models\unet
+[32m[INFO][0m Adding extra search path embeddings C:\ComfyUI-Models\embeddings
+[32m[INFO][0m Adding extra search path loras C:\ComfyUI-Models\loras
+[32m[INFO][0m Adding extra search path upscale_models C:\ComfyUI-Models\upscale_models
+[32m[INFO][0m Adding extra search path latent_upscale_models C:\ComfyUI-Models\latent_upscale_models
+[32m[INFO][0m Adding extra search path vae C:\ComfyUI-Models\vae
+[32m[INFO][0m Adding extra search path audio_encoders C:\ComfyUI-Models\audio_encoders
+[32m[INFO][0m Adding extra search path model_patches C:\ComfyUI-Models\model_patches
+[32m[INFO][0m Setting output directory to: C:\Users\jeffr\Documents\ComfyUI\output
+[32m[INFO][0m Setting user directory to: C:\Users\jeffr\Documents\ComfyUI
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2026-08-09 18:03:53.654
+** Platform: Windows
+** Python version: 3.12.11 (main, Aug 18 2025, 19:17:54) [MSC v.1944 64 bit (AMD64)]
+** Python executable: C:\Users\jeffr\Documents\ComfyUI\.venv\Scripts\python.exe
+** ComfyUI Path: C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI
+** ComfyUI Base Folder Path: C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI
+** User directory: C:\Users\jeffr\Documents\ComfyUI
+** ComfyUI-Manager config path: C:\Users\jeffr\Documents\ComfyUI\__manager\config.ini
+** Log path: C:\Users\jeffr\Documents\ComfyUI\comfyui.log
+[32m[INFO][0m OldTimeRadio prestartup: HF_HOME=C:\ComfyUI-Models\huggingface | safetensors_conversion mocked EARLY
+[OldTimeRadio] prestartup OK: safetensors_conversion mocked before any transformers import
+[32m[INFO][0m OldTimeRadio prestartup: HF_HOME=C:\ComfyUI-Models\huggingface | safetensors_conversion mocked EARLY
+[OldTimeRadio] prestartup OK: safetensors_conversion mocked before any transformers import
+[32m[INFO][0m 
+Prestartup times for custom nodes:
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\custom_nodes\ComfyUI-OldTimeRadio
+[32m[INFO][0m 
+[32m[INFO][0m Found comfy_kitchen backend triton: {'available': True, 'disabled': True, 'unavailable_reason': None, 'capabilities': ['adaln', 'apply_rope', 'apply_rope1', 'apply_rope1_', 'apply_rope_', 'apply_rope_split_half', 'apply_rope_split_half1', 'apply_rope_split_half1_', 'apply_rope_split_half_', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'int8_linear', 'na3d', 'quantize_and_rotate_rowwise', 'quantize_int8_rowwise', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'rms_adaln', 'rms_rope', 'rms_rope1', 'rms_rope1_', 'rms_rope_', 'rms_rope_split_half', 'rms_rope_split_half1', 'rms_rope_split_half1_', 'rms_rope_split_half_', 'w4a8_int8_linear']}
+[32m[INFO][0m Found comfy_kitchen backend cuda: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['adaln', 'apply_rope', 'apply_rope1', 'apply_rope1_', 'apply_rope_', 'apply_rope_split_half', 'apply_rope_split_half1', 'apply_rope_split_half1_', 'apply_rope_split_half_', 'convrot_w4a4_linear', 'dequantize_convrot_w4a4_weight', 'dequantize_int8_convrot_weight', 'dequantize_int8_convrot_weight_dtype', 'dequantize_int8_simple', 'dequantize_int8_simple_dtype', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'dequantize_w4a8_int8_weight', 'gemv_awq_w4a16', 'int8_linear', 'na3d', 'prepare_int4_weight_for_int8_linear', 'quantize_and_rotate_rowwise', 'quantize_convrot_w4a4_weight', 'quantize_int8_convrot_weight', 'quantize_int8_rowwise', 'quantize_int8_tensorwise', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'quantize_svdquant_w4a4', 'quantize_w4a8_int8_weight', 'rms_adaln', 'rms_rope', 'rms_rope1', 'rms_rope1_', 'rms_rope_', 'rms_rope_split_half', 'rms_rope_split_half1', 'rms_rope_split_half1_', 'rms_rope_split_half_', 'rotate_int8_convrot_weight', 'scaled_mm_nvfp4', 'scaled_mm_svdquant_w4a4', 'stochastic_rounding_fp8', 'w4a8_int8_linear']}
+[32m[INFO][0m Found comfy_kitchen backend eager: {'available': True, 'disabled': False, 'unavailable_reason': None, 'capabilities': ['adaln', 'apply_rope', 'apply_rope1', 'apply_rope1_', 'apply_rope_', 'apply_rope_split_half', 'apply_rope_split_half1', 'apply_rope_split_half1_', 'apply_rope_split_half_', 'convrot_w4a4_linear', 'dequantize_convrot_w4a4_weight', 'dequantize_int8_convrot_weight', 'dequantize_int8_convrot_weight_dtype', 'dequantize_int8_embedding', 'dequantize_int8_simple', 'dequantize_int8_simple_dtype', 'dequantize_mxfp8', 'dequantize_nvfp4', 'dequantize_per_tensor_fp8', 'dequantize_w4a8_int8_weight', 'gemv_awq_w4a16', 'int8_linear', 'na3d', 'prepare_int4_weight_for_int8_linear', 'quantize_and_rotate_rowwise', 'quantize_convrot_w4a4_weight', 'quantize_int8_convrot_weight', 'quantize_int8_rowwise', 'quantize_int8_tensorwise', 'quantize_mxfp8', 'quantize_nvfp4', 'quantize_per_tensor_fp8', 'quantize_svdquant_w4a4', 'quantize_w4a8_int8_weight', 'rms_adaln', 'rms_rope', 'rms_rope1', 'rms_rope1_', 'rms_rope_', 'rms_rope_split_half', 'rms_rope_split_half1', 'rms_rope_split_half1_', 'rms_rope_split_half_', 'rotate_int8_convrot_weight', 'scaled_mm_mxfp8', 'scaled_mm_nvfp4', 'scaled_mm_svdquant_w4a4', 'stochastic_rounding_fp8', 'w4a8_int8_linear']}
+[32m[INFO][0m Found comfy_kitchen backend hip: {'available': False, 'disabled': False, 'unavailable_reason': 'PyTorch ROCm/HIP runtime not available', 'capabilities': []}
+[32m[INFO][0m Checkpoint files will always be loaded safely.
+[32m[INFO][0m Total VRAM 16303 MB, total RAM 64957 MB
+[32m[INFO][0m pytorch version: 2.10.0+cu130
+[32m[INFO][0m Set vram state to: NORMAL_VRAM
+[32m[INFO][0m Device: cuda:0 NVIDIA GeForce RTX 5080 Laptop GPU : cudaMallocAsync
+[32m[INFO][0m Using async weight offloading with 2 streams
+[32m[INFO][0m Enabled pinned memory 25982.0
+[32m[INFO][0m working around nvidia conv3d memory bug.
+[32m[INFO][0m Using pytorch attention
+[32m[INFO][0m aimdo: src-win/cuda-detour.c:38:INFO:aimdo_setup_hooks: installing 6 hooks
+[32m[INFO][0m aimdo: src/control.c:262:INFO:comfy-aimdo NVML pressure enabled
+[32m[INFO][0m aimdo: src-win/shmem-detect.c:80:INFO:comfy-aimdo WDDM adapter match: NVIDIA GeForce RTX 5080 Laptop GPU runtime_luid=00000000:00014cde dxgi_luid=00000000:00014cde
+[32m[INFO][0m aimdo: src/control.c:277:INFO:comfy-aimdo inited for GPU: NVIDIA GeForce RTX 5080 Laptop GPU (VRAM: 16302 MB)
+[32m[INFO][0m DynamicVRAM support detected and enabled
+[32m[INFO][0m Python version: 3.12.11 (main, Aug 18 2025, 19:17:54) [MSC v.1944 64 bit (AMD64)]
+[32m[INFO][0m ComfyUI version: 0.31.1
+[32m[INFO][0m comfy-aimdo version: 0.4.13
+[32m[INFO][0m comfy-kitchen version: 0.2.28
+[32m[INFO][0m comfyui-frontend-package version: 1.48.7
+[32m[INFO][0m comfyui-workflow-templates version: 0.11.37
+[32m[INFO][0m comfyui-embedded-docs version: 0.5.9
+[32m[INFO][0m comfy-kitchen version: 0.2.28
+[32m[INFO][0m comfy-aimdo version: 0.4.13
+[32m[INFO][0m [Prompt Server] web root: C:\Users\jeffr\Documents\ComfyUI\.venv\Lib\site-packages\comfyui_frontend_package\static
+[32m[INFO][0m Asset seeder disabled
+[32m[INFO][0m No OpenGL_accelerate module loaded: Acceleration disabled
+W0809 18:04:05.691000 37300 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+unknown args: ['--cuda-malloc', '--user-directory', 'C:\\Users\\jeffr\\Documents\\ComfyUI', '--output-directory', 'C:\\Users\\jeffr\\Documents\\ComfyUI\\output', '--extra-model-paths-config', 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml', '--disable-metadata']
+Found GPU NVIDIA GeForce RTX 5080 Laptop GPU
+[ModelDownloader] Routes registered.
+[DMM] Data Media Machine v3.7: loaded 31/31 nodes
+[DMM] Graceful disconnect handler installed
+[34m[ComfyUI-Easy-Use] server: [0mv1.3.6 [92mLoaded[0m
+[34m[ComfyUI-Easy-Use] web root: [0mC:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-easy-use\web_version/v2 [92mLoaded[0m
+[32m[INFO][0m ComfyUI-GGUF: Allowing full torch compile
+
+======================================================================
+ HunyuanWorld-Mirror ComfyUI Node Pack
+ Version: 1.0.0
+ Transform 2D images into 3D worlds
+======================================================================
+ Loaded 11 nodes:
+   • Preprocess Images for HWM
+   • Load HunyuanWorld-Mirror Model
+   • HWM Inference
+   • Visualize Depth
+   • Visualize Normals
+   • Save Point Cloud
+   • Save 3D Gaussians
+   • Save Depth Map
+   • Save Camera Parameters
+   • Save COLMAP Reconstruction
+   • View 3D in Browser
+======================================================================
+
+✓ CUDA available: NVIDIA GeForce RTX 5080 Laptop GPU
+  VRAM: 15.9GB
+
+[32m[INFO][0m ### Loading: ComfyUI-Impact-Pack (V8.28.3)
+[1m[33m[WARNING][0m 
+----------------------------------------------------------------------------
+[Impact Pack] The SAM2 functionality is unavailable because the `facebook/sam2` dependency is not installed.
+
+Installation command:
+C:\Users\jeffr\Documents\ComfyUI\.venv\Scripts\python.exe -m pip install git+https://github.com/facebookresearch/sam2
+----------------------------------------------------------------------------
+
+[1m[33m[WARNING][0m 
+----------------------------------------------------------------------------
+[Impact Pack] The SAM2 functionality is unavailable because the `facebook/sam2` dependency is not installed.
+
+Installation command:
+C:\Users\jeffr\Documents\ComfyUI\.venv\Scripts\python.exe -m pip install git+https://github.com/facebookresearch/sam2
+----------------------------------------------------------------------------
+
+[32m[INFO][0m [Impact Pack] Wildcard total size (0.00 MB) is within cache limit (50.00 MB). Using full cache mode.
+[32m[INFO][0m [Impact Pack] Wildcards loading done.
+[32m[INFO][0m [LoRA-Manager] Found LoRA roots:
+ - C:/ComfyUI-Models/loras
+ - C:/Users/jeffr/ComfyUI-Installs/ComfyUI/ComfyUI/models/loras
+[32m[INFO][0m [LoRA-Manager] Found checkpoint roots:
+ - C:/ComfyUI-Models/checkpoints
+ - C:/ComfyUI-Models/diffusion_models
+ - C:/ComfyUI-Models/unet
+ - C:/Users/jeffr/ComfyUI-Installs/ComfyUI/ComfyUI/models/checkpoints
+ - C:/Users/jeffr/ComfyUI-Installs/ComfyUI/ComfyUI/models/diffusion_models
+ - C:/Users/jeffr/ComfyUI-Installs/ComfyUI/ComfyUI/models/unet
+[32m[INFO][0m [LoRA-Manager] Found embedding roots:
+ - C:/ComfyUI-Models/embeddings
+ - C:/Users/jeffr/ComfyUI-Installs/ComfyUI/ComfyUI/models/embeddings
+[32m[INFO][0m [LoRA-Manager] Symlink cache loaded with 0 mappings
+[32m[INFO][0m [LoRA-Manager] Symlink mappings restored from cache in 1.96 ms
+[32m[INFO][0m [LoRA-Manager] Updated 'comfyui' library with current folder paths
+[32m[INFO][0m [LoRA-Manager] Detected async ComfyUI execution, installing async metadata hooks
+[32m[INFO][0m [LoRA-Manager] Metadata collection hooks installed for runtime values
+[32m[INFO][0m [LoRA-Manager] ComfyUI Metadata Collector initialized
+[32m[INFO][0m [LoRA-Manager] Example images path: 
+[32m[INFO][0m [LoRA-Manager] Added static route for locales: /locales -> C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-lora-manager\locales
+[32m[INFO][0m ### Loading: ComfyUI-Manager (V3.40)
+[32m[INFO][0m [ComfyUI-Manager] network_mode: offline
+[32m[INFO][0m [ComfyUI-Manager] ComfyUI per-queue preview override detected (PR #11261). Manager's preview method feature is disabled. Use ComfyUI's --preview-method CLI option or 'Settings > Execution > Live preview method'.
+[32m[INFO][0m ### ComfyUI Revision: 5727 [fe4195f7] *DETACHED | Released on '2026-08-08'
+[32m[INFO][0m [ComfyUI-Manager] All startup tasks have been completed.
+[32m[INFO][0m [hf_token] HF_TOKEN resolved from os.environ (len=16)
+[OldTimeRadio] OK - All 34 nodes loaded successfully
+[OldTimeRadio] HTTP route registered: GET /otr/latest_ledger (with CORS)
+[OldTimeRadio] HTTP routes registered: POST /otr/video_render_single, POST /otr/video_render_soak
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_beat_b001_kk5xt3lb.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_beat_b001_knq7ybgw.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_beat_b001_qxvr4re5.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_terminal_b001_seg00_f_txnpws.png
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_camera_j78l9a8z.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_camera_lwxlw7gp.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_camera_tx1ffbgp.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_green_22cgwgqs.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_green_ehha4hvm.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_green_ipwzdund.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_green_pumbtnt1.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mandala_9mfbi1pn.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mandala_bjwbdxv3.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mandala_mlyogyte.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mandala_plvo6mlk.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mandala_r63hn26a.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mxc_bpa3p0cn.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mxc_prg2uet0.mp4
+[32m[INFO][0m [OTR.janitor] swept stale tmp entry: C:\Users\jeffr\Documents\ComfyUI\output\otr\episodes\_shared\tmp\otr_viz_mxc_yeztdgex.mp4
+[1m[33m[WARNING][0m [OTR.janitor] boot sweep: 1132 scanned, 19 deleted, 0 locked-skip, 1113 young-skip, 0 errors
+⚡ SeedVR2 optimizations check: SageAttention ✅ | Flash Attention ❌ | Triton ✅
+💡 Optional: pip install flash-attn
+🔧 Conv3d workaround active: PyTorch 2.10.0, cuDNN 91200 (fixing VAE 3x memory bug)
+📊 Initial CUDA memory: 14.60GB free / 15.92GB total
+C:\Users\jeffr\Documents\ComfyUI\.venv\Lib\site-packages\rotary_embedding_torch\rotary_embedding_torch.py:35: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled = False)
+C:\Users\jeffr\Documents\ComfyUI\.venv\Lib\site-packages\rotary_embedding_torch\rotary_embedding_torch.py:268: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @autocast(enabled = False)
+Workspace manager - Openning file hash dict
+### Loading: Workspace Manager (V1.0.0)
+[1m[33m[WARNING][0m Traceback (most recent call last):
+  File "C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\nodes.py", line 2256, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\models\\__init__.py'
+
+[1m[33m[WARNING][0m Cannot import C:\Users\jeffr\Documents\ComfyUI\custom_nodes\models module for custom nodes: [Errno 2] No such file or directory: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\models\\__init__.py'
+[1m[33m[WARNING][0m Traceback (most recent call last):
+  File "C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\nodes.py", line 2256, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\otr-model-smoker\\__init__.py'
+
+[1m[33m[WARNING][0m Cannot import C:\Users\jeffr\Documents\ComfyUI\custom_nodes\otr-model-smoker module for custom nodes: [Errno 2] No such file or directory: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\otr-model-smoker\\__init__.py'
+[32m[INFO][0m Using pytorch attention
+(RES4LYF) Init
+(RES4LYF) Importing beta samplers.
+(RES4LYF) Importing legacy samplers.
+
+[92m[rgthree-comfy] Loaded 48 epic nodes. 🎉[0m
+
+[33m[rgthree-comfy] ComfyUI's new Node 2.0 rendering may be incompatible with some rgthree-comfy nodes and features, breaking some rendering as well as losing the ability to access a node's properties (a vital part of many nodes). It also appears to run MUCH more slowly spiking CPU usage and causing jankiness and unresponsiveness, especially with large workflows. Personally I am not planning to use the new Nodes 2.0 and, unfortunately, am not able to invest the time to investigate and overhaul rgthree-comfy where needed. If you have issues when Nodes 2.0 is enabled, I'd urge you to switch it off as well and join me in hoping ComfyUI is not planning to deprecate the existing, stable canvas rendering all together.
+[0m
+[1m[33m[WARNING][0m Traceback (most recent call last):
+  File "C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\nodes.py", line 2256, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1132, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1190, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\story-project\\__init__.py'
+
+[1m[33m[WARNING][0m Cannot import C:\Users\jeffr\Documents\ComfyUI\custom_nodes\story-project module for custom nodes: [Errno 2] No such file or directory: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\story-project\\__init__.py'
+[32m[INFO][0m [hf_token] HF_TOKEN resolved from os.environ (len=16)
+[OldTimeRadio] OK - All 34 nodes loaded successfully
+[OldTimeRadio] HTTP route registered: GET /otr/latest_ledger (with CORS)
+[OldTimeRadio] HTTP routes registered: POST /otr/video_render_single, POST /otr/video_render_soak
+[32m[INFO][0m 
+Import times for custom nodes:
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\custom_nodes\websocket_image_save.py
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\dmm_ascii_art.py
+[32m[INFO][0m    0.0 seconds (IMPORT FAILED): C:\Users\jeffr\Documents\ComfyUI\custom_nodes\otr-model-smoker
+[32m[INFO][0m    0.0 seconds (IMPORT FAILED): C:\Users\jeffr\Documents\ComfyUI\custom_nodes\story-project
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\otr_bakeoff_helper
+[32m[INFO][0m    0.0 seconds (IMPORT FAILED): C:\Users\jeffr\Documents\ComfyUI\custom_nodes\models
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\golden-flicker
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\radio_drama
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\voice-ref
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\custom_nodes\golden-flicker
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\DMM_MusicEnhancer
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-advanced-model-manager
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-GGUF
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-Goofer
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-custom-scripts
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyMath
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui_essentials
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\vnccs
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-workspace-manager
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-data-media-machine
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\rgthree-comfy
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-KJNodes
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-LTXVideo
+[32m[INFO][0m    0.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-impact-pack
+[32m[INFO][0m    0.1 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\Nvidia_RTX_Nodes_ComfyUI
+[32m[INFO][0m    0.1 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-videohelpersuite
+[32m[INFO][0m    0.2 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-lora-manager
+[32m[INFO][0m    0.2 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-HunyuanWorld-Mirror
+[32m[INFO][0m    0.2 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-SeedVR2_VideoUpscaler
+[32m[INFO][0m    0.3 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\RES4LYF
+[32m[INFO][0m    0.6 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-kokorotts
+[32m[INFO][0m    0.6 seconds: C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI\custom_nodes\ComfyUI-OldTimeRadio
+[32m[INFO][0m    0.8 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-Manager
+[32m[INFO][0m    1.0 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-OldTimeRadio
+[32m[INFO][0m    2.9 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfyui-easy-use
+[32m[INFO][0m    3.9 seconds: C:\Users\jeffr\Documents\ComfyUI\custom_nodes\comfy-rvc
+[32m[INFO][0m 
+[32m[INFO][0m Context impl SQLiteImpl.
+[32m[INFO][0m Will assume non-transactional DDL.
+[32m[INFO][0m Using RAM pressure cache.
+[32m[INFO][0m [LoRA-Manager] Deduplicate: removed 0 history rows, 0 queue rows, 0 orphaned queue rows
+[32m[INFO][0m Starting server
+
+[32m[INFO][0m [LoRA-Manager] Lora cache hydrated from persisted snapshot with 4 models
+[32m[INFO][0m To see the GUI go to: http://127.0.0.1:8000
+[32m[INFO][0m [LoRA-Manager] Checkpoint cache hydrated from persisted snapshot with 27 models
+[32m[INFO][0m [LoRA-Manager] Recipe cache miss: performing full directory scan
+[32m[INFO][0m [LoRA-Manager] Embedding cache initialized in 0.00 seconds. Found 0 models
+[32m[INFO][0m [LoRA-Manager] Recipe cache initialized in 0.01 seconds. Found 0 recipes
+[32m[INFO][0m [LoRA-Manager] FTS index validated, reusing existing index with 0 recipes
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 32 -> 32 MB, reserved 64 -> 64 MB, free=14955 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.6044921875
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=ca87bd0f
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12917.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12849.73 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:01<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:01<00:47,  1.63s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:02<00:47,  1.63s/it]                                     7%|▋         | 2/30 [00:02<00:38,  1.36s/it] 10%|█         | 3/30 [00:04<00:36,  1.37s/it] 13%|█▎        | 4/30 [00:05<00:35,  1.38s/it] 17%|█▋        | 5/30 [00:06<00:34,  1.38s/it] 20%|██        | 6/30 [00:08<00:33,  1.39s/it] 23%|██▎       | 7/30 [00:09<00:31,  1.38s/it] 27%|██▋       | 8/30 [00:11<00:30,  1.40s/it] 30%|███       | 9/30 [00:12<00:29,  1.41s/it] 33%|███▎      | 10/30 [00:13<00:27,  1.40s/it] 37%|███▋      | 11/30 [00:15<00:26,  1.39s/it] 40%|████      | 12/30 [00:16<00:24,  1.39s/it] 43%|████▎     | 13/30 [00:17<00:23,  1.39s/it] 47%|████▋     | 14/30 [00:19<00:22,  1.39s/it] 50%|█████     | 15/30 [00:20<00:21,  1.43s/it] 53%|█████▎    | 16/30 [00:22<00:19,  1.40s/it] 57%|█████▋    | 17/30 [00:23<00:18,  1.39s/it] 60%|██████    | 18/30 [00:24<00:16,  1.40s/it] 63%|██████▎   | 19/30 [00:26<00:15,  1.40s/it] 67%|██████▋   | 20/30 [00:27<00:14,  1.41s/it] 70%|███████   | 21/30 [00:29<00:12,  1.41s/it] 73%|███████▎  | 22/30 [00:30<00:11,  1.42s/it] 77%|███████▋  | 23/30 [00:32<00:09,  1.39s/it] 80%|████████  | 24/30 [00:33<00:08,  1.40s/it] 83%|████████▎ | 25/30 [00:34<00:07,  1.41s/it] 87%|████████▋ | 26/30 [00:36<00:05,  1.40s/it] 90%|█████████ | 27/30 [00:37<00:04,  1.39s/it] 93%|█████████▎| 28/30 [00:39<00:02,  1.39s/it] 97%|█████████▋| 29/30 [00:40<00:01,  1.42s/it]100%|██████████| 30/30 [00:41<00:00,  1.41s/it]100%|██████████| 30/30 [00:41<00:00,  1.40s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8318 MB / post 7040 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_tuufo9l3.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f025_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 87.19 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14787 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4404296875
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=3b58d354
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12850.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:01<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:01<00:40,  1.40s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:02<00:40,  1.40s/it]                                     7%|▋         | 2/30 [00:02<00:39,  1.41s/it] 10%|█         | 3/30 [00:04<00:38,  1.41s/it] 13%|█▎        | 4/30 [00:05<00:36,  1.39s/it] 17%|█▋        | 5/30 [00:07<00:35,  1.40s/it] 20%|██        | 6/30 [00:08<00:33,  1.41s/it] 23%|██▎       | 7/30 [00:09<00:33,  1.44s/it] 27%|██▋       | 8/30 [00:11<00:30,  1.41s/it] 30%|███       | 9/30 [00:12<00:30,  1.45s/it] 33%|███▎      | 10/30 [00:14<00:29,  1.46s/it] 37%|███▋      | 11/30 [00:15<00:27,  1.47s/it] 40%|████      | 12/30 [00:17<00:26,  1.46s/it] 43%|████▎     | 13/30 [00:18<00:24,  1.42s/it] 47%|████▋     | 14/30 [00:19<00:22,  1.42s/it] 50%|█████     | 15/30 [00:21<00:21,  1.46s/it] 53%|█████▎    | 16/30 [00:22<00:20,  1.45s/it] 57%|█████▋    | 17/30 [00:24<00:18,  1.44s/it] 60%|██████    | 18/30 [00:25<00:17,  1.42s/it] 63%|██████▎   | 19/30 [00:27<00:15,  1.41s/it] 67%|██████▋   | 20/30 [00:28<00:14,  1.41s/it] 70%|███████   | 21/30 [00:29<00:12,  1.43s/it] 73%|███████▎  | 22/30 [00:31<00:11,  1.44s/it] 77%|███████▋  | 23/30 [00:32<00:10,  1.43s/it] 80%|████████  | 24/30 [00:34<00:08,  1.43s/it] 83%|████████▎ | 25/30 [00:35<00:07,  1.44s/it] 87%|████████▋ | 26/30 [00:37<00:05,  1.44s/it] 90%|█████████ | 27/30 [00:38<00:04,  1.47s/it] 93%|█████████▎| 28/30 [00:40<00:02,  1.44s/it] 97%|█████████▋| 29/30 [00:41<00:01,  1.45s/it]100%|██████████| 30/30 [00:42<00:00,  1.43s/it]100%|██████████| 30/30 [00:42<00:00,  1.43s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8318 MB / post 7047 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_kdfe5vmt.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f025_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 83.22 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14787 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4404296875
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+2.560s -> slice_8a2dbd7e0f338dc0.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+2.560s -> slice_8a2dbd7e0f338dc0.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=547cba55
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12850.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12845.88 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:03<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:03<01:38,  3.40s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:06<01:38,  3.40s/it]                                     7%|▋         | 2/30 [00:06<01:35,  3.43s/it] 10%|█         | 3/30 [00:10<01:32,  3.41s/it] 13%|█▎        | 4/30 [00:13<01:31,  3.50s/it] 17%|█▋        | 5/30 [00:17<01:28,  3.53s/it] 20%|██        | 6/30 [00:20<01:23,  3.49s/it] 23%|██▎       | 7/30 [00:24<01:19,  3.48s/it] 27%|██▋       | 8/30 [00:27<01:15,  3.43s/it] 30%|███       | 9/30 [00:31<01:11,  3.40s/it] 33%|███▎      | 10/30 [00:34<01:08,  3.41s/it] 37%|███▋      | 11/30 [00:37<01:05,  3.43s/it] 40%|████      | 12/30 [00:41<01:00,  3.36s/it] 43%|████▎     | 13/30 [00:44<00:56,  3.31s/it] 47%|████▋     | 14/30 [00:47<00:52,  3.29s/it] 50%|█████     | 15/30 [00:51<00:49,  3.32s/it] 53%|█████▎    | 16/30 [00:54<00:46,  3.33s/it] 57%|█████▋    | 17/30 [00:57<00:43,  3.38s/it] 60%|██████    | 18/30 [01:01<00:40,  3.35s/it] 63%|██████▎   | 19/30 [01:04<00:36,  3.36s/it] 67%|██████▋   | 20/30 [01:07<00:33,  3.35s/it] 70%|███████   | 21/30 [01:11<00:30,  3.34s/it] 73%|███████▎  | 22/30 [01:14<00:26,  3.32s/it] 77%|███████▋  | 23/30 [01:17<00:23,  3.31s/it] 80%|████████  | 24/30 [01:21<00:19,  3.31s/it] 83%|████████▎ | 25/30 [01:24<00:16,  3.30s/it] 87%|████████▋ | 26/30 [01:27<00:13,  3.32s/it] 90%|█████████ | 27/30 [01:31<00:10,  3.34s/it] 93%|█████████▎| 28/30 [01:34<00:06,  3.35s/it] 97%|█████████▋| 29/30 [01:37<00:03,  3.34s/it]100%|██████████| 30/30 [01:41<00:00,  3.34s/it]100%|██████████| 30/30 [01:41<00:00,  3.37s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8288 MB / post 7213 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 64 frame(s) at otr_beat_shot_b001_b0dtaebr.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f065_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 158.13 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+2.560s -> slice_8a2dbd7e0f338dc0.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+2.560s -> slice_8a2dbd7e0f338dc0.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=362db84d
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12843.88 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:03<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:03<01:43,  3.56s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:06<01:43,  3.56s/it]                                     7%|▋         | 2/30 [00:06<01:35,  3.41s/it] 10%|█         | 3/30 [00:10<01:32,  3.41s/it] 13%|█▎        | 4/30 [00:13<01:27,  3.35s/it] 17%|█▋        | 5/30 [00:16<01:22,  3.32s/it] 20%|██        | 6/30 [00:20<01:20,  3.34s/it] 23%|██▎       | 7/30 [00:23<01:16,  3.33s/it] 27%|██▋       | 8/30 [00:26<01:14,  3.36s/it] 30%|███       | 9/30 [00:30<01:11,  3.38s/it] 33%|███▎      | 10/30 [00:33<01:09,  3.45s/it] 37%|███▋      | 11/30 [00:37<01:03,  3.37s/it] 40%|████      | 12/30 [00:40<01:00,  3.36s/it] 43%|████▎     | 13/30 [00:43<00:56,  3.34s/it] 47%|████▋     | 14/30 [00:47<00:53,  3.34s/it] 50%|█████     | 15/30 [00:50<00:49,  3.33s/it] 53%|█████▎    | 16/30 [00:53<00:46,  3.34s/it] 57%|█████▋    | 17/30 [00:57<00:43,  3.32s/it] 60%|██████    | 18/30 [01:00<00:40,  3.35s/it] 63%|██████▎   | 19/30 [01:03<00:36,  3.35s/it] 67%|██████▋   | 20/30 [01:07<00:33,  3.32s/it] 70%|███████   | 21/30 [01:10<00:30,  3.37s/it] 73%|███████▎  | 22/30 [01:13<00:26,  3.31s/it] 77%|███████▋  | 23/30 [01:17<00:23,  3.30s/it] 80%|████████  | 24/30 [01:20<00:20,  3.34s/it] 83%|████████▎ | 25/30 [01:23<00:16,  3.30s/it] 87%|████████▋ | 26/30 [01:27<00:13,  3.31s/it] 90%|█████████ | 27/30 [01:30<00:09,  3.33s/it] 93%|█████████▎| 28/30 [01:33<00:06,  3.31s/it] 97%|█████████▋| 29/30 [01:37<00:03,  3.31s/it]100%|██████████| 30/30 [01:40<00:00,  3.33s/it]100%|██████████| 30/30 [01:40<00:00,  3.35s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8455 MB / post 7006 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 64 frame(s) at otr_beat_shot_b001_nfml07ax.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f065_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 157.91 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=51692919
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12625.83 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:04<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:04<02:24,  4.97s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:09<02:24,  4.97s/it]                                     7%|▋         | 2/30 [00:09<02:17,  4.92s/it] 10%|█         | 3/30 [00:14<02:14,  4.97s/it] 13%|█▎        | 4/30 [00:19<02:09,  5.00s/it] 17%|█▋        | 5/30 [00:24<02:01,  4.87s/it] 20%|██        | 6/30 [00:29<01:56,  4.86s/it] 23%|██▎       | 7/30 [00:34<01:52,  4.89s/it] 27%|██▋       | 8/30 [00:39<01:48,  4.94s/it] 30%|███       | 9/30 [00:44<01:43,  4.94s/it] 33%|███▎      | 10/30 [00:49<01:39,  4.97s/it] 37%|███▋      | 11/30 [00:54<01:34,  4.95s/it] 40%|████      | 12/30 [00:59<01:27,  4.88s/it] 43%|████▎     | 13/30 [01:04<01:36,  5.69s/it] 47%|████▋     | 14/30 [01:09<01:18,  4.92s/it] 50%|█████     | 15/30 [01:14<01:13,  4.92s/it] 53%|█████▎    | 16/30 [01:19<01:09,  4.93s/it] 57%|█████▋    | 17/30 [01:24<01:03,  4.92s/it] 60%|██████    | 18/30 [01:29<00:59,  4.95s/it] 63%|██████▎   | 19/30 [01:34<00:54,  4.95s/it] 67%|██████▋   | 20/30 [01:39<00:49,  4.92s/it] 70%|███████   | 21/30 [01:44<00:44,  4.92s/it] 73%|███████▎  | 22/30 [01:49<00:39,  4.93s/it] 77%|███████▋  | 23/30 [01:54<00:34,  4.93s/it] 80%|████████  | 24/30 [01:58<00:28,  4.79s/it] 83%|████████▎ | 25/30 [02:03<00:22,  4.46s/it] 87%|████████▋ | 26/30 [02:07<00:17,  4.46s/it] 90%|█████████ | 27/30 [02:12<00:13,  4.43s/it] 93%|█████████▎| 28/30 [02:16<00:08,  4.46s/it] 97%|█████████▋| 29/30 [02:21<00:04,  4.44s/it]100%|██████████| 30/30 [02:25<00:00,  4.45s/it]100%|██████████| 30/30 [02:25<00:00,  4.85s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8254 MB / post 6998 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 92 frame(s) at otr_beat_shot_b001_2yfgs7dg.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f093_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 211.59 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=a40c77fc
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12625.83 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:04<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:04<02:09,  4.45s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:08<02:09,  4.45s/it]                                     7%|▋         | 2/30 [00:08<02:04,  4.44s/it] 10%|█         | 3/30 [00:13<02:00,  4.46s/it] 13%|█▎        | 4/30 [00:17<01:56,  4.46s/it] 17%|█▋        | 5/30 [00:22<01:57,  4.69s/it] 20%|██        | 6/30 [00:27<01:57,  4.90s/it] 23%|██▎       | 7/30 [00:32<01:52,  4.91s/it] 27%|██▋       | 8/30 [00:37<01:48,  4.93s/it] 30%|███       | 9/30 [00:42<01:41,  4.84s/it] 33%|███▎      | 10/30 [00:46<01:28,  4.42s/it] 37%|███▋      | 11/30 [00:50<01:24,  4.45s/it] 40%|████      | 12/30 [00:55<01:20,  4.45s/it] 43%|████▎     | 13/30 [00:59<01:15,  4.45s/it] 47%|████▋     | 14/30 [01:04<01:11,  4.46s/it] 50%|█████     | 15/30 [01:08<01:07,  4.47s/it] 53%|█████▎    | 16/30 [01:13<01:02,  4.47s/it] 57%|█████▋    | 17/30 [01:17<00:57,  4.45s/it] 60%|██████    | 18/30 [01:22<00:53,  4.45s/it] 63%|██████▎   | 19/30 [01:26<00:49,  4.46s/it] 67%|██████▋   | 20/30 [01:31<00:44,  4.45s/it] 70%|███████   | 21/30 [01:35<00:39,  4.44s/it] 73%|███████▎  | 22/30 [01:39<00:35,  4.45s/it] 77%|███████▋  | 23/30 [01:44<00:31,  4.46s/it] 80%|████████  | 24/30 [01:48<00:26,  4.46s/it] 83%|████████▎ | 25/30 [01:53<00:22,  4.47s/it] 87%|████████▋ | 26/30 [01:58<00:18,  4.68s/it] 90%|█████████ | 27/30 [02:02<00:14,  4.87s/it] 93%|█████████▎| 28/30 [02:07<00:09,  4.95s/it] 97%|█████████▋| 29/30 [02:12<00:04,  4.93s/it]100%|██████████| 30/30 [02:17<00:00,  4.93s/it]100%|██████████| 30/30 [02:17<00:00,  4.59s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8246 MB / post 7008 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 92 frame(s) at otr_beat_shot_b001_j2oorwbh.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f093_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 206.59 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+5.120s -> slice_68288b5c257f0e1a.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+5.120s -> slice_68288b5c257f0e1a.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=9ccd7324
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12235.04 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:06<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:06<03:11,  6.61s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:13<03:11,  6.61s/it]                                     7%|▋         | 2/30 [00:13<03:04,  6.60s/it] 10%|█         | 3/30 [00:19<02:58,  6.60s/it] 13%|█▎        | 4/30 [00:26<02:51,  6.60s/it] 17%|█▋        | 5/30 [00:33<02:45,  6.62s/it] 20%|██        | 6/30 [00:39<02:38,  6.60s/it] 23%|██▎       | 7/30 [00:46<02:32,  6.61s/it] 27%|██▋       | 8/30 [00:52<02:25,  6.59s/it] 30%|███       | 9/30 [00:59<02:18,  6.59s/it] 33%|███▎      | 10/30 [01:06<02:12,  6.62s/it] 37%|███▋      | 11/30 [01:12<02:05,  6.60s/it] 40%|████      | 12/30 [01:19<01:59,  6.61s/it] 43%|████▎     | 13/30 [01:25<01:52,  6.62s/it] 47%|████▋     | 14/30 [01:32<01:46,  6.63s/it] 50%|█████     | 15/30 [01:39<01:38,  6.59s/it] 53%|█████▎    | 16/30 [01:45<01:32,  6.62s/it] 57%|█████▋    | 17/30 [01:52<01:26,  6.63s/it] 60%|██████    | 18/30 [01:58<01:19,  6.62s/it] 63%|██████▎   | 19/30 [02:05<01:12,  6.62s/it] 67%|██████▋   | 20/30 [02:12<01:06,  6.62s/it] 70%|███████   | 21/30 [02:18<00:59,  6.61s/it] 73%|███████▎  | 22/30 [02:25<00:53,  6.63s/it] 77%|███████▋  | 23/30 [02:32<00:46,  6.60s/it] 80%|████████  | 24/30 [02:38<00:39,  6.62s/it] 83%|████████▎ | 25/30 [02:45<00:35,  7.02s/it] 87%|████████▋ | 26/30 [02:52<00:28,  7.22s/it] 90%|█████████ | 27/30 [03:00<00:21,  7.24s/it] 93%|█████████▎| 28/30 [03:07<00:14,  7.25s/it] 97%|█████████▋| 29/30 [03:14<00:07,  7.25s/it]100%|██████████| 30/30 [03:21<00:00,  7.23s/it]100%|██████████| 30/30 [03:21<00:00,  6.73s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8808 MB / post 7057 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 128 frame(s) at otr_beat_shot_b001_kl4uys4s.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f129_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 285.44 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+5.120s -> slice_68288b5c257f0e1a.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+5.120s -> slice_68288b5c257f0e1a.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=32af813b
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12235.04 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:06<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:06<03:10,  6.57s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:13<03:10,  6.57s/it]                                     7%|▋         | 2/30 [00:13<03:04,  6.60s/it] 10%|█         | 3/30 [00:19<02:58,  6.60s/it] 13%|█▎        | 4/30 [00:26<03:00,  6.95s/it] 17%|█▋        | 5/30 [00:33<02:59,  7.19s/it] 20%|██        | 6/30 [00:41<02:52,  7.20s/it] 23%|██▎       | 7/30 [00:48<02:45,  7.19s/it] 27%|██▋       | 8/30 [00:55<02:37,  7.17s/it] 30%|███       | 9/30 [01:02<02:31,  7.20s/it] 33%|███▎      | 10/30 [01:09<02:24,  7.22s/it] 37%|███▋      | 11/30 [01:17<02:17,  7.22s/it] 40%|████      | 12/30 [01:24<02:09,  7.20s/it] 43%|████▎     | 13/30 [01:31<02:03,  7.27s/it] 47%|████▋     | 14/30 [01:38<01:56,  7.26s/it] 50%|█████     | 15/30 [01:46<01:49,  7.30s/it] 53%|█████▎    | 16/30 [01:53<01:42,  7.29s/it] 57%|█████▋    | 17/30 [02:00<01:34,  7.26s/it] 60%|██████    | 18/30 [02:07<01:26,  7.24s/it] 63%|██████▎   | 19/30 [02:15<01:19,  7.27s/it] 67%|██████▋   | 20/30 [02:22<01:12,  7.26s/it] 70%|███████   | 21/30 [02:29<01:04,  7.22s/it] 73%|███████▎  | 22/30 [02:36<00:57,  7.23s/it] 77%|███████▋  | 23/30 [02:44<00:50,  7.24s/it] 80%|████████  | 24/30 [02:51<00:43,  7.22s/it] 83%|████████▎ | 25/30 [02:58<00:36,  7.28s/it] 87%|████████▋ | 26/30 [03:05<00:29,  7.28s/it] 90%|█████████ | 27/30 [03:13<00:22,  7.41s/it] 93%|█████████▎| 28/30 [03:20<00:14,  7.23s/it] 97%|█████████▋| 29/30 [03:27<00:06,  6.99s/it]100%|██████████| 30/30 [03:34<00:00,  7.22s/it]100%|██████████| 30/30 [03:34<00:00,  7.16s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8871 MB / post 7118 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 128 frame(s) at otr_beat_shot_b001_d916m_6x.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f129_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 299.57 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=f7ce63e5
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 11713.99 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:10<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:10<05:09, 10.66s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:21<05:09, 10.66s/it]                                     7%|▋         | 2/30 [00:21<05:02, 10.81s/it] 10%|█         | 3/30 [00:32<04:47, 10.64s/it] 13%|█▎        | 4/30 [00:42<04:37, 10.66s/it] 17%|█▋        | 5/30 [00:53<04:21, 10.45s/it] 20%|██        | 6/30 [01:03<03:54,  9.77s/it] 23%|██▎       | 7/30 [01:12<03:44,  9.74s/it] 27%|██▋       | 8/30 [01:22<03:34,  9.74s/it] 30%|███       | 9/30 [01:32<03:24,  9.73s/it] 33%|███▎      | 10/30 [01:42<03:14,  9.74s/it] 37%|███▋      | 11/30 [01:51<03:05,  9.75s/it] 40%|████      | 12/30 [02:01<02:55,  9.74s/it] 43%|████▎     | 13/30 [02:11<02:45,  9.73s/it] 47%|████▋     | 14/30 [02:21<02:36,  9.75s/it] 50%|█████     | 15/30 [02:30<02:26,  9.77s/it] 53%|█████▎    | 16/30 [02:41<02:29, 10.66s/it] 57%|█████▋    | 17/30 [02:52<02:18, 10.68s/it] 60%|██████    | 18/30 [03:02<02:08, 10.71s/it] 63%|██████▎   | 19/30 [03:13<01:57, 10.71s/it] 67%|██████▋   | 20/30 [03:24<01:46, 10.69s/it] 70%|███████   | 21/30 [03:34<01:27,  9.74s/it] 73%|███████▎  | 22/30 [03:43<01:17,  9.73s/it] 77%|███████▋  | 23/30 [03:53<01:08,  9.76s/it] 80%|████████  | 24/30 [04:03<00:58,  9.76s/it] 83%|████████▎ | 25/30 [04:13<00:48,  9.73s/it] 87%|████████▋ | 26/30 [04:22<00:38,  9.73s/it] 90%|█████████ | 27/30 [04:32<00:29,  9.71s/it] 93%|█████████▎| 28/30 [04:42<00:19,  9.72s/it] 97%|█████████▋| 29/30 [04:51<00:09,  9.74s/it]100%|██████████| 30/30 [05:01<00:00,  9.71s/it]100%|██████████| 30/30 [05:01<00:00, 10.05s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 9657 MB / post 7053 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 176 frame(s) at otr_beat_shot_b001_s_tjh4gg.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f177_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 403.35 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=9e519264
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 11713.99 MB usable, 3716.96 MB loaded, full load: True
+  0%|          | 0/30 [00:00<?, ?it/s]  0%|          | 0/30 [00:00<?, ?it/s,   Model Initializing ...  ]  0%|          | 0/30 [00:09<?, ?it/s,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:09<04:40,  9.68s/it,  Model Initialization complete!  ]  3%|▎         | 1/30 [00:19<04:40,  9.68s/it]                                     7%|▋         | 2/30 [00:19<04:32,  9.73s/it] 10%|█         | 3/30 [00:29<04:23,  9.76s/it] 13%|█▎        | 4/30 [00:38<04:13,  9.75s/it] 17%|█▋        | 5/30 [00:48<04:03,  9.72s/it] 20%|██        | 6/30 [00:58<03:54,  9.76s/it] 23%|██▎       | 7/30 [01:08<03:44,  9.75s/it] 27%|██▋       | 8/30 [01:17<03:34,  9.74s/it] 30%|███       | 9/30 [01:27<03:24,  9.72s/it] 33%|███▎      | 10/30 [01:37<03:14,  9.72s/it] 37%|███▋      | 11/30 [01:47<03:04,  9.71s/it] 40%|████      | 12/30 [01:56<02:55,  9.75s/it] 43%|████▎     | 13/30 [02:06<02:45,  9.75s/it] 47%|████▋     | 14/30 [02:16<02:36,  9.77s/it] 50%|█████     | 15/30 [02:26<02:25,  9.72s/it] 53%|█████▎    | 16/30 [02:35<02:15,  9.71s/it] 57%|█████▋    | 17/30 [02:45<02:06,  9.72s/it] 60%|██████    | 18/30 [02:55<01:56,  9.74s/it] 63%|██████▎   | 19/30 [03:05<01:49,  9.92s/it] 67%|██████▋   | 20/30 [03:14<01:37,  9.79s/it] 70%|███████   | 21/30 [03:24<01:27,  9.76s/it] 73%|███████▎  | 22/30 [03:34<01:18,  9.77s/it] 77%|███████▋  | 23/30 [03:44<01:08,  9.77s/it] 80%|████████  | 24/30 [03:53<00:58,  9.77s/it] 83%|████████▎ | 25/30 [04:03<00:48,  9.75s/it] 87%|████████▋ | 26/30 [04:13<00:38,  9.74s/it] 90%|█████████ | 27/30 [04:23<00:29,  9.76s/it] 93%|█████████▎| 28/30 [04:32<00:19,  9.74s/it] 97%|█████████▋| 29/30 [04:42<00:09,  9.76s/it]100%|██████████| 30/30 [04:52<00:00,  9.71s/it]100%|██████████| 30/30 [04:52<00:00,  9.75s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 9606 MB / post 7045 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 176 frame(s) at otr_beat_shot_b001_g74n522w.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f177_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'wan_ti2v' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 394.29 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=3188742b
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12846.73 MB usable, 3716.96 MB loaded, full load: True
+[OTR_DMDRestart] marker=9b429d0ec028 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+[1m[33m[WARNING][0m [OTR_DMDRestart] marker=9b429d0ec028 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:01<00:03,  1.75s/it] 67%|██████▋   | 2/3 [00:02<00:01,  1.28s/it]100%|██████████| 3/3 [00:03<00:00,  1.14s/it]100%|██████████| 3/3 [00:03<00:00,  1.23s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8262 MB / post 7021 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_vhgrjftz.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f025_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 41.43 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=2fb3e129
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12846.73 MB usable, 3716.96 MB loaded, full load: True
+[OTR_DMDRestart] marker=d700ea218c36 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+[1m[33m[WARNING][0m [OTR_DMDRestart] marker=d700ea218c36 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:01<00:02,  1.06s/it] 67%|██████▋   | 2/3 [00:02<00:01,  1.01s/it]100%|██████████| 3/3 [00:02<00:00,  1.01it/s]100%|██████████| 3/3 [00:02<00:00,  1.00it/s]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8279 MB / post 7021 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_v_oj3j_0.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f025_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 40.32 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=7f825ca1
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12625.83 MB usable, 3716.96 MB loaded, full load: True
+[OTR_DMDRestart] marker=1fccc9aab8c2 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+[1m[33m[WARNING][0m [OTR_DMDRestart] marker=1fccc9aab8c2 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:02<00:05,  2.68s/it] 67%|██████▋   | 2/3 [00:05<00:02,  2.63s/it]100%|██████████| 3/3 [00:07<00:00,  2.62s/it]100%|██████████| 3/3 [00:07<00:00,  2.63s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8272 MB / post 7459 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 92 frame(s) at otr_beat_shot_b001_dn_os_4e.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f093_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 73.88 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+3.680s -> slice_cb9ac1882630b478.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=228f186a
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 12625.83 MB usable, 3716.96 MB loaded, full load: True
+[OTR_DMDRestart] marker=8468a8fcb371 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+[1m[33m[WARNING][0m [OTR_DMDRestart] marker=8468a8fcb371 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:02<00:05,  2.98s/it] 67%|██████▋   | 2/3 [00:05<00:02,  2.90s/it]100%|██████████| 3/3 [00:08<00:00,  2.87s/it]100%|██████████| 3/3 [00:08<00:00,  2.89s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8729 MB / post 7424 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 92 frame(s) at otr_beat_shot_b001_3ldl7vgx.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f093_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 75.43 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=dd6e720e
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 11713.99 MB usable, 3716.96 MB loaded, full load: True
+[OTR_DMDRestart] marker=37b66a683792 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+[1m[33m[WARNING][0m [OTR_DMDRestart] marker=37b66a683792 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:05<00:11,  5.77s/it] 67%|██████▋   | 2/3 [00:11<00:05,  5.70s/it]100%|██████████| 3/3 [00:17<00:00,  5.66s/it]100%|██████████| 3/3 [00:17<00:00,  5.68s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8613 MB / post 7339 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 176 frame(s) at otr_beat_shot_b001_cjwmb447.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f177_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 120.42 seconds[0m
+[32m[INFO][0m got prompt
+[32m[INFO][0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3
+[32m[INFO][0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB
+[1m[33m[WARNING][0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+7.040s -> slice_63ba18f022174fd8.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))
+[32m[INFO][0m [gpu_residency] lease acquired pid=37300 token=4b473857
+[32m[INFO][0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)
+[32m[INFO][0m model weight dtype torch.float16, manual cast: None
+[32m[INFO][0m model_type FLOW
+[32m[INFO][0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)
+[32m[INFO][0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata...
+[32m[INFO][0m Created tokenizer with vocab size of 256384
+[1m[33m[WARNING][0m Dequantizing token_embd.weight to prevent runtime OOM.
+[32m[INFO][0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m Using pytorch attention in VAE
+[32m[INFO][0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16
+[32m[INFO][0m Requested to load WanVAE
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m Requested to load WanTEModel
+[32m[INFO][0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True
+[32m[INFO][0m Requested to load WAN22
+[32m[INFO][0m loaded completely; 11713.99 MB usable, 3716.96 MB loaded, full load: True
+[OTR_DMDRestart] marker=dbb39186af2d transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+[1m[33m[WARNING][0m [OTR_DMDRestart] marker=dbb39186af2d transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:05<00:11,  5.87s/it] 67%|██████▋   | 2/3 [00:11<00:05,  5.79s/it]100%|██████████| 3/3 [00:17<00:00,  5.80s/it]100%|██████████| 3/3 [00:17<00:00,  5.81s/it]
+[32m[INFO][0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB.
+[32m[INFO][0m [OTR video] wan_ti2v VRAM render-phase peak 8641 MB / post 7549 MB
+[1m[33m[WARNING][0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 176 frame(s) at otr_beat_shot_b001_ivy1t3g9.mp4
+[32m[INFO][0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f177_20260809/clips/
+[1m[33m[WARNING][0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build.
+[32m[INFO][0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True
+[1m[33m[WARNING][0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json
+[32m[INFO][0m [32mPrompt executed in 120.34 seconds[0m

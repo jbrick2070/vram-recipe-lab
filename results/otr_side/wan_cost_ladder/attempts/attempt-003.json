@@ -1,0 +1,1369 @@
+{
+  "boot_environment": {
+    "contract": {
+      "clear_exact": [
+        "COMFYUI_URL",
+        "HF_API_TOKEN",
+        "HUGGINGFACE_HUB_TOKEN",
+        "OTR_C7",
+        "OTR_ENABLE_HUMO",
+        "OTR_ENABLE_LTX_VIDEO",
+        "OTR_FORCE_ENGINE_MAP",
+        "OTR_HEADLESS_RESERVE_VRAM_GB",
+        "OTR_SOURCE_SNAPSHOT_MANIFEST",
+        "OTR_TEST_MODE",
+        "OTR_VIDEO_LANDSCAPE_CANVAS"
+      ],
+      "clear_prefixes": [
+        "OTR_WAN_TI2V_",
+        "OTR_FASTWAN_8GB_"
+      ],
+      "reason": "prevent stale reserve, model-file, prequalification, recipe, max-frame, or alternate-lane overrides from changing the frozen production workload; prevent any real HF credential or HKCU fallback from crossing the offline boot",
+      "set": {
+        "COMFYUI_URL": "http://127.0.0.1:8000",
+        "HF_HUB_OFFLINE": "1",
+        "HF_TOKEN": "offline-disabled",
+        "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+        "OTR_HEADLESS_PORT": "8000",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TRANSFORMERS_OFFLINE": "1"
+      }
+    },
+    "offline_credentials": {
+      "ambient_credential_key_names_present": [
+        "HF_TOKEN"
+      ],
+      "ambient_values_never_read_or_receipted": true,
+      "schema_version": 1,
+      "scrubbed_key_names": [
+        "HUGGINGFACE_HUB_TOKEN",
+        "HF_API_TOKEN"
+      ],
+      "set_nonsecret": {
+        "HF_HUB_OFFLINE": "1",
+        "HF_TOKEN": "offline-disabled",
+        "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+        "TRANSFORMERS_OFFLINE": "1"
+      },
+      "source_proof": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+        "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+      },
+      "validation_errors": []
+    },
+    "removed_keys": [
+      "OTR_WAN_TI2V_CKPT"
+    ],
+    "set": {
+      "COMFYUI_URL": "http://127.0.0.1:8000",
+      "HF_HUB_OFFLINE": "1",
+      "HF_TOKEN": "offline-disabled",
+      "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+      "OTR_HEADLESS_PORT": "8000",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "TRANSFORMERS_OFFLINE": "1"
+    }
+  },
+  "campaign_attempt_id": "attempt-003",
+  "errors": [
+    "CampaignError: Owned OTR WAN server did not boot: CampaignError: Listener parent 9124 is not owned launcher PID 24908",
+    "post-shutdown Manager audit failed: ManagerOfflineError: Serving argv must contain exactly one --user-directory: []"
+  ],
+  "finished_at_ns": 1786322448272081800,
+  "kind": "wan-cost-ladder-owned-campaign-lifecycle",
+  "manager_offline": {
+    "baseline": {
+      "config": {
+        "bytes": 460,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849860737885,
+        "key": "network_mode",
+        "mtime_ns": 1786320736274345500,
+        "network_mode": "offline",
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "section": "default",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      "derivation": {
+        "authority": "literal --user-directory in exact OTR launcher source",
+        "launcher": {
+          "bytes": 10558,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 63613344737203552,
+          "mtime_ns": 1785857769805265100,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+          "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+        },
+        "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+      },
+      "manager_source": {
+        "comfy_folder_paths_source": {
+          "bytes": 23156,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 7599824371845827,
+          "mtime_ns": 1785816261419028100,
+          "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+          "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+        },
+        "comfy_required_token": "def get_system_user_directory",
+        "derivation": "<effective --user-directory>/__manager/config.ini",
+        "manager_server_required_tokens": [
+          "[ComfyUI-Manager] All startup tasks have been completed.",
+          "[ComfyUI-Manager] default cache updated:",
+          "[ComfyUI-Manager] Failed to perform initial fetching",
+          "Start fetching...",
+          "Fetching done."
+        ],
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "offline_credential_environment_contract": {
+          "scrub_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "otr_hf_token_required_tokens": [
+          "token = os.environ.get(\"HF_TOKEN\") or None",
+          "token = _read_from_winreg()",
+          "source = \"HKCU\\\\Environment\"",
+          "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+        ],
+        "otr_hf_token_source": {
+          "bytes": 3703,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 2814749767578241,
+          "mtime_ns": 1780669043385039700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "required_tokens": [
+          "folder_paths.get_user_directory(), '__manager'",
+          "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+        ],
+        "source": {
+          "bytes": 30389,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 18858823440126191,
+          "mtime_ns": 1773849424839527300,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+          "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+        }
+      },
+      "phase": "preboot"
+    },
+    "immediately_preboot": {
+      "config": {
+        "bytes": 460,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849860737885,
+        "key": "network_mode",
+        "mtime_ns": 1786320736274345500,
+        "network_mode": "offline",
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "section": "default",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      "derivation": {
+        "authority": "literal --user-directory in exact OTR launcher source",
+        "launcher": {
+          "bytes": 10558,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 63613344737203552,
+          "mtime_ns": 1785857769805265100,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+          "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+        },
+        "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+      },
+      "manager_source": {
+        "comfy_folder_paths_source": {
+          "bytes": 23156,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 7599824371845827,
+          "mtime_ns": 1785816261419028100,
+          "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+          "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+        },
+        "comfy_required_token": "def get_system_user_directory",
+        "derivation": "<effective --user-directory>/__manager/config.ini",
+        "manager_server_required_tokens": [
+          "[ComfyUI-Manager] All startup tasks have been completed.",
+          "[ComfyUI-Manager] default cache updated:",
+          "[ComfyUI-Manager] Failed to perform initial fetching",
+          "Start fetching...",
+          "Fetching done."
+        ],
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "offline_credential_environment_contract": {
+          "scrub_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "otr_hf_token_required_tokens": [
+          "token = os.environ.get(\"HF_TOKEN\") or None",
+          "token = _read_from_winreg()",
+          "source = \"HKCU\\\\Environment\"",
+          "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+        ],
+        "otr_hf_token_source": {
+          "bytes": 3703,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 2814749767578241,
+          "mtime_ns": 1780669043385039700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "required_tokens": [
+          "folder_paths.get_user_directory(), '__manager'",
+          "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+        ],
+        "source": {
+          "bytes": 30389,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 18858823440126191,
+          "mtime_ns": 1773849424839527300,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+          "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+        }
+      },
+      "phase": "preboot"
+    },
+    "initial_preflight": {
+      "config": {
+        "bytes": 460,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849860737885,
+        "key": "network_mode",
+        "mtime_ns": 1786320736274345500,
+        "network_mode": "offline",
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "section": "default",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      "derivation": {
+        "authority": "literal --user-directory in exact OTR launcher source",
+        "launcher": {
+          "bytes": 10558,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 63613344737203552,
+          "mtime_ns": 1785857769805265100,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+          "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+        },
+        "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+      },
+      "manager_source": {
+        "comfy_folder_paths_source": {
+          "bytes": 23156,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 7599824371845827,
+          "mtime_ns": 1785816261419028100,
+          "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+          "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+        },
+        "comfy_required_token": "def get_system_user_directory",
+        "derivation": "<effective --user-directory>/__manager/config.ini",
+        "manager_server_required_tokens": [
+          "[ComfyUI-Manager] All startup tasks have been completed.",
+          "[ComfyUI-Manager] default cache updated:",
+          "[ComfyUI-Manager] Failed to perform initial fetching",
+          "Start fetching...",
+          "Fetching done."
+        ],
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "offline_credential_environment_contract": {
+          "scrub_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "otr_hf_token_required_tokens": [
+          "token = os.environ.get(\"HF_TOKEN\") or None",
+          "token = _read_from_winreg()",
+          "source = \"HKCU\\\\Environment\"",
+          "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+        ],
+        "otr_hf_token_source": {
+          "bytes": 3703,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 2814749767578241,
+          "mtime_ns": 1780669043385039700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "required_tokens": [
+          "folder_paths.get_user_directory(), '__manager'",
+          "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+        ],
+        "source": {
+          "bytes": 30389,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 18858823440126191,
+          "mtime_ns": 1773849424839527300,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+          "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+        }
+      },
+      "phase": "preboot"
+    }
+  },
+  "prior_failed_attempt": {
+    "attempt_002_offline_incident": {
+      "attempt_id": "attempt-002",
+      "baseline": {
+        "bytes": 171275,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 19984723347398114,
+        "mtime_ns": 1786320484599315500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-002.json",
+        "sha256": "88f607f553a4f55c6d442c9b27f85748e84a15030a7e3522ac10918a1172ce10"
+      },
+      "disposition": "immutable_in_place_invalid_pre_measurement",
+      "lifecycle": {
+        "bytes": 37816,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249302287459,
+        "mtime_ns": 1786320724932863600,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-002.json",
+        "sha256": "a0c0e2eda3b760b4387cee157898043fcfcebe9a16e4842997c2270fd4a07e99"
+      },
+      "measurement_accepted": false,
+      "observed_manager_markers": [
+        "network_mode: public",
+        "default cache updated:",
+        "FETCH ComfyRegistry Data"
+      ],
+      "recovery_receipt": {
+        "bytes": 2530,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 96827391989163735,
+        "mtime_ns": 1786320811786755900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-002_offline_incident_recovery.json",
+        "sha256": "77b42b7069e53b31d9694fabcbd54a0b6317b27b3a2d2a02cbf089390049fc4f"
+      },
+      "recovery_status": "INVALID_PRE_MEASUREMENT_OFFLINE_POLICY_INCIDENT_RECOVERED",
+      "rendered_clip_file_count": 0,
+      "server_log": {
+        "bytes": 34916,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 3377699721495645,
+        "mtime_ns": 1786320610671889500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-002\\wan_cost_ladder.server.log",
+        "sha256": "7523896db30d08b4f7e0557a4ab5c5ce1f4be17b3c01294a99d3264362dde71c"
+      },
+      "telemetry_file_count": 0
+    },
+    "legacy_attempt_001": {
+      "attempt_id": "legacy-attempt-001",
+      "disposition": "immutable_in_place",
+      "raw_receipt_count": 0,
+      "receipt": {
+        "bytes": 33343,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5348024558464453,
+        "mtime_ns": 1786319633661482900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\campaign_lifecycle.json",
+        "sha256": "442013facb8b261763a9d559270a6ca2302692c27629c94d29d4817b8c57c211"
+      },
+      "server_was_booted": false,
+      "status": "invalid"
+    }
+  },
+  "prior_failed_attempt_after": {
+    "attempt_002_offline_incident": {
+      "attempt_id": "attempt-002",
+      "baseline": {
+        "bytes": 171275,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 19984723347398114,
+        "mtime_ns": 1786320484599315500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-002.json",
+        "sha256": "88f607f553a4f55c6d442c9b27f85748e84a15030a7e3522ac10918a1172ce10"
+      },
+      "disposition": "immutable_in_place_invalid_pre_measurement",
+      "lifecycle": {
+        "bytes": 37816,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249302287459,
+        "mtime_ns": 1786320724932863600,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-002.json",
+        "sha256": "a0c0e2eda3b760b4387cee157898043fcfcebe9a16e4842997c2270fd4a07e99"
+      },
+      "measurement_accepted": false,
+      "observed_manager_markers": [
+        "network_mode: public",
+        "default cache updated:",
+        "FETCH ComfyRegistry Data"
+      ],
+      "recovery_receipt": {
+        "bytes": 2530,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 96827391989163735,
+        "mtime_ns": 1786320811786755900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-002_offline_incident_recovery.json",
+        "sha256": "77b42b7069e53b31d9694fabcbd54a0b6317b27b3a2d2a02cbf089390049fc4f"
+      },
+      "recovery_status": "INVALID_PRE_MEASUREMENT_OFFLINE_POLICY_INCIDENT_RECOVERED",
+      "rendered_clip_file_count": 0,
+      "server_log": {
+        "bytes": 34916,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 3377699721495645,
+        "mtime_ns": 1786320610671889500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-002\\wan_cost_ladder.server.log",
+        "sha256": "7523896db30d08b4f7e0557a4ab5c5ce1f4be17b3c01294a99d3264362dde71c"
+      },
+      "telemetry_file_count": 0
+    },
+    "legacy_attempt_001": {
+      "attempt_id": "legacy-attempt-001",
+      "disposition": "immutable_in_place",
+      "raw_receipt_count": 0,
+      "receipt": {
+        "bytes": 33343,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5348024558464453,
+        "mtime_ns": 1786319633661482900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\campaign_lifecycle.json",
+        "sha256": "442013facb8b261763a9d559270a6ca2302692c27629c94d29d4817b8c57c211"
+      },
+      "server_was_booted": false,
+      "status": "invalid"
+    }
+  },
+  "raw_receipts": [],
+  "runbook": {
+    "baseline_capture": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\capture_wan_cost_baseline.py",
+      "--output",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json"
+    ],
+    "campaign_attempt_id": "attempt-003",
+    "execution_switch": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_wan_cost_ladder_campaign.py",
+      "--run"
+    ],
+    "expected_clip_evidence": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f025_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f025_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f065_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f065_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f093_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f093_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f129_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f129_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f177_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\wan_ti2v_f177_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\fastwan_8gb_f025_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\fastwan_8gb_f025_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\fastwan_8gb_f093_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\fastwan_8gb_f093_run2.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\fastwan_8gb_f177_run1.mp4",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\clips\\fastwan_8gb_f177_run2.mp4"
+    ],
+    "expected_final_receipts": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\fits\\attempt-003.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-003.json"
+    ],
+    "expected_raw_receipts": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f025_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f025_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f065_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f065_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f093_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f093_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f129_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f129_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f177_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f177_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f025_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f025_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f093_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f093_run2.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f177_run1.json",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f177_run2.json"
+    ],
+    "manager_offline_check": {
+      "config": {
+        "bytes": 460,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849860737885,
+        "key": "network_mode",
+        "mtime_ns": 1786320736274345500,
+        "network_mode": "offline",
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "section": "default",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      "enforced_by": [
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\capture_wan_cost_baseline.py",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_wan_cost_ladder_campaign.py"
+      ],
+      "manager_source": {
+        "comfy_folder_paths_source": {
+          "bytes": 23156,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 7599824371845827,
+          "mtime_ns": 1785816261419028100,
+          "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+          "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+        },
+        "comfy_required_token": "def get_system_user_directory",
+        "derivation": "<effective --user-directory>/__manager/config.ini",
+        "manager_server_required_tokens": [
+          "[ComfyUI-Manager] All startup tasks have been completed.",
+          "[ComfyUI-Manager] default cache updated:",
+          "[ComfyUI-Manager] Failed to perform initial fetching",
+          "Start fetching...",
+          "Fetching done."
+        ],
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "offline_credential_environment_contract": {
+          "scrub_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "otr_hf_token_required_tokens": [
+          "token = os.environ.get(\"HF_TOKEN\") or None",
+          "token = _read_from_winreg()",
+          "source = \"HKCU\\\\Environment\"",
+          "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+        ],
+        "otr_hf_token_source": {
+          "bytes": 3703,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 2814749767578241,
+          "mtime_ns": 1780669043385039700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "required_tokens": [
+          "folder_paths.get_user_directory(), '__manager'",
+          "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+        ],
+        "source": {
+          "bytes": 30389,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 18858823440126191,
+          "mtime_ns": 1773849424839527300,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+          "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+        }
+      },
+      "required": "exact launcher --user-directory before boot; exact serving argv --user-directory after identification; same config path/SHA; network_mode=offline; clean full-log checks before every prompt",
+      "user_directory_authority": {
+        "authority": "literal --user-directory in exact OTR launcher source",
+        "launcher": {
+          "bytes": 10558,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 63613344737203552,
+          "mtime_ns": 1785857769805265100,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+          "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+        },
+        "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+      }
+    },
+    "one_resident_server": {
+      "allowed": true,
+      "scope": "all 16 legs",
+      "warm_proof": "within each cell, run1 then run2 are consecutive on identical serving PID/create-time/argv and fixture/baseline hashes; run2 hash-binds run1 and the append-only inter-run log gap must have no execution marker"
+    },
+    "owned_boot": {
+      "argv": [
+        "C:\\WINDOWS\\system32\\cmd.exe",
+        "/d",
+        "/c",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+        "WAN"
+      ],
+      "environment_contract": {
+        "clear_exact": [
+          "COMFYUI_URL",
+          "HF_API_TOKEN",
+          "HUGGINGFACE_HUB_TOKEN",
+          "OTR_C7",
+          "OTR_ENABLE_HUMO",
+          "OTR_ENABLE_LTX_VIDEO",
+          "OTR_FORCE_ENGINE_MAP",
+          "OTR_HEADLESS_RESERVE_VRAM_GB",
+          "OTR_SOURCE_SNAPSHOT_MANIFEST",
+          "OTR_TEST_MODE",
+          "OTR_VIDEO_LANDSCAPE_CANVAS"
+        ],
+        "clear_prefixes": [
+          "OTR_WAN_TI2V_",
+          "OTR_FASTWAN_8GB_"
+        ],
+        "reason": "prevent stale reserve, model-file, prequalification, recipe, max-frame, or alternate-lane overrides from changing the frozen production workload; prevent any real HF credential or HKCU fallback from crossing the offline boot",
+        "set": {
+          "COMFYUI_URL": "http://127.0.0.1:8000",
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "OTR_HEADLESS_PORT": "8000",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TRANSFORMERS_OFFLINE": "1"
+        }
+      },
+      "ownership_proof": "port had no listener before launch; serving main.py is the direct child whose parent_pid equals the exact launcher PID returned by Popen; port/model-path/output argv identity is receipt-bound",
+      "port": 8000
+    },
+    "pairs_in_required_sequence": [
+      {
+        "engine": "wan_ti2v",
+        "model_render_frames": 25,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f025_run1.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "25",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 21,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f025_run2.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "25",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f025_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 22
+      },
+      {
+        "engine": "wan_ti2v",
+        "model_render_frames": 65,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f065_run1.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "65",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 23,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f065_run2.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "65",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f065_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 24
+      },
+      {
+        "engine": "wan_ti2v",
+        "model_render_frames": 93,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f093_run1.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "93",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 25,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f093_run2.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "93",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f093_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 26
+      },
+      {
+        "engine": "wan_ti2v",
+        "model_render_frames": 129,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f129_run1.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "129",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 27,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f129_run2.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "129",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f129_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 28
+      },
+      {
+        "engine": "wan_ti2v",
+        "model_render_frames": 177,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f177_run1.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "177",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 29,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f177_run2.json",
+          "--engine",
+          "wan_ti2v",
+          "--frames",
+          "177",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\wan_ti2v_f177_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 30
+      },
+      {
+        "engine": "fastwan_8gb",
+        "model_render_frames": 25,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f025_run1.json",
+          "--engine",
+          "fastwan_8gb",
+          "--frames",
+          "25",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 221,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f025_run2.json",
+          "--engine",
+          "fastwan_8gb",
+          "--frames",
+          "25",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f025_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 222
+      },
+      {
+        "engine": "fastwan_8gb",
+        "model_render_frames": 93,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f093_run1.json",
+          "--engine",
+          "fastwan_8gb",
+          "--frames",
+          "93",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 223,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f093_run2.json",
+          "--engine",
+          "fastwan_8gb",
+          "--frames",
+          "93",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f093_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 224
+      },
+      {
+        "engine": "fastwan_8gb",
+        "model_render_frames": 177,
+        "pair_first_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f177_run1.json",
+          "--engine",
+          "fastwan_8gb",
+          "--frames",
+          "177",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "pair_first",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "pair_first_cache_buster": 225,
+        "warm_second_argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+          "--output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f177_run2.json",
+          "--engine",
+          "fastwan_8gb",
+          "--frames",
+          "177",
+          "--desktop-baseline-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-003.json",
+          "--boot-lane",
+          "otr-8000, WAN, production-wrapper, manager-offline",
+          "--server-port",
+          "8000",
+          "--expected-server-model-paths",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--expected-server-output",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--server-log",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+          "--interval-s",
+          "0.2",
+          "--timeout",
+          "2400",
+          "--run-role",
+          "warm_second",
+          "--previous-receipt",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-003\\fastwan_8gb_f177_run1.json",
+          "--manager-boot-guard",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\manager_boot_guard.json"
+        ],
+        "warm_second_cache_buster": 226
+      }
+    ],
+    "prior_failed_attempt": {
+      "attempt_002_offline_incident": {
+        "attempt_id": "attempt-002",
+        "baseline": {
+          "bytes": 171275,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 19984723347398114,
+          "mtime_ns": 1786320484599315500,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-002.json",
+          "sha256": "88f607f553a4f55c6d442c9b27f85748e84a15030a7e3522ac10918a1172ce10"
+        },
+        "disposition": "immutable_in_place_invalid_pre_measurement",
+        "lifecycle": {
+          "bytes": 37816,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 8444249302287459,
+          "mtime_ns": 1786320724932863600,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-002.json",
+          "sha256": "a0c0e2eda3b760b4387cee157898043fcfcebe9a16e4842997c2270fd4a07e99"
+        },
+        "measurement_accepted": false,
+        "observed_manager_markers": [
+          "network_mode: public",
+          "default cache updated:",
+          "FETCH ComfyRegistry Data"
+        ],
+        "recovery_receipt": {
+          "bytes": 2530,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 96827391989163735,
+          "mtime_ns": 1786320811786755900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\attempts\\attempt-002_offline_incident_recovery.json",
+          "sha256": "77b42b7069e53b31d9694fabcbd54a0b6317b27b3a2d2a02cbf089390049fc4f"
+        },
+        "recovery_status": "INVALID_PRE_MEASUREMENT_OFFLINE_POLICY_INCIDENT_RECOVERED",
+        "rendered_clip_file_count": 0,
+        "server_log": {
+          "bytes": 34916,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 3377699721495645,
+          "mtime_ns": 1786320610671889500,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-002\\wan_cost_ladder.server.log",
+          "sha256": "7523896db30d08b4f7e0557a4ab5c5ce1f4be17b3c01294a99d3264362dde71c"
+        },
+        "telemetry_file_count": 0
+      },
+      "legacy_attempt_001": {
+        "attempt_id": "legacy-attempt-001",
+        "disposition": "immutable_in_place",
+        "raw_receipt_count": 0,
+        "receipt": {
+          "bytes": 33343,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5348024558464453,
+          "mtime_ns": 1786319633661482900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\campaign_lifecycle.json",
+          "sha256": "442013facb8b261763a9d559270a6ca2302692c27629c94d29d4817b8c57c211"
+        },
+        "server_was_booted": false,
+        "status": "invalid"
+      }
+    },
+    "reducer_check": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\reduce_wan_cost_ladder.py",
+      "--attempt-id",
+      "attempt-003",
+      "--output",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\fits\\attempt-003.json"
+    ],
+    "reducer_write": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\reduce_wan_cost_ladder.py",
+      "--attempt-id",
+      "attempt-003",
+      "--output",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\fits\\attempt-003.json",
+      "--write"
+    ],
+    "shutdown_proof": "re-identify port 8000 and require exact PID/create-time/argv plus direct-parent launcher match before terminate/kill; then require both processes exited and port 8000 has no listener"
+  },
+  "schema_version": 1,
+  "server": null,
+  "server_log": {
+    "bytes": 39626,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 18858823440581762,
+    "mtime_ns": 1786322230761622200,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-003\\wan_cost_ladder.server.log",
+    "sha256": "a3b177447b58b6f050fd20d56f87e881cba8aa79c5d65408b8a1ffca81f52f97"
+  },
+  "shutdown": {
+    "attempted": false,
+    "errors": [
+      "No positively identified server; owned launcher left for manual inspection"
+    ],
+    "forced_server_kill": false,
+    "identity_reverified": false,
+    "launcher_exit_confirmed": false,
+    "port_8000_listener_pids_after": null,
+    "server_exit_confirmed": false
+  },
+  "source": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_wan_cost_ladder_campaign.py",
+    "sha256": "9ce9a7391ecebc37ffabaa3bfbf040f34f5feb93a415a1b18a55fadf22c8bbaa"
+  },
+  "started_at_ns": 1786322205565460000,
+  "status": "invalid"
+}

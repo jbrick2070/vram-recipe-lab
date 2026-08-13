@@ -1,0 +1,46 @@
+{
+  "receipt_schema_version": 1,
+  "receipt_kind": "manual-runtime-cleanup-recovery",
+  "created_at_utc": "2026-08-09T23:24:43.8715772Z",
+  "incident": "The command-host timeout detached the warm runner. The model run completed and wrote its immutable run-2 receipt, but the runner process exited before its normal shutdown and lease-release finalizer completed.",
+  "certification_effect": "The run-2 measurement remains machine evidence. This receipt records the separate cleanup incident and must not be represented as normal runner shutdown proof.",
+  "associated_run": {
+    "receipt": "results/humo_14b_diet_portrait_480x832_f97_run2.json",
+    "receipt_sha256": "87ddd92834a1ba14544c102623407f8a849ebaa9007a51b11192abe92a19a234",
+    "artifact": "outputs/humo_14b_diet_portrait_480x832_f97_out_00002_.mp4",
+    "artifact_sha256": "ab26d00df511f8ace62b1b00a646ea8b40a89b890d38a2930aacad4252c6c14d"
+  },
+  "dead_gpu_owner": {
+    "created_at_unix": 1786317440.8814194,
+    "lock_schema_version": 1,
+    "nonce": "d4574f1ff2e9d6528c8ad63eedd1350ba4934db98c83b59d1e2e245285fe1516",
+    "pid": 56224,
+    "process_create_time": 1786317440.6762924,
+    "role": "standalone",
+    "process_identity_live_before_recovery": false
+  },
+  "recovery_guards": {
+    "os_coordinator_acquired_nonblocking": true,
+    "gpu_receipt_unlinked_only_after_exact_nonce_and_owner_match": true,
+    "foreign_server_adopted_or_killed": false,
+    "render_or_prompt_submitted": false
+  },
+  "owned_server_shutdown": {
+    "had_receipt": true,
+    "listener_exited": true,
+    "pid": 54568,
+    "pid_verified": true,
+    "process_exited": true,
+    "reason": "verified server process and listener exited",
+    "receipt_removed": true,
+    "success": true,
+    "termination_attempted": true,
+    "termination_reported_success": true
+  },
+  "postconditions": {
+    "gpu_lock_absent": true,
+    "suite_lock_absent": true,
+    "server_pid_receipt_absent": true
+  },
+  "success": true
+}

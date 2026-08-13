@@ -1,0 +1,584 @@
+{
+  "authoritative_server_reported_mode": {
+    "announcement_count": 1,
+    "authority": "server-reported resolved mode; config files are advisory only",
+    "first_execution_line_number": null,
+    "gate_evaluated_after_startup_tasks_complete": true,
+    "manager_core_default_source": {
+      "bytes": 131406,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 8444249301773195,
+      "mtime_ns": 1777140876094016400,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+      "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+    },
+    "manager_server_source": {
+      "bytes": 73639,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 5066549581245383,
+      "mtime_ns": 1777140876095535900,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+      "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+    },
+    "mode_line_number": 169,
+    "mode_precedes_first_execution": true,
+    "mode_precedes_startup_completion": true,
+    "observed_values": [
+      "offline"
+    ],
+    "required_mode": "offline",
+    "resolved_mode": "offline",
+    "source_contract": {
+      "authority": "exactly one server-log resolved network_mode announcement",
+      "config_role": "preboot advisory only; missing config defaults public",
+      "manager_core_default_source_line": 1774,
+      "manager_server_source_line": 29
+    },
+    "startup_complete_line_number": 172
+  },
+  "boot_environment": {
+    "contract": {
+      "clear_exact": [
+        "COMFYUI_URL",
+        "HF_API_TOKEN",
+        "HUGGINGFACE_HUB_TOKEN",
+        "OTR_C7",
+        "OTR_ENABLE_HUMO",
+        "OTR_ENABLE_LTX_VIDEO",
+        "OTR_FORCE_ENGINE_MAP",
+        "OTR_HEADLESS_RESERVE_VRAM_GB",
+        "OTR_SOURCE_SNAPSHOT_MANIFEST",
+        "OTR_TEST_MODE",
+        "OTR_VIDEO_LANDSCAPE_CANVAS"
+      ],
+      "clear_prefixes": [
+        "OTR_WAN_TI2V_",
+        "OTR_FASTWAN_8GB_"
+      ],
+      "reason": "prevent stale reserve, model-file, prequalification, recipe, max-frame, or alternate-lane overrides from changing the frozen production workload; prevent any real HF credential or HKCU fallback from crossing the offline boot",
+      "set": {
+        "COMFYUI_URL": "http://127.0.0.1:8000",
+        "HF_HUB_OFFLINE": "1",
+        "HF_TOKEN": "offline-disabled",
+        "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+        "OTR_HEADLESS_PORT": "8000",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TRANSFORMERS_OFFLINE": "1"
+      }
+    },
+    "offline_credentials": {
+      "ambient_credential_key_names_present": [
+        "HF_TOKEN"
+      ],
+      "ambient_values_never_read_or_receipted": true,
+      "schema_version": 1,
+      "scrubbed_key_names": [
+        "HUGGINGFACE_HUB_TOKEN",
+        "HF_API_TOKEN"
+      ],
+      "set_nonsecret": {
+        "HF_HUB_OFFLINE": "1",
+        "HF_TOKEN": "offline-disabled",
+        "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+        "TRANSFORMERS_OFFLINE": "1"
+      },
+      "source_proof": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+        "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+      },
+      "validation_errors": []
+    },
+    "removed_keys": [
+      "OTR_WAN_TI2V_CKPT"
+    ],
+    "set": {
+      "COMFYUI_URL": "http://127.0.0.1:8000",
+      "HF_HUB_OFFLINE": "1",
+      "HF_TOKEN": "offline-disabled",
+      "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+      "OTR_HEADLESS_PORT": "8000",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "TRANSFORMERS_OFFLINE": "1"
+    }
+  },
+  "boot_log_scan": {
+    "authoritative_server_reported_mode": {
+      "announcement_count": 1,
+      "authority": "server-reported resolved mode; config files are advisory only",
+      "first_execution_line_number": null,
+      "gate_evaluated_after_startup_tasks_complete": true,
+      "manager_core_default_source": {
+        "bytes": 131406,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249301773195,
+        "mtime_ns": 1777140876094016400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+        "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+      },
+      "manager_server_source": {
+        "bytes": 73639,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5066549581245383,
+        "mtime_ns": 1777140876095535900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+        "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+      },
+      "mode_line_number": 169,
+      "mode_precedes_first_execution": true,
+      "mode_precedes_startup_completion": true,
+      "observed_values": [
+        "offline"
+      ],
+      "required_mode": "offline",
+      "resolved_mode": "offline",
+      "source_contract": {
+        "authority": "exactly one server-log resolved network_mode announcement",
+        "config_role": "preboot advisory only; missing config defaults public",
+        "manager_core_default_source_line": 1774,
+        "manager_server_source_line": 29
+      },
+      "startup_complete_line_number": 172
+    },
+    "captured_log_snapshot": {
+      "bytes": 26876,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 19140298417286236,
+      "mtime_ns": 1786323854749715400,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+      "sha256": "1aa224e71099ab9755fb5e48d2f954c15820e0001e75b6ec013182de337a7db0"
+    },
+    "config_announcements": [
+      {
+        "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "line_number": 56,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+      }
+    ],
+    "errors": [],
+    "execution_marker_line_count": 0,
+    "execution_marker_rows_truncated": false,
+    "execution_markers_before_gate": [],
+    "expected_gui_url": "http://127.0.0.1:8000",
+    "expected_manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+    "first_execution_line_number": null,
+    "forbidden_credential_markers": [],
+    "forbidden_network_markers": [],
+    "hf_token_resolution_contract": {
+      "allowed_length": 16,
+      "allowed_source": "os.environ",
+      "allowed_value_is_nonsecret_offline_sentinel": true,
+      "marker_optional_if_resolver_not_imported": true
+    },
+    "hf_token_resolution_markers": [
+      {
+        "length": 16,
+        "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+        "line_number": 173,
+        "source": "os.environ"
+      },
+      {
+        "length": 16,
+        "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+        "line_number": 243,
+        "source": "os.environ"
+      }
+    ],
+    "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+    "network_mode_announcements": [
+      {
+        "line": "[INFO] [ComfyUI-Manager] network_mode: offline",
+        "line_number": 169,
+        "mode": "offline"
+      }
+    ],
+    "prefix_bytes": 26876,
+    "prefix_sha256": "1aa224e71099ab9755fb5e48d2f954c15820e0001e75b6ec013182de337a7db0",
+    "require_pre_prompt": true,
+    "start_offset": 0,
+    "startup_complete_markers": [
+      {
+        "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+        "line_number": 172
+      }
+    ],
+    "status": "pass",
+    "unique_attempt_log_required": true
+  },
+  "campaign_attempt_id": "attempt-004",
+  "created_at_ns": 1786323854904868900,
+  "kind": "wan-cost-ladder-manager-offline-boot-guard",
+  "post_identification": {
+    "authority": "advisory filesystem continuity; server log is authoritative",
+    "config": {
+      "bytes": 460,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849860737885,
+      "key": "network_mode",
+      "mtime_ns": 1786320736274345500,
+      "network_mode": "offline",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "section": "default",
+      "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+    },
+    "config_is_runtime_authority": false,
+    "derivation": {
+      "argv_index": 5,
+      "authority": "--user-directory in positively identified serving argv",
+      "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+    },
+    "manager_source": {
+      "comfy_folder_paths_source": {
+        "bytes": 23156,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 7599824371845827,
+        "mtime_ns": 1785816261419028100,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+        "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+      },
+      "comfy_required_token": "def get_system_user_directory",
+      "derivation": "<effective --user-directory>/__manager/config.ini",
+      "manager_core_required_tokens": [
+        "'network_mode': 'public',   # public | private | offline",
+        "def get_config():"
+      ],
+      "manager_core_source": {
+        "bytes": 131406,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249301773195,
+        "mtime_ns": 1777140876094016400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+        "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+      },
+      "manager_server_required_tokens": [
+        "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+        "[ComfyUI-Manager] All startup tasks have been completed.",
+        "[ComfyUI-Manager] default cache updated:",
+        "[ComfyUI-Manager] Failed to perform initial fetching",
+        "Start fetching...",
+        "Fetching done."
+      ],
+      "manager_server_source": {
+        "bytes": 73639,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5066549581245383,
+        "mtime_ns": 1777140876095535900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+        "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+      },
+      "mode_authority_contract": {
+        "authority": "exactly one server-log resolved network_mode announcement",
+        "config_role": "preboot advisory only; missing config defaults public",
+        "manager_core_default_source_line": 1774,
+        "manager_server_source_line": 29
+      },
+      "offline_credential_environment_contract": {
+        "scrub_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "TRANSFORMERS_OFFLINE": "1"
+        }
+      },
+      "otr_hf_token_required_tokens": [
+        "token = os.environ.get(\"HF_TOKEN\") or None",
+        "token = _read_from_winreg()",
+        "source = \"HKCU\\\\Environment\"",
+        "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+      ],
+      "otr_hf_token_source": {
+        "bytes": 3703,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 2814749767578241,
+        "mtime_ns": 1780669043385039700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+        "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+      },
+      "required_tokens": [
+        "folder_paths.get_user_directory(), '__manager'",
+        "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+      ],
+      "source": {
+        "bytes": 30389,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 18858823440126191,
+        "mtime_ns": 1773849424839527300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+        "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+      }
+    },
+    "matches_preboot_path_and_sha": true,
+    "phase": "post-identification-pre-prompt"
+  },
+  "preboot": {
+    "authority": "advisory filesystem precondition; server log is authoritative",
+    "config": {
+      "bytes": 460,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849860737885,
+      "key": "network_mode",
+      "mtime_ns": 1786320736274345500,
+      "network_mode": "offline",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "section": "default",
+      "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+    },
+    "config_is_runtime_authority": false,
+    "derivation": {
+      "authority": "literal --user-directory in exact OTR launcher source",
+      "launcher": {
+        "bytes": 10558,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 63613344737203552,
+        "mtime_ns": 1785857769805265100,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+        "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+      },
+      "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+    },
+    "manager_source": {
+      "comfy_folder_paths_source": {
+        "bytes": 23156,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 7599824371845827,
+        "mtime_ns": 1785816261419028100,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+        "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+      },
+      "comfy_required_token": "def get_system_user_directory",
+      "derivation": "<effective --user-directory>/__manager/config.ini",
+      "manager_core_required_tokens": [
+        "'network_mode': 'public',   # public | private | offline",
+        "def get_config():"
+      ],
+      "manager_core_source": {
+        "bytes": 131406,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249301773195,
+        "mtime_ns": 1777140876094016400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+        "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+      },
+      "manager_server_required_tokens": [
+        "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+        "[ComfyUI-Manager] All startup tasks have been completed.",
+        "[ComfyUI-Manager] default cache updated:",
+        "[ComfyUI-Manager] Failed to perform initial fetching",
+        "Start fetching...",
+        "Fetching done."
+      ],
+      "manager_server_source": {
+        "bytes": 73639,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5066549581245383,
+        "mtime_ns": 1777140876095535900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+        "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+      },
+      "mode_authority_contract": {
+        "authority": "exactly one server-log resolved network_mode announcement",
+        "config_role": "preboot advisory only; missing config defaults public",
+        "manager_core_default_source_line": 1774,
+        "manager_server_source_line": 29
+      },
+      "offline_credential_environment_contract": {
+        "scrub_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "TRANSFORMERS_OFFLINE": "1"
+        }
+      },
+      "otr_hf_token_required_tokens": [
+        "token = os.environ.get(\"HF_TOKEN\") or None",
+        "token = _read_from_winreg()",
+        "source = \"HKCU\\\\Environment\"",
+        "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+      ],
+      "otr_hf_token_source": {
+        "bytes": 3703,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 2814749767578241,
+        "mtime_ns": 1780669043385039700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+        "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+      },
+      "required_tokens": [
+        "folder_paths.get_user_directory(), '__manager'",
+        "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+      ],
+      "source": {
+        "bytes": 30389,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 18858823440126191,
+        "mtime_ns": 1773849424839527300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+        "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+      }
+    },
+    "phase": "preboot"
+  },
+  "schema_version": 1,
+  "server_instance": {
+    "argv": [
+      "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8000",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "--disable-metadata"
+    ],
+    "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 37300,
+        "port": 8000
+      }
+    ],
+    "ownership_chain": {
+      "chain_type": "windows-venv-one-hop",
+      "expected_launcher_argv": [
+        "C:\\WINDOWS\\system32\\cmd.exe",
+        "/d",
+        "/c",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+        "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+        "WAN"
+      ],
+      "intermediary": {
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8000",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--disable-metadata"
+        ],
+        "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "parent_pid": 34988,
+        "pid": 8388,
+        "process_create_time": 1786323831.969754
+      },
+      "launcher": {
+        "argv": [
+          "C:\\WINDOWS\\system32\\cmd.exe",
+          "/d",
+          "/c",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+          "WAN"
+        ],
+        "executable": "C:\\Windows\\System32\\cmd.exe",
+        "parent_pid": 7956,
+        "pid": 34988,
+        "process_create_time": 1786323831.265443
+      },
+      "policy": "exact-owned-cmd-direct-or-certified-windows-venv-one-hop",
+      "policy_precedent": {
+        "adaptation": "owned cmd launcher -> exact venv python shim -> serving interpreter; same argv[1:] and <=5s from shim to serving interpreter",
+        "required_tokens": [
+          "def _is_verified_windows_venv_launcher_chain(",
+          "launcher_argv[1:] != child_argv[1:]",
+          "child_created - launcher_created <= 5.0"
+        ],
+        "source": {
+          "bytes": 19611,
+          "mtime_ns": 1786220099290678700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\lab_locks.py",
+          "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+        }
+      },
+      "serving": {
+        "argv": [
+          "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8000",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--disable-metadata"
+        ],
+        "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+        "parent_pid": 8388,
+        "pid": 37300,
+        "process_create_time": 1786323831.9768996
+      },
+      "validated": true,
+      "validator_source": {
+        "bytes": 10221,
+        "mtime_ns": 1786323461589320200,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ownership.py",
+        "sha256": "bdf2f88a66044fea24220f27d91a331ae9e5bcf1fb82e1cfac7933e28c2d55be"
+      },
+      "venv_base_interpreter": {
+        "base_interpreter": {
+          "bytes": 91648,
+          "mtime_ns": 1772691957004560800,
+          "path": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "sha256": "8b3dd06c02d038c4cc10a0dd132285a7b07bed5e4e6c20251c896105c69e266a"
+        },
+        "config": {
+          "bytes": 198,
+          "mtime_ns": 1772691957771171900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\pyvenv.cfg",
+          "sha256": "7a7549dd2dc1749821b3ab570f7c6e48fcc2e3fddba888260d9ed46948802e67"
+        },
+        "derivation": "<single absolute pyvenv.cfg home>/python.exe",
+        "home": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none"
+      }
+    },
+    "parent_pid": 8388,
+    "process_create_time": 1786323831.9768996,
+    "serving_pid": 37300
+  },
+  "source": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\manager_offline_guard.py",
+    "sha256": "84aa8a46e02147e5373b862b5a915b85c903d7f3832534e8028ccb732cdab0d6"
+  },
+  "status": "pass"
+}

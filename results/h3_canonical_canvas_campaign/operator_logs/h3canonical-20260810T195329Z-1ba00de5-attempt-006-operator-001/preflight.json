@@ -1,0 +1,292 @@
+{
+  "directory_entries_before_preflight": [
+    "stderr.log",
+    "stdout.log"
+  ],
+  "exclusive_log_claims": {
+    "stderr": {
+      "bytes": 0,
+      "device": 1356286727840300467,
+      "inode": 29554872555588395,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786391639490595000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001\\stderr.log",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "device": 1356286727840300467,
+      "inode": 18295873487162153,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786391639487960200,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001\\stdout.log",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "initial_lifecycle": {
+    "bytes": 137011,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 10133099162454322,
+    "link_count": 1,
+    "mode": 33206,
+    "mtime_ns": 1786390522083680800,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\lifecycle.jsonl",
+    "regular_file": true,
+    "reparse_point": false,
+    "sha256": "56997729c0c2cc326fc93bbcef31a6a642cd5015ec0550100153c05c86a248d3"
+  },
+  "kind": "h3-local-operator-transport-preflight",
+  "no_campaign_or_server_process_started_by_recorder": true,
+  "plan": {
+    "arguments": [
+      "-B",
+      "-u",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_canonical_campaign.py",
+      "--run",
+      "--campaign-id",
+      "h3canonical-20260810T195329Z-1ba00de5-attempt-006"
+    ],
+    "argv": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "-B",
+      "-u",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_canonical_campaign.py",
+      "--run",
+      "--campaign-id",
+      "h3canonical-20260810T195329Z-1ba00de5-attempt-006"
+    ],
+    "authority": "operator transport only",
+    "campaign_id": "h3canonical-20260810T195329Z-1ba00de5-attempt-006",
+    "default_read_only": true,
+    "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "kind": "h3-local-operator-transport-plan",
+    "launch_receipt": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001\\launch.json",
+    "lifecycle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\lifecycle.jsonl",
+    "mission": "canonical",
+    "operator_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001",
+    "operator_run_id": "h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001",
+    "preflight_receipt": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001\\preflight.json",
+    "process_contract": {
+      "api": "Windows Start-Process",
+      "end_time_source": "System.Diagnostics.Process.ExitTime after -Wait",
+      "exit_code_source": "System.Diagnostics.Process.ExitCode after -Wait",
+      "pass_thru": true,
+      "start_time_source": "System.Diagnostics.Process.StartTime after -Wait",
+      "wait": true,
+      "window_style": "Hidden"
+    },
+    "resume": false,
+    "resume_from_campaign_id": null,
+    "safety_contract": {
+      "campaign_status_changed_by_transport": false,
+      "cleanup": false,
+      "force_or_kill": false,
+      "foreign_or_otr_access": false,
+      "server_adoption": false,
+      "server_or_gpu_probe": false,
+      "starts_only_campaign_process": true
+    },
+    "schema_version": 1,
+    "source_evidence": {
+      "builder": {
+        "bytes": 23048,
+        "device": 1356286727840300467,
+        "inode": 34902897112400078,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391029221064400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\build_h3_canonical_canvas_ladders.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "4dd33941f2c88fb5fcf7ddf2aaa0205cc2c805db941b83288639e8657f7158a4"
+      },
+      "campaign": {
+        "bytes": 169752,
+        "device": 1356286727840300467,
+        "inode": 16044073673229875,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391197283715500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_canonical_campaign.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "e9a7aef3c29fde2e60a53076a6a250d786b4c6d558f4aadd40640fc34e79ba28"
+      },
+      "lab_locks": {
+        "bytes": 19611,
+        "device": 1356286727840300467,
+        "inode": 12103423999309051,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786220099290678700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\lab_locks.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+      },
+      "manager_guard": {
+        "bytes": 39609,
+        "device": 1356286727840300467,
+        "inode": 21673573207687760,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786328834896415800,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "manager_test_boot": {
+        "bytes": 2556,
+        "device": 1356286727840300467,
+        "inode": 1688849861645462,
+        "link_count": 1,
+        "mode": 33279,
+        "mtime_ns": 1786328122932155800,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      "operator_launcher": {
+        "bytes": 4654,
+        "device": 1356286727840300467,
+        "inode": 17732923533996454,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786381835542073400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_campaign_operator.ps1",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "2873336d37427fda53ee14b762eaf586132d1a6d433f321b26d1e3b7f9f71d2d"
+      },
+      "operator_recorder": {
+        "bytes": 40313,
+        "device": 1356286727840300467,
+        "inode": 176203335421606373,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391444933198500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_campaign_operator_transport.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "b584d844e4529b8061e950f1b7c4dc69c1eb1553e4c29298403ab3b76a8a5075"
+      },
+      "python_executable": {
+        "bytes": 262144,
+        "device": 1356286727840300467,
+        "inode": 562949953716875,
+        "link_count": 1,
+        "mode": 33279,
+        "mtime_ns": 1772691956859914100,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+      },
+      "recipe_i2v_f107": {
+        "bytes": 15550,
+        "device": 1356286727840300467,
+        "inode": 9007199255463329,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391171851087000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_i2v_canonical_832x480_f107.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "00cf050221589d83e814c06f395b48ed9ca6f86d875d338d7dacf8eeb42c4e88"
+      },
+      "recipe_i2v_f192": {
+        "bytes": 15537,
+        "device": 1356286727840300467,
+        "inode": 3096224744539665,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391171851087000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_i2v_canonical_832x480_f192.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "9aa2a3552abb22c8261fd855443e74646b09fcf67d77459b3987f7b5ff4bc1eb"
+      },
+      "recipe_i2v_f277": {
+        "bytes": 15555,
+        "device": 1356286727840300467,
+        "inode": 2251799814407702,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391171851087000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_i2v_canonical_832x480_f277.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "441c47228a06e8cc3c8b6fc9b92a26d6042da7b546205bc7495485fce85bb7a0"
+      },
+      "recipe_r2v_f107": {
+        "bytes": 22004,
+        "device": 1356286727840300467,
+        "inode": 4222124651382275,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391171853198300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_r2v_refaudio_canonical_832x480_f107_seed43.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "fc578f336938874f7c7e7833e9394654aa0ed245e95121fb6ace2991208acb99"
+      },
+      "recipe_r2v_f192": {
+        "bytes": 21991,
+        "device": 1356286727840300467,
+        "inode": 1970324837697045,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391171853198300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_r2v_refaudio_canonical_832x480_f192_seed43.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "a6666b11343137dc1d87d4d901066ccbb4b42b435d7f9d766983db2ec3469a4e"
+      },
+      "recipe_r2v_f277": {
+        "bytes": 22009,
+        "device": 1356286727840300467,
+        "inode": 1688849860986394,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391171854752000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_r2v_refaudio_canonical_832x480_f277_seed43.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "aef0c1f3e682dfa888c8962e2e181d8c08afb420c1666078caa8448f90477023"
+      },
+      "runner": {
+        "bytes": 331908,
+        "device": 1356286727840300467,
+        "inode": 5348024559281480,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786390929528633200,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "85a841a4a040dfcad1d57911a583bc1345d8872c67880cc4fb68c636fe65f4ac"
+      }
+    },
+    "stderr_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001\\stderr.log",
+    "stdout_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_canonical_canvas_campaign\\operator_logs\\h3canonical-20260810T195329Z-1ba00de5-attempt-006-operator-001\\stdout.log",
+    "working_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab",
+    "write_contract": {
+      "launch_receipt": "open mode xb after terminal lifecycle verification",
+      "operator_directory": "unique atomic directory claim",
+      "preflight_receipt": "open mode xb",
+      "stderr_log": "os.open O_CREAT|O_EXCL before Start-Process",
+      "stdout_log": "os.open O_CREAT|O_EXCL before Start-Process"
+    }
+  },
+  "prepared_at_utc": "2026-08-10T19:53:59.493619Z",
+  "schema_version": 1
+}

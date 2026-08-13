@@ -333,6 +333,33 @@ class TestLabLocks(unittest.TestCase):
 
 
 class TestShutdownProof(unittest.TestCase):
+    def setUp(self):
+        # These legacy tests isolate PID-receipt/termination behavior.  The
+        # hardened runner now also requires a valid immutable idle-gate
+        # sidecar for every owned server, so provide that independent proof
+        # without adding a second filesystem unlink to the retry assertions.
+        process = mock.Mock()
+        process.create_time.return_value = 50.0
+        self._process_patch = mock.patch.object(
+            run_recipe.psutil, "Process", return_value=process
+        )
+        self._sidecar_snapshot_patch = mock.patch.object(
+            run_recipe,
+            "_snapshot_server_idle_gate_sidecar_for_cleanup",
+            return_value={"metadata": {"server_instance": {}}, "raw": b"sealed"},
+        )
+        self._sidecar_remove_patch = mock.patch.object(
+            run_recipe,
+            "_remove_server_idle_gate_sidecar_after_proved_exit",
+            return_value=(True, ""),
+        )
+        self._process_patch.start()
+        self._sidecar_snapshot_patch.start()
+        self._sidecar_remove_patch.start()
+        self.addCleanup(self._sidecar_remove_patch.stop)
+        self.addCleanup(self._sidecar_snapshot_patch.stop)
+        self.addCleanup(self._process_patch.stop)
+
     def test_stale_pid_cleanup_retains_unverifiable_receipt(self):
         with tempfile.TemporaryDirectory() as tmp:
             receipt = Path(tmp) / ".server.pid"
@@ -395,6 +422,417 @@ class TestShutdownProof(unittest.TestCase):
             self.assertTrue(receipt.exists())
             terminate.assert_not_called()
 
+    def test_stale_shutdown_retries_transient_receipt_unlink_after_clear_proof(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            real_unlink = path_type.unlink
+            unlink_attempts = 0
+
+            def flaky_unlink(path, *args, **kwargs):
+                nonlocal unlink_attempts
+                unlink_attempts += 1
+                if unlink_attempts < 3:
+                    raise PermissionError(13, "transient sharing violation", str(path))
+                return real_unlink(path, *args, **kwargs)
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(path_type, "unlink", autospec=True, side_effect=flaky_unlink),
+                mock.patch.object(run_recipe.time, "sleep") as sleep,
+                mock.patch.object(run_recipe, "terminate_owned_process_tree") as terminate,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertTrue(result["success"])
+            self.assertTrue(result["process_exited"])
+            self.assertTrue(result["listener_exited"])
+            self.assertTrue(result["receipt_removed"])
+            self.assertFalse(receipt.exists())
+            self.assertEqual(unlink_attempts, 3)
+            self.assertEqual(sleep.call_count, 2)
+            terminate.assert_not_called()
+
+    def test_stale_shutdown_bounds_persistent_receipt_unlink_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(
+                    path_type,
+                    "unlink",
+                    autospec=True,
+                    side_effect=PermissionError(13, "persistent sharing violation"),
+                ) as unlink,
+                mock.patch.object(run_recipe.time, "sleep") as sleep,
+                mock.patch.object(run_recipe, "terminate_owned_process_tree") as terminate,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(result["process_exited"])
+            self.assertTrue(result["listener_exited"])
+            self.assertFalse(result["receipt_removed"])
+            self.assertTrue(receipt.exists())
+            self.assertIn(
+                f"after {run_recipe.SERVER_PID_UNLINK_ATTEMPTS} attempts",
+                result["reason"],
+            )
+            self.assertEqual(unlink.call_count, run_recipe.SERVER_PID_UNLINK_ATTEMPTS)
+            self.assertEqual(
+                sleep.call_count,
+                run_recipe.SERVER_PID_UNLINK_ATTEMPTS - 1,
+            )
+            self.assertLessEqual(
+                sum(call.args[0] for call in sleep.call_args_list),
+                2.0,
+            )
+            terminate.assert_not_called()
+
+    def test_live_shutdown_retries_only_unlink_and_never_termination(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            real_unlink = path_type.unlink
+            alive = {"value": True}
+            unlink_attempts = 0
+
+            def terminate(_pid):
+                alive["value"] = False
+                return True
+
+            def flaky_unlink(path, *args, **kwargs):
+                nonlocal unlink_attempts
+                unlink_attempts += 1
+                if unlink_attempts < 3:
+                    raise PermissionError(13, "transient sharing violation", str(path))
+                return real_unlink(path, *args, **kwargs)
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(
+                    run_recipe.psutil,
+                    "pid_exists",
+                    side_effect=lambda _pid: alive["value"],
+                ),
+                mock.patch.object(run_recipe, "is_expected_lab_server_pid", return_value=True),
+                mock.patch.object(
+                    run_recipe,
+                    "listener_pid",
+                    side_effect=lambda _port, **_kwargs: 123 if alive["value"] else None,
+                ),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(
+                    run_recipe, "terminate_owned_process_tree", side_effect=terminate
+                ) as terminate_mock,
+                mock.patch.object(path_type, "unlink", autospec=True, side_effect=flaky_unlink),
+                mock.patch.object(run_recipe.time, "sleep"),
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertTrue(result["success"])
+            self.assertTrue(result["termination_attempted"])
+            self.assertTrue(result["receipt_removed"])
+            self.assertEqual(unlink_attempts, 3)
+            terminate_mock.assert_called_once_with(123)
+
+    def test_unlink_retry_fails_closed_on_receipt_content_drift(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            unlink_attempts = 0
+
+            def drift_then_fail(path, *args, **kwargs):
+                nonlocal unlink_attempts
+                unlink_attempts += 1
+                path.write_text("456", encoding="utf-8")
+                raise PermissionError(13, "sharing violation after drift", str(path))
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(path_type, "unlink", autospec=True, side_effect=drift_then_fail),
+                mock.patch.object(run_recipe.time, "sleep") as sleep,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertFalse(result["receipt_removed"])
+            self.assertEqual(receipt.read_text(encoding="utf-8"), "456")
+            self.assertEqual(unlink_attempts, 1)
+            self.assertEqual(sleep.call_count, 1)
+            self.assertIn("identity/content drifted", result["reason"])
+
+    def test_unlink_retry_fails_closed_on_receipt_replacement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            real_unlink = path_type.unlink
+            initial = receipt.stat()
+            unlink_attempts = 0
+
+            def replace_then_fail(path, *args, **kwargs):
+                nonlocal unlink_attempts
+                unlink_attempts += 1
+                real_unlink(path)
+                path.write_text("123", encoding="utf-8")
+                os.utime(
+                    path,
+                    ns=(initial.st_atime_ns, initial.st_mtime_ns + 1_000_000_000),
+                )
+                raise PermissionError(13, "sharing violation after replacement", str(path))
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(path_type, "unlink", autospec=True, side_effect=replace_then_fail),
+                mock.patch.object(run_recipe.time, "sleep"),
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(receipt.exists())
+            self.assertEqual(unlink_attempts, 1)
+            self.assertIn("identity/content drifted", result["reason"])
+
+    def test_unlink_retry_fails_closed_if_hardlink_appears(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            external = Path(tmp) / "external.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            unlink_attempts = 0
+
+            def link_then_fail(path, *args, **kwargs):
+                nonlocal unlink_attempts
+                unlink_attempts += 1
+                os.link(path, external)
+                raise PermissionError(13, "sharing violation after hardlink", str(path))
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(path_type, "unlink", autospec=True, side_effect=link_then_fail),
+                mock.patch.object(run_recipe.time, "sleep"),
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(receipt.exists())
+            self.assertTrue(external.exists())
+            self.assertEqual(unlink_attempts, 1)
+            self.assertIn("exactly one hardlink", result["reason"])
+
+    def test_unlink_retry_fails_closed_if_pid_becomes_live(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(
+                    run_recipe.psutil, "pid_exists", side_effect=[False, False, True]
+                ),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(
+                    path_type,
+                    "unlink",
+                    autospec=True,
+                    side_effect=PermissionError(13, "first unlink blocked"),
+                ) as unlink,
+                mock.patch.object(run_recipe.time, "sleep"),
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(receipt.exists())
+            self.assertEqual(unlink.call_count, 1)
+            self.assertIn("became live", result["reason"])
+
+    def test_unlink_retry_fails_closed_if_listener_appears(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(
+                    run_recipe, "listener_pid", side_effect=[None, None, 456]
+                ),
+                mock.patch.object(
+                    path_type,
+                    "unlink",
+                    autospec=True,
+                    side_effect=PermissionError(13, "first unlink blocked"),
+                ) as unlink,
+                mock.patch.object(run_recipe.time, "sleep"),
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(receipt.exists())
+            self.assertEqual(unlink.call_count, 1)
+            self.assertIn("port 8199 became live", result["reason"])
+
+    def test_unlink_retry_fails_closed_if_server_stats_appear(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(
+                    run_recipe,
+                    "query_server_stats",
+                    side_effect=[None, None, {"live": True}],
+                ),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(
+                    path_type,
+                    "unlink",
+                    autospec=True,
+                    side_effect=PermissionError(13, "first unlink blocked"),
+                ) as unlink,
+                mock.patch.object(run_recipe.time, "sleep"),
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(receipt.exists())
+            self.assertEqual(unlink.call_count, 1)
+            self.assertIn("port 8199 became live", result["reason"])
+
+    def test_unlink_retry_treats_empty_server_stats_response_as_live(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(run_recipe, "query_server_stats", return_value={}),
+                mock.patch.object(run_recipe, "listener_pid", return_value=None),
+                mock.patch.object(run_recipe.time, "sleep") as sleep,
+                mock.patch.object(run_recipe, "terminate_owned_process_tree") as terminate,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertFalse(result["process_exited"])
+            self.assertFalse(result["listener_exited"])
+            self.assertFalse(result["receipt_removed"])
+            self.assertTrue(receipt.exists())
+            self.assertIn("unverified server", result["reason"])
+            sleep.assert_not_called()
+            terminate.assert_not_called()
+
+    def test_unlink_retry_fails_closed_if_listener_enumeration_is_denied(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(
+                    run_recipe.psutil,
+                    "net_connections",
+                    side_effect=run_recipe.psutil.AccessDenied(pid=456),
+                ),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(path_type, "unlink", autospec=True) as unlink,
+                mock.patch.object(run_recipe.time, "sleep") as sleep,
+                mock.patch.object(run_recipe, "terminate_owned_process_tree") as terminate,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertFalse(result["receipt_removed"])
+            self.assertTrue(receipt.exists())
+            self.assertIn("could not re-prove clear port 8199", result["reason"])
+            unlink.assert_not_called()
+            sleep.assert_not_called()
+            terminate.assert_not_called()
+
+    def test_unlink_retry_fails_closed_if_listener_owner_is_unknown(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            path_type = type(receipt)
+            connection = mock.Mock(
+                laddr=("127.0.0.1", int(run_recipe.LAB_PORT)),
+                status=run_recipe.psutil.CONN_LISTEN,
+                pid=None,
+            )
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(run_recipe.psutil, "pid_exists", return_value=False),
+                mock.patch.object(
+                    run_recipe.psutil, "net_connections", return_value=[connection]
+                ),
+                mock.patch.object(run_recipe, "query_server_stats", return_value=None),
+                mock.patch.object(path_type, "unlink", autospec=True) as unlink,
+                mock.patch.object(run_recipe.time, "sleep") as sleep,
+                mock.patch.object(run_recipe, "terminate_owned_process_tree") as terminate,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertFalse(result["receipt_removed"])
+            self.assertTrue(receipt.exists())
+            self.assertIn("could not re-prove clear port 8199", result["reason"])
+            unlink.assert_not_called()
+            sleep.assert_not_called()
+            terminate.assert_not_called()
+
+    def test_shutdown_rejects_reparse_receipt_before_process_or_port_checks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            receipt = Path(tmp) / ".server.pid"
+            receipt.write_text("123", encoding="utf-8")
+            with (
+                mock.patch.object(run_recipe, "SERVER_PID_FILE", receipt),
+                mock.patch.object(
+                    run_recipe, "_is_symlink_or_reparse_point", return_value=True
+                ),
+                mock.patch.object(run_recipe.psutil, "pid_exists") as pid_exists,
+                mock.patch.object(run_recipe, "query_server_stats") as stats,
+                mock.patch.object(run_recipe, "listener_pid") as listener,
+                mock.patch.object(run_recipe, "terminate_owned_process_tree") as terminate,
+            ):
+                result = run_recipe.shutdown_lab_server()
+
+            self.assertFalse(result["success"])
+            self.assertTrue(receipt.exists())
+            self.assertIn("regular non-reparse", result["reason"])
+            pid_exists.assert_not_called()
+            stats.assert_not_called()
+            listener.assert_not_called()
+            terminate.assert_not_called()
 
 if __name__ == "__main__":
     unittest.main()

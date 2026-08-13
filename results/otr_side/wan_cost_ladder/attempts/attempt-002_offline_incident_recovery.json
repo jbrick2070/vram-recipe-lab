@@ -1,0 +1,57 @@
+{
+  "receipt_schema_version": 1,
+  "receipt_kind": "wan-cost-ladder-offline-policy-incident-recovery",
+  "created_at_utc": "2026-08-10T00:13:04.4358756Z",
+  "attempt_id": "attempt-002",
+  "status": "INVALID_PRE_MEASUREMENT_OFFLINE_POLICY_INCIDENT_RECOVERED",
+  "incident": {
+    "cause": "The OTR launcher passed --user-directory C:\\Users\\jeffr\\Documents\\ComfyUI, so ComfyUI-Manager read C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini. The preflight had checked the different C:\\Users\\jeffr\\Documents\\ComfyUI\\user\\__manager\\config.ini path.",
+    "observed_markers": [
+      "ComfyUI-Manager default cache updated",
+      "FETCH ComfyRegistry Data"
+    ],
+    "classification": "Automatic registry/cache network activity occurred during owned-server boot. This is not a full network audit and no measurement from this attempt is accepted.",
+    "server_log": {
+      "bytes": 34916,
+      "path": "results/otr_side/wan_cost_ladder/evidence/attempt-002/wan_cost_ladder.server.log",
+      "sha256": "7523896db30d08b4f7e0557a4ab5c5ce1f4be17b3c01294a99d3264362dde71c"
+    }
+  },
+  "attempt_evidence": {
+    "baseline": {
+      "bytes": 171275,
+      "path": "results/otr_side/wan_cost_ladder/baselines/attempt-002.json",
+      "sha256": "88f607f553a4f55c6d442c9b27f85748e84a15030a7e3522ac10918a1172ce10"
+    },
+    "lifecycle": {
+      "path": "results/otr_side/wan_cost_ladder/attempts/attempt-002.json",
+      "sha256": "a0c0e2eda3b760b4387cee157898043fcfcebe9a16e4842997c2270fd4a07e99"
+    },
+    "telemetry_file_count": 0,
+    "rendered_clip_file_count": 0,
+    "measurement_accepted": false
+  },
+  "owned_server_recovery": {
+    "serving_pid": 50384,
+    "serving_parent_pid": 46552,
+    "identity_before_stop": {
+      "listener": "127.0.0.1:8000",
+      "main_path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "model_paths_config": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "output_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output"
+    },
+    "foreign_server_adopted_or_killed": false,
+    "owned_server_stopped_before_telemetry_or_render": true,
+    "server_process_alive_after": false,
+    "launcher_process_alive_after": false,
+    "port_8000_listener_count_after": 0
+  },
+  "postconditions": {
+    "campaign_process_alive": false,
+    "gpu_lock_absent": true,
+    "suite_lock_absent": true,
+    "telemetry_file_count": 0,
+    "rendered_clip_file_count": 0
+  },
+  "success": true
+}

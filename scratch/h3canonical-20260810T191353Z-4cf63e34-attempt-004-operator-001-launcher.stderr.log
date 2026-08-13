@@ -1,0 +1,7 @@
+Campaign exited 1; immutable local transport evidence was retained
+At C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\scratch\start_h3_campaign_operator.ps1:139 char:5
++     throw "Campaign exited $CampaignExitCode; immutable local transpo ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Campaign exited...ce was retained:String) [], RuntimeException
+    + FullyQualifiedErrorId : Campaign exited 1; immutable local transport evidence was retained
+ 

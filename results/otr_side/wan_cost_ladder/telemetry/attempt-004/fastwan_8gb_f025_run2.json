@@ -1,0 +1,4605 @@
+{
+  "adapter_render_peak_vram_mib": 8279.0,
+  "boot_lane": "otr-8000, WAN, production-wrapper, manager-offline",
+  "cache_buster": 222,
+  "campaign_attempt_id": "attempt-004",
+  "child_stdout": {
+    "errors": [],
+    "events": [
+      {
+        "byte_count": 155,
+        "observed_at_ns": 1786326242438433400,
+        "observed_at_utc": "2026-08-10T01:44:02.438433400Z",
+        "observed_monotonic_ns": 242052078000000,
+        "raw_base64": "W3dhbi1jb3N0LXJlcGxheV0gc3VibWl0dGluZyBlbmdpbmU9ZmFzdHdhbl84Z2IgZnJhbWVzPTI1IGNhY2hlX2J1c3Rlcj0yMjIgcHJvbXB0X3NoYTI1Nj0yZjYzMTM0YjA2MTk2NzAyODc5ZTFiNjYxM2I4MjQwNzI5NDlhYTIyMjhmZDE4NzU2ZTA1NjI3OGNmNDEzNDE3DQo=",
+        "raw_sha256": "2b06e914df1d01c2b96ed11767ee523f59ebe141c76937e020c82fefcdcc082f",
+        "text": "[wan-cost-replay] submitting engine=fastwan_8gb frames=25 cache_buster=222 prompt_sha256=2f63134b06196702879e1b6613b824072949aa2228fd18756e056278cf413417"
+      },
+      {
+        "byte_count": 2319,
+        "observed_at_ns": 1786326283162731000,
+        "observed_at_utc": "2026-08-10T01:44:43.162731000Z",
+        "observed_monotonic_ns": 242092796000000,
+        "raw_base64": "V0FOX0NPU1RfUkVQTEFZX1JFU1VMVD17ImJha2VkX2xlZGdlcl9zaGEyNTYiOiAiZTE2MDgxMDQ0ZDUwMjczNDExYzQxOTNlOGU4MTAzMWQxOTMwZmY5ODUxNGYzZWIyNzFjZWE0OTM3MGU5NTkyOCIsICJidW5kbGUiOiAiQzpcXFVzZXJzXFxqZWZmclxcRG9jdW1lbnRzXFxDb21meVVJXFxvdXRwdXRcXG90clxcZXBpc29kZXNcXF9zaGFyZWRcXHdhbl9jb3N0X2xhZGRlcl9tZWFzdXJlbWVudFxcZmFzdHdhbl84Z2JfZjAyNSIsICJjYWNoZV9idXN0ZXIiOiAyMjIsICJjYWNoZV9idXN0ZXJfZmllbGQiOiAiT1RSX1ZpZGVvUmVuZGVyQmF0Y2gub29tX2luZGV4IiwgImNhY2hlX2J1c3Rlcl9pbmVydF9jb250cmFjdCI6ICJtb2RlPWVwaXNvZGUiLCAiY29tZnl1aV91cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo4MDAwIiwgImRlbGl2ZXJlZF9mcmFtZXMiOiAyNCwgImVuZ2luZSI6ICJmYXN0d2FuXzhnYiIsICJlcnJvciI6ICIiLCAiZXhlY3V0ZWQiOiB7ImFsbG93ZWQiOiBbIjkyIl0sICJleGVjdXRlZCI6IFsiOTIiXSwgInJlbmRlcl9yYW4iOiB0cnVlLCAidW5leHBlY3RlZCI6IFtdfSwgImZpeHR1cmVfY29udHJhY3Rfc2hhMjU2IjogIjA3NmI0ZmVhYjFkNGI1ZmFmMjgzYzMxMTI1MDMxZmQwMTYxMzQ1MGRjNmFmNjQ1YzgyZDQyNjE2ODM1MjVlY2QiLCAia2luZCI6ICJ3YW4tY29zdC1sYWRkZXItY2FjaGVidXN0LXJlcGxheSIsICJtYXN0ZXJfYXVkaW9fc2hhMjU2IjogIjE1ZjQ3MTNiYmM4YTI4NDU2OTk5OTU1NWJjNmRmNzJiOTNlNjFlZjFiMjI3NzNlMjg0NTMwOGM2YjdiNDA0NDQiLCAibWFzdGVyX2F1ZGlvX3VuY2hhbmdlZCI6IHRydWUsICJtb2RlbF9yZW5kZXJfZnJhbWVzIjogMjUsICJub2RlX291dHB1dF90ZXh0cyI6IFsie1wib2tcIjogdHJ1ZSwgXCJtb2RlXCI6IFwiZXBpc29kZVwiLCBcImVwaXNvZGVfaWRcIjogXCJ3YW5fY29zdF9sYWRkZXJfZmFzdHdhbl84Z2JfZjAyNV8yMDI2MDgwOVwiLCBcIm5fYmVhdHNcIjogMSwgXCJjbGlwX2NvdW50XCI6IDEsIFwiZW5naW5lX2hpc3RvZ3JhbVwiOiB7XCJmYXN0d2FuXzhnYlwiOiAxfSwgXCJ2aWRlb19yZXZpc2lvblwiOiAxLCBcInByb21wdF9kaXZlcnNpdHlcIjoge1wiblwiOiAwLCBcImRpc3RpbmN0XCI6IDAsIFwib2tcIjogdHJ1ZSwgXCJzaGE4c1wiOiBbXX0sIFwidnJhbV9wZWFrX21iXCI6IDgyNzksIFwidHJhY2VcIjogW3tcInNob3RfaWRcIjogXCJzaG90X2IwMDFcIiwgXCJhdHRlbXB0c1wiOiBbXCJmYXN0d2FuXzhnYlwiXSwgXCJmaW5hbF9lbmdpbmVcIjogXCJmYXN0d2FuXzhnYlwiLCBcImluaXRfc291cmNlXCI6IFwic2NlbmVfc3RpbGxcIiwgXCJpbml0X2ltYWdlXCI6IFwic3RpbGxfYjAwMV80ZDMyZjNiMjlmYjQucG5nXCIsIFwidmlkZW9fc2VlZFwiOiA5NDQwMjExOTMsIFwidmlzdWFsX3N0eWxlXCI6IFwic2NpX2ZpX3JhZGlvXCIsIFwiYmFuYW5hX3JvdXRlXCI6IFwib25cIiwgXCJiYW5hbmFfdGFibGVfdmVyc2lvblwiOiBcIjNcIiwgXCJiYW5hbmFfc3Vic3RpdHV0aW9uc1wiOiAwLCBcImJhbmFuYV9zaGEyNTZfYmVmb3JlXCI6IFwiZGU2NjlmN2Y1YTgyYWRjM2RiZWVjNmU4NDVmM2E4OTg0MmI4YzUzNTk0ODI1NWFjM2E0NWFmYzIxZGNhZWM5OFwiLCBcImJhbmFuYV9zaGEyNTZfYWZ0ZXJcIjogXCJkZTY2OWY3ZjVhODJhZGMzZGJlZWM2ZTg0NWYzYTg5ODQyYjhjNTM1OTQ4MjU1YWMzYTQ1YWZjMjFkY2FlYzk4XCIsIFwiYmFuYW5hX3ZhcmlldGllc1wiOiBcIlNJREVBUk09cmVkIGJhbmFuYSxMT05HPXBsYW50YWluXCJ9XX0iXSwgIm9mZmxpbmVfY3JlZGVudGlhbF9lbnZpcm9ubWVudCI6IHsiYW1iaWVudF92YWx1ZXNfbmV2ZXJfcmVhZF9vcl9yZXR1cm5lZCI6IHRydWUsICJub25zZWNyZXRfc2VudGluZWxfbGVuZ3RoIjogMTYsICJzY3J1YmJlZF9rZXlfbmFtZXNfYWJzZW50IjogWyJIVUdHSU5HRkFDRV9IVUJfVE9LRU4iLCAiSEZfQVBJX1RPS0VOIl0sICJzZXRfa2V5X25hbWVzIjogWyJIRl9IVUJfT0ZGTElORSIsICJIRl9UT0tFTiIsICJIVUdHSU5HX0ZBQ0VfSFVCX1RPS0VOIiwgIlRSQU5TRk9STUVSU19PRkZMSU5FIl0sICJ2YWxpZGF0ZWQiOiB0cnVlfSwgInByb21wdF9pZCI6ICI5NDUwMTkyZC0yMTU1LTQxMWQtYTk1MS03OTU3OTA2ZWYwNmUiLCAicHJvbXB0X3NoYTI1NiI6ICIyZjYzMTM0YjA2MTk2NzAyODc5ZTFiNjYxM2I4MjQwNzI5NDlhYTIyMjhmZDE4NzU2ZTA1NjI3OGNmNDEzNDE3IiwgInB5dGhvbl9kb250X3dyaXRlX2J5dGVjb2RlIjogdHJ1ZSwgInNjaGVtYV92ZXJzaW9uIjogMSwgInN0YXR1cyI6ICJTVUNDRVNTIiwgInN1Y2Nlc3MiOiB0cnVlfQ0K",
+        "raw_sha256": "7f6b1a5ccf00c201a4d2668802325c9527aa1887a94cb6d1ab28687d71410897",
+        "text": "WAN_COST_REPLAY_RESULT={\"baked_ledger_sha256\": \"e16081044d50273411c4193e8e81031d1930ff98514f3eb271cea49370e95928\", \"bundle\": \"C:\\\\Users\\\\jeffr\\\\Documents\\\\ComfyUI\\\\output\\\\otr\\\\episodes\\\\_shared\\\\wan_cost_ladder_measurement\\\\fastwan_8gb_f025\", \"cache_buster\": 222, \"cache_buster_field\": \"OTR_VideoRenderBatch.oom_index\", \"cache_buster_inert_contract\": \"mode=episode\", \"comfyui_url\": \"http://127.0.0.1:8000\", \"delivered_frames\": 24, \"engine\": \"fastwan_8gb\", \"error\": \"\", \"executed\": {\"allowed\": [\"92\"], \"executed\": [\"92\"], \"render_ran\": true, \"unexpected\": []}, \"fixture_contract_sha256\": \"076b4feab1d4b5faf283c31125031fd01613450dc6af645c82d4261683525ecd\", \"kind\": \"wan-cost-ladder-cachebust-replay\", \"master_audio_sha256\": \"15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444\", \"master_audio_unchanged\": true, \"model_render_frames\": 25, \"node_output_texts\": [\"{\\\"ok\\\": true, \\\"mode\\\": \\\"episode\\\", \\\"episode_id\\\": \\\"wan_cost_ladder_fastwan_8gb_f025_20260809\\\", \\\"n_beats\\\": 1, \\\"clip_count\\\": 1, \\\"engine_histogram\\\": {\\\"fastwan_8gb\\\": 1}, \\\"video_revision\\\": 1, \\\"prompt_diversity\\\": {\\\"n\\\": 0, \\\"distinct\\\": 0, \\\"ok\\\": true, \\\"sha8s\\\": []}, \\\"vram_peak_mb\\\": 8279, \\\"trace\\\": [{\\\"shot_id\\\": \\\"shot_b001\\\", \\\"attempts\\\": [\\\"fastwan_8gb\\\"], \\\"final_engine\\\": \\\"fastwan_8gb\\\", \\\"init_source\\\": \\\"scene_still\\\", \\\"init_image\\\": \\\"still_b001_4d32f3b29fb4.png\\\", \\\"video_seed\\\": 944021193, \\\"visual_style\\\": \\\"sci_fi_radio\\\", \\\"banana_route\\\": \\\"on\\\", \\\"banana_table_version\\\": \\\"3\\\", \\\"banana_substitutions\\\": 0, \\\"banana_sha256_before\\\": \\\"de669f7f5a82adc3dbeec6e845f3a89842b8c535948255ac3a45afc21dcaec98\\\", \\\"banana_sha256_after\\\": \\\"de669f7f5a82adc3dbeec6e845f3a89842b8c535948255ac3a45afc21dcaec98\\\", \\\"banana_varieties\\\": \\\"SIDEARM=red banana,LONG=plantain\\\"}]}\"], \"offline_credential_environment\": {\"ambient_values_never_read_or_returned\": true, \"nonsecret_sentinel_length\": 16, \"scrubbed_key_names_absent\": [\"HUGGINGFACE_HUB_TOKEN\", \"HF_API_TOKEN\"], \"set_key_names\": [\"HF_HUB_OFFLINE\", \"HF_TOKEN\", \"HUGGING_FACE_HUB_TOKEN\", \"TRANSFORMERS_OFFLINE\"], \"validated\": true}, \"prompt_id\": \"9450192d-2155-411d-a951-7957906ef06e\", \"prompt_sha256\": \"2f63134b06196702879e1b6613b824072949aa2228fd18756e056278cf413417\", \"python_dont_write_bytecode\": true, \"schema_version\": 1, \"status\": \"SUCCESS\", \"success\": true}"
+      },
+      {
+        "byte_count": 24,
+        "observed_at_ns": 1786326283162731000,
+        "observed_at_utc": "2026-08-10T01:44:43.162731000Z",
+        "observed_monotonic_ns": 242092796000000,
+        "raw_base64": "W3dhbi1jb3N0LXJlcGxheV0gUEFTUw0K",
+        "raw_sha256": "9b91e0ecc7483b0b21ccd2bba78cebb47e271146fbe8a16536e93dfdeb89250c",
+        "text": "[wan-cost-replay] PASS"
+      }
+    ],
+    "timestamps_are_observation_times": true
+  },
+  "command": {
+    "argv": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "-u",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\otr_visual_smoke_cachebust.py",
+      "--bundle",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025",
+      "--cache-buster",
+      "222",
+      "--timeout",
+      "2400"
+    ],
+    "environment": {
+      "ambient_matched_required": true,
+      "ambient_present": true,
+      "ambient_sha256": "63767aa5615dabadd32b93fdf0db0c7190c850062ba568114ea4f28b6cdc9e71",
+      "ambient_value_redacted": true,
+      "conflicting_ambient_cleared": false,
+      "offline_credentials": {
+        "ambient_credential_key_names_present": [
+          "HF_HUB_OFFLINE",
+          "HF_TOKEN",
+          "HUGGING_FACE_HUB_TOKEN",
+          "TRANSFORMERS_OFFLINE"
+        ],
+        "ambient_values_never_read_or_receipted": true,
+        "schema_version": 1,
+        "scrubbed_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "TRANSFORMERS_OFFLINE": "1"
+        },
+        "source_proof": {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "validation_errors": []
+      },
+      "pinned_child_value": "http://127.0.0.1:8000",
+      "python_dont_write_bytecode": "1",
+      "required": "http://127.0.0.1:8000"
+    },
+    "python_sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d",
+    "replay_shim_sha256": "566e9444049c959b21532188be2b41a8d221ef8dc940e34a4844aba2fb478ccc",
+    "returncode": 0
+  },
+  "cost_row_demand_mib": 7077.0,
+  "delivered_frames": 24,
+  "duration_s": 42.578,
+  "engine": "fastwan_8gb",
+  "errors": [],
+  "finished_at_ns": 1786326283186566400,
+  "finished_at_utc": "2026-08-10T01:44:43.186566400Z",
+  "fixture": {
+    "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025",
+    "contract": {
+      "bytes": 7140,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 10133099162394769,
+      "mtime_ns": 1786318119655066000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025\\fixture_contract.json",
+      "sha256": "076b4feab1d4b5faf283c31125031fd01613450dc6af645c82d4261683525ecd"
+    },
+    "ledger": {
+      "bytes": 61462,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 5348024558313056,
+      "mtime_ns": 1786318119609425100,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025\\baked_ledger.json",
+      "sha256": "e16081044d50273411c4193e8e81031d1930ff98514f3eb271cea49370e95928"
+    },
+    "manifest": {
+      "bytes": 15370,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 3659174698049593,
+      "mtime_ns": 1786318119655066000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025\\bundle_manifest.json",
+      "sha256": "71f79cfb20d74df74dbafbb721b0839ad674e99f37273a3e81457fa9d5e056ed"
+    },
+    "master": {
+      "bytes": 8232192,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 57420895249783568,
+      "mtime_ns": 1786301825778093500,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025\\master.wav",
+      "sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444"
+    },
+    "verified_otr_source_pins": {
+      "_otr_headless_model_paths.yaml": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+        "sha256": "ec421773a2f0eac02cc242ae8b8ed5699ab01f99c54edc0e45f20e8ffee1fdc8"
+      },
+      "_otr_soak_server_launch.cmd": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+        "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+      },
+      "coverage_plan.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\coverage_plan.py",
+        "sha256": "3314e695910b2983e3319ac414bed9093ab999ad52dfa8d3739e752e7278ff60"
+      },
+      "dmd_sampler.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\dmd_sampler.py",
+        "sha256": "f80811f8eba786d5db520ab87490afeab7e7c8ab5bcf0fb9eb52dedd9d2c7da6"
+      },
+      "eng_fastwan_8gb.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_fastwan_8gb.py",
+        "sha256": "0eed2747308d0bc3fc9225f43cc1c8dcef15c28a858c45f4b968fc95dfb6a889"
+      },
+      "eng_wan_ti2v.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_wan_ti2v.py",
+        "sha256": "e610b905d774a5f0075787fd6cd3ee96b653a15cbc1f3efc975575674c809183"
+      },
+      "motion_common.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\motion_common.py",
+        "sha256": "6935658896c93b75e71dff766ca30cd9ba029572e9b28b12e2619f3ba9725e00"
+      },
+      "otr_canonical.json": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\workflows\\otr_canonical.json",
+        "sha256": "8697ad9ee2c547ffbf29bdf76286a514669bd329212260b8b984f5593d57aa3e"
+      },
+      "otr_video_render_batch.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\otr_video_render_batch.py",
+        "sha256": "6be2d501610d151659dd73ec3c2613df0766a9843fc9ac62d0d2138bd4c9df2e"
+      },
+      "otr_visual_smoke.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\otr_visual_smoke.py",
+        "sha256": "6ee0bae25633c6f0206b0bedfc69914ce6692a828f9e2f84258047ec4aac1f8f"
+      },
+      "render_driver.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\render_driver.py",
+        "sha256": "7d431a5877af678fbb88b0be1c57d98009eb7ffca1290d7ebbae97f44a98b564"
+      },
+      "wan_shared.py": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\wan_shared.py",
+        "sha256": "f09ea0adcfb94a6d0db90007c237402068211ad078a2d431b88fd2cf7980d987"
+      }
+    }
+  },
+  "gpu_lease": {
+    "owner": {
+      "created_at_unix": 1786326240.5266247,
+      "lock_schema_version": 1,
+      "nonce": "5d72910e5c49fc68a6efee33c3d1c25520a85fa3d6316a4580648407e98d7444",
+      "pid": 14364,
+      "process_create_time": 1786326240.4408455,
+      "role": "standalone"
+    },
+    "release": {
+      "error": "",
+      "success": true
+    }
+  },
+  "immediate_pre_render_baseline": {
+    "gpu_index": 0,
+    "host_ram_total_bytes": 68112736256,
+    "host_ram_used_bytes": 25988694016,
+    "sampled_at_ns": 1786326240572413100,
+    "sampled_at_utc": "2026-08-10T01:44:00.572413100Z",
+    "sampled_monotonic_ns": 242050203000000,
+    "vram_total_mib": 16303.0,
+    "vram_used_mib": 1627.0
+  },
+  "inter_run_log_gap": {
+    "byte_count": 0,
+    "current_start_offset": 86655,
+    "execution_markers_checked": [
+      "got prompt",
+      "Prompt executed in",
+      "[OTR video]",
+      "OTR_VideoRenderBatch",
+      "execution_start"
+    ],
+    "execution_markers_found": [],
+    "prefix_sha256_reverified": true,
+    "previous_end_offset": 86655,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "text": ""
+  },
+  "kind": "wan-cost-ladder-raw-telemetry",
+  "label": "fastwan_8gb_f025_run2",
+  "manager_config": {
+    "authority": "advisory filesystem continuity; server log is authoritative",
+    "config": {
+      "bytes": 460,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 1688849860737885,
+      "key": "network_mode",
+      "mtime_ns": 1786320736274345500,
+      "network_mode": "offline",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "section": "default",
+      "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+    },
+    "config_is_runtime_authority": false,
+    "derivation": {
+      "argv_index": 5,
+      "authority": "--user-directory in positively identified serving argv",
+      "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+    },
+    "manager_source": {
+      "comfy_folder_paths_source": {
+        "bytes": 23156,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 7599824371845827,
+        "mtime_ns": 1785816261419028100,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+        "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+      },
+      "comfy_required_token": "def get_system_user_directory",
+      "derivation": "<effective --user-directory>/__manager/config.ini",
+      "manager_core_required_tokens": [
+        "'network_mode': 'public',   # public | private | offline",
+        "def get_config():"
+      ],
+      "manager_core_source": {
+        "bytes": 131406,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 8444249301773195,
+        "mtime_ns": 1777140876094016400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+        "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+      },
+      "manager_server_required_tokens": [
+        "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+        "[ComfyUI-Manager] All startup tasks have been completed.",
+        "[ComfyUI-Manager] default cache updated:",
+        "[ComfyUI-Manager] Failed to perform initial fetching",
+        "Start fetching...",
+        "Fetching done."
+      ],
+      "manager_server_source": {
+        "bytes": 73639,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 5066549581245383,
+        "mtime_ns": 1777140876095535900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+        "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+      },
+      "mode_authority_contract": {
+        "authority": "exactly one server-log resolved network_mode announcement",
+        "config_role": "preboot advisory only; missing config defaults public",
+        "manager_core_default_source_line": 1774,
+        "manager_server_source_line": 29
+      },
+      "offline_credential_environment_contract": {
+        "scrub_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "TRANSFORMERS_OFFLINE": "1"
+        }
+      },
+      "otr_hf_token_required_tokens": [
+        "token = os.environ.get(\"HF_TOKEN\") or None",
+        "token = _read_from_winreg()",
+        "source = \"HKCU\\\\Environment\"",
+        "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+      ],
+      "otr_hf_token_source": {
+        "bytes": 3703,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 2814749767578241,
+        "mtime_ns": 1780669043385039700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+        "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+      },
+      "required_tokens": [
+        "folder_paths.get_user_directory(), '__manager'",
+        "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+      ],
+      "source": {
+        "bytes": 30389,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 18858823440126191,
+        "mtime_ns": 1773849424839527300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+        "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+      }
+    },
+    "matches_preboot_path_and_sha": true,
+    "phase": "post-identification-pre-prompt"
+  },
+  "manager_offline_guard": {
+    "boot_guard_payload": {
+      "authoritative_server_reported_mode": {
+        "announcement_count": 1,
+        "authority": "server-reported resolved mode; config files are advisory only",
+        "first_execution_line_number": null,
+        "gate_evaluated_after_startup_tasks_complete": true,
+        "manager_core_default_source": {
+          "bytes": 131406,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 8444249301773195,
+          "mtime_ns": 1777140876094016400,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+          "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+        },
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "mode_line_number": 169,
+        "mode_precedes_first_execution": true,
+        "mode_precedes_startup_completion": true,
+        "observed_values": [
+          "offline"
+        ],
+        "required_mode": "offline",
+        "resolved_mode": "offline",
+        "source_contract": {
+          "authority": "exactly one server-log resolved network_mode announcement",
+          "config_role": "preboot advisory only; missing config defaults public",
+          "manager_core_default_source_line": 1774,
+          "manager_server_source_line": 29
+        },
+        "startup_complete_line_number": 172
+      },
+      "boot_environment": {
+        "contract": {
+          "clear_exact": [
+            "COMFYUI_URL",
+            "HF_API_TOKEN",
+            "HUGGINGFACE_HUB_TOKEN",
+            "OTR_C7",
+            "OTR_ENABLE_HUMO",
+            "OTR_ENABLE_LTX_VIDEO",
+            "OTR_FORCE_ENGINE_MAP",
+            "OTR_HEADLESS_RESERVE_VRAM_GB",
+            "OTR_SOURCE_SNAPSHOT_MANIFEST",
+            "OTR_TEST_MODE",
+            "OTR_VIDEO_LANDSCAPE_CANVAS"
+          ],
+          "clear_prefixes": [
+            "OTR_WAN_TI2V_",
+            "OTR_FASTWAN_8GB_"
+          ],
+          "reason": "prevent stale reserve, model-file, prequalification, recipe, max-frame, or alternate-lane overrides from changing the frozen production workload; prevent any real HF credential or HKCU fallback from crossing the offline boot",
+          "set": {
+            "COMFYUI_URL": "http://127.0.0.1:8000",
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "OTR_HEADLESS_PORT": "8000",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "offline_credentials": {
+          "ambient_credential_key_names_present": [
+            "HF_TOKEN"
+          ],
+          "ambient_values_never_read_or_receipted": true,
+          "schema_version": 1,
+          "scrubbed_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          },
+          "source_proof": {
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+            "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+          },
+          "validation_errors": []
+        },
+        "removed_keys": [
+          "OTR_WAN_TI2V_CKPT"
+        ],
+        "set": {
+          "COMFYUI_URL": "http://127.0.0.1:8000",
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "OTR_HEADLESS_PORT": "8000",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "TRANSFORMERS_OFFLINE": "1"
+        }
+      },
+      "boot_log_scan": {
+        "authoritative_server_reported_mode": {
+          "announcement_count": 1,
+          "authority": "server-reported resolved mode; config files are advisory only",
+          "first_execution_line_number": null,
+          "gate_evaluated_after_startup_tasks_complete": true,
+          "manager_core_default_source": {
+            "bytes": 131406,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 8444249301773195,
+            "mtime_ns": 1777140876094016400,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+            "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+          },
+          "manager_server_source": {
+            "bytes": 73639,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 5066549581245383,
+            "mtime_ns": 1777140876095535900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+            "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+          },
+          "mode_line_number": 169,
+          "mode_precedes_first_execution": true,
+          "mode_precedes_startup_completion": true,
+          "observed_values": [
+            "offline"
+          ],
+          "required_mode": "offline",
+          "resolved_mode": "offline",
+          "source_contract": {
+            "authority": "exactly one server-log resolved network_mode announcement",
+            "config_role": "preboot advisory only; missing config defaults public",
+            "manager_core_default_source_line": 1774,
+            "manager_server_source_line": 29
+          },
+          "startup_complete_line_number": 172
+        },
+        "captured_log_snapshot": {
+          "bytes": 26876,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 19140298417286236,
+          "mtime_ns": 1786323854749715400,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+          "sha256": "1aa224e71099ab9755fb5e48d2f954c15820e0001e75b6ec013182de337a7db0"
+        },
+        "config_announcements": [
+          {
+            "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+            "line_number": 56,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+          }
+        ],
+        "errors": [],
+        "execution_marker_line_count": 0,
+        "execution_marker_rows_truncated": false,
+        "execution_markers_before_gate": [],
+        "expected_gui_url": "http://127.0.0.1:8000",
+        "expected_manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "first_execution_line_number": null,
+        "forbidden_credential_markers": [],
+        "forbidden_network_markers": [],
+        "hf_token_resolution_contract": {
+          "allowed_length": 16,
+          "allowed_source": "os.environ",
+          "allowed_value_is_nonsecret_offline_sentinel": true,
+          "marker_optional_if_resolver_not_imported": true
+        },
+        "hf_token_resolution_markers": [
+          {
+            "length": 16,
+            "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+            "line_number": 173,
+            "source": "os.environ"
+          },
+          {
+            "length": 16,
+            "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+            "line_number": 243,
+            "source": "os.environ"
+          }
+        ],
+        "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+        "network_mode_announcements": [
+          {
+            "line": "[INFO] [ComfyUI-Manager] network_mode: offline",
+            "line_number": 169,
+            "mode": "offline"
+          }
+        ],
+        "prefix_bytes": 26876,
+        "prefix_sha256": "1aa224e71099ab9755fb5e48d2f954c15820e0001e75b6ec013182de337a7db0",
+        "require_pre_prompt": true,
+        "start_offset": 0,
+        "startup_complete_markers": [
+          {
+            "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+            "line_number": 172
+          }
+        ],
+        "status": "pass",
+        "unique_attempt_log_required": true
+      },
+      "campaign_attempt_id": "attempt-004",
+      "created_at_ns": 1786323854904868900,
+      "kind": "wan-cost-ladder-manager-offline-boot-guard",
+      "post_identification": {
+        "authority": "advisory filesystem continuity; server log is authoritative",
+        "config": {
+          "bytes": 460,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 1688849860737885,
+          "key": "network_mode",
+          "mtime_ns": 1786320736274345500,
+          "network_mode": "offline",
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "section": "default",
+          "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+        },
+        "config_is_runtime_authority": false,
+        "derivation": {
+          "argv_index": 5,
+          "authority": "--user-directory in positively identified serving argv",
+          "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+        },
+        "manager_source": {
+          "comfy_folder_paths_source": {
+            "bytes": 23156,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 7599824371845827,
+            "mtime_ns": 1785816261419028100,
+            "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+            "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+          },
+          "comfy_required_token": "def get_system_user_directory",
+          "derivation": "<effective --user-directory>/__manager/config.ini",
+          "manager_core_required_tokens": [
+            "'network_mode': 'public',   # public | private | offline",
+            "def get_config():"
+          ],
+          "manager_core_source": {
+            "bytes": 131406,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 8444249301773195,
+            "mtime_ns": 1777140876094016400,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+            "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+          },
+          "manager_server_required_tokens": [
+            "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+            "[ComfyUI-Manager] All startup tasks have been completed.",
+            "[ComfyUI-Manager] default cache updated:",
+            "[ComfyUI-Manager] Failed to perform initial fetching",
+            "Start fetching...",
+            "Fetching done."
+          ],
+          "manager_server_source": {
+            "bytes": 73639,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 5066549581245383,
+            "mtime_ns": 1777140876095535900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+            "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+          },
+          "mode_authority_contract": {
+            "authority": "exactly one server-log resolved network_mode announcement",
+            "config_role": "preboot advisory only; missing config defaults public",
+            "manager_core_default_source_line": 1774,
+            "manager_server_source_line": 29
+          },
+          "offline_credential_environment_contract": {
+            "scrub_key_names": [
+              "HUGGINGFACE_HUB_TOKEN",
+              "HF_API_TOKEN"
+            ],
+            "set_nonsecret": {
+              "HF_HUB_OFFLINE": "1",
+              "HF_TOKEN": "offline-disabled",
+              "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+              "TRANSFORMERS_OFFLINE": "1"
+            }
+          },
+          "otr_hf_token_required_tokens": [
+            "token = os.environ.get(\"HF_TOKEN\") or None",
+            "token = _read_from_winreg()",
+            "source = \"HKCU\\\\Environment\"",
+            "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+          ],
+          "otr_hf_token_source": {
+            "bytes": 3703,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 2814749767578241,
+            "mtime_ns": 1780669043385039700,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+            "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+          },
+          "required_tokens": [
+            "folder_paths.get_user_directory(), '__manager'",
+            "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+          ],
+          "source": {
+            "bytes": 30389,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 18858823440126191,
+            "mtime_ns": 1773849424839527300,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+            "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+          }
+        },
+        "matches_preboot_path_and_sha": true,
+        "phase": "post-identification-pre-prompt"
+      },
+      "preboot": {
+        "authority": "advisory filesystem precondition; server log is authoritative",
+        "config": {
+          "bytes": 460,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 1688849860737885,
+          "key": "network_mode",
+          "mtime_ns": 1786320736274345500,
+          "network_mode": "offline",
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "section": "default",
+          "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+        },
+        "config_is_runtime_authority": false,
+        "derivation": {
+          "authority": "literal --user-directory in exact OTR launcher source",
+          "launcher": {
+            "bytes": 10558,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 63613344737203552,
+            "mtime_ns": 1785857769805265100,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+            "sha256": "36e4375d22e83435c31bc47bad47d014e7041df2f8d029adb6d0d74e7103bf88"
+          },
+          "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+        },
+        "manager_source": {
+          "comfy_folder_paths_source": {
+            "bytes": 23156,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 7599824371845827,
+            "mtime_ns": 1785816261419028100,
+            "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+            "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+          },
+          "comfy_required_token": "def get_system_user_directory",
+          "derivation": "<effective --user-directory>/__manager/config.ini",
+          "manager_core_required_tokens": [
+            "'network_mode': 'public',   # public | private | offline",
+            "def get_config():"
+          ],
+          "manager_core_source": {
+            "bytes": 131406,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 8444249301773195,
+            "mtime_ns": 1777140876094016400,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+            "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+          },
+          "manager_server_required_tokens": [
+            "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+            "[ComfyUI-Manager] All startup tasks have been completed.",
+            "[ComfyUI-Manager] default cache updated:",
+            "[ComfyUI-Manager] Failed to perform initial fetching",
+            "Start fetching...",
+            "Fetching done."
+          ],
+          "manager_server_source": {
+            "bytes": 73639,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 5066549581245383,
+            "mtime_ns": 1777140876095535900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+            "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+          },
+          "mode_authority_contract": {
+            "authority": "exactly one server-log resolved network_mode announcement",
+            "config_role": "preboot advisory only; missing config defaults public",
+            "manager_core_default_source_line": 1774,
+            "manager_server_source_line": 29
+          },
+          "offline_credential_environment_contract": {
+            "scrub_key_names": [
+              "HUGGINGFACE_HUB_TOKEN",
+              "HF_API_TOKEN"
+            ],
+            "set_nonsecret": {
+              "HF_HUB_OFFLINE": "1",
+              "HF_TOKEN": "offline-disabled",
+              "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+              "TRANSFORMERS_OFFLINE": "1"
+            }
+          },
+          "otr_hf_token_required_tokens": [
+            "token = os.environ.get(\"HF_TOKEN\") or None",
+            "token = _read_from_winreg()",
+            "source = \"HKCU\\\\Environment\"",
+            "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+          ],
+          "otr_hf_token_source": {
+            "bytes": 3703,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 2814749767578241,
+            "mtime_ns": 1780669043385039700,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+            "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+          },
+          "required_tokens": [
+            "folder_paths.get_user_directory(), '__manager'",
+            "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+          ],
+          "source": {
+            "bytes": 30389,
+            "device": 1356286727840300467,
+            "exists": true,
+            "inode": 18858823440126191,
+            "mtime_ns": 1773849424839527300,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+            "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+          }
+        },
+        "phase": "preboot"
+      },
+      "schema_version": 1,
+      "server_instance": {
+        "argv": [
+          "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8000",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+          "--disable-metadata"
+        ],
+        "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+        "listeners": [
+          {
+            "address": "127.0.0.1",
+            "pid": 37300,
+            "port": 8000
+          }
+        ],
+        "ownership_chain": {
+          "chain_type": "windows-venv-one-hop",
+          "expected_launcher_argv": [
+            "C:\\WINDOWS\\system32\\cmd.exe",
+            "/d",
+            "/c",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+            "WAN"
+          ],
+          "intermediary": {
+            "argv": [
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+              "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+              "--port",
+              "8000",
+              "--cuda-malloc",
+              "--user-directory",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI",
+              "--output-directory",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+              "--extra-model-paths-config",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+              "--disable-metadata"
+            ],
+            "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "parent_pid": 34988,
+            "pid": 8388,
+            "process_create_time": 1786323831.969754
+          },
+          "launcher": {
+            "argv": [
+              "C:\\WINDOWS\\system32\\cmd.exe",
+              "/d",
+              "/c",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_soak_server_launch.cmd",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+              "WAN"
+            ],
+            "executable": "C:\\Windows\\System32\\cmd.exe",
+            "parent_pid": 7956,
+            "pid": 34988,
+            "process_create_time": 1786323831.265443
+          },
+          "policy": "exact-owned-cmd-direct-or-certified-windows-venv-one-hop",
+          "policy_precedent": {
+            "adaptation": "owned cmd launcher -> exact venv python shim -> serving interpreter; same argv[1:] and <=5s from shim to serving interpreter",
+            "required_tokens": [
+              "def _is_verified_windows_venv_launcher_chain(",
+              "launcher_argv[1:] != child_argv[1:]",
+              "child_created - launcher_created <= 5.0"
+            ],
+            "source": {
+              "bytes": 19611,
+              "mtime_ns": 1786220099290678700,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\lab_locks.py",
+              "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+            }
+          },
+          "serving": {
+            "argv": [
+              "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+              "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+              "--port",
+              "8000",
+              "--cuda-malloc",
+              "--user-directory",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI",
+              "--output-directory",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+              "--extra-model-paths-config",
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+              "--disable-metadata"
+            ],
+            "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+            "parent_pid": 8388,
+            "pid": 37300,
+            "process_create_time": 1786323831.9768996
+          },
+          "validated": true,
+          "validator_source": {
+            "bytes": 10221,
+            "mtime_ns": 1786323461589320200,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ownership.py",
+            "sha256": "bdf2f88a66044fea24220f27d91a331ae9e5bcf1fb82e1cfac7933e28c2d55be"
+          },
+          "venv_base_interpreter": {
+            "base_interpreter": {
+              "bytes": 91648,
+              "mtime_ns": 1772691957004560800,
+              "path": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+              "sha256": "8b3dd06c02d038c4cc10a0dd132285a7b07bed5e4e6c20251c896105c69e266a"
+            },
+            "config": {
+              "bytes": 198,
+              "mtime_ns": 1772691957771171900,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\pyvenv.cfg",
+              "sha256": "7a7549dd2dc1749821b3ab570f7c6e48fcc2e3fddba888260d9ed46948802e67"
+            },
+            "derivation": "<single absolute pyvenv.cfg home>/python.exe",
+            "home": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none"
+          }
+        },
+        "parent_pid": 8388,
+        "process_create_time": 1786323831.9768996,
+        "serving_pid": 37300
+      },
+      "source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\manager_offline_guard.py",
+        "sha256": "84aa8a46e02147e5373b862b5a915b85c903d7f3832534e8028ccb732cdab0d6"
+      },
+      "status": "pass"
+    },
+    "boot_guard_receipt": {
+      "bytes": 23549,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 7318349395437917,
+      "mtime_ns": 1786323854907768500,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\manager_boot_guard.json",
+      "sha256": "66add462c878ab2821ffd892820211fce1da8fc16537371d33281a764a72c6bd"
+    },
+    "post_render_config": {
+      "authority": "advisory filesystem continuity; server log is authoritative",
+      "config": {
+        "bytes": 460,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849860737885,
+        "key": "network_mode",
+        "mtime_ns": 1786320736274345500,
+        "network_mode": "offline",
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "section": "default",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      "config_is_runtime_authority": false,
+      "derivation": {
+        "argv_index": 5,
+        "authority": "--user-directory in positively identified serving argv",
+        "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+      },
+      "manager_source": {
+        "comfy_folder_paths_source": {
+          "bytes": 23156,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 7599824371845827,
+          "mtime_ns": 1785816261419028100,
+          "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+          "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+        },
+        "comfy_required_token": "def get_system_user_directory",
+        "derivation": "<effective --user-directory>/__manager/config.ini",
+        "manager_core_required_tokens": [
+          "'network_mode': 'public',   # public | private | offline",
+          "def get_config():"
+        ],
+        "manager_core_source": {
+          "bytes": 131406,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 8444249301773195,
+          "mtime_ns": 1777140876094016400,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+          "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+        },
+        "manager_server_required_tokens": [
+          "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+          "[ComfyUI-Manager] All startup tasks have been completed.",
+          "[ComfyUI-Manager] default cache updated:",
+          "[ComfyUI-Manager] Failed to perform initial fetching",
+          "Start fetching...",
+          "Fetching done."
+        ],
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "mode_authority_contract": {
+          "authority": "exactly one server-log resolved network_mode announcement",
+          "config_role": "preboot advisory only; missing config defaults public",
+          "manager_core_default_source_line": 1774,
+          "manager_server_source_line": 29
+        },
+        "offline_credential_environment_contract": {
+          "scrub_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "otr_hf_token_required_tokens": [
+          "token = os.environ.get(\"HF_TOKEN\") or None",
+          "token = _read_from_winreg()",
+          "source = \"HKCU\\\\Environment\"",
+          "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+        ],
+        "otr_hf_token_source": {
+          "bytes": 3703,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 2814749767578241,
+          "mtime_ns": 1780669043385039700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "required_tokens": [
+          "folder_paths.get_user_directory(), '__manager'",
+          "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+        ],
+        "source": {
+          "bytes": 30389,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 18858823440126191,
+          "mtime_ns": 1773849424839527300,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+          "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+        }
+      },
+      "matches_preboot_path_and_sha": true,
+      "phase": "post-identification-pre-prompt"
+    },
+    "post_render_full_log_scan": {
+      "authoritative_server_reported_mode": {
+        "announcement_count": 1,
+        "authority": "server-reported resolved mode; config files are advisory only",
+        "first_execution_line_number": 299,
+        "gate_evaluated_after_startup_tasks_complete": true,
+        "manager_core_default_source": {
+          "bytes": 131406,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 8444249301773195,
+          "mtime_ns": 1777140876094016400,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+          "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+        },
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "mode_line_number": 169,
+        "mode_precedes_first_execution": true,
+        "mode_precedes_startup_completion": true,
+        "observed_values": [
+          "offline"
+        ],
+        "required_mode": "offline",
+        "resolved_mode": "offline",
+        "source_contract": {
+          "authority": "exactly one server-log resolved network_mode announcement",
+          "config_role": "preboot advisory only; missing config defaults public",
+          "manager_core_default_source_line": 1774,
+          "manager_server_source_line": 29
+        },
+        "startup_complete_line_number": 172
+      },
+      "captured_log_snapshot": {
+        "bytes": 90744,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 19140298417286236,
+        "mtime_ns": 1786326282778465900,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+        "sha256": "b61743a6f59821f6fb8af3dc11007956e0ee74cc9203b1ff1845bd8c23ed5826"
+      },
+      "config_announcements": [
+        {
+          "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "line_number": 56,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+        }
+      ],
+      "errors": [],
+      "execution_marker_line_count": 96,
+      "execution_marker_rows_truncated": true,
+      "execution_markers_before_gate": [
+        {
+          "line": "[INFO] got prompt",
+          "line_number": 299,
+          "markers": [
+            "got prompt"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.6044921875",
+          "line_number": 302,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] wan_ti2v VRAM render-phase peak 8318 MB / post 7040 MB",
+          "line_number": 360,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_tuufo9l3.mp4",
+          "line_number": 361,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f025_20260809/clips/",
+          "line_number": 362,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True",
+          "line_number": 365,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json",
+          "line_number": 366,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[INFO] Prompt executed in 87.19 seconds",
+          "line_number": 367,
+          "markers": [
+            "Prompt executed in"
+          ]
+        },
+        {
+          "line": "[INFO] got prompt",
+          "line_number": 368,
+          "markers": [
+            "got prompt"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4404296875",
+          "line_number": 371,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] wan_ti2v VRAM render-phase peak 8318 MB / post 7047 MB",
+          "line_number": 429,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_kdfe5vmt.mp4",
+          "line_number": 430,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f025_20260809/clips/",
+          "line_number": 431,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True",
+          "line_number": 434,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json",
+          "line_number": 435,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[INFO] Prompt executed in 83.22 seconds",
+          "line_number": 436,
+          "markers": [
+            "Prompt executed in"
+          ]
+        },
+        {
+          "line": "[INFO] got prompt",
+          "line_number": 437,
+          "markers": [
+            "got prompt"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4404296875",
+          "line_number": 440,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] wan_ti2v VRAM render-phase peak 8288 MB / post 7213 MB",
+          "line_number": 498,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 64 frame(s) at otr_beat_shot_b001_b0dtaebr.mp4",
+          "line_number": 499,
+          "markers": [
+            "[OTR video]"
+          ]
+        }
+      ],
+      "expected_gui_url": "http://127.0.0.1:8000",
+      "expected_manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "first_execution_line_number": 299,
+      "forbidden_credential_markers": [],
+      "forbidden_network_markers": [],
+      "hf_token_resolution_contract": {
+        "allowed_length": 16,
+        "allowed_source": "os.environ",
+        "allowed_value_is_nonsecret_offline_sentinel": true,
+        "marker_optional_if_resolver_not_imported": true
+      },
+      "hf_token_resolution_markers": [
+        {
+          "length": 16,
+          "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+          "line_number": 173,
+          "source": "os.environ"
+        },
+        {
+          "length": 16,
+          "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+          "line_number": 243,
+          "source": "os.environ"
+        }
+      ],
+      "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+      "network_mode_announcements": [
+        {
+          "line": "[INFO] [ComfyUI-Manager] network_mode: offline",
+          "line_number": 169,
+          "mode": "offline"
+        }
+      ],
+      "prefix_bytes": 90744,
+      "prefix_sha256": "b61743a6f59821f6fb8af3dc11007956e0ee74cc9203b1ff1845bd8c23ed5826",
+      "require_pre_prompt": false,
+      "start_offset": 0,
+      "startup_complete_markers": [
+        {
+          "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+          "line_number": 172
+        }
+      ],
+      "status": "pass",
+      "unique_attempt_log_required": true
+    },
+    "pre_render_config": {
+      "authority": "advisory filesystem continuity; server log is authoritative",
+      "config": {
+        "bytes": 460,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849860737885,
+        "key": "network_mode",
+        "mtime_ns": 1786320736274345500,
+        "network_mode": "offline",
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "section": "default",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      "config_is_runtime_authority": false,
+      "derivation": {
+        "argv_index": 5,
+        "authority": "--user-directory in positively identified serving argv",
+        "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "user_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+      },
+      "manager_source": {
+        "comfy_folder_paths_source": {
+          "bytes": 23156,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 7599824371845827,
+          "mtime_ns": 1785816261419028100,
+          "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+          "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+        },
+        "comfy_required_token": "def get_system_user_directory",
+        "derivation": "<effective --user-directory>/__manager/config.ini",
+        "manager_core_required_tokens": [
+          "'network_mode': 'public',   # public | private | offline",
+          "def get_config():"
+        ],
+        "manager_core_source": {
+          "bytes": 131406,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 8444249301773195,
+          "mtime_ns": 1777140876094016400,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+          "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+        },
+        "manager_server_required_tokens": [
+          "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+          "[ComfyUI-Manager] All startup tasks have been completed.",
+          "[ComfyUI-Manager] default cache updated:",
+          "[ComfyUI-Manager] Failed to perform initial fetching",
+          "Start fetching...",
+          "Fetching done."
+        ],
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "mode_authority_contract": {
+          "authority": "exactly one server-log resolved network_mode announcement",
+          "config_role": "preboot advisory only; missing config defaults public",
+          "manager_core_default_source_line": 1774,
+          "manager_server_source_line": 29
+        },
+        "offline_credential_environment_contract": {
+          "scrub_key_names": [
+            "HUGGINGFACE_HUB_TOKEN",
+            "HF_API_TOKEN"
+          ],
+          "set_nonsecret": {
+            "HF_HUB_OFFLINE": "1",
+            "HF_TOKEN": "offline-disabled",
+            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+            "TRANSFORMERS_OFFLINE": "1"
+          }
+        },
+        "otr_hf_token_required_tokens": [
+          "token = os.environ.get(\"HF_TOKEN\") or None",
+          "token = _read_from_winreg()",
+          "source = \"HKCU\\\\Environment\"",
+          "[hf_token] HF_TOKEN resolved from %s (len=%d)"
+        ],
+        "otr_hf_token_source": {
+          "bytes": 3703,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 2814749767578241,
+          "mtime_ns": 1780669043385039700,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "required_tokens": [
+          "folder_paths.get_user_directory(), '__manager'",
+          "manager_config_path = os.path.join(manager_files_path, 'config.ini')"
+        ],
+        "source": {
+          "bytes": 30389,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 18858823440126191,
+          "mtime_ns": 1773849424839527300,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+          "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+        }
+      },
+      "matches_preboot_path_and_sha": true,
+      "phase": "post-identification-pre-prompt"
+    },
+    "pre_render_full_log_scan": {
+      "authoritative_server_reported_mode": {
+        "announcement_count": 1,
+        "authority": "server-reported resolved mode; config files are advisory only",
+        "first_execution_line_number": 299,
+        "gate_evaluated_after_startup_tasks_complete": true,
+        "manager_core_default_source": {
+          "bytes": 131406,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 8444249301773195,
+          "mtime_ns": 1777140876094016400,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+          "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+        },
+        "manager_server_source": {
+          "bytes": 73639,
+          "device": 1356286727840300467,
+          "exists": true,
+          "inode": 5066549581245383,
+          "mtime_ns": 1777140876095535900,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+          "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+        },
+        "mode_line_number": 169,
+        "mode_precedes_first_execution": true,
+        "mode_precedes_startup_completion": true,
+        "observed_values": [
+          "offline"
+        ],
+        "required_mode": "offline",
+        "resolved_mode": "offline",
+        "source_contract": {
+          "authority": "exactly one server-log resolved network_mode announcement",
+          "config_role": "preboot advisory only; missing config defaults public",
+          "manager_core_default_source_line": 1774,
+          "manager_server_source_line": 29
+        },
+        "startup_complete_line_number": 172
+      },
+      "captured_log_snapshot": {
+        "bytes": 86655,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 19140298417286236,
+        "mtime_ns": 1786326236120068600,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+        "sha256": "f1c8c7e690bfcefbce4893341bb61038403ca4c39b96fb3a9680d2d973a1cc70"
+      },
+      "config_announcements": [
+        {
+          "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "line_number": 56,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+        }
+      ],
+      "errors": [],
+      "execution_marker_line_count": 88,
+      "execution_marker_rows_truncated": true,
+      "execution_markers_before_gate": [
+        {
+          "line": "[INFO] got prompt",
+          "line_number": 299,
+          "markers": [
+            "got prompt"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.6044921875",
+          "line_number": 302,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] wan_ti2v VRAM render-phase peak 8318 MB / post 7040 MB",
+          "line_number": 360,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_tuufo9l3.mp4",
+          "line_number": 361,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f025_20260809/clips/",
+          "line_number": 362,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True",
+          "line_number": 365,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json",
+          "line_number": 366,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[INFO] Prompt executed in 87.19 seconds",
+          "line_number": 367,
+          "markers": [
+            "Prompt executed in"
+          ]
+        },
+        {
+          "line": "[INFO] got prompt",
+          "line_number": 368,
+          "markers": [
+            "got prompt"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4404296875",
+          "line_number": 371,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] wan_ti2v VRAM render-phase peak 8318 MB / post 7047 MB",
+          "line_number": 429,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_kdfe5vmt.mp4",
+          "line_number": 430,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_wan_ti2v_f025_20260809/clips/",
+          "line_number": 431,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True",
+          "line_number": 434,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json",
+          "line_number": 435,
+          "markers": [
+            "OTR_VideoRenderBatch"
+          ]
+        },
+        {
+          "line": "[INFO] Prompt executed in 83.22 seconds",
+          "line_number": 436,
+          "markers": [
+            "Prompt executed in"
+          ]
+        },
+        {
+          "line": "[INFO] got prompt",
+          "line_number": 437,
+          "markers": [
+            "got prompt"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4404296875",
+          "line_number": 440,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[INFO] [OTR video] wan_ti2v VRAM render-phase peak 8288 MB / post 7213 MB",
+          "line_number": 498,
+          "markers": [
+            "[OTR video]"
+          ]
+        },
+        {
+          "line": "[WARNING] [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 64 frame(s) at otr_beat_shot_b001_b0dtaebr.mp4",
+          "line_number": 499,
+          "markers": [
+            "[OTR video]"
+          ]
+        }
+      ],
+      "expected_gui_url": "http://127.0.0.1:8000",
+      "expected_manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "first_execution_line_number": 299,
+      "forbidden_credential_markers": [],
+      "forbidden_network_markers": [],
+      "hf_token_resolution_contract": {
+        "allowed_length": 16,
+        "allowed_source": "os.environ",
+        "allowed_value_is_nonsecret_offline_sentinel": true,
+        "marker_optional_if_resolver_not_imported": true
+      },
+      "hf_token_resolution_markers": [
+        {
+          "length": 16,
+          "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+          "line_number": 173,
+          "source": "os.environ"
+        },
+        {
+          "length": 16,
+          "line": "[INFO] [hf_token] HF_TOKEN resolved from os.environ (len=16)",
+          "line_number": 243,
+          "source": "os.environ"
+        }
+      ],
+      "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+      "network_mode_announcements": [
+        {
+          "line": "[INFO] [ComfyUI-Manager] network_mode: offline",
+          "line_number": 169,
+          "mode": "offline"
+        }
+      ],
+      "prefix_bytes": 86655,
+      "prefix_sha256": "f1c8c7e690bfcefbce4893341bb61038403ca4c39b96fb3a9680d2d973a1cc70",
+      "require_pre_prompt": false,
+      "start_offset": 0,
+      "startup_complete_markers": [
+        {
+          "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+          "line_number": 172
+        }
+      ],
+      "status": "pass",
+      "unique_attempt_log_required": true
+    }
+  },
+  "measured": "otr-side production wrapper",
+  "model_render_frames": 25,
+  "node_episode_manifest_after": {
+    "bytes": 1504,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 1688849861801961,
+    "mtime_ns": 1786326282733432000,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+    "sha256": "2b9b3d69aeaea8dee3502db442417aef1703193b855e96a2c12383ac0045f4d4"
+  },
+  "node_episode_manifest_before": {
+    "bytes": 1504,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 1688849861801961,
+    "mtime_ns": 1786326236075526500,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+    "sha256": "6dc36b4abaa3cfb593cc19b582cae6cf99f80ec489f82bf3696524b44ab2ecd9"
+  },
+  "node_episode_manifest_payload": {
+    "canvas": {
+      "h": 480,
+      "w": 832
+    },
+    "clip_count": 1,
+    "clips": [
+      {
+        "beat_id": "b001",
+        "char_id": "c01",
+        "delivered_native_frame_count": 24,
+        "engine_id": "fastwan_8gb",
+        "exists": true,
+        "extension_mode": "none",
+        "family": "image_to_video",
+        "frame_count": 24,
+        "init_image": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025\\assets\\c01_b3eecde9ac24.png",
+        "init_image_used": "still_b001_4d32f3b29fb4.png",
+        "init_source": "scene_still",
+        "native_frame_count": 25,
+        "order": 0,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\wan_cost_ladder_fastwan_8gb_f025_20260809\\clips\\shot_b001_announcer_visual_fastwan_8gb.mp4",
+        "quant": "Q5_K_M",
+        "recipe": "fastwan22_ti2v_5b_dmd3_i2v_v1",
+        "render_canvas": "832x480",
+        "role": "announcer_visual",
+        "segments": [
+          {
+            "drop_head": 0,
+            "extension_mode": "none",
+            "native_frame_count": 25,
+            "render_frames": 25,
+            "segment_id": "shot_b001_seg00",
+            "segment_index": 0,
+            "trim_tail": 1
+          }
+        ],
+        "shot_id": "shot_b001",
+        "start_s": 9.5,
+        "target_frame_count": 24,
+        "type": "video",
+        "use_lora": true,
+        "vram_peak_mb": 8279
+      }
+    ],
+    "closing_theme_frame_window": {
+      "end": 1072,
+      "start": 872
+    },
+    "engine_histogram": {
+      "fastwan_8gb": 1
+    },
+    "episode_id": "wan_cost_ladder_fastwan_8gb_f025_20260809",
+    "fps": 25,
+    "frame_receipt_version": 1,
+    "n_beats": 1,
+    "render_target_frames": 24,
+    "timeline_duration_s": null,
+    "timeline_frame_source": "render_target_sum",
+    "timeline_total_frames": 24,
+    "total_target_frames": 24,
+    "video_revision": 1
+  },
+  "node_episode_report_after": {
+    "bytes": 820,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 2814749769320194,
+    "mtime_ns": 1786326282733432000,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+    "sha256": "895de8e95a5079c5067557a33f5c6d3f1c316c46d912f882163afaf1d5ea4dc5"
+  },
+  "node_episode_report_before": {
+    "bytes": 820,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 2814749769320194,
+    "mtime_ns": 1786326236075526500,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+    "sha256": "b2f65c63925aadfebef610b5dea8ad968d7de27d89d750a89d5db3b204f8da94"
+  },
+  "node_episode_report_payload": {
+    "clip_count": 1,
+    "engine_histogram": {
+      "fastwan_8gb": 1
+    },
+    "episode_id": "wan_cost_ladder_fastwan_8gb_f025_20260809",
+    "mode": "episode",
+    "n_beats": 1,
+    "ok": true,
+    "prompt_diversity": {
+      "distinct": 0,
+      "n": 0,
+      "ok": true,
+      "sha8s": []
+    },
+    "trace": [
+      {
+        "attempts": [
+          "fastwan_8gb"
+        ],
+        "banana_route": "on",
+        "banana_sha256_after": "de669f7f5a82adc3dbeec6e845f3a89842b8c535948255ac3a45afc21dcaec98",
+        "banana_sha256_before": "de669f7f5a82adc3dbeec6e845f3a89842b8c535948255ac3a45afc21dcaec98",
+        "banana_substitutions": 0,
+        "banana_table_version": "3",
+        "banana_varieties": "SIDEARM=red banana,LONG=plantain",
+        "final_engine": "fastwan_8gb",
+        "init_image": "still_b001_4d32f3b29fb4.png",
+        "init_source": "scene_still",
+        "shot_id": "shot_b001",
+        "video_seed": 944021193,
+        "visual_style": "sci_fi_radio"
+      }
+    ],
+    "video_revision": 1,
+    "vram_peak_mb": 8279
+  },
+  "previous_pair_receipt": {
+    "bytes": 198329,
+    "device": 1356286727840300467,
+    "exists": true,
+    "inode": 10977524092683456,
+    "mtime_ns": 1786326240408473500,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\telemetry\\attempt-004\\fastwan_8gb_f025_run1.json",
+    "sha256": "784d8085a9a15a99cfa51672863c69af5c39e16a821d6292fa46755c6498cc09"
+  },
+  "quiescent_desktop_baseline": {
+    "receipt": {
+      "bytes": 176073,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 11258999069391980,
+      "mtime_ns": 1786323831193564600,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\baselines\\attempt-004.json",
+      "sha256": "d097bf7326b1d747031bb1d1acbf0ec2783687c2f7737ae6493275347184b9a0"
+    },
+    "unit_contract": "additional engine demand above quiescent desktop baseline",
+    "vram_used_mib": 1202.0
+  },
+  "rendered_clip": {
+    "capture_method": "byte-copy-to-temp, fsync, exclusive hard-link publish",
+    "captured_at_ns": 1786326283261604000,
+    "evidence": {
+      "bytes": 140839,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 19421773393861358,
+      "mtime_ns": 1786326283261604000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\clips\\fastwan_8gb_f025_run2.mp4",
+      "sha256": "7e9266df0c7c63b05405fa66632b27b791ebc97016b9c3dd391d10a4859b12c5"
+    },
+    "fresh_state_files": {
+      "node_episode_manifest": {
+        "bytes": 1504,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 1688849861801961,
+        "mtime_ns": 1786326282733432000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_manifest.json",
+        "sha256": "2b9b3d69aeaea8dee3502db442417aef1703193b855e96a2c12383ac0045f4d4"
+      },
+      "node_episode_report": {
+        "bytes": 820,
+        "device": 1356286727840300467,
+        "exists": true,
+        "inode": 2814749769320194,
+        "mtime_ns": 1786326282733432000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\state\\node_episode_report.json",
+        "sha256": "895de8e95a5079c5067557a33f5c6d3f1c316c46d912f882163afaf1d5ea4dc5"
+      }
+    },
+    "freshness_window": {
+      "captured_at_ns": 1786326283261604000,
+      "replay_started_at_ns": 1786326240614154200,
+      "source_mtime_ns": 1786326282626383000,
+      "within_window": true
+    },
+    "manifest_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\wan_cost_ladder_fastwan_8gb_f025_20260809\\clips\\shot_b001_announcer_visual_fastwan_8gb.mp4",
+    "source_after": {
+      "bytes": 140839,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 7881299348866242,
+      "mtime_ns": 1786326282626383000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\wan_cost_ladder_fastwan_8gb_f025_20260809\\clips\\shot_b001_announcer_visual_fastwan_8gb.mp4",
+      "sha256": "7e9266df0c7c63b05405fa66632b27b791ebc97016b9c3dd391d10a4859b12c5"
+    },
+    "source_before": {
+      "bytes": 140839,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 7881299348866242,
+      "mtime_ns": 1786326282626383000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\wan_cost_ladder_fastwan_8gb_f025_20260809\\clips\\shot_b001_announcer_visual_fastwan_8gb.mp4",
+      "sha256": "7e9266df0c7c63b05405fa66632b27b791ebc97016b9c3dd391d10a4859b12c5"
+    },
+    "source_stable_during_copy": true
+  },
+  "replay_endpoint": {
+    "environment": {
+      "ambient_matched_required": true,
+      "ambient_present": true,
+      "ambient_sha256": "63767aa5615dabadd32b93fdf0db0c7190c850062ba568114ea4f28b6cdc9e71",
+      "ambient_value_redacted": true,
+      "conflicting_ambient_cleared": false,
+      "offline_credentials": {
+        "ambient_credential_key_names_present": [
+          "HF_HUB_OFFLINE",
+          "HF_TOKEN",
+          "HUGGING_FACE_HUB_TOKEN",
+          "TRANSFORMERS_OFFLINE"
+        ],
+        "ambient_values_never_read_or_receipted": true,
+        "schema_version": 1,
+        "scrubbed_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "TRANSFORMERS_OFFLINE": "1"
+        },
+        "source_proof": {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\visual\\_hf_token.py",
+          "sha256": "56115a1946d6eb6e8dbf860f4d8db36090c4d10f89a168a3d265265984753aa1"
+        },
+        "validation_errors": []
+      },
+      "pinned_child_value": "http://127.0.0.1:8000",
+      "python_dont_write_bytecode": "1",
+      "required": "http://127.0.0.1:8000"
+    },
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 37300,
+        "port": 8000
+      }
+    ],
+    "process_create_time": 1786323831.9768996,
+    "replay_reported_url": "http://127.0.0.1:8000",
+    "required_url": "http://127.0.0.1:8000",
+    "serving_pid": 37300,
+    "validated": true
+  },
+  "replay_result": {
+    "baked_ledger_sha256": "e16081044d50273411c4193e8e81031d1930ff98514f3eb271cea49370e95928",
+    "bundle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\output\\otr\\episodes\\_shared\\wan_cost_ladder_measurement\\fastwan_8gb_f025",
+    "cache_buster": 222,
+    "cache_buster_field": "OTR_VideoRenderBatch.oom_index",
+    "cache_buster_inert_contract": "mode=episode",
+    "comfyui_url": "http://127.0.0.1:8000",
+    "delivered_frames": 24,
+    "engine": "fastwan_8gb",
+    "error": "",
+    "executed": {
+      "allowed": [
+        "92"
+      ],
+      "executed": [
+        "92"
+      ],
+      "render_ran": true,
+      "unexpected": []
+    },
+    "fixture_contract_sha256": "076b4feab1d4b5faf283c31125031fd01613450dc6af645c82d4261683525ecd",
+    "kind": "wan-cost-ladder-cachebust-replay",
+    "master_audio_sha256": "15f4713bbc8a284569999555bc6df72b93e61ef1b22773e2845308c6b7b40444",
+    "master_audio_unchanged": true,
+    "model_render_frames": 25,
+    "node_output_texts": [
+      "{\"ok\": true, \"mode\": \"episode\", \"episode_id\": \"wan_cost_ladder_fastwan_8gb_f025_20260809\", \"n_beats\": 1, \"clip_count\": 1, \"engine_histogram\": {\"fastwan_8gb\": 1}, \"video_revision\": 1, \"prompt_diversity\": {\"n\": 0, \"distinct\": 0, \"ok\": true, \"sha8s\": []}, \"vram_peak_mb\": 8279, \"trace\": [{\"shot_id\": \"shot_b001\", \"attempts\": [\"fastwan_8gb\"], \"final_engine\": \"fastwan_8gb\", \"init_source\": \"scene_still\", \"init_image\": \"still_b001_4d32f3b29fb4.png\", \"video_seed\": 944021193, \"visual_style\": \"sci_fi_radio\", \"banana_route\": \"on\", \"banana_table_version\": \"3\", \"banana_substitutions\": 0, \"banana_sha256_before\": \"de669f7f5a82adc3dbeec6e845f3a89842b8c535948255ac3a45afc21dcaec98\", \"banana_sha256_after\": \"de669f7f5a82adc3dbeec6e845f3a89842b8c535948255ac3a45afc21dcaec98\", \"banana_varieties\": \"SIDEARM=red banana,LONG=plantain\"}]}"
+    ],
+    "offline_credential_environment": {
+      "ambient_values_never_read_or_returned": true,
+      "nonsecret_sentinel_length": 16,
+      "scrubbed_key_names_absent": [
+        "HUGGINGFACE_HUB_TOKEN",
+        "HF_API_TOKEN"
+      ],
+      "set_key_names": [
+        "HF_HUB_OFFLINE",
+        "HF_TOKEN",
+        "HUGGING_FACE_HUB_TOKEN",
+        "TRANSFORMERS_OFFLINE"
+      ],
+      "validated": true
+    },
+    "prompt_id": "9450192d-2155-411d-a951-7957906ef06e",
+    "prompt_sha256": "2f63134b06196702879e1b6613b824072949aa2228fd18756e056278cf413417",
+    "python_dont_write_bytecode": true,
+    "schema_version": 1,
+    "status": "SUCCESS",
+    "success": true
+  },
+  "run_role": "warm_second",
+  "sampler": {
+    "baseline_host_ram_bytes": 25988694016,
+    "baseline_vram_mib": 1627.0,
+    "coverage_errors": [],
+    "interval_s": 0.2,
+    "largest_coverage_gap_s": 0.219,
+    "last_sample_to_child_end_s": 0.0,
+    "max_inter_sample_gap_s": 0.219,
+    "maximum_allowed_gap_s": 0.75,
+    "peak_host_ram_bytes": 33804513280,
+    "peak_host_ram_gib": 31.482906341552734,
+    "peak_vram_gib": 7.79296875,
+    "peak_vram_mib": 7980.0,
+    "sample_count": 214,
+    "sample_error_count": 0,
+    "sample_errors": [],
+    "samples": [
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 25992003584,
+        "sampled_at_ns": 1786326240618169000,
+        "sampled_at_utc": "2026-08-10T01:44:00.618169000Z",
+        "sampled_monotonic_ns": 242050250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26015019008,
+        "sampled_at_ns": 1786326240825878700,
+        "sampled_at_utc": "2026-08-10T01:44:00.825878700Z",
+        "sampled_monotonic_ns": 242050468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26020265984,
+        "sampled_at_ns": 1786326241030796700,
+        "sampled_at_utc": "2026-08-10T01:44:01.030796700Z",
+        "sampled_monotonic_ns": 242050671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26010353664,
+        "sampled_at_ns": 1786326241219157300,
+        "sampled_at_utc": "2026-08-10T01:44:01.219157300Z",
+        "sampled_monotonic_ns": 242050859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26023854080,
+        "sampled_at_ns": 1786326241422005800,
+        "sampled_at_utc": "2026-08-10T01:44:01.422005800Z",
+        "sampled_monotonic_ns": 242051062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26036826112,
+        "sampled_at_ns": 1786326241624585700,
+        "sampled_at_utc": "2026-08-10T01:44:01.624585700Z",
+        "sampled_monotonic_ns": 242051265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26014064640,
+        "sampled_at_ns": 1786326241827314300,
+        "sampled_at_utc": "2026-08-10T01:44:01.827314300Z",
+        "sampled_monotonic_ns": 242051468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26009100288,
+        "sampled_at_ns": 1786326242019292500,
+        "sampled_at_utc": "2026-08-10T01:44:02.019292500Z",
+        "sampled_monotonic_ns": 242051656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26031386624,
+        "sampled_at_ns": 1786326242208396600,
+        "sampled_at_utc": "2026-08-10T01:44:02.208396600Z",
+        "sampled_monotonic_ns": 242051843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26055557120,
+        "sampled_at_ns": 1786326242412390400,
+        "sampled_at_utc": "2026-08-10T01:44:02.412390400Z",
+        "sampled_monotonic_ns": 242052046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26089672704,
+        "sampled_at_ns": 1786326242619293900,
+        "sampled_at_utc": "2026-08-10T01:44:02.619293900Z",
+        "sampled_monotonic_ns": 242052250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26102095872,
+        "sampled_at_ns": 1786326242822346800,
+        "sampled_at_utc": "2026-08-10T01:44:02.822346800Z",
+        "sampled_monotonic_ns": 242052453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26097053696,
+        "sampled_at_ns": 1786326243024758300,
+        "sampled_at_utc": "2026-08-10T01:44:03.024758300Z",
+        "sampled_monotonic_ns": 242052656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26084847616,
+        "sampled_at_ns": 1786326243214653300,
+        "sampled_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "sampled_monotonic_ns": 242052859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26093027328,
+        "sampled_at_ns": 1786326243419643700,
+        "sampled_at_utc": "2026-08-10T01:44:03.419643700Z",
+        "sampled_monotonic_ns": 242053062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26090668032,
+        "sampled_at_ns": 1786326243623870800,
+        "sampled_at_utc": "2026-08-10T01:44:03.623870800Z",
+        "sampled_monotonic_ns": 242053265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26106388480,
+        "sampled_at_ns": 1786326243826256100,
+        "sampled_at_utc": "2026-08-10T01:44:03.826256100Z",
+        "sampled_monotonic_ns": 242053468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26107953152,
+        "sampled_at_ns": 1786326244028473400,
+        "sampled_at_utc": "2026-08-10T01:44:04.028473400Z",
+        "sampled_monotonic_ns": 242053671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26108891136,
+        "sampled_at_ns": 1786326244216156700,
+        "sampled_at_utc": "2026-08-10T01:44:04.216156700Z",
+        "sampled_monotonic_ns": 242053859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26103717888,
+        "sampled_at_ns": 1786326244419872700,
+        "sampled_at_utc": "2026-08-10T01:44:04.419872700Z",
+        "sampled_monotonic_ns": 242054062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26095259648,
+        "sampled_at_ns": 1786326244621447900,
+        "sampled_at_utc": "2026-08-10T01:44:04.621447900Z",
+        "sampled_monotonic_ns": 242054265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26098667520,
+        "sampled_at_ns": 1786326244825781100,
+        "sampled_at_utc": "2026-08-10T01:44:04.825781100Z",
+        "sampled_monotonic_ns": 242054468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26096029696,
+        "sampled_at_ns": 1786326245031459100,
+        "sampled_at_utc": "2026-08-10T01:44:05.031459100Z",
+        "sampled_monotonic_ns": 242054671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26119639040,
+        "sampled_at_ns": 1786326245234379700,
+        "sampled_at_utc": "2026-08-10T01:44:05.234379700Z",
+        "sampled_monotonic_ns": 242054875000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26086039552,
+        "sampled_at_ns": 1786326245423758300,
+        "sampled_at_utc": "2026-08-10T01:44:05.423758300Z",
+        "sampled_monotonic_ns": 242055062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26079870976,
+        "sampled_at_ns": 1786326245629295900,
+        "sampled_at_utc": "2026-08-10T01:44:05.629295900Z",
+        "sampled_monotonic_ns": 242055265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26093449216,
+        "sampled_at_ns": 1786326245817966500,
+        "sampled_at_utc": "2026-08-10T01:44:05.817966500Z",
+        "sampled_monotonic_ns": 242055453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26124943360,
+        "sampled_at_ns": 1786326246025008000,
+        "sampled_at_utc": "2026-08-10T01:44:06.025008000Z",
+        "sampled_monotonic_ns": 242055656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26144268288,
+        "sampled_at_ns": 1786326246214703800,
+        "sampled_at_utc": "2026-08-10T01:44:06.214703800Z",
+        "sampled_monotonic_ns": 242055859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26174103552,
+        "sampled_at_ns": 1786326246419388200,
+        "sampled_at_utc": "2026-08-10T01:44:06.419388200Z",
+        "sampled_monotonic_ns": 242056062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26207420416,
+        "sampled_at_ns": 1786326246622426300,
+        "sampled_at_utc": "2026-08-10T01:44:06.622426300Z",
+        "sampled_monotonic_ns": 242056265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26233409536,
+        "sampled_at_ns": 1786326246826523300,
+        "sampled_at_utc": "2026-08-10T01:44:06.826523300Z",
+        "sampled_monotonic_ns": 242056468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26227376128,
+        "sampled_at_ns": 1786326247030552400,
+        "sampled_at_utc": "2026-08-10T01:44:07.030552400Z",
+        "sampled_monotonic_ns": 242056671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1626.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26254602240,
+        "sampled_at_ns": 1786326247219072900,
+        "sampled_at_utc": "2026-08-10T01:44:07.219072900Z",
+        "sampled_monotonic_ns": 242056859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1637.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26269241344,
+        "sampled_at_ns": 1786326247422036100,
+        "sampled_at_utc": "2026-08-10T01:44:07.422036100Z",
+        "sampled_monotonic_ns": 242057062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1637.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26336706560,
+        "sampled_at_ns": 1786326247625779200,
+        "sampled_at_utc": "2026-08-10T01:44:07.625779200Z",
+        "sampled_monotonic_ns": 242057265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1637.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26375487488,
+        "sampled_at_ns": 1786326247829777700,
+        "sampled_at_utc": "2026-08-10T01:44:07.829777700Z",
+        "sampled_monotonic_ns": 242057468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1650.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26396762112,
+        "sampled_at_ns": 1786326248020082400,
+        "sampled_at_utc": "2026-08-10T01:44:08.020082400Z",
+        "sampled_monotonic_ns": 242057656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1650.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26419089408,
+        "sampled_at_ns": 1786326248206545100,
+        "sampled_at_utc": "2026-08-10T01:44:08.206545100Z",
+        "sampled_monotonic_ns": 242057843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1650.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26439622656,
+        "sampled_at_ns": 1786326248407268500,
+        "sampled_at_utc": "2026-08-10T01:44:08.407268500Z",
+        "sampled_monotonic_ns": 242058046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1636.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26465693696,
+        "sampled_at_ns": 1786326248627075400,
+        "sampled_at_utc": "2026-08-10T01:44:08.627075400Z",
+        "sampled_monotonic_ns": 242058265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1636.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26471968768,
+        "sampled_at_ns": 1786326248834453500,
+        "sampled_at_utc": "2026-08-10T01:44:08.834453500Z",
+        "sampled_monotonic_ns": 242058468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1636.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26476113920,
+        "sampled_at_ns": 1786326249022645700,
+        "sampled_at_utc": "2026-08-10T01:44:09.022645700Z",
+        "sampled_monotonic_ns": 242058656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1636.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26476216320,
+        "sampled_at_ns": 1786326249211776100,
+        "sampled_at_utc": "2026-08-10T01:44:09.211776100Z",
+        "sampled_monotonic_ns": 242058843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1636.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26481364992,
+        "sampled_at_ns": 1786326249416280400,
+        "sampled_at_utc": "2026-08-10T01:44:09.416280400Z",
+        "sampled_monotonic_ns": 242059046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26503974912,
+        "sampled_at_ns": 1786326249619935700,
+        "sampled_at_utc": "2026-08-10T01:44:09.619935700Z",
+        "sampled_monotonic_ns": 242059265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26526924800,
+        "sampled_at_ns": 1786326249823111300,
+        "sampled_at_utc": "2026-08-10T01:44:09.823111300Z",
+        "sampled_monotonic_ns": 242059468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26550677504,
+        "sampled_at_ns": 1786326250025806200,
+        "sampled_at_utc": "2026-08-10T01:44:10.025806200Z",
+        "sampled_monotonic_ns": 242059656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26575876096,
+        "sampled_at_ns": 1786326250212336800,
+        "sampled_at_utc": "2026-08-10T01:44:10.212336800Z",
+        "sampled_monotonic_ns": 242059843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26593935360,
+        "sampled_at_ns": 1786326250417252000,
+        "sampled_at_utc": "2026-08-10T01:44:10.417252000Z",
+        "sampled_monotonic_ns": 242060062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26117394432,
+        "sampled_at_ns": 1786326250622280800,
+        "sampled_at_utc": "2026-08-10T01:44:10.622280800Z",
+        "sampled_monotonic_ns": 242060265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26115461120,
+        "sampled_at_ns": 1786326250826146800,
+        "sampled_at_utc": "2026-08-10T01:44:10.826146800Z",
+        "sampled_monotonic_ns": 242060468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1629.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26113437696,
+        "sampled_at_ns": 1786326251031697600,
+        "sampled_at_utc": "2026-08-10T01:44:11.031697600Z",
+        "sampled_monotonic_ns": 242060671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26117087232,
+        "sampled_at_ns": 1786326251217850000,
+        "sampled_at_utc": "2026-08-10T01:44:11.217850000Z",
+        "sampled_monotonic_ns": 242060859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26122133504,
+        "sampled_at_ns": 1786326251422047500,
+        "sampled_at_utc": "2026-08-10T01:44:11.422047500Z",
+        "sampled_monotonic_ns": 242061062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26116833280,
+        "sampled_at_ns": 1786326251625671600,
+        "sampled_at_utc": "2026-08-10T01:44:11.625671600Z",
+        "sampled_monotonic_ns": 242061265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26126159872,
+        "sampled_at_ns": 1786326251828198500,
+        "sampled_at_utc": "2026-08-10T01:44:11.828198500Z",
+        "sampled_monotonic_ns": 242061468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26142617600,
+        "sampled_at_ns": 1786326252018505800,
+        "sampled_at_utc": "2026-08-10T01:44:12.018505800Z",
+        "sampled_monotonic_ns": 242061656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26164895744,
+        "sampled_at_ns": 1786326252221178700,
+        "sampled_at_utc": "2026-08-10T01:44:12.221178700Z",
+        "sampled_monotonic_ns": 242061859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26147868672,
+        "sampled_at_ns": 1786326252423370700,
+        "sampled_at_utc": "2026-08-10T01:44:12.423370700Z",
+        "sampled_monotonic_ns": 242062062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26187694080,
+        "sampled_at_ns": 1786326252613692300,
+        "sampled_at_utc": "2026-08-10T01:44:12.613692300Z",
+        "sampled_monotonic_ns": 242062250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26199257088,
+        "sampled_at_ns": 1786326252819414700,
+        "sampled_at_utc": "2026-08-10T01:44:12.819414700Z",
+        "sampled_monotonic_ns": 242062453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26206076928,
+        "sampled_at_ns": 1786326253024009400,
+        "sampled_at_utc": "2026-08-10T01:44:13.024009400Z",
+        "sampled_monotonic_ns": 242062656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26230812672,
+        "sampled_at_ns": 1786326253212122100,
+        "sampled_at_utc": "2026-08-10T01:44:13.212122100Z",
+        "sampled_monotonic_ns": 242062843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26258780160,
+        "sampled_at_ns": 1786326253418307000,
+        "sampled_at_utc": "2026-08-10T01:44:13.418307000Z",
+        "sampled_monotonic_ns": 242063062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26282766336,
+        "sampled_at_ns": 1786326253624451000,
+        "sampled_at_utc": "2026-08-10T01:44:13.624451000Z",
+        "sampled_monotonic_ns": 242063265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26299326464,
+        "sampled_at_ns": 1786326253829791800,
+        "sampled_at_utc": "2026-08-10T01:44:13.829791800Z",
+        "sampled_monotonic_ns": 242063468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26344767488,
+        "sampled_at_ns": 1786326254035313300,
+        "sampled_at_utc": "2026-08-10T01:44:14.035313300Z",
+        "sampled_monotonic_ns": 242063671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26314420224,
+        "sampled_at_ns": 1786326254206598200,
+        "sampled_at_utc": "2026-08-10T01:44:14.206598200Z",
+        "sampled_monotonic_ns": 242063843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26324049920,
+        "sampled_at_ns": 1786326254414360300,
+        "sampled_at_utc": "2026-08-10T01:44:14.414360300Z",
+        "sampled_monotonic_ns": 242064046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26320384000,
+        "sampled_at_ns": 1786326254621638000,
+        "sampled_at_utc": "2026-08-10T01:44:14.621638000Z",
+        "sampled_monotonic_ns": 242064265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26348478464,
+        "sampled_at_ns": 1786326254826691000,
+        "sampled_at_utc": "2026-08-10T01:44:14.826691000Z",
+        "sampled_monotonic_ns": 242064468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26368716800,
+        "sampled_at_ns": 1786326255032853400,
+        "sampled_at_utc": "2026-08-10T01:44:15.032853400Z",
+        "sampled_monotonic_ns": 242064671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26396143616,
+        "sampled_at_ns": 1786326255221181700,
+        "sampled_at_utc": "2026-08-10T01:44:15.221181700Z",
+        "sampled_monotonic_ns": 242064859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26416386048,
+        "sampled_at_ns": 1786326255411816100,
+        "sampled_at_utc": "2026-08-10T01:44:15.411816100Z",
+        "sampled_monotonic_ns": 242065046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26448572416,
+        "sampled_at_ns": 1786326255615412400,
+        "sampled_at_utc": "2026-08-10T01:44:15.615412400Z",
+        "sampled_monotonic_ns": 242065250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26456498176,
+        "sampled_at_ns": 1786326255823944900,
+        "sampled_at_utc": "2026-08-10T01:44:15.823944900Z",
+        "sampled_monotonic_ns": 242065468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26487906304,
+        "sampled_at_ns": 1786326256029925000,
+        "sampled_at_utc": "2026-08-10T01:44:16.029925000Z",
+        "sampled_monotonic_ns": 242065671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26493722624,
+        "sampled_at_ns": 1786326256219827700,
+        "sampled_at_utc": "2026-08-10T01:44:16.219827700Z",
+        "sampled_monotonic_ns": 242065859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26498453504,
+        "sampled_at_ns": 1786326256424225200,
+        "sampled_at_utc": "2026-08-10T01:44:16.424225200Z",
+        "sampled_monotonic_ns": 242066062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26492702720,
+        "sampled_at_ns": 1786326256629429500,
+        "sampled_at_utc": "2026-08-10T01:44:16.629429500Z",
+        "sampled_monotonic_ns": 242066265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26507997184,
+        "sampled_at_ns": 1786326256817840300,
+        "sampled_at_utc": "2026-08-10T01:44:16.817840300Z",
+        "sampled_monotonic_ns": 242066453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26531610624,
+        "sampled_at_ns": 1786326257021903400,
+        "sampled_at_utc": "2026-08-10T01:44:17.021903400Z",
+        "sampled_monotonic_ns": 242066656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1624.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26581299200,
+        "sampled_at_ns": 1786326257209661600,
+        "sampled_at_utc": "2026-08-10T01:44:17.209661600Z",
+        "sampled_monotonic_ns": 242066843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26605035520,
+        "sampled_at_ns": 1786326257415249100,
+        "sampled_at_utc": "2026-08-10T01:44:17.415249100Z",
+        "sampled_monotonic_ns": 242067046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26634846208,
+        "sampled_at_ns": 1786326257619891900,
+        "sampled_at_utc": "2026-08-10T01:44:17.619891900Z",
+        "sampled_monotonic_ns": 242067265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26676768768,
+        "sampled_at_ns": 1786326257824317100,
+        "sampled_at_utc": "2026-08-10T01:44:17.824317100Z",
+        "sampled_monotonic_ns": 242067468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26696810496,
+        "sampled_at_ns": 1786326258014337800,
+        "sampled_at_utc": "2026-08-10T01:44:18.014337800Z",
+        "sampled_monotonic_ns": 242067656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26397528064,
+        "sampled_at_ns": 1786326258218178800,
+        "sampled_at_utc": "2026-08-10T01:44:18.218178800Z",
+        "sampled_monotonic_ns": 242067859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 27284606976,
+        "sampled_at_ns": 1786326258422815000,
+        "sampled_at_utc": "2026-08-10T01:44:18.422815000Z",
+        "sampled_monotonic_ns": 242068062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 28318892032,
+        "sampled_at_ns": 1786326258609956900,
+        "sampled_at_utc": "2026-08-10T01:44:18.609956900Z",
+        "sampled_monotonic_ns": 242068250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29693591552,
+        "sampled_at_ns": 1786326258815812000,
+        "sampled_at_utc": "2026-08-10T01:44:18.815812000Z",
+        "sampled_monotonic_ns": 242068453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30883966976,
+        "sampled_at_ns": 1786326259021005100,
+        "sampled_at_utc": "2026-08-10T01:44:19.021005100Z",
+        "sampled_monotonic_ns": 242068656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32004063232,
+        "sampled_at_ns": 1786326259226166600,
+        "sampled_at_utc": "2026-08-10T01:44:19.226166600Z",
+        "sampled_monotonic_ns": 242068859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 33338286080,
+        "sampled_at_ns": 1786326259429447100,
+        "sampled_at_utc": "2026-08-10T01:44:19.429447100Z",
+        "sampled_monotonic_ns": 242069062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1634.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30697455616,
+        "sampled_at_ns": 1786326259618397800,
+        "sampled_at_utc": "2026-08-10T01:44:19.618397800Z",
+        "sampled_monotonic_ns": 242069250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29112213504,
+        "sampled_at_ns": 1786326259826139800,
+        "sampled_at_utc": "2026-08-10T01:44:19.826139800Z",
+        "sampled_monotonic_ns": 242069468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29113794560,
+        "sampled_at_ns": 1786326260030018000,
+        "sampled_at_utc": "2026-08-10T01:44:20.030018000Z",
+        "sampled_monotonic_ns": 242069671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29093453824,
+        "sampled_at_ns": 1786326260216588900,
+        "sampled_at_utc": "2026-08-10T01:44:20.216588900Z",
+        "sampled_monotonic_ns": 242069859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30123343872,
+        "sampled_at_ns": 1786326260419892100,
+        "sampled_at_utc": "2026-08-10T01:44:20.419892100Z",
+        "sampled_monotonic_ns": 242070062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1627.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29171900416,
+        "sampled_at_ns": 1786326260626238700,
+        "sampled_at_utc": "2026-08-10T01:44:20.626238700Z",
+        "sampled_monotonic_ns": 242070265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1771.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29487484928,
+        "sampled_at_ns": 1786326260830919800,
+        "sampled_at_utc": "2026-08-10T01:44:20.830919800Z",
+        "sampled_monotonic_ns": 242070468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2459.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29503352832,
+        "sampled_at_ns": 1786326261032582900,
+        "sampled_at_utc": "2026-08-10T01:44:21.032582900Z",
+        "sampled_monotonic_ns": 242070671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2459.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29490679808,
+        "sampled_at_ns": 1786326261221976400,
+        "sampled_at_utc": "2026-08-10T01:44:21.221976400Z",
+        "sampled_monotonic_ns": 242070859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 4120.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 27482226688,
+        "sampled_at_ns": 1786326261412178300,
+        "sampled_at_utc": "2026-08-10T01:44:21.412178300Z",
+        "sampled_monotonic_ns": 242071046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 4184.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 28035690496,
+        "sampled_at_ns": 1786326261618374400,
+        "sampled_at_utc": "2026-08-10T01:44:21.618374400Z",
+        "sampled_monotonic_ns": 242071250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 4728.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 28547850240,
+        "sampled_at_ns": 1786326261821667800,
+        "sampled_at_utc": "2026-08-10T01:44:21.821667800Z",
+        "sampled_monotonic_ns": 242071453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 5208.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29028790272,
+        "sampled_at_ns": 1786326262011124300,
+        "sampled_at_utc": "2026-08-10T01:44:22.011124300Z",
+        "sampled_monotonic_ns": 242071656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 5688.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29579837440,
+        "sampled_at_ns": 1786326262218327400,
+        "sampled_at_utc": "2026-08-10T01:44:22.218327400Z",
+        "sampled_monotonic_ns": 242071859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6178.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30134960128,
+        "sampled_at_ns": 1786326262425430300,
+        "sampled_at_utc": "2026-08-10T01:44:22.425430300Z",
+        "sampled_monotonic_ns": 242072062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6690.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30613798912,
+        "sampled_at_ns": 1786326262614204600,
+        "sampled_at_utc": "2026-08-10T01:44:22.614204600Z",
+        "sampled_monotonic_ns": 242072250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7138.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29284089856,
+        "sampled_at_ns": 1786326262817924400,
+        "sampled_at_utc": "2026-08-10T01:44:22.817924400Z",
+        "sampled_monotonic_ns": 242072453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7244.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 27492847616,
+        "sampled_at_ns": 1786326263009905300,
+        "sampled_at_utc": "2026-08-10T01:44:23.009905300Z",
+        "sampled_monotonic_ns": 242072640000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7244.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26565599232,
+        "sampled_at_ns": 1786326263213976900,
+        "sampled_at_utc": "2026-08-10T01:44:23.213976900Z",
+        "sampled_monotonic_ns": 242072859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7948.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26569420800,
+        "sampled_at_ns": 1786326263417104900,
+        "sampled_at_utc": "2026-08-10T01:44:23.417104900Z",
+        "sampled_monotonic_ns": 242073062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7948.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26564751360,
+        "sampled_at_ns": 1786326263622170100,
+        "sampled_at_utc": "2026-08-10T01:44:23.622170100Z",
+        "sampled_monotonic_ns": 242073265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7980.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26568056832,
+        "sampled_at_ns": 1786326263826478300,
+        "sampled_at_utc": "2026-08-10T01:44:23.826478300Z",
+        "sampled_monotonic_ns": 242073468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7970.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26571956224,
+        "sampled_at_ns": 1786326264031094400,
+        "sampled_at_utc": "2026-08-10T01:44:24.031094400Z",
+        "sampled_monotonic_ns": 242073671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7970.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26573606912,
+        "sampled_at_ns": 1786326264217832800,
+        "sampled_at_utc": "2026-08-10T01:44:24.217832800Z",
+        "sampled_monotonic_ns": 242073859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7970.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26592534528,
+        "sampled_at_ns": 1786326264424905200,
+        "sampled_at_utc": "2026-08-10T01:44:24.424905200Z",
+        "sampled_monotonic_ns": 242074062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7970.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26597801984,
+        "sampled_at_ns": 1786326264614457400,
+        "sampled_at_utc": "2026-08-10T01:44:24.614457400Z",
+        "sampled_monotonic_ns": 242074250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7618.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26811801600,
+        "sampled_at_ns": 1786326264819854400,
+        "sampled_at_utc": "2026-08-10T01:44:24.819854400Z",
+        "sampled_monotonic_ns": 242074453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2939.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 27308433408,
+        "sampled_at_ns": 1786326265011491900,
+        "sampled_at_utc": "2026-08-10T01:44:25.011491900Z",
+        "sampled_monotonic_ns": 242074656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 2939.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 27853582336,
+        "sampled_at_ns": 1786326265214477300,
+        "sampled_at_utc": "2026-08-10T01:44:25.214477300Z",
+        "sampled_monotonic_ns": 242074859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 3387.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 28376961024,
+        "sampled_at_ns": 1786326265416593800,
+        "sampled_at_utc": "2026-08-10T01:44:25.416593800Z",
+        "sampled_monotonic_ns": 242075062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 3835.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 28896317440,
+        "sampled_at_ns": 1786326265623196700,
+        "sampled_at_utc": "2026-08-10T01:44:25.623196700Z",
+        "sampled_monotonic_ns": 242075265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 4315.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29376729088,
+        "sampled_at_ns": 1786326265827898700,
+        "sampled_at_utc": "2026-08-10T01:44:25.827898700Z",
+        "sampled_monotonic_ns": 242075468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 4763.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29824946176,
+        "sampled_at_ns": 1786326266030486800,
+        "sampled_at_utc": "2026-08-10T01:44:26.030486800Z",
+        "sampled_monotonic_ns": 242075671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 5179.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30227218432,
+        "sampled_at_ns": 1786326266221498100,
+        "sampled_at_utc": "2026-08-10T01:44:26.221498100Z",
+        "sampled_monotonic_ns": 242075859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 5563.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30413430784,
+        "sampled_at_ns": 1786326266426327900,
+        "sampled_at_utc": "2026-08-10T01:44:26.426327900Z",
+        "sampled_monotonic_ns": 242076062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6456.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30512930816,
+        "sampled_at_ns": 1786326266613248900,
+        "sampled_at_utc": "2026-08-10T01:44:26.613248900Z",
+        "sampled_monotonic_ns": 242076250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6616.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30638895104,
+        "sampled_at_ns": 1786326266816491000,
+        "sampled_at_utc": "2026-08-10T01:44:26.816491000Z",
+        "sampled_monotonic_ns": 242076453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6616.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30765109248,
+        "sampled_at_ns": 1786326267022435000,
+        "sampled_at_utc": "2026-08-10T01:44:27.022435000Z",
+        "sampled_monotonic_ns": 242076656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6648.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 30899286016,
+        "sampled_at_ns": 1786326267210589600,
+        "sampled_at_utc": "2026-08-10T01:44:27.210589600Z",
+        "sampled_monotonic_ns": 242076843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31033339904,
+        "sampled_at_ns": 1786326267415977000,
+        "sampled_at_utc": "2026-08-10T01:44:27.415977000Z",
+        "sampled_monotonic_ns": 242077046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31061803008,
+        "sampled_at_ns": 1786326267621053200,
+        "sampled_at_utc": "2026-08-10T01:44:27.621053200Z",
+        "sampled_monotonic_ns": 242077265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31087616000,
+        "sampled_at_ns": 1786326267825609300,
+        "sampled_at_utc": "2026-08-10T01:44:27.825609300Z",
+        "sampled_monotonic_ns": 242077468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6668.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31078146048,
+        "sampled_at_ns": 1786326268031369200,
+        "sampled_at_utc": "2026-08-10T01:44:28.031369200Z",
+        "sampled_monotonic_ns": 242077671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6668.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31070781440,
+        "sampled_at_ns": 1786326268222430000,
+        "sampled_at_utc": "2026-08-10T01:44:28.222430000Z",
+        "sampled_monotonic_ns": 242077859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6668.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31076827136,
+        "sampled_at_ns": 1786326268412016800,
+        "sampled_at_utc": "2026-08-10T01:44:28.412016800Z",
+        "sampled_monotonic_ns": 242078046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6668.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31060561920,
+        "sampled_at_ns": 1786326268618599100,
+        "sampled_at_utc": "2026-08-10T01:44:28.618599100Z",
+        "sampled_monotonic_ns": 242078250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31070162944,
+        "sampled_at_ns": 1786326268822543000,
+        "sampled_at_utc": "2026-08-10T01:44:28.822543000Z",
+        "sampled_monotonic_ns": 242078453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31078469632,
+        "sampled_at_ns": 1786326269027829800,
+        "sampled_at_utc": "2026-08-10T01:44:29.027829800Z",
+        "sampled_monotonic_ns": 242078671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31077003264,
+        "sampled_at_ns": 1786326269218398400,
+        "sampled_at_utc": "2026-08-10T01:44:29.218398400Z",
+        "sampled_monotonic_ns": 242078859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31063330816,
+        "sampled_at_ns": 1786326269424251400,
+        "sampled_at_utc": "2026-08-10T01:44:29.424251400Z",
+        "sampled_monotonic_ns": 242079062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6658.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31059599360,
+        "sampled_at_ns": 1786326269629908600,
+        "sampled_at_utc": "2026-08-10T01:44:29.629908600Z",
+        "sampled_monotonic_ns": 242079265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6651.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31910658048,
+        "sampled_at_ns": 1786326269819701300,
+        "sampled_at_utc": "2026-08-10T01:44:29.819701300Z",
+        "sampled_monotonic_ns": 242079453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6363.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32409190400,
+        "sampled_at_ns": 1786326270022791900,
+        "sampled_at_utc": "2026-08-10T01:44:30.022791900Z",
+        "sampled_monotonic_ns": 242079656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32415072256,
+        "sampled_at_ns": 1786326270211765800,
+        "sampled_at_utc": "2026-08-10T01:44:30.211765800Z",
+        "sampled_monotonic_ns": 242079843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32423829504,
+        "sampled_at_ns": 1786326270414679700,
+        "sampled_at_utc": "2026-08-10T01:44:30.414679700Z",
+        "sampled_monotonic_ns": 242080046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32431910912,
+        "sampled_at_ns": 1786326270621000500,
+        "sampled_at_utc": "2026-08-10T01:44:30.621000500Z",
+        "sampled_monotonic_ns": 242080265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32439357440,
+        "sampled_at_ns": 1786326270830076200,
+        "sampled_at_utc": "2026-08-10T01:44:30.830076200Z",
+        "sampled_monotonic_ns": 242080468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32445538304,
+        "sampled_at_ns": 1786326271031996600,
+        "sampled_at_utc": "2026-08-10T01:44:31.031996600Z",
+        "sampled_monotonic_ns": 242080671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32433029120,
+        "sampled_at_ns": 1786326271220662700,
+        "sampled_at_utc": "2026-08-10T01:44:31.220662700Z",
+        "sampled_monotonic_ns": 242080859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32432848896,
+        "sampled_at_ns": 1786326271422472600,
+        "sampled_at_utc": "2026-08-10T01:44:31.422472600Z",
+        "sampled_monotonic_ns": 242081062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32429559808,
+        "sampled_at_ns": 1786326271610776600,
+        "sampled_at_utc": "2026-08-10T01:44:31.610776600Z",
+        "sampled_monotonic_ns": 242081250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32411267072,
+        "sampled_at_ns": 1786326271832490600,
+        "sampled_at_utc": "2026-08-10T01:44:31.832490600Z",
+        "sampled_monotonic_ns": 242081468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32403623936,
+        "sampled_at_ns": 1786326272021058300,
+        "sampled_at_utc": "2026-08-10T01:44:32.021058300Z",
+        "sampled_monotonic_ns": 242081656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32423915520,
+        "sampled_at_ns": 1786326272210106300,
+        "sampled_at_utc": "2026-08-10T01:44:32.210106300Z",
+        "sampled_monotonic_ns": 242081843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7552.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32429498368,
+        "sampled_at_ns": 1786326272415635700,
+        "sampled_at_utc": "2026-08-10T01:44:32.415635700Z",
+        "sampled_monotonic_ns": 242082046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32416133120,
+        "sampled_at_ns": 1786326272618211700,
+        "sampled_at_utc": "2026-08-10T01:44:32.618211700Z",
+        "sampled_monotonic_ns": 242082250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32426795008,
+        "sampled_at_ns": 1786326272822322900,
+        "sampled_at_utc": "2026-08-10T01:44:32.822322900Z",
+        "sampled_monotonic_ns": 242082453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32435740672,
+        "sampled_at_ns": 1786326273026898100,
+        "sampled_at_utc": "2026-08-10T01:44:33.026898100Z",
+        "sampled_monotonic_ns": 242082671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32427425792,
+        "sampled_at_ns": 1786326273215426300,
+        "sampled_at_utc": "2026-08-10T01:44:33.215426300Z",
+        "sampled_monotonic_ns": 242082859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32439218176,
+        "sampled_at_ns": 1786326273422912600,
+        "sampled_at_utc": "2026-08-10T01:44:33.422912600Z",
+        "sampled_monotonic_ns": 242083062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32434266112,
+        "sampled_at_ns": 1786326273612477400,
+        "sampled_at_utc": "2026-08-10T01:44:33.612477400Z",
+        "sampled_monotonic_ns": 242083250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32422076416,
+        "sampled_at_ns": 1786326273818120100,
+        "sampled_at_utc": "2026-08-10T01:44:33.818120100Z",
+        "sampled_monotonic_ns": 242083453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32428167168,
+        "sampled_at_ns": 1786326274008176200,
+        "sampled_at_utc": "2026-08-10T01:44:34.008176200Z",
+        "sampled_monotonic_ns": 242083640000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32424706048,
+        "sampled_at_ns": 1786326274225976800,
+        "sampled_at_utc": "2026-08-10T01:44:34.225976800Z",
+        "sampled_monotonic_ns": 242083859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32430211072,
+        "sampled_at_ns": 1786326274413735800,
+        "sampled_at_utc": "2026-08-10T01:44:34.413735800Z",
+        "sampled_monotonic_ns": 242084046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32424685568,
+        "sampled_at_ns": 1786326274618081500,
+        "sampled_at_utc": "2026-08-10T01:44:34.618081500Z",
+        "sampled_monotonic_ns": 242084250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32416227328,
+        "sampled_at_ns": 1786326274821413200,
+        "sampled_at_utc": "2026-08-10T01:44:34.821413200Z",
+        "sampled_monotonic_ns": 242084453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32415576064,
+        "sampled_at_ns": 1786326275011172900,
+        "sampled_at_utc": "2026-08-10T01:44:35.011172900Z",
+        "sampled_monotonic_ns": 242084656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32419786752,
+        "sampled_at_ns": 1786326275216202900,
+        "sampled_at_utc": "2026-08-10T01:44:35.216202900Z",
+        "sampled_monotonic_ns": 242084859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32415186944,
+        "sampled_at_ns": 1786326275422300900,
+        "sampled_at_utc": "2026-08-10T01:44:35.422300900Z",
+        "sampled_monotonic_ns": 242085062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32403062784,
+        "sampled_at_ns": 1786326275626257900,
+        "sampled_at_utc": "2026-08-10T01:44:35.626257900Z",
+        "sampled_monotonic_ns": 242085265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32406360064,
+        "sampled_at_ns": 1786326275813995200,
+        "sampled_at_utc": "2026-08-10T01:44:35.813995200Z",
+        "sampled_monotonic_ns": 242085453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32400257024,
+        "sampled_at_ns": 1786326276036411400,
+        "sampled_at_utc": "2026-08-10T01:44:36.036411400Z",
+        "sampled_monotonic_ns": 242085671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32407314432,
+        "sampled_at_ns": 1786326276208239100,
+        "sampled_at_utc": "2026-08-10T01:44:36.208239100Z",
+        "sampled_monotonic_ns": 242085843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32513687552,
+        "sampled_at_ns": 1786326276411187300,
+        "sampled_at_utc": "2026-08-10T01:44:36.411187300Z",
+        "sampled_monotonic_ns": 242086046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7547.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32450560000,
+        "sampled_at_ns": 1786326276631523500,
+        "sampled_at_utc": "2026-08-10T01:44:36.631523500Z",
+        "sampled_monotonic_ns": 242086265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32446783488,
+        "sampled_at_ns": 1786326276817046400,
+        "sampled_at_utc": "2026-08-10T01:44:36.817046400Z",
+        "sampled_monotonic_ns": 242086453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32448151552,
+        "sampled_at_ns": 1786326277019940200,
+        "sampled_at_utc": "2026-08-10T01:44:37.019940200Z",
+        "sampled_monotonic_ns": 242086656000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32445288448,
+        "sampled_at_ns": 1786326277209537400,
+        "sampled_at_utc": "2026-08-10T01:44:37.209537400Z",
+        "sampled_monotonic_ns": 242086843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7544.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32477888512,
+        "sampled_at_ns": 1786326277413840700,
+        "sampled_at_utc": "2026-08-10T01:44:37.413840700Z",
+        "sampled_monotonic_ns": 242087046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32510971904,
+        "sampled_at_ns": 1786326277618333700,
+        "sampled_at_utc": "2026-08-10T01:44:37.618333700Z",
+        "sampled_monotonic_ns": 242087250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32493412352,
+        "sampled_at_ns": 1786326277823298600,
+        "sampled_at_utc": "2026-08-10T01:44:37.823298600Z",
+        "sampled_monotonic_ns": 242087468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32513839104,
+        "sampled_at_ns": 1786326278028464900,
+        "sampled_at_utc": "2026-08-10T01:44:38.028464900Z",
+        "sampled_monotonic_ns": 242087671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32493690880,
+        "sampled_at_ns": 1786326278216563500,
+        "sampled_at_utc": "2026-08-10T01:44:38.216563500Z",
+        "sampled_monotonic_ns": 242087859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32493883392,
+        "sampled_at_ns": 1786326278422664600,
+        "sampled_at_utc": "2026-08-10T01:44:38.422664600Z",
+        "sampled_monotonic_ns": 242088062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7564.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32434962432,
+        "sampled_at_ns": 1786326278626828200,
+        "sampled_at_utc": "2026-08-10T01:44:38.626828200Z",
+        "sampled_monotonic_ns": 242088265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7554.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32450191360,
+        "sampled_at_ns": 1786326278831537900,
+        "sampled_at_utc": "2026-08-10T01:44:38.831537900Z",
+        "sampled_monotonic_ns": 242088468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 7298.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32460034048,
+        "sampled_at_ns": 1786326279035814100,
+        "sampled_at_utc": "2026-08-10T01:44:39.035814100Z",
+        "sampled_monotonic_ns": 242088671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6722.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 31024107520,
+        "sampled_at_ns": 1786326279223887600,
+        "sampled_at_utc": "2026-08-10T01:44:39.223887600Z",
+        "sampled_monotonic_ns": 242088859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6722.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 32292179968,
+        "sampled_at_ns": 1786326279411912000,
+        "sampled_at_utc": "2026-08-10T01:44:39.411912000Z",
+        "sampled_monotonic_ns": 242089046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6722.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 33804513280,
+        "sampled_at_ns": 1786326279618905600,
+        "sampled_at_utc": "2026-08-10T01:44:39.618905600Z",
+        "sampled_monotonic_ns": 242089250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 33166897152,
+        "sampled_at_ns": 1786326279822994200,
+        "sampled_at_utc": "2026-08-10T01:44:39.822994200Z",
+        "sampled_monotonic_ns": 242089468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 29729972224,
+        "sampled_at_ns": 1786326280027852900,
+        "sampled_at_utc": "2026-08-10T01:44:40.027852900Z",
+        "sampled_monotonic_ns": 242089671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 28185292800,
+        "sampled_at_ns": 1786326280218563800,
+        "sampled_at_utc": "2026-08-10T01:44:40.218563800Z",
+        "sampled_monotonic_ns": 242089859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26350972928,
+        "sampled_at_ns": 1786326280421839000,
+        "sampled_at_utc": "2026-08-10T01:44:40.421839000Z",
+        "sampled_monotonic_ns": 242090062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26378801152,
+        "sampled_at_ns": 1786326280625618200,
+        "sampled_at_utc": "2026-08-10T01:44:40.625618200Z",
+        "sampled_monotonic_ns": 242090265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26381705216,
+        "sampled_at_ns": 1786326280813777300,
+        "sampled_at_utc": "2026-08-10T01:44:40.813777300Z",
+        "sampled_monotonic_ns": 242090453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26353762304,
+        "sampled_at_ns": 1786326281034780300,
+        "sampled_at_utc": "2026-08-10T01:44:41.034780300Z",
+        "sampled_monotonic_ns": 242090671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6715.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26348417024,
+        "sampled_at_ns": 1786326281208450600,
+        "sampled_at_utc": "2026-08-10T01:44:41.208450600Z",
+        "sampled_monotonic_ns": 242090843000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6712.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26388815872,
+        "sampled_at_ns": 1786326281413049900,
+        "sampled_at_utc": "2026-08-10T01:44:41.413049900Z",
+        "sampled_monotonic_ns": 242091046000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6712.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26367787008,
+        "sampled_at_ns": 1786326281616810600,
+        "sampled_at_utc": "2026-08-10T01:44:41.616810600Z",
+        "sampled_monotonic_ns": 242091250000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6712.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26362662912,
+        "sampled_at_ns": 1786326281819686900,
+        "sampled_at_utc": "2026-08-10T01:44:41.819686900Z",
+        "sampled_monotonic_ns": 242091453000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6712.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26376388608,
+        "sampled_at_ns": 1786326282025952500,
+        "sampled_at_utc": "2026-08-10T01:44:42.025952500Z",
+        "sampled_monotonic_ns": 242091671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6712.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26364284928,
+        "sampled_at_ns": 1786326282213868900,
+        "sampled_at_utc": "2026-08-10T01:44:42.213868900Z",
+        "sampled_monotonic_ns": 242091859000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6712.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26392182784,
+        "sampled_at_ns": 1786326282418236600,
+        "sampled_at_utc": "2026-08-10T01:44:42.418236600Z",
+        "sampled_monotonic_ns": 242092062000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6722.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26391478272,
+        "sampled_at_ns": 1786326282621318000,
+        "sampled_at_utc": "2026-08-10T01:44:42.621318000Z",
+        "sampled_monotonic_ns": 242092265000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 6722.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26327949312,
+        "sampled_at_ns": 1786326282826438500,
+        "sampled_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "sampled_monotonic_ns": 242092468000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1630.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26332004352,
+        "sampled_at_ns": 1786326283030521700,
+        "sampled_at_utc": "2026-08-10T01:44:43.030521700Z",
+        "sampled_monotonic_ns": 242092671000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      },
+      {
+        "gpu_index": 0,
+        "host_ram_total_bytes": 68112736256,
+        "host_ram_used_bytes": 26291273728,
+        "sampled_at_ns": 1786326283186566400,
+        "sampled_at_utc": "2026-08-10T01:44:43.186566400Z",
+        "sampled_monotonic_ns": 242092828000000,
+        "vram_total_mib": 16303.0,
+        "vram_used_mib": 1644.0
+      }
+    ],
+    "start_to_first_sample_s": 0.0
+  },
+  "server_instance": {
+    "argv": [
+      "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8000",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\output",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\scripts\\_otr_headless_model_paths.yaml",
+      "--disable-metadata"
+    ],
+    "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+    "listeners": [
+      {
+        "address": "127.0.0.1",
+        "pid": 37300,
+        "port": 8000
+      }
+    ],
+    "parent_pid": 8388,
+    "process_create_time": 1786323831.9768996,
+    "serving_pid": 37300
+  },
+  "server_log": {
+    "ending": {
+      "bytes": 90744,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 19140298417286236,
+      "mtime_ns": 1786326282778465900,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+      "sha256": "b61743a6f59821f6fb8af3dc11007956e0ee74cc9203b1ff1845bd8c23ed5826"
+    },
+    "errors": [],
+    "event_count": 36,
+    "events": [
+      {
+        "byte_count": 28,
+        "end_offset": 86683,
+        "observed_at_ns": 1786326242619293900,
+        "observed_at_utc": "2026-08-10T01:44:02.619293900Z",
+        "observed_monotonic_ns": 242052250000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIGdvdCBwcm9tcHQNCg==",
+        "raw_sha256": "af203ec61b1a14a4133a8edd92147fabde1fbec46732a0e0635d1b32dedaccb0",
+        "start_offset": 86655,
+        "text": "\u001b[32m[INFO]\u001b[0m got prompt"
+      },
+      {
+        "byte_count": 112,
+        "end_offset": 86795,
+        "observed_at_ns": 1786326242619293900,
+        "observed_at_utc": "2026-08-10T01:44:02.619293900Z",
+        "observed_monotonic_ns": 242052250000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtzdG9yeV9icmllZjpsdHhfc2NlbmVfb3Blbl0gc3RhdHVzPW9rIGJyaWVmX2NoYXJzPTEyMiB0ZXJtcz1zZXR0aW5nPTIvbGlnaHRpbmc9My9hdG1vc3BoZXJlPTMNCg==",
+        "raw_sha256": "273d1288b19def457dd52a15cf3b7cd0e49bdcbadb518a17c32dc3e85356da29",
+        "start_offset": 86683,
+        "text": "\u001b[32m[INFO]\u001b[0m [story_brief:ltx_scene_open] status=ok brief_chars=122 terms=setting=2/lighting=3/atmosphere=3"
+      },
+      {
+        "byte_count": 264,
+        "end_offset": 87059,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtWUkFNTGV2ZXJzXSBmcmVlX290cl9waXBlbGluZV9yZXNpZHVlIChwcmUtcmVuZGVyOiBhbGwgc3RpbGxzIG1pbnRlZCkgT0s6IHVubG9hZF9sbG0sIF91bmxvYWRfYmFyaywgZ2MuY29sbGVjdCwgc29mdF9lbXB0eV9jYWNoZSwgY3VkYS5zeW5jaHJvbml6ZSwgY3VkYS5lbXB0eV9jYWNoZSwgY3VkYS5pcGNfY29sbGVjdCB8IGFsbG9jYXRlZCA2NSAtPiA2NSBNQiwgcmVzZXJ2ZWQgMTYwIC0+IDE2MCBNQiwgZnJlZT0xNDc4NSBNQg0K",
+        "raw_sha256": "4ba0acd56a4615c21d4e46528e6420c439202a7e134ade4d60765e31f4d27334",
+        "start_offset": 86795,
+        "text": "\u001b[32m[INFO]\u001b[0m [VRAMLevers] free_otr_pipeline_residue (pre-render: all stills minted) OK: unload_llm, _unload_bark, gc.collect, soft_empty_cache, cuda.synchronize, cuda.empty_cache, cuda.ipc_collect | allocated 65 -> 65 MB, reserved 160 -> 160 MB, free=14785 MB"
+      },
+      {
+        "byte_count": 228,
+        "end_offset": 87287,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBbT1RSIHZpZGVvXSBwcmUtcmVuZGVyIHJlc2lkdWUgZnJlZTogcmFuPVsndW5sb2FkX2xsbScsICdfdW5sb2FkX2JhcmsnLCAnZ2MuY29sbGVjdCcsICdzb2Z0X2VtcHR5X2NhY2hlJywgJ2N1ZGEuc3luY2hyb25pemUnLCAnY3VkYS5lbXB0eV9jYWNoZScsICdjdWRhLmlwY19jb2xsZWN0J10gZmFpbGVkPVtdIGZyZWVfZ2JfYWZ0ZXI9MTQuNDM4NDc2NTYyNQ0K",
+        "raw_sha256": "0c39018baf2267ddde43b8da1be19c8eacbeeb6dc078013d49c387544dabb417",
+        "start_offset": 87059,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m [OTR video] pre-render residue free: ran=['unload_llm', '_unload_bark', 'gc.collect', 'soft_empty_cache', 'cuda.synchronize', 'cuda.empty_cache', 'cuda.ipc_collect'] failed=[] free_gb_after=14.4384765625"
+      },
+      {
+        "byte_count": 178,
+        "end_offset": 87465,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtPVFIucmVuZGVyX2RyaXZlcl0gcGVyLWJlYXQgYXVkaW86IHNsaWNlZCBtYXN0ZXIud2F2IEA5LjUwMCswLjk2MHMgLT4gc2xpY2VfYmE0MjVhNDk5MDJhYzMxMy53YXYgKGJlYXQgYjAwMSBzZWdtZW50IDAvMSAoKzAuMDQwcyBzaWxlbmNlIGZvciB0aGUgdHJpbW1lZCB0YWlsKSkNCg==",
+        "raw_sha256": "d7808d4db1392b42b153ece3ff6449ecd56e40787d44e30b8d47c5a4fb6fca60",
+        "start_offset": 87287,
+        "text": "\u001b[32m[INFO]\u001b[0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))"
+      },
+      {
+        "byte_count": 178,
+        "end_offset": 87643,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtPVFIucmVuZGVyX2RyaXZlcl0gcGVyLWJlYXQgYXVkaW86IHNsaWNlZCBtYXN0ZXIud2F2IEA5LjUwMCswLjk2MHMgLT4gc2xpY2VfYmE0MjVhNDk5MDJhYzMxMy53YXYgKGJlYXQgYjAwMSBzZWdtZW50IDAvMSAoKzAuMDQwcyBzaWxlbmNlIGZvciB0aGUgdHJpbW1lZCB0YWlsKSkNCg==",
+        "raw_sha256": "d7808d4db1392b42b153ece3ff6449ecd56e40787d44e30b8d47c5a4fb6fca60",
+        "start_offset": 87465,
+        "text": "\u001b[32m[INFO]\u001b[0m [OTR.render_driver] per-beat audio: sliced master.wav @9.500+0.960s -> slice_ba425a49902ac313.wav (beat b001 segment 0/1 (+0.040s silence for the trimmed tail))"
+      },
+      {
+        "byte_count": 73,
+        "end_offset": 87716,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtncHVfcmVzaWRlbmN5XSBsZWFzZSBhY3F1aXJlZCBwaWQ9MzczMDAgdG9rZW49MmZiM2UxMjkNCg==",
+        "raw_sha256": "5fafffbfd6e2a7f1c28d4336c6ea4b3adc0363efbb2fdc095fd2f95ab4d93a97",
+        "start_offset": 87643,
+        "text": "\u001b[32m[INFO]\u001b[0m [gpu_residency] lease acquired pid=37300 token=2fb3e129"
+      },
+      {
+        "byte_count": 72,
+        "end_offset": 87788,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIGdndWYgcXR5cGVzOiBGMTYgKDUyNCksIFE1X0sgKDIxMCksIFE2X0sgKDkwKSwgRjMyICgxKQ0K",
+        "raw_sha256": "91d1e4970ecd3088f8ce5f75776af7e1d27c5c9a997927159a2e315858bb1bc3",
+        "start_offset": 87716,
+        "text": "\u001b[32m[INFO]\u001b[0m gguf qtypes: F16 (524), Q5_K (210), Q6_K (90), F32 (1)"
+      },
+      {
+        "byte_count": 69,
+        "end_offset": 87857,
+        "observed_at_ns": 1786326243214653300,
+        "observed_at_utc": "2026-08-10T01:44:03.214653300Z",
+        "observed_monotonic_ns": 242052859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIG1vZGVsIHdlaWdodCBkdHlwZSB0b3JjaC5mbG9hdDE2LCBtYW51YWwgY2FzdDogTm9uZQ0K",
+        "raw_sha256": "10b2c3612faea378e227fc919de8cb6a2cabc61a853b055c93196b514935f0ed",
+        "start_offset": 87788,
+        "text": "\u001b[32m[INFO]\u001b[0m model weight dtype torch.float16, manual cast: None"
+      },
+      {
+        "byte_count": 33,
+        "end_offset": 87890,
+        "observed_at_ns": 1786326243419643700,
+        "observed_at_utc": "2026-08-10T01:44:03.419643700Z",
+        "observed_monotonic_ns": 242053062000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIG1vZGVsX3R5cGUgRkxPVw0K",
+        "raw_sha256": "c86ee860899c62e255bffed2dae770cc2b3c778fa2d0af3f9842357c99f0291c",
+        "start_offset": 87857,
+        "text": "\u001b[32m[INFO]\u001b[0m model_type FLOW"
+      },
+      {
+        "byte_count": 62,
+        "end_offset": 87952,
+        "observed_at_ns": 1786326250622280800,
+        "observed_at_utc": "2026-08-10T01:44:10.622280800Z",
+        "observed_monotonic_ns": 242060265000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIGdndWYgcXR5cGVzOiBRNV9LICgxNDQpLCBGMzIgKDczKSwgUTZfSyAoMjUpDQo=",
+        "raw_sha256": "1a208b241e5f2e592a8cdf1708273f73f37bf7a0415aad64f4bee01d8767ea72",
+        "start_offset": 87890,
+        "text": "\u001b[32m[INFO]\u001b[0m gguf qtypes: Q5_K (144), F32 (73), Q6_K (25)"
+      },
+      {
+        "byte_count": 91,
+        "end_offset": 88043,
+        "observed_at_ns": 1786326250622280800,
+        "observed_at_utc": "2026-08-10T01:44:10.622280800Z",
+        "observed_monotonic_ns": 242060265000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIEF0dGVtcHRpbmcgdG8gcmVjcmVhdGUgc2VudGVuY2VwaWVjZSB0b2tlbml6ZXIgZnJvbSBHR1VGIGZpbGUgbWV0YWRhdGEuLi4NCg==",
+        "raw_sha256": "b6654f8483bf9a13ee4da7d2b2d8dcab11e4c4517cd13aa2c1e1908dc59642a0",
+        "start_offset": 87952,
+        "text": "\u001b[32m[INFO]\u001b[0m Attempting to recreate sentencepiece tokenizer from GGUF file metadata..."
+      },
+      {
+        "byte_count": 61,
+        "end_offset": 88104,
+        "observed_at_ns": 1786326258218178800,
+        "observed_at_utc": "2026-08-10T01:44:18.218178800Z",
+        "observed_monotonic_ns": 242067859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIENyZWF0ZWQgdG9rZW5pemVyIHdpdGggdm9jYWIgc2l6ZSBvZiAyNTYzODQNCg==",
+        "raw_sha256": "263a1ba4d9ebd237a56ecdaa225ff2bd01757a481a3bc937c28b6b097b8175ec",
+        "start_offset": 88043,
+        "text": "\u001b[32m[INFO]\u001b[0m Created tokenizer with vocab size of 256384"
+      },
+      {
+        "byte_count": 79,
+        "end_offset": 88183,
+        "observed_at_ns": 1786326258422815000,
+        "observed_at_utc": "2026-08-10T01:44:18.422815000Z",
+        "observed_monotonic_ns": 242068062000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBEZXF1YW50aXppbmcgdG9rZW5fZW1iZC53ZWlnaHQgdG8gcHJldmVudCBydW50aW1lIE9PTS4NCg==",
+        "raw_sha256": "f7a3ef3c3673bbf0285f83205b684b43360abd9a53b1ef17020712e07e0b609d",
+        "start_offset": 88104,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m Dequantizing token_embd.weight to prevent runtime OOM."
+      },
+      {
+        "byte_count": 118,
+        "end_offset": 88301,
+        "observed_at_ns": 1786326260216588900,
+        "observed_at_utc": "2026-08-10T01:44:20.216588900Z",
+        "observed_monotonic_ns": 242069859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIENMSVAvdGV4dCBlbmNvZGVyIG1vZGVsIGxvYWQgZGV2aWNlOiBjdWRhOjAsIG9mZmxvYWQgZGV2aWNlOiBjcHUsIGN1cnJlbnQ6IGNwdSwgZHR5cGU6IHRvcmNoLmZsb2F0MTYNCg==",
+        "raw_sha256": "881ce9305eee4a0262e1508b9fcebd6562f97c604c4fccdf6713fa30d305b0b1",
+        "start_offset": 88183,
+        "text": "\u001b[32m[INFO]\u001b[0m CLIP/text encoder model load device: cuda:0, offload device: cpu, current: cpu, dtype: torch.float16"
+      },
+      {
+        "byte_count": 48,
+        "end_offset": 88349,
+        "observed_at_ns": 1786326260419892100,
+        "observed_at_utc": "2026-08-10T01:44:20.419892100Z",
+        "observed_monotonic_ns": 242070062000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFVzaW5nIHB5dG9yY2ggYXR0ZW50aW9uIGluIFZBRQ0K",
+        "raw_sha256": "ca03c439707b02a0941c29a09c4bb03c2b193fa95d3e84fd846f4deadc02d2bf",
+        "start_offset": 88301,
+        "text": "\u001b[32m[INFO]\u001b[0m Using pytorch attention in VAE"
+      },
+      {
+        "byte_count": 48,
+        "end_offset": 88397,
+        "observed_at_ns": 1786326260419892100,
+        "observed_at_utc": "2026-08-10T01:44:20.419892100Z",
+        "observed_monotonic_ns": 242070062000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFVzaW5nIHB5dG9yY2ggYXR0ZW50aW9uIGluIFZBRQ0K",
+        "raw_sha256": "ca03c439707b02a0941c29a09c4bb03c2b193fa95d3e84fd846f4deadc02d2bf",
+        "start_offset": 88349,
+        "text": "\u001b[32m[INFO]\u001b[0m Using pytorch attention in VAE"
+      },
+      {
+        "byte_count": 85,
+        "end_offset": 88482,
+        "observed_at_ns": 1786326260626238700,
+        "observed_at_utc": "2026-08-10T01:44:20.626238700Z",
+        "observed_monotonic_ns": 242070265000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFZBRSBsb2FkIGRldmljZTogY3VkYTowLCBvZmZsb2FkIGRldmljZTogY3B1LCBkdHlwZTogdG9yY2guYmZsb2F0MTYNCg==",
+        "raw_sha256": "e283ad101b58a59e14de057c59cad169bc8c1c6b4f5dec83657734296263d7b6",
+        "start_offset": 88397,
+        "text": "\u001b[32m[INFO]\u001b[0m VAE load device: cuda:0, offload device: cpu, dtype: torch.bfloat16"
+      },
+      {
+        "byte_count": 42,
+        "end_offset": 88524,
+        "observed_at_ns": 1786326260626238700,
+        "observed_at_utc": "2026-08-10T01:44:20.626238700Z",
+        "observed_monotonic_ns": 242070265000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFJlcXVlc3RlZCB0byBsb2FkIFdhblZBRQ0K",
+        "raw_sha256": "4fa127d992eb78b2a8500790cafb9e8d11db868af822cff8b51537cff08154d5",
+        "start_offset": 88482,
+        "text": "\u001b[32m[INFO]\u001b[0m Requested to load WanVAE"
+      },
+      {
+        "byte_count": 136,
+        "end_offset": 88660,
+        "observed_at_ns": 1786326260626238700,
+        "observed_at_utc": "2026-08-10T01:44:20.626238700Z",
+        "observed_monotonic_ns": 242070265000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIE1vZGVsIFdhblZBRSBwcmVwYXJlZCBmb3IgZHluYW1pYyBWUkFNIGxvYWRpbmcuIDEzNDRNQiBTdGFnZWQuIDAgcGF0Y2hlcyBhdHRhY2hlZC4gRm9yY2UgcHJlLWxvYWRlZCA1NCB3ZWlnaHRzOiA2OSBLQi4NCg==",
+        "raw_sha256": "beec8425047457da77b4d0f0df4793565f7458cb736cbf73d40bcfa3f5f225d6",
+        "start_offset": 88524,
+        "text": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB."
+      },
+      {
+        "byte_count": 46,
+        "end_offset": 88706,
+        "observed_at_ns": 1786326261221976400,
+        "observed_at_utc": "2026-08-10T01:44:21.221976400Z",
+        "observed_monotonic_ns": 242070859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFJlcXVlc3RlZCB0byBsb2FkIFdhblRFTW9kZWwNCg==",
+        "raw_sha256": "5a77d35f2e5289c8e85be3707a41a1e41a2e50ef78dd55a1f1273ccaf686f619",
+        "start_offset": 88660,
+        "text": "\u001b[32m[INFO]\u001b[0m Requested to load WanTEModel"
+      },
+      {
+        "byte_count": 91,
+        "end_offset": 88797,
+        "observed_at_ns": 1786326263213976900,
+        "observed_at_utc": "2026-08-10T01:44:23.213976900Z",
+        "observed_monotonic_ns": 242072859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIGxvYWRlZCBjb21wbGV0ZWx5OyAxMjg0OC43MyBNQiB1c2FibGUsIDUxMjkuMjAgTUIgbG9hZGVkLCBmdWxsIGxvYWQ6IFRydWUNCg==",
+        "raw_sha256": "d355cb458d9944dc368db5dce9283fa9bcdc735291ffbe39d2b3fb3a53079e6c",
+        "start_offset": 88706,
+        "text": "\u001b[32m[INFO]\u001b[0m loaded completely; 12848.73 MB usable, 5129.20 MB loaded, full load: True"
+      },
+      {
+        "byte_count": 41,
+        "end_offset": 88838,
+        "observed_at_ns": 1786326264819854400,
+        "observed_at_utc": "2026-08-10T01:44:24.819854400Z",
+        "observed_monotonic_ns": 242074453000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFJlcXVlc3RlZCB0byBsb2FkIFdBTjIyDQo=",
+        "raw_sha256": "3b6877a9cb83f590c2206ac44595eda12fa61188c9f81966e22d514e221246f3",
+        "start_offset": 88797,
+        "text": "\u001b[32m[INFO]\u001b[0m Requested to load WAN22"
+      },
+      {
+        "byte_count": 91,
+        "end_offset": 88929,
+        "observed_at_ns": 1786326266426327900,
+        "observed_at_utc": "2026-08-10T01:44:26.426327900Z",
+        "observed_monotonic_ns": 242076062000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIGxvYWRlZCBjb21wbGV0ZWx5OyAxMjg0Ni43MyBNQiB1c2FibGUsIDM3MTYuOTYgTUIgbG9hZGVkLCBmdWxsIGxvYWQ6IFRydWUNCg==",
+        "raw_sha256": "79827d4dd70682d21f3975ec1a634dced0f33fee025a12c7d4cf4c85b94cf983",
+        "start_offset": 88838,
+        "text": "\u001b[32m[INFO]\u001b[0m loaded completely; 12846.73 MB usable, 3716.96 MB loaded, full load: True"
+      },
+      {
+        "byte_count": 168,
+        "end_offset": 89097,
+        "observed_at_ns": 1786326266426327900,
+        "observed_at_utc": "2026-08-10T01:44:26.426327900Z",
+        "observed_monotonic_ns": 242076062000000,
+        "raw_base64": "W09UUl9ETURSZXN0YXJ0XSBtYXJrZXI9ZDcwMGVhMjE4YzM2IHRyYW5zaXRpb249cmVzdGFydChwcmVkaWN0X3gwLT5yZW5vaXNlX2ZyZXNoKSBzaWdtYXM9MSwwLjc1NywwLjUyMiwwIHRpbWVzdGVwcz0xMDAwLDc1Nyw1MjIsMCBub2lzZV9zY2FsaW5nPU1vZGVsU2FtcGxpbmdBZHZhbmNlZA0K",
+        "raw_sha256": "a58b7819d3bb4fceb15506bb5d5206a4d919f30ce9d2ffa01bfd0f2a6705596d",
+        "start_offset": 88929,
+        "text": "[OTR_DMDRestart] marker=d700ea218c36 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced"
+      },
+      {
+        "byte_count": 191,
+        "end_offset": 89288,
+        "observed_at_ns": 1786326266426327900,
+        "observed_at_utc": "2026-08-10T01:44:26.426327900Z",
+        "observed_monotonic_ns": 242076062000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBbT1RSX0RNRFJlc3RhcnRdIG1hcmtlcj1kNzAwZWEyMThjMzYgdHJhbnNpdGlvbj1yZXN0YXJ0KHByZWRpY3RfeDAtPnJlbm9pc2VfZnJlc2gpIHNpZ21hcz0xLDAuNzU3LDAuNTIyLDAgdGltZXN0ZXBzPTEwMDAsNzU3LDUyMiwwIG5vaXNlX3NjYWxpbmc9TW9kZWxTYW1wbGluZ0FkdmFuY2VkDQo=",
+        "raw_sha256": "13c6c1410176f148cf299d23879d052d29990c4b21eed22755bfd02ef5e12d7f",
+        "start_offset": 89097,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m [OTR_DMDRestart] marker=d700ea218c36 transition=restart(predict_x0->renoise_fresh) sigmas=1,0.757,0.522,0 timesteps=1000,757,522,0 noise_scaling=ModelSamplingAdvanced"
+      },
+      {
+        "byte_count": 286,
+        "end_offset": 89574,
+        "observed_at_ns": 1786326269424251400,
+        "observed_at_utc": "2026-08-10T01:44:29.424251400Z",
+        "observed_monotonic_ns": 242079062000000,
+        "raw_base64": "DSAgMCV8ICAgICAgICAgIHwgMC8zIFswMDowMDw/LCA/aXQvc10NIDMzJXzilojilojilojilo4gICAgICB8IDEvMyBbMDA6MDE8MDA6MDIsICAxLjA2cy9pdF0NIDY3JXzilojilojilojilojilojilojilosgICB8IDIvMyBbMDA6MDI8MDA6MDEsICAxLjAxcy9pdF0NMTAwJXzilojilojilojilojilojilojilojilojilojiloh8IDMvMyBbMDA6MDI8MDA6MDAsICAxLjAxaXQvc10NMTAwJXzilojilojilojilojilojilojilojilojilojiloh8IDMvMyBbMDA6MDI8MDA6MDAsICAxLjAwaXQvc10NCg==",
+        "raw_sha256": "b6906a29b26edd3efea10107856ed29b48f11950eaea14bb3553267e1e79cbdb",
+        "start_offset": 89288,
+        "text": "\r  0%|          | 0/3 [00:00<?, ?it/s]\r 33%|███▎      | 1/3 [00:01<00:02,  1.06s/it]\r 67%|██████▋   | 2/3 [00:02<00:01,  1.01s/it]\r100%|██████████| 3/3 [00:02<00:00,  1.01it/s]\r100%|██████████| 3/3 [00:02<00:00,  1.00it/s]"
+      },
+      {
+        "byte_count": 136,
+        "end_offset": 89710,
+        "observed_at_ns": 1786326269819701300,
+        "observed_at_utc": "2026-08-10T01:44:29.819701300Z",
+        "observed_monotonic_ns": 242079453000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIE1vZGVsIFdhblZBRSBwcmVwYXJlZCBmb3IgZHluYW1pYyBWUkFNIGxvYWRpbmcuIDEzNDRNQiBTdGFnZWQuIDAgcGF0Y2hlcyBhdHRhY2hlZC4gRm9yY2UgcHJlLWxvYWRlZCA1NCB3ZWlnaHRzOiA2OSBLQi4NCg==",
+        "raw_sha256": "beec8425047457da77b4d0f0df4793565f7458cb736cbf73d40bcfa3f5f225d6",
+        "start_offset": 89574,
+        "text": "\u001b[32m[INFO]\u001b[0m Model WanVAE prepared for dynamic VRAM loading. 1344MB Staged. 0 patches attached. Force pre-loaded 54 weights: 69 KB."
+      },
+      {
+        "byte_count": 84,
+        "end_offset": 89794,
+        "observed_at_ns": 1786326279223887600,
+        "observed_at_utc": "2026-08-10T01:44:39.223887600Z",
+        "observed_monotonic_ns": 242088859000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtPVFIgdmlkZW9dIHdhbl90aTJ2IFZSQU0gcmVuZGVyLXBoYXNlIHBlYWsgODI3OSBNQiAvIHBvc3QgNzAyMSBNQg0K",
+        "raw_sha256": "86385faaebead73b9eeb6e2653b5178a1228ba6a1a4b511c9b6ee53810a27da6",
+        "start_offset": 89710,
+        "text": "\u001b[32m[INFO]\u001b[0m [OTR video] wan_ti2v VRAM render-phase peak 8279 MB / post 7021 MB"
+      },
+      {
+        "byte_count": 136,
+        "end_offset": 89930,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBbT1RSIHZpZGVvXSBCRUFUIHNob3RfYjAwMSBhc3NlbWJsZWQgZnJvbSAxIHNpbmdsZSBzZWdtZW50KHMpIC0+IDI0IGZyYW1lKHMpIGF0IG90cl9iZWF0X3Nob3RfYjAwMV92X29qM2pfMC5tcDQNCg==",
+        "raw_sha256": "8eb4d59cf72071eafb2986c519478b74638d734126f05e3f2035e39af11f8f5a",
+        "start_offset": 89794,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m [OTR video] BEAT shot_b001 assembled from 1 single segment(s) -> 24 frame(s) at otr_beat_shot_b001_v_oj3j_0.mp4"
+      },
+      {
+        "byte_count": 110,
+        "end_offset": 90040,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtPVFIgdmlkZW9dIHBlcnNpc3RlZCAxIGNsaXAocykgdG8gZXBpc29kZXMvd2FuX2Nvc3RfbGFkZGVyX2Zhc3R3YW5fOGdiX2YwMjVfMjAyNjA4MDkvY2xpcHMvDQo=",
+        "raw_sha256": "33d444bcecd9869692e2cab82e1a8f933602a7e9067fea202796137f52aa812c",
+        "start_offset": 89930,
+        "text": "\u001b[32m[INFO]\u001b[0m [OTR video] persisted 1 clip(s) to episodes/wan_cost_ladder_fastwan_8gb_f025_20260809/clips/"
+      },
+      {
+        "byte_count": 323,
+        "end_offset": 90363,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBbT1RSLnJlbmRlcl9kcml2ZXJdIExUWC1PUEVOIEhFQUxUSCAoQlVHLUxPQ0FMLTQxMyk6IHJhZGlvLW9wZW4gYmVhdCBiMDAxIHJvbGU9YW5ub3VuY2VyX3Zpc3VhbCByZW5kZXJlZCBvbiAnZmFzdHdhbl84Z2InIChleGlzdHM9VHJ1ZSkgLS0gTk9UIGFuIExUWCBlbmdpbmU7IHRoZSBvcGVuIGlzIHRoZSBwcm9jZ2VuL3N0aWxsIGZsb29yIChzb2Z0IG9wZW4pLiBFeHBlY3RlZCBvbmUgb2YgKCdsdHhfYXVkaW9faW4nLCAnbHR4X3ZpZGVvJykuIFNldCBPVFJfTFRYX09QRU5fU1RSSUNUPTEgdG8gZmFpbCB0aGUgYnVpbGQuDQo=",
+        "raw_sha256": "d3de5ad9d44a93152b209c6c2e8aa4faa5a2d487bf657859fca360888aed5641",
+        "start_offset": 90040,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m [OTR.render_driver] LTX-OPEN HEALTH (BUG-LOCAL-413): radio-open beat b001 role=announcer_visual rendered on 'fastwan_8gb' (exists=True) -- NOT an LTX engine; the open is the procgen/still floor (soft open). Expected one of ('ltx_audio_in', 'ltx_video'). Set OTR_LTX_OPEN_STRICT=1 to fail the build."
+      },
+      {
+        "byte_count": 87,
+        "end_offset": 90450,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIFtMZWRnZXJdIHNhdmVkIHBlbmRpbmdfMjAyNjA4MDlfMTgwNTQ0X2xlZGdlci5qc29uICgwIGxpbmVzLCAwIHdvcmRzKQ0K",
+        "raw_sha256": "658b8124ac6056448a0802d58a28a9f5749d0002c8355d6e5e79eb7f2e0dabe6",
+        "start_offset": 90363,
+        "text": "\u001b[32m[INFO]\u001b[0m [Ledger] saved pending_20260809_180544_ledger.json (0 lines, 0 words)"
+      },
+      {
+        "byte_count": 139,
+        "end_offset": 90589,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBbT1RSX1ZpZGVvUmVuZGVyQmF0Y2hdIGF1ZGlvX21vdGlvbjogc3RhbXBlZCAxIHByb2ZpbGUocykgKDEgb2spIC0+IHBlbmRpbmdfMjAyNjA4MDlfMTgwNTQ0X2xlZGdlci5qc29uIHNhdmVkPVRydWUNCg==",
+        "raw_sha256": "718e21e2c2232b3088d73326bcf5b8f062d849c64e140b2919711bc0901720ed",
+        "start_offset": 90450,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m [OTR_VideoRenderBatch] audio_motion: stamped 1 profile(s) (1 ok) -> pending_20260809_180544_ledger.json saved=True"
+      },
+      {
+        "byte_count": 96,
+        "end_offset": 90685,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1sxbRtbMzNtW1dBUk5JTkddG1swbSBbT1RSX1ZpZGVvUmVuZGVyQmF0Y2hdIG1vZGU9ZXBpc29kZSBvaz1UcnVlIC0+IG5vZGVfZXBpc29kZV9yZXBvcnQuanNvbg0K",
+        "raw_sha256": "46edec0959158c0f437a38bea3cb07fa2ad9ef35025bcd63dcb1ddbf50c7d050",
+        "start_offset": 90589,
+        "text": "\u001b[1m\u001b[33m[WARNING]\u001b[0m [OTR_VideoRenderBatch] mode=episode ok=True -> node_episode_report.json"
+      },
+      {
+        "byte_count": 59,
+        "end_offset": 90744,
+        "observed_at_ns": 1786326282826438500,
+        "observed_at_utc": "2026-08-10T01:44:42.826438500Z",
+        "observed_monotonic_ns": 242092468000000,
+        "raw_base64": "G1szMm1bSU5GT10bWzBtIBtbMzJtUHJvbXB0IGV4ZWN1dGVkIGluIDQwLjMyIHNlY29uZHMbWzBtDQo=",
+        "raw_sha256": "4a59085017a630555a7d40f5f50befa8aa5c7f9e51022c6903a6d849fa0437f8",
+        "start_offset": 90685,
+        "text": "\u001b[32m[INFO]\u001b[0m \u001b[32mPrompt executed in 40.32 seconds\u001b[0m"
+      }
+    ],
+    "new_byte_count": 4089,
+    "new_bytes_sha256": "4904905794219531ab1262bcb93837bfe4fda58dabde64c062205c65fc5f22cd",
+    "starting": {
+      "bytes": 86655,
+      "device": 1356286727840300467,
+      "exists": true,
+      "inode": 19140298417286236,
+      "mtime_ns": 1786326236120068600,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\otr_side\\wan_cost_ladder\\evidence\\attempt-004\\wan_cost_ladder.server.log",
+      "sha256": "f1c8c7e690bfcefbce4893341bb61038403ca4c39b96fb3a9680d2d973a1cc70"
+    },
+    "timestamps_are_observation_times": true
+  },
+  "sidecar_peak_vram_mib": 7980.0,
+  "sidecar_schema_version": 1,
+  "source": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\wan_cost_ladder_sidecar.py",
+    "sha256": "5a2e1868e8a10cc7871feed46ddd6a5674ef8efe909530829ac3b17c4e1faf7c"
+  },
+  "started_at_ns": 1786326240614154200,
+  "started_at_utc": "2026-08-10T01:44:00.614154200Z",
+  "status": "measured",
+  "warm": true,
+  "warm_peak_derivation": {
+    "inputs": [
+      "sidecar_peak_vram_mib",
+      "adapter_render_peak_vram_mib"
+    ],
+    "operation": "max",
+    "rationale": "Conservative machine-wide peak: retain the mandated 200 ms sidecar and OTR's independent 100 ms render-window probe; do not let either instrument's cadence underprice the row.",
+    "selected_source": "adapter_render_window_100ms"
+  },
+  "warm_peak_vram_mib": 8279.0
+}

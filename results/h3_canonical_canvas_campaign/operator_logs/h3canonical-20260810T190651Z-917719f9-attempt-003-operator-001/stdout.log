@@ -1,0 +1,6 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 9436)
+--- Running Preflight Checks for h3_i2v_canonical_832x480_f107 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+
+[PREFLIGHT ABORT] Preflight Check #2 [GPU idle] FAILED: Five-sample WDDM idle gate failed: GpuIdleGateError: Pre-boot unmetered-client policy requires active WDDM display mode; found driver_model='WDDM', display_active='Disabled'
+[LOCK] Released .gpu.lock and coordinator

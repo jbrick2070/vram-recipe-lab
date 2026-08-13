@@ -89,3 +89,7 @@ The public **692x692 / 192-frame / 210-second / 8 GB** result remains
 
 Exact distribution-seed 2.1 pins are recorded in
 `results/comparisons/environment_2p1.json`.
+| humo_14b_diet_portrait_480x832_f97 | PASS (machine; human pending) | 13.22 | 6.87 | 285.3 | Run #2; boot lane: lab-8199, sage-free, no-pinned, reserve-2.921gb; executor cache nonce; sampler/output execution proved |
+| humo_14b_diet_landscape_832x480_f97 | PASS (machine; human pending) | 13.06 | 7.09 | 288.6 | Run #2; boot lane: lab-8199, sage-free, no-pinned, reserve-2.921gb; executor cache nonce; sampler/output execution proved |
+| h3_i2v_canonical_832x480_f107 | FAIL (VRAM 15.39 GB > 14.5 GB) | 15.39 | 2.33 | 178.8 | Run #1; boot lane: lab-8199, sage-free, manager-offline-test, no-pinned; executor cache nonce; sampler/output execution proved; elevated-baseline lane, operator-authorized 2026-08-10 |
+| h3_jobd_lipsync_refaudio_seed43_f192 | PASS (cold) (machine; human pending) | 6.88 | 2.28 | 436.0 | Run #1; boot lane: lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb; executor cache nonce; sampler/output execution proved; elevated-baseline lane, operator-authorized 2026-08-10 |

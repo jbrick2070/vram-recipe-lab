@@ -1,0 +1,23 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 39400)
+--- Running Preflight Checks for h3_i2v_canonical_832x480_f107 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 2: Five-sample WDDM idle gate passed
+[SERVER] Launching lab server via boot_h3_manager_offline_test.cmd on port 8199...
+[SERVER] Recorded server PID 40304 in .server.pid
+[SERVER] Updated .server.pid to serving PID 36188
+[SERVER] Lab server online on port 8199 after 10.1s
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+[FIXTURE] Uploaded and verified fixture scene_still.png in server input directory
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 2.37 GB | Host RAM: 20.72 GB
+Queueing prompt for h3_i2v_canonical_832x480_f107...
+[PREFLIGHT ABORT] Preflight Check #2 [GPU idle] FAILED: Immediate prequeue known-workload scan blocked: redacted_blocking_processes=[{"argv_sha256":"b078ccc596f7fe97b658d49cc9918a6b73480637833be2f856347ce665f91883","executable_basename":"python.exe","match_basis":["python_script_target"],"matched_markers":["main.py"],"pid":37248,"process_basename":"python.exe","process_create_time":1786390510.8083284,"target_basename":"main.py"}]; scan_errors=[]
+[LOCK] Released .gpu.lock and coordinator

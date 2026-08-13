@@ -1,0 +1,6 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 25544)
+--- Running Preflight Checks for h3_i2v_canonical_832x480_f107 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+
+[PREFLIGHT ABORT] Preflight Check #2 [GPU idle] FAILED: Five-sample WDDM idle gate failed: GpuIdleGateError: GPU is not quiescent: sample 0: independent process scan found 1 forbidden/unknown workload(s); sample 1: independent process scan found 1 forbidden/unknown workload(s); sample 2: independent process scan found 1 forbidden/unknown workload(s); sample 3: independent process scan found 1 forbidden/unknown workload(s); sample 4: independent process scan found 1 forbidden/unknown workload(s)
+[LOCK] Released .gpu.lock and coordinator

@@ -13,7 +13,10 @@ import sys
 import time
 import json
 import copy
+import csv
 import hashlib
+import importlib.util
+import io
 import math
 import re
 import stat
@@ -39,6 +42,7 @@ COORDINATOR_MUTEX_PATH = REPO_ROOT / ".coordinator.mutex"
 LAB_LOCKS_SOURCE_PATH = Path(lab_locks.__file__).resolve()
 QUEUE_QUARANTINE_PATH = REPO_ROOT / ".queue.quarantine.json"
 SERVER_PID_FILE = REPO_ROOT / ".server.pid"
+SERVER_IDLE_GATE_FILE = REPO_ROOT / ".server.idle-gate.json"
 SERVER_LOG_FILE = REPO_ROOT / "server.log"
 BOOT_CMD = REPO_ROOT / "boot_lab_server.cmd"
 RESULTS_DIR = REPO_ROOT / "results"
@@ -66,14 +70,179 @@ LAB_PORT = "8199"
 COMFY_SERVER_URL = f"http://127.0.0.1:{LAB_PORT}"
 VRAM_GATE_GB = 14.5
 RECEIPT_SCHEMA_VERSION = 3
-# Desktop composition fluctuates around 2.5 GB on this workstation. This is
-# only a pre-boot contention check; the independent 14.5 GB peak gate remains
-# authoritative for render safety and certification.
-VRAM_GPU_IDLE_MAX_MB = 3072  # 3.0 GB pre-boot desktop threshold
+# Operator-authorized desktop-use lane.  A render may start with ordinary
+# desktop applications attached to the WDDM GPU, but the measured absolute
+# desktop baseline must not exceed 3.0 GiB.  The independent 14.5 GiB absolute
+# peak gate remains authoritative during the render itself, while known render
+# and compute workloads remain hard pre-boot and pre-prompt blockers.
+GPU_IDLE_STANDARD_BASELINE_MAX_MB = 2048
+GPU_IDLE_BASELINE_MAX_MB = 3072
+GPU_IDLE_ELEVATED_BASELINE_STAMP = (
+    "elevated-baseline lane, operator-authorized 2026-08-10"
+)
+GPU_IDLE_INDEX = 0
+GPU_IDLE_SAMPLE_COUNT = 5
+GPU_IDLE_SAMPLE_INTERVAL_S = 0.2
+GPU_IDLE_WDDM_UNMETERED_MEMORY_TOKEN = "[N/A]"
+GPU_IDLE_REQUIRED_DRIVER_MODEL = "WDDM"
+GPU_IDLE_DISPLAY_ACTIVE_MEASURED_STATES = frozenset({"Enabled", "Disabled"})
+GPU_IDLE_EVIDENCE_KEY = "preboot_gpu_idle_gate"
+GPU_IDLE_INTERNAL_STATS_KEY = "_vram_lab_preboot_gpu_idle_gate"
+GPU_IDLE_SIDECAR_KEY = "preboot_gpu_idle_gate_sidecar"
+GPU_IDLE_SIDECAR_INTERNAL_STATS_KEY = "_vram_lab_preboot_gpu_idle_gate_sidecar"
+PREQUEUE_WORKLOAD_SCAN_EVIDENCE_KEY = "prequeue_known_workload_scan"
+PREQUEUE_WORKLOAD_SCAN_CONTRACT_KEY = "prequeue_known_workload_scan_contract"
+GPU_IDLE_CURRENT_RUNNER_EXCLUSION_SCHEMA = (
+    "pid",
+    "process_create_time",
+    "resolved_runner_path",
+    "narrowly_verified",
+    "excluded_pid_only",
+    "process_identity",
+    "verified_windows_venv_launcher",
+    "expected_excluded_process_count",
+)
+GPU_IDLE_VERIFIED_VENV_LAUNCHER_SCHEMA = (
+    "pid",
+    "process_create_time",
+    "expected_launcher_path",
+    "direct_child_pid",
+    "direct_parent_verified",
+    "launcher_identity_live",
+    "child_identity_live",
+    "argv_tail_matches_child",
+    "both_exact_runner_target",
+    "child_executable_differs",
+    "creation_delta_s",
+    "narrowly_verified",
+    "excluded_pid_only",
+    "process_identity",
+)
+GPU_IDLE_EXCLUDED_CURRENT_RUNNER_ROW_SCHEMA = (
+    "pid",
+    "process_create_time",
+    "reason",
+)
+PREQUEUE_OWNED_SERVER_EXCLUSION_SCHEMA = (
+    "pid",
+    "process_create_time",
+    "server_instance",
+    "process_identity",
+    "argv_match",
+    "narrowly_verified",
+    "excluded_pid_only",
+    "verified_windows_venv_launcher",
+    "expected_excluded_process_count",
+)
+PREQUEUE_VERIFIED_SERVER_VENV_LAUNCHER_SCHEMA = (
+    "pid",
+    "process_create_time",
+    "expected_launcher_path",
+    "direct_child_pid",
+    "direct_parent_verified",
+    "launcher_identity_live",
+    "child_identity_live",
+    "argv_tail_matches_child",
+    "both_exact_validated_server_argv",
+    "child_executable_differs",
+    "creation_delta_s",
+    "narrowly_verified",
+    "excluded_pid_only",
+    "process_identity",
+    "argv_match",
+)
+PREQUEUE_EXCLUDED_OWNED_SERVER_ROW_SCHEMA = (
+    "pid",
+    "process_create_time",
+    "reason",
+)
+GPU_IDLE_PROCESS_IDENTITY_SCHEMA = (
+    "pid",
+    "exists",
+    "name",
+    "executable",
+    "command_line",
+    "process_create_time",
+    "identity_errors",
+)
+GPU_IDLE_MODEL_WORKLOAD_MARKERS = (
+    "main.py",
+    "run_recipe.py",
+    "torchrun",
+    "stable-diffusion",
+    "automatic1111",
+    "invokeai",
+    "diffusers",
+    "text-generation",
+    "vllm",
+    "ollama",
+    "kobold",
+    "eng_wan_",
+    "eng_fastwan_",
+    "eng_humo",
+    "minimax",
+)
 MIN_FREE_DISK_GB = 5.0
 BOOT_TIMEOUT_S = 120
 POLL_INTERVAL_S = 0.2  # 200ms VRAM polling interval
+COMPLETION_TIMEOUT_FLAG = "--completion-timeout-s"
+DEFAULT_COMPLETION_TIMEOUT_S = 1800
+MAX_COMPLETION_TIMEOUT_S = 7200
+SERVER_PID_UNLINK_ATTEMPTS = 20
+SERVER_PID_UNLINK_RETRY_S = 0.1
 REQUIRED_CUSTOM_NODE_WHITELIST = frozenset({"ComfyUI-GGUF", "ComfyUI-KJNodes"})
+MANAGER_PROBE_ENV = "LAB_MANAGER_OFFLINE_PROBE"
+MANAGER_PROBE_LOG_ENV = "LAB_MANAGER_PROBE_LOG"
+MANAGER_PROBE_CLI_FLAG = "--manager-offline-test"
+MANAGER_PROBE_PHASE_FLAG = "--manager-probe-phase"
+MANAGER_PROBE_CANONICAL_JOB_C_RECIPES = frozenset(
+    {
+        "h3_i2v_canonical_832x480_f107",
+        "h3_i2v_canonical_832x480_f192",
+        "h3_i2v_canonical_832x480_f277",
+        "h3_r2v_refaudio_canonical_832x480_f107_seed43",
+        "h3_r2v_refaudio_canonical_832x480_f192_seed43",
+        "h3_r2v_refaudio_canonical_832x480_f277_seed43",
+    }
+)
+MANAGER_PROBE_SHORT_JOB_RECIPES = frozenset(
+    {
+        "h3_jobd_lipsync_refaudio_seed43_f192",
+    }
+)
+# Closed recipe-to-log-root map. Prefix scopes are intentionally limited to
+# the two named music missions; Job C uses exact names so unrelated canonical
+# recipes cannot opt Manager into the lab boot lane.
+MANAGER_PROBE_SCOPES = (
+    (
+        "h3-unconditioned-music-mission1",
+        frozenset(),
+        "h3_unconditioned_music_",
+        RESULTS_DIR / "h3_unconditioned_music_campaign" / "server_logs",
+    ),
+    (
+        "h3-canonical-canvas-job-c",
+        MANAGER_PROBE_CANONICAL_JOB_C_RECIPES,
+        None,
+        RESULTS_DIR / "h3_canonical_canvas_campaign" / "server_logs",
+    ),
+    (
+        "h3-music-followup",
+        frozenset(),
+        "h3_music_followup_",
+        RESULTS_DIR / "h3_music_followup_campaign" / "server_logs",
+    ),
+    (
+        "h3-short-jobs",
+        MANAGER_PROBE_SHORT_JOB_RECIPES,
+        None,
+        RESULTS_DIR / "h3_short_jobs" / "server_logs",
+    ),
+)
+MANAGER_PROBE_GUARD_SOURCE = REPO_ROOT / "scratch" / "h3_manager_offline_guard.py"
+MANAGER_PROBE_CUSTOM_NODE = "ComfyUI-Manager"
+MANAGER_PROBE_BOOT_CMD = REPO_ROOT / "boot_h3_manager_offline_test.cmd"
+MANAGER_PROBE_USER_DIRECTORY = Path(r"C:\Users\jeffr\Documents\ComfyUI")
 SUITE_CACHE_NONCE_INPUT = "_vram_lab_cache_nonce"
 SUITE_CACHE_NONCE_PATTERN = re.compile(r"[A-Za-z0-9_.:-]{1,160}")
 SUITE_CACHE_RUNTIME_SOURCES = {
@@ -245,6 +414,42 @@ def parse_standalone_cache_nonce(argv: List[str], is_suite: bool) -> Optional[st
             "--executor-cache-nonce must be 1-160 characters from A-Z, a-z, 0-9, _ . : -"
         )
     return nonce
+
+
+def parse_completion_timeout_s(argv: List[str]) -> int:
+    """Parse one bounded completion timeout, preserving the legacy default."""
+
+    positions = [
+        index for index, value in enumerate(argv) if value == COMPLETION_TIMEOUT_FLAG
+    ]
+    if len(positions) > 1:
+        raise ValueError(f"{COMPLETION_TIMEOUT_FLAG} may be supplied only once")
+    if any(
+        isinstance(value, str) and value.startswith(f"{COMPLETION_TIMEOUT_FLAG}=")
+        for value in argv
+    ):
+        raise ValueError(
+            f"{COMPLETION_TIMEOUT_FLAG} requires one separate integer value"
+        )
+    if not positions:
+        return DEFAULT_COMPLETION_TIMEOUT_S
+
+    index = positions[0]
+    if index + 1 >= len(argv):
+        raise ValueError(f"{COMPLETION_TIMEOUT_FLAG} requires an integer value")
+    raw_value = argv[index + 1]
+    if not isinstance(raw_value, str) or re.fullmatch(r"[1-9][0-9]*", raw_value) is None:
+        raise ValueError(
+            f"{COMPLETION_TIMEOUT_FLAG} must be an integer from 1 to "
+            f"{MAX_COMPLETION_TIMEOUT_S}"
+        )
+    value = int(raw_value)
+    if value > MAX_COMPLETION_TIMEOUT_S:
+        raise ValueError(
+            f"{COMPLETION_TIMEOUT_FLAG} must be an integer from 1 to "
+            f"{MAX_COMPLETION_TIMEOUT_S}"
+        )
+    return value
 
 
 def suite_cache_runtime_sha256s() -> Dict[str, str]:
@@ -1492,6 +1697,329 @@ class PreflightError(Exception):
         super().__init__(f"Preflight Check #{check_num} [{name}] FAILED: {reason}")
 
 
+_manager_probe_guard_module: Any = None
+
+
+def manager_probe_requested() -> bool:
+    """Return the validated test-only Manager opt-in state."""
+    raw = os.environ.get(MANAGER_PROBE_ENV)
+    if raw in (None, ""):
+        if os.environ.get(MANAGER_PROBE_LOG_ENV):
+            raise PreflightError(
+                9,
+                "Boot lane",
+                f"{MANAGER_PROBE_LOG_ENV} is set without {MANAGER_PROBE_ENV}=1",
+            )
+        return False
+    if raw != "1":
+        raise PreflightError(
+            9,
+            "Boot lane",
+            f"{MANAGER_PROBE_ENV} must be exactly 1 when present",
+        )
+    return True
+
+
+def manager_probe_phase(argv: List[str]) -> Optional[str]:
+    """Parse the cold/warm proof phase for the explicit Manager test lane."""
+    positions = [
+        index for index, value in enumerate(argv) if value == MANAGER_PROBE_PHASE_FLAG
+    ]
+    if len(positions) > 1:
+        raise ValueError(f"{MANAGER_PROBE_PHASE_FLAG} may be supplied only once")
+    if not positions:
+        if manager_probe_requested():
+            raise ValueError(
+                f"{MANAGER_PROBE_CLI_FLAG} requires "
+                f"{MANAGER_PROBE_PHASE_FLAG} cold|warm"
+            )
+        return None
+    index = positions[0]
+    if index + 1 >= len(argv) or argv[index + 1].startswith("--"):
+        raise ValueError(f"{MANAGER_PROBE_PHASE_FLAG} requires cold or warm")
+    phase = argv[index + 1]
+    if phase not in {"cold", "warm"}:
+        raise ValueError(f"{MANAGER_PROBE_PHASE_FLAG} must be cold or warm")
+    if not manager_probe_requested():
+        raise ValueError(
+            f"{MANAGER_PROBE_PHASE_FLAG} is allowed only with "
+            f"{MANAGER_PROBE_CLI_FLAG}"
+        )
+    return phase
+
+
+def manager_probe_identity(evidence: Dict[str, Any]) -> Dict[str, Any]:
+    """Return the immutable subset that may safely enter cold/warm identity."""
+    if evidence.get("enabled") is not True:
+        return {}
+    advisory = evidence.get("advisory_config") or {}
+    scan = evidence.get("log_scan") or {}
+    authority = scan.get("authoritative_server_reported_mode") or {}
+    source = scan.get("source_proof") or {}
+    return {
+        "recipe_scope": evidence.get("recipe_scope"),
+        "guard_source": evidence.get("guard_source"),
+        "test_boot_source": evidence.get("test_boot_source"),
+        "offline_environment": evidence.get("offline_environment"),
+        "advisory_config_path": (advisory.get("snapshot") or {}).get("path"),
+        "advisory_config_sha256": (advisory.get("snapshot") or {}).get("sha256"),
+        "authoritative_server_reported_mode": authority.get("resolved_mode"),
+        "manager_source_sha256s": {
+            key: (source.get(key) or {}).get("sha256")
+            for key in (
+                "manager_prestartup",
+                "manager_server",
+                "manager_core",
+                "comfy_folder_paths",
+                "manager_util",
+            )
+        },
+        "prestartup_state_sha256": (
+            (scan.get("current_prestartup_state") or {}).get("state_sha256")
+        ),
+        "preboot_record_sha256": (
+            ((scan.get("preboot_records") or [{}])[0].get("record") or {}).get(
+                "record_sha256"
+            )
+        ),
+        "log_path": evidence.get("log_path"),
+        "serving_pid": evidence.get("serving_pid"),
+        "serving_process_create_time_ns": evidence.get(
+            "serving_process_create_time_ns"
+        ),
+    }
+
+
+def manager_probe_recipe_scope(recipe_name: str) -> Dict[str, Any]:
+    """Resolve exactly one closed Manager recipe scope or fail closed."""
+
+    if (
+        not isinstance(recipe_name, str)
+        or re.fullmatch(r"[A-Za-z0-9_.-]+", recipe_name) is None
+    ):
+        raise PreflightError(9, "Boot lane", "Manager probe recipe name is invalid")
+    matches = []
+    for scope_name, exact_names, prefix, log_root in MANAGER_PROBE_SCOPES:
+        exact_match = recipe_name in exact_names
+        prefix_match = bool(prefix and recipe_name.startswith(prefix))
+        if exact_match or prefix_match:
+            matches.append(
+                {
+                    "scope": scope_name,
+                    "match_type": "exact" if exact_match else "prefix",
+                    "match_value": recipe_name if exact_match else prefix,
+                    "log_root": Path(log_root),
+                }
+            )
+    if len(matches) != 1:
+        raise PreflightError(
+            9,
+            "Boot lane",
+            "Manager offline probe recipe scope must match exactly one closed "
+            f"allowlist entry; found {len(matches)} for {recipe_name!r}",
+        )
+    return matches[0]
+
+
+def manager_probe_log_path(recipe_name: str) -> Path:
+    """Resolve the attempt-unique Manager log without permitting path escape."""
+    if not manager_probe_requested():
+        return SERVER_LOG_FILE
+    scope = manager_probe_recipe_scope(recipe_name)
+    raw = os.environ.get(MANAGER_PROBE_LOG_ENV, "")
+    path = Path(raw)
+    if not raw or not path.is_absolute() or path.suffix.lower() != ".log":
+        raise PreflightError(
+            9,
+            "Boot lane",
+            f"{MANAGER_PROBE_LOG_ENV} must be an absolute .log path",
+        )
+    log_root = Path(scope["log_root"])
+    lexical_root = Path(os.path.abspath(os.fspath(log_root)))
+    lexical = Path(os.path.abspath(os.fspath(path)))
+    if not os.path.lexists(lexical_root):
+        raise PreflightError(9, "Boot lane", "Manager probe log root is absent")
+    if _is_symlink_or_reparse_point(lexical_root):
+        raise PreflightError(
+            9, "Boot lane", "Manager probe log root is a symlink/reparse point"
+        )
+    try:
+        if lexical_root.resolve(strict=True) != lexical_root:
+            raise PreflightError(
+                9, "Boot lane", "Manager probe log root does not resolve exactly"
+            )
+        lexical.relative_to(lexical_root)
+        component = lexical_root
+        for part in lexical.relative_to(lexical_root).parts[:-1]:
+            component = component / part
+            if os.path.lexists(component) and _is_symlink_or_reparse_point(component):
+                raise PreflightError(
+                    9,
+                    "Boot lane",
+                    "Manager probe log path contains a symlink/reparse point",
+                )
+        if os.path.lexists(lexical) and _is_symlink_or_reparse_point(lexical):
+            raise PreflightError(
+                9, "Boot lane", "Manager probe log is a symlink/reparse point"
+            )
+        resolved = lexical.resolve()
+        if resolved != lexical:
+            raise PreflightError(
+                9, "Boot lane", "Manager probe log path does not resolve exactly"
+            )
+    except PreflightError:
+        raise
+    except (OSError, RuntimeError, ValueError) as exc:
+        raise PreflightError(
+            9, "Boot lane", f"Cannot prove Manager probe log containment: {exc}"
+        ) from exc
+    try:
+        resolved.relative_to(lexical_root)
+    except ValueError as exc:
+        raise PreflightError(
+            9,
+            "Boot lane",
+            f"Manager probe log must stay under {log_root}",
+        ) from exc
+    return resolved
+
+
+def load_manager_probe_guard() -> Any:
+    """Load the H3-specific guard only for the explicit test lane."""
+    global _manager_probe_guard_module
+    if _manager_probe_guard_module is not None:
+        return _manager_probe_guard_module
+    if not MANAGER_PROBE_GUARD_SOURCE.is_file():
+        raise PreflightError(
+            9,
+            "Boot lane",
+            f"Manager probe guard is missing: {MANAGER_PROBE_GUARD_SOURCE}",
+        )
+    spec = importlib.util.spec_from_file_location(
+        "h3_manager_offline_guard_runtime", MANAGER_PROBE_GUARD_SOURCE
+    )
+    if spec is None or spec.loader is None:
+        raise PreflightError(9, "Boot lane", "Cannot load Manager probe guard")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    _manager_probe_guard_module = module
+    return module
+
+
+def initialize_manager_probe_log(log_path: Path) -> Dict[str, Any]:
+    """Exclusively create a byte-zero log with the prestartup no-op record."""
+    try:
+        flags = os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_BINARY", 0)
+        fd = os.open(str(log_path), flags, 0o600)
+        try:
+            guard = load_manager_probe_guard()
+            preboot_line = guard.preboot_log_line(
+                MANAGER_PROBE_USER_DIRECTORY, dict(os.environ)
+            )
+            written = os.write(fd, preboot_line)
+            if written != len(preboot_line):
+                raise OSError("short write for Manager preboot record")
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+        retained = log_path.read_bytes()
+        if retained != preboot_line:
+            raise OSError("exclusive Manager probe log preboot record drifted")
+        return {
+            "path": str(log_path.resolve()),
+            "bytes": len(retained),
+            "sha256": sha256_bytes(retained),
+            "exclusive_create": True,
+            "preboot_record_starts_at_byte_zero": True,
+        }
+    except Exception as exc:
+        raise PreflightError(
+            3,
+            "Server up",
+            "Could not atomically create and state-bind the byte-zero "
+            f"Manager probe log: {exc}",
+        ) from exc
+
+
+def manager_probe_evidence(
+    recipe_name: str,
+    argv: List[str],
+    *,
+    require_pre_prompt: bool,
+) -> Dict[str, Any]:
+    """Prove the test-only Manager lane from its unique live server log."""
+    if not manager_probe_requested():
+        return {
+            "enabled": False,
+            "default_manager_disabled": True,
+        }
+    scope = manager_probe_recipe_scope(recipe_name)
+    log_path = manager_probe_log_path(recipe_name)
+    if not log_path.is_file():
+        raise PreflightError(9, "Boot lane", f"Manager probe log is absent: {log_path}")
+    try:
+        guard = load_manager_probe_guard()
+        environment = guard.offline_environment_evidence(dict(os.environ))
+        config = guard.config_evidence(argv)
+        if require_pre_prompt:
+            scan = guard.wait_for_pre_prompt_gate(
+                log_path,
+                argv,
+                expected_url=COMFY_SERVER_URL,
+            )
+        else:
+            scan = guard.scan_log(
+                log_path,
+                argv,
+                expected_url=COMFY_SERVER_URL,
+                require_pre_prompt=False,
+            )
+        scan_errors = guard.validate_scan_binding(scan, log_path, argv)
+        if scan_errors:
+            raise guard.ManagerProbeError("; ".join(scan_errors))
+        serving_pid = listener_pid(int(LAB_PORT))
+        if serving_pid is None:
+            raise guard.ManagerProbeError("lab listener PID is absent")
+        process_created_ns = int(psutil.Process(serving_pid).create_time() * 1e9)
+        if int(scan["log"]["mtime_ns"]) < process_created_ns:
+            raise guard.ManagerProbeError("Manager probe log predates serving process")
+        return {
+            "enabled": True,
+            "valid": True,
+            "recipe_scope": {
+                "scope": scope["scope"],
+                "match_type": scope["match_type"],
+                "match_value": scope["match_value"],
+                "log_root": str(Path(scope["log_root"]).resolve()),
+            },
+            "verified_before_this_prompt": True,
+            "require_no_prior_prompt": require_pre_prompt,
+            "log_path": str(log_path),
+            "serving_pid": serving_pid,
+            "serving_process_create_time_ns": process_created_ns,
+            "offline_environment": environment,
+            "advisory_config": config,
+            "log_scan": scan,
+            "guard_source": {
+                "path": str(MANAGER_PROBE_GUARD_SOURCE.resolve()),
+                "sha256": sha256_file(MANAGER_PROBE_GUARD_SOURCE),
+            },
+            "test_boot_source": {
+                "path": str(MANAGER_PROBE_BOOT_CMD.resolve()),
+                "sha256": sha256_file(MANAGER_PROBE_BOOT_CMD),
+            },
+        }
+    except PreflightError:
+        raise
+    except Exception as exc:
+        raise PreflightError(
+            9,
+            "Boot lane",
+            f"Manager offline probe failed: {type(exc).__name__}: {exc}",
+        ) from exc
+
+
 class LockManager:
     """GPU lease facade that maps coordinator failures to preflight errors."""
 
@@ -1517,6 +2045,10 @@ class LockManager:
     @property
     def acquired(self) -> bool:
         return self._lease.acquired
+
+    @property
+    def owner(self) -> Optional[Dict[str, Any]]:
+        return copy.deepcopy(self._lease.owner)
 
     def acquire(self):
         try:
@@ -1637,7 +2169,7 @@ class ResourceMonitorThread(threading.Thread):
 
 def get_recorded_pid() -> Optional[int]:
     """Retrieve recorded lab server PID from .server.pid."""
-    if SERVER_PID_FILE.exists():
+    if os.path.lexists(SERVER_PID_FILE):
         try:
             content = SERVER_PID_FILE.read_text(encoding="utf-8-sig", errors="ignore").strip()
             if content:
@@ -1650,46 +2182,3250 @@ def get_recorded_pid() -> Optional[int]:
 
 
 def cleanup_stale_pid_receipt() -> bool:
-    """Remove a stale PID receipt only after both process and port are proved clear."""
-    if not SERVER_PID_FILE.exists():
+    """Remove a stale owned-server receipt and its exact sidecar after clear proof."""
+    if not os.path.lexists(SERVER_PID_FILE):
         return False
     try:
-        pid = int(SERVER_PID_FILE.read_text(encoding="utf-8-sig").strip())
-        if pid <= 0:
-            raise ValueError("PID must be positive")
-    except (OSError, UnicodeError, ValueError) as exc:
+        receipt = _snapshot_server_pid_receipt()
+        pid = int(receipt["pid"])
+    except (ServerPidReceiptError, KeyError, TypeError, ValueError) as exc:
         print(f"[SERVER] Keeping unverifiable .server.pid receipt: {exc}")
         return False
     if psutil.pid_exists(pid):
         return False
-    if query_server_stats() or listener_pid(int(LAB_PORT)) is not None:
-        print(
-            f"[SERVER] Recorded PID {pid} is gone but port {LAB_PORT} is not proved clear; "
-            "keeping .server.pid."
+    cleanup = shutdown_lab_server()
+    return bool(cleanup.get("success") and cleanup.get("receipt_removed"))
+
+
+class GpuIdleGateError(RuntimeError):
+    """Raised when pre-boot WDDM quiescence cannot be proved."""
+
+
+def _idle_run_nvidia_smi(argv: List[str]) -> subprocess.CompletedProcess:
+    try:
+        return subprocess.run(
+            argv,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
         )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise GpuIdleGateError(f"nvidia-smi query failed: {exc}") from exc
+
+
+def _idle_csv_rows(stdout: str) -> List[List[str]]:
+    return [
+        [field.strip() for field in row]
+        for row in csv.reader(io.StringIO(stdout))
+        if row and any(field.strip() for field in row)
+    ]
+
+
+def _idle_finite_nonnegative(value: str, label: str) -> float:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError) as exc:
+        raise GpuIdleGateError(f"Non-numeric {label}: {value!r}") from exc
+    if not math.isfinite(parsed) or parsed < 0:
+        raise GpuIdleGateError(f"Invalid {label}: {value!r}")
+    return parsed
+
+
+def gpu_idle_gate_contract() -> Dict[str, Any]:
+    """Return the stable policy/source contract that may enter run identity."""
+
+    runner = Path(__file__).resolve()
+    return {
+        "schema_version": 1,
+        "kind": "run-recipe-preboot-wddm-idle-gate-contract",
+        "gpu_index": GPU_IDLE_INDEX,
+        "port": int(LAB_PORT),
+        "sample_count": GPU_IDLE_SAMPLE_COUNT,
+        "sampling_interval_s": GPU_IDLE_SAMPLE_INTERVAL_S,
+        "aggregation": "maximum of five conjunctively quiescent WDDM samples",
+        "policy": {
+            "maximum_vram_used_mib": float(GPU_IDLE_BASELINE_MAX_MB),
+            "vram_used_mib_threshold_gating": True,
+            "operator_idle_policy": operator_idle_policy_contract(),
+            "gpu_utilization_recorded_non_gating": True,
+            "memory_utilization_recorded_non_gating": True,
+            "recognized_unmetered_wddm_memory_token": (
+                GPU_IDLE_WDDM_UNMETERED_MEMORY_TOKEN
+            ),
+            "numeric_or_unknown_process_memory_tokens_block": True,
+            "live_process_identity_required": True,
+            "desktop_graphics_signals_retained_but_not_required": True,
+            "model_workload_markers": list(GPU_IDLE_MODEL_WORKLOAD_MARKERS),
+            "known_workload_classifier": known_workload_classifier_contract(),
+            "port_8199_listener_required_absent": True,
+            "same_gpu_lease_required_each_sample": True,
+            "required_driver_model": GPU_IDLE_REQUIRED_DRIVER_MODEL,
+            "display_active_allowed_measured_states": sorted(
+                GPU_IDLE_DISPLAY_ACTIVE_MEASURED_STATES
+            ),
+            "display_active_recorded_non_gating": True,
+            "current_runner_exclusion": (
+                "exact real runner PID/create-time/target plus at most one verified "
+                "direct Windows venv launcher stub"
+            ),
+        },
+        "collector": {
+            "path": str(runner),
+            "sha256": sha256_file(runner),
+        },
+    }
+
+
+def operator_idle_policy_contract() -> Dict[str, Any]:
+    """Return the stable operator authorization bound into run identity."""
+
+    return {
+        "schema_version": 1,
+        "kind": "operator-authorized-desktop-baseline-policy",
+        "preboot_baseline_maximum_mib": float(
+            GPU_IDLE_BASELINE_MAX_MB
+        ),
+        "preboot_baseline_threshold_gating": True,
+        "elevated_baseline_threshold_mib": float(
+            GPU_IDLE_STANDARD_BASELINE_MAX_MB
+        ),
+        "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+        "elevated_baseline_stamp": GPU_IDLE_ELEVATED_BASELINE_STAMP,
+        "known_render_compute_processes_block": True,
+        "utilization_descriptors_non_gating": True,
+        "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+        "pair_drift_threshold_gating": False,
+        "pair_drift_condition": (
+            "compare each same-identity warm baseline_vram_gb to the prior cold leg; "
+            "record absolute drift and threshold exceedance without blocking"
+        ),
+        PREQUEUE_WORKLOAD_SCAN_CONTRACT_KEY: prequeue_known_workload_scan_contract(),
+        "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+        "authorized_on": "2026-08-10",
+    }
+
+
+def prequeue_known_workload_scan_contract() -> Dict[str, Any]:
+    """Return stable semantics for the mandatory per-leg prequeue process scan."""
+
+    return {
+        "schema_version": 1,
+        "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+        "timing": (
+            "every cold and warm leg, after queue-idle and baseline/drift measurements, "
+            "immediately before POST /prompt"
+        ),
+        "model_workload_markers": list(GPU_IDLE_MODEL_WORKLOAD_MARKERS),
+        "known_workload_classifier": known_workload_classifier_contract(),
+        "exact_exclusions": [
+            "current run_recipe PID + create time + resolved run_recipe.py argv",
+            (
+                "optional one-hop direct Windows venv launcher at "
+                "sys.prefix/Scripts/python.exe with identical argv tail, exact runner "
+                "targets, live PID/create-times, distinct child executable, and <=5s creation delta"
+            ),
+            (
+                "owned port-8199 serving PID + create time + exact self-reported "
+                "server argv (with only its Python interpreter prefix permitted)"
+            ),
+            (
+                "optional one-hop direct owned-server Windows venv launcher at "
+                "sys.prefix/Scripts/python.exe with identical argv tail, both exact "
+                "validated self-reported server argv, live PID/create-times, distinct "
+                "serving-child executable, and <=5s creation delta"
+            ),
+        ],
+        "owned_lab_server_exclusion_schema": list(
+            PREQUEUE_OWNED_SERVER_EXCLUSION_SCHEMA
+        ),
+        "verified_owned_server_windows_venv_launcher_schema": list(
+            PREQUEUE_VERIFIED_SERVER_VENV_LAUNCHER_SCHEMA
+        ),
+        "excluded_owned_lab_server_row_schema": list(
+            PREQUEUE_EXCLUDED_OWNED_SERVER_ROW_SCHEMA
+        ),
+        "owned_server_launcher_boot_lineage": (
+            "not inferred when unavailable; only the exact serving PID direct parent "
+            "may be excluded, never arbitrary ancestors"
+        ),
+        "python_without_readable_argv_blocks": False,
+        "advisory_unreadable_processes_retained": True,
+        "listener_binding_required_before_and_after_scan": True,
+        "warm_leg_scan_required": True,
+        "blocking_condition": "any known render/compute workload is live",
+    }
+
+
+def known_workload_classifier_contract() -> Dict[str, Any]:
+    """Return the shared token-aware cold/prequeue classifier contract."""
+
+    return {
+        "schema_version": 1,
+        "kind": "token-aware-positive-known-workload-classifier",
+        "python_script_markers": ["main.py", "run_recipe.py"],
+        "other_markers": [
+            marker
+            for marker in GPU_IDLE_MODEL_WORKLOAD_MARKERS
+            if marker not in {"main.py", "run_recipe.py"}
+        ],
+        "positive_match_sources": [
+            "process_basename",
+            "executable_basename",
+            "actual_python_script_or_module_target",
+        ],
+        "arbitrary_later_argv_values_ignored": True,
+        "exact_exclusions_run_before_classifier": True,
+        "optional_current_windows_venv_launcher_exclusion": (
+            "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher "
+            "argv[1:] equals real child argv[1:]; both target run_recipe.py; live "
+            "PID/create-times; real child executable differs; ordered creation delta <=5s"
+        ),
+        "current_runner_exclusion_schema": list(
+            GPU_IDLE_CURRENT_RUNNER_EXCLUSION_SCHEMA
+        ),
+        "verified_windows_venv_launcher_schema": list(
+            GPU_IDLE_VERIFIED_VENV_LAUNCHER_SCHEMA
+        ),
+        "excluded_current_runner_row_schema": list(
+            GPU_IDLE_EXCLUDED_CURRENT_RUNNER_ROW_SCHEMA
+        ),
+        "unreadable_or_unmatched_python_is_advisory": True,
+        "redacted_process_schema": [
+            "pid",
+            "process_create_time",
+            "process_basename",
+            "executable_basename",
+            "target_basename",
+            "matched_markers",
+            "match_basis",
+            "argv_sha256",
+        ],
+        "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+    }
+
+
+def vram_receipt_fields(
+    baseline_vram_gb: float, peak_vram_gb: float
+) -> Dict[str, Any]:
+    """Build honest absolute/baseline/net per-leg receipt measurements."""
+
+    try:
+        baseline = float(baseline_vram_gb)
+        peak = float(peak_vram_gb)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("VRAM receipt measurements must be numeric") from exc
+    if (
+        not math.isfinite(baseline)
+        or not math.isfinite(peak)
+        or baseline < 0
+        or peak < baseline
+    ):
+        raise ValueError(
+            "VRAM receipt measurements must be finite, nonnegative, and peak >= baseline"
+        )
+
+    # nvidia-smi reports MiB; three decimals after dividing by 1024 retain
+    # approximately one-MiB resolution. Compute the displayed net from the
+    # displayed operands so the receipt remains arithmetically self-consistent.
+    recorded_baseline = round(baseline, 3)
+    recorded_peak = round(peak, 3)
+    recorded_net = round(recorded_peak - recorded_baseline, 3)
+    elevated = recorded_baseline > (
+        float(GPU_IDLE_STANDARD_BASELINE_MAX_MB) / 1024.0
+    )
+    stamp = GPU_IDLE_ELEVATED_BASELINE_STAMP if elevated else None
+    return {
+        "peak_vram_gb": recorded_peak,
+        "absolute_peak_vram_gb": recorded_peak,
+        "baseline_vram_gb": recorded_baseline,
+        "net_peak_vram_gb": recorded_net,
+        "elevated_baseline_lane": elevated,
+        "baseline_lane_stamp": stamp,
+        "vram_measurement": {
+            "units": "GiB (nvidia-smi MiB / 1024)",
+            "baseline_measurement_point": (
+                "immediately before prompt queue; includes owned lab server and desktop load"
+            ),
+            "baseline_absolute_gib": recorded_baseline,
+            "peak_absolute_gib": recorded_peak,
+            "net_peak_gib": recorded_net,
+            "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+        },
+    }
+
+
+def prompt_baseline_advisory(baseline_vram_gb: float) -> Dict[str, Any]:
+    """Evaluate the hard per-leg pre-prompt absolute baseline gate."""
+
+    try:
+        baseline = float(baseline_vram_gb)
+    except (TypeError, ValueError) as exc:
+        raise PreflightError(
+            2, "GPU idle", f"Pre-queue baseline is not numeric: {baseline_vram_gb!r}"
+        ) from exc
+    limit_gib = float(GPU_IDLE_BASELINE_MAX_MB) / 1024.0
+    if not math.isfinite(baseline) or baseline < 0:
+        raise PreflightError(
+            2, "GPU idle", f"Pre-queue baseline is invalid: {baseline_vram_gb!r}"
+        )
+    recorded = round(baseline, 3)
+    return {
+        "schema_version": 1,
+        "kind": "per-leg-prequeue-baseline-gate",
+        "baseline_vram_gb": recorded,
+        "maximum_threshold_gb": limit_gib,
+        "threshold_exceeded": recorded > limit_gib,
+        "gating": True,
+        "disposition": (
+            "abort before prompt" if recorded > limit_gib else "proceed"
+        ),
+    }
+
+
+def pair_baseline_drift_advisory(
+    baseline_vram_gb: float,
+    previous_result: Dict[str, Any],
+    config_run_count: int,
+) -> Dict[str, Any]:
+    """Describe same-identity cold/warm baseline drift without gating execution."""
+
+    threshold = 0.5
+    if config_run_count < 2:
+        return {
+            "schema_version": 1,
+            "kind": "same-identity-cold-warm-baseline-drift-advisory",
+            "applicable": False,
+            "measurement_available": False,
+            "previous_baseline_vram_gb": None,
+            "current_baseline_vram_gb": round(float(baseline_vram_gb), 3),
+            "absolute_drift_gb": None,
+            "advisory_threshold_gb": threshold,
+            "threshold_exceeded": False,
+            "gating": False,
+            "disposition": "record-only; no same-identity prior leg",
+        }
+    try:
+        current = float(baseline_vram_gb)
+        previous = float(previous_result["baseline_vram_gb"])
+    except (KeyError, TypeError, ValueError):
+        return {
+            "schema_version": 1,
+            "kind": "same-identity-cold-warm-baseline-drift-advisory",
+            "applicable": True,
+            "measurement_available": False,
+            "previous_baseline_vram_gb": None,
+            "current_baseline_vram_gb": round(float(baseline_vram_gb), 3),
+            "absolute_drift_gb": None,
+            "advisory_threshold_gb": threshold,
+            "threshold_exceeded": None,
+            "gating": False,
+            "disposition": "record-only; prior baseline unavailable",
+        }
+    if not all(math.isfinite(value) and value >= 0 for value in (current, previous)):
+        return {
+            "schema_version": 1,
+            "kind": "same-identity-cold-warm-baseline-drift-advisory",
+            "applicable": True,
+            "measurement_available": False,
+            "previous_baseline_vram_gb": None,
+            "current_baseline_vram_gb": (
+                round(current, 3) if math.isfinite(current) and current >= 0 else None
+            ),
+            "absolute_drift_gb": None,
+            "advisory_threshold_gb": threshold,
+            "threshold_exceeded": None,
+            "gating": False,
+            "disposition": "record-only; drift inputs invalid",
+        }
+    recorded_current = round(current, 3)
+    recorded_previous = round(previous, 3)
+    drift = round(abs(recorded_current - recorded_previous), 3)
+    return {
+        "schema_version": 1,
+        "kind": "same-identity-cold-warm-baseline-drift-advisory",
+        "applicable": True,
+        "measurement_available": True,
+        "previous_baseline_vram_gb": recorded_previous,
+        "current_baseline_vram_gb": recorded_current,
+        "absolute_drift_gb": drift,
+        "advisory_threshold_gb": threshold,
+        "threshold_exceeded": drift > threshold,
+        "gating": False,
+        "disposition": "record-only; proceed regardless of drift",
+    }
+
+
+def _idle_target_gpu_identity(gpu_index: int = GPU_IDLE_INDEX) -> Dict[str, Any]:
+    argv = [
+        "nvidia-smi",
+        "-i",
+        str(gpu_index),
+        "--query-gpu=index,uuid,name,memory.total,driver_model.current,display_active",
+        "--format=csv,noheader,nounits",
+    ]
+    result = _idle_run_nvidia_smi(argv)
+    rows = _idle_csv_rows(result.stdout)
+    if len(rows) != 1 or len(rows[0]) != 6:
+        raise GpuIdleGateError(f"Unexpected target-GPU identity rows: {rows!r}")
+    index, uuid_value, name, total, driver_model, display_active = rows[0]
+    if int(index) != int(gpu_index) or not uuid_value.startswith("GPU-"):
+        raise GpuIdleGateError(f"Target GPU identity mismatch: {rows[0]!r}")
+    if driver_model != GPU_IDLE_REQUIRED_DRIVER_MODEL:
+        raise GpuIdleGateError(
+            "Pre-boot unmetered-client policy requires exact WDDM driver mode; "
+            f"found driver_model={driver_model!r}, display_active={display_active!r}"
+        )
+    if display_active not in GPU_IDLE_DISPLAY_ACTIVE_MEASURED_STATES:
+        raise GpuIdleGateError(
+            f"Unexpected display_active measured state: {display_active!r}"
+        )
+    return {
+        "gpu_index": int(index),
+        "gpu_uuid": uuid_value,
+        "gpu_name": name,
+        "vram_total_mib": _idle_finite_nonnegative(total, "GPU total memory"),
+        "driver_model_current": driver_model,
+        "display_active": display_active,
+        "query_argv": argv,
+        "raw_stdout_sha256": sha256_bytes(result.stdout.encode("utf-8")),
+    }
+
+
+def _idle_query_gpu_activity(
+    gpu_index: int, expected_uuid: str
+) -> Dict[str, Any]:
+    argv = [
+        "nvidia-smi",
+        "-i",
+        str(gpu_index),
+        "--query-gpu=index,uuid,name,memory.used,memory.total,utilization.gpu,utilization.memory,pstate,driver_model.current,display_active",
+        "--format=csv,noheader,nounits",
+    ]
+    result = _idle_run_nvidia_smi(argv)
+    rows = _idle_csv_rows(result.stdout)
+    if len(rows) != 1 or len(rows[0]) != 10:
+        raise GpuIdleGateError(f"Unexpected target-GPU activity rows: {rows!r}")
+    (
+        index,
+        uuid_value,
+        name,
+        used,
+        total,
+        gpu_util,
+        memory_util,
+        pstate,
+        driver_model,
+        display_active,
+    ) = rows[0]
+    if int(index) != int(gpu_index) or uuid_value != expected_uuid:
+        raise GpuIdleGateError(
+            f"Target GPU changed during idle gate: index={index!r}, "
+            f"uuid={uuid_value!r}"
+        )
+    used_mib = _idle_finite_nonnegative(used, "used VRAM")
+    total_mib = _idle_finite_nonnegative(total, "total VRAM")
+    gpu_percent = _idle_finite_nonnegative(gpu_util, "GPU utilization")
+    memory_percent = _idle_finite_nonnegative(memory_util, "memory utilization")
+    if used_mib > total_mib or gpu_percent > 100 or memory_percent > 100:
+        raise GpuIdleGateError("nvidia-smi target-GPU activity values are out of range")
+    if driver_model != GPU_IDLE_REQUIRED_DRIVER_MODEL:
+        raise GpuIdleGateError(
+            "Target GPU left exact WDDM driver mode during idle gate: "
+            f"driver_model={driver_model!r}, display_active={display_active!r}"
+        )
+    if display_active not in GPU_IDLE_DISPLAY_ACTIVE_MEASURED_STATES:
+        raise GpuIdleGateError(
+            f"Unexpected display_active measured state: {display_active!r}"
+        )
+    return {
+        "gpu_index": int(index),
+        "gpu_uuid": uuid_value,
+        "gpu_name": name,
+        "vram_used_mib": used_mib,
+        "vram_total_mib": total_mib,
+        "gpu_utilization_percent": gpu_percent,
+        "memory_utilization_percent": memory_percent,
+        "performance_state": pstate,
+        "driver_model_current": driver_model,
+        "display_active": display_active,
+        "query_argv": argv,
+        "raw_stdout_sha256": sha256_bytes(result.stdout.encode("utf-8")),
+    }
+
+
+def _idle_process_identity(pid: int) -> Dict[str, Any]:
+    identity: Dict[str, Any] = {
+        "pid": int(pid),
+        "exists": False,
+        "name": None,
+        "executable": None,
+        "command_line": None,
+        "process_create_time": None,
+        "identity_errors": [],
+    }
+    try:
+        process = psutil.Process(pid)
+        identity["exists"] = True
+    except (psutil.NoSuchProcess, psutil.AccessDenied, OSError) as exc:
+        identity["identity_errors"].append(f"process: {type(exc).__name__}: {exc}")
+        return identity
+    for key, getter in (
+        ("name", process.name),
+        ("executable", process.exe),
+        ("command_line", process.cmdline),
+        ("process_create_time", process.create_time),
+    ):
+        try:
+            value = getter()
+            identity[key] = list(value) if key == "command_line" else value
+        except (psutil.NoSuchProcess, psutil.AccessDenied, OSError) as exc:
+            identity["identity_errors"].append(f"{key}: {type(exc).__name__}: {exc}")
+    return identity
+
+
+def _idle_command_line_has_exact_runner(command_line: Any) -> bool:
+    expected = os.path.normcase(str(Path(__file__).resolve()))
+    argv = [str(value) for value in command_line or []]
+    target = _workload_python_target(argv)
+    if target.get("kind") != "script" or not target.get("identity"):
         return False
     try:
-        SERVER_PID_FILE.unlink()
+        resolved = os.path.normcase(str(Path(str(target["identity"])).resolve()))
+    except (OSError, RuntimeError):
+        return False
+    return resolved == expected
+
+
+def _idle_verified_current_windows_venv_launcher(
+    child_identity: Dict[str, Any],
+) -> Optional[Dict[str, Any]]:
+    """Prove the one direct Windows venv launcher stub for this real runner."""
+
+    if os.name != "nt" or sys.prefix == sys.base_prefix:
+        return None
+    try:
+        venv_prefix = Path(sys.prefix).resolve()
+        expected_launcher = (venv_prefix / "Scripts" / "python.exe").resolve()
+        if not (venv_prefix / "pyvenv.cfg").is_file():
+            return None
+        child_pid = int(child_identity["pid"])
+        child_created = float(child_identity["process_create_time"])
+        launcher_pid = int(os.getppid())
+        launcher_identity = _idle_process_identity(launcher_pid)
+        launcher_created = float(launcher_identity["process_create_time"])
+        launcher_argv = [
+            str(value) for value in launcher_identity.get("command_line") or []
+        ]
+        child_argv = [str(value) for value in child_identity.get("command_line") or []]
+        launcher_exe = Path(str(launcher_identity.get("executable"))).resolve()
+        child_exe = Path(str(child_identity.get("executable"))).resolve()
+        direct_parent_verified = psutil.Process(child_pid).ppid() == launcher_pid
+        launcher_live = lab_locks.process_identity_is_live(
+            launcher_pid, launcher_created
+        )
+        child_live = lab_locks.process_identity_is_live(child_pid, child_created)
+        exact = (
+            launcher_identity.get("exists") is True
+            and launcher_pid > 0
+            and launcher_pid != child_pid
+            and direct_parent_verified
+            and os.path.normcase(str(launcher_exe))
+            == os.path.normcase(str(expected_launcher))
+            and os.path.normcase(str(child_exe))
+            != os.path.normcase(str(expected_launcher))
+            and len(launcher_argv) >= 2
+            and len(child_argv) >= 2
+            and launcher_argv[1:] == child_argv[1:]
+            and _idle_command_line_has_exact_runner(launcher_argv)
+            and _idle_command_line_has_exact_runner(child_argv)
+            and launcher_live
+            and child_live
+            and launcher_created <= child_created + 0.001
+            and child_created - launcher_created <= 5.0
+        )
+        if not exact:
+            return None
+        return {
+            "pid": launcher_pid,
+            "process_create_time": launcher_created,
+            "expected_launcher_path": str(expected_launcher),
+            "direct_child_pid": child_pid,
+            "direct_parent_verified": True,
+            "launcher_identity_live": True,
+            "child_identity_live": True,
+            "argv_tail_matches_child": True,
+            "both_exact_runner_target": True,
+            "child_executable_differs": True,
+            "creation_delta_s": round(child_created - launcher_created, 6),
+            "narrowly_verified": True,
+            "excluded_pid_only": True,
+            "process_identity": launcher_identity,
+        }
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        OSError,
+        RuntimeError,
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+    ):
+        return None
+
+
+def _idle_retained_process_identity_validation_errors(
+    value: Any, label: str
+) -> List[str]:
+    errors = []
+    if not isinstance(value, dict) or set(value) != set(
+        GPU_IDLE_PROCESS_IDENTITY_SCHEMA
+    ):
+        return [f"{label} process identity shape is invalid"]
+    pid = value.get("pid")
+    created = value.get("process_create_time")
+    if not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0:
+        errors.append(f"{label} process identity PID is invalid")
+    if (
+        not isinstance(created, (int, float))
+        or isinstance(created, bool)
+        or not math.isfinite(float(created))
+        or float(created) <= 0
+    ):
+        errors.append(f"{label} process identity create time is invalid")
+    if value.get("exists") is not True:
+        errors.append(f"{label} process identity was not retained as live")
+    for field in ("name", "executable"):
+        if not isinstance(value.get(field), str) or not value.get(field):
+            errors.append(f"{label} process identity {field} is invalid")
+    argv = value.get("command_line")
+    if (
+        not isinstance(argv, list)
+        or len(argv) < 2
+        or not all(isinstance(token, str) for token in argv)
+    ):
+        errors.append(f"{label} process identity argv is invalid")
+    identity_errors = value.get("identity_errors")
+    if not isinstance(identity_errors, list) or not all(
+        isinstance(error, str) for error in identity_errors
+    ):
+        errors.append(f"{label} process identity error evidence is invalid")
+    return errors
+
+
+def current_runner_exclusion_validation_errors(
+    exclusion: Any, excluded_current_runner: Optional[Any] = None
+) -> List[str]:
+    """Validate retained real-runner and optional one-hop launcher evidence.
+
+    This validator intentionally performs no process queries.  It independently
+    checks that the immutable evidence records the same narrow relationship that
+    was proved live by the collector, and optionally checks the exact rows that
+    the process enumeration excluded.
+    """
+
+    errors = []
+    if not isinstance(exclusion, dict) or set(exclusion) != set(
+        GPU_IDLE_CURRENT_RUNNER_EXCLUSION_SCHEMA
+    ):
+        return ["current runner exclusion shape is invalid"]
+
+    pid = exclusion.get("pid")
+    created = exclusion.get("process_create_time")
+    if not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0:
+        errors.append("current runner exclusion PID is invalid")
+    if (
+        not isinstance(created, (int, float))
+        or isinstance(created, bool)
+        or not math.isfinite(float(created))
+        or float(created) <= 0
+    ):
+        errors.append("current runner exclusion create time is invalid")
+    if exclusion.get("narrowly_verified") is not True:
+        errors.append("current runner exclusion narrow proof is absent")
+    if exclusion.get("excluded_pid_only") is not True:
+        errors.append("current runner exclusion is not PID-only")
+    if exclusion.get("resolved_runner_path") != str(Path(__file__).resolve()):
+        errors.append("current runner exclusion path is wrong")
+
+    child_identity = exclusion.get("process_identity")
+    errors.extend(
+        _idle_retained_process_identity_validation_errors(
+            child_identity, "current runner"
+        )
+    )
+    child_argv = []
+    child_executable = None
+    if isinstance(child_identity, dict):
+        child_argv = child_identity.get("command_line") or []
+        child_executable = child_identity.get("executable")
+        if child_identity.get("pid") != pid:
+            errors.append("current runner retained PID does not match")
+        try:
+            if not math.isclose(
+                float(child_identity.get("process_create_time")),
+                float(created),
+                rel_tol=0.0,
+                abs_tol=0.001,
+            ):
+                errors.append("current runner retained create time does not match")
+        except (TypeError, ValueError):
+            pass
+        if not _idle_command_line_has_exact_runner(child_argv):
+            errors.append("current runner retained argv does not target this runner")
+
+    launcher = exclusion.get("verified_windows_venv_launcher")
+    expected_count = 1
+    launcher_pid = None
+    launcher_created = None
+    if launcher is not None:
+        expected_count = 2
+        if not isinstance(launcher, dict) or set(launcher) != set(
+            GPU_IDLE_VERIFIED_VENV_LAUNCHER_SCHEMA
+        ):
+            errors.append("verified Windows venv launcher shape is invalid")
+        else:
+            launcher_pid = launcher.get("pid")
+            launcher_created = launcher.get("process_create_time")
+            try:
+                launcher_pid_valid = (
+                    isinstance(launcher_pid, int)
+                    and not isinstance(launcher_pid, bool)
+                    and launcher_pid > 0
+                    and launcher_pid != pid
+                )
+                launcher_created_valid = (
+                    isinstance(launcher_created, (int, float))
+                    and not isinstance(launcher_created, bool)
+                    and math.isfinite(float(launcher_created))
+                    and float(launcher_created) > 0
+                )
+            except (TypeError, ValueError):
+                launcher_pid_valid = False
+                launcher_created_valid = False
+            if not launcher_pid_valid:
+                errors.append("verified Windows venv launcher PID is invalid")
+            if not launcher_created_valid:
+                errors.append("verified Windows venv launcher create time is invalid")
+            if os.name != "nt" or sys.prefix == sys.base_prefix:
+                errors.append("verified Windows venv launcher is outside a Windows venv")
+            expected_launcher_path = str(
+                (Path(sys.prefix).resolve() / "Scripts" / "python.exe").resolve()
+            )
+            try:
+                launcher_path_matches = (
+                    os.path.normcase(
+                        str(Path(str(launcher.get("expected_launcher_path"))).resolve())
+                    )
+                    == os.path.normcase(expected_launcher_path)
+                )
+            except (OSError, RuntimeError, TypeError, ValueError):
+                launcher_path_matches = False
+            if not launcher_path_matches:
+                errors.append("verified Windows venv launcher path is wrong")
+            if launcher.get("direct_child_pid") != pid:
+                errors.append("verified Windows venv launcher child PID is wrong")
+            for flag in (
+                "direct_parent_verified",
+                "launcher_identity_live",
+                "child_identity_live",
+                "argv_tail_matches_child",
+                "both_exact_runner_target",
+                "child_executable_differs",
+                "narrowly_verified",
+                "excluded_pid_only",
+            ):
+                if launcher.get(flag) is not True:
+                    errors.append(f"verified Windows venv launcher {flag} proof is absent")
+
+            launcher_identity = launcher.get("process_identity")
+            errors.extend(
+                _idle_retained_process_identity_validation_errors(
+                    launcher_identity, "Windows venv launcher"
+                )
+            )
+            launcher_argv = []
+            launcher_executable = None
+            if isinstance(launcher_identity, dict):
+                launcher_argv = launcher_identity.get("command_line") or []
+                launcher_executable = launcher_identity.get("executable")
+                if launcher_identity.get("pid") != launcher_pid:
+                    errors.append("verified Windows venv launcher retained PID is wrong")
+                try:
+                    if not math.isclose(
+                        float(launcher_identity.get("process_create_time")),
+                        float(launcher_created),
+                        rel_tol=0.0,
+                        abs_tol=0.001,
+                    ):
+                        errors.append(
+                            "verified Windows venv launcher retained create time is wrong"
+                        )
+                except (TypeError, ValueError):
+                    pass
+                try:
+                    retained_exe_matches = (
+                        os.path.normcase(
+                            str(Path(str(launcher_executable)).resolve())
+                        )
+                        == os.path.normcase(expected_launcher_path)
+                    )
+                except (OSError, RuntimeError, TypeError, ValueError):
+                    retained_exe_matches = False
+                if not retained_exe_matches:
+                    errors.append(
+                        "verified Windows venv launcher retained executable is wrong"
+                    )
+                if not _idle_command_line_has_exact_runner(launcher_argv):
+                    errors.append(
+                        "verified Windows venv launcher argv does not target this runner"
+                    )
+            if list(launcher_argv[1:]) != list(child_argv[1:]):
+                errors.append("verified Windows venv launcher argv tail differs from child")
+            try:
+                child_executable_differs = (
+                    os.path.normcase(str(Path(str(child_executable)).resolve()))
+                    != os.path.normcase(expected_launcher_path)
+                )
+            except (OSError, RuntimeError, TypeError, ValueError):
+                child_executable_differs = False
+            if not child_executable_differs:
+                errors.append(
+                    "verified Windows venv launcher child executable is not distinct"
+                )
+            try:
+                observed_delta = float(created) - float(launcher_created)
+                retained_delta = float(launcher.get("creation_delta_s"))
+                if (
+                    not math.isfinite(observed_delta)
+                    or not math.isfinite(retained_delta)
+                    or observed_delta < -0.001
+                    or observed_delta > 5.0
+                    or not math.isclose(
+                        retained_delta,
+                        round(observed_delta, 6),
+                        rel_tol=0.0,
+                        abs_tol=0.000001,
+                    )
+                ):
+                    errors.append("verified Windows venv launcher creation delta is invalid")
+            except (TypeError, ValueError):
+                errors.append("verified Windows venv launcher creation delta is invalid")
+
+    retained_count = exclusion.get("expected_excluded_process_count")
+    if (
+        not isinstance(retained_count, int)
+        or isinstance(retained_count, bool)
+        or retained_count != expected_count
+    ):
+        errors.append("current runner expected exclusion count is invalid")
+
+    if excluded_current_runner is not None:
+        if not isinstance(excluded_current_runner, list):
+            errors.append("excluded current runner rows are not a list")
+        else:
+            expected_rows = {}
+            rows_valid = True
+            if isinstance(pid, int) and not isinstance(pid, bool) and pid > 0:
+                expected_rows[pid] = (
+                    float(created) if isinstance(created, (int, float)) else created,
+                    "exact current run_recipe process",
+                )
+            else:
+                rows_valid = False
+            if (
+                isinstance(launcher_pid, int)
+                and not isinstance(launcher_pid, bool)
+                and launcher_pid > 0
+            ):
+                expected_rows[launcher_pid] = (
+                    float(launcher_created)
+                    if isinstance(launcher_created, (int, float))
+                    else launcher_created,
+                    "exact verified direct Windows venv launcher stub",
+                )
+            observed_rows = {}
+            rows_valid = rows_valid and len(excluded_current_runner) == expected_count
+            for row in excluded_current_runner:
+                if not isinstance(row, dict) or set(row) != set(
+                    GPU_IDLE_EXCLUDED_CURRENT_RUNNER_ROW_SCHEMA
+                ):
+                    rows_valid = False
+                    continue
+                row_pid = row.get("pid")
+                row_created = row.get("process_create_time")
+                if (
+                    not isinstance(row_pid, int)
+                    or isinstance(row_pid, bool)
+                    or row_pid <= 0
+                    or not isinstance(row_created, (int, float))
+                    or isinstance(row_created, bool)
+                    or not math.isfinite(float(row_created))
+                    or float(row_created) <= 0
+                    or not isinstance(row.get("reason"), str)
+                    or row_pid in observed_rows
+                ):
+                    rows_valid = False
+                    continue
+                observed_rows[row_pid] = (float(row_created), row.get("reason"))
+            if set(observed_rows) != set(expected_rows):
+                rows_valid = False
+            else:
+                for row_pid, (expected_created, expected_reason) in expected_rows.items():
+                    observed_created, observed_reason = observed_rows[row_pid]
+                    if (
+                        not isinstance(expected_created, (int, float))
+                        or not math.isclose(
+                            observed_created,
+                            float(expected_created),
+                            rel_tol=0.0,
+                            abs_tol=0.001,
+                        )
+                        or observed_reason != expected_reason
+                    ):
+                        rows_valid = False
+            if not rows_valid:
+                errors.append("excluded current runner rows are not exact")
+    return errors
+
+
+def _idle_current_runner_exclusion() -> Dict[str, Any]:
+    """Prove the real runner and, when present, its one Windows venv stub."""
+
+    pid = os.getpid()
+    identity = _idle_process_identity(pid)
+    create_time = identity.get("process_create_time")
+    if (
+        identity.get("exists") is not True
+        or not isinstance(create_time, (int, float))
+        or isinstance(create_time, bool)
+        or not math.isfinite(float(create_time))
+        or float(create_time) <= 0
+        or not _idle_command_line_has_exact_runner(identity.get("command_line"))
+    ):
+        raise GpuIdleGateError(
+            "Current run_recipe process cannot be narrowly identified for exclusion"
+        )
+    launcher = _idle_verified_current_windows_venv_launcher(identity)
+    exclusion = {
+        "pid": pid,
+        "process_create_time": float(create_time),
+        "resolved_runner_path": str(Path(__file__).resolve()),
+        "narrowly_verified": True,
+        "excluded_pid_only": True,
+        "process_identity": identity,
+        "verified_windows_venv_launcher": launcher,
+        "expected_excluded_process_count": 2 if launcher is not None else 1,
+    }
+    validation_errors = current_runner_exclusion_validation_errors(exclusion)
+    if validation_errors:
+        raise GpuIdleGateError(
+            "Current run_recipe exclusion evidence is invalid: "
+            + "; ".join(validation_errors)
+        )
+    return exclusion
+
+
+def _idle_desktop_graphics_signals(identity: Dict[str, Any]) -> List[str]:
+    name = str(identity.get("name") or "").lower()
+    executable = str(identity.get("executable") or "").lower()
+    command_line = " ".join(
+        str(value) for value in identity.get("command_line") or []
+    ).lower()
+    signals = []
+    if "--type=gpu-process" in command_line:
+        signals.append("chromium_or_electron_gpu_process")
+    if "--video-capture-use-gpu-memory-buffer" in command_line:
+        signals.append("desktop_video_capture_service")
+    if "windows-mcp.exe" in command_line:
+        signals.append("desktop_control_helper")
+    if (
+        name == "dwm.exe"
+        and executable.replace("/", "\\").endswith("\\windows\\system32\\dwm.exe")
+        and identity.get("process_create_time") is not None
+    ):
+        signals.append("windows_desktop_compositor")
+    if "\\windows\\systemapps\\" in executable:
+        signals.append("windows_system_ui")
+    if "\\windowsapps\\" in executable and name not in {"python.exe", "pythonw.exe"}:
+        signals.append("packaged_windows_ui")
+    if name in {
+        "explorer.exe",
+        "shellhost.exe",
+        "applicationframehost.exe",
+        "systemsettings.exe",
+        "snagiteditor.exe",
+    }:
+        signals.append("interactive_desktop_application")
+    return sorted(set(signals))
+
+
+def _workload_basename(value: Any) -> Optional[str]:
+    text = str(value or "").replace("\\", "/").rstrip("/")
+    return text.rsplit("/", 1)[-1].lower() if text else None
+
+
+def _workload_is_python_basename(value: Optional[str]) -> bool:
+    return bool(
+        value
+        and re.fullmatch(
+            r"(?:python|pythonw|py)(?:\d+(?:\.\d+)*)?(?:\.exe)?", value
+        )
+    )
+
+
+def _workload_python_target(argv: List[str]) -> Dict[str, Any]:
+    """Parse only Python interpreter options and its actual script/module target."""
+
+    if not argv:
+        return {"kind": None, "identity": None, "basename": None}
+    start = 1 if _workload_is_python_basename(_workload_basename(argv[0])) else 0
+    index = start
+    options_with_separate_value = {"-W", "-X", "--check-hash-based-pycs"}
+    while index < len(argv):
+        token = str(argv[index])
+        lowered = token.lower()
+        if token == "--":
+            index += 1
+            if index >= len(argv):
+                break
+            target = str(argv[index])
+            return {
+                "kind": "script",
+                "identity": target.replace("\\", "/").lower(),
+                "basename": _workload_basename(target),
+            }
+        if lowered == "-m":
+            if index + 1 >= len(argv):
+                break
+            module = str(argv[index + 1]).lower()
+            return {
+                "kind": "module",
+                "identity": module,
+                "basename": module.rsplit(".", 1)[-1] or None,
+            }
+        if lowered == "-c" or lowered.startswith("-c") and len(lowered) > 2:
+            return {"kind": "inline", "identity": None, "basename": None}
+        if lowered == "-" or lowered in {"-h", "--help", "-v", "--version"}:
+            return {"kind": "interpreter-only", "identity": None, "basename": None}
+        if lowered.startswith("-"):
+            if token in options_with_separate_value:
+                index += 2
+            else:
+                index += 1
+            continue
+        return {
+            "kind": "script",
+            "identity": token.replace("\\", "/").lower(),
+            "basename": _workload_basename(token),
+        }
+    return {"kind": None, "identity": None, "basename": None}
+
+
+def _workload_argv_sha256(argv: Any) -> str:
+    canonical_argv = [str(value) for value in (argv or [])]
+    encoded = json.dumps(
+        canonical_argv, ensure_ascii=False, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _redacted_workload_process(
+    info: Dict[str, Any],
+    target_basename: Optional[str],
+    matched_markers: List[str],
+    match_basis: List[str],
+) -> Dict[str, Any]:
+    try:
+        created = float(info.get("create_time"))
+        if not math.isfinite(created) or created <= 0:
+            created = None
+    except (TypeError, ValueError):
+        created = None
+    return {
+        "pid": int(info.get("pid") or 0),
+        "process_create_time": created,
+        "process_basename": _workload_basename(info.get("name")),
+        "executable_basename": _workload_basename(info.get("exe")),
+        "target_basename": target_basename,
+        "matched_markers": sorted(set(matched_markers)),
+        "match_basis": sorted(set(match_basis)),
+        "argv_sha256": _workload_argv_sha256(info.get("cmdline")),
+    }
+
+
+def classify_known_workload_process(info: Dict[str, Any]) -> Dict[str, Any]:
+    """Shared token-aware positive classifier for cold and prequeue scans."""
+
+    argv = [str(value) for value in info.get("cmdline") or []]
+    process_basename = _workload_basename(info.get("name"))
+    executable_basename = _workload_basename(info.get("exe"))
+    argv0_basename = _workload_basename(argv[0]) if argv else None
+    is_python = any(
+        _workload_is_python_basename(value)
+        for value in (process_basename, executable_basename, argv0_basename)
+    )
+    target = (
+        _workload_python_target(argv)
+        if is_python
+        else {"kind": None, "identity": None, "basename": None}
+    )
+    matched = []
+    bases = []
+    if target.get("kind") == "script" and target.get("basename") in {
+        "main.py",
+        "run_recipe.py",
+    }:
+        matched.append(str(target["basename"]))
+        bases.append("python_script_target")
+    other_markers = [
+        marker
+        for marker in GPU_IDLE_MODEL_WORKLOAD_MARKERS
+        if marker not in {"main.py", "run_recipe.py"}
+    ]
+    sources = (
+        ("process_basename", process_basename),
+        ("executable_basename", executable_basename),
+        ("python_script_or_module_target", target.get("identity")),
+    )
+    for marker in other_markers:
+        for basis, value in sources:
+            if value and marker in str(value).lower():
+                matched.append(marker)
+                bases.append(basis)
+    if matched:
+        classification = "blocking_positive_known_workload"
+    elif is_python:
+        classification = "advisory_unreadable_or_unmatched_python"
+        bases = ["advisory_python_without_positive_marker"]
+    else:
+        classification = "clear"
+        bases = []
+    return {
+        "classification": classification,
+        "redacted_process": _redacted_workload_process(
+            info, target.get("basename"), matched, bases
+        ),
+    }
+
+
+def redacted_workload_process_validation_errors(
+    value: Any, expected_classification: str
+) -> List[str]:
+    """Validate one deterministic redacted blocker/advisory process row."""
+
+    errors = []
+    expected = set(known_workload_classifier_contract()["redacted_process_schema"])
+    if not isinstance(value, dict) or set(value) != expected:
+        return ["redacted process row shape is invalid"]
+    pid = value.get("pid")
+    if not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0:
+        errors.append("redacted process PID is invalid")
+    created = value.get("process_create_time")
+    if created is not None and (
+        not isinstance(created, (int, float))
+        or isinstance(created, bool)
+        or not math.isfinite(float(created))
+        or float(created) <= 0
+    ):
+        errors.append("redacted process create time is invalid")
+    for field in ("process_basename", "executable_basename", "target_basename"):
+        scalar = value.get(field)
+        if scalar is not None and (
+            not isinstance(scalar, str)
+            or not scalar
+            or scalar != scalar.lower()
+            or "/" in scalar
+            or "\\" in scalar
+        ):
+            errors.append(f"redacted process {field} is invalid or leaks a path")
+    markers = value.get("matched_markers")
+    bases = value.get("match_basis")
+    allowed_markers = set(GPU_IDLE_MODEL_WORKLOAD_MARKERS)
+    allowed_positive_bases = {
+        "python_script_target",
+        "process_basename",
+        "executable_basename",
+        "python_script_or_module_target",
+    }
+    exclusion_bases = {
+        "current_runner_exclusion_mismatch",
+        "owned_server_exclusion_mismatch",
+    }
+    if (
+        not isinstance(markers, list)
+        or not all(isinstance(marker, str) for marker in markers)
+        or (markers and markers != sorted(set(markers)))
+        or (
+            all(isinstance(marker, str) for marker in markers or [])
+            and not set(markers or []).issubset(allowed_markers)
+        )
+    ):
+        errors.append("redacted process markers are invalid")
+    if (
+        not isinstance(bases, list)
+        or not all(isinstance(basis, str) for basis in bases)
+        or (bases and bases != sorted(set(bases)))
+    ):
+        errors.append("redacted process match basis is invalid")
+    elif expected_classification == "advisory" and isinstance(markers, list):
+        if markers != [] or bases != ["advisory_python_without_positive_marker"]:
+            errors.append("advisory process row contains positive blocking evidence")
+    elif expected_classification == "blocking" and isinstance(markers, list):
+        positive = (
+            bool(markers)
+            and bool(bases)
+            and set(bases).issubset(allowed_positive_bases)
+            and (
+                not set(markers).intersection({"main.py", "run_recipe.py"})
+                or "python_script_target" in bases
+            )
+        )
+        exclusion = not markers and len(bases) == 1 and bases[0] in exclusion_bases
+        if not (positive or exclusion):
+            errors.append("blocking process row lacks positive or exclusion evidence")
+    else:
+        errors.append("redacted process expected classification is invalid")
+    if re.fullmatch(r"[0-9a-f]{64}", str(value.get("argv_sha256") or "")) is None:
+        errors.append("redacted process argv SHA-256 is invalid")
+    return errors
+
+
+def _redacted_workload_process_is_valid(
+    value: Any, expected_classification: str
+) -> bool:
+    return not redacted_workload_process_validation_errors(
+        value, expected_classification
+    )
+
+
+def _redacted_exclusion_mismatch(
+    info: Dict[str, Any], basis: str
+) -> Dict[str, Any]:
+    classified = classify_known_workload_process(info)["redacted_process"]
+    classified["matched_markers"] = []
+    classified["match_basis"] = [basis]
+    return classified
+
+
+def _idle_process_info_matches_verified_launcher(
+    info: Dict[str, Any], current_runner_exclusion: Dict[str, Any]
+) -> bool:
+    if current_runner_exclusion_validation_errors(current_runner_exclusion):
+        return False
+    launcher = current_runner_exclusion.get("verified_windows_venv_launcher")
+    if not isinstance(launcher, dict):
+        return False
+    retained = launcher.get("process_identity") or {}
+    try:
+        launcher_pid = int(launcher["pid"])
+        launcher_created = float(launcher["process_create_time"])
+        return (
+            int(info.get("pid") or 0) == launcher_pid
+            and math.isclose(
+                float(info.get("create_time")),
+                launcher_created,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+            and os.path.normcase(str(Path(str(info.get("exe"))).resolve()))
+            == os.path.normcase(str(Path(launcher["expected_launcher_path"]).resolve()))
+            and [str(value) for value in info.get("cmdline") or []]
+            == [str(value) for value in retained.get("command_line") or []]
+            and _idle_command_line_has_exact_runner(info.get("cmdline"))
+            and psutil.Process(int(current_runner_exclusion["pid"])).ppid()
+            == launcher_pid
+            and lab_locks.process_identity_is_live(launcher_pid, launcher_created)
+            and lab_locks.process_identity_is_live(
+                int(current_runner_exclusion["pid"]),
+                float(current_runner_exclusion["process_create_time"]),
+            )
+        )
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        OSError,
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+    ):
+        return False
+
+
+def _idle_forbidden_process_scan(
+    current_runner_exclusion: Dict[str, Any],
+) -> Dict[str, Any]:
+    exclusion_errors = current_runner_exclusion_validation_errors(
+        current_runner_exclusion
+    )
+    if exclusion_errors:
+        raise GpuIdleGateError(
+            "Current runner exclusion cannot be used for process scan: "
+            + "; ".join(exclusion_errors)
+        )
+    blockers = []
+    advisories = []
+    excluded = []
+    scanned = 0
+    try:
+        iterator = psutil.process_iter(
+            ["pid", "name", "exe", "cmdline", "create_time"], ad_value=None
+        )
+        for process in iterator:
+            scanned += 1
+            info = process.info
+            pid = int(info["pid"])
+            command_line = [str(value) for value in info.get("cmdline") or []]
+            if pid == int(current_runner_exclusion["pid"]):
+                observed_create_time = info.get("create_time")
+                exact_current = (
+                    isinstance(observed_create_time, (int, float))
+                    and not isinstance(observed_create_time, bool)
+                    and math.isclose(
+                        float(observed_create_time),
+                        float(current_runner_exclusion["process_create_time"]),
+                        rel_tol=0.0,
+                        abs_tol=0.001,
+                    )
+                    and _idle_command_line_has_exact_runner(command_line)
+                )
+                if exact_current:
+                    excluded.append(
+                        {
+                            "pid": pid,
+                            "process_create_time": float(observed_create_time),
+                            "reason": "exact current run_recipe process",
+                        }
+                    )
+                else:
+                    blockers.append(
+                        _redacted_exclusion_mismatch(
+                            info, "current_runner_exclusion_mismatch"
+                        )
+                    )
+                continue
+            launcher = current_runner_exclusion.get("verified_windows_venv_launcher")
+            if isinstance(launcher, dict) and pid == int(launcher.get("pid") or 0):
+                if _idle_process_info_matches_verified_launcher(
+                    info, current_runner_exclusion
+                ):
+                    excluded.append(
+                        {
+                            "pid": pid,
+                            "process_create_time": float(info["create_time"]),
+                            "reason": "exact verified direct Windows venv launcher stub",
+                        }
+                    )
+                else:
+                    blockers.append(
+                        _redacted_exclusion_mismatch(
+                            info, "current_runner_exclusion_mismatch"
+                        )
+                    )
+                continue
+            classified = classify_known_workload_process(info)
+            if classified["classification"] == "blocking_positive_known_workload":
+                blockers.append(classified["redacted_process"])
+            elif classified["classification"] == "advisory_unreadable_or_unmatched_python":
+                advisories.append(classified["redacted_process"])
+    except (psutil.AccessDenied, psutil.NoSuchProcess, OSError, ValueError) as exc:
+        raise GpuIdleGateError(
+            f"Independent process scan could not be completed: {exc}"
+        ) from exc
+    return {
+        "scanned_process_count": scanned,
+        "model_workload_markers": list(GPU_IDLE_MODEL_WORKLOAD_MARKERS),
+        "classifier_contract": known_workload_classifier_contract(),
+        "current_runner_exclusion": current_runner_exclusion,
+        "excluded_current_runner": excluded,
+        "blocking_processes": blockers,
+        "advisory_unreadable_processes": advisories,
+    }
+
+
+def _prequeue_normalize_argv(argv: Any) -> List[str]:
+    return [str(value).replace("\\", "/").lower() for value in (argv or [])]
+
+
+def _prequeue_reported_server_argv_is_lab(server_argv: Any) -> bool:
+    normalized = _prequeue_normalize_argv(server_argv)
+    expected_main = str(COMFYUI_ROOT / "main.py").replace("\\", "/").lower()
+    expected_output = str(REPO_ROOT / "outputs").replace("\\", "/").lower()
+    try:
+        return (
+            len(normalized) >= 5
+            and normalized[0] == expected_main
+            and normalized.count("--port") == 1
+            and normalized[normalized.index("--port") + 1] == str(LAB_PORT)
+            and normalized.count("--output-directory") == 1
+            and normalized[normalized.index("--output-directory") + 1]
+            == expected_output
+        )
+    except (ValueError, IndexError):
+        return False
+
+
+def _prequeue_server_argv_match(
+    actual_argv: Any, server_argv: Any, executable: Any
+) -> Dict[str, Any]:
+    actual = _prequeue_normalize_argv(actual_argv)
+    reported = _prequeue_normalize_argv(server_argv)
+    executable_normalized = _prequeue_normalize_argv([executable])
+    mode = None
+    if actual == reported:
+        mode = "exact-self-reported-argv"
+    elif (
+        len(actual) == len(reported) + 1
+        and actual[1:] == reported
+        and executable_normalized
+        and actual[0] == executable_normalized[0]
+        and Path(actual[0]).name.lower() in {"python.exe", "pythonw.exe"}
+    ):
+        mode = "exact-self-reported-argv-plus-python-interpreter-prefix"
+    return {
+        "matches": mode is not None and _prequeue_reported_server_argv_is_lab(server_argv),
+        "match_mode": mode,
+        "actual_argv": list(actual_argv or []),
+        "reported_server_argv": list(server_argv or []),
+    }
+
+
+def _prequeue_verified_owned_server_windows_venv_launcher(
+    child_identity: Dict[str, Any], server_argv: List[str]
+) -> Optional[Dict[str, Any]]:
+    """Prove the serving process's one direct Windows venv launcher stub."""
+
+    if os.name != "nt" or sys.prefix == sys.base_prefix:
+        return None
+    try:
+        venv_prefix = Path(sys.prefix).resolve()
+        expected_launcher = (venv_prefix / "Scripts" / "python.exe").resolve()
+        if not (venv_prefix / "pyvenv.cfg").is_file():
+            return None
+        child_pid = int(child_identity["pid"])
+        child_created = float(child_identity["process_create_time"])
+        child_argv = [str(value) for value in child_identity.get("command_line") or []]
+        child_exe = Path(str(child_identity.get("executable"))).resolve()
+        launcher_pid = int(psutil.Process(child_pid).ppid())
+        launcher_identity = _idle_process_identity(launcher_pid)
+        launcher_created = float(launcher_identity["process_create_time"])
+        launcher_argv = [
+            str(value) for value in launcher_identity.get("command_line") or []
+        ]
+        launcher_exe = Path(str(launcher_identity.get("executable"))).resolve()
+        direct_parent_verified = psutil.Process(child_pid).ppid() == launcher_pid
+        launcher_live = lab_locks.process_identity_is_live(
+            launcher_pid, launcher_created
+        )
+        child_live = lab_locks.process_identity_is_live(child_pid, child_created)
+        child_argv_match = _prequeue_server_argv_match(
+            child_argv, server_argv, child_identity.get("executable")
+        )
+        launcher_argv_match = _prequeue_server_argv_match(
+            launcher_argv, server_argv, launcher_identity.get("executable")
+        )
+        exact = (
+            launcher_identity.get("exists") is True
+            and child_pid > 0
+            and launcher_pid > 0
+            and launcher_pid not in {child_pid, os.getpid()}
+            and direct_parent_verified
+            and os.path.normcase(str(launcher_exe))
+            == os.path.normcase(str(expected_launcher))
+            and os.path.normcase(str(child_exe))
+            != os.path.normcase(str(expected_launcher))
+            and len(launcher_argv) >= 2
+            and len(child_argv) >= 2
+            and launcher_argv[1:] == child_argv[1:]
+            and child_argv_match["matches"] is True
+            and launcher_argv_match["matches"] is True
+            and launcher_live
+            and child_live
+            and launcher_created <= child_created + 0.001
+            and child_created - launcher_created <= 5.0
+        )
+        if not exact:
+            return None
+        return {
+            "pid": launcher_pid,
+            "process_create_time": launcher_created,
+            "expected_launcher_path": str(expected_launcher),
+            "direct_child_pid": child_pid,
+            "direct_parent_verified": True,
+            "launcher_identity_live": True,
+            "child_identity_live": True,
+            "argv_tail_matches_child": True,
+            "both_exact_validated_server_argv": True,
+            "child_executable_differs": True,
+            "creation_delta_s": round(child_created - launcher_created, 6),
+            "narrowly_verified": True,
+            "excluded_pid_only": True,
+            "process_identity": launcher_identity,
+            "argv_match": launcher_argv_match,
+        }
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        OSError,
+        RuntimeError,
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+    ):
+        return None
+
+
+def owned_lab_server_exclusion_validation_errors(
+    exclusion: Any,
+    expected_server_instance: Optional[Dict[str, Any]] = None,
+    expected_server_argv: Optional[List[str]] = None,
+    excluded_owned_lab_server: Optional[Any] = None,
+) -> List[str]:
+    """Validate retained serving-process and optional direct-launcher evidence."""
+
+    errors = []
+    if not isinstance(exclusion, dict) or set(exclusion) != set(
+        PREQUEUE_OWNED_SERVER_EXCLUSION_SCHEMA
+    ):
+        return ["owned lab server exclusion shape is invalid"]
+    pid = exclusion.get("pid")
+    created = exclusion.get("process_create_time")
+    if not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0:
+        errors.append("owned lab server exclusion PID is invalid")
+    if (
+        not isinstance(created, (int, float))
+        or isinstance(created, bool)
+        or not math.isfinite(float(created))
+        or float(created) <= 0
+    ):
+        errors.append("owned lab server exclusion create time is invalid")
+    if exclusion.get("narrowly_verified") is not True:
+        errors.append("owned lab server exclusion narrow proof is absent")
+    if exclusion.get("excluded_pid_only") is not True:
+        errors.append("owned lab server exclusion is not PID-only")
+
+    server_instance = exclusion.get("server_instance")
+    try:
+        valid_server_instance = (
+            isinstance(server_instance, dict)
+            and set(server_instance) == {"serving_pid", "process_create_time"}
+            and int(server_instance.get("serving_pid") or 0) == pid
+            and math.isclose(
+                float(server_instance.get("process_create_time")),
+                float(created),
+                rel_tol=0.0,
+                abs_tol=0.000001,
+            )
+        )
+    except (TypeError, ValueError):
+        valid_server_instance = False
+    if not valid_server_instance:
+        errors.append("owned lab server instance binding is invalid")
+    if expected_server_instance is not None and server_instance != expected_server_instance:
+        errors.append("owned lab server expected instance binding is wrong")
+
+    child_identity = exclusion.get("process_identity")
+    errors.extend(
+        _idle_retained_process_identity_validation_errors(
+            child_identity, "owned lab server"
+        )
+    )
+    child_argv = []
+    child_executable = None
+    if isinstance(child_identity, dict):
+        child_argv = child_identity.get("command_line") or []
+        child_executable = child_identity.get("executable")
+        if child_identity.get("pid") != pid:
+            errors.append("owned lab server retained PID does not match")
+        try:
+            if not math.isclose(
+                float(child_identity.get("process_create_time")),
+                float(created),
+                rel_tol=0.0,
+                abs_tol=0.000001,
+            ):
+                errors.append("owned lab server retained create time does not match")
+        except (TypeError, ValueError):
+            pass
+
+    retained_child_match = exclusion.get("argv_match")
+    server_argv = (
+        expected_server_argv
+        if expected_server_argv is not None
+        else (
+            retained_child_match.get("reported_server_argv")
+            if isinstance(retained_child_match, dict)
+            else None
+        )
+    )
+    if (
+        not isinstance(server_argv, list)
+        or not all(isinstance(token, str) for token in server_argv)
+        or not _prequeue_reported_server_argv_is_lab(server_argv)
+    ):
+        errors.append("owned lab server reported argv binding is invalid")
+        server_argv = []
+    recomputed_child_match = _prequeue_server_argv_match(
+        child_argv, server_argv, child_executable
+    )
+    if (
+        retained_child_match != recomputed_child_match
+        or recomputed_child_match.get("matches") is not True
+    ):
+        errors.append("owned lab server retained argv proof is invalid")
+
+    launcher = exclusion.get("verified_windows_venv_launcher")
+    expected_count = 1
+    launcher_pid = None
+    launcher_created = None
+    if launcher is not None:
+        expected_count = 2
+        if not isinstance(launcher, dict) or set(launcher) != set(
+            PREQUEUE_VERIFIED_SERVER_VENV_LAUNCHER_SCHEMA
+        ):
+            errors.append("owned-server Windows venv launcher shape is invalid")
+        else:
+            launcher_pid = launcher.get("pid")
+            launcher_created = launcher.get("process_create_time")
+            if (
+                not isinstance(launcher_pid, int)
+                or isinstance(launcher_pid, bool)
+                or launcher_pid <= 0
+                or launcher_pid == pid
+            ):
+                errors.append("owned-server Windows venv launcher PID is invalid")
+            if (
+                not isinstance(launcher_created, (int, float))
+                or isinstance(launcher_created, bool)
+                or not math.isfinite(float(launcher_created))
+                or float(launcher_created) <= 0
+            ):
+                errors.append(
+                    "owned-server Windows venv launcher create time is invalid"
+                )
+            if os.name != "nt" or sys.prefix == sys.base_prefix:
+                errors.append(
+                    "owned-server Windows venv launcher is outside a Windows venv"
+                )
+            expected_launcher_path = str(
+                (Path(sys.prefix).resolve() / "Scripts" / "python.exe").resolve()
+            )
+            try:
+                launcher_path_matches = (
+                    os.path.normcase(
+                        str(Path(str(launcher.get("expected_launcher_path"))).resolve())
+                    )
+                    == os.path.normcase(expected_launcher_path)
+                )
+            except (OSError, RuntimeError, TypeError, ValueError):
+                launcher_path_matches = False
+            if not launcher_path_matches:
+                errors.append("owned-server Windows venv launcher path is wrong")
+            if launcher.get("direct_child_pid") != pid:
+                errors.append("owned-server Windows venv launcher child PID is wrong")
+            for flag in (
+                "direct_parent_verified",
+                "launcher_identity_live",
+                "child_identity_live",
+                "argv_tail_matches_child",
+                "both_exact_validated_server_argv",
+                "child_executable_differs",
+                "narrowly_verified",
+                "excluded_pid_only",
+            ):
+                if launcher.get(flag) is not True:
+                    errors.append(
+                        f"owned-server Windows venv launcher {flag} proof is absent"
+                    )
+
+            launcher_identity = launcher.get("process_identity")
+            errors.extend(
+                _idle_retained_process_identity_validation_errors(
+                    launcher_identity, "owned-server Windows venv launcher"
+                )
+            )
+            launcher_argv = []
+            launcher_executable = None
+            if isinstance(launcher_identity, dict):
+                launcher_argv = launcher_identity.get("command_line") or []
+                launcher_executable = launcher_identity.get("executable")
+                if launcher_identity.get("pid") != launcher_pid:
+                    errors.append(
+                        "owned-server Windows venv launcher retained PID is wrong"
+                    )
+                try:
+                    if not math.isclose(
+                        float(launcher_identity.get("process_create_time")),
+                        float(launcher_created),
+                        rel_tol=0.0,
+                        abs_tol=0.001,
+                    ):
+                        errors.append(
+                            "owned-server Windows venv launcher retained create time is wrong"
+                        )
+                except (TypeError, ValueError):
+                    pass
+                try:
+                    launcher_executable_matches = (
+                        os.path.normcase(
+                            str(Path(str(launcher_executable)).resolve())
+                        )
+                        == os.path.normcase(expected_launcher_path)
+                    )
+                except (OSError, RuntimeError, TypeError, ValueError):
+                    launcher_executable_matches = False
+                if not launcher_executable_matches:
+                    errors.append(
+                        "owned-server Windows venv launcher executable is wrong"
+                    )
+            if list(launcher_argv[1:]) != list(child_argv[1:]):
+                errors.append(
+                    "owned-server Windows venv launcher argv tail differs from child"
+                )
+            try:
+                child_executable_differs = (
+                    os.path.normcase(str(Path(str(child_executable)).resolve()))
+                    != os.path.normcase(expected_launcher_path)
+                )
+            except (OSError, RuntimeError, TypeError, ValueError):
+                child_executable_differs = False
+            if not child_executable_differs:
+                errors.append(
+                    "owned-server Windows venv launcher child executable is not distinct"
+                )
+            retained_launcher_match = launcher.get("argv_match")
+            recomputed_launcher_match = _prequeue_server_argv_match(
+                launcher_argv, server_argv, launcher_executable
+            )
+            if (
+                retained_launcher_match != recomputed_launcher_match
+                or recomputed_launcher_match.get("matches") is not True
+            ):
+                errors.append(
+                    "owned-server Windows venv launcher argv proof is invalid"
+                )
+            try:
+                observed_delta = float(created) - float(launcher_created)
+                retained_delta = float(launcher.get("creation_delta_s"))
+                if (
+                    not math.isfinite(observed_delta)
+                    or not math.isfinite(retained_delta)
+                    or observed_delta < -0.001
+                    or observed_delta > 5.0
+                    or not math.isclose(
+                        retained_delta,
+                        round(observed_delta, 6),
+                        rel_tol=0.0,
+                        abs_tol=0.000001,
+                    )
+                ):
+                    errors.append(
+                        "owned-server Windows venv launcher creation delta is invalid"
+                    )
+            except (TypeError, ValueError):
+                errors.append(
+                    "owned-server Windows venv launcher creation delta is invalid"
+                )
+
+    retained_count = exclusion.get("expected_excluded_process_count")
+    if (
+        not isinstance(retained_count, int)
+        or isinstance(retained_count, bool)
+        or retained_count != expected_count
+    ):
+        errors.append("owned lab server expected exclusion count is invalid")
+
+    if excluded_owned_lab_server is not None:
+        if not isinstance(excluded_owned_lab_server, list):
+            errors.append("excluded owned lab server rows are not a list")
+        else:
+            expected_rows = {}
+            rows_valid = True
+            if isinstance(pid, int) and not isinstance(pid, bool) and pid > 0:
+                expected_rows[pid] = (
+                    float(created) if isinstance(created, (int, float)) else created,
+                    "exact owned port-8199 server PID/create-time/argv",
+                )
+            else:
+                rows_valid = False
+            if (
+                isinstance(launcher_pid, int)
+                and not isinstance(launcher_pid, bool)
+                and launcher_pid > 0
+            ):
+                expected_rows[launcher_pid] = (
+                    float(launcher_created)
+                    if isinstance(launcher_created, (int, float))
+                    else launcher_created,
+                    "exact verified direct Windows venv owned-server launcher stub",
+                )
+            observed_rows = {}
+            rows_valid = rows_valid and len(excluded_owned_lab_server) == expected_count
+            for row in excluded_owned_lab_server:
+                if not isinstance(row, dict) or set(row) != set(
+                    PREQUEUE_EXCLUDED_OWNED_SERVER_ROW_SCHEMA
+                ):
+                    rows_valid = False
+                    continue
+                row_pid = row.get("pid")
+                row_created = row.get("process_create_time")
+                if (
+                    not isinstance(row_pid, int)
+                    or isinstance(row_pid, bool)
+                    or row_pid <= 0
+                    or not isinstance(row_created, (int, float))
+                    or isinstance(row_created, bool)
+                    or not math.isfinite(float(row_created))
+                    or float(row_created) <= 0
+                    or not isinstance(row.get("reason"), str)
+                    or row_pid in observed_rows
+                ):
+                    rows_valid = False
+                    continue
+                observed_rows[row_pid] = (float(row_created), row.get("reason"))
+            if set(observed_rows) != set(expected_rows):
+                rows_valid = False
+            else:
+                for row_pid, (expected_created, expected_reason) in expected_rows.items():
+                    observed_created, observed_reason = observed_rows[row_pid]
+                    if (
+                        not isinstance(expected_created, (int, float))
+                        or not math.isclose(
+                            observed_created,
+                            float(expected_created),
+                            rel_tol=0.0,
+                            abs_tol=0.001,
+                        )
+                        or observed_reason != expected_reason
+                    ):
+                        rows_valid = False
+            if not rows_valid:
+                errors.append("excluded owned lab server rows are not exact")
+    return errors
+
+
+def _prequeue_owned_server_exclusion(
+    server_instance: Dict[str, Any], server_argv: List[str]
+) -> Dict[str, Any]:
+    try:
+        exact_shape = set(server_instance) == {"serving_pid", "process_create_time"}
+        pid = int(server_instance["serving_pid"])
+        expected_created = float(server_instance["process_create_time"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise PreflightError(
+            2, "GPU idle", f"Owned server identity is malformed before prompt: {exc}"
+        ) from exc
+    if (
+        not exact_shape
+        or pid <= 0
+        or not math.isfinite(expected_created)
+        or expected_created <= 0
+        or pid == os.getpid()
+    ):
+        raise PreflightError(
+            2, "GPU idle", "Owned server identity is invalid before prompt"
+        )
+    identity = _idle_process_identity(pid)
+    try:
+        observed_created = float(identity.get("process_create_time"))
+    except (TypeError, ValueError) as exc:
+        raise PreflightError(
+            2, "GPU idle", "Owned server process create time is unavailable before prompt"
+        ) from exc
+    argv_match = _prequeue_server_argv_match(
+        identity.get("command_line"), server_argv, identity.get("executable")
+    )
+    if (
+        identity.get("exists") is not True
+        or not math.isfinite(observed_created)
+        or not math.isclose(
+            observed_created, expected_created, rel_tol=0.0, abs_tol=0.000001
+        )
+        or argv_match["matches"] is not True
+    ):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Owned server PID/create-time/argv could not be re-proved before prompt",
+        )
+    launcher = _prequeue_verified_owned_server_windows_venv_launcher(
+        identity, server_argv
+    )
+    exclusion = {
+        "pid": pid,
+        "process_create_time": observed_created,
+        "server_instance": copy.deepcopy(server_instance),
+        "process_identity": identity,
+        "argv_match": argv_match,
+        "narrowly_verified": True,
+        "excluded_pid_only": True,
+        "verified_windows_venv_launcher": launcher,
+        "expected_excluded_process_count": 2 if launcher is not None else 1,
+    }
+    validation_errors = owned_lab_server_exclusion_validation_errors(
+        exclusion, server_instance, server_argv
+    )
+    if validation_errors:
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Owned server exclusion evidence is invalid: "
+            + "; ".join(validation_errors),
+        )
+    return exclusion
+
+
+def _prequeue_process_info_matches_server_exclusion(
+    info: Dict[str, Any], exclusion: Dict[str, Any]
+) -> bool:
+    if owned_lab_server_exclusion_validation_errors(exclusion):
+        return False
+    identity = exclusion.get("process_identity") or {}
+    try:
+        return (
+            int(info.get("pid") or 0) == int(exclusion.get("pid") or -1)
+            and math.isclose(
+                float(info.get("create_time")),
+                float(exclusion.get("process_create_time")),
+                rel_tol=0.0,
+                abs_tol=0.000001,
+            )
+            and _prequeue_normalize_argv(info.get("cmdline"))
+            == _prequeue_normalize_argv(identity.get("command_line"))
+            and _prequeue_normalize_argv([info.get("exe")])
+            == _prequeue_normalize_argv([identity.get("executable")])
+        )
+    except (TypeError, ValueError):
+        return False
+
+
+def _prequeue_process_info_matches_server_launcher(
+    info: Dict[str, Any], exclusion: Dict[str, Any]
+) -> bool:
+    if owned_lab_server_exclusion_validation_errors(exclusion):
+        return False
+    launcher = exclusion.get("verified_windows_venv_launcher")
+    if not isinstance(launcher, dict):
+        return False
+    retained = launcher.get("process_identity") or {}
+    try:
+        launcher_pid = int(launcher["pid"])
+        launcher_created = float(launcher["process_create_time"])
+        child_pid = int(exclusion["pid"])
+        child_created = float(exclusion["process_create_time"])
+        return (
+            int(info.get("pid") or 0) == launcher_pid
+            and math.isclose(
+                float(info.get("create_time")),
+                launcher_created,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+            and os.path.normcase(str(Path(str(info.get("exe"))).resolve()))
+            == os.path.normcase(
+                str(Path(str(launcher["expected_launcher_path"])).resolve())
+            )
+            and [str(value) for value in info.get("cmdline") or []]
+            == [str(value) for value in retained.get("command_line") or []]
+            and psutil.Process(child_pid).ppid() == launcher_pid
+            and lab_locks.process_identity_is_live(launcher_pid, launcher_created)
+            and lab_locks.process_identity_is_live(child_pid, child_created)
+        )
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        OSError,
+        RuntimeError,
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+    ):
+        return False
+
+
+def prequeue_known_workload_scan_validation_errors(
+    evidence: Dict[str, Any],
+    expected_server_instance: Optional[Dict[str, Any]] = None,
+    expected_server_argv: Optional[List[str]] = None,
+) -> List[str]:
+    """Validate the immutable receipt-facing per-leg prequeue scan evidence."""
+
+    errors = []
+    expected_keys = {
+        "schema_version",
+        "kind",
+        "status",
+        "scan_ran",
+        "sampled_at_ns",
+        "sampled_at_utc",
+        "completed_at_ns",
+        "contract",
+        "server_instance",
+        "server_argv",
+        "listener_pid_before",
+        "listener_pid_after",
+        "current_runner_exclusion",
+        "owned_lab_server_exclusion",
+        "scanned_process_count",
+        "excluded_current_runner",
+        "excluded_owned_lab_server",
+        "blocking_processes",
+        "advisory_unreadable_processes",
+        "scan_errors",
+        "evidence_sha256",
+    }
+    if set(evidence) != expected_keys:
+        errors.append("prequeue workload scan contains missing/extra fields")
+    if evidence.get("schema_version") != 1:
+        errors.append("prequeue workload scan schema_version is not 1")
+    if evidence.get("kind") != "per-leg-immediate-prequeue-known-workload-scan":
+        errors.append("prequeue workload scan kind is wrong")
+    if (
+        evidence.get("status") != "clean"
+        or evidence.get("scan_ran") is not True
+        or evidence.get("blocking_processes") != []
+        or evidence.get("scan_errors") != []
+    ):
+        errors.append("prequeue workload scan is not clean")
+    advisories = evidence.get("advisory_unreadable_processes")
+    if not isinstance(advisories, list) or not all(
+        _redacted_workload_process_is_valid(value, "advisory")
+        for value in advisories
+    ):
+        errors.append("prequeue workload advisory evidence is malformed")
+    retained_hash = evidence.get("evidence_sha256")
+    unhashed = copy.deepcopy(evidence)
+    unhashed.pop("evidence_sha256", None)
+    if retained_hash != stable_identity(unhashed):
+        errors.append("prequeue workload scan evidence SHA-256 is invalid")
+    if evidence.get("contract") != prequeue_known_workload_scan_contract():
+        errors.append("prequeue workload scan contract drifted")
+    server_instance = evidence.get("server_instance")
+    if expected_server_instance is not None and server_instance != expected_server_instance:
+        errors.append("prequeue workload scan server instance binding is wrong")
+    server_argv = evidence.get("server_argv")
+    if expected_server_argv is not None and server_argv != expected_server_argv:
+        errors.append("prequeue workload scan server argv binding is wrong")
+    try:
+        serving_pid = int((server_instance or {}).get("serving_pid") or 0)
+    except (TypeError, ValueError):
+        serving_pid = 0
+    if (
+        serving_pid <= 0
+        or evidence.get("listener_pid_before") != serving_pid
+        or evidence.get("listener_pid_after") != serving_pid
+    ):
+        errors.append("prequeue workload scan listener binding is wrong")
+    current = evidence.get("current_runner_exclusion") or {}
+    server = evidence.get("owned_lab_server_exclusion") or {}
+    excluded_current = evidence.get("excluded_current_runner") or []
+    excluded_server = evidence.get("excluded_owned_lab_server") or []
+    if current_runner_exclusion_validation_errors(current, excluded_current):
+        errors.append("prequeue workload scan current runner exclusion is not exact")
+    if owned_lab_server_exclusion_validation_errors(
+        server, server_instance, server_argv, excluded_server
+    ):
+        errors.append("prequeue workload scan owned server exclusion is not exact")
+    if isinstance(excluded_current, list) and isinstance(excluded_server, list):
+        current_pids = {
+            row.get("pid") for row in excluded_current if isinstance(row, dict)
+        }
+        server_pids = {
+            row.get("pid") for row in excluded_server if isinstance(row, dict)
+        }
+        if current_pids.intersection(server_pids):
+            errors.append("prequeue workload scan exclusion PID sets overlap")
+    try:
+        expected_current_count = int(
+            current.get("expected_excluded_process_count") or 0
+        )
+        expected_server_count = int(
+            server.get("expected_excluded_process_count") or 0
+        )
+        if int(evidence.get("scanned_process_count") or 0) < (
+            expected_current_count + expected_server_count
+        ):
+            errors.append("prequeue workload scan did not enumerate all exclusions")
+        sampled_at_ns = int(evidence.get("sampled_at_ns") or 0)
+        completed_at_ns = int(evidence.get("completed_at_ns") or 0)
+        if sampled_at_ns <= 0 or completed_at_ns < sampled_at_ns:
+            errors.append("prequeue workload scan timestamps are invalid")
+    except (TypeError, ValueError):
+        errors.append("prequeue workload scan numeric evidence is malformed")
+    return errors
+
+
+def collect_prequeue_known_workload_scan(
+    server_instance: Dict[str, Any], server_argv: List[str]
+) -> Dict[str, Any]:
+    """Scan every process immediately before every cold/warm prompt queue."""
+
+    sampled_at_ns = time.time_ns()
+    current_exclusion = _idle_current_runner_exclusion()
+    server_exclusion = _prequeue_owned_server_exclusion(server_instance, server_argv)
+    serving_pid = int(server_exclusion["pid"])
+    try:
+        listener_before = listener_pid(int(LAB_PORT), strict=True)
+    except Exception as exc:
+        raise PreflightError(
+            2, "GPU idle", f"Could not re-prove port {LAB_PORT} before prompt: {exc}"
+        ) from exc
+    if listener_before != serving_pid:
+        raise PreflightError(
+            2, "GPU idle", "Owned server is no longer the port-8199 listener before prompt"
+        )
+
+    blockers = []
+    advisories = []
+    excluded_current = []
+    excluded_server = []
+    scan_errors = []
+    scanned = 0
+    try:
+        iterator = psutil.process_iter(
+            ["pid", "name", "exe", "cmdline", "create_time"], ad_value=None
+        )
+        for process in iterator:
+            scanned += 1
+            info = process.info
+            pid = int(info["pid"])
+            name = str(info.get("name") or "")
+            executable = str(info.get("exe") or "")
+            command_line = [str(value) for value in info.get("cmdline") or []]
+            if pid == int(current_exclusion["pid"]):
+                try:
+                    exact_current = (
+                        math.isclose(
+                            float(info.get("create_time")),
+                            float(current_exclusion["process_create_time"]),
+                            rel_tol=0.0,
+                            abs_tol=0.001,
+                        )
+                        and _idle_command_line_has_exact_runner(command_line)
+                    )
+                except (TypeError, ValueError):
+                    exact_current = False
+                if exact_current:
+                    excluded_current.append(
+                        {
+                            "pid": pid,
+                            "process_create_time": float(info["create_time"]),
+                            "reason": "exact current run_recipe process",
+                        }
+                    )
+                else:
+                    blockers.append(
+                        _redacted_exclusion_mismatch(
+                            info, "current_runner_exclusion_mismatch"
+                        )
+                    )
+                continue
+            launcher = current_exclusion.get("verified_windows_venv_launcher")
+            if isinstance(launcher, dict) and pid == int(launcher.get("pid") or 0):
+                if _idle_process_info_matches_verified_launcher(info, current_exclusion):
+                    excluded_current.append(
+                        {
+                            "pid": pid,
+                            "process_create_time": float(info["create_time"]),
+                            "reason": "exact verified direct Windows venv launcher stub",
+                        }
+                    )
+                else:
+                    blockers.append(
+                        _redacted_exclusion_mismatch(
+                            info, "current_runner_exclusion_mismatch"
+                        )
+                    )
+                continue
+            if pid == serving_pid:
+                if _prequeue_process_info_matches_server_exclusion(
+                    info, server_exclusion
+                ):
+                    excluded_server.append(
+                        {
+                            "pid": pid,
+                            "process_create_time": float(info["create_time"]),
+                            "reason": (
+                                "exact owned port-8199 server PID/create-time/argv"
+                            ),
+                        }
+                    )
+                else:
+                    blockers.append(
+                        _redacted_exclusion_mismatch(
+                            info, "owned_server_exclusion_mismatch"
+                        )
+                    )
+                continue
+            server_launcher = server_exclusion.get(
+                "verified_windows_venv_launcher"
+            )
+            if (
+                isinstance(server_launcher, dict)
+                and pid == int(server_launcher.get("pid") or 0)
+            ):
+                if _prequeue_process_info_matches_server_launcher(
+                    info, server_exclusion
+                ):
+                    excluded_server.append(
+                        {
+                            "pid": pid,
+                            "process_create_time": float(info["create_time"]),
+                            "reason": (
+                                "exact verified direct Windows venv owned-server "
+                                "launcher stub"
+                            ),
+                        }
+                    )
+                else:
+                    blockers.append(
+                        _redacted_exclusion_mismatch(
+                            info, "owned_server_exclusion_mismatch"
+                        )
+                    )
+                continue
+            classified = classify_known_workload_process(info)
+            if classified["classification"] == "blocking_positive_known_workload":
+                blockers.append(classified["redacted_process"])
+            elif classified["classification"] == "advisory_unreadable_or_unmatched_python":
+                advisories.append(classified["redacted_process"])
+    except (psutil.AccessDenied, psutil.NoSuchProcess, OSError, ValueError) as exc:
+        scan_errors.append(f"process enumeration failed: {type(exc).__name__}: {exc}")
+
+    current_exclusion_errors = current_runner_exclusion_validation_errors(
+        current_exclusion, excluded_current
+    )
+    if current_exclusion_errors:
+        scan_errors.append(
+            "current run_recipe/verified-launcher exclusions were not observed exactly"
+        )
+    server_exclusion_errors = owned_lab_server_exclusion_validation_errors(
+        server_exclusion, server_instance, server_argv, excluded_server
+    )
+    if server_exclusion_errors:
+        scan_errors.append(
+            "owned lab server/verified-launcher exclusions were not observed exactly"
+        )
+    try:
+        listener_after = listener_pid(int(LAB_PORT), strict=True)
+    except Exception as exc:
+        listener_after = None
+        scan_errors.append(f"post-scan listener proof failed: {type(exc).__name__}: {exc}")
+    if listener_after != serving_pid:
+        scan_errors.append("owned server is no longer the port-8199 listener after scan")
+
+    evidence = {
+        "schema_version": 1,
+        "kind": "per-leg-immediate-prequeue-known-workload-scan",
+        "status": "clean" if not blockers and not scan_errors else "blocked",
+        "scan_ran": True,
+        "sampled_at_ns": sampled_at_ns,
+        "sampled_at_utc": time.strftime(
+            "%Y-%m-%dT%H:%M:%SZ", time.gmtime(sampled_at_ns / 1e9)
+        ),
+        "completed_at_ns": time.time_ns(),
+        "contract": prequeue_known_workload_scan_contract(),
+        "server_instance": copy.deepcopy(server_instance),
+        "server_argv": list(server_argv),
+        "listener_pid_before": listener_before,
+        "listener_pid_after": listener_after,
+        "current_runner_exclusion": current_exclusion,
+        "owned_lab_server_exclusion": server_exclusion,
+        "scanned_process_count": scanned,
+        "excluded_current_runner": excluded_current,
+        "excluded_owned_lab_server": excluded_server,
+        "blocking_processes": blockers,
+        "advisory_unreadable_processes": advisories,
+        "scan_errors": scan_errors,
+    }
+    evidence["evidence_sha256"] = stable_identity(evidence)
+    if blockers or scan_errors:
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Immediate prequeue known-workload scan blocked: "
+            "redacted_blocking_processes="
+            + json.dumps(blockers, sort_keys=True, separators=(",", ":"))
+            + "; scan_errors="
+            + json.dumps(scan_errors, sort_keys=True, separators=(",", ":")),
+        )
+    validation_errors = prequeue_known_workload_scan_validation_errors(
+        evidence, server_instance, server_argv
+    )
+    if validation_errors:
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Immediate prequeue scan evidence is invalid: "
+            + "; ".join(validation_errors),
+        )
+    return evidence
+
+
+def _idle_classify_process_row(
+    row: Dict[str, Any], expected_uuid: str, identity: Dict[str, Any]
+) -> Dict[str, Any]:
+    desktop_signals = _idle_desktop_graphics_signals(identity)
+    evidence = {
+        **row,
+        "process_identity": identity,
+        "desktop_graphics_signals": desktop_signals,
+        "desktop_signal_status": (
+            "recognized" if desktop_signals else "unrecognized-non-workload-client"
+        ),
+        "blocking_reasons": [],
+        "classification": "blocked",
+    }
+    reasons: List[str] = evidence["blocking_reasons"]
+    if row.get("gpu_uuid") != expected_uuid:
+        reasons.append("process row is not bound to the selected GPU UUID")
+    token = str(row.get("used_gpu_memory_token") or "")
+    if token != GPU_IDLE_WDDM_UNMETERED_MEMORY_TOKEN:
+        try:
+            numeric = float(token)
+        except ValueError:
+            reasons.append(f"unknown per-process memory token {token!r}")
+        else:
+            reasons.append(f"numeric per-process GPU allocation reported ({numeric} MiB)")
+    if identity.get("exists") is not True:
+        reasons.append("NVIDIA process PID cannot be re-identified")
+    create_time = identity.get("process_create_time")
+    if (
+        not isinstance(create_time, (int, float))
+        or isinstance(create_time, bool)
+        or not math.isfinite(float(create_time))
+        or float(create_time) <= 0
+    ):
+        reasons.append("NVIDIA process create time is unavailable")
+    workload = classify_known_workload_process(
+        {
+            "pid": row.get("pid"),
+            "name": identity.get("name") or row.get("nvidia_process_name"),
+            "exe": identity.get("executable"),
+            "cmdline": identity.get("command_line"),
+            "create_time": identity.get("process_create_time"),
+        }
+    )
+    evidence["known_workload_classification"] = workload
+    if workload["classification"] == "blocking_positive_known_workload":
+        reasons.append(
+            "positive known workload marker(s): "
+            f"{workload['redacted_process']['matched_markers']}"
+        )
+    if not reasons:
+        evidence["classification"] = "allowed_unmetered_wddm_desktop_client"
+    return evidence
+
+
+def _idle_query_process_evidence(
+    gpu_index: int, expected_uuid: str
+) -> Dict[str, Any]:
+    argv = [
+        "nvidia-smi",
+        "-i",
+        str(gpu_index),
+        "--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory",
+        "--format=csv,noheader,nounits",
+    ]
+    result = _idle_run_nvidia_smi(argv)
+    parsed = []
+    for fields in _idle_csv_rows(result.stdout):
+        if len(fields) != 4 or not fields[1].isdigit():
+            parsed.append(
+                {
+                    "raw_fields": fields,
+                    "classification": "blocked",
+                    "blocking_reasons": ["malformed NVIDIA process row"],
+                }
+            )
+            continue
+        gpu_uuid, pid_text, process_name, memory = fields
+        row = {
+            "gpu_uuid": gpu_uuid,
+            "pid": int(pid_text),
+            "nvidia_process_name": process_name,
+            "used_gpu_memory_token": memory,
+        }
+        parsed.append(
+            _idle_classify_process_row(
+                row, expected_uuid, _idle_process_identity(int(pid_text))
+            )
+        )
+    blockers = [
+        {
+            "pid": row.get("pid"),
+            "blocking_reasons": row.get("blocking_reasons") or [],
+        }
+        for row in parsed
+        if row.get("classification") != "allowed_unmetered_wddm_desktop_client"
+    ]
+    return {
+        "target_gpu_index": int(gpu_index),
+        "target_gpu_uuid": expected_uuid,
+        "query_argv": argv,
+        "raw_stdout_sha256": sha256_bytes(result.stdout.encode("utf-8")),
+        "row_count": len(parsed),
+        "rows": parsed,
+        "blocking_rows": blockers,
+    }
+
+
+def _idle_same_lock_owner(
+    left: Dict[str, Any], right: Dict[str, Any]
+) -> bool:
+    try:
+        return (
+            int(left.get("lock_schema_version") or 0)
+            == int(right.get("lock_schema_version") or 0)
+            and int(left.get("pid") or 0) == int(right.get("pid") or 0)
+            and math.isclose(
+                float(left.get("process_create_time") or 0.0),
+                float(right.get("process_create_time") or 0.0),
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+            and str(left.get("nonce") or "") == str(right.get("nonce") or "")
+            and str(left.get("role") or "") == str(right.get("role") or "")
+        )
+    except (TypeError, ValueError):
+        return False
+
+
+def _idle_lock_evidence(
+    expected_owner: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    try:
+        before = LOCKFILE_PATH.lstat()
+        if (
+            _is_symlink_or_reparse_point(LOCKFILE_PATH)
+            or not stat.S_ISREG(before.st_mode)
+            or int(before.st_nlink) != 1
+        ):
+            raise GpuIdleGateError(
+                "GPU lock receipt is not an exact single-link regular file"
+            )
+        raw = LOCKFILE_PATH.read_bytes()
+        receipt = lab_locks.read_lock_receipt(LOCKFILE_PATH)
+        retained = LOCKFILE_PATH.read_bytes()
+        after = LOCKFILE_PATH.lstat()
+        stable_fields = ("st_dev", "st_ino", "st_mode", "st_nlink", "st_size", "st_mtime_ns")
+        if raw != retained or any(
+            getattr(before, field) != getattr(after, field) for field in stable_fields
+        ):
+            raise GpuIdleGateError("GPU lock receipt changed while it was sampled")
+    except GpuIdleGateError:
+        raise
+    except (OSError, lab_locks.LeaseError) as exc:
+        raise GpuIdleGateError(f"GPU lock receipt cannot be verified: {exc}") from exc
+    role = str(receipt.get("role") or "")
+    authorized = False
+    authorization = "unproved"
+    if role == "standalone":
+        try:
+            current_created = float(psutil.Process(os.getpid()).create_time())
+            authorized = int(receipt.get("pid") or 0) == os.getpid() and math.isclose(
+                float(receipt.get("process_create_time") or 0.0),
+                current_created,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+        except (psutil.NoSuchProcess, psutil.AccessDenied, OSError, ValueError):
+            authorized = False
+        authorization = "current standalone owner"
+    elif role == "suite":
+        receipt_pid = int(receipt.get("pid") or 0)
+        receipt_created = float(receipt.get("process_create_time") or 0.0)
+        if receipt_pid == os.getpid():
+            authorized = lab_locks.process_identity_is_live(
+                receipt_pid, receipt_created
+            )
+            authorization = "current suite owner"
+        else:
+            try:
+                owner_pid = int(os.environ[lab_locks.SUITE_OWNER_PID_ENV])
+                owner_created = float(
+                    os.environ[lab_locks.SUITE_OWNER_CREATE_TIME_ENV]
+                )
+                owner_nonce = os.environ[lab_locks.SUITE_NONCE_ENV]
+                receipt_matches_environment = (
+                    receipt_pid == owner_pid
+                    and math.isclose(
+                        receipt_created,
+                        owner_created,
+                        rel_tol=0.0,
+                        abs_tol=0.001,
+                    )
+                    and str(receipt.get("nonce") or "") == owner_nonce
+                )
+                direct_child = os.getppid() == owner_pid
+                launcher_chain = lab_locks._is_verified_windows_venv_launcher_chain(
+                    owner_pid, owner_created
+                )
+                authorized = bool(
+                    receipt_matches_environment
+                    and lab_locks.process_identity_is_live(owner_pid, owner_created)
+                    and (direct_child or launcher_chain)
+                )
+            except (KeyError, TypeError, ValueError):
+                authorized = False
+            authorization = "nonce-bound suite child"
+    expected_owner_matches = (
+        expected_owner is None or _idle_same_lock_owner(receipt, expected_owner)
+    )
+    authorized = authorized and expected_owner_matches
+    return {
+        "path": str(LOCKFILE_PATH.resolve()),
+        "receipt": receipt,
+        "receipt_sha256": sha256_bytes(raw),
+        "authorization": authorization,
+        "matches_expected_owner": expected_owner_matches,
+        "matches_acquired_owner": authorized,
+    }
+
+
+def _idle_listener_evidence(port: int = int(LAB_PORT)) -> Dict[str, Any]:
+    rows = []
+    try:
+        connections = psutil.net_connections(kind="tcp")
+    except (psutil.AccessDenied, OSError) as exc:
+        raise GpuIdleGateError(
+            f"Could not enumerate listener ownership for port {port}: {exc}"
+        ) from exc
+    for connection in connections:
+        local = connection.laddr
+        local_port = (
+            getattr(local, "port", local[1] if len(local) > 1 else None)
+            if local
+            else None
+        )
+        if connection.status != psutil.CONN_LISTEN or local_port != port:
+            continue
+        rows.append(
+            {
+                "pid": connection.pid,
+                "local_address": str(local),
+                "owner_known": connection.pid is not None,
+            }
+        )
+    return {
+        "port": port,
+        "listeners": rows,
+        "listener_pids": sorted(
+            {int(row["pid"]) for row in rows if row["pid"] is not None}
+        ),
+        "unknown_owner_count": sum(1 for row in rows if row["pid"] is None),
+    }
+
+
+def _idle_evaluate_sample(
+    activity: Dict[str, Any],
+    process_evidence: Dict[str, Any],
+    lock_evidence: Dict[str, Any],
+    listener_evidence: Dict[str, Any],
+    forbidden_processes: Dict[str, Any],
+) -> List[str]:
+    errors = []
+    if activity.get("driver_model_current") != GPU_IDLE_REQUIRED_DRIVER_MODEL:
+        errors.append("selected GPU is not in exact WDDM driver mode")
+    try:
+        used_vram_mib = float(activity["vram_used_mib"])
+    except (KeyError, TypeError, ValueError):
+        errors.append("selected GPU used VRAM is not numeric")
+    else:
+        if not math.isfinite(used_vram_mib) or used_vram_mib < 0:
+            errors.append("selected GPU used VRAM is invalid")
+        elif used_vram_mib > float(GPU_IDLE_BASELINE_MAX_MB):
+            errors.append(
+                "selected GPU absolute baseline exceeds 3072 MiB"
+            )
+    if process_evidence.get("target_gpu_uuid") != activity.get("gpu_uuid"):
+        errors.append("NVIDIA process evidence is not bound to the sampled GPU UUID")
+    if process_evidence.get("blocking_rows"):
+        errors.append(
+            f"NVIDIA process evidence has "
+            f"{len(process_evidence['blocking_rows'])} blocking row(s)"
+        )
+    if listener_evidence.get("listeners"):
+        errors.append(f"port {LAB_PORT} listener(s) appeared")
+    if listener_evidence.get("unknown_owner_count"):
+        errors.append(f"port {LAB_PORT} listener ownership is incomplete")
+    if lock_evidence.get("matches_acquired_owner") is not True:
+        errors.append("GPU lock receipt no longer matches the acquired owner")
+    if current_runner_exclusion_validation_errors(
+        forbidden_processes.get("current_runner_exclusion"),
+        forbidden_processes.get("excluded_current_runner"),
+    ):
+        errors.append("current run_recipe/verified-launcher exclusion proof is wrong")
+    if forbidden_processes.get("blocking_processes"):
+        errors.append(
+            "independent process scan found %s forbidden/unknown workload(s)"
+            % len(forbidden_processes["blocking_processes"])
+        )
+    return errors
+
+
+def _idle_finalize_evidence(
+    evidence: Dict[str, Any], server_instance: Dict[str, Any]
+) -> Dict[str, Any]:
+    finalized = copy.deepcopy(evidence)
+    finalized["server_instance"] = copy.deepcopy(server_instance)
+    finalized.pop("evidence_sha256", None)
+    finalized["evidence_sha256"] = stable_identity(finalized)
+    return finalized
+
+
+def _idle_owned_server_reuse_evidence(
+    server_instance: Dict[str, Any]
+) -> Dict[str, Any]:
+    evidence = {
+        "schema_version": 1,
+        "kind": "run-recipe-preboot-wddm-idle-gate",
+        "status": "not-rerun-owned-server-reuse",
+        "gate_ran": False,
+        "reason": (
+            "verified owned lab server already active; no fresh idle sampling claimed"
+        ),
+        "contract": gpu_idle_gate_contract(),
+    }
+    return _idle_finalize_evidence(evidence, server_instance)
+
+
+def gpu_idle_gate_validation_errors(
+    evidence: Dict[str, Any],
+    expected_server_instance: Optional[Dict[str, Any]] = None,
+) -> List[str]:
+    """Independently recompute the receipt-facing idle-gate assertions."""
+
+    errors = []
+    if evidence.get("schema_version") != 1:
+        errors.append("idle gate schema_version is not 1")
+    if evidence.get("kind") != "run-recipe-preboot-wddm-idle-gate":
+        errors.append("idle gate kind is wrong")
+    retained_hash = evidence.get("evidence_sha256")
+    unhashed = copy.deepcopy(evidence)
+    unhashed.pop("evidence_sha256", None)
+    if retained_hash != stable_identity(unhashed):
+        errors.append("idle gate evidence SHA-256 is invalid")
+    if evidence.get("contract") != gpu_idle_gate_contract():
+        errors.append("idle gate contract drifted")
+    server_instance = evidence.get("server_instance")
+    if not isinstance(server_instance, dict):
+        errors.append("idle gate server instance is absent")
+    else:
+        try:
+            valid_server_instance = (
+                set(server_instance) == {"serving_pid", "process_create_time"}
+                and int(server_instance.get("serving_pid") or 0) > 0
+                and math.isfinite(float(server_instance.get("process_create_time")))
+                and float(server_instance.get("process_create_time")) > 0
+            )
+        except (TypeError, ValueError):
+            valid_server_instance = False
+        if not valid_server_instance:
+            errors.append("idle gate server instance shape/values are invalid")
+        if (
+            expected_server_instance is not None
+            and server_instance != expected_server_instance
+        ):
+            errors.append("idle gate server instance binding is wrong")
+
+    status = evidence.get("status")
+    if status == "not-rerun-owned-server-reuse":
+        expected_reuse_keys = {
+            "schema_version",
+            "kind",
+            "status",
+            "gate_ran",
+            "reason",
+            "contract",
+            "server_instance",
+            "evidence_sha256",
+        }
+        if evidence.get("gate_ran") is not False:
+            errors.append("owned-server reuse marker claims the idle gate ran")
+        if evidence.get("reason") != (
+            "verified owned lab server already active; no fresh idle sampling claimed"
+        ):
+            errors.append("owned-server reuse reason is not exact")
+        if set(evidence) != expected_reuse_keys:
+            errors.append("owned-server reuse marker contains missing/extra fields")
+        return errors
+    if status != "measured" or evidence.get("gate_ran") is not True:
+        errors.append("cold idle gate is not measured")
+        return errors
+
+    expected_cold_keys = {
+        "schema_version",
+        "kind",
+        "status",
+        "gate_ran",
+        "gpu_index",
+        "target_gpu",
+        "sample_count",
+        "sampling_interval_s",
+        "aggregation",
+        "policy",
+        "contract",
+        "port_8199_listener_pids_before",
+        "port_8199_listener_pids_after",
+        "current_runner_exclusion",
+        "gpu_lock_owner",
+        "samples",
+        "summary",
+        "collector",
+        "server_instance",
+        "evidence_sha256",
+    }
+    if set(evidence) != expected_cold_keys:
+        errors.append("cold idle gate contains missing/extra fields")
+
+    target = evidence.get("target_gpu") or {}
+    samples = evidence.get("samples") or []
+    contract = evidence.get("contract") or {}
+    if evidence.get("aggregation") != contract.get("aggregation"):
+        errors.append("cold idle gate aggregation drifted from its contract")
+    if evidence.get("policy") != contract.get("policy"):
+        errors.append("cold idle gate policy drifted from its contract")
+    if evidence.get("collector") != contract.get("collector"):
+        errors.append("cold idle gate collector drifted from its contract")
+    if int(evidence.get("gpu_index", -1)) != GPU_IDLE_INDEX:
+        errors.append("cold idle gate GPU index is wrong")
+    if (
+        not str(target.get("gpu_uuid") or "").startswith("GPU-")
+        or target.get("gpu_index") != GPU_IDLE_INDEX
+    ):
+        errors.append("cold idle gate target GPU binding is invalid")
+    if target.get("driver_model_current") != GPU_IDLE_REQUIRED_DRIVER_MODEL:
+        errors.append("cold idle gate target GPU is not WDDM")
+    if target.get("display_active") not in GPU_IDLE_DISPLAY_ACTIVE_MEASURED_STATES:
+        errors.append("cold idle gate target display measured state is invalid")
+    if (
+        evidence.get("sample_count") != GPU_IDLE_SAMPLE_COUNT
+        or len(samples) != GPU_IDLE_SAMPLE_COUNT
+    ):
+        errors.append("cold idle gate does not retain exactly five samples")
+    if evidence.get("sampling_interval_s") != GPU_IDLE_SAMPLE_INTERVAL_S:
+        errors.append("cold idle gate sampling interval is not 200 ms")
+    if evidence.get("port_8199_listener_pids_before") != []:
+        errors.append("port 8199 was occupied before the idle gate")
+    if evidence.get("port_8199_listener_pids_after") != []:
+        errors.append("port 8199 was occupied after the idle gate")
+    exclusion = evidence.get("current_runner_exclusion") or {}
+    if current_runner_exclusion_validation_errors(exclusion):
+        errors.append("current runner exclusion is not narrowly bound")
+    gpu_lock_owner = evidence.get("gpu_lock_owner") or {}
+    try:
+        valid_lock_owner = (
+            int(gpu_lock_owner.get("lock_schema_version") or 0)
+            == lab_locks.LOCK_SCHEMA_VERSION
+            and int(gpu_lock_owner.get("pid") or 0) > 0
+            and float(gpu_lock_owner.get("process_create_time") or 0.0) > 0
+            and len(str(gpu_lock_owner.get("nonce") or "")) >= 32
+            and str(gpu_lock_owner.get("role") or "") in {"standalone", "suite"}
+        )
+    except (TypeError, ValueError):
+        valid_lock_owner = False
+    if not valid_lock_owner:
+        errors.append("cold idle gate GPU lock owner is invalid")
+
+    uuid_value = target.get("gpu_uuid")
+    for index, sample in enumerate(samples):
+        prefix = f"sample {index}"
+        if sample.get("sample_index") != index:
+            errors.append(f"{prefix} index is wrong")
+        if (
+            sample.get("gpu_index") != GPU_IDLE_INDEX
+            or sample.get("gpu_uuid") != uuid_value
+        ):
+            errors.append(f"{prefix} target GPU binding is wrong")
+        if sample.get("driver_model_current") != GPU_IDLE_REQUIRED_DRIVER_MODEL:
+            errors.append(f"{prefix} is not WDDM")
+        if sample.get("display_active") not in GPU_IDLE_DISPLAY_ACTIVE_MEASURED_STATES:
+            errors.append(f"{prefix} display measured state is invalid")
+        try:
+            vram = float(sample["vram_used_mib"])
+            gpu_util = float(sample["gpu_utilization_percent"])
+            memory_util = float(sample["memory_utilization_percent"])
+        except (KeyError, TypeError, ValueError):
+            errors.append(f"{prefix} activity is malformed")
+            continue
+        if (
+            not all(math.isfinite(value) for value in (vram, gpu_util, memory_util))
+            or min(vram, gpu_util, memory_util) < 0
+            or gpu_util > 100
+            or memory_util > 100
+        ):
+            errors.append(f"{prefix} activity is non-finite/out of range")
+        if math.isfinite(vram) and vram > float(GPU_IDLE_BASELINE_MAX_MB):
+            errors.append(f"{prefix} exceeds the 3072 MiB absolute baseline gate")
+        if sample.get("quiescent") is not True or sample.get("quiescence_errors") != []:
+            errors.append(f"{prefix} is not classified quiescent")
+        listeners = sample.get("port_8199_listener_evidence") or {}
+        if (
+            listeners.get("port") != int(LAB_PORT)
+            or listeners.get("listeners") != []
+            or listeners.get("listener_pids") != []
+            or listeners.get("unknown_owner_count") != 0
+        ):
+            errors.append(f"{prefix} observed an occupied/unowned port 8199")
+        lock = sample.get("gpu_lock") or {}
+        if lock.get("matches_acquired_owner") is not True:
+            errors.append(f"{prefix} does not prove the GPU lease")
+        if lock.get("matches_expected_owner") is not True:
+            errors.append(f"{prefix} does not match the captured GPU lease owner")
+        if not _idle_same_lock_owner(lock.get("receipt") or {}, gpu_lock_owner):
+            errors.append(f"{prefix} GPU lease owner/nonce drifted")
+        processes = sample.get("nvidia_process_evidence") or {}
+        if (
+            processes.get("target_gpu_index") != GPU_IDLE_INDEX
+            or processes.get("target_gpu_uuid") != uuid_value
+            or processes.get("blocking_rows") != []
+        ):
+            errors.append(f"{prefix} NVIDIA process evidence is not clean/bound")
+        rows = processes.get("rows") or []
+        if processes.get("row_count") != len(rows):
+            errors.append(f"{prefix} NVIDIA process row count is inconsistent")
+        for row in rows:
+            identity = row.get("process_identity") or {}
+            recomputed = _idle_classify_process_row(
+                {
+                    "gpu_uuid": row.get("gpu_uuid"),
+                    "pid": row.get("pid"),
+                    "nvidia_process_name": row.get("nvidia_process_name"),
+                    "used_gpu_memory_token": row.get("used_gpu_memory_token"),
+                },
+                str(uuid_value),
+                identity,
+            )
+            if (
+                row.get("classification")
+                != "allowed_unmetered_wddm_desktop_client"
+                or row.get("blocking_reasons") != []
+                or row.get("used_gpu_memory_token")
+                != GPU_IDLE_WDDM_UNMETERED_MEMORY_TOKEN
+                or row.get("classification") != recomputed.get("classification")
+                or row.get("blocking_reasons")
+                != recomputed.get("blocking_reasons")
+                or row.get("desktop_graphics_signals")
+                != recomputed.get("desktop_graphics_signals")
+                or row.get("desktop_signal_status")
+                != recomputed.get("desktop_signal_status")
+                or row.get("known_workload_classification")
+                != recomputed.get("known_workload_classification")
+            ):
+                errors.append(f"{prefix} contains an unqualified NVIDIA process row")
+        forbidden = sample.get("forbidden_process_scan") or {}
+        expected_forbidden_keys = {
+            "scanned_process_count",
+            "model_workload_markers",
+            "classifier_contract",
+            "current_runner_exclusion",
+            "excluded_current_runner",
+            "blocking_processes",
+            "advisory_unreadable_processes",
+        }
+        if set(forbidden) != expected_forbidden_keys:
+            errors.append(f"{prefix} independent process scan shape is invalid")
+        if forbidden.get("blocking_processes") != []:
+            errors.append(f"{prefix} independent process scan is not clean")
+        if forbidden.get("classifier_contract") != known_workload_classifier_contract():
+            errors.append(f"{prefix} independent process classifier contract drifted")
+        blockers = forbidden.get("blocking_processes")
+        advisories = forbidden.get("advisory_unreadable_processes")
+        if not isinstance(blockers, list) or not all(
+            _redacted_workload_process_is_valid(value, "blocking")
+            for value in blockers
+        ):
+            errors.append(f"{prefix} independent process blockers are malformed")
+        if not isinstance(advisories, list) or not all(
+            _redacted_workload_process_is_valid(value, "advisory")
+            for value in advisories
+        ):
+            errors.append(f"{prefix} independent process advisories are malformed")
+        if int(forbidden.get("scanned_process_count") or 0) <= 0:
+            errors.append(f"{prefix} independent process scan retained no evidence")
+        if forbidden.get("current_runner_exclusion") != exclusion:
+            errors.append(f"{prefix} current runner exclusion binding drifted")
+        excluded = forbidden.get("excluded_current_runner") or []
+        if current_runner_exclusion_validation_errors(exclusion, excluded):
+            errors.append(f"{prefix} current runner exclusion is not exact")
+
+    if samples:
+        summary = evidence.get("summary") or {}
+        try:
+            expected_summary = {
+                "max_vram_used_mib": max(
+                    float(row["vram_used_mib"]) for row in samples
+                ),
+                "max_gpu_utilization_percent": max(
+                    float(row["gpu_utilization_percent"]) for row in samples
+                ),
+                "max_memory_utilization_percent": max(
+                    float(row["memory_utilization_percent"]) for row in samples
+                ),
+            }
+            if summary != expected_summary:
+                errors.append("cold idle gate summary was not recomputed")
+        except (KeyError, TypeError, ValueError):
+            errors.append("cold idle gate summary inputs are malformed")
+    return errors
+
+
+class ServerIdleGateSidecarError(RuntimeError):
+    """Raised when the owned-server idle-gate sidecar cannot be proved."""
+
+
+def _server_idle_gate_bytes(evidence: Dict[str, Any]) -> bytes:
+    try:
+        return (
+            json.dumps(
+                evidence,
+                indent=2,
+                sort_keys=True,
+                ensure_ascii=False,
+                allow_nan=False,
+            )
+            + "\n"
+        ).encode("utf-8")
+    except (TypeError, ValueError) as exc:
+        raise ServerIdleGateSidecarError(
+            f"idle-gate evidence is not canonical JSON: {exc}"
+        ) from exc
+
+
+def _server_idle_gate_stat_identity(value: os.stat_result) -> Tuple[int, ...]:
+    return (
+        int(value.st_dev),
+        int(value.st_ino),
+        int(value.st_mode),
+        int(value.st_nlink),
+        int(value.st_size),
+        int(value.st_mtime_ns),
+    )
+
+
+def snapshot_server_idle_gate_sidecar(
+    expected_server_instance: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Stably read and independently validate the immutable cold-gate sidecar."""
+
+    path = SERVER_IDLE_GATE_FILE
+    if not os.path.lexists(path):
+        raise ServerIdleGateSidecarError("server idle-gate sidecar is absent")
+    try:
+        before = path.lstat()
+        if (
+            _is_symlink_or_reparse_point(path)
+            or not stat.S_ISREG(before.st_mode)
+            or int(before.st_nlink) != 1
+        ):
+            raise ServerIdleGateSidecarError(
+                "server idle-gate sidecar is not an exact single-link regular file"
+            )
+        flags = os.O_RDONLY | getattr(os, "O_BINARY", 0)
+        fd = os.open(str(path), flags)
+        try:
+            descriptor_before = os.fstat(fd)
+            chunks = []
+            while True:
+                chunk = os.read(fd, 1024 * 1024)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+            raw = b"".join(chunks)
+            descriptor_after = os.fstat(fd)
+        finally:
+            os.close(fd)
+        after = path.lstat()
+    except ServerIdleGateSidecarError:
+        raise
     except OSError as exc:
-        print(f"[SERVER] Could not remove proved-stale .server.pid: {exc}")
-        return False
-    print(f"[SERVER] Removed proved-stale .server.pid for dead PID {pid}")
-    return True
+        raise ServerIdleGateSidecarError(
+            f"cannot snapshot server idle-gate sidecar: {exc}"
+        ) from exc
 
-
-def check_gpu_idle() -> float:
-    """Preflight Check #2: Refuse unexpectedly high unrelated desktop GPU load."""
+    identity = _server_idle_gate_stat_identity(before)
+    if (
+        identity != _server_idle_gate_stat_identity(descriptor_before)
+        or identity != _server_idle_gate_stat_identity(descriptor_after)
+        or identity != _server_idle_gate_stat_identity(after)
+        or _is_symlink_or_reparse_point(path)
+        or not stat.S_ISREG(after.st_mode)
+        or int(after.st_nlink) != 1
+        or len(raw) != int(after.st_size)
+    ):
+        raise ServerIdleGateSidecarError(
+            "server idle-gate sidecar changed while it was read"
+        )
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raise ServerIdleGateSidecarError("server idle-gate sidecar contains a UTF-8 BOM")
     try:
-        used_mb = query_gpu_vram_mb()
-        max_limit_mb = float(VRAM_GPU_IDLE_MAX_MB)
+        evidence = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ServerIdleGateSidecarError(
+            f"server idle-gate sidecar is invalid JSON: {exc}"
+        ) from exc
+    if not isinstance(evidence, dict):
+        raise ServerIdleGateSidecarError(
+            "server idle-gate sidecar is not a JSON object"
+        )
+    if raw != _server_idle_gate_bytes(evidence):
+        raise ServerIdleGateSidecarError(
+            "server idle-gate sidecar bytes are not canonical"
+        )
+    errors = gpu_idle_gate_validation_errors(evidence, expected_server_instance)
+    if evidence.get("status") != "measured" or evidence.get("gate_ran") is not True:
+        errors.append("server idle-gate sidecar does not contain a measured cold gate")
+    if errors:
+        raise ServerIdleGateSidecarError("; ".join(errors))
+    metadata = {
+        "path": str(path.resolve()),
+        "bytes": len(raw),
+        "sha256": sha256_bytes(raw),
+        "identity": list(identity),
+        "evidence_sha256": evidence["evidence_sha256"],
+        "server_instance": copy.deepcopy(evidence["server_instance"]),
+    }
+    return {
+        "evidence": evidence,
+        "metadata": metadata,
+        "raw": raw,
+    }
 
-        if used_mb >= max_limit_mb:
-            raise PreflightError(2, "GPU idle", f"GPU allocated VRAM is {used_mb:.1f} MB (exceeds pre-boot desktop threshold {max_limit_mb:.0f} MB)")
-        return used_mb / 1024.0
-    except (subprocess.SubprocessError, FileNotFoundError, ValueError) as e:
-        if isinstance(e, PreflightError):
-            raise
-        raise PreflightError(2, "GPU idle", f"Could not query nvidia-smi: {e}")
+
+def create_server_idle_gate_sidecar(
+    evidence: Dict[str, Any],
+) -> Dict[str, Any]:
+    """O_EXCL-create and re-prove the cold gate bound to the new server."""
+
+    errors = gpu_idle_gate_validation_errors(
+        evidence, evidence.get("server_instance") if isinstance(evidence, dict) else None
+    )
+    if evidence.get("status") != "measured" or evidence.get("gate_ran") is not True:
+        errors.append("only measured cold idle evidence may create the sidecar")
+    if errors:
+        raise ServerIdleGateSidecarError(
+            "refusing invalid server idle-gate sidecar evidence: " + "; ".join(errors)
+        )
+    content = _server_idle_gate_bytes(evidence)
+    flags = os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_BINARY", 0)
+    try:
+        fd = os.open(str(SERVER_IDLE_GATE_FILE), flags, 0o600)
+        try:
+            offset = 0
+            while offset < len(content):
+                written = os.write(fd, content[offset:])
+                if written <= 0:
+                    raise OSError("short write for server idle-gate sidecar")
+                offset += written
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+    except OSError as exc:
+        raise ServerIdleGateSidecarError(
+            f"cannot exclusively create server idle-gate sidecar: {exc}"
+        ) from exc
+    retained = snapshot_server_idle_gate_sidecar(evidence["server_instance"])
+    if retained["evidence"] != evidence or retained["raw"] != content:
+        raise ServerIdleGateSidecarError(
+            "server idle-gate sidecar changed after exclusive creation"
+        )
+    return retained
+
+
+def _remove_server_idle_gate_sidecar_after_proved_exit(
+    pid: int, original: Dict[str, Any]
+) -> Tuple[bool, str]:
+    """Remove only the exact cold-gate sidecar after PID and port are clear."""
+
+    try:
+        current = snapshot_server_idle_gate_sidecar(
+            original.get("metadata", {}).get("server_instance")
+        )
+    except ServerIdleGateSidecarError as exc:
+        return False, f"server idle-gate sidecar drifted: {exc}"
+    if (
+        current.get("metadata") != original.get("metadata")
+        or current.get("raw") != original.get("raw")
+    ):
+        return False, "server idle-gate sidecar identity/content drifted before removal"
+    if psutil.pid_exists(pid):
+        return False, f"recorded PID {pid} became live before sidecar removal"
+    try:
+        serving_pid = listener_pid(int(LAB_PORT), strict=True)
+        live_stats = query_server_stats()
+    except Exception as exc:
+        return False, f"could not re-prove clear port {LAB_PORT}: {exc}"
+    if serving_pid is not None or live_stats is not None:
+        return False, f"port {LAB_PORT} became live before sidecar removal"
+    try:
+        SERVER_IDLE_GATE_FILE.unlink()
+    except OSError as exc:
+        return False, f"could not remove server idle-gate sidecar: {exc}"
+    if os.path.lexists(SERVER_IDLE_GATE_FILE):
+        return False, "server idle-gate sidecar path was replaced during removal"
+    return True, ""
+
+
+def _snapshot_server_idle_gate_sidecar_for_cleanup(
+    pid: int,
+    expected_process_create_time: Optional[float] = None,
+) -> Optional[Dict[str, Any]]:
+    """Seal the sidecar, when present, and prove that it belongs to ``pid``."""
+
+    if not os.path.lexists(SERVER_IDLE_GATE_FILE):
+        return None
+    snapshot = snapshot_server_idle_gate_sidecar()
+    server_instance = snapshot.get("metadata", {}).get("server_instance")
+    if not isinstance(server_instance, dict) or set(server_instance) != {
+        "serving_pid",
+        "process_create_time",
+    }:
+        raise ServerIdleGateSidecarError(
+            "server idle-gate sidecar has an invalid server_instance shape"
+        )
+    try:
+        serving_pid = int(server_instance["serving_pid"])
+        create_time = float(server_instance["process_create_time"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ServerIdleGateSidecarError(
+            f"server idle-gate sidecar has an invalid server identity: {exc}"
+        ) from exc
+    if serving_pid != int(pid):
+        raise ServerIdleGateSidecarError(
+            f"server idle-gate sidecar PID {serving_pid} does not match receipt PID {pid}"
+        )
+    if (
+        not math.isfinite(create_time)
+        or create_time <= 0
+        or (
+            expected_process_create_time is not None
+            and create_time != round(float(expected_process_create_time), 6)
+        )
+    ):
+        raise ServerIdleGateSidecarError(
+            "server idle-gate sidecar process creation time does not match the owned PID"
+        )
+    return snapshot
+
+
+def check_gpu_idle(
+    expected_gpu_lock_owner: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Preflight Check #2: prove five conjunctively idle WDDM samples."""
+
+    try:
+        contract = gpu_idle_gate_contract()
+        runner_exclusion = _idle_current_runner_exclusion()
+        retained_gpu_lock_owner = copy.deepcopy(expected_gpu_lock_owner)
+        listeners_before = _idle_listener_evidence()
+        if listeners_before["listeners"]:
+            raise GpuIdleGateError(
+                f"Port {LAB_PORT} already has listener evidence: "
+                f"{listeners_before['listeners']}"
+            )
+        target = _idle_target_gpu_identity(GPU_IDLE_INDEX)
+        samples = []
+        all_errors = []
+        redacted_blockers: Dict[str, Dict[str, Any]] = {}
+        for index in range(GPU_IDLE_SAMPLE_COUNT):
+            sampled_ns = time.time_ns()
+            activity = _idle_query_gpu_activity(
+                GPU_IDLE_INDEX, str(target["gpu_uuid"])
+            )
+            processes = _idle_query_process_evidence(
+                GPU_IDLE_INDEX, str(target["gpu_uuid"])
+            )
+            lock = _idle_lock_evidence(retained_gpu_lock_owner)
+            if retained_gpu_lock_owner is None:
+                retained_gpu_lock_owner = copy.deepcopy(lock.get("receipt"))
+            if not isinstance(retained_gpu_lock_owner, dict):
+                raise GpuIdleGateError("GPU lock owner snapshot is missing")
+            listeners = _idle_listener_evidence()
+            forbidden = _idle_forbidden_process_scan(runner_exclusion)
+            for blocker in forbidden.get("blocking_processes") or []:
+                redacted_blockers[stable_identity(blocker)] = blocker
+            errors = _idle_evaluate_sample(
+                activity, processes, lock, listeners, forbidden
+            )
+            host = psutil.virtual_memory()
+            samples.append(
+                {
+                    "sample_index": index,
+                    "sampled_at_ns": sampled_ns,
+                    "sampled_at_utc": time.strftime(
+                        "%Y-%m-%dT%H:%M:%SZ", time.gmtime(sampled_ns / 1e9)
+                    ),
+                    "sampled_monotonic_ns": time.monotonic_ns(),
+                    **activity,
+                    "host_ram_used_bytes": int(host.used),
+                    "host_ram_total_bytes": int(host.total),
+                    "port_8199_listener_evidence": listeners,
+                    "gpu_lock": lock,
+                    "nvidia_process_evidence": processes,
+                    "forbidden_process_scan": forbidden,
+                    "quiescence_errors": errors,
+                    "quiescent": not errors,
+                }
+            )
+            all_errors.extend(f"sample {index}: {error}" for error in errors)
+            if index != GPU_IDLE_SAMPLE_COUNT - 1:
+                time.sleep(GPU_IDLE_SAMPLE_INTERVAL_S)
+        listeners_after = _idle_listener_evidence()
+        if listeners_after["listeners"]:
+            all_errors.append(
+                f"post-sample port {LAB_PORT} listener(s): "
+                f"{listeners_after['listeners']}"
+            )
+        if all_errors:
+            raise GpuIdleGateError(
+                "GPU is not quiescent: "
+                + "; ".join(all_errors)
+                + "; redacted_blocking_processes="
+                + json.dumps(
+                    [redacted_blockers[key] for key in sorted(redacted_blockers)],
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+            )
+        return {
+            "schema_version": 1,
+            "kind": "run-recipe-preboot-wddm-idle-gate",
+            "status": "measured",
+            "gate_ran": True,
+            "gpu_index": GPU_IDLE_INDEX,
+            "target_gpu": target,
+            "sample_count": len(samples),
+            "sampling_interval_s": GPU_IDLE_SAMPLE_INTERVAL_S,
+            "aggregation": contract["aggregation"],
+            "policy": contract["policy"],
+            "contract": contract,
+            "port_8199_listener_pids_before": listeners_before["listener_pids"],
+            "port_8199_listener_pids_after": listeners_after["listener_pids"],
+            "current_runner_exclusion": runner_exclusion,
+            "gpu_lock_owner": retained_gpu_lock_owner,
+            "samples": samples,
+            "summary": {
+                "max_vram_used_mib": max(
+                    float(row["vram_used_mib"]) for row in samples
+                ),
+                "max_gpu_utilization_percent": max(
+                    float(row["gpu_utilization_percent"]) for row in samples
+                ),
+                "max_memory_utilization_percent": max(
+                    float(row["memory_utilization_percent"]) for row in samples
+                ),
+            },
+            "collector": contract["collector"],
+        }
+    except PreflightError:
+        raise
+    except Exception as exc:
+        raise PreflightError(
+            2,
+            "GPU idle",
+            f"Five-sample WDDM idle gate failed: {type(exc).__name__}: {exc}",
+        ) from exc
 
 
 def query_server_stats() -> Optional[Dict[str, Any]]:
@@ -1770,15 +5506,23 @@ def ensure_queue_idle() -> Dict[str, Any]:
     return state
 
 
-def listener_pid(port: int) -> Optional[int]:
-    """Return the PID listening on the local lab port when psutil can resolve it."""
+def listener_pid(port: int, *, strict: bool = False) -> Optional[int]:
+    """Return the PID listening on a port, optionally failing on unknown state."""
     try:
         for connection in psutil.net_connections(kind="inet"):
             local = connection.laddr
             local_port = getattr(local, "port", local[1] if len(local) > 1 else None) if local else None
             if connection.status == psutil.CONN_LISTEN and local_port == port:
+                if strict and connection.pid is None:
+                    raise RuntimeError(
+                        f"listener on port {port} exists but its PID is unavailable"
+                    )
                 return connection.pid
-    except (psutil.AccessDenied, OSError):
+    except (psutil.AccessDenied, OSError) as exc:
+        if strict:
+            raise RuntimeError(
+                f"could not enumerate listener ownership for port {port}: {exc}"
+            ) from exc
         return None
     return None
 
@@ -1851,23 +5595,52 @@ def terminate_owned_process_tree(pid: int) -> bool:
         return not psutil.pid_exists(pid)
 
 
-def boot_lab_server() -> Dict[str, Any]:
+def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
     """Boot lab server headlessly via boot_lab_server.cmd and wait for health-check."""
-    if not BOOT_CMD.exists():
-        raise PreflightError(3, "Server up", f"boot_lab_server.cmd missing at {BOOT_CMD}")
+    manager_probe = manager_probe_requested()
+    if manager_probe and recipe_name is None:
+        raise PreflightError(
+            3, "Server up", "Manager probe boot requires a closed recipe scope"
+        )
+    active_boot_cmd = MANAGER_PROBE_BOOT_CMD if manager_probe else BOOT_CMD
+    if not active_boot_cmd.exists():
+        raise PreflightError(3, "Server up", f"Lab boot command missing: {active_boot_cmd}")
 
+    active_server_log = (
+        manager_probe_log_path(recipe_name) if manager_probe else SERVER_LOG_FILE
+    )
+    if manager_probe and not active_server_log.parent.is_dir():
+        raise PreflightError(
+            3,
+            "Server up",
+            f"Manager probe log directory is absent: {active_server_log.parent}",
+        )
+    if manager_probe and active_server_log.exists():
+        raise PreflightError(
+            3,
+            "Server up",
+            f"Manager probe requires an attempt-unique absent log: {active_server_log}",
+        )
     cleanup_stale_pid_receipt()
-    if SERVER_PID_FILE.exists():
+    if os.path.lexists(SERVER_PID_FILE):
         raise PreflightError(
             3,
             "Server up",
             "An existing .server.pid receipt could not be proved stale; refusing to overwrite it",
         )
-    print(f"[SERVER] Launching lab server via {BOOT_CMD.name} on port {LAB_PORT}...")
+    if os.path.lexists(SERVER_IDLE_GATE_FILE):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "An orphan .server.idle-gate.json exists before boot; refusing to overwrite it",
+        )
+    if manager_probe:
+        initialize_manager_probe_log(active_server_log)
+    print(f"[SERVER] Launching lab server via {active_boot_cmd.name} on port {LAB_PORT}...")
     
     CREATE_NO_WINDOW = 0x08000000
     proc = subprocess.Popen(
-        ["cmd.exe", "/c", str(BOOT_CMD)],
+        ["cmd.exe", "/c", str(active_boot_cmd)],
         cwd=str(REPO_ROOT),
         creationflags=CREATE_NO_WINDOW if sys.platform == "win32" else 0
     )
@@ -1901,18 +5674,23 @@ def boot_lab_server() -> Dict[str, Any]:
             time.sleep(3.0)
 
         log_tail = ""
-        if SERVER_LOG_FILE.exists():
+        if active_server_log.exists():
             try:
-                log_lines = SERVER_LOG_FILE.read_text(encoding="utf-8-sig", errors="replace").splitlines()
+                log_lines = active_server_log.read_text(encoding="utf-8-sig", errors="replace").splitlines()
                 log_tail = "\n".join(log_lines[-15:])
             except Exception as e:
-                log_tail = f"(Could not read server.log: {e})"
+                log_tail = f"(Could not read {active_server_log}: {e})"
 
         raise PreflightError(3, "Server up", f"Lab server failed to boot on port {LAB_PORT} within 120s.\nTail of server.log:\n{log_tail}")
     except Exception:
         terminated = terminate_owned_process_tree(proc.pid)
-        if terminated and SERVER_PID_FILE.exists():
+        if terminated and not os.path.lexists(SERVER_IDLE_GATE_FILE) and SERVER_PID_FILE.exists():
             SERVER_PID_FILE.unlink(missing_ok=True)
+        elif terminated and os.path.lexists(SERVER_IDLE_GATE_FILE):
+            print(
+                "[SERVER] Boot cleanup found an unexpected idle-gate sidecar; "
+                "preserving it and .server.pid for manual inspection."
+            )
         elif not terminated:
             print(
                 f"[SERVER] Boot cleanup could not prove PID {proc.pid} exited; "
@@ -1921,7 +5699,10 @@ def boot_lab_server() -> Dict[str, Any]:
         raise
 
 
-def check_server_up_and_ownership() -> Dict[str, Any]:
+def check_server_up_and_ownership(
+    recipe_name: Optional[str] = None,
+    expected_gpu_lock_owner: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
     """Verify ownership first; check desktop VRAM only before booting a new server."""
     cleanup_stale_pid_receipt()
     stats = query_server_stats()
@@ -1935,25 +5716,193 @@ def check_server_up_and_ownership() -> Dict[str, Any]:
             and is_expected_lab_server_pid(pid_receipt)
         ):
             ensure_queue_idle()
-            return stats
+            server_instance = verified_server_instance()
+            try:
+                sidecar = snapshot_server_idle_gate_sidecar(server_instance)
+            except ServerIdleGateSidecarError as exc:
+                raise PreflightError(
+                    2,
+                    "GPU idle",
+                    "Owned lab server has no valid persisted cold idle gate: "
+                    f"{exc}",
+                ) from exc
+            retained = dict(stats)
+            retained[GPU_IDLE_INTERNAL_STATS_KEY] = (
+                _idle_owned_server_reuse_evidence(server_instance)
+            )
+            retained[GPU_IDLE_SIDECAR_INTERNAL_STATS_KEY] = sidecar["metadata"]
+            return retained
         else:
             raise PreflightError(
                 3, "Server up",
                 f"Unrecognized server already answering on port {LAB_PORT} without valid PID receipt. Refusing to adopt or kill it."
             )
 
-    if pid_receipt or SERVER_PID_FILE.exists():
+    if pid_receipt or os.path.lexists(SERVER_PID_FILE):
         raise PreflightError(
             3,
             "Server up",
             f"A PID receipt ({pid_receipt or 'unverifiable'}) exists but no verified lab server answers on port {LAB_PORT}. Refusing to overwrite the receipt.",
         )
+    if os.path.lexists(SERVER_IDLE_GATE_FILE):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Orphan .server.idle-gate.json exists without an owned lab server; "
+            "manual inspection is required",
+        )
 
-    check_gpu_idle()
-    print("  [OK] Check 2: GPU below the pre-boot desktop threshold")
-    stats = boot_lab_server()
-    ensure_queue_idle()
-    return stats
+    idle_evidence = check_gpu_idle(expected_gpu_lock_owner)
+    print("  [OK] Check 2: Five-sample WDDM idle gate passed")
+    stats = boot_lab_server(recipe_name)
+    try:
+        server_instance = verified_server_instance()
+        finalized = _idle_finalize_evidence(idle_evidence, server_instance)
+        errors = gpu_idle_gate_validation_errors(finalized, server_instance)
+        if errors:
+            raise ServerIdleGateSidecarError("; ".join(errors))
+        sidecar = create_server_idle_gate_sidecar(finalized)
+        ensure_queue_idle()
+        retained = dict(stats)
+        retained[GPU_IDLE_INTERNAL_STATS_KEY] = finalized
+        retained[GPU_IDLE_SIDECAR_INTERNAL_STATS_KEY] = sidecar["metadata"]
+        return retained
+    except Exception as exc:
+        cleanup = shutdown_lab_server()
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Could not bind the measured idle gate to the booted lab server: "
+            f"{type(exc).__name__}: {exc}; cleanup={cleanup}",
+        ) from exc
+
+
+class ServerPidReceiptError(RuntimeError):
+    """Raised when the exact owned-server PID receipt cannot be re-proved."""
+
+
+def _snapshot_server_pid_receipt(
+    expected_pid: Optional[int] = None,
+) -> Dict[str, Any]:
+    """Read one stable regular PID receipt without following a reparse point."""
+
+    path = SERVER_PID_FILE
+    if not os.path.lexists(path):
+        raise ServerPidReceiptError("PID receipt is absent")
+    try:
+        before = path.lstat()
+        if _is_symlink_or_reparse_point(path) or not stat.S_ISREG(before.st_mode):
+            raise ServerPidReceiptError(
+                "PID receipt is not an exact regular non-reparse file"
+            )
+        if int(before.st_nlink) != 1:
+            raise ServerPidReceiptError("PID receipt must have exactly one hardlink")
+
+        flags = os.O_RDONLY | getattr(os, "O_BINARY", 0)
+        fd = os.open(str(path), flags)
+        try:
+            descriptor_before = os.fstat(fd)
+            chunks = []
+            while True:
+                chunk = os.read(fd, 4096)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+            raw = b"".join(chunks)
+            descriptor_after = os.fstat(fd)
+        finally:
+            os.close(fd)
+        after = path.lstat()
+    except ServerPidReceiptError:
+        raise
+    except (OSError, UnicodeError) as exc:
+        raise ServerPidReceiptError(f"cannot snapshot PID receipt: {exc}") from exc
+
+    def identity(value: os.stat_result) -> Tuple[int, int, int, int, int, int]:
+        return (
+            int(value.st_dev),
+            int(value.st_ino),
+            int(value.st_mode),
+            int(value.st_nlink),
+            int(value.st_size),
+            int(value.st_mtime_ns),
+        )
+
+    sealed_identity = identity(before)
+    if (
+        sealed_identity != identity(descriptor_before)
+        or sealed_identity != identity(descriptor_after)
+        or sealed_identity != identity(after)
+        or _is_symlink_or_reparse_point(path)
+        or not stat.S_ISREG(after.st_mode)
+        or int(after.st_nlink) != 1
+        or len(raw) != int(after.st_size)
+    ):
+        raise ServerPidReceiptError("PID receipt changed while it was read")
+    try:
+        pid = int(raw.decode("utf-8-sig").strip())
+    except (UnicodeError, ValueError) as exc:
+        raise ServerPidReceiptError(f"PID receipt content is invalid: {exc}") from exc
+    if pid <= 0:
+        raise ServerPidReceiptError("PID receipt must contain a positive PID")
+    if expected_pid is not None and pid != expected_pid:
+        raise ServerPidReceiptError(
+            f"PID receipt changed from proved-exited PID {expected_pid} to {pid}"
+        )
+    return {
+        "pid": pid,
+        "raw": raw,
+        "identity": sealed_identity,
+    }
+
+
+def _remove_server_pid_receipt_after_proved_exit(
+    pid: int, original: Dict[str, Any]
+) -> Tuple[bool, str]:
+    """Retry only receipt unlink while re-proving the same exited server."""
+
+    last_error = ""
+    for attempt in range(1, SERVER_PID_UNLINK_ATTEMPTS + 1):
+        try:
+            current = _snapshot_server_pid_receipt(expected_pid=pid)
+        except ServerPidReceiptError as exc:
+            return False, f"PID receipt identity/content drifted: {exc}"
+        if (
+            current.get("identity") != original.get("identity")
+            or current.get("raw") != original.get("raw")
+        ):
+            return False, "PID receipt identity/content drifted before removal"
+
+        if psutil.pid_exists(pid):
+            return False, f"recorded PID {pid} became live before receipt removal"
+        try:
+            serving_pid = listener_pid(int(LAB_PORT), strict=True)
+            live_stats = query_server_stats()
+        except Exception as exc:
+            return False, f"could not re-prove clear port {LAB_PORT}: {exc}"
+        if serving_pid is not None or live_stats is not None:
+            return False, (
+                f"port {LAB_PORT} became live before receipt removal "
+                f"(listener_pid={serving_pid})"
+            )
+
+        try:
+            SERVER_PID_FILE.unlink()
+        except FileNotFoundError as exc:
+            return False, f"PID receipt disappeared before verified removal: {exc}"
+        except OSError as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+            if attempt < SERVER_PID_UNLINK_ATTEMPTS:
+                time.sleep(SERVER_PID_UNLINK_RETRY_S)
+            continue
+        if os.path.lexists(SERVER_PID_FILE):
+            return False, "PID receipt path was replaced during verified removal"
+        return True, ""
+
+    return False, (
+        "receipt removal still failed after "
+        f"{SERVER_PID_UNLINK_ATTEMPTS} attempts: {last_error}"
+    )
 
 
 def shutdown_lab_server() -> Dict[str, Any]:
@@ -1965,7 +5914,8 @@ def shutdown_lab_server() -> Dict[str, Any]:
     """
     result: Dict[str, Any] = {
         "success": False,
-        "had_receipt": SERVER_PID_FILE.exists(),
+        "had_receipt": os.path.lexists(SERVER_PID_FILE),
+        "had_idle_gate_sidecar": os.path.lexists(SERVER_IDLE_GATE_FILE),
         "pid": None,
         "pid_verified": False,
         "termination_attempted": False,
@@ -1973,15 +5923,23 @@ def shutdown_lab_server() -> Dict[str, Any]:
         "process_exited": False,
         "listener_exited": False,
         "receipt_removed": False,
+        "idle_gate_sidecar_validated": False,
+        "idle_gate_sidecar_removed": False,
         "reason": "",
     }
 
-    if not SERVER_PID_FILE.exists():
+    if not os.path.lexists(SERVER_PID_FILE):
         live_stats = query_server_stats()
         serving_pid = listener_pid(int(LAB_PORT))
-        if live_stats or serving_pid is not None:
+        if live_stats is not None or serving_pid is not None:
             result["reason"] = "port 8199 is live without an owned PID receipt"
             print(f"[SERVER] {result['reason']}; refusing cleanup.")
+            return result
+        if os.path.lexists(SERVER_IDLE_GATE_FILE):
+            result["reason"] = (
+                "orphan .server.idle-gate.json exists without an owned PID receipt"
+            )
+            print(f"[SERVER] {result['reason']}; preserving it for inspection.")
             return result
         result.update(
             success=True,
@@ -1992,20 +5950,31 @@ def shutdown_lab_server() -> Dict[str, Any]:
         return result
 
     try:
-        text = SERVER_PID_FILE.read_text(encoding="utf-8-sig").strip()
-        pid = int(text)
-        if pid <= 0:
-            raise ValueError("PID must be positive")
-    except (OSError, UnicodeError, ValueError) as exc:
+        receipt_snapshot = _snapshot_server_pid_receipt()
+        pid = int(receipt_snapshot["pid"])
+    except (ServerPidReceiptError, KeyError, TypeError, ValueError) as exc:
         result["reason"] = f"could not verify .server.pid: {exc}"
         print(f"[SERVER] {result['reason']}; keeping receipt.")
         return result
     result["pid"] = pid
 
     if not psutil.pid_exists(pid):
+        try:
+            sidecar_snapshot = _snapshot_server_idle_gate_sidecar_for_cleanup(pid)
+        except ServerIdleGateSidecarError as exc:
+            result["reason"] = f"could not verify server idle-gate sidecar: {exc}"
+            print(f"[SERVER] {result['reason']}; keeping receipt and sidecar.")
+            return result
+        if sidecar_snapshot is None:
+            result["reason"] = (
+                "verified stale PID receipt has no mandatory server idle-gate sidecar"
+            )
+            print(f"[SERVER] {result['reason']}; keeping receipt.")
+            return result
+        result["idle_gate_sidecar_validated"] = True
         live_stats = query_server_stats()
         serving_pid = listener_pid(int(LAB_PORT))
-        if live_stats or serving_pid is not None:
+        if live_stats is not None or serving_pid is not None:
             result["reason"] = (
                 f"recorded PID {pid} is gone but port {LAB_PORT} still has an unverified server"
             )
@@ -2013,15 +5982,44 @@ def shutdown_lab_server() -> Dict[str, Any]:
             return result
         result["process_exited"] = True
         result["listener_exited"] = True
-        try:
-            SERVER_PID_FILE.unlink()
-        except OSError as exc:
-            result["reason"] = f"server already exited but PID receipt removal failed: {exc}"
+        sidecar_removed, sidecar_error = (
+            _remove_server_idle_gate_sidecar_after_proved_exit(
+                pid, sidecar_snapshot
+            )
+        )
+        if not sidecar_removed:
+            result["reason"] = (
+                "server already exited but idle-gate sidecar removal failed: "
+                f"{sidecar_error}"
+            )
             print(f"[SERVER] {result['reason']}")
+            return result
+        result["idle_gate_sidecar_removed"] = True
+        if os.path.lexists(SERVER_IDLE_GATE_FILE):
+            result["reason"] = (
+                "idle-gate sidecar path reappeared before stale PID receipt removal"
+            )
+            print(f"[SERVER] {result['reason']}; preserving the PID receipt.")
+            return result
+        receipt_removed, removal_error = _remove_server_pid_receipt_after_proved_exit(
+            pid, receipt_snapshot
+        )
+        if not receipt_removed:
+            result["reason"] = (
+                "server already exited but PID receipt removal failed: "
+                f"{removal_error}"
+            )
+            print(f"[SERVER] {result['reason']}")
+            return result
+        result["receipt_removed"] = True
+        if os.path.lexists(SERVER_IDLE_GATE_FILE):
+            result["reason"] = (
+                "idle-gate sidecar path appeared after stale PID receipt removal"
+            )
+            print(f"[SERVER] {result['reason']}; preserving the unknown sidecar.")
             return result
         result.update(
             success=True,
-            receipt_removed=True,
             reason="recorded server was already stopped and port is clear",
         )
         print(f"[SERVER] Confirmed stale PID {pid} is gone; removed .server.pid receipt.")
@@ -2033,9 +6031,33 @@ def shutdown_lab_server() -> Dict[str, Any]:
         return result
     result["pid_verified"] = True
 
+    try:
+        process_create_time = psutil.Process(pid).create_time()
+        sidecar_snapshot = _snapshot_server_idle_gate_sidecar_for_cleanup(
+            pid, process_create_time
+        )
+    except (
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+        OSError,
+        ServerIdleGateSidecarError,
+    ) as exc:
+        result["reason"] = f"could not verify server idle-gate sidecar: {exc}"
+        print(f"[SERVER] {result['reason']}; keeping receipt and sidecar.")
+        return result
+    if sidecar_snapshot is None:
+        result["reason"] = (
+            "verified live PID receipt has no mandatory server idle-gate sidecar"
+        )
+        print(f"[SERVER] {result['reason']}; keeping receipt.")
+        return result
+    result["idle_gate_sidecar_validated"] = True
+
     serving_pid = listener_pid(int(LAB_PORT))
     live_stats = query_server_stats()
-    if serving_pid not in (None, pid) or (live_stats and serving_pid != pid):
+    if serving_pid not in (None, pid) or (
+        live_stats is not None and serving_pid != pid
+    ):
         result["reason"] = (
             f"port {LAB_PORT} ownership does not match verified recorded PID {pid}"
         )
@@ -2054,7 +6076,7 @@ def shutdown_lab_server() -> Dict[str, Any]:
     result["process_exited"] = not psutil.pid_exists(pid)
     post_listener = listener_pid(int(LAB_PORT))
     post_stats = query_server_stats()
-    result["listener_exited"] = post_listener is None and not post_stats
+    result["listener_exited"] = post_listener is None and post_stats is None
 
     if not (terminated and result["process_exited"] and result["listener_exited"]):
         result["reason"] = (
@@ -2064,15 +6086,38 @@ def shutdown_lab_server() -> Dict[str, Any]:
         print(f"[SERVER] {result['reason']}; keeping .server.pid.")
         return result
 
-    try:
-        SERVER_PID_FILE.unlink()
-    except OSError as exc:
-        result["reason"] = f"server exited but PID receipt removal failed: {exc}"
+    sidecar_removed, sidecar_error = (
+        _remove_server_idle_gate_sidecar_after_proved_exit(pid, sidecar_snapshot)
+    )
+    if not sidecar_removed:
+        result["reason"] = (
+            "server exited but idle-gate sidecar removal failed: "
+            f"{sidecar_error}"
+        )
+        print(f"[SERVER] {result['reason']}; keeping .server.pid.")
+        return result
+    result["idle_gate_sidecar_removed"] = True
+    if os.path.lexists(SERVER_IDLE_GATE_FILE):
+        result["reason"] = (
+            "idle-gate sidecar path reappeared before PID receipt removal"
+        )
+        print(f"[SERVER] {result['reason']}; keeping .server.pid.")
+        return result
+
+    receipt_removed, removal_error = _remove_server_pid_receipt_after_proved_exit(
+        pid, receipt_snapshot
+    )
+    if not receipt_removed:
+        result["reason"] = f"server exited but PID receipt removal failed: {removal_error}"
         print(f"[SERVER] {result['reason']}")
+        return result
+    result["receipt_removed"] = True
+    if os.path.lexists(SERVER_IDLE_GATE_FILE):
+        result["reason"] = "idle-gate sidecar path appeared after PID receipt removal"
+        print(f"[SERVER] {result['reason']}; preserving the unknown sidecar.")
         return result
     result.update(
         success=True,
-        receipt_removed=True,
         reason="verified server process and listener exited",
     )
     print(f"[SERVER] Process {pid} and listener exited; removed .server.pid receipt.")
@@ -2723,11 +6768,16 @@ def check_fixtures_uploaded(recipe_data: Dict[str, Any]) -> Tuple[Dict[str, str]
     return fixture_hashes, audio_receipt_hashes
 
 
-def check_boot_lane(recipe_name: str, system_stats: Dict[str, Any]):
+def check_boot_lane(
+    recipe_name: str,
+    system_stats: Dict[str, Any],
+    manager_phase: Optional[str] = None,
+):
     """Preflight Check #9: Confirm the isolated, offline, Sage-free lab lane."""
     argv = system_stats.get("system", {}).get("argv", [])
     if not isinstance(argv, list) or not all(isinstance(value, str) for value in argv):
         raise PreflightError(9, "Boot lane", "Live server argv must be a list of strings")
+    manager_probe = manager_probe_requested()
     extra_flags = str(argv)
     if "--use-sage-attention" in extra_flags:
         raise PreflightError(
@@ -2741,11 +6791,18 @@ def check_boot_lane(recipe_name: str, system_stats: Dict[str, Any]):
             "Boot lane",
             "Live server argv must contain exactly one --disable-all-custom-nodes",
         )
-    if any("comfyui-manager" in value.lower() for value in argv):
+    manager_present = any("comfyui-manager" in value.lower() for value in argv)
+    if manager_present and not manager_probe:
         raise PreflightError(
             9,
             "Boot lane",
             "ComfyUI-Manager is forbidden in the offline lab boot lane",
+        )
+    if manager_probe and not manager_present:
+        raise PreflightError(
+            9,
+            "Boot lane",
+            "Manager offline probe requested but ComfyUI-Manager is not whitelisted",
         )
 
     whitelist_flag = "--whitelist-custom-nodes"
@@ -2761,15 +6818,18 @@ def check_boot_lane(recipe_name: str, system_stats: Dict[str, Any]):
         if value.startswith("--"):
             break
         whitelist_values.append(value)
+    expected_whitelist = set(REQUIRED_CUSTOM_NODE_WHITELIST)
+    if manager_probe:
+        expected_whitelist.add(MANAGER_PROBE_CUSTOM_NODE)
     if (
-        len(whitelist_values) != len(REQUIRED_CUSTOM_NODE_WHITELIST)
-        or set(whitelist_values) != REQUIRED_CUSTOM_NODE_WHITELIST
+        len(whitelist_values) != len(expected_whitelist)
+        or set(whitelist_values) != expected_whitelist
     ):
         raise PreflightError(
             9,
             "Boot lane",
             "Live server custom-node whitelist must contain exactly "
-            f"{sorted(REQUIRED_CUSTOM_NODE_WHITELIST)}; found {whitelist_values}",
+            f"{sorted(expected_whitelist)}; found {whitelist_values}",
         )
 
     expected_reserve = os.environ.get("LAB_RESERVE_VRAM_GB")
@@ -2819,6 +6879,11 @@ def check_boot_lane(recipe_name: str, system_stats: Dict[str, Any]):
             "Suite cache-classic lane has conflicting cache flags: "
             f"{sorted(conflicting_cache_flags)}",
         )
+    return manager_probe_evidence(
+        recipe_name,
+        argv,
+        require_pre_prompt=manager_phase == "cold",
+    )
 
 
 def check_disk_space():
@@ -2836,12 +6901,59 @@ def run_all_preflights(
     recipe_sha256: str,
     boot_lane: str,
     is_force: bool = False,
+    manager_phase: Optional[str] = None,
+    expected_gpu_lock_owner: Optional[Dict[str, Any]] = None,
 ):
     """Run all 10 preflight safety and validity checks before acquiring lock."""
     print(f"--- Running Preflight Checks for {recipe_name} ---")
 
     print("  [OK] Check 1: Atomic GPU lock held by this runner")
-    system_stats = check_server_up_and_ownership()
+    system_stats = check_server_up_and_ownership(
+        recipe_name, expected_gpu_lock_owner
+    )
+    preboot_gpu_idle_gate = system_stats.pop(GPU_IDLE_INTERNAL_STATS_KEY, None)
+    preboot_gpu_idle_gate_sidecar = system_stats.pop(
+        GPU_IDLE_SIDECAR_INTERNAL_STATS_KEY, None
+    )
+    if not isinstance(preboot_gpu_idle_gate, dict):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Server preflight omitted the immutable pre-boot idle/reuse evidence",
+        )
+    idle_errors = gpu_idle_gate_validation_errors(preboot_gpu_idle_gate)
+    if idle_errors:
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Invalid pre-boot idle/reuse evidence: " + "; ".join(idle_errors),
+        )
+    if not isinstance(preboot_gpu_idle_gate_sidecar, dict):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Server preflight omitted the persisted cold idle-gate sidecar snapshot",
+        )
+    if (
+        preboot_gpu_idle_gate_sidecar.get("path")
+        != str(SERVER_IDLE_GATE_FILE.resolve())
+        or preboot_gpu_idle_gate_sidecar.get("server_instance")
+        != preboot_gpu_idle_gate.get("server_instance")
+    ):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Idle-gate sidecar snapshot is not bound to this server/evidence",
+        )
+    if preboot_gpu_idle_gate.get("status") == "measured" and (
+        preboot_gpu_idle_gate_sidecar.get("evidence_sha256")
+        != preboot_gpu_idle_gate.get("evidence_sha256")
+    ):
+        raise PreflightError(
+            2,
+            "GPU idle",
+            "Cold receipt evidence does not match the persisted idle-gate sidecar",
+        )
     print(f"  [OK] Check 3: Lab server up & owned at 127.0.0.1:{LAB_PORT}")
 
     object_info = fetch_object_info()
@@ -2861,13 +6973,22 @@ def run_all_preflights(
     queued_fixture_sha256s, queued_audio_receipt_sha256s = check_fixtures_uploaded(recipe_data)
     print("  [OK] Check 8: Fixtures and audio ear-gate receipts verified")
 
-    check_boot_lane(recipe_name, system_stats)
+    manager_offline_probe = check_boot_lane(
+        recipe_name, system_stats, manager_phase=manager_phase
+    )
     print("  [OK] Check 9: Boot lane verified (lab-8199, sage-free)")
 
     check_disk_space()
     print("  [OK] Check 10: Output disk space >= 5 GB")
     print("--- Preflight Complete: ALL CHECKS PASSED ---\n")
-    return system_stats, queued_fixture_sha256s, queued_audio_receipt_sha256s
+    return (
+        system_stats,
+        queued_fixture_sha256s,
+        queued_audio_receipt_sha256s,
+        manager_offline_probe,
+        preboot_gpu_idle_gate,
+        preboot_gpu_idle_gate_sidecar,
+    )
 
 
 class VramMonitorThread(threading.Thread):
@@ -2980,19 +7101,55 @@ def main():
         print(f"[PREFLIGHT ABORT] {exc}")
         return 1
     if len(sys.argv) < 2:
-        print("Usage: python run_recipe.py <path_to_recipe.json> [--suite] [--shutdown]")
+        print(
+            "Usage: python run_recipe.py <path_to_recipe.json> [--suite] "
+            "[--shutdown] [--completion-timeout-s <1-7200>]"
+        )
         sys.exit(1)
 
     recipe_path = Path(sys.argv[1]).resolve()
     is_suite = "--suite" in sys.argv
     do_shutdown = "--shutdown" in sys.argv
     is_force = "--force" in sys.argv
+    manager_probe_flag_count = sys.argv.count(MANAGER_PROBE_CLI_FLAG)
+    if manager_probe_flag_count > 1:
+        print(f"Error: {MANAGER_PROBE_CLI_FLAG} may be supplied only once")
+        return 2
+    manager_offline_test = manager_probe_flag_count == 1
+    ambient_manager_probe = os.environ.get(MANAGER_PROBE_ENV)
+    if manager_offline_test:
+        if ambient_manager_probe not in (None, "", "1"):
+            print(f"Error: conflicting {MANAGER_PROBE_ENV} value")
+            return 2
+        os.environ[MANAGER_PROBE_ENV] = "1"
+    elif ambient_manager_probe not in (None, ""):
+        print(
+            f"Error: {MANAGER_PROBE_ENV} cannot enable Manager without "
+            f"{MANAGER_PROBE_CLI_FLAG}"
+        )
+        return 2
+    elif os.environ.get(MANAGER_PROBE_LOG_ENV):
+        print(
+            f"Error: {MANAGER_PROBE_LOG_ENV} cannot be set without "
+            f"{MANAGER_PROBE_CLI_FLAG}"
+        )
+        return 2
+    try:
+        manager_phase = manager_probe_phase(sys.argv)
+    except ValueError as exc:
+        print(f"Error: invalid Manager probe phase: {exc}")
+        return 2
     tier = "suite" if is_suite else "smoke"
     try:
         suite_cache_nonce = parse_suite_cache_nonce(sys.argv, is_suite)
         standalone_cache_nonce = parse_standalone_cache_nonce(sys.argv, is_suite)
     except ValueError as exc:
         print(f"Error: invalid executor cache control: {exc}")
+        return 2
+    try:
+        completion_timeout_s = parse_completion_timeout_s(sys.argv)
+    except ValueError as exc:
+        print(f"Error: invalid completion timeout: {exc}")
         return 2
     executor_cache_nonce = suite_cache_nonce or standalone_cache_nonce
     
@@ -3030,6 +7187,8 @@ def main():
             os.environ["LAB_DISABLE_PINNED"] = "1"
 
     lane_parts = ["lab-8199", "sage-free"]
+    if manager_offline_test:
+        lane_parts.append("manager-offline-test")
     if disable_pinned:
         lane_parts.append("no-pinned")
     if cache_classic:
@@ -3045,6 +7204,12 @@ def main():
         sys.exit(1)
 
     recipe_name = recipe_path.stem
+    if manager_offline_test:
+        try:
+            manager_probe_recipe_scope(recipe_name)
+        except PreflightError as exc:
+            print(f"Error: {exc}")
+            return 2
     RESULTS_DIR.mkdir(exist_ok=True)
     lock_manager: Optional[LockManager] = None
     suite_parent_watchdog: Optional[SuiteParentWatchdog] = None
@@ -3095,13 +7260,22 @@ def main():
 
         # Execute all 10 Preflight checks
         try:
-            system_stats, queued_fixture_sha256s, queued_audio_receipt_sha256s = run_all_preflights(
+            (
+                system_stats,
+                queued_fixture_sha256s,
+                queued_audio_receipt_sha256s,
+                queued_manager_probe_evidence,
+                queued_preboot_gpu_idle_gate,
+                queued_preboot_gpu_idle_gate_sidecar,
+            ) = run_all_preflights(
                 recipe_path,
                 recipe_data,
                 recipe_name,
                 queued_recipe_sha256,
                 boot_lane_str,
                 is_force=is_force,
+                manager_phase=manager_phase,
+                expected_gpu_lock_owner=lock_manager.owner,
             )
         except PreflightError as e:
             print(f"\n[PREFLIGHT ABORT] {e}")
@@ -3111,6 +7285,37 @@ def main():
         queued_model_fingerprints = model_fingerprints(recipe_data)
         server_argv = system_stats.get("system", {}).get("argv", [])
         server_instance = verified_server_instance()
+        queued_gpu_idle_gate_contract = queued_preboot_gpu_idle_gate.get("contract")
+        if queued_gpu_idle_gate_contract != gpu_idle_gate_contract():
+            raise PreflightError(
+                2,
+                "GPU idle",
+                "Pre-boot idle evidence contract does not match the running collector",
+            )
+        if (
+            (queued_gpu_idle_gate_contract.get("collector") or {}).get("sha256")
+            != queued_runner_sha256
+        ):
+            raise PreflightError(
+                2,
+                "GPU idle",
+                "Pre-boot idle collector SHA does not match the queued runner SHA",
+            )
+        if queued_preboot_gpu_idle_gate.get("server_instance") != server_instance:
+            raise PreflightError(
+                2,
+                "GPU idle",
+                "Pre-boot idle/reuse evidence is not bound to the verified server instance",
+            )
+        if (
+            queued_preboot_gpu_idle_gate_sidecar.get("server_instance")
+            != server_instance
+        ):
+            raise PreflightError(
+                2,
+                "GPU idle",
+                "Persisted cold idle-gate sidecar is not bound to the verified server",
+            )
         identity_payload = {
             "recipe_sha256": queued_recipe_sha256,
             "runner_sha256": queued_runner_sha256,
@@ -3122,7 +7327,17 @@ def main():
             "server_argv": server_argv,
             "server_instance": server_instance,
             "comfyui_git_commit": comfyui_git_commit,
+            "completion_timeout_s": completion_timeout_s,
+            "preboot_gpu_idle_gate_contract": queued_gpu_idle_gate_contract,
+            "operator_idle_policy": operator_idle_policy_contract(),
+            PREQUEUE_WORKLOAD_SCAN_CONTRACT_KEY: (
+                prequeue_known_workload_scan_contract()
+            ),
         }
+        if queued_manager_probe_evidence.get("enabled") is True:
+            identity_payload["manager_offline_probe_identity"] = (
+                manager_probe_identity(queued_manager_probe_evidence)
+            )
         if queued_cache_runtime_sha256s:
             # The nonce value is deliberately excluded: it is executor metadata,
             # not declared recipe state.  The pinned runtime semantics are part
@@ -3156,8 +7371,27 @@ def main():
             ensure_queue_idle()
             # 1. Record baseline VRAM and Host RAM before run
             baseline_vram_gb = query_gpu_vram_mb() / 1024.0
+            try:
+                baseline_advisory = prompt_baseline_advisory(baseline_vram_gb)
+                baseline_drift_advisory = pair_baseline_drift_advisory(
+                    baseline_vram_gb, previous_result, config_run_count
+                )
+            except PreflightError as exc:
+                print(f"[PREFLIGHT ABORT] {exc}")
+                return 1
             baseline_host_ram_gb = query_host_ram_gb()
             print(f"[RESOURCES] Baseline GPU VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
+            if baseline_advisory["threshold_exceeded"]:
+                print(
+                    "[PREFLIGHT ABORT] GPU idle: pre-queue absolute baseline "
+                    "exceeds 3.0 GiB."
+                )
+                return 1
+            if baseline_drift_advisory.get("measurement_available") is True:
+                print(
+                    "[ADVISORY, NON-GATING] Cold/warm baseline drift: "
+                    f"{baseline_drift_advisory['absolute_drift_gb']:.3f} GiB."
+                )
 
             # 2. Start Resource monitor thread BEFORE /prompt POST
             monitor = ResourceMonitorThread(interval=POLL_INTERVAL_S)
@@ -3189,6 +7423,14 @@ def main():
             prompt_payload = {"prompt": prompt_dict}
             req_data = json.dumps(prompt_payload).encode("utf-8")
             req = urllib.request.Request(f"{COMFY_SERVER_URL}/prompt", data=req_data, headers={"Content-Type": "application/json"})
+            try:
+                prequeue_known_workload_scan = collect_prequeue_known_workload_scan(
+                    server_instance, server_argv
+                )
+            except PreflightError as exc:
+                monitor.stop()
+                print(f"[PREFLIGHT ABORT] {exc}")
+                return 1
             accepted_prompt = False
             orphan_cleanup: Dict[str, Any] = {}
             prompt_request_started = True
@@ -3219,8 +7461,7 @@ def main():
             target_file = None
             outputs = {}
             messages: Any = []
-            RUNNER_COMPLETION_TIMEOUT_S = 1800
-            while time.time() - start_time < RUNNER_COMPLETION_TIMEOUT_S:  # 1800s (30 min) completion window
+            while time.time() - start_time < completion_timeout_s:
                 time.sleep(0.5)
                 try:
                     with urllib.request.urlopen(f"{COMFY_SERVER_URL}/history/{prompt_id}") as hresp:
@@ -3317,6 +7558,7 @@ def main():
             # Ensure peaks are at least baselines
             peak_vram_gb = max(peak_vram_gb, baseline_vram_gb)
             peak_host_ram_gb = max(peak_host_ram_gb, baseline_host_ram_gb)
+            vram_receipt = vram_receipt_fields(baseline_vram_gb, peak_vram_gb)
 
             # 5. Invalid measurement guard: peak <= baseline + 0.2 GB means sampler missed render
             is_measurement_valid = peak_vram_gb > (baseline_vram_gb + 0.2)
@@ -3328,6 +7570,57 @@ def main():
             final_fixture_sha256s = final_provenance["fixture_sha256s"]
             final_audio_receipt_sha256s = final_provenance["audio_receipt_sha256s"]
             final_model_fingerprints = final_provenance["model_fingerprints"]
+            final_manager_probe_evidence: Dict[str, Any] = {
+                "enabled": False,
+                "default_manager_disabled": True,
+            }
+            manager_probe_unchanged = True
+            if queued_manager_probe_evidence.get("enabled") is True:
+                try:
+                    final_manager_probe_evidence = manager_probe_evidence(
+                        recipe_name,
+                        server_argv,
+                        require_pre_prompt=False,
+                    )
+                    queued_config_sha = (
+                        (queued_manager_probe_evidence.get("advisory_config") or {})
+                        .get("snapshot", {})
+                        .get("sha256")
+                    )
+                    final_config_sha = (
+                        (final_manager_probe_evidence.get("advisory_config") or {})
+                        .get("snapshot", {})
+                        .get("sha256")
+                    )
+                    manager_probe_unchanged = bool(
+                        final_manager_probe_evidence.get("valid") is True
+                        and manager_probe_identity(final_manager_probe_evidence)
+                        == manager_probe_identity(queued_manager_probe_evidence)
+                        and final_manager_probe_evidence.get("guard_source")
+                        == queued_manager_probe_evidence.get("guard_source")
+                        and final_manager_probe_evidence.get("offline_environment")
+                        == queued_manager_probe_evidence.get("offline_environment")
+                        and final_manager_probe_evidence.get("log_path")
+                        == queued_manager_probe_evidence.get("log_path")
+                        and int(final_manager_probe_evidence.get("serving_pid") or -1)
+                        == int(queued_manager_probe_evidence.get("serving_pid") or -2)
+                        and final_config_sha == queued_config_sha
+                    )
+                    if not manager_probe_unchanged:
+                        raise PreflightError(
+                            9,
+                            "Boot lane",
+                            "Manager offline probe identity/config/source changed during render",
+                        )
+                except PreflightError as exc:
+                    manager_probe_unchanged = False
+                    final_manager_probe_evidence = {
+                        "enabled": True,
+                        "valid": False,
+                        "error": str(exc),
+                    }
+                    if not final_provenance["error"]:
+                        final_provenance["error"] = str(exc)
             try:
                 final_server_instance = verified_server_instance()
                 server_instance_unchanged = final_server_instance == server_instance
@@ -3344,6 +7637,7 @@ def main():
                 and final_fixture_sha256s == queued_fixture_sha256s
                 and final_audio_receipt_sha256s == queued_audio_receipt_sha256s
                 and final_model_fingerprints == queued_model_fingerprints
+                and manager_probe_unchanged
                 and server_instance_unchanged
             )
             if queued_cache_runtime_sha256s:
@@ -3395,7 +7689,7 @@ def main():
                 warm_pass = False
                 if orphan_cleanup.get("success") is True:
                     status = (
-                        f"TIMEOUT (exceeded {RUNNER_COMPLETION_TIMEOUT_S}s; owned server shutdown proved)"
+                        f"TIMEOUT (exceeded {completion_timeout_s}s; owned server shutdown proved)"
                     )
                 else:
                     status = "QUARANTINED (accepted prompt cleanup could not be proved)"
@@ -3465,8 +7759,11 @@ def main():
             print(f"\n--- Run Summary ---")
             print(f"Recipe:        {recipe_name}")
             print(f"Run Count:     {run_count} (configuration run {config_run_count}; {'Warm cache' if is_warm_cache else 'Cold cache'})")
-            print(f"Baseline VRAM: {baseline_vram_gb:.2f} GB | Host RAM: {baseline_host_ram_gb:.2f} GB")
-            print(f"Peak VRAM:     {peak_vram_gb:.2f} GB (Gate <= {VRAM_GATE_GB} GB)")
+            print(f"Baseline VRAM: {vram_receipt['baseline_vram_gb']:.3f} GiB | Host RAM: {baseline_host_ram_gb:.2f} GB")
+            print(f"Peak VRAM:     {vram_receipt['absolute_peak_vram_gb']:.3f} GiB (Gate <= {VRAM_GATE_GB} GiB)")
+            print(f"Net Peak VRAM: {vram_receipt['net_peak_vram_gb']:.3f} GiB (peak minus this leg's baseline)")
+            if vram_receipt["baseline_lane_stamp"] is not None:
+                print(f"Baseline Lane: {vram_receipt['baseline_lane_stamp']}")
             print(f"Peak Host RAM: {peak_host_ram_gb:.2f} GB")
             print(f"Wall Clock:    {duration_s:.1f} s")
             print(f"Boot Lane:     {boot_lane_str}")
@@ -3478,6 +7775,7 @@ def main():
                 "recipe": recipe_name,
                 "run_number": run_count,
                 "config_run_count": config_run_count,
+                "completion_timeout_s": completion_timeout_s,
                 "status": status,
                 "gate_pass": gate_pass,
                 "pass": warm_pass,
@@ -3501,6 +7799,19 @@ def main():
                 "identity": identity_payload,
                 "queued_prompt_sha256": queued_prompt_sha256,
                 "execution_cache_control": cache_evidence,
+                "operator_idle_policy": operator_idle_policy_contract(),
+                PREQUEUE_WORKLOAD_SCAN_CONTRACT_KEY: (
+                    prequeue_known_workload_scan_contract()
+                ),
+                PREQUEUE_WORKLOAD_SCAN_EVIDENCE_KEY: prequeue_known_workload_scan,
+                "preboot_gpu_idle_gate_contract": queued_gpu_idle_gate_contract,
+                GPU_IDLE_EVIDENCE_KEY: queued_preboot_gpu_idle_gate,
+                GPU_IDLE_SIDECAR_KEY: queued_preboot_gpu_idle_gate_sidecar,
+                "manager_offline_probe": {
+                    "pre_queue": queued_manager_probe_evidence,
+                    "post_render": final_manager_probe_evidence,
+                    "provenance_unchanged": manager_probe_unchanged,
+                },
                 "suite_cache_runtime_sha256s": queued_cache_runtime_sha256s,
                 "final_suite_cache_runtime_sha256s": final_cache_runtime_sha256s,
                 "standalone_cache_runtime_sha256s": queued_standalone_cache_runtime_sha256s,
@@ -3517,8 +7828,9 @@ def main():
                 "clamp_target_gib": clamp_target_gib,
                 "reserve_vram_gib": reserve_vram_gib,
                 "physical_total_vram_gib": physical_total_vram_gib,
-                "peak_vram_gb": round(peak_vram_gb, 2),
-                "baseline_vram_gb": round(baseline_vram_gb, 2),
+                **vram_receipt,
+                "baseline_advisory": baseline_advisory,
+                "cold_warm_baseline_drift_advisory": baseline_drift_advisory,
                 "peak_host_ram_gb": round(peak_host_ram_gb, 2),
                 "baseline_host_ram_gb": round(baseline_host_ram_gb, 2),
                 "duration_s": round(duration_s, 1),
@@ -3562,10 +7874,22 @@ def main():
                     ledger_note += "; sampler/output execution unproved"
             if media_metrics.get("bitrate_anomaly"):
                 ledger_note += "; bitrate-anomaly (priority eyeball, non-gating)"
+            if vram_receipt["baseline_lane_stamp"] is not None:
+                ledger_note += f"; {vram_receipt['baseline_lane_stamp']}"
+            if baseline_advisory["threshold_exceeded"]:
+                ledger_note += "; baseline >3.0 GiB advisory (non-gating)"
+            if baseline_drift_advisory.get("threshold_exceeded") is True:
+                ledger_note += "; cold/warm baseline drift >0.5 GiB advisory (non-gating)"
             update_results_ledger(recipe_name, display_status, peak_vram_gb, baseline_vram_gb, duration_s, ledger_note)
             matrix_note = f"Measured on box ({display_status})"
             if media_metrics.get("bitrate_anomaly"):
                 matrix_note += "; bitrate-anomaly"
+            if vram_receipt["baseline_lane_stamp"] is not None:
+                matrix_note += f"; {vram_receipt['baseline_lane_stamp']}"
+            if baseline_advisory["threshold_exceeded"]:
+                matrix_note += "; baseline >3.0 GiB advisory (non-gating)"
+            if baseline_drift_advisory.get("threshold_exceeded") is True:
+                matrix_note += "; baseline drift >0.5 GiB advisory (non-gating)"
             pass_consecutive = "2/2" if warm_pass else ("1/2" if gate_pass else "0/2")
             update_engine_matrix_beta(
                 recipe_name,

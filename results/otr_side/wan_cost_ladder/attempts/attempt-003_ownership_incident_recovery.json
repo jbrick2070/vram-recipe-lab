@@ -1,0 +1,75 @@
+{
+  "receipt_schema_version": 1,
+  "receipt_kind": "wan-cost-ladder-owned-process-chain-recovery",
+  "created_at_utc": "2026-08-10T00:41:28.8739858Z",
+  "attempt_id": "attempt-003",
+  "status": "INVALID_PRE_MEASUREMENT_OWNERSHIP_CHECK_FALSE_NEGATIVE_RECOVERED",
+  "incident": {
+    "cause": "The ownership checker required the serving Python process to be the direct child of the cmd launcher. On this Windows venv, the verified serving process was one hop below the launcher's venv-shim Python process.",
+    "campaign_error": "Listener parent 9124 is not owned launcher PID 24908",
+    "measurement_accepted": false
+  },
+  "attempt_evidence": {
+    "baseline": {
+      "bytes": 175004,
+      "path": "results/otr_side/wan_cost_ladder/baselines/attempt-003.json",
+      "sha256": "5e7de2b54bb7b5431d2841b7e099902e9852512552a81be30b484ddebf86fbc5"
+    },
+    "lifecycle": {
+      "path": "results/otr_side/wan_cost_ladder/attempts/attempt-003.json",
+      "sha256": "f90ae20856f8c00c10163303fb8d28656db594069cda73c2b9735530111f61a3"
+    },
+    "server_log": {
+      "bytes": 39626,
+      "path": "results/otr_side/wan_cost_ladder/evidence/attempt-003/wan_cost_ladder.server.log",
+      "sha256": "a3b177447b58b6f050fd20d56f87e881cba8aa79c5d65408b8a1ffca81f52f97"
+    },
+    "telemetry_file_count": 0,
+    "rendered_clip_file_count": 0
+  },
+  "offline_boot_proof": {
+    "manager_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+    "network_mode": "offline",
+    "startup_tasks_completed_marker_count": 1,
+    "manager_fetch_or_cache_update_marker_count": 0
+  },
+  "verified_owned_chain": [
+    {
+      "depth": 0,
+      "pid": 42148,
+      "parent_pid": 9124,
+      "role": "serving-python",
+      "identity": "ComfyUI main.py --port 8000 with the exact OTR model-paths config and output directory"
+    },
+    {
+      "depth": 1,
+      "pid": 9124,
+      "parent_pid": 24908,
+      "role": "windows-venv-python-shim",
+      "identity": "Documents\\ComfyUI\\.venv\\Scripts\\python.exe launching the same main.py argv"
+    },
+    {
+      "depth": 2,
+      "pid": 24908,
+      "parent_pid": 31548,
+      "role": "owned-cmd-launcher",
+      "identity": "cmd.exe /d /c scripts\\_otr_soak_server_launch.cmd with the attempt-003 lab log and WAN lane"
+    }
+  ],
+  "recovery": {
+    "foreign_server_adopted_or_killed": false,
+    "exact_owned_chain_reverified_immediately_before_stop": true,
+    "serving_process_stopped": true,
+    "shim_process_exited": true,
+    "launcher_process_exited": true,
+    "port_8000_listener_count_after": 0,
+    "render_or_prompt_submitted": false
+  },
+  "postconditions": {
+    "gpu_lock_absent": true,
+    "suite_lock_absent": true,
+    "telemetry_file_count": 0,
+    "rendered_clip_file_count": 0
+  },
+  "success": true
+}

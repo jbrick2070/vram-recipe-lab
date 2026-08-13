@@ -1,0 +1,39 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 24792)
+--- Running Preflight Checks for h3_i2v_canonical_832x480_f107 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 2: Five-sample WDDM idle gate passed
+[SERVER] Launching lab server via boot_h3_manager_offline_test.cmd on port 8199...
+[SERVER] Recorded server PID 24264 in .server.pid
+[SERVER] Updated .server.pid to serving PID 24456
+[SERVER] Lab server online on port 8199 after 10.1s
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+[FIXTURE] Uploaded and verified fixture scene_still.png in server input directory
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 2.33 GB | Host RAM: 21.98 GB
+Queueing prompt for h3_i2v_canonical_832x480_f107...
+Queued successfully (Prompt ID: c1874d2f-6e17-4013-8ee5-f55c22e7af4f)
+
+--- Run Summary ---
+Recipe:        h3_i2v_canonical_832x480_f107
+Run Count:     1 (configuration run 1; Cold cache)
+Baseline VRAM: 2.326 GiB | Host RAM: 21.98 GB
+Peak VRAM:     15.390 GiB (Gate <= 14.5 GiB)
+Net Peak VRAM: 13.064 GiB (peak minus this leg's baseline)
+Baseline Lane: elevated-baseline lane, operator-authorized 2026-08-10
+Peak Host RAM: 27.19 GB
+Wall Clock:    178.8 s
+Boot Lane:     lab-8199, sage-free, manager-offline-test, no-pinned
+Status:        FAIL (VRAM 15.39 GB > 14.5 GB)
+[LEDGER] Updated RESULTS.md entry for h3_i2v_canonical_832x480_f107: FAIL (VRAM 15.39 GB > 14.5 GB)
+[MATRIX] Updated ENGINE_MATRIX_BETA.md for h3_i2v_canonical_832x480_f107
+[LOCK] Released .gpu.lock and coordinator
+[SERVER] Shutting down verified lab server (PID 24456)...
+[SERVER] Process 24456 and listener exited; removed .server.pid receipt.

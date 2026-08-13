@@ -1,0 +1,616 @@
+{
+  "name": "h3_i2v_canonical_832x480_f277",
+  "tier": "measurement",
+  "blocked": false,
+  "experiment": {
+    "campaign": "h3_canonical_canvas_envelope_v1",
+    "job": "C_h3_canonical_canvas",
+    "variant": "i2v",
+    "measurement_state": "unrendered",
+    "independent_variable": "model_frame_count",
+    "controlled_canvas": "832x480",
+    "controlled_fps": 24.0,
+    "frame_grid": "17k+5",
+    "frame_rungs": [
+      107,
+      192,
+      277
+    ],
+    "ladder_recipe_names": [
+      "h3_i2v_canonical_832x480_f107",
+      "h3_i2v_canonical_832x480_f192",
+      "h3_i2v_canonical_832x480_f277"
+    ],
+    "execution_order": "cold then warm for each rung; one render at a time",
+    "execution_lane": "sage-free Manager offline-test with --disable-pinned-memory",
+    "execution_graph_diff_policy": "Within this mode, prompt graphs differ only at node 7 length and the node 12 artifact prefix.",
+    "job_d_source_recipe": "h3_r2v_refaudio_canonical_832x480_f192_seed43",
+    "job_d_source_policy": "The seed-43 192-frame Ref2VA rung is also the sole source render for the separate 25 fps delivery proof; review copies are post-process only.",
+    "behavioral_claim_status": "unrendered and unproven"
+  },
+  "contract": {
+    "engine": "minimax_h3",
+    "mode": "i2v",
+    "width": 832,
+    "height": 480,
+    "frames": 277,
+    "fps": 24.0,
+    "target_s": 11.541667,
+    "duration_s": 11.541667,
+    "model_duration_fraction": "277/24",
+    "h3_frame_grid": "17k+5",
+    "h3_grid_k": 16,
+    "requires_audio": true,
+    "required_boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned",
+    "requires_disable_pinned_memory": true,
+    "vram_ceiling_gb": 14.5
+  },
+  "receipt_requirements": {
+    "warm_gate": {
+      "required_consecutive_runs": 2,
+      "passing_run": "second consecutive run",
+      "required_lane": "--disable-pinned-memory",
+      "required_boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned",
+      "executor_cache_nonce_required": true,
+      "peak_vram_gb_lte": 14.5
+    },
+    "manager_offline_gate": {
+      "required": true,
+      "authoritative_source": "pair-unique server log",
+      "required_announcement": "[ComfyUI-Manager] network_mode: offline",
+      "required_announcement_count": 1,
+      "must_precede_startup_completion": true,
+      "must_precede_first_prompt": true,
+      "network_markers_required_empty": true,
+      "mutation_markers_required_empty": true
+    },
+    "preboot_gpu_idle_gate": {
+      "cold_required": true,
+      "warm_policy": "reuse exact owned cold server; no fresh idle sampling claimed",
+      "sample_count": 5,
+      "sampling_interval_s": 0.2,
+      "vram_used_recorded_non_gating": true,
+      "gpu_utilization_recorded_non_gating": true,
+      "memory_utilization_recorded_non_gating": true,
+      "known_render_compute_processes_block": true,
+      "advisory_unreadable_processes_retained_non_gating": true,
+      "shared_positive_workload_classifier_required": true,
+      "optional_verified_direct_windows_venv_launcher_exclusion": true,
+      "windows_venv_launcher_exclusion_max_count": 1,
+      "redacted_process_evidence_required": true,
+      "process_scan_result_fields": [
+        "blocking_processes",
+        "advisory_unreadable_processes"
+      ],
+      "redacted_process_schema": [
+        "pid",
+        "process_create_time",
+        "process_basename",
+        "executable_basename",
+        "target_basename",
+        "matched_markers",
+        "match_basis",
+        "argv_sha256"
+      ],
+      "desktop_graphics_signals_retained_but_not_required": true,
+      "required_driver_model": "WDDM",
+      "display_active_allowed_measured_states": [
+        "Disabled",
+        "Enabled"
+      ],
+      "display_active_recorded_non_gating": true
+    },
+    "operator_idle_policy": {
+      "baseline_vram_recorded_advisory": true,
+      "baseline_numeric_rejection": false,
+      "pair_cold_warm_baseline_drift_recorded_advisory": true,
+      "pair_baseline_drift_numeric_rejection": false,
+      "elevated_baseline_threshold_gb": 2.0,
+      "elevated_baseline_threshold_operator": ">",
+      "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+      "per_leg_immediate_prequeue_known_workload_scan_required": true,
+      "optional_verified_direct_owned_server_windows_venv_launcher_exclusion": true,
+      "owned_server_windows_venv_launcher_exclusion_max_count": 1,
+      "owned_server_excluded_process_count_allowed": [
+        1,
+        2
+      ],
+      "owned_lab_server_exclusion_schema": [
+        "pid",
+        "process_create_time",
+        "server_instance",
+        "process_identity",
+        "argv_match",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "verified_windows_venv_launcher",
+        "expected_excluded_process_count"
+      ],
+      "verified_owned_server_windows_venv_launcher_schema": [
+        "pid",
+        "process_create_time",
+        "expected_launcher_path",
+        "direct_child_pid",
+        "direct_parent_verified",
+        "launcher_identity_live",
+        "child_identity_live",
+        "argv_tail_matches_child",
+        "both_exact_validated_server_argv",
+        "child_executable_differs",
+        "creation_delta_s",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity",
+        "argv_match"
+      ],
+      "excluded_owned_lab_server_row_schema": [
+        "pid",
+        "process_create_time",
+        "reason"
+      ],
+      "unreadable_unknown_python_advisory_non_gating": true,
+      "redacted_positive_workload_evidence_required": true,
+      "absolute_and_net_peak_required": true,
+      "net_peak_definition": "peak_vram_gb - baseline_vram_gb"
+    },
+    "completion_timeout_s": 5400,
+    "timing": {
+      "ffprobe_required": true,
+      "expected_width": 832,
+      "expected_height": 480,
+      "expected_model_frame_count": 277,
+      "expected_fps": 24.0,
+      "expected_duration_s": 11.541667,
+      "absolute_duration_error_lte_s": 0.041667
+    },
+    "required_measured_fields": [
+      "baseline_vram_gb",
+      "peak_vram_gb",
+      "absolute_peak_vram_gb",
+      "net_peak_vram_gb",
+      "elevated_baseline_lane",
+      "baseline_lane_stamp",
+      "duration_s"
+    ]
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "intent": "Official AV-complete MiniMax H3 FL2VA I2V topology at OTR's 832x480 canonical canvas for frame-envelope measurement",
+    "frozen_template": {
+      "path": "research/comfy_templates/video_minimax_h3_i2v.json",
+      "sha256": "bb71aecdd3c0b62e56eafe03acb14d1cfeabec7072eaed9cbdf473c2aaf73009"
+    },
+    "installed_schema": {
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+      "node_source": "comfy_extras/nodes_minimax_h3.py",
+      "node_source_sha256": "f767df4074b908efb345f5a87c2fd263ba82c12e65bcca932846207cc213e064"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UNETLoader",
+      "2": "CLIPLoader",
+      "3": "VAELoader",
+      "4": "VAELoader",
+      "5": "RandomNoise",
+      "6": "BasicGuider",
+      "7": "MiniMaxH3ImageToVideo",
+      "8": "SamplerCustomAdvanced",
+      "9": "VAEDecode",
+      "10": "CreateVideo",
+      "12": "SaveVideo",
+      "13": "KSamplerSelect",
+      "14": "BasicScheduler",
+      "15": "VAEDecodeAudio",
+      "11": "LoadImage"
+    },
+    "required_class_types": [
+      "UNETLoader",
+      "CLIPLoader",
+      "VAELoader",
+      "RandomNoise",
+      "BasicGuider",
+      "MiniMaxH3ImageToVideo",
+      "SamplerCustomAdvanced",
+      "VAEDecode",
+      "CreateVideo",
+      "SaveVideo",
+      "KSamplerSelect",
+      "BasicScheduler",
+      "VAEDecodeAudio",
+      "LoadImage"
+    ],
+    "required_connections": {
+      "6.model": [
+        "1",
+        0
+      ],
+      "14.model": [
+        "1",
+        0
+      ],
+      "7.clip": [
+        "2",
+        0
+      ],
+      "7.vae": [
+        "3",
+        0
+      ],
+      "6.conditioning": [
+        "7",
+        0
+      ],
+      "8.noise": [
+        "5",
+        0
+      ],
+      "8.guider": [
+        "6",
+        0
+      ],
+      "8.sampler": [
+        "13",
+        0
+      ],
+      "8.sigmas": [
+        "14",
+        0
+      ],
+      "8.latent_image": [
+        "7",
+        1
+      ],
+      "9.samples": [
+        "8",
+        0
+      ],
+      "9.vae": [
+        "3",
+        0
+      ],
+      "15.samples": [
+        "8",
+        0
+      ],
+      "15.vae": [
+        "4",
+        0
+      ],
+      "10.images": [
+        "9",
+        0
+      ],
+      "10.audio": [
+        "15",
+        0
+      ],
+      "12.video": [
+        "10",
+        0
+      ],
+      "7.first_frame": [
+        "11",
+        0
+      ]
+    },
+    "required_absent_inputs": [
+      "7.last_frame"
+    ],
+    "required_input_values": [
+      {
+        "node": "2",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "13",
+        "input": "sampler_name",
+        "equals": "res_multistep"
+      },
+      {
+        "node": "14",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "14",
+        "input": "steps",
+        "equals": 20
+      },
+      {
+        "node": "14",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "10",
+        "input": "fps",
+        "equals": 24.0
+      },
+      {
+        "node": "10",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "1",
+        "input": "unet_name",
+        "equals": "minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+      },
+      {
+        "node": "1",
+        "input": "weight_dtype",
+        "equals": "default"
+      },
+      {
+        "node": "2",
+        "input": "clip_name",
+        "equals": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+      },
+      {
+        "node": "2",
+        "input": "type",
+        "equals": "minimax"
+      },
+      {
+        "node": "3",
+        "input": "vae_name",
+        "equals": "minimax_h3_video_vae_fp16.safetensors"
+      },
+      {
+        "node": "4",
+        "input": "vae_name",
+        "equals": "minimax_h3_audio_vae_fp32.safetensors"
+      },
+      {
+        "node": "5",
+        "input": "noise_seed",
+        "equals": 42
+      },
+      {
+        "node": "7",
+        "input": "prompt",
+        "equals": "cinematic camera motion across vintage radio control room, warm analog glow, 8k"
+      },
+      {
+        "node": "7",
+        "input": "width",
+        "equals": 832
+      },
+      {
+        "node": "7",
+        "input": "height",
+        "equals": 480
+      },
+      {
+        "node": "7",
+        "input": "length",
+        "equals": 277
+      },
+      {
+        "node": "11",
+        "input": "image",
+        "equals": "scene_still.png"
+      },
+      {
+        "node": "12",
+        "input": "filename_prefix",
+        "equals": "h3_i2v_canonical_832x480_f277_out"
+      },
+      {
+        "node": "12",
+        "input": "format",
+        "equals": "auto"
+      },
+      {
+        "node": "12",
+        "input": "codec",
+        "equals": "auto"
+      }
+    ],
+    "forbidden_class_types": [
+      "KSampler",
+      "CLIPTextEncode",
+      "MiniMaxH3SigmaShift",
+      "LoadAudio"
+    ],
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "The official UI subgraph is flattened to the hash-pinned local API prompt",
+      "Canvas is OTR's canonical 832x480, both dimensions divisible by 32",
+      "Length is the legal H3 17*16+5 = 277 frame rung",
+      "The randomized template seed remains pinned at 42",
+      "scene_still.png remains the sole first-frame fixture; last_frame is absent",
+      "Both sampled visual and audio latents retain their official native decoders",
+      "No MiniMaxH3SigmaShift or SageAttention patch is inserted",
+      "Only the SaveVideo prefix changes to give this immutable rung a unique artifact"
+    ],
+    "fixture_hashes": {
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+    },
+    "origin": {
+      "builder": "scratch/build_h3_canonical_canvas_ladders.py",
+      "source_recipe": "recipes/h3_i2v_suite_sentinel.json",
+      "source_recipe_sha256": "3a838a63521f6266293a3f5796e0f25d41187f3c47e3665493c8938779be2f53",
+      "source_recipe_edited": false,
+      "third_party_workflow_json_copied": false
+    }
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "type": "minimax",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+    },
+    "5": {
+      "class_type": "RandomNoise",
+      "inputs": {
+        "noise_seed": 42
+      }
+    },
+    "6": {
+      "class_type": "BasicGuider",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "conditioning": [
+          "7",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    },
+    "7": {
+      "class_type": "MiniMaxH3ImageToVideo",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "prompt": "cinematic camera motion across vintage radio control room, warm analog glow, 8k",
+        "width": 832,
+        "height": 480,
+        "length": 277,
+        "first_frame": [
+          "11",
+          0
+        ]
+      }
+    },
+    "8": {
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+        "noise": [
+          "5",
+          0
+        ],
+        "guider": [
+          "6",
+          0
+        ],
+        "sampler": [
+          "13",
+          0
+        ],
+        "sigmas": [
+          "14",
+          0
+        ],
+        "latent_image": [
+          "7",
+          1
+        ]
+      }
+    },
+    "13": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "res_multistep"
+      }
+    },
+    "14": {
+      "class_type": "BasicScheduler",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
+      }
+    },
+    "9": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "4",
+          0
+        ]
+      }
+    },
+    "10": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "9",
+          0
+        ],
+        "fps": 24.0,
+        "bit_depth": 8,
+        "audio": [
+          "15",
+          0
+        ]
+      }
+    },
+    "12": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "10",
+          0
+        ],
+        "filename_prefix": "h3_i2v_canonical_832x480_f277_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  }
+}

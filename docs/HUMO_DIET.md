@@ -120,6 +120,12 @@ judge lips, onset, identity, temporal stability, and overall image quality. Unti
 review, the integration state is **warm machine-certified, human quality
 `PENDING_HUMAN`**.
 
+**RULED by Jeffrey 2026-08-09 (A/B full view): PARITY** - "look same to me."
+The integration state is now **warm machine-certified AND human
+quality-approved**. The diet boot variant (`--reserve-vram 2.921
+--disable-pinned-memory`, explicit variant only, default boot unchanged) is
+cleared for OTR integration per the Recommendation section below.
+
 ## Recommendation
 
 Recommendation: retain the production graph verbatim and add an explicitly selected
