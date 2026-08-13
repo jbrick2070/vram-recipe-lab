@@ -78,8 +78,10 @@ install it.
    Get-Service sshd -ErrorAction SilentlyContinue | Format-List Name,Status,StartType
    ```
 
-   The service must exist. Confirm the Ethernet network is Private before
-   creating the firewall rule. Do not expose port 22 to any other address.
+   The service must exist. Do **not** change the Ethernet network category:
+   `Public` is appropriate for an isolated direct cable. The later firewall
+   rule will use the interface's current category while still permitting only
+   `10.55.0.1` to reach the 4060's port 22.
 
    If the installed OpenSSH Server has no ED25519 host public key yet, generate
    only the missing default host keys. This is necessary for the 4060 to prove
@@ -154,9 +156,21 @@ install it.
    If validation fails, undo only the new bridge block and stop to report the
    validation error. Do not restart an invalid SSH service.
 
-4. Start `sshd` and add precisely this Private-profile firewall allowance:
+4. Start `sshd` and add a firewall allowance for the Ethernet interface's
+   **current** profile only. Do not change the interface category. The command
+   below accepts `Public`, `Private`, or `DomainAuthenticated`; every case
+   remains restricted to the two exact Ethernet addresses.
 
    ```powershell
+   $ethernetAddress = Get-NetIPAddress -IPAddress 10.55.0.2 -AddressFamily IPv4 -ErrorAction Stop |
+     Select-Object -First 1
+   $networkCategory = (Get-NetConnectionProfile -InterfaceIndex $ethernetAddress.InterfaceIndex -ErrorAction Stop).NetworkCategory
+   $firewallProfile = switch ($networkCategory) {
+     'Public' { 'Public' }
+     'Private' { 'Private' }
+     'DomainAuthenticated' { 'Domain' }
+     default { throw "STOP: unsupported Ethernet network category: $networkCategory" }
+   }
    Set-Service -Name sshd -StartupType Manual
    if ((Get-Service -Name sshd).Status -eq 'Running') {
      Restart-Service -Name sshd
@@ -168,7 +182,7 @@ install it.
      -DisplayName 'Codex 4060 SSH tunnel from 5080 only' `
      -Direction Inbound -Action Allow -Protocol TCP `
      -LocalAddress 10.55.0.2 -RemoteAddress 10.55.0.1 `
-     -LocalPort 22 -Profile Private
+     -LocalPort 22 -Profile $firewallProfile
    ```
 
    If a rule with that name already exists, inspect it and correct it only when
