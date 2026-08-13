@@ -242,6 +242,8 @@ class Physical4060ProfileTests(unittest.TestCase):
         (self.comfy_root / "main.py").write_text("print('main')\n", encoding="utf-8")
         self.python = self.root / "python.exe"
         self.python.write_bytes(b"python")
+        self.ffprobe = self.root / "ffprobe.exe"
+        self.ffprobe.write_bytes(b"ffprobe")
         self.roots = {}
         for category in ("diffusion_models", "text_encoders", "vae"):
             path = self.root / category
@@ -267,6 +269,7 @@ class Physical4060ProfileTests(unittest.TestCase):
             "paths": {
                 "python": str(self.python),
                 "comfyui_root": str(self.comfy_root),
+                "ffprobe": str(self.ffprobe),
                 "model_roots": {key: str(value) for key, value in self.roots.items()},
             },
             "identity": {
@@ -274,6 +277,7 @@ class Physical4060ProfileTests(unittest.TestCase):
                 "python_major_minor": "3.12",
                 "comfyui_git_commit": "b" * 40,
                 "comfyui_main_py_sha256": "c" * 64,
+                "ffprobe_sha256": "d" * 64,
                 "model_sha256s": self.asset_hashes,
             },
             "policy": {
@@ -311,6 +315,7 @@ class Physical4060ProfileTests(unittest.TestCase):
         hashes = {
             self.python: "a" * 64,
             self.comfy_root / "main.py": "c" * 64,
+            self.ffprobe: "d" * 64,
         }
         return {"path": str(path), "bytes": path.stat().st_size, "sha256": hashes.get(path, "e" * 64)}
 
@@ -325,11 +330,12 @@ class Physical4060ProfileTests(unittest.TestCase):
             mock.patch.object(bench, "_git_identity", return_value={"commit": "b" * 40, "dirty": False}),
             mock.patch.object(bench.sys, "executable", str(self.python)),
             mock.patch.object(bench, "_running_python_major_minor", return_value="3.12"),
+            mock.patch.object(bench, "_run_readonly", return_value="ffprobe version test"),
         )
 
     def test_ready_inventory_is_hardware_bound_but_never_a_render_pass(self):
         patches = self._preflight_patches()
-        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8]:
+        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8], patches[9]:
             payload = bench.preflight("physical-rtx4060-8gb")
         self.assertEqual(payload["status"], bench.READY_STATUS)
         self.assertEqual(payload["scope"], bench.SCOPE)
@@ -341,7 +347,7 @@ class Physical4060ProfileTests(unittest.TestCase):
         self.profile["expected_gpu"]["uuid"] = ""
         self._write_profile()
         patches = self._preflight_patches()
-        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8]:
+        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8], patches[9]:
             payload = bench.preflight("physical-rtx4060-8gb")
         self.assertEqual(payload["status"], "BLOCKED_GPU_UUID_UNPINNED")
         self.assertEqual(payload["blockers"][0]["detail"], "observed GPU-test-4060")
@@ -357,10 +363,19 @@ class Physical4060ProfileTests(unittest.TestCase):
         first_asset = self.plan["engine"]["required_assets"][0]
         (self.roots[first_asset["category"]] / first_asset["filename"]).unlink()
         patches = self._preflight_patches()
-        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8]:
+        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8], patches[9]:
             payload = bench.preflight("physical-rtx4060-8gb")
         self.assertEqual(payload["status"], "BLOCKED_MODEL_MISSING")
         self.assertEqual(payload["network_or_gpu_actions"], bench.READ_ONLY_GPU_INVENTORY_ACTIONS)
+
+    def test_ffprobe_hash_drift_blocks_before_comfy_or_model_identity_probes(self):
+        self.profile["identity"]["ffprobe_sha256"] = "f" * 64
+        self._write_profile()
+        patches = self._preflight_patches()
+        with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6], patches[7], patches[8], patches[9], mock.patch.object(bench, "_validated_child_file") as child:
+            payload = bench.preflight("physical-rtx4060-8gb")
+        self.assertEqual(payload["status"], "BLOCKED_FFPROBE_SHA256_DRIFT")
+        child.assert_not_called()
 
     def test_arbitrary_profile_id_is_rejected_before_any_inventory_probe(self):
         with mock.patch.object(bench, "query_nvidia_smi") as nvidia:

@@ -368,6 +368,7 @@ def validate_admission_inputs(profile_id: str) -> dict[str, Any]:
     try:
         python = inventory._validated_path(paths["python"], "profile Python", "file")
         comfy_root = inventory._validated_path(paths["comfyui_root"], "profile ComfyUI root", "directory")
+        ffprobe = inventory._validated_ffprobe(paths["ffprobe"], "profile ffprobe")
         model_roots = {
             name: inventory._validated_path(value, f"profile model root {name}", "directory")
             for name, value in paths["model_roots"].items()
@@ -397,6 +398,11 @@ def validate_admission_inputs(profile_id: str) -> dict[str, Any]:
             "ComfyUI root has an unmanaged extra_model_paths.yaml; "
             "the physical runner requires its private model-path configuration to be the only extra root"
         )
+    ffprobe_observed = {
+        "path": str(ffprobe), "bytes": ffprobe.stat().st_size, "sha256": sha256_file(ffprobe)
+    }
+    if ffprobe_observed["sha256"] != identity.get("ffprobe_sha256"):
+        raise RunnerError("ffprobe SHA-256 drifted from the enrolled profile")
     expected_model_hashes = identity.get("model_sha256s")
     if not isinstance(expected_model_hashes, dict):
         raise RunnerError("profile omitted model SHA-256 identities")
@@ -415,6 +421,8 @@ def validate_admission_inputs(profile_id: str) -> dict[str, Any]:
         "preflight": preflight,
         "python": python,
         "comfy_root": comfy_root,
+        "ffprobe": ffprobe,
+        "ffprobe_observed": ffprobe_observed,
         "model_roots": model_roots,
         "kjnodes_root": kjnodes_root,
         "loaded_kjnodes_root": loaded_kjnodes_root,
@@ -1316,9 +1324,9 @@ def _fraction_to_float(value: str) -> float:
     return float(numerator) / float(denominator)
 
 
-def probe_media(artifact: Path) -> dict[str, Any]:
+def probe_media(ffprobe: Path, artifact: Path) -> dict[str, Any]:
     command = [
-        "ffprobe", "-v", "error", "-count_frames", "-count_packets", "-show_streams", "-show_format", "-of", "json", str(artifact),
+        str(ffprobe), "-v", "error", "-count_frames", "-count_packets", "-show_streams", "-show_format", "-of", "json", str(artifact),
     ]
     try:
         completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="strict", check=False, timeout=60)
@@ -1534,6 +1542,7 @@ def _run_leg(
     physical_vram_gib: float,
     physical_host_ram_gib: float,
     gpu_uuid: str,
+    ffprobe: Path,
 ) -> dict[str, Any]:
     if physical_host_ram_gib < 4.0:
         raise RunnerError("profile preflight physical host-RAM capacity is implausibly low")
@@ -1559,7 +1568,7 @@ def _run_leg(
         artifact, messages, outputs = _wait_for_artifact(prompt_id, _safe_local_child(cell, "output"))
     finally:
         metrics = monitor.stop()
-    media = probe_media(artifact)
+    media = probe_media(ffprobe, artifact)
     cache = execution_cache_evidence(messages, cache_control)
     vram_gate = metrics["peak_vram_gib"] <= 7.5
     host_gate = metrics["peak_host_ram_gib"] <= 28.0
@@ -1655,6 +1664,7 @@ def _admission_receipt(
             "init_py_sha256": sha256_file(admission["kjnodes_root"] / "__init__.py"),
         },
         "model_manifest": list(admission["model_manifest"]),
+        "ffprobe": dict(admission["ffprobe_observed"]),
         "model_paths_sha256": sha256_file(model_yaml),
         "canonical_argv": list(argv),
         "canonical_argv_sha256": hashlib.sha256(canonical_bytes(list(argv))).hexdigest(),
@@ -1788,6 +1798,7 @@ def execute(profile_id: str, *, run_sequence: bool) -> dict[str, Any]:
                         physical_vram_gib,
                         physical_host_ram_gib,
                         admission["gpu_uuid"],
+                        admission["ffprobe"],
                     )
                     legs.append(leg)
                     if not leg["machine_gate_pass"]:

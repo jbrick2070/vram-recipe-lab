@@ -944,7 +944,7 @@ def _validate_profile(profile: Mapping[str, Any], profile_id: str) -> None:
     paths = profile.get("paths")
     if not isinstance(paths, dict):
         raise PreflightError("profile.paths must be an object")
-    _require_exact_keys(paths, {"python", "comfyui_root", "model_roots"}, "profile.paths")
+    _require_exact_keys(paths, {"python", "comfyui_root", "ffprobe", "model_roots"}, "profile.paths")
     roots = paths.get("model_roots")
     if not isinstance(roots, dict):
         raise PreflightError("profile.paths.model_roots must be an object")
@@ -954,10 +954,13 @@ def _validate_profile(profile: Mapping[str, Any], profile_id: str) -> None:
         raise PreflightError("profile.identity must be an object")
     _require_exact_keys(
         identity,
-        {"python_sha256", "python_major_minor", "comfyui_git_commit", "comfyui_main_py_sha256", "model_sha256s"},
+        {
+            "python_sha256", "python_major_minor", "comfyui_git_commit",
+            "comfyui_main_py_sha256", "ffprobe_sha256", "model_sha256s",
+        },
         "profile.identity",
     )
-    for key in ("python_sha256", "comfyui_main_py_sha256"):
+    for key in ("python_sha256", "comfyui_main_py_sha256", "ffprobe_sha256"):
         _validated_optional_sha256(identity.get(key), f"profile.identity.{key}")
     python_major_minor = _require_string(identity, "python_major_minor", "profile.identity")
     if python_major_minor and python_major_minor not in {"3.10", "3.12"}:
@@ -996,12 +999,20 @@ def _observed_file(path: Path) -> dict[str, Any]:
     return {"path": str(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)}
 
 
+def _validated_ffprobe(value: str, label: str) -> Path:
+    path = _validated_path(value, label, "file")
+    if path.name.casefold() != "ffprobe.exe":
+        raise PreflightError(f"{label} must name ffprobe.exe")
+    return path
+
+
 def _profile_paths(profile: Mapping[str, Any]) -> dict[str, Path]:
     paths = profile["paths"]
     roots = paths["model_roots"]
     return {
         "python": _validated_path(paths["python"], "profile.paths.python", "file"),
         "comfyui_root": _validated_path(paths["comfyui_root"], "profile.paths.comfyui_root", "directory"),
+        "ffprobe": _validated_ffprobe(paths["ffprobe"], "profile.paths.ffprobe"),
         "diffusion_models": _validated_path(roots["diffusion_models"], "profile model root diffusion_models", "directory"),
         "text_encoders": _validated_path(roots["text_encoders"], "profile model root text_encoders", "directory"),
         "vae": _validated_path(roots["vae"], "profile model root vae", "directory"),
@@ -1119,6 +1130,26 @@ def preflight(profile_id: str) -> dict[str, Any]:
     _identity_check(blockers, "PYTHON_VERSION", identity["python_major_minor"], python_major_minor)
 
     paths = _profile_paths(profile)
+    ffprobe_observed = _observed_file(paths["ffprobe"])
+    observed["ffprobe"] = ffprobe_observed
+    _identity_check(
+        blockers, "FFPROBE_SHA256", identity["ffprobe_sha256"], ffprobe_observed["sha256"]
+    )
+    if not blockers:
+        try:
+            version = _run_readonly([str(paths["ffprobe"]), "-version"], "profile ffprobe")
+        except PreflightError as exc:
+            blockers.append(_block("BLOCKED_FFPROBE_HEALTH", str(exc)))
+        else:
+            first_line = version.splitlines()[0] if version else ""
+            if not first_line.casefold().startswith("ffprobe version "):
+                blockers.append(
+                    _block("BLOCKED_FFPROBE_HEALTH", "ffprobe -version did not identify ffprobe")
+                )
+            else:
+                observed["ffprobe"]["version"] = first_line
+    if blockers:
+        return _preflight_payload(static, profile_id, profile_path, blockers, observed)
     main_py = _validated_child_file(paths["comfyui_root"], "main.py", "declared ComfyUI main.py")
     if main_py is None:
         blockers.append(_block("BLOCKED_COMFYUI_MAIN_MISSING", f"missing {paths['comfyui_root'] / 'main.py'}"))

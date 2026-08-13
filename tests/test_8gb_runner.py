@@ -217,6 +217,26 @@ class Physical4060RunnerPureTests(unittest.TestCase):
         metrics["audio_present"] = False
         self.assertFalse(runner.media_matches_contract(metrics, contract))
 
+    def test_media_probe_uses_only_the_explicit_profile_bound_executable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            ffprobe = root / "ffprobe.exe"
+            artifact = root / "artifact.mp4"
+            ffprobe.write_bytes(b"ffprobe")
+            artifact.write_bytes(b"video")
+            probe = {
+                "streams": [
+                    {"codec_type": "video", "nb_read_frames": "90", "width": 864, "height": 480, "avg_frame_rate": "24/1", "duration": "3.75", "codec_name": "h264", "nb_read_packets": "90"},
+                    {"codec_type": "audio", "duration": "3.75", "codec_name": "aac", "nb_read_packets": "119"},
+                ],
+                "format": {"duration": "3.75"},
+            }
+            completed = SimpleNamespace(returncode=0, stdout=json.dumps(probe), stderr="")
+            with mock.patch.object(runner.subprocess, "run", return_value=completed) as run:
+                metrics = runner.probe_media(ffprobe, artifact)
+        self.assertEqual(metrics["encoded_frame_count"], 90)
+        self.assertEqual(run.call_args.args[0][0], str(ffprobe))
+
     def test_resource_monitor_records_minimum_available_host_ram(self):
         monitor = runner.ResourceMonitor("GPU-laptop-4060")
         with mock.patch.object(monitor, "_sample_details", return_value=(0.2, 20.0, 12.0)), mock.patch.object(monitor, "_run"):
@@ -469,6 +489,7 @@ class Physical4060TerminalReceiptTests(unittest.TestCase):
             admission = {
                 "plan": {}, "gpu_uuid": "GPU-laptop-4060", "profile_sha256": "a" * 64,
                 "plan_sha256": "b" * 64, "launch_sha256": "c" * 64,
+                "ffprobe": Path("C:/ffprobe.exe"),
                 "model_roots": {}, "model_manifest": [],
                 "profile": {"identity": {"model_sha256s": {}}},
             }
@@ -497,6 +518,7 @@ class Physical4060TerminalReceiptTests(unittest.TestCase):
             admission = {
                 "plan": {}, "gpu_uuid": "GPU-laptop-4060", "profile_sha256": "a" * 64,
                 "plan_sha256": "b" * 64, "launch_sha256": "c" * 64,
+                "ffprobe": Path("C:/ffprobe.exe"),
                 "model_roots": {}, "model_manifest": [],
                 "profile": {"identity": {"model_sha256s": {}}},
                 "preflight": {

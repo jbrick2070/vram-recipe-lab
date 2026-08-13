@@ -65,7 +65,9 @@ them; do not reset, force-push, or discard them.
    `profile-template.json` and `runner-4060-launch-template.json`. The actual
    ComfyUI root, KJNodes root, Python path, model roots, raw GPU UUID, and file
    hashes stay inside `eightgb_bench/local/`; never commit or paste them into a
-   handoff.
+   handoff. The profile also pins one already-installed `ffprobe.exe` by
+   absolute path and SHA-256; the runner never searches `PATH` and does not
+   download or install FFmpeg.
 5. Run `preflight --profile physical-rtx4060-8gb --write-receipt`. Blank
    identity hashes deliberately fail closed while showing locally observed
    values. Pin those values in the ignored profile and repeat until the result
