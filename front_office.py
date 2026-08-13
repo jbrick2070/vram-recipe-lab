@@ -43,7 +43,9 @@ _NONCE_RE = re.compile(r"[0-9a-f]{32}\Z")
 _NODE_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}\Z")
 
 PROFILE_STATUSES = frozenset({"ENROLLED_STATIC_ONLY"})
-CAMPAIGN_STATUSES = frozenset({"STATIC_ONLY", "BLOCKED_PROFILE_ENROLLMENT"})
+CAMPAIGN_STATUSES = frozenset(
+    {"STATIC_ONLY", "BLOCKED_PROFILE_ENROLLMENT", "BLOCKED_WEIGHT_ADMISSION"}
+)
 FORBIDDEN_BOOT_TOKENS = frozenset(
     {
         "--use-sage-attention",
@@ -552,9 +554,9 @@ def validate_campaign(campaign: Mapping[str, Any]) -> None:
         raise CampaignValidationError("campaign.purpose must be nonempty")
     if not isinstance(campaign["independent_variable"], str) or not campaign["independent_variable"].strip():
         raise CampaignValidationError("campaign.independent_variable must be nonempty")
-    if campaign["status"] == "BLOCKED_PROFILE_ENROLLMENT":
+    if campaign["status"].startswith("BLOCKED_"):
         if not isinstance(campaign.get("block_reason"), str) or not campaign["block_reason"].strip():
-            raise CampaignValidationError("blocked campaign must state its profile-enrollment blocker")
+            raise CampaignValidationError("blocked campaign must state its blocker")
     elif "block_reason" in campaign:
         raise CampaignValidationError("an unblocked static campaign must not carry block_reason")
     profiles = campaign["profiles"]

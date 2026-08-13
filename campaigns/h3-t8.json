@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "h3-t8",
+  "status": "BLOCKED_WEIGHT_ADMISSION",
+  "purpose": "Selected first MiniMax H3 Turbo speed campaign: Larry v4-600 at eight steps, evaluated only after a separate asset-admission decision and enrolled Turbo profile.",
+  "independent_variable": "The admitted Larry MiniMax H3 Turbo v4 step-600 EMA LoRA at strength 1.0 with its required eight-step schedule, compared with the native 20-step surface. The first comparison excludes Sage, Spectrum, TAE, W4A8, SplitSigmas, and four-step settings.",
+  "block_reason": "minimax_h3_turbo_v4_step600_ema.safetensors is not locally admitted, and the required h3-turbo-larry-v4 profile does not exist. No download, install, profile invention, server launch, or render is authorized.",
+  "profiles": [
+    "comfy0311-h3",
+    "h3-turbo-larry-v4"
+  ],
+  "cells": [
+    {
+      "id": "h3-i2v-sentinel",
+      "recipe": "h3_i2v_suite_sentinel.json",
+      "role": "static",
+      "phase": "native-20-step control versus Larry-Turbo-8 after asset admission",
+      "profiles": [
+        "comfy0311-h3",
+        "h3-turbo-larry-v4"
+      ]
+    },
+    {
+      "id": "h3-ref2va-seed42",
+      "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed42.json",
+      "role": "static",
+      "phase": "after H3-LIP-TXT: native control versus Larry-Turbo-8",
+      "profiles": [
+        "comfy0311-h3",
+        "h3-turbo-larry-v4"
+      ]
+    },
+    {
+      "id": "h3-ref2va-seed43",
+      "recipe": "h3_r2v_refaudio_tts_lipsync_exact_seed43.json",
+      "role": "static",
+      "phase": "after H3-LIP-TXT: native control versus Larry-Turbo-8",
+      "profiles": [
+        "comfy0311-h3",
+        "h3-turbo-larry-v4"
+      ]
+    }
+  ]
+}

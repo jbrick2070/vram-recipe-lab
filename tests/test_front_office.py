@@ -132,6 +132,15 @@ class FrontOfficeLaunchSpecTests(unittest.TestCase):
         with self.assertRaisesRegex(front_office.CampaignValidationError, "BLOCKED_PROFILE_ENROLLMENT"):
             front_office.build_launch_spec("h3-c032", "h3-i2v-sentinel", "comfy0311-h3", "d" * 32)
 
+    def test_selected_h3_t8_is_blocked_until_weight_and_profile_admission(self):
+        campaign = front_office.load_campaign("h3-t8")
+        self.assertEqual(campaign["status"], "BLOCKED_WEIGHT_ADMISSION")
+        self.assertIn("eight-step", campaign["independent_variable"])
+        self.assertIn("h3-turbo-larry-v4", campaign["profiles"])
+        self.assertNotIn("h3-turbo-larry-v4", front_office.list_enrolled_profiles())
+        with self.assertRaisesRegex(front_office.CampaignValidationError, "BLOCKED_WEIGHT_ADMISSION"):
+            front_office.build_launch_spec("h3-t8", "h3-i2v-sentinel", "comfy0311-h3", "e" * 32)
+
     def test_static_front_office_contains_no_comfy_launcher(self):
         source = Path(front_office.__file__).read_text(encoding="utf-8")
         self.assertNotIn("Popen(", source)

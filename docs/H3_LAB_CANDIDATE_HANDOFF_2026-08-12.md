@@ -196,6 +196,8 @@ The code class is spelled `PathchSageAttentionKJ`; its UI name is `Patch Sage At
 
 **Preferred route:** [Larry MiniMax H3 Turbo](https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo/tree/546b5028f4934f5129eb6c7142c2f3e461dfddbf), pinned after the audio-reference AdaLN-row fix, plus [`minimax_h3_turbo_v4_step600_ema.safetensors`](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora) at strength 1.0 and eight steps.
 
+**Lab selection (2026-08-12):** this Larry route is the sole first Turbo candidate, recorded as [`campaigns/h3-t8.json`](../campaigns/h3-t8.json). It is `BLOCKED_WEIGHT_ADMISSION`; the drbaph conversion remains a later compatibility reference, not a parallel first test.
+
 **Compatibility references:** the [drbaph pruned-conversion graph](https://huggingface.co/drbaph/MiniMax-H3-Turbo-Lora-ComfyUI/blob/498f1e2ca02e10a598f21267739f30073f68eb10/fl_minimax_h3_turbo_lora_example_workflow.json) and the [Tlano Ref2VA lip-sync graph](https://github.com/tlano-z/ComfyUI-MiniMax-H3-Workflows-For3060/blob/359ea78cb7eeb0d52ee13487bca014ade312c8ef/MiniMax-H3_R2V_Turbo_Lip-sync/MiniMax-H3_R2V_Turbo_Lip-sync.json). Choose and pin one provenance route before admission; do not mix conversions/settings. The drbaph conversion removes incompatible AdaLN pairs and must be labeled as such.
 
 No Turbo weight is currently admitted. Operator authorization to acquire it is only the first gate: also record creator terms, H3 grant scope, expected bytes/hash, quarantine inspection, and model-manifest admission. Never redistribute the weight.
