@@ -81,6 +81,27 @@ install it.
    The service must exist. Confirm the Ethernet network is Private before
    creating the firewall rule. Do not expose port 22 to any other address.
 
+   If the installed OpenSSH Server has no ED25519 host public key yet, generate
+   only the missing default host keys. This is necessary for the 4060 to prove
+   its SSH identity; it is not an OpenSSH installation and it does not download
+   anything. `-A` preserves existing host keys rather than replacing them:
+
+   ```powershell
+   $sshKeygen = "$env:WINDIR\System32\OpenSSH\ssh-keygen.exe"
+   $ed25519HostPublicKey = Join-Path $env:ProgramData 'ssh\ssh_host_ed25519_key.pub'
+   if (-not (Test-Path -LiteralPath $ed25519HostPublicKey)) {
+     & $sshKeygen -A
+     if ($LASTEXITCODE -ne 0) { throw 'STOP: OpenSSH host-key generation failed.' }
+   }
+   if (-not (Test-Path -LiteralPath $ed25519HostPublicKey)) {
+     throw 'STOP: ED25519 host public key is still absent after generation.'
+   }
+   & $sshKeygen -lf $ed25519HostPublicKey -E sha256
+   ```
+
+   Record the printed `SHA256:` fingerprint for the 5080. Never put the host
+   private keys or any app-server token into Git or chat.
+
 3. Resolve the current user's effective `AuthorizedKeysFile` from the existing
    `sshd` configuration. The normal-user path is `%USERPROFILE%\.ssh\authorized_keys`;
    administrator accounts can instead use the protected ProgramData file. Do
