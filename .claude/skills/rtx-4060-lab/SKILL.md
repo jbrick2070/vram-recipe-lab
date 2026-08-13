@@ -11,6 +11,8 @@ of production receipts, or permission to change top-level lab state.
 Read [bridge boundary](references/bridge-boundary.md) before using the bridge.
 Read [execution ladder](references/execution-ladder.md) before admission or a
 render.
+If a bridge check says unhealthy, read [SSH bridge health and recovery](references/ssh-bridge-health.md)
+before attempting any 4060 lab action.
 
 ## Scope
 
