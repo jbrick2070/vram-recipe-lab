@@ -50,6 +50,34 @@ bridge recovery workaround.
    Allow one mutating controller at a time. Before any remote mutation, require
    a clean checkout and stop on a Git conflict or unexpected local edit.
 
+## TCP timeout after Ethernet reachability
+
+Treat this pattern precisely: when the 5080 owns `10.55.0.1`, its Ethernet
+adapter is up, and its neighbor table resolves `10.55.0.2` to a MAC address,
+but `Test-NetConnection 10.55.0.2 -Port 22` fails, the cable and IPv4 path are
+working. The fault is then an inbound 4060 listener/firewall policy issue, not
+the SSH key, app-server port 8766, or a GPU/ComfyUI issue.
+
+On the 4060, inspect the two named rules without changing them:
+
+```powershell
+$names = 'Codex4060-SshFrom5080', 'OpenSSH-Server-In-TCP'
+Get-NetFirewallRule -Name $names -ErrorAction SilentlyContinue |
+  Select-Object Name, Enabled, Direction, Action, Profile, PolicyStoreSource
+Get-NetFirewallRule -Name 'Codex4060-SshFrom5080' -ErrorAction Stop |
+  Get-NetFirewallAddressFilter |
+  Select-Object LocalAddress, RemoteAddress
+Get-NetFirewallRule -Name 'Codex4060-SshFrom5080' -ErrorAction Stop |
+  Get-NetFirewallPortFilter |
+  Select-Object Protocol, LocalPort, RemotePort
+```
+
+The narrow rule must be enabled, inbound, allow TCP port 22 only, with local
+address `10.55.0.2`, remote address `10.55.0.1`, and a profile that includes
+the current Ethernet profile. If any field differs, report the exact field to
+the bridge owner. Do not disable the firewall, add a broad port-22 rule, or
+open 8766 on Ethernet as a workaround.
+
 ## Escalation boundary
 
 The one-time secure SSH/app-server setup is documented in
