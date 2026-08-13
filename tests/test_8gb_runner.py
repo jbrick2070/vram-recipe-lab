@@ -246,6 +246,16 @@ class Physical4060RunnerPureTests(unittest.TestCase):
         with mock.patch.object(runner.inventory, "_trusted_nvidia_smi_path", return_value=Path("C:/Windows/nvidia-smi.exe")), mock.patch.object(runner.subprocess, "run", return_value=completed):
             identity = runner._verify_system_stats_device(stats, "GPU-laptop-4060")
         self.assertEqual(identity["vram_total_mib"], 8188)
+        self.assertEqual(identity["comfy_device_name"], "NVIDIA GeForce RTX 4060 Laptop GPU")
+        stats["devices"][0]["name"] = "cuda:0 NVIDIA GeForce RTX 4060 Laptop GPU : cudaMallocAsync"
+        with mock.patch.object(runner.inventory, "_trusted_nvidia_smi_path", return_value=Path("C:/Windows/nvidia-smi.exe")), mock.patch.object(runner.subprocess, "run", return_value=completed):
+            wrapped = runner._verify_system_stats_device(stats, "GPU-laptop-4060")
+        self.assertEqual(wrapped["name"], "NVIDIA GeForce RTX 4060 Laptop GPU")
+        self.assertEqual(wrapped["comfy_device_name"], "cuda:0 NVIDIA GeForce RTX 4060 Laptop GPU : cudaMallocAsync")
+        stats["devices"][0]["name"] = "cuda:1 NVIDIA GeForce RTX 4060 Laptop GPU : cudaMallocAsync"
+        with mock.patch.object(runner.inventory, "_trusted_nvidia_smi_path", return_value=Path("C:/Windows/nvidia-smi.exe")), mock.patch.object(runner.subprocess, "run", return_value=completed):
+            with self.assertRaisesRegex(runner.RunnerError, "does not match"):
+                runner._verify_system_stats_device(stats, "GPU-laptop-4060")
         stats["devices"][0]["name"] = "NVIDIA GeForce RTX 5080 Laptop GPU"
         with mock.patch.object(runner.inventory, "_trusted_nvidia_smi_path", return_value=Path("C:/Windows/nvidia-smi.exe")), mock.patch.object(runner.subprocess, "run", return_value=completed):
             with self.assertRaisesRegex(runner.RunnerError, "does not match"):

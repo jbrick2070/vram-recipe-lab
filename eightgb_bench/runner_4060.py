@@ -666,14 +666,29 @@ def _verify_system_stats_device(
     if not isinstance(name, str) or not isinstance(total, (int, float)):
         raise RunnerError("Comfy system_stats primary device is malformed")
     total_mib = int(round(float(total) / (1024 * 1024)))
+    # Comfy 0.32 may decorate its primary device string with the logical
+    # CUDA ordinal and allocator (for example, ``cuda:0 <name> :
+    # cudaMallocAsync``).  CUDA_VISIBLE_DEVICES pins the enrolled UUID and
+    # therefore the only permitted logical ordinal is cuda:0.  Accept exactly
+    # that documented wrapper around the nvidia-smi name--not a substring or
+    # arbitrary formatter--and still require the independently observed VRAM.
+    wrapped_name = re.fullmatch(
+        rf"cuda:0\s+{re.escape(enrolled[0])}\s+:\s+[A-Za-z0-9_.-]+", name
+    )
+    same_device_name = name == enrolled[0] or wrapped_name is not None
     # Comfy reports bytes while nvidia-smi reports MiB. Allow a small rounding
     # tolerance, but never accept a different device name or capacity.
-    if name != enrolled[0] or abs(total_mib - enrolled[1]) > 8:
+    if not same_device_name or abs(total_mib - enrolled[1]) > 8:
         raise RunnerError(
             "Comfy primary device does not match the enrolled GPU identity "
             f"(Comfy={name}/{total_mib} MiB; enrolled={enrolled[0]}/{enrolled[1]} MiB)"
         )
-    return {"gpu_uuid": gpu_uuid, "name": name, "vram_total_mib": total_mib}
+    return {
+        "gpu_uuid": gpu_uuid,
+        "name": enrolled[0],
+        "comfy_device_name": name,
+        "vram_total_mib": total_mib,
+    }
 
 
 def _schema_option_values(
