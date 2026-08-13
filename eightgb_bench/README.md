@@ -9,18 +9,29 @@ The first candidate is MiniMax H3 image-to-video with native audio: 864x480,
 VRAM and 27.56 GiB host RAM; that makes it worth trying on the physical laptop,
 but it is not a 4060 result.
 
-## First laptop action
+## First laptop action: commit the hardware proof
 
 First record the actual physical GPU UUID and RAM. This does not require
-ComfyUI, a model, or a local profile:
+ComfyUI, a model, or a local profile. The exact commit-and-push instruction is
+in [RTX4060_8GB_NEXT_ACTION.md](../docs/RTX4060_8GB_NEXT_ACTION.md):
 
 ```powershell
-& <any-local-python.exe> -B .\eightgb_bench\preflight_4060.py hardware-inventory
+& <any-local-python.exe> -B .\eightgb_bench\preflight_4060.py hardware-inventory --write-receipt --write-public-report
 ```
 
-Copy the UUID for the exact `NVIDIA GeForce RTX 4060 Laptop GPU` row into the
-profile below. If it reports a different GPU name, VRAM size, or less than
-30 GiB total RAM, stop: it is not the declared test hardware.
+This produces an ignored local receipt with the raw UUID and one redacted,
+commit-ready report under `eightgb_bench/reports/`. The tracked report binds
+only the opaque SHA-256 of that local receipt; it contains neither the UUID
+nor another stable GPU identifier. Commit and push only that redacted report,
+exactly as the next-action document directs. If it reports a different GPU
+name, VRAM size, or less than 30 GiB total RAM, stop: it is not the declared
+test hardware.
+
+## Later, only after a new written instruction
+
+Do not create a profile or run the following commands today. They describe the
+later inventory phase, after the hardware report has been reviewed and lawful
+local assets exist on the laptop.
 
 Copy `profile-template.json` to the ignored local location and replace every
 `REPLACE_...` value with a real absolute laptop path:

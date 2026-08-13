@@ -22,8 +22,122 @@ class Physical4060StaticContractTests(unittest.TestCase):
         with mock.patch.object(bench, "query_nvidia_smi", return_value=[gpu]), mock.patch.object(bench, "host_ram_snapshot", return_value={"total_gib": 31.7, "available_gib": 12.0}):
             result = bench.hardware_inventory()
         self.assertEqual(result["status"], "HARDWARE_OBSERVED_NOT_ENROLLED")
+        self.assertEqual(result["receipt_schema_version"], 1)
         self.assertEqual(result["gpus"], [gpu])
         self.assertEqual(result["network_or_gpu_actions"], bench.READ_ONLY_GPU_INVENTORY_ACTIONS)
+
+    def test_hardware_inventory_cli_can_write_only_an_isolated_local_receipt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bench_root = root / "eightgb_bench"
+            bench_root.mkdir()
+            local_root = bench_root / "local"
+            gpu = {"uuid": "GPU-laptop", "name": "NVIDIA GeForce RTX 4060 Laptop GPU", "memory_total_mib": 8188, "driver_version": "999.0", "driver_model_current": "WDDM"}
+            payload = {"receipt_schema_version": 1, "status": "HARDWARE_OBSERVED_NOT_ENROLLED", "scope": bench.SCOPE}
+            output = []
+            with mock.patch.object(bench, "BENCH_ROOT", bench_root), mock.patch.object(bench, "LOCAL_ROOT", local_root), mock.patch.object(bench, "hardware_inventory", return_value=payload), mock.patch.object(bench, "format_json", side_effect=lambda value: output.append(value) or ""):
+                self.assertEqual(bench.main(["hardware-inventory", "--write-receipt"]), 0)
+            self.assertEqual(len(output), 1)
+            self.assertIn("receipt_path", output[0])
+            receipt = Path(output[0]["receipt_path"])
+            self.assertTrue(receipt.is_relative_to(local_root))
+            self.assertTrue(receipt.is_file())
+
+    def test_hardware_inventory_can_publish_one_redacted_commit_ready_report(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bench_root = root / "eightgb_bench"
+            reports_root = bench_root / "reports"
+            reports_root.mkdir(parents=True)
+            local_root = bench_root / "local"
+            raw_uuid = "GPU-laptop-private-uuid"
+            payload = {
+                "receipt_schema_version": 1,
+                "kind": "physical_4060_8gb_hardware_inventory",
+                "checked_at_utc": "2026-08-13T16:00:00Z",
+                "status": "HARDWARE_OBSERVED_NOT_ENROLLED",
+                "scope": bench.SCOPE,
+                "contract_sha256": "a" * 64,
+                "preflight_script_sha256": "b" * 64,
+                "gpus": [{
+                    "uuid": raw_uuid,
+                    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+                    "memory_total_mib": 8188,
+                    "driver_version": "999.0",
+                    "driver_model_current": "WDDM",
+                }],
+                "host_ram": {"total_gib": 31.7, "available_gib": 12.0},
+                "next_action": "local only",
+                "network_or_gpu_actions": bench.READ_ONLY_GPU_INVENTORY_ACTIONS,
+            }
+            output = []
+            with mock.patch.object(bench, "BENCH_ROOT", bench_root), mock.patch.object(bench, "LOCAL_ROOT", local_root), mock.patch.object(bench, "REPORTS_ROOT", reports_root), mock.patch.object(bench, "hardware_inventory", return_value=payload), mock.patch.object(bench, "format_json", side_effect=lambda value: output.append(value) or ""):
+                self.assertEqual(bench.main(["hardware-inventory", "--write-public-report"]), 0)
+                self.assertEqual(bench.main(["hardware-inventory", "--write-public-report"]), 0)
+            self.assertEqual(len(output), 2)
+            report_path = reports_root / "physical-rtx4060-8gb-hardware.json"
+            self.assertEqual(output[0]["public_report_path"], bench.PUBLIC_REPORT_REPO_PATH.as_posix())
+            self.assertTrue(report_path.is_file())
+            report_bytes = report_path.read_bytes()
+            report = json.loads(report_bytes)
+            self.assertNotIn(raw_uuid.encode("utf-8"), report_bytes)
+            self.assertNotIn(b"999.0", report_bytes)
+            self.assertNotIn(b"WDDM", report_bytes)
+            self.assertNotIn(b"available_gib", report_bytes)
+            self.assertNotIn(b"checked_at_utc", report_bytes)
+            self.assertNotIn(str(local_root).encode("utf-8"), report_bytes)
+            self.assertNotIn("receipt_path", report)
+            self.assertNotIn("available_gib", report["hardware"])
+            self.assertNotIn("gpu_uuid_sha256", report["hardware"])
+            receipt_paths = sorted((local_root / "receipts").glob("*.json"))
+            self.assertEqual(len(receipt_paths), 2)
+            self.assertEqual(
+                report["source_local_receipt_sha256"],
+                bench.sha256_file(receipt_paths[0]),
+            )
+            self.assertNotIn(b"GPU-laptop-private-uuid", bench.canonical_bytes(output[0]))
+            self.assertNotIn(b"999.0", bench.canonical_bytes(output[0]))
+            self.assertNotIn(b"WDDM", bench.canonical_bytes(output[0]))
+            self.assertNotIn(b"available_gib", bench.canonical_bytes(output[0]))
+            self.assertNotIn(b"checked_at_utc", bench.canonical_bytes(output[0]))
+            self.assertNotIn(str(local_root).encode("utf-8"), bench.canonical_bytes(output[0]))
+            self.assertEqual(output[1]["public_report_path"], bench.PUBLIC_REPORT_REPO_PATH.as_posix())
+
+    def test_public_hardware_report_rejects_a_redirected_reports_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bench_root = root / "eightgb_bench"
+            bench_root.mkdir()
+            redirected = root / "somewhere-else"
+            redirected.mkdir()
+            payload = {
+                "receipt_schema_version": 1,
+                "kind": "physical_4060_8gb_hardware_inventory",
+                "checked_at_utc": "2026-08-13T16:00:00Z",
+                "status": "HARDWARE_OBSERVED_NOT_ENROLLED",
+                "scope": bench.SCOPE,
+                "contract_sha256": "a" * 64,
+                "preflight_script_sha256": "b" * 64,
+                "gpus": [{
+                    "uuid": "GPU-laptop",
+                    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+                    "memory_total_mib": 8188,
+                    "driver_version": "999.0",
+                    "driver_model_current": "WDDM",
+                }],
+                "host_ram": {"total_gib": 31.7, "available_gib": 12.0},
+                "next_action": "local only",
+                "network_or_gpu_actions": bench.READ_ONLY_GPU_INVENTORY_ACTIONS,
+            }
+            local_root = bench_root / "local"
+            local_root.mkdir()
+            receipt_dir = local_root / "receipts"
+            receipt_dir.mkdir()
+            receipt_path = receipt_dir / "preflight.json"
+            receipt_path.write_bytes(bench.canonical_bytes(payload))
+            with mock.patch.object(bench, "BENCH_ROOT", bench_root), mock.patch.object(bench, "LOCAL_ROOT", local_root), mock.patch.object(bench, "REPORTS_ROOT", redirected):
+                with self.assertRaisesRegex(bench.PreflightError, "report root drifted"):
+                    bench.write_public_hardware_report(receipt_path)
 
     def test_first_candidate_is_the_measured_short_native_audio_h3_cell(self):
         plan = json.loads(bench.PLAN_PATH.read_text(encoding="utf-8"))

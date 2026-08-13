@@ -30,6 +30,10 @@ The H3 and Wan receipts are useful orientation only:
 
 ## Set up the laptop safely
 
+The current immediate instruction is in
+[RTX4060_8GB_NEXT_ACTION.md](RTX4060_8GB_NEXT_ACTION.md). Follow that before
+creating a profile or considering any model.
+
 1. Use a **separate checkout** of this repository on the 4060. Do not point it
    at the 5080 checkout, its `results/`, outputs, locks, port owner, or model
    manifest.
@@ -40,17 +44,14 @@ The H3 and Wan receipts are useful orientation only:
    ```text
    Read AGENTS.md, BOOT.md, PREFLIGHT.md, and docs/RTX4060_8GB_HANDOFF.md.
    Work only in this laptop checkout. Do not download/install anything, do not
-   touch a 5080 or OTR path, and do not boot ComfyUI yet. First follow
-   eightgb_bench/README.md and report the inventory receipt verbatim.
+   touch a 5080 or OTR path, and do not boot ComfyUI yet. Follow
+   docs/RTX4060_8GB_NEXT_ACTION.md exactly: write the redacted hardware report,
+   commit only that report, push it, report its commit hash, then stop.
    ```
 
-4. Run `hardware-inventory` first, copy the actual laptop GPU UUID into the
-   profile template, then copy `eightgb_bench/profile-template.json` to the
-   ignored path described in its README and fill only real absolute paths.
-   Run `static-check`, then the inventory-only `preflight` command.
-5. Pin every observed Python, ComfyUI, and model hash in the local profile and
-   rerun it. Do not proceed until it says
-   `READY_FOR_HUMAN_BOOT_APPROVAL`.
+4. Do **not** create a profile or run `preflight` in this first task. Those
+   steps need a later written instruction after the committed hardware proof is
+   reviewed and lawful local assets exist on the laptop.
 
 `hardware-inventory` only reads `nvidia-smi` and Windows RAM state. The later
 profile preflight reads local paths, the already-running Python, and ComfyUI

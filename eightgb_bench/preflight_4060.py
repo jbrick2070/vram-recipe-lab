@@ -13,8 +13,10 @@ import ctypes
 import datetime as dt
 import hashlib
 import json
+import math
 import os
 import re
+import secrets
 import stat
 import subprocess
 import sys
@@ -25,6 +27,8 @@ from typing import Any, Iterable, Mapping, Sequence
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BENCH_ROOT = REPO_ROOT / "eightgb_bench"
 LOCAL_ROOT = BENCH_ROOT / "local"
+REPORTS_ROOT = BENCH_ROOT / "reports"
+PUBLIC_REPORT_REPO_PATH = Path("eightgb_bench") / "reports" / "physical-rtx4060-8gb-hardware.json"
 CONTRACT_PATH = BENCH_ROOT / "contract-v1.json"
 PLAN_PATH = BENCH_ROOT / "plans" / "h3_mime_i2v_864x480_f90.json"
 PROFILE_SUFFIX = ".profile.json"
@@ -186,6 +190,22 @@ def _validated_local_root(*, create: bool) -> Path:
     if local_root.parent != bench_root:
         raise PreflightError("physical 4060 local state root escaped the bench root")
     return local_root
+
+
+def _validated_public_reports_root() -> Path:
+    """Return the checked-in, non-reparse public-report namespace only."""
+    bench_root = _validated_path(str(BENCH_ROOT), "physical 4060 bench root", "directory")
+    expected = BENCH_ROOT / "reports"
+    if not _same_path(REPORTS_ROOT, expected):
+        raise PreflightError("physical 4060 public report root drifted from eightgb_bench/reports")
+    if not REPORTS_ROOT.exists():
+        raise PreflightError("physical 4060 public report directory is absent; pull the current lab checkout")
+    reports_root = _validated_path(
+        str(REPORTS_ROOT), "physical 4060 public report directory", "directory"
+    )
+    if not _same_path(reports_root.parent, bench_root):
+        raise PreflightError("physical 4060 public report directory escaped the bench root")
+    return reports_root
 
 
 def _validated_child_file(root: Path, basename: str, label: str) -> Path | None:
@@ -661,15 +681,223 @@ def hardware_inventory() -> dict[str, Any]:
     """
     static = static_check()
     return {
+        "receipt_schema_version": 1,
         "kind": "physical_4060_8gb_hardware_inventory",
+        "checked_at_utc": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
         "status": "HARDWARE_OBSERVED_NOT_ENROLLED",
         "scope": SCOPE,
         "contract_sha256": static["contract_sha256"],
+        "preflight_script_sha256": sha256_file(Path(__file__).resolve()),
         "gpus": query_nvidia_smi(),
         "host_ram": host_ram_snapshot(),
         "next_action": "Copy the exact matching GPU UUID into the laptop-local profile template, then declare real local ComfyUI and model paths.",
         "network_or_gpu_actions": READ_ONLY_GPU_INVENTORY_ACTIONS,
     }
+
+
+def _validate_hardware_inventory_receipt(inventory: Mapping[str, Any]) -> None:
+    """Fail closed on the raw immutable receipt before public redaction."""
+    _require_exact_keys(
+        inventory,
+        {
+            "receipt_schema_version",
+            "kind",
+            "checked_at_utc",
+            "status",
+            "scope",
+            "contract_sha256",
+            "preflight_script_sha256",
+            "gpus",
+            "host_ram",
+            "next_action",
+            "network_or_gpu_actions",
+        },
+        "local hardware inventory receipt",
+    )
+    if _require_int(inventory, "receipt_schema_version", "local hardware inventory receipt") != 1:
+        raise PreflightError("local hardware inventory receipt schema drifted")
+    if inventory.get("kind") != "physical_4060_8gb_hardware_inventory":
+        raise PreflightError("local hardware inventory receipt kind drifted")
+    if inventory.get("status") != "HARDWARE_OBSERVED_NOT_ENROLLED":
+        raise PreflightError("local hardware inventory receipt status drifted")
+    if inventory.get("scope") != SCOPE:
+        raise PreflightError("local hardware inventory receipt scope drifted")
+    checked_at = _require_string(inventory, "checked_at_utc", "local hardware inventory receipt")
+    try:
+        parsed_checked_at = dt.datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise PreflightError("local hardware inventory receipt timestamp is invalid") from exc
+    if parsed_checked_at.tzinfo is None:
+        raise PreflightError("local hardware inventory receipt timestamp must include a timezone")
+    _require_string(inventory, "next_action", "local hardware inventory receipt")
+    if inventory.get("network_or_gpu_actions") != READ_ONLY_GPU_INVENTORY_ACTIONS:
+        raise PreflightError("local hardware inventory receipt action scope drifted")
+    contract_sha256 = inventory.get("contract_sha256")
+    script_sha256 = inventory.get("preflight_script_sha256")
+    if not isinstance(contract_sha256, str) or not SHA256_RE.fullmatch(contract_sha256):
+        raise PreflightError("local hardware inventory receipt contract SHA-256 is invalid")
+    if not isinstance(script_sha256, str) or not SHA256_RE.fullmatch(script_sha256):
+        raise PreflightError("local hardware inventory receipt preflight script SHA-256 is invalid")
+    rows = inventory.get("gpus")
+    if not isinstance(rows, list) or not rows:
+        raise PreflightError("local hardware inventory receipt has no GPU rows")
+    matching_rows: list[Mapping[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise PreflightError("local hardware inventory receipt has a malformed GPU row")
+        _require_exact_keys(
+            row,
+            {"uuid", "name", "memory_total_mib", "driver_version", "driver_model_current"},
+            "local hardware inventory GPU",
+        )
+        _require_string(row, "uuid", "local hardware inventory GPU")
+        _require_string(row, "name", "local hardware inventory GPU")
+        if _require_int(row, "memory_total_mib", "local hardware inventory GPU") <= 0:
+            raise PreflightError("local hardware inventory GPU memory total must be positive")
+        _require_string(row, "driver_version", "local hardware inventory GPU")
+        _require_string(row, "driver_model_current", "local hardware inventory GPU")
+        if row.get("name") == "NVIDIA GeForce RTX 4060 Laptop GPU":
+            matching_rows.append(row)
+    if len(matching_rows) != 1:
+        raise PreflightError("public hardware report requires exactly one RTX 4060 Laptop GPU row")
+    selected = matching_rows[0]
+    _require_string(selected, "uuid", "public hardware report GPU")
+    memory_total_mib = _require_int(selected, "memory_total_mib", "public hardware report GPU")
+    if not 7800 <= memory_total_mib <= 8192:
+        raise PreflightError("public hardware report GPU is outside the declared physical 8 GB range")
+    _require_string(selected, "driver_version", "public hardware report GPU")
+    _require_string(selected, "driver_model_current", "public hardware report GPU")
+    host_ram = inventory.get("host_ram")
+    if not isinstance(host_ram, Mapping):
+        raise PreflightError("local hardware inventory receipt has no host-RAM record")
+    _require_exact_keys(host_ram, {"total_gib", "available_gib"}, "local hardware inventory host RAM")
+    host_total_gib = host_ram.get("total_gib")
+    if (
+        isinstance(host_total_gib, bool)
+        or not isinstance(host_total_gib, (int, float))
+        or not math.isfinite(host_total_gib)
+    ):
+        raise PreflightError("public hardware report host total RAM is invalid")
+    if host_total_gib < 30:
+        raise PreflightError("public hardware report host RAM is below the declared 30 GiB minimum")
+
+
+def _load_immutable_local_hardware_receipt(receipt_path: Path) -> tuple[dict[str, Any], str]:
+    """Read only the raw local receipt just written by this isolated bench."""
+    local_root = _validated_local_root(create=False)
+    receipt_dir = local_root / "receipts"
+    receipt_dir = _validated_path(
+        str(receipt_dir), "physical 4060 local receipt directory", "directory"
+    )
+    if not _same_path(receipt_dir.parent, local_root):
+        raise PreflightError("physical 4060 local receipt directory escaped the local state root")
+    checked = _validated_path(
+        str(receipt_path), "physical 4060 local hardware receipt", "file"
+    )
+    if not checked.is_relative_to(receipt_dir):
+        raise PreflightError("physical 4060 local hardware receipt escaped the receipt directory")
+    raw = checked.read_bytes()
+    inventory = _read_json(checked, "physical 4060 local hardware receipt")
+    if raw != canonical_bytes(inventory):
+        raise PreflightError("physical 4060 local hardware receipt is not canonical immutable JSON")
+    _validate_hardware_inventory_receipt(inventory)
+    return inventory, sha256_bytes(raw)
+
+
+def _public_hardware_report_payload(
+    inventory: Mapping[str, Any], source_local_receipt_sha256: str
+) -> dict[str, Any]:
+    """Redact one validated local receipt into a commit-safe public report."""
+    _validate_hardware_inventory_receipt(inventory)
+    if not SHA256_RE.fullmatch(source_local_receipt_sha256):
+        raise PreflightError("public hardware report source receipt SHA-256 is invalid")
+    contract_sha256 = inventory["contract_sha256"]
+    script_sha256 = inventory["preflight_script_sha256"]
+    matching_rows = [
+        row for row in inventory["gpus"]
+        if row["name"] == "NVIDIA GeForce RTX 4060 Laptop GPU"
+    ]
+    selected = matching_rows[0]
+    memory_total_mib = selected["memory_total_mib"]
+    host_total_gib = inventory["host_ram"]["total_gib"]
+    hardware = {
+        "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "memory_total_mib": memory_total_mib,
+        "host_ram_total_gib": host_total_gib,
+    }
+    return {
+        "report_schema_version": 1,
+        "kind": "physical_4060_8gb_hardware_inventory_public",
+        "status": "HARDWARE_OBSERVED_NOT_ENROLLED",
+        "scope": SCOPE,
+        "contract_sha256": contract_sha256,
+        "preflight_script_sha256": script_sha256,
+        "source_local_receipt_sha256": source_local_receipt_sha256,
+        "hardware": hardware,
+        "privacy": {
+            "raw_gpu_uuid": "omitted; retained only in the ignored eightgb_bench/local hardware receipt",
+            "stable_gpu_identifier": "omitted; the source receipt digest is opaque outside the laptop-local evidence store",
+        },
+        "next_action": "Stop after committing this hardware report. It is not an enrollment, model-admission, server, or render authorization.",
+    }
+
+
+def _public_report_equivalent(existing: Mapping[str, Any], candidate: Mapping[str, Any]) -> bool:
+    """Allow repeat inventory without rewriting the first immutable public proof."""
+    required = {
+        "report_schema_version",
+        "kind",
+        "status",
+        "scope",
+        "contract_sha256",
+        "preflight_script_sha256",
+        "source_local_receipt_sha256",
+        "hardware",
+        "privacy",
+        "next_action",
+    }
+    _require_exact_keys(existing, required, "existing public hardware report")
+    if existing.get("report_schema_version") != 1:
+        raise PreflightError("existing public hardware report schema drifted")
+    source = existing.get("source_local_receipt_sha256")
+    if not isinstance(source, str) or not SHA256_RE.fullmatch(source):
+        raise PreflightError("existing public hardware report source receipt SHA-256 is invalid")
+    existing_without_source = dict(existing)
+    candidate_without_source = dict(candidate)
+    existing_without_source.pop("source_local_receipt_sha256")
+    candidate_without_source.pop("source_local_receipt_sha256")
+    return canonical_bytes(existing_without_source) == canonical_bytes(candidate_without_source)
+
+
+def write_public_hardware_report(receipt_path: Path) -> Path:
+    """Write one deterministic, redacted report in the tracked reports namespace."""
+    inventory, source_sha256 = _load_immutable_local_hardware_receipt(receipt_path)
+    report = _public_hardware_report_payload(inventory, source_sha256)
+    reports_root = _validated_public_reports_root()
+    path = reports_root / PUBLIC_REPORT_REPO_PATH.name
+    serialized = canonical_bytes(report)
+    if path.exists():
+        existing = _validated_path(str(path), "physical 4060 public hardware report", "file")
+        raw_existing = existing.read_bytes()
+        existing_payload = _read_json(existing, "existing public hardware report")
+        if raw_existing != canonical_bytes(existing_payload):
+            raise PreflightError("existing public hardware report is not canonical immutable JSON")
+        if _public_report_equivalent(existing_payload, report):
+            return existing
+        raise PreflightError(f"public hardware report path already has different bytes: {existing}")
+    try:
+        with path.open("xb") as handle:
+            handle.write(serialized)
+    except FileExistsError:
+        existing = _validated_path(str(path), "physical 4060 public hardware report", "file")
+        raw_existing = existing.read_bytes()
+        existing_payload = _read_json(existing, "existing public hardware report")
+        if raw_existing == canonical_bytes(existing_payload) and _public_report_equivalent(existing_payload, report):
+            return existing
+        raise PreflightError(f"public hardware report path already has different bytes: {existing}")
+    except OSError as exc:
+        raise PreflightError(f"cannot write public hardware report: {path}: {exc}") from exc
+    return path
 
 
 def _validate_profile(profile: Mapping[str, Any], profile_id: str) -> None:
@@ -934,8 +1162,9 @@ def write_receipt(payload: Mapping[str, Any]) -> Path:
     if receipt_dir.parent != local_root:
         raise PreflightError("physical 4060 receipt directory escaped the local state root")
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    nonce = hashlib.sha256(canonical_bytes(payload)).hexdigest()[:12]
-    path = receipt_dir / f"preflight-{now}-{nonce}.json"
+    payload_digest = hashlib.sha256(canonical_bytes(payload)).hexdigest()[:12]
+    nonce = secrets.token_hex(6)
+    path = receipt_dir / f"preflight-{now}-{payload_digest}-{nonce}.json"
     serialized = canonical_bytes(payload)
     try:
         with path.open("xb") as handle:
@@ -955,7 +1184,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("static-check", help="validate the checked-in physical 4060 contract and plan")
-    subparsers.add_parser("hardware-inventory", help="read only the installed GPU and RAM; no profile or server is needed")
+    hardware_parser = subparsers.add_parser(
+        "hardware-inventory", help="read only the installed GPU and RAM; no profile or server is needed"
+    )
+    hardware_parser.add_argument(
+        "--write-receipt",
+        action="store_true",
+        help="write an immutable receipt beneath eightgb_bench/local only",
+    )
+    hardware_parser.add_argument(
+        "--write-public-report",
+        action="store_true",
+        help="also write one redacted, commit-ready hardware report beneath eightgb_bench/reports",
+    )
     preflight_parser = subparsers.add_parser("preflight", help="inspect one fixed laptop-local enrolled profile")
     preflight_parser.add_argument("--profile", required=True, help="only physical-rtx4060-8gb is enrolled")
     preflight_parser.add_argument("--write-receipt", action="store_true", help="write an immutable receipt beneath eightgb_bench/local only")
@@ -970,7 +1211,27 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(format_json(static_check()), end="")
             return 0
         if args.command == "hardware-inventory":
-            print(format_json(hardware_inventory()), end="")
+            payload = hardware_inventory()
+            if args.write_public_report:
+                local_receipt_path = write_receipt(payload)
+                public_report_path = write_public_hardware_report(local_receipt_path)
+                print(
+                    format_json(
+                        {
+                            "status": "HARDWARE_OBSERVED_NOT_ENROLLED",
+                            "scope": SCOPE,
+                            "public_report_path": PUBLIC_REPORT_REPO_PATH.as_posix(),
+                            "public_report_sha256": sha256_file(public_report_path),
+                            "next_action": "Commit only the redacted public report, push it, report the commit hash, then stop.",
+                        }
+                    ),
+                    end="",
+                )
+                return 0
+            if args.write_receipt:
+                payload = dict(payload)
+                payload["receipt_path"] = str(write_receipt(payload))
+            print(format_json(payload), end="")
             return 0
         if args.command == "preflight":
             payload = preflight(args.profile)
