@@ -272,6 +272,7 @@ def readonly_environment(parent: Mapping[str, str] | None = None) -> dict[str, s
         "localappdata",
         "path",
         "pathext",
+        "programfiles",
         "programdata",
         "systemroot",
         "temp",
@@ -403,11 +404,12 @@ def host_ram_snapshot() -> dict[str, float]:
 
 def _git_identity(comfyui_root: Path) -> dict[str, Any]:
     git = str(_trusted_git_path())
-    commit = _run_readonly([git, "-C", str(comfyui_root), "rev-parse", "HEAD"], "ComfyUI Git")
+    safe_git = [git, "-c", f"safe.directory={comfyui_root}", "-C", str(comfyui_root)]
+    commit = _run_readonly([*safe_git, "rev-parse", "HEAD"], "ComfyUI Git")
     if not re.fullmatch(r"[0-9a-f]{40}", commit):
         raise PreflightError("ComfyUI Git returned an invalid commit")
     dirty = bool(
-        _run_readonly([git, "-C", str(comfyui_root), "status", "--porcelain"], "ComfyUI Git status")
+        _run_readonly([*safe_git, "status", "--porcelain"], "ComfyUI Git status")
     )
     return {"commit": commit, "dirty": dirty}
 

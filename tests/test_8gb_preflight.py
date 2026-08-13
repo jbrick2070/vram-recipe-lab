@@ -184,18 +184,44 @@ class Physical4060StaticContractTests(unittest.TestCase):
             {
                 "PATH": "safe-path",
                 "SYSTEMROOT": "C:\\Windows",
+                "PROGRAMFILES": "C:\\Program Files",
                 "HF_TOKEN": "must-not-leak",
                 "HTTPS_PROXY": "must-not-leak",
+                "OPENAI_API_KEY": "must-not-leak",
                 "LAB_RESERVE_VRAM_GB": "12",
                 "CUDA_VISIBLE_DEVICES": "0",
             }
         )
         self.assertEqual(environment["PATH"], "safe-path")
+        self.assertEqual(environment["PROGRAMFILES"], "C:\\Program Files")
         self.assertNotIn("HF_TOKEN", environment)
+        self.assertNotIn("OPENAI_API_KEY", environment)
         self.assertNotIn("HTTPS_PROXY", environment)
         self.assertNotIn("LAB_RESERVE_VRAM_GB", environment)
         self.assertNotIn("CUDA_VISIBLE_DEVICES", environment)
         self.assertEqual(environment["HF_HUB_OFFLINE"], "1")
+
+    def test_git_identity_scopes_git_calls_with_a_per_command_safe_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            comfy_root = Path(directory) / "ComfyUI"
+            comfy_root.mkdir()
+            trusted_git = Path("C:\\Program Files\\Git\\cmd\\git.exe")
+            with (
+                mock.patch.object(bench, "_trusted_git_path", return_value=trusted_git),
+                mock.patch.object(bench, "_run_readonly") as run_readonly,
+            ):
+                run_readonly.side_effect = ["b" * 40, ""]
+                bench._git_identity(comfy_root)
+
+        calls = run_readonly.call_args_list
+        self.assertEqual(len(calls), 2)
+        first = calls[0].args[0]
+        second = calls[1].args[0]
+        expected_prefix = [str(trusted_git), "-c", f"safe.directory={comfy_root}", "-C", str(comfy_root)]
+        self.assertEqual(first[:5], expected_prefix)
+        self.assertEqual(second[:5], expected_prefix)
+        self.assertEqual(first[-2:], ["rev-parse", "HEAD"])
+        self.assertEqual(second[-2:], ["status", "--porcelain"])
 
     def test_readonly_subprocesses_have_a_fixed_timeout(self):
         with mock.patch.object(bench.subprocess, "run", side_effect=bench.subprocess.TimeoutExpired("probe", 20)):
