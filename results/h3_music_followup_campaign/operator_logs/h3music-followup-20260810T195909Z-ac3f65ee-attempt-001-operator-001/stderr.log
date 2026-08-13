@@ -1,0 +1,1 @@
+[H3 MUSIC FOLLOW-UP FAILED] CampaignError: receipt invariant drift for h3_music_followup_score_seed42_f277: {'gate_pass': {'expected': True, 'actual': False}, 'status': {'expected': 'cold gate pass', 'actual': 'FAIL (VRAM 14.72 GB > 14.5 GB)'}}

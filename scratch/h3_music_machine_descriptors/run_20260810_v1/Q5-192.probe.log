@@ -1,0 +1,19 @@
+{
+    "programs": [
+
+    ],
+    "stream_groups": [
+
+    ],
+    "streams": [
+        {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "8.000000"
+        }
+    ],
+    "format": {
+        "duration": "8.000000"
+    }
+}

@@ -1,0 +1,106 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\outputs\h3_music_followup_mood_dim_lighthearted_seed42_f124_out_00001_.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Duration: 00:00:05.17, start: 0.000000, bitrate: 1319 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1344x768, 1183 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 32000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:1 -> #0:0 (aac (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'NUL':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Stream #0:0(und): Audio: pcm_s16le, 32000 Hz, stereo, s16, 1024 kb/s (default)
+    Metadata:
+      encoder         : Lavc62.11.100 pcm_s16le
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+[Parsed_astats_0 @ 0000024fe5291940] Channel: 1
+[Parsed_astats_0 @ 0000024fe5291940] DC offset: 0.000058
+[Parsed_astats_0 @ 0000024fe5291940] Min level: -0.141861
+[Parsed_astats_0 @ 0000024fe5291940] Max level: 0.158736
+[Parsed_astats_0 @ 0000024fe5291940] Min difference: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Max difference: 0.025193
+[Parsed_astats_0 @ 0000024fe5291940] Mean difference: 0.003586
+[Parsed_astats_0 @ 0000024fe5291940] RMS difference: 0.004706
+[Parsed_astats_0 @ 0000024fe5291940] Peak level dB: -15.986488
+[Parsed_astats_0 @ 0000024fe5291940] RMS level dB: -30.113689
+[Parsed_astats_0 @ 0000024fe5291940] RMS peak dB: -26.193079
+[Parsed_astats_0 @ 0000024fe5291940] RMS through dB: -37.220779
+[Parsed_astats_0 @ 0000024fe5291940] Crest factor: 5.085809
+[Parsed_astats_0 @ 0000024fe5291940] Flat factor: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Peak count: 2
+[Parsed_astats_0 @ 0000024fe5291940] Abs Peak count: 1
+[Parsed_astats_0 @ 0000024fe5291940] Noise floor dB: -29.041011
+[Parsed_astats_0 @ 0000024fe5291940] Noise floor count: 17
+[Parsed_astats_0 @ 0000024fe5291940] Entropy: 0.694861
+[Parsed_astats_0 @ 0000024fe5291940] Bit depth: 29/32/32/32
+[Parsed_astats_0 @ 0000024fe5291940] Dynamic range: 135.216686
+[Parsed_astats_0 @ 0000024fe5291940] Zero crossings: 7794
+[Parsed_astats_0 @ 0000024fe5291940] Zero crossings rate: 0.046984
+[Parsed_astats_0 @ 0000024fe5291940] Number of NaNs: 0
+[Parsed_astats_0 @ 0000024fe5291940] Number of Infs: 0
+[Parsed_astats_0 @ 0000024fe5291940] Number of denormals: 0
+[Parsed_astats_0 @ 0000024fe5291940] Channel: 2
+[Parsed_astats_0 @ 0000024fe5291940] DC offset: 0.000060
+[Parsed_astats_0 @ 0000024fe5291940] Min level: -0.179006
+[Parsed_astats_0 @ 0000024fe5291940] Max level: 0.216448
+[Parsed_astats_0 @ 0000024fe5291940] Min difference: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Max difference: 0.029116
+[Parsed_astats_0 @ 0000024fe5291940] Mean difference: 0.004217
+[Parsed_astats_0 @ 0000024fe5291940] RMS difference: 0.005485
+[Parsed_astats_0 @ 0000024fe5291940] Peak level dB: -13.292914
+[Parsed_astats_0 @ 0000024fe5291940] RMS level dB: -27.366368
+[Parsed_astats_0 @ 0000024fe5291940] RMS peak dB: -23.682844
+[Parsed_astats_0 @ 0000024fe5291940] RMS through dB: -35.309315
+[Parsed_astats_0 @ 0000024fe5291940] Crest factor: 5.054436
+[Parsed_astats_0 @ 0000024fe5291940] Flat factor: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Peak count: 2
+[Parsed_astats_0 @ 0000024fe5291940] Abs Peak count: 1
+[Parsed_astats_0 @ 0000024fe5291940] Noise floor dB: -24.518803
+[Parsed_astats_0 @ 0000024fe5291940] Noise floor count: 533
+[Parsed_astats_0 @ 0000024fe5291940] Entropy: 0.729886
+[Parsed_astats_0 @ 0000024fe5291940] Bit depth: 29/32/32/32
+[Parsed_astats_0 @ 0000024fe5291940] Dynamic range: 146.399846
+[Parsed_astats_0 @ 0000024fe5291940] Zero crossings: 6642
+[Parsed_astats_0 @ 0000024fe5291940] Zero crossings rate: 0.040039
+[Parsed_astats_0 @ 0000024fe5291940] Number of NaNs: 0
+[Parsed_astats_0 @ 0000024fe5291940] Number of Infs: 0
+[Parsed_astats_0 @ 0000024fe5291940] Number of denormals: 0
+[Parsed_astats_0 @ 0000024fe5291940] Overall
+[Parsed_astats_0 @ 0000024fe5291940] DC offset: 0.000060
+[Parsed_astats_0 @ 0000024fe5291940] Min level: -0.179006
+[Parsed_astats_0 @ 0000024fe5291940] Max level: 0.216448
+[Parsed_astats_0 @ 0000024fe5291940] Min difference: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Max difference: 0.029116
+[Parsed_astats_0 @ 0000024fe5291940] Mean difference: 0.003901
+[Parsed_astats_0 @ 0000024fe5291940] RMS difference: 0.005110
+[Parsed_astats_0 @ 0000024fe5291940] Peak level dB: -13.292914
+[Parsed_astats_0 @ 0000024fe5291940] RMS level dB: -28.526315
+[Parsed_astats_0 @ 0000024fe5291940] RMS peak dB: -23.682844
+[Parsed_astats_0 @ 0000024fe5291940] RMS through dB: -37.220779
+[Parsed_astats_0 @ 0000024fe5291940] Flat factor: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Peak count: 2.000000
+[Parsed_astats_0 @ 0000024fe5291940] Abs Peak count: 1.000000
+[Parsed_astats_0 @ 0000024fe5291940] Noise floor dB: -24.518803
+[Parsed_astats_0 @ 0000024fe5291940] Noise floor count: 275.000000
+[Parsed_astats_0 @ 0000024fe5291940] Entropy: 0.712373
+[Parsed_astats_0 @ 0000024fe5291940] Bit depth: 29/32/32/32
+[Parsed_astats_0 @ 0000024fe5291940] Number of samples: 165888
+[Parsed_astats_0 @ 0000024fe5291940] Number of NaNs: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Number of Infs: 0.000000
+[Parsed_astats_0 @ 0000024fe5291940] Number of denormals: 0.000000
+[out#0/null @ 0000024fe55a1f40] video:0KiB audio:648KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:05.18 bitrate=N/A speed= 739x elapsed=0:00:00.00    

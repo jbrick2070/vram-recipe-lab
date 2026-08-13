@@ -1,0 +1,6 @@
+STDOUT:
+Review written to `kibitz-runs/2026-08-10-h3-music-attempt5-recovery/r1/claude.md`.
+
+**4 MUST-FIX, 3 SHOULD-FIX, 1 OPTIONAL, nothing to cut.**
+
+The sharpest finding: the plan describes desired pair-10 behavior in four different places without ever naming the two functions that actually implement it — `ensure_pristine_pair()` (which will crash on the existing `_run1.json`) and `pair_run_schedule()` (which has no pair-10/attempt-004 branch). Both are silent runtime failures, not build-time failures.

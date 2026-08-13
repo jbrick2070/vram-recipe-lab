@@ -199,6 +199,15 @@ near-still, because Jeffrey has not yet ranked the full clips or judged beat res
 Recommendation: present M0-M3 together and wait for Jeffrey's ranking. Do not infer
 music responsiveness from sparse frame samples.
 
+**RULED by Jeffrey 2026-08-09 (full-clip review):** "Not much movement from my
+perspective - these are all stills. Prompting too constrained or inputs
+misconfigured. Boring." All four rungs read near-still; no rung is promoted. The
+ruling attributes the stillness to the experiment's restrained prompting and
+configuration rather than proving the lane inherently near-still - a looser-prompt
+motion experiment remains an open lab question. The M1 (motion-vocabulary) and M2
+(soft-anchor 0.7) levers produced no visible motion gain and do not earn recipe
+status.
+
 ## Unconditioned Mini Mime
 
 The corrected Mini Mime proof has picture conditioning and model-native audio output,
@@ -217,6 +226,38 @@ speech/vocals or coherent diegetic synchronization.
 The inverted human ear gate remains pending: Jeffrey must confirm no speech-like or
 vocal-like content at all, intelligible or otherwise, plus coherent diegetic sync. This is one cold
 experimental proof, not a warm production promotion.
+
+**DISCOVERY 2026-08-09 (evening) - the capability ALREADY WORKED, in a clip
+nobody had filed as a mime result.** `recipes/h3_r2v_best.json` supplies a
+portrait plus a scene-describing prompt and **NO audio input of any kind**;
+`outputs/h3_r2v_best_out_00001_.mp4` (2026-08-08) nevertheless carries a full
+generated AAC soundtrack, which Jeffrey independently recalled a day later as
+"great music" and identified from a frame contact sheet. Its prompt directs
+only picture ("Use `<Picture 1>` as the exact character identity ... slow
+cinematic move") and says nothing about audio; the on-screen woman is also
+H3's invention. Filed at the time as an r2v QUALITY test, so its audio was
+never auditioned.
+
+Consequence for the FAIL below: the rejected artifact
+(`h3_mime_i2v_ledger_music_closing_8s`) is the ONLY mime-labelled render whose
+prompt DIRECTED the audio ("ambient room tone and synchronized diegetic sound
+effects only ... No dialogue") - the prompting style the operator retired hours
+later in favour of scene-only prompting. Working hypothesis, now testable:
+directing the audio degrades it; describing only the scene lets H3 compose.
+The FAIL stands as a ruling on that artifact; it is NOT a ruling on the
+capability. Queued lab mission `H3_UNCONDITIONED_MUSIC` tests repeatability
+across seeds, the prompt-style hypothesis as a one-variable A/B/C, and whether
+invented music survives longer durations.
+
+**RULED by Jeffrey 2026-08-09 (ear gate, full listen): FAIL.** "I thought it
+would be music. It's garbage - a real musical score or TTS would be better."
+Ruled under the operator's own RELAXED criteria of the same day (speech-like
+content allowed, full improvisation allowed), so the failure is quality, not
+criteria. Consequence: the mime lane's model-generated-audio exception is
+PARKED - real TTS/music remains delivery authority everywhere (V-1 universal),
+no audio-spine or add-on-compositor architecture work proceeds, and any future
+re-audition requires a new lab render under the scene-only prompting doctrine
+(describe the scene, never direct the audio) recorded the same day.
 
 ## Duration and token-budget intel
 

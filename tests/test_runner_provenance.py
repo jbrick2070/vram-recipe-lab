@@ -2114,6 +2114,95 @@ class TestRunnerProvenance(unittest.TestCase):
             errors = validate_recipes.current_certification_errors(receipt, recipe_file, root)
             self.assertTrue(any("runner_sha256" in error for error in errors))
 
+    def test_legacy_manager_probe_identity_is_reproved_from_nested_receipt_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            recipe_file = root / "sample.json"
+            output_dir = root / "outputs"
+            results_dir = root / "results"
+            output_dir.mkdir()
+            results_dir.mkdir()
+            recipe_file.write_text('{"name":"sample"}', encoding="utf-8")
+            output_file = output_dir / "sample.mp4"
+            output_file.write_bytes(b"video")
+            manager_evidence = {
+                "enabled": True,
+                "recipe_scope": {"id": "historic-manager-lane"},
+                "guard_source": {"path": "guard.py", "sha256": "g" * 64},
+                "test_boot_source": {"path": "boot.cmd", "sha256": "b" * 64},
+                "offline_environment": {"set_nonsecret": {"PIP_NO_INDEX": "1"}},
+                "advisory_config": {
+                    "snapshot": {"path": "config.ini", "sha256": "a" * 64}
+                },
+                "log_scan": {
+                    "authoritative_server_reported_mode": {"resolved_mode": "offline"},
+                    "source_proof": {
+                        name: {"sha256": name[0] * 64}
+                        for name in (
+                            "manager_prestartup",
+                            "manager_server",
+                            "manager_core",
+                            "comfy_folder_paths",
+                            "manager_util",
+                        )
+                    },
+                    "current_prestartup_state": {"state_sha256": "s" * 64},
+                    "preboot_records": [{"record": {"record_sha256": "p" * 64}}],
+                },
+                "log_path": "attempt.log",
+                "serving_pid": 123,
+                "serving_process_create_time_ns": 456,
+            }
+            manager_identity = validate_recipes.manager_probe_identity_from_receipt(
+                manager_evidence
+            )
+            self.assertIsNotNone(manager_identity)
+            # `recipe_scope` was introduced after the receipts this validates;
+            # historical identity is still fully re-proved for its own keys.
+            manager_identity.pop("recipe_scope")
+            identity = {
+                "recipe_sha256": run_recipe.sha256_file(recipe_file),
+                "runner_sha256": "runner-hash",
+                "fixture_sha256s": {},
+                "manager_offline_probe_identity": manager_identity,
+            }
+            receipt = {
+                "receipt_schema_version": 2,
+                "recipe": "sample",
+                "run_number": 2,
+                "run_count": 2,
+                "recipe_sha256": identity["recipe_sha256"],
+                "runner_sha256": identity["runner_sha256"],
+                "fixture_sha256s": identity["fixture_sha256s"],
+                "identity": identity,
+                "run_identity_sha256": run_recipe.stable_identity(identity),
+                "gate_pass": True,
+                "warm_pass": True,
+                "pass": True,
+                "status": "PASS",
+                "config_run_count": 2,
+                "provenance_unchanged": True,
+                "output_path": output_file.name,
+                "artifact_sha256": run_recipe.sha256_file(output_file),
+                "manager_offline_probe": {"pre_queue": manager_evidence},
+            }
+            archive = results_dir / "sample_run2.json"
+            archive.write_text(json.dumps(receipt), encoding="utf-8")
+
+            self.assertEqual(
+                validate_recipes.current_certification_errors(receipt, recipe_file, root),
+                [],
+            )
+
+            bad = json.loads(json.dumps(receipt))
+            bad["manager_offline_probe"]["pre_queue"]["log_path"] = "tampered.log"
+            archive.write_text(json.dumps(bad), encoding="utf-8")
+            errors = validate_recipes.current_certification_errors(bad, recipe_file, root)
+            self.assertTrue(
+                any("manager_offline_probe.pre_queue disagrees" in error for error in errors),
+                errors,
+            )
+
     def test_current_certification_rejects_type_confused_machine_fields(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

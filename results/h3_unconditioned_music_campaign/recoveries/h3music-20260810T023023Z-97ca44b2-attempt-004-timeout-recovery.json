@@ -1,0 +1,1269 @@
+{
+  "anti_mutation": {
+    "existing_receipt_artifact_or_log_modified": false,
+    "failed_lifecycle_appended_or_rewritten": false,
+    "network_used": false,
+    "operator_stream_modified": false,
+    "otr_touched": false,
+    "process_listener_lock_or_gpu_queried": false,
+    "recorder_source_self_hash_included": false,
+    "render_started": false,
+    "server_contacted": false
+  },
+  "certification_effect": {
+    "attempt004_status": "FAILED",
+    "campaign_complete_granted": false,
+    "human_judgment": "PENDING_HUMAN",
+    "pair10_machine_complete": false,
+    "pair10_run1_historical_orphan_only": true,
+    "pair10_run1_machine_pair_leg": false,
+    "pair11_machine_complete": false,
+    "pairs_1_through_9_machine_complete": true,
+    "promotion_or_study_pass_granted": false
+  },
+  "failed_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+  "full_pair_verification": [
+    {
+      "canonical_result_sha256": "b47abc5895f9e0a6bbeb3d4da4a2490213dba168fa1aa4505257bfd5f4103f22",
+      "cold_artifact_sha256": "b58461545dc0b7ceee6bfa0eaac080446cc3148bc00783f04eaef48ee96617ed",
+      "cold_receipt_sha256": "30d6dbc37b906a25909826e8ef68862af4952c7597b793a76982db1a9ebe25cd",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "1ab05e73202b2e77a5dfb4f4cf350491e1e9a0d0d6c4083204d855be88122b7d",
+      "pair_index": 1,
+      "recipe": "h3_unconditioned_music_scene_seed42_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-002",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "b58461545dc0b7ceee6bfa0eaac080446cc3148bc00783f04eaef48ee96617ed",
+      "warm_receipt_sha256": "e12a76ebc4e14bb42d2d6f44466364894a6ce65a70b4cbda1057d55cb976829a"
+    },
+    {
+      "canonical_result_sha256": "a3dd0a5966f6f738b56fbadfd53c95a54789e9481e5b0202bd60d650e8aa3be1",
+      "cold_artifact_sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541",
+      "cold_receipt_sha256": "a3bd3aaf1cf60f578d6e472d7894c12041dd32bd14ccce475f5dd966b4f4cff0",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "68b53407712bc42a59167bf5e4fb55aa6fbc8008704a3c695c64e05c56f5f24c",
+      "pair_index": 2,
+      "recipe": "h3_unconditioned_music_motion_small_seed42_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-003",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541",
+      "warm_receipt_sha256": "737b3d4a4473569cbfa6615b01eb3a4143450d2a133cbf99b3990ea71e1c7aa8"
+    },
+    {
+      "canonical_result_sha256": "21ea1f8d0075915135ef7e2d3a535af5383b16ae4a29189992d48738f914dfc9",
+      "cold_artifact_sha256": "3f7b98cdd8187972e2c9119006ac56d2921e071b9b4adc977e8adc8eb81beabe",
+      "cold_receipt_sha256": "e22ccd5b3ba44f9d0e54dff455d3b0ef8d90b269ee873fd2048091b0d2e078d3",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "510cfbbae0482da7a02c4566dcc37766a5a1abd2d5b9b57079046de1d95e74e6",
+      "pair_index": 3,
+      "recipe": "h3_unconditioned_music_motion_large_seed42_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "3f7b98cdd8187972e2c9119006ac56d2921e071b9b4adc977e8adc8eb81beabe",
+      "warm_receipt_sha256": "cf14ab30ebe995367125a13c443c83b6d6334b61caf12c4491a19c5a6537fe7f"
+    },
+    {
+      "canonical_result_sha256": "2b5b1c576888a228713b89842fc9fc39322f38dc599fab9d2235647c8512047b",
+      "cold_artifact_sha256": "cff95b06e823ef91209287cc6dee914a6f4f5e1f161b152e93ece00b67b84ca2",
+      "cold_receipt_sha256": "14a91e13a5b26aecc2ab40c693556f0c9b406ce8057f1def2a8348e90994e20d",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "ccddb3c1d095dc73a68f55f98c6178b67d0cc3898ef286742554246409db06a0",
+      "pair_index": 4,
+      "recipe": "h3_unconditioned_music_scene_seed43_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "cff95b06e823ef91209287cc6dee914a6f4f5e1f161b152e93ece00b67b84ca2",
+      "warm_receipt_sha256": "99b2cc43a61aee957d94ca99a4dfee7bfb191186f41d3f3aaa21a95ef603ab65"
+    },
+    {
+      "canonical_result_sha256": "4b2fd091f1a264ceee6e43556c1d2908c2a78138d0fe40334965149e81e38f99",
+      "cold_artifact_sha256": "c17326216587c63dff23b01ec6964720c9ecfcc110575b493b47435605f9c7cf",
+      "cold_receipt_sha256": "2a36585469c46ce434e3ddbe742227d2bddefede3da44f41ab5daf76f9d9d994",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "e0a66519b12d8542da2d83705e7a47b4d819fcade46dd36c5f17c8f49cca1559",
+      "pair_index": 5,
+      "recipe": "h3_unconditioned_music_scene_seed44_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "c17326216587c63dff23b01ec6964720c9ecfcc110575b493b47435605f9c7cf",
+      "warm_receipt_sha256": "d1e559d0f14b28ae80df574c384927fcb462cffc91e065c3f4e3a9b1d8cfd347"
+    },
+    {
+      "canonical_result_sha256": "e515f5663a251b5fa7750396423e998c769ad6d0de9722c24d8cda0abe1daf7d",
+      "cold_artifact_sha256": "aa1de4095d44112195407fe23beeacdd93ca84b5b9d4927651013bf3528ad020",
+      "cold_receipt_sha256": "57f36610b486b6a46c8774fae910a35628af93db47a65b646912bc2a08dbe2d0",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "d58d22004d496cd62ccfd7eb5e82805a09cd1d9d6ce30384002f3c4c8516eb2e",
+      "pair_index": 6,
+      "recipe": "h3_unconditioned_music_scene_seed45_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "aa1de4095d44112195407fe23beeacdd93ca84b5b9d4927651013bf3528ad020",
+      "warm_receipt_sha256": "8c62da832d95ba34e26f71044c7432ee1eee17235c318c91fa58ea7c7b4f22fc"
+    },
+    {
+      "canonical_result_sha256": "3bf2ec0437db5d8b4b77ddbb256dad6eb9df17c44e99fba4b711090532788aae",
+      "cold_artifact_sha256": "bae207d958cf0bd1fed62eba770b716588cccf126eeeaea7b6c77749bf6a5890",
+      "cold_receipt_sha256": "26de7a04188714d0a71bd67a608641deb68e768dbd48e72f2967f68d0448be25",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "5289cd801a1a327b25ce56a5c9fd35b247f09b405b8a9b109ff7ff937c0c058d",
+      "pair_index": 7,
+      "recipe": "h3_unconditioned_music_scene_seed46_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "bae207d958cf0bd1fed62eba770b716588cccf126eeeaea7b6c77749bf6a5890",
+      "warm_receipt_sha256": "3fe567f8dcaf8b26a5f78a426a216555235c21fe7a5cad5d21505e57146061c8"
+    },
+    {
+      "canonical_result_sha256": "0b5356f0516aa4a57a22f8a65026113beca98c18d73346bc4d632c9dbb3479e0",
+      "cold_artifact_sha256": "23cff43d00b2de2a57da492b4e5942606cf25217b522927d19bad208a58d763a",
+      "cold_receipt_sha256": "c10068f539b3e81fd09eeef88cbfae26e37c20a99f51f05060f4ef191296f19d",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "a734317b15dfe7dd6658bcca5b6ea23c92c7988b268f358d78ea60f56cf51f8e",
+      "pair_index": 8,
+      "recipe": "h3_unconditioned_music_score_seed42_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "23cff43d00b2de2a57da492b4e5942606cf25217b522927d19bad208a58d763a",
+      "warm_receipt_sha256": "cdeb5829fc1a4c466d9db6d43571de15103edcd46206063d8eb88c3191c506be"
+    },
+    {
+      "canonical_result_sha256": "cc98b1d1f14d61a2a5bd052d30b6b9fb8f5992a40c5825b4f64f56a2b55b4c75",
+      "cold_artifact_sha256": "70ffb6fa94cec7ecae2ed103b5373a689c5563f4e8feb8f09d3c173a41f81041",
+      "cold_receipt_sha256": "a03e83d27018bb8f245ac95cdd234a49488f3efbb7243e16ff472d916716f78f",
+      "human_judgment": "PENDING_HUMAN",
+      "manager_log_sha256": "09a5fbbc283581b94aeefaf03a7b8a26a1103366d163cfb36ab5fb4bec2ea0b8",
+      "pair_index": 9,
+      "recipe": "h3_unconditioned_music_sfx_seed42_f124",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+      "status": "MACHINE_COMPLETE",
+      "warm_artifact_sha256": "70ffb6fa94cec7ecae2ed103b5373a689c5563f4e8feb8f09d3c173a41f81041",
+      "warm_receipt_sha256": "d5992ab2b1364fcec16fcd3b577790340c3efa1c202b8151b112d8c52116f7c1"
+    }
+  ],
+  "immutable_evidence": {
+    "lifecycle": {
+      "prefix": {
+        "bytes": 1513119,
+        "hash_chain_verified": true,
+        "last_event_sha256": "b66526982583393059c25d6c67cad3b8fdae4a51239111dc19d15681c14df80f",
+        "path": "results/h3_unconditioned_music_campaign/lifecycle.jsonl",
+        "row_count": 65,
+        "sha256": "1fb0ea686f0acd30e83e2f294d717afebf471381b3eb9d2138a12f6a10734c69"
+      },
+      "snapshot": {
+        "bytes": 1513119,
+        "path": "results/h3_unconditioned_music_campaign/lifecycle.jsonl",
+        "sha256": "1fb0ea686f0acd30e83e2f294d717afebf471381b3eb9d2138a12f6a10734c69"
+      },
+      "terminal_failure": {
+        "carried_pair_count": 2,
+        "completed_pair_count": 9,
+        "error": "h3_unconditioned_music_scene_seed42_f192 run 1 field gate_pass drift: False != True",
+        "failure_state": {
+          "expected_server_identity_live": false,
+          "gpu_lock_exists": false,
+          "listener_pids_8199": [],
+          "queue_quarantine_exists": false,
+          "server_pid_create_time": null,
+          "server_pid_receipt": null,
+          "server_pid_receipt_exists": false,
+          "suite_lock_exists": false
+        },
+        "new_verified_pair_count": 7,
+        "owned_server_cleanup": {
+          "attempted": false
+        },
+        "status": "FAILED",
+        "stopped_without_force_or_additional_render": true
+      }
+    },
+    "operator_streams": {
+      "launch_receipt_absent": {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_campaign/operator_logs/h3music-20260810T023023Z-97ca44b2-attempt-004/launch.json"
+      },
+      "stderr": {
+        "bytes": 127,
+        "path": "results/h3_unconditioned_music_campaign/operator_logs/h3music-20260810T023023Z-97ca44b2-attempt-004/stderr.log",
+        "sha256": "b06421405eaea1da951fc837038d4b255bfa8652571adcfbf4c92120aca0a130"
+      },
+      "stdout": {
+        "bytes": 27710,
+        "path": "results/h3_unconditioned_music_campaign/operator_logs/h3music-20260810T023023Z-97ca44b2-attempt-004/stdout.log",
+        "sha256": "f5725b2bc6bbce93dcc682ae5716b8e8b056ca7f2cb8099f364c795acfed890e"
+      }
+    },
+    "pair10_failed_run1": {
+      "alias": {
+        "bytes": 37593,
+        "path": "results/h3_unconditioned_music_scene_seed42_f192.json",
+        "sha256": "4ab72334bc80d8155d1b1d1466258922a7a9e1ad2e289f37b07a510115d164bf"
+      },
+      "classification": {
+        "artifact_finalized": false,
+        "operator_stderr_terminal_line": "[H3 MUSIC CAMPAIGN FAILED] CampaignError: h3_unconditioned_music_scene_seed42_f192 run 1 field gate_pass drift: False != True",
+        "qualifying_cold_leg": false,
+        "sampling_steps_completed": 20,
+        "timeout_seconds": 1800
+      },
+      "manager_log": {
+        "bytes": 22893,
+        "path": "results/h3_unconditioned_music_campaign/server_logs/h3music-20260810T023023Z-97ca44b2-attempt-004-p10-h3_unconditioned_music_scene_seed42_f192.log",
+        "sha256": "22d1e7264febfe962cbda12f9365fc633f28af2cb9c079fc253138f5698edfb1"
+      },
+      "receipt": {
+        "bytes": 37593,
+        "path": "results/h3_unconditioned_music_scene_seed42_f192_run1.json",
+        "sha256": "4ab72334bc80d8155d1b1d1466258922a7a9e1ad2e289f37b07a510115d164bf"
+      },
+      "receipt_fields": {
+        "accepted_prompt": true,
+        "audio_receipt_sha256s": {},
+        "baseline_host_ram_gb": 18.39,
+        "baseline_vram_gb": 1.97,
+        "blocked": false,
+        "boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb",
+        "certification_scope": "machine-only",
+        "clamp_target_gib": null,
+        "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+        "config_run_count": 1,
+        "duration_s": 1800.0,
+        "execution_cache_control": {
+          "cache_event_found": false,
+          "cached_fresh_node_ids": [],
+          "cached_node_ids": [],
+          "fresh_execution_proved": false,
+          "fresh_node_ids": [
+            "5",
+            "8",
+            "9",
+            "10",
+            "12",
+            "15"
+          ],
+          "fresh_output_node_ids": [
+            "12"
+          ],
+          "mode": "pinned-undeclared-sampler-input",
+          "nonce": "h3music:h3music-20260810T023023Z-97ca44b2-attempt-004:p10:cold",
+          "reachable_node_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+          ],
+          "recipe_seed": 42,
+          "sampler_node_ids": [
+            "8"
+          ],
+          "seed_input": "noise_seed",
+          "source_class_type": "RandomNoise",
+          "source_node_id": "5",
+          "stable_node_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "6",
+            "7",
+            "11",
+            "13",
+            "14"
+          ]
+        },
+        "eyeball": "pending",
+        "final_server_instance": {},
+        "final_standalone_cache_runtime_sha256s": {
+          "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+          "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+          "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+          "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+          "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+          "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+          "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+        },
+        "final_suite_cache_runtime_sha256s": {},
+        "fixture_sha256s": {
+          "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+        },
+        "gate_pass": false,
+        "git_commit": "4d87cfa3278c39cbdde6f3cb8b16f241aeb58c02",
+        "git_dirty": true,
+        "identity": {
+          "audio_receipt_sha256s": {},
+          "boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb",
+          "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+          "fixture_sha256s": {
+            "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+          },
+          "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+          "manager_offline_probe_identity": {
+            "advisory_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+            "advisory_config_sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab",
+            "authoritative_server_reported_mode": "offline",
+            "guard_source": {
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+              "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+            },
+            "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p10-h3_unconditioned_music_scene_seed42_f192.log",
+            "manager_source_sha256s": {
+              "comfy_folder_paths": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db",
+              "manager_core": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67",
+              "manager_prestartup": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4",
+              "manager_server": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6",
+              "manager_util": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+            },
+            "offline_environment": {
+              "scrubbed_key_names": [
+                "HUGGINGFACE_HUB_TOKEN",
+                "HF_API_TOKEN"
+              ],
+              "set_nonsecret": {
+                "GIT_TERMINAL_PROMPT": "0",
+                "HF_HUB_OFFLINE": "1",
+                "HF_TOKEN": "offline-disabled",
+                "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                "PIP_NO_INDEX": "1",
+                "TRANSFORMERS_OFFLINE": "1",
+                "UV_OFFLINE": "1"
+              },
+              "values_are_nonsecret": true
+            },
+            "preboot_record_sha256": "f32c76479e685091c6e248675a41f434af4f228f5d30ff4ec7caee893eda113f",
+            "prestartup_state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+            "serving_pid": 38876,
+            "serving_process_create_time_ns": 1786355417775455488,
+            "test_boot_source": {
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+              "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+            }
+          },
+          "model_fingerprints": {
+            "minimax_h3_audio_vae_fp32.safetensors": {
+              "bytes": 605254808,
+              "mtime_ns": 1786172708634123800,
+              "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+              "resolved": true
+            },
+            "minimax_h3_ref2va_pruned_int8_convrot.safetensors": {
+              "bytes": 20970379616,
+              "mtime_ns": 1786178589584574300,
+              "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+              "resolved": true
+            },
+            "minimax_h3_video_vae_fp16.safetensors": {
+              "bytes": 5207808496,
+              "mtime_ns": 1786173216118700500,
+              "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+              "resolved": true
+            },
+            "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+              "bytes": 15687142551,
+              "mtime_ns": 1786174937682140700,
+              "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+              "resolved": true
+            }
+          },
+          "recipe_sha256": "5249ffd3e89c10c4a3bae8ba939da9ee2f26e9da2dcbc58e08448f2a393c04a3",
+          "runner_sha256": "0224d6ec6db4962f0332bf53e031cd71e2818ccca4a919479c829e64cbfc4bf8",
+          "server_argv": [
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "ComfyUI-Manager",
+            "--reserve-vram",
+            "12",
+            "--disable-pinned-memory",
+            "--cache-classic"
+          ],
+          "server_instance": {
+            "process_create_time": 1786355417.775455,
+            "serving_pid": 38876
+          },
+          "standalone_cache_runtime_sha256s": {
+            "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+            "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+            "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+            "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+            "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+            "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+            "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+          }
+        },
+        "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+        "manager_offline_probe": {
+          "post_render": {
+            "enabled": true,
+            "error": "Preflight Check #9 [Boot lane] FAILED: Manager offline probe failed: ManagerProbeError: lab listener PID is absent",
+            "valid": false
+          },
+          "pre_queue": {
+            "advisory_config": {
+              "authority": "advisory precondition; server log is runtime authority",
+              "network_mode": "offline",
+              "snapshot": {
+                "bytes": 460,
+                "device": 1356286727840300467,
+                "inode": 1688849860737885,
+                "mtime_ns": 1786320736274345500,
+                "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+              }
+            },
+            "enabled": true,
+            "guard_source": {
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+              "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+            },
+            "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p10-h3_unconditioned_music_scene_seed42_f192.log",
+            "log_scan": {
+              "atomically_precreated_empty_required": true,
+              "authoritative_server_reported_mode": {
+                "announcement_count": 1,
+                "first_execution_line_number": null,
+                "mode_line_number": 106,
+                "mode_precedes_first_execution": true,
+                "mode_precedes_startup_completion": true,
+                "observed_values": [
+                  "offline"
+                ],
+                "required_mode": "offline",
+                "resolved_mode": "offline",
+                "startup_complete_line_number": 109
+              },
+              "config_announcements": [
+                {
+                  "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                  "line_number": 58,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+                }
+              ],
+              "current_prestartup_state": {
+                "dependency_imports": {
+                  "chardet": {
+                    "bytes": 4797,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009640,
+                    "mtime_ns": 1772691972102495000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+                    "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+                  },
+                  "git": {
+                    "bytes": 8899,
+                    "device": 1356286727840300467,
+                    "inode": 281474977008730,
+                    "mtime_ns": 1772691971770212000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+                    "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+                  },
+                  "rich": {
+                    "bytes": 6131,
+                    "device": 1356286727840300467,
+                    "inode": 3096224743826856,
+                    "mtime_ns": 1776637389041712100,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+                    "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+                  },
+                  "toml": {
+                    "bytes": 723,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009844,
+                    "mtime_ns": 1772691972176384000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+                    "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+                  }
+                },
+                "kind": "h3-manager-prestartup-noop-state",
+                "manager_config": {
+                  "network_mode": "offline",
+                  "pip_list_route": "exact interpreter -m pip list",
+                  "snapshot": {
+                    "bytes": 460,
+                    "device": 1356286727840300467,
+                    "inode": 1688849860737885,
+                    "mtime_ns": 1786320736274345500,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                    "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+                  },
+                  "use_uv": false
+                },
+                "manager_files": {
+                  "device": 1356286727840300467,
+                  "entries": [
+                    "cache",
+                    "channels.list",
+                    "config.ini",
+                    "snapshots",
+                    "startup-scripts"
+                  ],
+                  "entry_count": 5,
+                  "inode": 2533274790869444,
+                  "mtime_ns": 1776467101916065900,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+                },
+                "manager_pip_list": {
+                  "command": [
+                    "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                    "-m",
+                    "pip",
+                    "list"
+                  ],
+                  "offline_environment": {
+                    "scrubbed_key_names": [
+                      "HUGGINGFACE_HUB_TOKEN",
+                      "HF_API_TOKEN"
+                    ],
+                    "set_nonsecret": {
+                      "GIT_TERMINAL_PROMPT": "0",
+                      "HF_HUB_OFFLINE": "1",
+                      "HF_TOKEN": "offline-disabled",
+                      "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                      "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                      "PIP_NO_INDEX": "1",
+                      "TRANSFORMERS_OFFLINE": "1",
+                      "UV_OFFLINE": "1"
+                    },
+                    "values_are_nonsecret": true
+                  },
+                  "relevant_versions": {
+                    "comfy": null,
+                    "comfyui_frontend_package": "1.48.7",
+                    "opencv_contrib_python": null,
+                    "opencv_contrib_python_headless": null,
+                    "opencv_python": "4.13.0.92",
+                    "opencv_python_headless": "4.13.0.92",
+                    "torch": "2.10.0+cu130",
+                    "torchaudio": "2.10.0+cu130",
+                    "torchvision": "0.25.0+cu130"
+                  },
+                  "returncode": 0,
+                  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+                },
+                "pip_fixer_noop": {
+                  "conditions": {
+                    "comfy_distribution_absent": true,
+                    "frontend_distribution_present": true,
+                    "opencv_variants_already_same_version": true,
+                    "pip_auto_fix_absent": true,
+                    "torch_trio_present_and_stable": true
+                  },
+                  "opencv_versions": [
+                    "4.13.0.92"
+                  ],
+                  "relevant_distributions": {
+                    "comfy": [],
+                    "comfyui_frontend_package": [
+                      {
+                        "distribution_name": "comfyui_frontend_package",
+                        "version": "1.48.7"
+                      }
+                    ],
+                    "opencv_contrib_python": [],
+                    "opencv_contrib_python_headless": [],
+                    "opencv_python": [
+                      {
+                        "distribution_name": "opencv-python",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "opencv_python_headless": [
+                      {
+                        "distribution_name": "opencv-python-headless",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "torch": [
+                      {
+                        "distribution_name": "torch",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchaudio": [
+                      {
+                        "distribution_name": "torchaudio",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchvision": [
+                      {
+                        "distribution_name": "torchvision",
+                        "version": "0.25.0+cu130"
+                      }
+                    ]
+                  }
+                },
+                "python": {
+                  "bytes": 262144,
+                  "device": 1356286727840300467,
+                  "inode": 562949953716875,
+                  "mtime_ns": 1772691956859914100,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                  "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+                },
+                "scheduled_mutation_inputs": {
+                  "install_scripts": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+                  },
+                  "pip_auto_fix": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+                  },
+                  "restore_snapshot": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+                  }
+                },
+                "schema_version": 1,
+                "startup_scripts": {
+                  "device": 1356286727840300467,
+                  "entries": [],
+                  "entry_count": 0,
+                  "inode": 1970324837448461,
+                  "mtime_ns": 1776467101898738000,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+                },
+                "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+                "user_directory": {
+                  "device": 1356286727840300467,
+                  "inode": 1970324837254298,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+                }
+              },
+              "errors": [],
+              "execution_markers": [],
+              "expected_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+              "expected_gui_url": "http://127.0.0.1:8199",
+              "kind": "h3-manager-offline-probe-log-scan",
+              "log": {
+                "bytes": 19516,
+                "device": 1356286727840300467,
+                "inode": 11258999069525468,
+                "mtime_ns": 1786355430937497400,
+                "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p10-h3_unconditioned_music_scene_seed42_f192.log",
+                "sha256": "6925449ad8ac670facb7554be14d775c9132f42d6b40c95ff3cc098d084d939c"
+              },
+              "mutation_markers": [],
+              "network_markers": [],
+              "preboot_record_starts_at_byte_zero": true,
+              "preboot_records": [
+                {
+                  "line_number": 1,
+                  "line_sha256": "fda901f0e10dd6352c83322fda0744c31042fee4d6794c8833b8685b7a0ec14d",
+                  "record": {
+                    "kind": "h3-manager-preboot-record",
+                    "offline_environment": {
+                      "scrubbed_key_names": [
+                        "HUGGINGFACE_HUB_TOKEN",
+                        "HF_API_TOKEN"
+                      ],
+                      "set_nonsecret": {
+                        "GIT_TERMINAL_PROMPT": "0",
+                        "HF_HUB_OFFLINE": "1",
+                        "HF_TOKEN": "offline-disabled",
+                        "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                        "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                        "PIP_NO_INDEX": "1",
+                        "TRANSFORMERS_OFFLINE": "1",
+                        "UV_OFFLINE": "1"
+                      },
+                      "values_are_nonsecret": true
+                    },
+                    "prestartup_state": {
+                      "dependency_imports": {
+                        "chardet": {
+                          "bytes": 4797,
+                          "device": 1356286727840300467,
+                          "inode": 281474977009640,
+                          "mtime_ns": 1772691972102495000,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+                          "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+                        },
+                        "git": {
+                          "bytes": 8899,
+                          "device": 1356286727840300467,
+                          "inode": 281474977008730,
+                          "mtime_ns": 1772691971770212000,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+                          "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+                        },
+                        "rich": {
+                          "bytes": 6131,
+                          "device": 1356286727840300467,
+                          "inode": 3096224743826856,
+                          "mtime_ns": 1776637389041712100,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+                          "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+                        },
+                        "toml": {
+                          "bytes": 723,
+                          "device": 1356286727840300467,
+                          "inode": 281474977009844,
+                          "mtime_ns": 1772691972176384000,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+                          "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+                        }
+                      },
+                      "kind": "h3-manager-prestartup-noop-state",
+                      "manager_config": {
+                        "network_mode": "offline",
+                        "pip_list_route": "exact interpreter -m pip list",
+                        "snapshot": {
+                          "bytes": 460,
+                          "device": 1356286727840300467,
+                          "inode": 1688849860737885,
+                          "mtime_ns": 1786320736274345500,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                          "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+                        },
+                        "use_uv": false
+                      },
+                      "manager_files": {
+                        "device": 1356286727840300467,
+                        "entries": [
+                          "cache",
+                          "channels.list",
+                          "config.ini",
+                          "snapshots",
+                          "startup-scripts"
+                        ],
+                        "entry_count": 5,
+                        "inode": 2533274790869444,
+                        "mtime_ns": 1776467101916065900,
+                        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+                      },
+                      "manager_pip_list": {
+                        "command": [
+                          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                          "-m",
+                          "pip",
+                          "list"
+                        ],
+                        "offline_environment": {
+                          "scrubbed_key_names": [
+                            "HUGGINGFACE_HUB_TOKEN",
+                            "HF_API_TOKEN"
+                          ],
+                          "set_nonsecret": {
+                            "GIT_TERMINAL_PROMPT": "0",
+                            "HF_HUB_OFFLINE": "1",
+                            "HF_TOKEN": "offline-disabled",
+                            "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                            "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                            "PIP_NO_INDEX": "1",
+                            "TRANSFORMERS_OFFLINE": "1",
+                            "UV_OFFLINE": "1"
+                          },
+                          "values_are_nonsecret": true
+                        },
+                        "relevant_versions": {
+                          "comfy": null,
+                          "comfyui_frontend_package": "1.48.7",
+                          "opencv_contrib_python": null,
+                          "opencv_contrib_python_headless": null,
+                          "opencv_python": "4.13.0.92",
+                          "opencv_python_headless": "4.13.0.92",
+                          "torch": "2.10.0+cu130",
+                          "torchaudio": "2.10.0+cu130",
+                          "torchvision": "0.25.0+cu130"
+                        },
+                        "returncode": 0,
+                        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+                      },
+                      "pip_fixer_noop": {
+                        "conditions": {
+                          "comfy_distribution_absent": true,
+                          "frontend_distribution_present": true,
+                          "opencv_variants_already_same_version": true,
+                          "pip_auto_fix_absent": true,
+                          "torch_trio_present_and_stable": true
+                        },
+                        "opencv_versions": [
+                          "4.13.0.92"
+                        ],
+                        "relevant_distributions": {
+                          "comfy": [],
+                          "comfyui_frontend_package": [
+                            {
+                              "distribution_name": "comfyui_frontend_package",
+                              "version": "1.48.7"
+                            }
+                          ],
+                          "opencv_contrib_python": [],
+                          "opencv_contrib_python_headless": [],
+                          "opencv_python": [
+                            {
+                              "distribution_name": "opencv-python",
+                              "version": "4.13.0.92"
+                            }
+                          ],
+                          "opencv_python_headless": [
+                            {
+                              "distribution_name": "opencv-python-headless",
+                              "version": "4.13.0.92"
+                            }
+                          ],
+                          "torch": [
+                            {
+                              "distribution_name": "torch",
+                              "version": "2.10.0+cu130"
+                            }
+                          ],
+                          "torchaudio": [
+                            {
+                              "distribution_name": "torchaudio",
+                              "version": "2.10.0+cu130"
+                            }
+                          ],
+                          "torchvision": [
+                            {
+                              "distribution_name": "torchvision",
+                              "version": "0.25.0+cu130"
+                            }
+                          ]
+                        }
+                      },
+                      "python": {
+                        "bytes": 262144,
+                        "device": 1356286727840300467,
+                        "inode": 562949953716875,
+                        "mtime_ns": 1772691956859914100,
+                        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                        "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+                      },
+                      "scheduled_mutation_inputs": {
+                        "install_scripts": {
+                          "absent": true,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+                        },
+                        "pip_auto_fix": {
+                          "absent": true,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+                        },
+                        "restore_snapshot": {
+                          "absent": true,
+                          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+                        }
+                      },
+                      "schema_version": 1,
+                      "startup_scripts": {
+                        "device": 1356286727840300467,
+                        "entries": [],
+                        "entry_count": 0,
+                        "inode": 1970324837448461,
+                        "mtime_ns": 1776467101898738000,
+                        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+                      },
+                      "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+                      "user_directory": {
+                        "device": 1356286727840300467,
+                        "inode": 1970324837254298,
+                        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+                      }
+                    },
+                    "record_sha256": "f32c76479e685091c6e248675a41f434af4f228f5d30ff4ec7caee893eda113f",
+                    "schema_version": 1
+                  }
+                }
+              ],
+              "prefix_bytes": 19516,
+              "prefix_sha256": "6925449ad8ac670facb7554be14d775c9132f42d6b40c95ff3cc098d084d939c",
+              "require_pre_prompt": true,
+              "schema_version": 1,
+              "source_proof": {
+                "authority": "attempt-unique server log; config is advisory only",
+                "comfy_folder_paths": {
+                  "bytes": 23156,
+                  "device": 1356286727840300467,
+                  "inode": 7599824371845827,
+                  "mtime_ns": 1785816261419028100,
+                  "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+                  "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+                },
+                "fail_open_default": "public",
+                "manager_core": {
+                  "bytes": 131406,
+                  "device": 1356286727840300467,
+                  "inode": 8444249301773195,
+                  "mtime_ns": 1777140876094016400,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+                  "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+                },
+                "manager_prestartup": {
+                  "bytes": 30389,
+                  "device": 1356286727840300467,
+                  "inode": 18858823440126191,
+                  "mtime_ns": 1773849424839527300,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+                  "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+                },
+                "manager_server": {
+                  "bytes": 73639,
+                  "device": 1356286727840300467,
+                  "inode": 5066549581245383,
+                  "mtime_ns": 1777140876095535900,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+                  "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+                },
+                "manager_util": {
+                  "bytes": 22368,
+                  "device": 1356286727840300467,
+                  "inode": 3659174697692109,
+                  "mtime_ns": 1773849424298987600,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_util.py",
+                  "sha256": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+                },
+                "required_tokens": {
+                  "core": [
+                    "'network_mode': 'public',   # public | private | offline",
+                    "def get_config():"
+                  ],
+                  "folder_paths": [
+                    "def get_system_user_directory"
+                  ],
+                  "manager_util": [
+                    "def get_pip_cmd(force_uv=False):",
+                    "def get_installed_packages(renew=False):",
+                    "class PIPFixer:",
+                    "def fix_broken(self):",
+                    "if 'comfy' in new_pip_versions:",
+                    "torch_rollback(self.prev_pip_versions['torch'])",
+                    "if 'comfyui_frontend_package' not in new_pip_versions:",
+                    "pip_auto_fix_path = os.path.join(self.manager_files_path, \"pip_auto_fix.list\")"
+                  ],
+                  "prestartup": [
+                    "folder_paths.get_user_directory(), '__manager'",
+                    "manager_config_path = os.path.join(manager_files_path, 'config.ini')",
+                    "def ensure_dependencies():",
+                    "restore_snapshot_path = os.path.join(manager_files_path, \"startup-scripts\", \"restore-snapshot.json\")",
+                    "script_list_path = os.path.join(manager_files_path, \"startup-scripts\", \"install-scripts.txt\")",
+                    "pip_fixer = manager_util.PIPFixer",
+                    "pip_fixer.fix_broken()"
+                  ],
+                  "server": [
+                    "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+                    "[ComfyUI-Manager] All startup tasks have been completed."
+                  ]
+                }
+              },
+              "start_offset": 0,
+              "startup_complete_markers": [
+                {
+                  "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+                  "line_number": 109
+                }
+              ],
+              "status": "pass",
+              "unique_attempt_log_required": true
+            },
+            "offline_environment": {
+              "scrubbed_key_names": [
+                "HUGGINGFACE_HUB_TOKEN",
+                "HF_API_TOKEN"
+              ],
+              "set_nonsecret": {
+                "GIT_TERMINAL_PROMPT": "0",
+                "HF_HUB_OFFLINE": "1",
+                "HF_TOKEN": "offline-disabled",
+                "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                "PIP_NO_INDEX": "1",
+                "TRANSFORMERS_OFFLINE": "1",
+                "UV_OFFLINE": "1"
+              },
+              "values_are_nonsecret": true
+            },
+            "require_no_prior_prompt": true,
+            "serving_pid": 38876,
+            "serving_process_create_time_ns": 1786355417775455488,
+            "test_boot_source": {
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+              "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+            },
+            "valid": true,
+            "verified_before_this_prompt": true
+          },
+          "provenance_unchanged": false
+        },
+        "marginal": false,
+        "model_fingerprints": {
+          "minimax_h3_audio_vae_fp32.safetensors": {
+            "bytes": 605254808,
+            "mtime_ns": 1786172708634123800,
+            "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+            "resolved": true
+          },
+          "minimax_h3_ref2va_pruned_int8_convrot.safetensors": {
+            "bytes": 20970379616,
+            "mtime_ns": 1786178589584574300,
+            "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+            "resolved": true
+          },
+          "minimax_h3_video_vae_fp16.safetensors": {
+            "bytes": 5207808496,
+            "mtime_ns": 1786173216118700500,
+            "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+            "resolved": true
+          },
+          "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+            "bytes": 15687142551,
+            "mtime_ns": 1786174937682140700,
+            "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+            "resolved": true
+          }
+        },
+        "orphan_cleanup": {
+          "had_receipt": true,
+          "listener_exited": true,
+          "pid": 38876,
+          "pid_verified": true,
+          "process_exited": true,
+          "reason": "verified server process and listener exited",
+          "receipt_removed": true,
+          "success": true,
+          "termination_attempted": true,
+          "termination_reported_success": true
+        },
+        "output_path": "",
+        "pass": false,
+        "peak_host_ram_gb": 28.49,
+        "peak_vram_gb": 10.69,
+        "physical_total_vram_gib": 15.9208984375,
+        "promotion_ready": false,
+        "prompt_id": "0373b418-2b93-4d2d-97bf-fa518010adf0",
+        "provenance_unchanged": false,
+        "provenance_validation_error": "Preflight Check #9 [Boot lane] FAILED: Manager offline probe failed: ManagerProbeError: lab listener PID is absent",
+        "queued_prompt_sha256": "5f2efb8f55e329ae4334e9dae988e1e62fa84cd684775d0d27f4eff8ad52b92b",
+        "receipt_schema_version": 3,
+        "recipe": "h3_unconditioned_music_scene_seed42_f192",
+        "recipe_sha256": "5249ffd3e89c10c4a3bae8ba939da9ee2f26e9da2dcbc58e08448f2a393c04a3",
+        "requires_human_eyeball": true,
+        "reserve_vram_gib": 12.0,
+        "run_count": 1,
+        "run_identity_sha256": "feff83eaa67a24f7e9becc7d0b14ac304b6c95213819586cb504937708fc9dbf",
+        "run_number": 1,
+        "runner_sha256": "0224d6ec6db4962f0332bf53e031cd71e2818ccca4a919479c829e64cbfc4bf8",
+        "server_argv": [
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8199",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+          "--disable-metadata",
+          "--disable-all-custom-nodes",
+          "--whitelist-custom-nodes",
+          "ComfyUI-GGUF",
+          "ComfyUI-KJNodes",
+          "ComfyUI-Manager",
+          "--reserve-vram",
+          "12",
+          "--disable-pinned-memory",
+          "--cache-classic"
+        ],
+        "server_instance": {
+          "process_create_time": 1786355417.775455,
+          "serving_pid": 38876
+        },
+        "server_instance_unchanged": false,
+        "standalone_cache_runtime_sha256s": {
+          "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+          "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+          "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+          "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+          "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+          "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+          "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+        },
+        "status": "TIMEOUT (exceeded 1800s; owned server shutdown proved)",
+        "suite_cache_runtime_sha256s": {},
+        "timestamp": "2026-08-10T10:20:38Z",
+        "valid_measurement": true,
+        "warm_pass": false
+      }
+    },
+    "required_absences": [
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_campaign/operator_logs/h3music-20260810T023023Z-97ca44b2-attempt-004/launch.json"
+      },
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_scene_seed42_f192_run2.json"
+      },
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_scene_seed42_f192_run3.json"
+      },
+      {
+        "absent": true,
+        "path": "outputs/h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4"
+      },
+      {
+        "absent": true,
+        "path": "outputs/h3_unconditioned_music_scene_seed42_f192_out_00002_.mp4"
+      },
+      {
+        "absent": true,
+        "path": "outputs/h3_unconditioned_music_scene_seed42_f192_out_00003_.mp4"
+      },
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_motion_large_seed42_f192.json"
+      },
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_motion_large_seed42_f192_run1.json"
+      },
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_motion_large_seed42_f192_run2.json"
+      },
+      {
+        "absent": true,
+        "path": "outputs/h3_unconditioned_music_motion_large_seed42_f192_out_00001_.mp4"
+      },
+      {
+        "absent": true,
+        "path": "outputs/h3_unconditioned_music_motion_large_seed42_f192_out_00002_.mp4"
+      },
+      {
+        "absent": true,
+        "path": "results/h3_unconditioned_music_campaign/server_logs/h3music-20260810T023023Z-97ca44b2-attempt-004-p11-h3_unconditioned_music_motion_large_seed42_f192.log"
+      }
+    ],
+    "sources": {
+      "attempt4_campaign": {
+        "bytes": 152154,
+        "path": "scratch/run_h3_unconditioned_music_campaign.py",
+        "sha256": "aed15f895e5837e181d639ee7e04bed638e904ea91911a190b31051bf3482a19"
+      },
+      "attempt4_launcher": {
+        "bytes": 5708,
+        "path": "scratch/start_h3_music_attempt4.ps1",
+        "sha256": "163650d79321cbda6ca8287fdf7551acca4ee54fbcee17b75e14bfb0cac6ae69"
+      },
+      "attempt4_operator_recorder": {
+        "bytes": 24435,
+        "path": "scratch/record_h3_music_attempt4_operator_launch.py",
+        "sha256": "053fd5fd22ba6c6132636a6946d2b4da6184d8f631a88970120afad77906059e"
+      },
+      "canonical_campaign": {
+        "bytes": 77526,
+        "path": "scratch/run_h3_canonical_campaign.py",
+        "sha256": "0c3246a435d0c9f208ecbca4bc77b172e2a1e3793cbb96332a2e41781fd5cb38"
+      },
+      "lab_locks": {
+        "bytes": 19611,
+        "path": "lab_locks.py",
+        "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+      },
+      "manager_guard": {
+        "bytes": 39609,
+        "path": "scratch/h3_manager_offline_guard.py",
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "manager_test_boot": {
+        "bytes": 2556,
+        "path": "boot_h3_manager_offline_test.cmd",
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      "runner": {
+        "bytes": 180403,
+        "path": "run_recipe.py",
+        "sha256": "0224d6ec6db4962f0332bf53e031cd71e2818ccca4a919479c829e64cbfc4bf8"
+      }
+    }
+  },
+  "receipt_kind": "h3-unconditioned-music-attempt-004-timeout-recovery",
+  "receipt_schema_version": 1,
+  "recording_time": {
+    "included": false,
+    "reason": "deterministic immutable-evidence receipt"
+  },
+  "recovery_id": "h3music-20260810T023023Z-97ca44b2-attempt-004-recovery-001",
+  "recovery_policy": {
+    "all_other_pair_execution_forbidden": true,
+    "attempt004_run1_must_not_be_reclassified_or_overwritten": true,
+    "carry_pair_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "execute_pair_indices": [
+      10,
+      11
+    ],
+    "new_leg_count": 4,
+    "new_pair10_cold_and_warm_must_share_one_new_owned_server": true,
+    "new_pair11_cold_and_warm_must_share_one_new_owned_server": true,
+    "pair10": {
+      "allowed_run_numbers": [
+        1,
+        2,
+        3
+      ],
+      "cold_config_run_count": 1,
+      "cold_run_number": 2,
+      "preserved_noncertifying_run_numbers": [
+        1
+      ],
+      "recipe": "h3_unconditioned_music_scene_seed42_f192",
+      "warm_config_run_count": 2,
+      "warm_run_number": 3
+    },
+    "pair11": {
+      "allowed_run_numbers": [
+        1,
+        2
+      ],
+      "cold_config_run_count": 1,
+      "cold_run_number": 1,
+      "preserved_noncertifying_run_numbers": [],
+      "recipe": "h3_unconditioned_music_motion_large_seed42_f192",
+      "warm_config_run_count": 2,
+      "warm_run_number": 2
+    },
+    "resume_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-005"
+  },
+  "resume_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-005",
+  "status": "ATTEMPT_004_FAILED_PAIRS_1_THROUGH_9_MACHINE_COMPLETE",
+  "success": true
+}

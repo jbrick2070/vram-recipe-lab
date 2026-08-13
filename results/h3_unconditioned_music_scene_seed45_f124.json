@@ -1,0 +1,1545 @@
+{
+  "accepted_prompt": true,
+  "artifact_bytes": 951919,
+  "artifact_bytes_per_frame": 7676.77,
+  "artifact_sha256": "aa1de4095d44112195407fe23beeacdd93ca84b5b9d4927651013bf3528ad020",
+  "audio_bitrate": 133279,
+  "audio_codec": "aac",
+  "audio_duration_s": 5.167,
+  "audio_present": true,
+  "audio_receipt_sha256s": {},
+  "audio_stream_bytes": 86610,
+  "baseline_host_ram_gb": 28.5,
+  "baseline_vram_gb": 3.73,
+  "bitrate_anomaly": false,
+  "bitrate_baseline_status": "provisional:0-of-3-clean-artifacts",
+  "blocked": false,
+  "boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb",
+  "certification_scope": "machine-only",
+  "clamp_target_gib": null,
+  "clean_baseline_sample_count": 0,
+  "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+  "config_run_count": 2,
+  "container_duration_s": 5.167,
+  "duration_s": 939.7,
+  "encoded_fps": 24.0,
+  "encoded_frame_count": 124,
+  "encoded_height": 768,
+  "encoded_width": 1344,
+  "execution_cache_control": {
+    "cache_event_found": true,
+    "cached_fresh_node_ids": [],
+    "cached_node_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "6",
+      "7",
+      "11",
+      "13",
+      "14"
+    ],
+    "fresh_execution_proved": true,
+    "fresh_node_ids": [
+      "5",
+      "8",
+      "9",
+      "10",
+      "12",
+      "15"
+    ],
+    "fresh_output_node_ids": [
+      "12"
+    ],
+    "mode": "pinned-undeclared-sampler-input",
+    "nonce": "h3music:h3music-20260810T023023Z-97ca44b2-attempt-004:p06:warm",
+    "reachable_node_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "recipe_seed": 45,
+    "sampler_node_ids": [
+      "8"
+    ],
+    "seed_input": "noise_seed",
+    "source_class_type": "RandomNoise",
+    "source_node_id": "5",
+    "stable_node_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "6",
+      "7",
+      "11",
+      "13",
+      "14"
+    ]
+  },
+  "eyeball": "pending",
+  "final_server_instance": {
+    "process_create_time": 1786348080.59759,
+    "serving_pid": 38908
+  },
+  "final_standalone_cache_runtime_sha256s": {
+    "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+    "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+    "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+    "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+    "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+    "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+    "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+  },
+  "final_suite_cache_runtime_sha256s": {},
+  "fixture_sha256s": {
+    "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+  },
+  "gate_pass": true,
+  "git_commit": "4d87cfa3278c39cbdde6f3cb8b16f241aeb58c02",
+  "git_dirty": true,
+  "identity": {
+    "audio_receipt_sha256s": {},
+    "boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb",
+    "comfyui_git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490",
+    "fixture_sha256s": {
+      "portrait.png": "3ce7b7245abb9129510567f7ed24c08ff68619ef649fee6d6ae79b8a1d770bad"
+    },
+    "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+    "manager_offline_probe_identity": {
+      "advisory_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+      "advisory_config_sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab",
+      "authoritative_server_reported_mode": "offline",
+      "guard_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p06-h3_unconditioned_music_scene_seed45_f124.log",
+      "manager_source_sha256s": {
+        "comfy_folder_paths": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db",
+        "manager_core": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67",
+        "manager_prestartup": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4",
+        "manager_server": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6",
+        "manager_util": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+      },
+      "offline_environment": {
+        "scrubbed_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "GIT_TERMINAL_PROMPT": "0",
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INDEX": "1",
+          "TRANSFORMERS_OFFLINE": "1",
+          "UV_OFFLINE": "1"
+        },
+        "values_are_nonsecret": true
+      },
+      "preboot_record_sha256": "f32c76479e685091c6e248675a41f434af4f228f5d30ff4ec7caee893eda113f",
+      "prestartup_state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+      "serving_pid": 38908,
+      "serving_process_create_time_ns": 1786348080597590016,
+      "test_boot_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      }
+    },
+    "model_fingerprints": {
+      "minimax_h3_audio_vae_fp32.safetensors": {
+        "bytes": 605254808,
+        "mtime_ns": 1786172708634123800,
+        "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+        "resolved": true
+      },
+      "minimax_h3_ref2va_pruned_int8_convrot.safetensors": {
+        "bytes": 20970379616,
+        "mtime_ns": 1786178589584574300,
+        "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "resolved": true
+      },
+      "minimax_h3_video_vae_fp16.safetensors": {
+        "bytes": 5207808496,
+        "mtime_ns": 1786173216118700500,
+        "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+        "resolved": true
+      },
+      "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+        "bytes": 15687142551,
+        "mtime_ns": 1786174937682140700,
+        "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "resolved": true
+      }
+    },
+    "recipe_sha256": "1de25882ebdf07f7ac9261467c01ea8144cbfff5da8c12cb49c44ca50019df48",
+    "runner_sha256": "0224d6ec6db4962f0332bf53e031cd71e2818ccca4a919479c829e64cbfc4bf8",
+    "server_argv": [
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-GGUF",
+      "ComfyUI-KJNodes",
+      "ComfyUI-Manager",
+      "--reserve-vram",
+      "12",
+      "--disable-pinned-memory",
+      "--cache-classic"
+    ],
+    "server_instance": {
+      "process_create_time": 1786348080.59759,
+      "serving_pid": 38908
+    },
+    "standalone_cache_runtime_sha256s": {
+      "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+      "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+      "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+      "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+      "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+      "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+      "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+    }
+  },
+  "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+  "manager_offline_probe": {
+    "post_render": {
+      "advisory_config": {
+        "authority": "advisory precondition; server log is runtime authority",
+        "network_mode": "offline",
+        "snapshot": {
+          "bytes": 460,
+          "device": 1356286727840300467,
+          "inode": 1688849860737885,
+          "mtime_ns": 1786320736274345500,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+        }
+      },
+      "enabled": true,
+      "guard_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p06-h3_unconditioned_music_scene_seed45_f124.log",
+      "log_scan": {
+        "atomically_precreated_empty_required": true,
+        "authoritative_server_reported_mode": {
+          "announcement_count": 1,
+          "first_execution_line_number": 142,
+          "mode_line_number": 106,
+          "mode_precedes_first_execution": true,
+          "mode_precedes_startup_completion": true,
+          "observed_values": [
+            "offline"
+          ],
+          "required_mode": "offline",
+          "resolved_mode": "offline",
+          "startup_complete_line_number": 109
+        },
+        "config_announcements": [
+          {
+            "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+            "line_number": 58,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+          }
+        ],
+        "current_prestartup_state": {
+          "dependency_imports": {
+            "chardet": {
+              "bytes": 4797,
+              "device": 1356286727840300467,
+              "inode": 281474977009640,
+              "mtime_ns": 1772691972102495000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+              "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+            },
+            "git": {
+              "bytes": 8899,
+              "device": 1356286727840300467,
+              "inode": 281474977008730,
+              "mtime_ns": 1772691971770212000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+              "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+            },
+            "rich": {
+              "bytes": 6131,
+              "device": 1356286727840300467,
+              "inode": 3096224743826856,
+              "mtime_ns": 1776637389041712100,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+              "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+            },
+            "toml": {
+              "bytes": 723,
+              "device": 1356286727840300467,
+              "inode": 281474977009844,
+              "mtime_ns": 1772691972176384000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+              "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+            }
+          },
+          "kind": "h3-manager-prestartup-noop-state",
+          "manager_config": {
+            "network_mode": "offline",
+            "pip_list_route": "exact interpreter -m pip list",
+            "snapshot": {
+              "bytes": 460,
+              "device": 1356286727840300467,
+              "inode": 1688849860737885,
+              "mtime_ns": 1786320736274345500,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+              "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+            },
+            "use_uv": false
+          },
+          "manager_files": {
+            "device": 1356286727840300467,
+            "entries": [
+              "cache",
+              "channels.list",
+              "config.ini",
+              "snapshots",
+              "startup-scripts"
+            ],
+            "entry_count": 5,
+            "inode": 2533274790869444,
+            "mtime_ns": 1776467101916065900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+          },
+          "manager_pip_list": {
+            "command": [
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+              "-m",
+              "pip",
+              "list"
+            ],
+            "offline_environment": {
+              "scrubbed_key_names": [
+                "HUGGINGFACE_HUB_TOKEN",
+                "HF_API_TOKEN"
+              ],
+              "set_nonsecret": {
+                "GIT_TERMINAL_PROMPT": "0",
+                "HF_HUB_OFFLINE": "1",
+                "HF_TOKEN": "offline-disabled",
+                "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                "PIP_NO_INDEX": "1",
+                "TRANSFORMERS_OFFLINE": "1",
+                "UV_OFFLINE": "1"
+              },
+              "values_are_nonsecret": true
+            },
+            "relevant_versions": {
+              "comfy": null,
+              "comfyui_frontend_package": "1.48.7",
+              "opencv_contrib_python": null,
+              "opencv_contrib_python_headless": null,
+              "opencv_python": "4.13.0.92",
+              "opencv_python_headless": "4.13.0.92",
+              "torch": "2.10.0+cu130",
+              "torchaudio": "2.10.0+cu130",
+              "torchvision": "0.25.0+cu130"
+            },
+            "returncode": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+          },
+          "pip_fixer_noop": {
+            "conditions": {
+              "comfy_distribution_absent": true,
+              "frontend_distribution_present": true,
+              "opencv_variants_already_same_version": true,
+              "pip_auto_fix_absent": true,
+              "torch_trio_present_and_stable": true
+            },
+            "opencv_versions": [
+              "4.13.0.92"
+            ],
+            "relevant_distributions": {
+              "comfy": [],
+              "comfyui_frontend_package": [
+                {
+                  "distribution_name": "comfyui_frontend_package",
+                  "version": "1.48.7"
+                }
+              ],
+              "opencv_contrib_python": [],
+              "opencv_contrib_python_headless": [],
+              "opencv_python": [
+                {
+                  "distribution_name": "opencv-python",
+                  "version": "4.13.0.92"
+                }
+              ],
+              "opencv_python_headless": [
+                {
+                  "distribution_name": "opencv-python-headless",
+                  "version": "4.13.0.92"
+                }
+              ],
+              "torch": [
+                {
+                  "distribution_name": "torch",
+                  "version": "2.10.0+cu130"
+                }
+              ],
+              "torchaudio": [
+                {
+                  "distribution_name": "torchaudio",
+                  "version": "2.10.0+cu130"
+                }
+              ],
+              "torchvision": [
+                {
+                  "distribution_name": "torchvision",
+                  "version": "0.25.0+cu130"
+                }
+              ]
+            }
+          },
+          "python": {
+            "bytes": 262144,
+            "device": 1356286727840300467,
+            "inode": 562949953716875,
+            "mtime_ns": 1772691956859914100,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+          },
+          "scheduled_mutation_inputs": {
+            "install_scripts": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+            },
+            "pip_auto_fix": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+            },
+            "restore_snapshot": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+            }
+          },
+          "schema_version": 1,
+          "startup_scripts": {
+            "device": 1356286727840300467,
+            "entries": [],
+            "entry_count": 0,
+            "inode": 1970324837448461,
+            "mtime_ns": 1776467101898738000,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+          },
+          "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+          "user_directory": {
+            "device": 1356286727840300467,
+            "inode": 1970324837254298,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+          }
+        },
+        "errors": [],
+        "execution_markers": [
+          {
+            "line": "[INFO] got prompt",
+            "line_number": 142,
+            "markers": [
+              "got prompt"
+            ]
+          },
+          {
+            "line": "[INFO] Prompt executed in 00:14:54",
+            "line_number": 191,
+            "markers": [
+              "Prompt executed in"
+            ]
+          },
+          {
+            "line": "[INFO] got prompt",
+            "line_number": 192,
+            "markers": [
+              "got prompt"
+            ]
+          },
+          {
+            "line": "[INFO] Prompt executed in 00:15:39",
+            "line_number": 224,
+            "markers": [
+              "Prompt executed in"
+            ]
+          }
+        ],
+        "expected_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "expected_gui_url": "http://127.0.0.1:8199",
+        "kind": "h3-manager-offline-probe-log-scan",
+        "log": {
+          "bytes": 25081,
+          "device": 1356286727840300467,
+          "inode": 29273397578195301,
+          "mtime_ns": 1786349933066808600,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p06-h3_unconditioned_music_scene_seed45_f124.log",
+          "sha256": "d58d22004d496cd62ccfd7eb5e82805a09cd1d9d6ce30384002f3c4c8516eb2e"
+        },
+        "mutation_markers": [],
+        "network_markers": [],
+        "preboot_record_starts_at_byte_zero": true,
+        "preboot_records": [
+          {
+            "line_number": 1,
+            "line_sha256": "fda901f0e10dd6352c83322fda0744c31042fee4d6794c8833b8685b7a0ec14d",
+            "record": {
+              "kind": "h3-manager-preboot-record",
+              "offline_environment": {
+                "scrubbed_key_names": [
+                  "HUGGINGFACE_HUB_TOKEN",
+                  "HF_API_TOKEN"
+                ],
+                "set_nonsecret": {
+                  "GIT_TERMINAL_PROMPT": "0",
+                  "HF_HUB_OFFLINE": "1",
+                  "HF_TOKEN": "offline-disabled",
+                  "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                  "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                  "PIP_NO_INDEX": "1",
+                  "TRANSFORMERS_OFFLINE": "1",
+                  "UV_OFFLINE": "1"
+                },
+                "values_are_nonsecret": true
+              },
+              "prestartup_state": {
+                "dependency_imports": {
+                  "chardet": {
+                    "bytes": 4797,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009640,
+                    "mtime_ns": 1772691972102495000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+                    "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+                  },
+                  "git": {
+                    "bytes": 8899,
+                    "device": 1356286727840300467,
+                    "inode": 281474977008730,
+                    "mtime_ns": 1772691971770212000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+                    "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+                  },
+                  "rich": {
+                    "bytes": 6131,
+                    "device": 1356286727840300467,
+                    "inode": 3096224743826856,
+                    "mtime_ns": 1776637389041712100,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+                    "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+                  },
+                  "toml": {
+                    "bytes": 723,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009844,
+                    "mtime_ns": 1772691972176384000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+                    "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+                  }
+                },
+                "kind": "h3-manager-prestartup-noop-state",
+                "manager_config": {
+                  "network_mode": "offline",
+                  "pip_list_route": "exact interpreter -m pip list",
+                  "snapshot": {
+                    "bytes": 460,
+                    "device": 1356286727840300467,
+                    "inode": 1688849860737885,
+                    "mtime_ns": 1786320736274345500,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                    "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+                  },
+                  "use_uv": false
+                },
+                "manager_files": {
+                  "device": 1356286727840300467,
+                  "entries": [
+                    "cache",
+                    "channels.list",
+                    "config.ini",
+                    "snapshots",
+                    "startup-scripts"
+                  ],
+                  "entry_count": 5,
+                  "inode": 2533274790869444,
+                  "mtime_ns": 1776467101916065900,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+                },
+                "manager_pip_list": {
+                  "command": [
+                    "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                    "-m",
+                    "pip",
+                    "list"
+                  ],
+                  "offline_environment": {
+                    "scrubbed_key_names": [
+                      "HUGGINGFACE_HUB_TOKEN",
+                      "HF_API_TOKEN"
+                    ],
+                    "set_nonsecret": {
+                      "GIT_TERMINAL_PROMPT": "0",
+                      "HF_HUB_OFFLINE": "1",
+                      "HF_TOKEN": "offline-disabled",
+                      "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                      "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                      "PIP_NO_INDEX": "1",
+                      "TRANSFORMERS_OFFLINE": "1",
+                      "UV_OFFLINE": "1"
+                    },
+                    "values_are_nonsecret": true
+                  },
+                  "relevant_versions": {
+                    "comfy": null,
+                    "comfyui_frontend_package": "1.48.7",
+                    "opencv_contrib_python": null,
+                    "opencv_contrib_python_headless": null,
+                    "opencv_python": "4.13.0.92",
+                    "opencv_python_headless": "4.13.0.92",
+                    "torch": "2.10.0+cu130",
+                    "torchaudio": "2.10.0+cu130",
+                    "torchvision": "0.25.0+cu130"
+                  },
+                  "returncode": 0,
+                  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+                },
+                "pip_fixer_noop": {
+                  "conditions": {
+                    "comfy_distribution_absent": true,
+                    "frontend_distribution_present": true,
+                    "opencv_variants_already_same_version": true,
+                    "pip_auto_fix_absent": true,
+                    "torch_trio_present_and_stable": true
+                  },
+                  "opencv_versions": [
+                    "4.13.0.92"
+                  ],
+                  "relevant_distributions": {
+                    "comfy": [],
+                    "comfyui_frontend_package": [
+                      {
+                        "distribution_name": "comfyui_frontend_package",
+                        "version": "1.48.7"
+                      }
+                    ],
+                    "opencv_contrib_python": [],
+                    "opencv_contrib_python_headless": [],
+                    "opencv_python": [
+                      {
+                        "distribution_name": "opencv-python",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "opencv_python_headless": [
+                      {
+                        "distribution_name": "opencv-python-headless",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "torch": [
+                      {
+                        "distribution_name": "torch",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchaudio": [
+                      {
+                        "distribution_name": "torchaudio",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchvision": [
+                      {
+                        "distribution_name": "torchvision",
+                        "version": "0.25.0+cu130"
+                      }
+                    ]
+                  }
+                },
+                "python": {
+                  "bytes": 262144,
+                  "device": 1356286727840300467,
+                  "inode": 562949953716875,
+                  "mtime_ns": 1772691956859914100,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                  "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+                },
+                "scheduled_mutation_inputs": {
+                  "install_scripts": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+                  },
+                  "pip_auto_fix": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+                  },
+                  "restore_snapshot": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+                  }
+                },
+                "schema_version": 1,
+                "startup_scripts": {
+                  "device": 1356286727840300467,
+                  "entries": [],
+                  "entry_count": 0,
+                  "inode": 1970324837448461,
+                  "mtime_ns": 1776467101898738000,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+                },
+                "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+                "user_directory": {
+                  "device": 1356286727840300467,
+                  "inode": 1970324837254298,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+                }
+              },
+              "record_sha256": "f32c76479e685091c6e248675a41f434af4f228f5d30ff4ec7caee893eda113f",
+              "schema_version": 1
+            }
+          }
+        ],
+        "prefix_bytes": 25081,
+        "prefix_sha256": "d58d22004d496cd62ccfd7eb5e82805a09cd1d9d6ce30384002f3c4c8516eb2e",
+        "require_pre_prompt": false,
+        "schema_version": 1,
+        "source_proof": {
+          "authority": "attempt-unique server log; config is advisory only",
+          "comfy_folder_paths": {
+            "bytes": 23156,
+            "device": 1356286727840300467,
+            "inode": 7599824371845827,
+            "mtime_ns": 1785816261419028100,
+            "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+            "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+          },
+          "fail_open_default": "public",
+          "manager_core": {
+            "bytes": 131406,
+            "device": 1356286727840300467,
+            "inode": 8444249301773195,
+            "mtime_ns": 1777140876094016400,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+            "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+          },
+          "manager_prestartup": {
+            "bytes": 30389,
+            "device": 1356286727840300467,
+            "inode": 18858823440126191,
+            "mtime_ns": 1773849424839527300,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+            "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+          },
+          "manager_server": {
+            "bytes": 73639,
+            "device": 1356286727840300467,
+            "inode": 5066549581245383,
+            "mtime_ns": 1777140876095535900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+            "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+          },
+          "manager_util": {
+            "bytes": 22368,
+            "device": 1356286727840300467,
+            "inode": 3659174697692109,
+            "mtime_ns": 1773849424298987600,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_util.py",
+            "sha256": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+          },
+          "required_tokens": {
+            "core": [
+              "'network_mode': 'public',   # public | private | offline",
+              "def get_config():"
+            ],
+            "folder_paths": [
+              "def get_system_user_directory"
+            ],
+            "manager_util": [
+              "def get_pip_cmd(force_uv=False):",
+              "def get_installed_packages(renew=False):",
+              "class PIPFixer:",
+              "def fix_broken(self):",
+              "if 'comfy' in new_pip_versions:",
+              "torch_rollback(self.prev_pip_versions['torch'])",
+              "if 'comfyui_frontend_package' not in new_pip_versions:",
+              "pip_auto_fix_path = os.path.join(self.manager_files_path, \"pip_auto_fix.list\")"
+            ],
+            "prestartup": [
+              "folder_paths.get_user_directory(), '__manager'",
+              "manager_config_path = os.path.join(manager_files_path, 'config.ini')",
+              "def ensure_dependencies():",
+              "restore_snapshot_path = os.path.join(manager_files_path, \"startup-scripts\", \"restore-snapshot.json\")",
+              "script_list_path = os.path.join(manager_files_path, \"startup-scripts\", \"install-scripts.txt\")",
+              "pip_fixer = manager_util.PIPFixer",
+              "pip_fixer.fix_broken()"
+            ],
+            "server": [
+              "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+              "[ComfyUI-Manager] All startup tasks have been completed."
+            ]
+          }
+        },
+        "start_offset": 0,
+        "startup_complete_markers": [
+          {
+            "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+            "line_number": 109
+          }
+        ],
+        "status": "pass",
+        "unique_attempt_log_required": true
+      },
+      "offline_environment": {
+        "scrubbed_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "GIT_TERMINAL_PROMPT": "0",
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INDEX": "1",
+          "TRANSFORMERS_OFFLINE": "1",
+          "UV_OFFLINE": "1"
+        },
+        "values_are_nonsecret": true
+      },
+      "require_no_prior_prompt": false,
+      "serving_pid": 38908,
+      "serving_process_create_time_ns": 1786348080597590016,
+      "test_boot_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      "valid": true,
+      "verified_before_this_prompt": true
+    },
+    "pre_queue": {
+      "advisory_config": {
+        "authority": "advisory precondition; server log is runtime authority",
+        "network_mode": "offline",
+        "snapshot": {
+          "bytes": 460,
+          "device": 1356286727840300467,
+          "inode": 1688849860737885,
+          "mtime_ns": 1786320736274345500,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+          "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+        }
+      },
+      "enabled": true,
+      "guard_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "log_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p06-h3_unconditioned_music_scene_seed45_f124.log",
+      "log_scan": {
+        "atomically_precreated_empty_required": true,
+        "authoritative_server_reported_mode": {
+          "announcement_count": 1,
+          "first_execution_line_number": 142,
+          "mode_line_number": 106,
+          "mode_precedes_first_execution": true,
+          "mode_precedes_startup_completion": true,
+          "observed_values": [
+            "offline"
+          ],
+          "required_mode": "offline",
+          "resolved_mode": "offline",
+          "startup_complete_line_number": 109
+        },
+        "config_announcements": [
+          {
+            "line": "** ComfyUI-Manager config path: C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+            "line_number": 58,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini"
+          }
+        ],
+        "current_prestartup_state": {
+          "dependency_imports": {
+            "chardet": {
+              "bytes": 4797,
+              "device": 1356286727840300467,
+              "inode": 281474977009640,
+              "mtime_ns": 1772691972102495000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+              "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+            },
+            "git": {
+              "bytes": 8899,
+              "device": 1356286727840300467,
+              "inode": 281474977008730,
+              "mtime_ns": 1772691971770212000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+              "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+            },
+            "rich": {
+              "bytes": 6131,
+              "device": 1356286727840300467,
+              "inode": 3096224743826856,
+              "mtime_ns": 1776637389041712100,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+              "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+            },
+            "toml": {
+              "bytes": 723,
+              "device": 1356286727840300467,
+              "inode": 281474977009844,
+              "mtime_ns": 1772691972176384000,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+              "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+            }
+          },
+          "kind": "h3-manager-prestartup-noop-state",
+          "manager_config": {
+            "network_mode": "offline",
+            "pip_list_route": "exact interpreter -m pip list",
+            "snapshot": {
+              "bytes": 460,
+              "device": 1356286727840300467,
+              "inode": 1688849860737885,
+              "mtime_ns": 1786320736274345500,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+              "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+            },
+            "use_uv": false
+          },
+          "manager_files": {
+            "device": 1356286727840300467,
+            "entries": [
+              "cache",
+              "channels.list",
+              "config.ini",
+              "snapshots",
+              "startup-scripts"
+            ],
+            "entry_count": 5,
+            "inode": 2533274790869444,
+            "mtime_ns": 1776467101916065900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+          },
+          "manager_pip_list": {
+            "command": [
+              "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+              "-m",
+              "pip",
+              "list"
+            ],
+            "offline_environment": {
+              "scrubbed_key_names": [
+                "HUGGINGFACE_HUB_TOKEN",
+                "HF_API_TOKEN"
+              ],
+              "set_nonsecret": {
+                "GIT_TERMINAL_PROMPT": "0",
+                "HF_HUB_OFFLINE": "1",
+                "HF_TOKEN": "offline-disabled",
+                "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                "PIP_NO_INDEX": "1",
+                "TRANSFORMERS_OFFLINE": "1",
+                "UV_OFFLINE": "1"
+              },
+              "values_are_nonsecret": true
+            },
+            "relevant_versions": {
+              "comfy": null,
+              "comfyui_frontend_package": "1.48.7",
+              "opencv_contrib_python": null,
+              "opencv_contrib_python_headless": null,
+              "opencv_python": "4.13.0.92",
+              "opencv_python_headless": "4.13.0.92",
+              "torch": "2.10.0+cu130",
+              "torchaudio": "2.10.0+cu130",
+              "torchvision": "0.25.0+cu130"
+            },
+            "returncode": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+          },
+          "pip_fixer_noop": {
+            "conditions": {
+              "comfy_distribution_absent": true,
+              "frontend_distribution_present": true,
+              "opencv_variants_already_same_version": true,
+              "pip_auto_fix_absent": true,
+              "torch_trio_present_and_stable": true
+            },
+            "opencv_versions": [
+              "4.13.0.92"
+            ],
+            "relevant_distributions": {
+              "comfy": [],
+              "comfyui_frontend_package": [
+                {
+                  "distribution_name": "comfyui_frontend_package",
+                  "version": "1.48.7"
+                }
+              ],
+              "opencv_contrib_python": [],
+              "opencv_contrib_python_headless": [],
+              "opencv_python": [
+                {
+                  "distribution_name": "opencv-python",
+                  "version": "4.13.0.92"
+                }
+              ],
+              "opencv_python_headless": [
+                {
+                  "distribution_name": "opencv-python-headless",
+                  "version": "4.13.0.92"
+                }
+              ],
+              "torch": [
+                {
+                  "distribution_name": "torch",
+                  "version": "2.10.0+cu130"
+                }
+              ],
+              "torchaudio": [
+                {
+                  "distribution_name": "torchaudio",
+                  "version": "2.10.0+cu130"
+                }
+              ],
+              "torchvision": [
+                {
+                  "distribution_name": "torchvision",
+                  "version": "0.25.0+cu130"
+                }
+              ]
+            }
+          },
+          "python": {
+            "bytes": 262144,
+            "device": 1356286727840300467,
+            "inode": 562949953716875,
+            "mtime_ns": 1772691956859914100,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+          },
+          "scheduled_mutation_inputs": {
+            "install_scripts": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+            },
+            "pip_auto_fix": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+            },
+            "restore_snapshot": {
+              "absent": true,
+              "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+            }
+          },
+          "schema_version": 1,
+          "startup_scripts": {
+            "device": 1356286727840300467,
+            "entries": [],
+            "entry_count": 0,
+            "inode": 1970324837448461,
+            "mtime_ns": 1776467101898738000,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+          },
+          "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+          "user_directory": {
+            "device": 1356286727840300467,
+            "inode": 1970324837254298,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+          }
+        },
+        "errors": [],
+        "execution_markers": [
+          {
+            "line": "[INFO] got prompt",
+            "line_number": 142,
+            "markers": [
+              "got prompt"
+            ]
+          },
+          {
+            "line": "[INFO] Prompt executed in 00:14:54",
+            "line_number": 191,
+            "markers": [
+              "Prompt executed in"
+            ]
+          }
+        ],
+        "expected_config_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "expected_gui_url": "http://127.0.0.1:8199",
+        "kind": "h3-manager-offline-probe-log-scan",
+        "log": {
+          "bytes": 22947,
+          "device": 1356286727840300467,
+          "inode": 29273397578195301,
+          "mtime_ns": 1786348988410475000,
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p06-h3_unconditioned_music_scene_seed45_f124.log",
+          "sha256": "ecad71275fd67b90ab64b6129b93738702a1d71d20d39615a182e7d86b96874b"
+        },
+        "mutation_markers": [],
+        "network_markers": [],
+        "preboot_record_starts_at_byte_zero": true,
+        "preboot_records": [
+          {
+            "line_number": 1,
+            "line_sha256": "fda901f0e10dd6352c83322fda0744c31042fee4d6794c8833b8685b7a0ec14d",
+            "record": {
+              "kind": "h3-manager-preboot-record",
+              "offline_environment": {
+                "scrubbed_key_names": [
+                  "HUGGINGFACE_HUB_TOKEN",
+                  "HF_API_TOKEN"
+                ],
+                "set_nonsecret": {
+                  "GIT_TERMINAL_PROMPT": "0",
+                  "HF_HUB_OFFLINE": "1",
+                  "HF_TOKEN": "offline-disabled",
+                  "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                  "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                  "PIP_NO_INDEX": "1",
+                  "TRANSFORMERS_OFFLINE": "1",
+                  "UV_OFFLINE": "1"
+                },
+                "values_are_nonsecret": true
+              },
+              "prestartup_state": {
+                "dependency_imports": {
+                  "chardet": {
+                    "bytes": 4797,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009640,
+                    "mtime_ns": 1772691972102495000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+                    "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+                  },
+                  "git": {
+                    "bytes": 8899,
+                    "device": 1356286727840300467,
+                    "inode": 281474977008730,
+                    "mtime_ns": 1772691971770212000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+                    "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+                  },
+                  "rich": {
+                    "bytes": 6131,
+                    "device": 1356286727840300467,
+                    "inode": 3096224743826856,
+                    "mtime_ns": 1776637389041712100,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+                    "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+                  },
+                  "toml": {
+                    "bytes": 723,
+                    "device": 1356286727840300467,
+                    "inode": 281474977009844,
+                    "mtime_ns": 1772691972176384000,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+                    "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+                  }
+                },
+                "kind": "h3-manager-prestartup-noop-state",
+                "manager_config": {
+                  "network_mode": "offline",
+                  "pip_list_route": "exact interpreter -m pip list",
+                  "snapshot": {
+                    "bytes": 460,
+                    "device": 1356286727840300467,
+                    "inode": 1688849860737885,
+                    "mtime_ns": 1786320736274345500,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+                    "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+                  },
+                  "use_uv": false
+                },
+                "manager_files": {
+                  "device": 1356286727840300467,
+                  "entries": [
+                    "cache",
+                    "channels.list",
+                    "config.ini",
+                    "snapshots",
+                    "startup-scripts"
+                  ],
+                  "entry_count": 5,
+                  "inode": 2533274790869444,
+                  "mtime_ns": 1776467101916065900,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager"
+                },
+                "manager_pip_list": {
+                  "command": [
+                    "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                    "-m",
+                    "pip",
+                    "list"
+                  ],
+                  "offline_environment": {
+                    "scrubbed_key_names": [
+                      "HUGGINGFACE_HUB_TOKEN",
+                      "HF_API_TOKEN"
+                    ],
+                    "set_nonsecret": {
+                      "GIT_TERMINAL_PROMPT": "0",
+                      "HF_HUB_OFFLINE": "1",
+                      "HF_TOKEN": "offline-disabled",
+                      "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+                      "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+                      "PIP_NO_INDEX": "1",
+                      "TRANSFORMERS_OFFLINE": "1",
+                      "UV_OFFLINE": "1"
+                    },
+                    "values_are_nonsecret": true
+                  },
+                  "relevant_versions": {
+                    "comfy": null,
+                    "comfyui_frontend_package": "1.48.7",
+                    "opencv_contrib_python": null,
+                    "opencv_contrib_python_headless": null,
+                    "opencv_python": "4.13.0.92",
+                    "opencv_python_headless": "4.13.0.92",
+                    "torch": "2.10.0+cu130",
+                    "torchaudio": "2.10.0+cu130",
+                    "torchvision": "0.25.0+cu130"
+                  },
+                  "returncode": 0,
+                  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "stdout_sha256": "905a515c79bb977730f4690a91d3b6596b67e8b38968fcbcdb39ce4a5bc7553f"
+                },
+                "pip_fixer_noop": {
+                  "conditions": {
+                    "comfy_distribution_absent": true,
+                    "frontend_distribution_present": true,
+                    "opencv_variants_already_same_version": true,
+                    "pip_auto_fix_absent": true,
+                    "torch_trio_present_and_stable": true
+                  },
+                  "opencv_versions": [
+                    "4.13.0.92"
+                  ],
+                  "relevant_distributions": {
+                    "comfy": [],
+                    "comfyui_frontend_package": [
+                      {
+                        "distribution_name": "comfyui_frontend_package",
+                        "version": "1.48.7"
+                      }
+                    ],
+                    "opencv_contrib_python": [],
+                    "opencv_contrib_python_headless": [],
+                    "opencv_python": [
+                      {
+                        "distribution_name": "opencv-python",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "opencv_python_headless": [
+                      {
+                        "distribution_name": "opencv-python-headless",
+                        "version": "4.13.0.92"
+                      }
+                    ],
+                    "torch": [
+                      {
+                        "distribution_name": "torch",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchaudio": [
+                      {
+                        "distribution_name": "torchaudio",
+                        "version": "2.10.0+cu130"
+                      }
+                    ],
+                    "torchvision": [
+                      {
+                        "distribution_name": "torchvision",
+                        "version": "0.25.0+cu130"
+                      }
+                    ]
+                  }
+                },
+                "python": {
+                  "bytes": 262144,
+                  "device": 1356286727840300467,
+                  "inode": 562949953716875,
+                  "mtime_ns": 1772691956859914100,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+                  "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+                },
+                "scheduled_mutation_inputs": {
+                  "install_scripts": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\install-scripts.txt"
+                  },
+                  "pip_auto_fix": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\pip_auto_fix.list"
+                  },
+                  "restore_snapshot": {
+                    "absent": true,
+                    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts\\restore-snapshot.json"
+                  }
+                },
+                "schema_version": 1,
+                "startup_scripts": {
+                  "device": 1356286727840300467,
+                  "entries": [],
+                  "entry_count": 0,
+                  "inode": 1970324837448461,
+                  "mtime_ns": 1776467101898738000,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\startup-scripts"
+                },
+                "state_sha256": "3b843866d09849b8cf672102cd22208cebaf1cca6696f2e6d24e913b3be28641",
+                "user_directory": {
+                  "device": 1356286727840300467,
+                  "inode": 1970324837254298,
+                  "path": "C:\\Users\\jeffr\\Documents\\ComfyUI"
+                }
+              },
+              "record_sha256": "f32c76479e685091c6e248675a41f434af4f228f5d30ff4ec7caee893eda113f",
+              "schema_version": 1
+            }
+          }
+        ],
+        "prefix_bytes": 22947,
+        "prefix_sha256": "ecad71275fd67b90ab64b6129b93738702a1d71d20d39615a182e7d86b96874b",
+        "require_pre_prompt": false,
+        "schema_version": 1,
+        "source_proof": {
+          "authority": "attempt-unique server log; config is advisory only",
+          "comfy_folder_paths": {
+            "bytes": 23156,
+            "device": 1356286727840300467,
+            "inode": 7599824371845827,
+            "mtime_ns": 1785816261419028100,
+            "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+            "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+          },
+          "fail_open_default": "public",
+          "manager_core": {
+            "bytes": 131406,
+            "device": 1356286727840300467,
+            "inode": 8444249301773195,
+            "mtime_ns": 1777140876094016400,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+            "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+          },
+          "manager_prestartup": {
+            "bytes": 30389,
+            "device": 1356286727840300467,
+            "inode": 18858823440126191,
+            "mtime_ns": 1773849424839527300,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+            "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+          },
+          "manager_server": {
+            "bytes": 73639,
+            "device": 1356286727840300467,
+            "inode": 5066549581245383,
+            "mtime_ns": 1777140876095535900,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+            "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+          },
+          "manager_util": {
+            "bytes": 22368,
+            "device": 1356286727840300467,
+            "inode": 3659174697692109,
+            "mtime_ns": 1773849424298987600,
+            "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_util.py",
+            "sha256": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+          },
+          "required_tokens": {
+            "core": [
+              "'network_mode': 'public',   # public | private | offline",
+              "def get_config():"
+            ],
+            "folder_paths": [
+              "def get_system_user_directory"
+            ],
+            "manager_util": [
+              "def get_pip_cmd(force_uv=False):",
+              "def get_installed_packages(renew=False):",
+              "class PIPFixer:",
+              "def fix_broken(self):",
+              "if 'comfy' in new_pip_versions:",
+              "torch_rollback(self.prev_pip_versions['torch'])",
+              "if 'comfyui_frontend_package' not in new_pip_versions:",
+              "pip_auto_fix_path = os.path.join(self.manager_files_path, \"pip_auto_fix.list\")"
+            ],
+            "prestartup": [
+              "folder_paths.get_user_directory(), '__manager'",
+              "manager_config_path = os.path.join(manager_files_path, 'config.ini')",
+              "def ensure_dependencies():",
+              "restore_snapshot_path = os.path.join(manager_files_path, \"startup-scripts\", \"restore-snapshot.json\")",
+              "script_list_path = os.path.join(manager_files_path, \"startup-scripts\", \"install-scripts.txt\")",
+              "pip_fixer = manager_util.PIPFixer",
+              "pip_fixer.fix_broken()"
+            ],
+            "server": [
+              "logging.info(\"[ComfyUI-Manager] network_mode: \" + core.get_config()['network_mode'])",
+              "[ComfyUI-Manager] All startup tasks have been completed."
+            ]
+          }
+        },
+        "start_offset": 0,
+        "startup_complete_markers": [
+          {
+            "line": "[INFO] [ComfyUI-Manager] All startup tasks have been completed.",
+            "line_number": 109
+          }
+        ],
+        "status": "pass",
+        "unique_attempt_log_required": true
+      },
+      "offline_environment": {
+        "scrubbed_key_names": [
+          "HUGGINGFACE_HUB_TOKEN",
+          "HF_API_TOKEN"
+        ],
+        "set_nonsecret": {
+          "GIT_TERMINAL_PROMPT": "0",
+          "HF_HUB_OFFLINE": "1",
+          "HF_TOKEN": "offline-disabled",
+          "HUGGING_FACE_HUB_TOKEN": "offline-disabled",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INDEX": "1",
+          "TRANSFORMERS_OFFLINE": "1",
+          "UV_OFFLINE": "1"
+        },
+        "values_are_nonsecret": true
+      },
+      "require_no_prior_prompt": false,
+      "serving_pid": 38908,
+      "serving_process_create_time_ns": 1786348080597590016,
+      "test_boot_source": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      "valid": true,
+      "verified_before_this_prompt": true
+    },
+    "provenance_unchanged": true
+  },
+  "marginal": false,
+  "model_fingerprints": {
+    "minimax_h3_audio_vae_fp32.safetensors": {
+      "bytes": 605254808,
+      "mtime_ns": 1786172708634123800,
+      "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_audio_vae_fp32.safetensors",
+      "resolved": true
+    },
+    "minimax_h3_ref2va_pruned_int8_convrot.safetensors": {
+      "bytes": 20970379616,
+      "mtime_ns": 1786178589584574300,
+      "path": "C:\\ComfyUI-Models\\diffusion_models\\minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "resolved": true
+    },
+    "minimax_h3_video_vae_fp16.safetensors": {
+      "bytes": 5207808496,
+      "mtime_ns": 1786173216118700500,
+      "path": "C:\\ComfyUI-Models\\vae\\minimax_h3_video_vae_fp16.safetensors",
+      "resolved": true
+    },
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+      "bytes": 15687142551,
+      "mtime_ns": 1786174937682140700,
+      "path": "C:\\ComfyUI-Models\\text_encoders\\qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "resolved": true
+    }
+  },
+  "orphan_cleanup": {},
+  "output_path": "h3_unconditioned_music_scene_seed45_f124_out_00002_.mp4",
+  "pass": true,
+  "peak_host_ram_gb": 28.56,
+  "peak_vram_gb": 8.12,
+  "physical_total_vram_gib": 15.9208984375,
+  "pixel_format": "yuv420p",
+  "promotion_ready": false,
+  "prompt_id": "7d2df93d-c669-46a5-b66b-07b601f49757",
+  "provenance_unchanged": true,
+  "provenance_validation_error": "",
+  "queued_prompt_sha256": "47d0bd0b064a994da25fe41e52194841ff47eb373bc60fac0c69f67e5bd5237b",
+  "receipt_schema_version": 3,
+  "recipe": "h3_unconditioned_music_scene_seed45_f124",
+  "recipe_sha256": "1de25882ebdf07f7ac9261467c01ea8144cbfff5da8c12cb49c44ca50019df48",
+  "requires_human_eyeball": true,
+  "reserve_vram_gib": 12.0,
+  "run_count": 2,
+  "run_identity_sha256": "f313e322b1410a73c3edfbc3e39113b08b6cc72028624c3eacd4d087e9b91d43",
+  "run_number": 2,
+  "runner_sha256": "0224d6ec6db4962f0332bf53e031cd71e2818ccca4a919479c829e64cbfc4bf8",
+  "server_argv": [
+    "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+    "--port",
+    "8199",
+    "--cuda-malloc",
+    "--user-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI",
+    "--output-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+    "--extra-model-paths-config",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "--disable-metadata",
+    "--disable-all-custom-nodes",
+    "--whitelist-custom-nodes",
+    "ComfyUI-GGUF",
+    "ComfyUI-KJNodes",
+    "ComfyUI-Manager",
+    "--reserve-vram",
+    "12",
+    "--disable-pinned-memory",
+    "--cache-classic"
+  ],
+  "server_instance": {
+    "process_create_time": 1786348080.59759,
+    "serving_pid": 38908
+  },
+  "server_instance_unchanged": true,
+  "standalone_cache_runtime_sha256s": {
+    "comfy_api/latest/_io.py": "495aefa059aad4eed4181aa7fbb415679d3f269651e9fc6f542bdac1b99dd40f",
+    "comfy_execution/caching.py": "26b5b768dff3f2e6fe8279aa6ff645dd87b698d4610744f848a85b1ab543e3a4",
+    "comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+    "comfy_execution/graph_utils.py": "be44a89007f99e4c90308f1e5f9063fa44497eec08d7cd1bb528fc35d7c727ac",
+    "comfy_extras/nodes_custom_sampler.py": "3fb59bf45aaf19b2f87099b559c789f94716a90088c6c4ac8a85c53b3c99c59b",
+    "execution.py": "dcac4074826ac9121624ad113f6027684650579da626e24a4011617aae5f3fc0",
+    "nodes.py": "aa7e2a87bb7c1b43273736eef9fcf4811cb55497c5bde2e201135b244b97431a"
+  },
+  "status": "PASS",
+  "suite_cache_runtime_sha256s": {},
+  "timestamp": "2026-08-10T08:18:53Z",
+  "valid_measurement": true,
+  "video_codec": "h264",
+  "video_duration_s": 5.166667,
+  "video_stream_bytes": 859831,
+  "video_stream_bytes_per_frame": 6934.12,
+  "warm_pass": true
+}

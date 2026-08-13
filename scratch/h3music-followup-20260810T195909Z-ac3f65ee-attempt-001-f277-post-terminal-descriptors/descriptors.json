@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "kind": "h3-music-followup-f277-post-terminal-machine-descriptors",
+  "scope": "scratch-only, render-free descriptor completion after terminal render failure",
+  "campaign_id": "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001",
+  "wrapper": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\analyze_h3_music_followup_f277_post_terminal.py",
+    "sha256": "9a8ecded669e7cf96e72f23c13dd484b2d3c2167146017a30e3cde05f3c45995",
+    "bytes": 12279
+  },
+  "pinned_analyzer": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py",
+    "sha256": "24cc09b0a7a187d7cf7a5dee0ab5547ad4b8bf64d40641ace86c1c8f571a5b3f",
+    "bytes": 19595
+  },
+  "recipe_binding": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed42_f277.json",
+    "sha256": "8965353ccf49d075f953cf9700119cb4030cface2b909f235d3a7bc8fd739094",
+    "bytes": 13311
+  },
+  "receipt_binding": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_score_seed42_f277_run1.json",
+    "sha256": "5b7e8963c464dc8bcf23accc1cda120234bfd0ea8614eeb885d6f8c3f1cd1124",
+    "bytes": 457978
+  },
+  "artifact_binding": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4",
+    "sha256": "727c2bbbf3ec969ebf8051b7659f0cd7531fba07abfb52340baf9aa1b2c60a67",
+    "bytes": 2310113
+  },
+  "source_render_gate": {
+    "status": "FAIL (VRAM 14.72 GB > 14.5 GB)",
+    "gate_pass": false,
+    "pass": false,
+    "valid_measurement": true,
+    "warm_pass": false,
+    "promotion_ready": false,
+    "absolute_peak_vram_gb": 14.722,
+    "baseline_vram_gb": 2.239,
+    "net_peak_vram_gb": 12.483,
+    "certification_effect": false,
+    "quality_judgment": "PENDING_HUMAN"
+  },
+  "python_executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+  "python_prefix": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv",
+  "python_version": "3.12.11 (main, Aug 18 2025, 19:17:54) [MSC v.1944 64 bit (AMD64)]",
+  "numpy_version": "2.4.4",
+  "ffmpeg_executable": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE",
+  "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "ffprobe_executable": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE",
+  "ffprobe_version": "ffprobe version 8.0.1-full_build-www.gyan.dev Copyright (c) 2007-2025 the FFmpeg developers",
+  "analysis_command": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe -B C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\analyze_h3_music_followup_f277_post_terminal.py",
+  "definitions": {
+    "spectral_windows": "non-overlapping complete 50 ms windows, Hann-weighted, mono 48 kHz signed 16-bit PCM",
+    "spectral_flux": "mean sum of positive binwise changes between consecutive L1-normalized magnitude spectra",
+    "periodicity": "largest overlap-energy-normalized autocorrelation coefficient at a 0.25-2.00 s lag after global mean removal",
+    "bands_hz": [
+      [
+        20.0,
+        250.0
+      ],
+      [
+        250.0,
+        2000.0
+      ],
+      [
+        2000.0,
+        24000.0
+      ]
+    ],
+    "alignment": "Pearson r across matching complete 0.5 s buckets: mean ffmpeg lavfi.scene_score versus linear mono PCM RMS; crude proxy, not sync proof",
+    "interpretation_limit": "Machine descriptors do not determine music presence, mood, quality, usability, or causation."
+  },
+  "logs": [
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.probe.log",
+      "sha256": "2dad2a8b38cc5ac409fe55a1267ecabfa06842a6c9c2da1ece42ba72badba8ee",
+      "bytes": 298,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.ebur128.log",
+      "sha256": "be0992613fb28cf12fc2c7143dd5c43b585c357742c1d92b0d45a944be7a176b",
+      "bytes": 21770,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.silencedetect.log",
+      "sha256": "929c52032f12e55fc9aa9c30f4092146c58c433f18e4492215dd61417589600a",
+      "bytes": 1479,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.astats.log",
+      "sha256": "a2e95671e42f3bd9bdafc0f37dd5762a660eea7ef7f1df06c050b0fe8f9b4bcb",
+      "bytes": 5950,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.scene_scores.log",
+      "sha256": "11b2a0e112605e89f612a5b329a0ca8a0f1f79c4f2c1a33d763896adb348c082",
+      "bytes": 41661,
+      "utf8_no_bom": true
+    }
+  ],
+  "records": [
+    {
+      "label": "J4-duration-f277-post-terminal",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4",
+      "input_bytes": 2310113,
+      "input_sha256": "727c2bbbf3ec969ebf8051b7659f0cd7531fba07abfb52340baf9aa1b2c60a67",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "11.542000"
+          }
+        ],
+        "format": {
+          "duration": "11.542000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -13.9,
+        "loudness_range_lu": 5.6,
+        "true_peak_dbfs": -5.0,
+        "silence_interval_count": 0,
+        "silent_time_s": 0.0,
+        "rms_dbfs_per_channel": [
+          -16.143498,
+          -16.424216
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 554496,
+        "pcm_duration_s": 11.552,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 231,
+        "spectral_centroid_mean_hz": 870.1447141224278,
+        "spectral_centroid_std_hz": 221.5460793406046,
+        "spectral_flux_mean": 0.1602359433121425,
+        "periodicity_score": 0.21718376245114432,
+        "periodicity_best_lag_s": 0.2751875,
+        "band_energy_ratio_low_20_250": 0.1395365783947736,
+        "band_energy_ratio_mid_250_2000": 0.8603015336726878,
+        "band_energy_ratio_high_2000_24000": 0.00016188793253859877,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 23,
+        "scene_score_frame_count": 277,
+        "scene_score_usable_count": 276,
+        "matched_bucket_count": 23,
+        "mean_scene_score": 0.019642128458498026,
+        "audio_rms_mean": 0.14521532285695335,
+        "motion_audio_rms_pearson_r": -0.2491603225546537
+      },
+      "recipe": "h3_music_followup_score_seed42_f277",
+      "recipe_sha256": "8965353ccf49d075f953cf9700119cb4030cface2b909f235d3a7bc8fd739094",
+      "receipt_binding": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_score_seed42_f277_run1.json",
+        "sha256": "5b7e8963c464dc8bcf23accc1cda120234bfd0ea8614eeb885d6f8c3f1cd1124",
+        "bytes": 457978
+      },
+      "source_render_gate": {
+        "status": "FAIL (VRAM 14.72 GB > 14.5 GB)",
+        "gate_pass": false,
+        "pass": false,
+        "valid_measurement": true,
+        "warm_pass": false,
+        "promotion_ready": false,
+        "absolute_peak_vram_gb": 14.722,
+        "baseline_vram_gb": 2.239,
+        "net_peak_vram_gb": 12.483,
+        "certification_effect": false,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      "certification_effect": false,
+      "quality_judgment": "PENDING_HUMAN"
+    }
+  ],
+  "valid_measurement": true,
+  "certification_effect": false,
+  "quality_judgment": "PENDING_HUMAN"
+}

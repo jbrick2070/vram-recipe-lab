@@ -1,0 +1,416 @@
+{
+  "anti_mutation": {
+    "failed_lifecycle_appended_or_rewritten": false,
+    "operator_stream_modified": false,
+    "otr_touched": false,
+    "pair_receipt_or_artifact_modified": false,
+    "process_or_listener_queried_by_recorder": false,
+    "recorder_source_self_hash_exclusion_reason": "avoid self-referential receipt; attempt004 pins recorder source externally",
+    "recorder_source_self_hash_included": false,
+    "render_started_by_recorder": false,
+    "server_or_gpu_queried_by_recorder": false,
+    "stale_pid_receipt_deleted_by_recorder": false
+  },
+  "certification_effect": {
+    "attempt_003_ledger_completed_pair_count": 1,
+    "attempt_003_status": "FAILED",
+    "campaign_complete_granted": false,
+    "human_judgment": "PENDING",
+    "pair1_machine_complete": true,
+    "pair2_machine_pair_recoverable_and_complete": true,
+    "promotion_or_study_pass_granted": false
+  },
+  "failed_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-003",
+  "full_pair_verification": {
+    "pair1": {
+      "canonical_result_sha256": "b47abc5895f9e0a6bbeb3d4da4a2490213dba168fa1aa4505257bfd5f4103f22",
+      "cold_receipt_sha256": "30d6dbc37b906a25909826e8ef68862af4952c7597b793a76982db1a9ebe25cd",
+      "human_judgment": "PENDING",
+      "manager_log_sha256": "1ab05e73202b2e77a5dfb4f4cf350491e1e9a0d0d6c4083204d855be88122b7d",
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-002",
+      "status": "CARRIED_FORWARD_MACHINE_COMPLETE",
+      "warm_receipt_sha256": "e12a76ebc4e14bb42d2d6f44466364894a6ce65a70b4cbda1057d55cb976829a"
+    },
+    "pair2": {
+      "canonical_result_sha256": "a3dd0a5966f6f738b56fbadfd53c95a54789e9481e5b0202bd60d650e8aa3be1",
+      "cold_artifact_sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541",
+      "cold_duration_s": 902.2,
+      "cold_peak_vram_gb": 7.58,
+      "cold_queued_prompt_sha256": "c2b680a4d03a96a2a2ff398ecdfb58d5d0ed2e3517a17f880a1dfc599d01dfd1",
+      "cold_receipt_sha256": "a3bd3aaf1cf60f578d6e472d7894c12041dd32bd14ccce475f5dd966b4f4cff0",
+      "human_judgment": "PENDING",
+      "manager_log_sha256": "68b53407712bc42a59167bf5e4fb55aa6fbc8008704a3c695c64e05c56f5f24c",
+      "run_identity_sha256": "cb168f4c65fb0e90099200ab34bd09c7479f6b6ff3edf433074ba0d78bd02672",
+      "server_instance": {
+        "process_create_time": 1786336988.58777,
+        "serving_pid": 19256
+      },
+      "source_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-003",
+      "status": "RECOVERABLE_MACHINE_COMPLETE",
+      "warm_artifact_sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541",
+      "warm_duration_s": 893.0,
+      "warm_peak_vram_gb": 7.58,
+      "warm_queued_prompt_sha256": "42592f5b73e3d2806a140a1bc85248045f85d494602625c71ab30ba78d9355b7",
+      "warm_receipt_sha256": "737b3d4a4473569cbfa6615b01eb3a4143450d2a133cbf99b3990ea71e1c7aa8"
+    }
+  },
+  "immutable_evidence": {
+    "attempt2_recovery": {
+      "bytes": 31555,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 16325548650178894,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786335268298633200,
+      "path": "results/h3_unconditioned_music_campaign/recoveries/h3music-20260810T023023Z-97ca44b2-attempt-002-return120-recovery.json",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "32a9e9403388d76e190082a04937fb83446b4b3617c0a2178cd4eb673de4911d"
+    },
+    "lifecycle": {
+      "prefix": {
+        "bytes": 297646,
+        "hash_chain_verified": true,
+        "last_event_sha256": "ad6ad066c8d64b7066c838541f583d4a10b8bc6f5ed30a77eff9ef632b3927ba",
+        "path": "results/h3_unconditioned_music_campaign/lifecycle.jsonl",
+        "row_count": 22,
+        "sha256": "8104b063130b8f6ddb907eaa972ff3a52f8879f970e60663d9df0ee607a83907"
+      },
+      "snapshot": {
+        "bytes": 297646,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 13792273859586412,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338809413855600,
+        "path": "results/h3_unconditioned_music_campaign/lifecycle.jsonl",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "8104b063130b8f6ddb907eaa972ff3a52f8879f970e60663d9df0ee607a83907"
+      },
+      "terminal_failure": {
+        "carried_pair_count": 1,
+        "completed_pair_count": 1,
+        "error": "h3_unconditioned_music_motion_small_seed42_f124 post-shutdown is not clean: server_pid_receipt_exists=True",
+        "failure_state": {
+          "expected_server_identity_live": false,
+          "gpu_lock_exists": false,
+          "listener_pids_8199": [],
+          "queue_quarantine_exists": false,
+          "server_pid_create_time": null,
+          "server_pid_receipt": 19256,
+          "server_pid_receipt_exists": true,
+          "suite_lock_exists": false
+        },
+        "new_verified_pair_count": 0,
+        "status": "FAILED"
+      }
+    },
+    "operator_streams": {
+      "stderr": {
+        "bytes": 150,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 85568392921005758,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338809419501900,
+        "path": "results/h3_unconditioned_music_campaign/operator_logs/h3music-20260810T023023Z-97ca44b2-attempt-003/stderr.log",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "2f0db3bb5cdda0b02311f561265a10d153551f2f6d7999d07fa20b890f687b2e"
+      },
+      "stdout": {
+        "bytes": 3865,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 70931694132051645,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338807300528000,
+        "path": "results/h3_unconditioned_music_campaign/operator_logs/h3music-20260810T023023Z-97ca44b2-attempt-003/stdout.log",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "3d805bca0d44bba06b19ea316dbfb9a9753daaeca3b57f1df21f121174f76868"
+      },
+      "transcript": {
+        "campaign_failure": {
+          "line_number": 1,
+          "line_sha256": "3fe1c008aff9c8c7fa12d0176f5b0b37133ed8ed8350482850a2e32fff387098",
+          "text": "[H3 MUSIC CAMPAIGN FAILED] CampaignError: h3_unconditioned_music_motion_small_seed42_f124 post-shutdown is not clean: server_pid_receipt_exists=True"
+        },
+        "coordinator_release": {
+          "line_number": 67,
+          "line_sha256": "f28a1ee68f5fb01f9f374c748f450e61f9fdd0515e205f824dbf08d5b1e5c4bf",
+          "text": "[LOCK] Released .gpu.lock and coordinator"
+        },
+        "receipt_unlink_failure": {
+          "line_number": 66,
+          "line_sha256": "2914f272638a4b78bd031ae9977a5d3d32417440722399b4972dd4ac0918cf9f",
+          "text": "[SERVER] server exited but PID receipt removal failed: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\\\Users\\\\jeffr\\\\Documents\\\\ComfyUI\\\\vram-recipe-lab\\\\.server.pid'"
+        },
+        "shutdown_start": {
+          "line_number": 65,
+          "line_sha256": "ef29674fccab2a1b155e2634a37cf6ce2e2e342b911f1ef8adb9571c29b2f6eb",
+          "text": "[SERVER] Shutting down verified lab server (PID 19256)..."
+        }
+      }
+    },
+    "pair_files": {
+      "pair2_alias": {
+        "bytes": 64214,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 72902018969026247,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338804631816000,
+        "path": "results/h3_unconditioned_music_motion_small_seed42_f124.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "737b3d4a4473569cbfa6615b01eb3a4143450d2a133cbf99b3990ea71e1c7aa8"
+      },
+      "pair2_cold_artifact": {
+        "bytes": 860629,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 45598946227319733,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786337906355146300,
+        "path": "outputs/h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541"
+      },
+      "pair2_manager_log": {
+        "bytes": 25081,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 57702370226650772,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338803742800500,
+        "path": "results/h3_unconditioned_music_campaign/server_logs/h3music-20260810T023023Z-97ca44b2-attempt-003-p02-h3_unconditioned_music_motion_small_seed42_f124.log",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "68b53407712bc42a59167bf5e4fb55aa6fbc8008704a3c695c64e05c56f5f24c"
+      },
+      "pair2_run1": {
+        "bytes": 63402,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 58546795156778502,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786337907516283800,
+        "path": "results/h3_unconditioned_music_motion_small_seed42_f124_run1.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "a3bd3aaf1cf60f578d6e472d7894c12041dd32bd14ccce475f5dd966b4f4cff0"
+      },
+      "pair2_run2": {
+        "bytes": 64214,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 71213169108762310,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338804629189800,
+        "path": "results/h3_unconditioned_music_motion_small_seed42_f124_run2.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "737b3d4a4473569cbfa6615b01eb3a4143450d2a133cbf99b3990ea71e1c7aa8"
+      },
+      "pair2_warm_artifact": {
+        "bytes": 860629,
+        "descriptor_mode": 33206,
+        "device": 1356286727840300467,
+        "inode": 92042317385350850,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786338803722044100,
+        "path": "outputs/h3_unconditioned_music_motion_small_seed42_f124_out_00002_.mp4",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541"
+      }
+    },
+    "stale_pid_receipt": {
+      "bytes": 5,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 74872343806000833,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786337003703060800,
+      "path": ".server.pid",
+      "pid": 19256,
+      "present_during_recovery_recording": true,
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "b1fd70434f75046bb14ecd64255dbea1f5add0142981b29db5f82bddf14116f0",
+      "utf8_text": "19256"
+    }
+  },
+  "incident_classification": {
+    "ambiguous_live_server": false,
+    "authority": "attempt lifecycle plus exact operator stdout/stderr; recorder performs no live probes",
+    "campaign_failure_trigger": "post-shutdown clean-state gate found .server.pid",
+    "classification": "EXPECTED_SERVER_EXITED_STALE_PID_RECEIPT_UNLINK_FAILED",
+    "lifecycle_post_child_expected_server_identity_live": false,
+    "lifecycle_post_child_listener_pids_8199": [],
+    "operator_stdout_reports_server_exited": true,
+    "operator_stdout_reports_windows_unlink_error": true,
+    "owned_server_pid": 19256,
+    "shutdown_requested": true,
+    "warm_child_returncode": 0
+  },
+  "receipt_kind": "h3-unconditioned-music-attempt-003-stale-pid-recovery",
+  "receipt_schema_version": 1,
+  "recording_time": {
+    "included": false,
+    "reason": "deterministic pre-publication candidate; filesystem publication metadata is non-authoritative"
+  },
+  "recovery_id": "h3music-20260810T023023Z-97ca44b2-attempt-003-recovery-001",
+  "recovery_policy": {
+    "carry_pair_indices": [
+      1,
+      2
+    ],
+    "execute_pair_indices": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "executions_per_pair": 2,
+    "next_pair_index": 3,
+    "remaining_execution_count": 18,
+    "remaining_pair_count": 9,
+    "resume_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+    "stale_receipt_cleanup": {
+      "attempt004_must_start_from_clean_state": true,
+      "operator_must_independently_reprove_pid_dead_and_listener_absent": true,
+      "operator_must_match_exact_bytes_and_sha256": true,
+      "performed_by_this_recorder": false,
+      "permitted_before_receipt_publication": false
+    }
+  },
+  "resume_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-004",
+  "source_sha256s": {
+    "attempt3_campaign": {
+      "bytes": 118043,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 9570149209123078,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786336617276845700,
+      "path": "scratch/run_h3_unconditioned_music_campaign.py",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "a1073c25caf4749ec095b99fe73b821aa5804c1f23d8d772a74d795af6fd4a0c"
+    },
+    "attempt3_launcher": {
+      "bytes": 5788,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 59109745109652849,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786334745656842400,
+      "path": "scratch/start_h3_music_attempt3.ps1",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "1a4dac75f14580d407cafc44c6b7503c6db3d7539432b28f4d79d9239fcb6601"
+    },
+    "attempt3_operator_recorder": {
+      "bytes": 32374,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 46161896180746484,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786336573263620600,
+      "path": "scratch/record_h3_music_operator_launch.py",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "0057321608c679c4d0924421dfc8174c7a7e61227cfc257a31cf1cacdb9fd849"
+    },
+    "canonical_campaign": {
+      "bytes": 77526,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 16044073673229875,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786330879625253300,
+      "path": "scratch/run_h3_canonical_campaign.py",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "0c3246a435d0c9f208ecbca4bc77b172e2a1e3793cbb96332a2e41781fd5cb38"
+    },
+    "lab_locks": {
+      "bytes": 19611,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 12103423999309051,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786220099290678700,
+      "path": "lab_locks.py",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+    },
+    "manager_guard": {
+      "bytes": 39609,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 21673573207687760,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786328834896415800,
+      "path": "scratch/h3_manager_offline_guard.py",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+    },
+    "manager_test_boot": {
+      "bytes": 2556,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 1688849861645462,
+      "link_count": 1,
+      "mode": 33279,
+      "mtime_ns": 1786328122932155800,
+      "path": "boot_h3_manager_offline_test.cmd",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+    },
+    "runner": {
+      "bytes": 174954,
+      "descriptor_mode": 33206,
+      "device": 1356286727840300467,
+      "inode": 5348024559281480,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786339223642924500,
+      "path": "run_recipe.py",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "938c72ad5b4cb6565804dde85222103707be67c410b4affec766b6fc9ed7acad"
+    }
+  },
+  "status": "ATTEMPT_003_FAILED_PAIR2_MACHINE_RECOVERED",
+  "success": true
+}

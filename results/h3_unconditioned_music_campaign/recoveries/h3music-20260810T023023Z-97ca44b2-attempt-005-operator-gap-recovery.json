@@ -1,0 +1,835 @@
+{
+  "attempt_id": "h3music-20260810T023023Z-97ca44b2-attempt-005",
+  "campaign_terminal_evidence": {
+    "campaign_sequence": 23,
+    "event": "campaign_completed",
+    "event_sha256": "7813ad0be79a53b9e8265e7ef784b28beef9d222cc0007ee265c08abedd50c48",
+    "final_evidence_audit_count": 11,
+    "final_state": {
+      "expected_server_identity_live": false,
+      "gpu_lock_exists": false,
+      "listener_pids_8199": [],
+      "queue_quarantine_exists": false,
+      "server_pid_create_time": null,
+      "server_pid_receipt": null,
+      "server_pid_receipt_exists": false,
+      "suite_lock_exists": false
+    },
+    "ledger_sequence": 88,
+    "quality_judgment": "PENDING_HUMAN",
+    "status": "COMPLETE",
+    "success_counts": {
+      "actual_execution_count": 4,
+      "carried_pair_count": 9,
+      "evidence_execution_count": 24,
+      "executed_pair_count": 2,
+      "failed_historical_execution_count": 1,
+      "logical_cell_count": 14,
+      "new_execution_count": 4,
+      "orphan_historical_cold_count": 1,
+      "pair_count": 11,
+      "study_leg_count": 22,
+      "valid_orphan_historical_cold_count": 1
+    },
+    "verified": true
+  },
+  "certification_effect": {
+    "campaign_completion_granted": false,
+    "campaign_status_changed": false,
+    "effect": "NONE",
+    "human_quality_judgment_granted": false,
+    "promotion_or_study_pass_granted": false,
+    "recipe_or_pair_certification_granted": false
+  },
+  "exact_process_end_time_unknown": true,
+  "exit_code_not_independently_recoverable": true,
+  "finalized_sources": {
+    "all_recorded_file_sources_rehashed": true,
+    "lifecycle_snapshot_reference_count": 33,
+    "literal_finalized_pins": {
+      "attempt4_recovery_receipt": {
+        "bytes": 60939,
+        "device": 1356286727840300467,
+        "inode": 37436171903249221,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786360893949578000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\recoveries\\h3music-20260810T023023Z-97ca44b2-attempt-004-timeout-recovery-correction-001.json",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "fef1ef0401b5e4f13dc11b7405224e6b792a1a18c3b607fce806468f598f7dcd"
+      },
+      "attempt4_recovery_recorder": {
+        "bytes": 38580,
+        "device": 1356286727840300467,
+        "inode": 33776997206001152,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786360785902899800,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt4_recovery.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "d35ec3c0ddc3ae495c4bc56d5166a716f0da57cfbcb32ac6876373ab61528335"
+      },
+      "attempt5_operator_launcher": {
+        "bytes": 5381,
+        "device": 1356286727840300467,
+        "inode": 9007199255489630,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786361000187903300,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_music_attempt5.ps1",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "909c609677601467b43ac4a275ae7fe118be49b478c55a42658f82274c4c31f2"
+      },
+      "attempt5_operator_recorder": {
+        "bytes": 31649,
+        "device": 1356286727840300467,
+        "inode": 83035118129864188,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786361852336371100,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt5_operator_launch.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "5250cdb89f6834305179897a24063ebe8e377681199830e1a32e8fb482709aa5"
+      },
+      "campaign": {
+        "bytes": 201061,
+        "device": 1356286727840300467,
+        "inode": 9570149209123078,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786361918232379700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_unconditioned_music_campaign.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "fbc2653c2171a4bfab0b54491a4c512055d1594003abdbb3c17db64a72148b54"
+      },
+      "runner": {
+        "bytes": 182105,
+        "device": 1356286727840300467,
+        "inode": 5348024559281480,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786360926598094100,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "0c7c636e36d1573852a5ad2c71cb06a826dea97eb34b16ab605ecafb530b83c9"
+      }
+    },
+    "manifest": [
+      {
+        "bytes": 23156,
+        "path": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\folder_paths.py",
+        "sha256": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db"
+      },
+      {
+        "bytes": 4797,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\chardet\\__init__.py",
+        "sha256": "e7b47e1d2c63d0f5a620b30dd0616650da8431fac45526a65f28c3f96ebf7dbb"
+      },
+      {
+        "bytes": 8899,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\git\\__init__.py",
+        "sha256": "20509d015671fc8b903a1fc105db5291d22b647b0e49dd1c8f43b9d2df68aeca"
+      },
+      {
+        "bytes": 6131,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\rich\\__init__.py",
+        "sha256": "8fb000f7fcff3c03506e6453c1391665cfc355daad0411f106a1ab32ccf6d422"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\toml\\__init__.py",
+        "sha256": "02ede4a82c0a0f47236dfe322463a9505c29b18d161ec0b56511af5a020a9a97"
+      },
+      {
+        "bytes": 262144,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+      },
+      {
+        "bytes": 460,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\__manager\\config.ini",
+        "sha256": "0611a4a02c50d0c2ec0c9fb79d97f145de03371c0bdf092e5701931f9e1b08ab"
+      },
+      {
+        "bytes": 131406,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_core.py",
+        "sha256": "1ab267fb751fd070dca0be15527e7ee45003d99e200537f94b95b2a1b262fa67"
+      },
+      {
+        "bytes": 73639,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_server.py",
+        "sha256": "34148e2999ce63b5883ebe18b3e437a04eecb8a0f6242f566a0942d25fc8cad6"
+      },
+      {
+        "bytes": 22368,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\glob\\manager_util.py",
+        "sha256": "b0e8d7b513a73644bbf21c29db587e1a3c1a2a4c601f727ea54ea3ccf8397c21"
+      },
+      {
+        "bytes": 30389,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-Manager\\prestartup_script.py",
+        "sha256": "20bc9f42d784efb6ed3aac323628137866a764791f3ef0df4d2f49306fcceab4"
+      },
+      {
+        "bytes": 2556,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      {
+        "bytes": 1371,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_lab_server.cmd",
+        "sha256": "5f9c313a050e2cec6356c9d31b54cb7e0f1825b0a5314ec7eec436466036ccb4"
+      },
+      {
+        "bytes": 19611,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\lab_locks.py",
+        "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+      },
+      {
+        "bytes": 31555,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\recoveries\\h3music-20260810T023023Z-97ca44b2-attempt-002-return120-recovery.json",
+        "sha256": "32a9e9403388d76e190082a04937fb83446b4b3617c0a2178cd4eb673de4911d"
+      },
+      {
+        "bytes": 16216,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\recoveries\\h3music-20260810T023023Z-97ca44b2-attempt-003-stale-pid-recovery.json",
+        "sha256": "306d44d4778b7a20921bc40df2594b6a11c0b11030e20e1629cd06f2dcd7442d"
+      },
+      {
+        "bytes": 60939,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\recoveries\\h3music-20260810T023023Z-97ca44b2-attempt-004-timeout-recovery-correction-001.json",
+        "sha256": "fef1ef0401b5e4f13dc11b7405224e6b792a1a18c3b607fce806468f598f7dcd"
+      },
+      {
+        "bytes": 182105,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+        "sha256": "0c7c636e36d1573852a5ad2c71cb06a826dea97eb34b16ab605ecafb530b83c9"
+      },
+      {
+        "bytes": 17794,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\build_h3_unconditioned_music_study.py",
+        "sha256": "80c17697ba8ad56b247e2acedbe1de2fe177a2946575d672b10785bcef838864"
+      },
+      {
+        "bytes": 39609,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      {
+        "bytes": 48060,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt2_recovery.py",
+        "sha256": "c873053051b9a7e295da89601c0ed92ba6a5d03aeaf1f2672b9b9d4d83ca7011"
+      },
+      {
+        "bytes": 39301,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt3_recovery.py",
+        "sha256": "6e22075eeb39e1cffdf2d311fc3950bafe2a227849bec376fb6c83e5eeb0ff0b"
+      },
+      {
+        "bytes": 24435,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt4_operator_launch.py",
+        "sha256": "053fd5fd22ba6c6132636a6946d2b4da6184d8f631a88970120afad77906059e"
+      },
+      {
+        "bytes": 38580,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt4_recovery.py",
+        "sha256": "d35ec3c0ddc3ae495c4bc56d5166a716f0da57cfbcb32ac6876373ab61528335"
+      },
+      {
+        "bytes": 31649,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt5_operator_launch.py",
+        "sha256": "5250cdb89f6834305179897a24063ebe8e377681199830e1a32e8fb482709aa5"
+      },
+      {
+        "bytes": 32374,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_operator_launch.py",
+        "sha256": "0057321608c679c4d0924421dfc8174c7a7e61227cfc257a31cf1cacdb9fd849"
+      },
+      {
+        "bytes": 27204,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_recovery.py",
+        "sha256": "7ecc98fa6a9157a1080406d556f0b1df055b0ac00f89367753bbe421c7a84b38"
+      },
+      {
+        "bytes": 77526,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_canonical_campaign.py",
+        "sha256": "0c3246a435d0c9f208ecbca4bc77b172e2a1e3793cbb96332a2e41781fd5cb38"
+      },
+      {
+        "bytes": 201061,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_unconditioned_music_campaign.py",
+        "sha256": "fbc2653c2171a4bfab0b54491a4c512055d1594003abdbb3c17db64a72148b54"
+      },
+      {
+        "bytes": 5788,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_music_attempt3.ps1",
+        "sha256": "1a4dac75f14580d407cafc44c6b7503c6db3d7539432b28f4d79d9239fcb6601"
+      },
+      {
+        "bytes": 5708,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_music_attempt4.ps1",
+        "sha256": "163650d79321cbda6ca8287fdf7551acca4ee54fbcee17b75e14bfb0cac6ae69"
+      },
+      {
+        "bytes": 5381,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_music_attempt5.ps1",
+        "sha256": "909c609677601467b43ac4a275ae7fe118be49b478c55a42658f82274c4c31f2"
+      }
+    ],
+    "unique_source_file_count": 32
+  },
+  "gap_recorder_source": {
+    "bytes": 44378,
+    "device": 1356286727840300467,
+    "inode": 24769797950802347,
+    "link_count": 1,
+    "mode": 33206,
+    "mtime_ns": 1786373832451722100,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt5_operator_gap_recovery.py",
+    "regular_file": true,
+    "reparse_point": false,
+    "sha256": "cf58c344a14fb1c5cb6f9f13ec8d39fd2b629b495c87482a74b61758e9f55099"
+  },
+  "launch_receipt_absent": true,
+  "lifecycle": {
+    "attempt_row_count": 23,
+    "bytes": 3745152,
+    "device": 1356286727840300467,
+    "hash_chain_verified": true,
+    "inode": 13792273859586412,
+    "last_event_sha256": "7813ad0be79a53b9e8265e7ef784b28beef9d222cc0007ee265c08abedd50c48",
+    "link_count": 1,
+    "mode": 33206,
+    "mtime_ns": 1786372917574630100,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\lifecycle.jsonl",
+    "regular_file": true,
+    "reparse_point": false,
+    "row_count": 88,
+    "sha256": "6eb9d815b5fbb9dd09edb07ae68a8a49c052bb81e346daf7b616e1d8984697ab",
+    "terminal_campaign_sequence": 23,
+    "terminal_is_last_row": true,
+    "terminal_ledger_sequence": 88
+  },
+  "must_not_substitute_for_launch_receipt": true,
+  "no_certification_effect": true,
+  "operator_capture_gap": {
+    "campaign_lifecycle_self_report_is_not_independent_operator_capture": true,
+    "captured_exit_code": null,
+    "captured_pid": null,
+    "captured_process_end_time": null,
+    "captured_process_start_time": null,
+    "independent_operator_capture_present": false,
+    "powershell_start_process_capture_claimed": false,
+    "recovered_exit_code": null
+  },
+  "operator_contract": {
+    "campaign_fd_identities_match_final_streams": true,
+    "campaign_growing_streams_excluded_from_source_hashes": true,
+    "contract": {
+      "attempt_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005",
+      "authority": "operator transport only",
+      "certification_effect": {
+        "campaign_status_changed": false,
+        "exit_120_reclassified_as_success": false,
+        "human_quality_judgment_granted": false,
+        "recipe_or_pair_certification_granted": false
+      },
+      "growing_logs_excluded_from_source_evidence": true,
+      "launch_receipt": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005\\launch.json",
+      "launcher_source": {
+        "bytes": 5381,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_music_attempt5.ps1",
+        "sha256": "909c609677601467b43ac4a275ae7fe118be49b478c55a42658f82274c4c31f2"
+      },
+      "recorder_source": {
+        "bytes": 31649,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_music_attempt5_operator_launch.py",
+        "sha256": "5250cdb89f6834305179897a24063ebe8e377681199830e1a32e8fb482709aa5"
+      },
+      "stderr_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005\\stderr.log",
+      "stdout_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005\\stdout.log"
+    },
+    "independent_process_capture_present": false
+  },
+  "operator_directory": {
+    "entries": [
+      "stderr.log",
+      "stdout.log"
+    ],
+    "launch_receipt": {
+      "absent": true,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005\\launch.json"
+    },
+    "launch_receipt_absent": true,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005"
+  },
+  "operator_streams": {
+    "rechecked_by_double_build_before_publication": true,
+    "snapshotted_through_stable_regular_file_descriptors": true,
+    "stderr": {
+      "bytes": 0,
+      "device": 1356286727840300467,
+      "inode": 32369622322480661,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786362124566110900,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005\\stderr.log",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr_empty": true,
+    "stdout": {
+      "bytes": 1898814,
+      "device": 1356286727840300467,
+      "inode": 33214047252612604,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786372917607647000,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\operator_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005\\stdout.log",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "141187131ce3455ccf568fd1697e8f713dbda208bd6218ad8a1aeb66056268c8"
+    },
+    "stdout_ends_with_newline": true
+  },
+  "receipt_kind": "h3-unconditioned-music-attempt-005-operator-gap-recovery",
+  "receipt_schema_version": 1,
+  "recording_time": {
+    "included": false,
+    "reason": "deterministic immutable-evidence receipt"
+  },
+  "safety": {
+    "campaign_recipe_result_or_document_modified": false,
+    "existing_evidence_overwritten": false,
+    "exit_code_or_exact_end_time_invented": false,
+    "network_used": false,
+    "operator_directory_modified": false,
+    "process_server_gpu_listener_or_port_queried": false,
+    "render_or_prompt_submitted": false,
+    "start_process_capture_claimed": false
+  },
+  "status": "POST_RUN_OPERATOR_CAPTURE_GAP",
+  "terminal_file_audit": {
+    "all_final_manager_logs_rehashed": true,
+    "all_final_manager_logs_server_reported_offline": true,
+    "all_terminal_artifacts_rehashed": true,
+    "all_terminal_receipts_rehashed": true,
+    "artifact_count": 22,
+    "artifacts": [
+      {
+        "bytes": 909151,
+        "leg": "cold",
+        "pair_index": 1,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4",
+        "sha256": "b58461545dc0b7ceee6bfa0eaac080446cc3148bc00783f04eaef48ee96617ed"
+      },
+      {
+        "bytes": 909151,
+        "leg": "warm",
+        "pair_index": 1,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00003_.mp4",
+        "sha256": "b58461545dc0b7ceee6bfa0eaac080446cc3148bc00783f04eaef48ee96617ed"
+      },
+      {
+        "bytes": 860629,
+        "leg": "cold",
+        "pair_index": 2,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4",
+        "sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541"
+      },
+      {
+        "bytes": 860629,
+        "leg": "warm",
+        "pair_index": 2,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00002_.mp4",
+        "sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541"
+      },
+      {
+        "bytes": 1127954,
+        "leg": "cold",
+        "pair_index": 3,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4",
+        "sha256": "3f7b98cdd8187972e2c9119006ac56d2921e071b9b4adc977e8adc8eb81beabe"
+      },
+      {
+        "bytes": 1127954,
+        "leg": "warm",
+        "pair_index": 3,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00002_.mp4",
+        "sha256": "3f7b98cdd8187972e2c9119006ac56d2921e071b9b4adc977e8adc8eb81beabe"
+      },
+      {
+        "bytes": 852700,
+        "leg": "cold",
+        "pair_index": 4,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4",
+        "sha256": "cff95b06e823ef91209287cc6dee914a6f4f5e1f161b152e93ece00b67b84ca2"
+      },
+      {
+        "bytes": 852700,
+        "leg": "warm",
+        "pair_index": 4,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00002_.mp4",
+        "sha256": "cff95b06e823ef91209287cc6dee914a6f4f5e1f161b152e93ece00b67b84ca2"
+      },
+      {
+        "bytes": 1236749,
+        "leg": "cold",
+        "pair_index": 5,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4",
+        "sha256": "c17326216587c63dff23b01ec6964720c9ecfcc110575b493b47435605f9c7cf"
+      },
+      {
+        "bytes": 1236749,
+        "leg": "warm",
+        "pair_index": 5,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00002_.mp4",
+        "sha256": "c17326216587c63dff23b01ec6964720c9ecfcc110575b493b47435605f9c7cf"
+      },
+      {
+        "bytes": 951919,
+        "leg": "cold",
+        "pair_index": 6,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4",
+        "sha256": "aa1de4095d44112195407fe23beeacdd93ca84b5b9d4927651013bf3528ad020"
+      },
+      {
+        "bytes": 951919,
+        "leg": "warm",
+        "pair_index": 6,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00002_.mp4",
+        "sha256": "aa1de4095d44112195407fe23beeacdd93ca84b5b9d4927651013bf3528ad020"
+      },
+      {
+        "bytes": 1270285,
+        "leg": "cold",
+        "pair_index": 7,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4",
+        "sha256": "bae207d958cf0bd1fed62eba770b716588cccf126eeeaea7b6c77749bf6a5890"
+      },
+      {
+        "bytes": 1270285,
+        "leg": "warm",
+        "pair_index": 7,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00002_.mp4",
+        "sha256": "bae207d958cf0bd1fed62eba770b716588cccf126eeeaea7b6c77749bf6a5890"
+      },
+      {
+        "bytes": 778629,
+        "leg": "cold",
+        "pair_index": 8,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4",
+        "sha256": "23cff43d00b2de2a57da492b4e5942606cf25217b522927d19bad208a58d763a"
+      },
+      {
+        "bytes": 778629,
+        "leg": "warm",
+        "pair_index": 8,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00002_.mp4",
+        "sha256": "23cff43d00b2de2a57da492b4e5942606cf25217b522927d19bad208a58d763a"
+      },
+      {
+        "bytes": 853218,
+        "leg": "cold",
+        "pair_index": 9,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4",
+        "sha256": "70ffb6fa94cec7ecae2ed103b5373a689c5563f4e8feb8f09d3c173a41f81041"
+      },
+      {
+        "bytes": 853218,
+        "leg": "warm",
+        "pair_index": 9,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00002_.mp4",
+        "sha256": "70ffb6fa94cec7ecae2ed103b5373a689c5563f4e8feb8f09d3c173a41f81041"
+      },
+      {
+        "bytes": 1734045,
+        "leg": "cold",
+        "pair_index": 10,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4",
+        "sha256": "0c6a50a389991ffc5f6b13cc2474c78a484be359014c31f3251302c2c12109ef"
+      },
+      {
+        "bytes": 1734045,
+        "leg": "warm",
+        "pair_index": 10,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00002_.mp4",
+        "sha256": "0c6a50a389991ffc5f6b13cc2474c78a484be359014c31f3251302c2c12109ef"
+      },
+      {
+        "bytes": 2389745,
+        "leg": "cold",
+        "pair_index": 11,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4",
+        "sha256": "ebd82c654297d938ba2cfdd68d3877af945d797022507433117ee665cc1c22e0"
+      },
+      {
+        "bytes": 2389745,
+        "leg": "warm",
+        "pair_index": 11,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00002_.mp4",
+        "sha256": "ebd82c654297d938ba2cfdd68d3877af945d797022507433117ee665cc1c22e0"
+      }
+    ],
+    "manager_log_count": 11,
+    "manager_logs": [
+      {
+        "bytes": 25081,
+        "pair_index": 1,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-002-p01-h3_unconditioned_music_scene_seed42_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "1ab05e73202b2e77a5dfb4f4cf350491e1e9a0d0d6c4083204d855be88122b7d",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 2,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-003-p02-h3_unconditioned_music_motion_small_seed42_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "68b53407712bc42a59167bf5e4fb55aa6fbc8008704a3c695c64e05c56f5f24c",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 3,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p03-h3_unconditioned_music_motion_large_seed42_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "510cfbbae0482da7a02c4566dcc37766a5a1abd2d5b9b57079046de1d95e74e6",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 4,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p04-h3_unconditioned_music_scene_seed43_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "ccddb3c1d095dc73a68f55f98c6178b67d0cc3898ef286742554246409db06a0",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 5,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p05-h3_unconditioned_music_scene_seed44_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "e0a66519b12d8542da2d83705e7a47b4d819fcade46dd36c5f17c8f49cca1559",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 6,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p06-h3_unconditioned_music_scene_seed45_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "d58d22004d496cd62ccfd7eb5e82805a09cd1d9d6ce30384002f3c4c8516eb2e",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 7,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p07-h3_unconditioned_music_scene_seed46_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "5289cd801a1a327b25ce56a5c9fd35b247f09b405b8a9b109ff7ff937c0c058d",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 8,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p08-h3_unconditioned_music_score_seed42_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "a734317b15dfe7dd6658bcca5b6ea23c92c7988b268f358d78ea60f56cf51f8e",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 9,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-004-p09-h3_unconditioned_music_sfx_seed42_f124.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "09a5fbbc283581b94aeefaf03a7b8a26a1103366d163cfb36ab5fb4bec2ea0b8",
+        "status": "pass"
+      },
+      {
+        "bytes": 25081,
+        "pair_index": 10,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005-p10-h3_unconditioned_music_scene_seed42_f192.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "a54d805f31a8456971fd84b5828d5ebe55c8e55d5b4f3cd15d542d211f86ccca",
+        "status": "pass"
+      },
+      {
+        "bytes": 25125,
+        "pair_index": 11,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\server_logs\\h3music-20260810T023023Z-97ca44b2-attempt-005-p11-h3_unconditioned_music_scene_seed42_f277.log",
+        "server_reported_network_mode": "offline",
+        "sha256": "558fd424a36db8620352eca7c6b32494b5726bc2480c97afc6674d774767a1c6",
+        "status": "pass"
+      }
+    ],
+    "receipt_count": 22,
+    "receipts": [
+      {
+        "bytes": 63350,
+        "leg": "cold",
+        "pair_index": 1,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed42_f124_run2.json",
+        "sha256": "30d6dbc37b906a25909826e8ef68862af4952c7597b793a76982db1a9ebe25cd"
+      },
+      {
+        "bytes": 64162,
+        "leg": "warm",
+        "pair_index": 1,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed42_f124_run3.json",
+        "sha256": "e12a76ebc4e14bb42d2d6f44466364894a6ce65a70b4cbda1057d55cb976829a"
+      },
+      {
+        "bytes": 63402,
+        "leg": "cold",
+        "pair_index": 2,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_motion_small_seed42_f124_run1.json",
+        "sha256": "a3bd3aaf1cf60f578d6e472d7894c12041dd32bd14ccce475f5dd966b4f4cff0"
+      },
+      {
+        "bytes": 64214,
+        "leg": "warm",
+        "pair_index": 2,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_motion_small_seed42_f124_run2.json",
+        "sha256": "737b3d4a4473569cbfa6615b01eb3a4143450d2a133cbf99b3990ea71e1c7aa8"
+      },
+      {
+        "bytes": 63405,
+        "leg": "cold",
+        "pair_index": 3,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_motion_large_seed42_f124_run1.json",
+        "sha256": "e22ccd5b3ba44f9d0e54dff455d3b0ef8d90b269ee873fd2048091b0d2e078d3"
+      },
+      {
+        "bytes": 64217,
+        "leg": "warm",
+        "pair_index": 3,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_motion_large_seed42_f124_run2.json",
+        "sha256": "cf14ab30ebe995367125a13c443c83b6d6334b61caf12c4491a19c5a6537fe7f"
+      },
+      {
+        "bytes": 63352,
+        "leg": "cold",
+        "pair_index": 4,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed43_f124_run1.json",
+        "sha256": "14a91e13a5b26aecc2ab40c693556f0c9b406ce8057f1def2a8348e90994e20d"
+      },
+      {
+        "bytes": 64165,
+        "leg": "warm",
+        "pair_index": 4,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed43_f124_run2.json",
+        "sha256": "99b2cc43a61aee957d94ca99a4dfee7bfb191186f41d3f3aaa21a95ef603ab65"
+      },
+      {
+        "bytes": 63359,
+        "leg": "cold",
+        "pair_index": 5,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed44_f124_run1.json",
+        "sha256": "2a36585469c46ce434e3ddbe742227d2bddefede3da44f41ab5daf76f9d9d994"
+      },
+      {
+        "bytes": 64171,
+        "leg": "warm",
+        "pair_index": 5,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed44_f124_run2.json",
+        "sha256": "d1e559d0f14b28ae80df574c384927fcb462cffc91e065c3f4e3a9b1d8cfd347"
+      },
+      {
+        "bytes": 63353,
+        "leg": "cold",
+        "pair_index": 6,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed45_f124_run1.json",
+        "sha256": "57f36610b486b6a46c8774fae910a35628af93db47a65b646912bc2a08dbe2d0"
+      },
+      {
+        "bytes": 64164,
+        "leg": "warm",
+        "pair_index": 6,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed45_f124_run2.json",
+        "sha256": "8c62da832d95ba34e26f71044c7432ee1eee17235c318c91fa58ea7c7b4f22fc"
+      },
+      {
+        "bytes": 63359,
+        "leg": "cold",
+        "pair_index": 7,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed46_f124_run1.json",
+        "sha256": "26de7a04188714d0a71bd67a608641deb68e768dbd48e72f2967f68d0448be25"
+      },
+      {
+        "bytes": 64172,
+        "leg": "warm",
+        "pair_index": 7,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed46_f124_run2.json",
+        "sha256": "3fe567f8dcaf8b26a5f78a426a216555235c21fe7a5cad5d21505e57146061c8"
+      },
+      {
+        "bytes": 63354,
+        "leg": "cold",
+        "pair_index": 8,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_score_seed42_f124_run1.json",
+        "sha256": "c10068f539b3e81fd09eeef88cbfae26e37c20a99f51f05060f4ef191296f19d"
+      },
+      {
+        "bytes": 64166,
+        "leg": "warm",
+        "pair_index": 8,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_score_seed42_f124_run2.json",
+        "sha256": "cdeb5829fc1a4c466d9db6d43571de15103edcd46206063d8eb88c3191c506be"
+      },
+      {
+        "bytes": 63341,
+        "leg": "cold",
+        "pair_index": 9,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_sfx_seed42_f124_run1.json",
+        "sha256": "a03e83d27018bb8f245ac95cdd234a49488f3efbb7243e16ff472d916716f78f"
+      },
+      {
+        "bytes": 64154,
+        "leg": "warm",
+        "pair_index": 9,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_sfx_seed42_f124_run2.json",
+        "sha256": "d5992ab2b1364fcec16fcd3b577790340c3efa1c202b8151b112d8c52116f7c1"
+      },
+      {
+        "bytes": 63417,
+        "leg": "cold",
+        "pair_index": 10,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed42_f192_run2.json",
+        "sha256": "6a6208b733d092b6316f7067acb2cc8e79878e3a33a7e33424cdad71ec0defaf"
+      },
+      {
+        "bytes": 64230,
+        "leg": "warm",
+        "pair_index": 10,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed42_f192_run3.json",
+        "sha256": "2c6cd3ce074d2abf47aa579691de79e53782c58cb795cab6ff6c83f1458aa954"
+      },
+      {
+        "bytes": 63424,
+        "leg": "cold",
+        "pair_index": 11,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed42_f277_run1.json",
+        "sha256": "c2f3b8f1ca531368c47b718e7ddb4d0eedc920d11432b1d945760d80231ef441"
+      },
+      {
+        "bytes": 64236,
+        "leg": "warm",
+        "pair_index": 11,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_scene_seed42_f277_run2.json",
+        "sha256": "a18ef8826b402a6ce91fbe30cc490c5ce827b7f1272b0e2aea50bdba634e60ae"
+      }
+    ],
+    "recovery_receipt": {
+      "bytes": 60939,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_unconditioned_music_campaign\\recoveries\\h3music-20260810T023023Z-97ca44b2-attempt-004-timeout-recovery-correction-001.json",
+      "sha256": "fef1ef0401b5e4f13dc11b7405224e6b792a1a18c3b607fce806468f598f7dcd"
+    }
+  }
+}

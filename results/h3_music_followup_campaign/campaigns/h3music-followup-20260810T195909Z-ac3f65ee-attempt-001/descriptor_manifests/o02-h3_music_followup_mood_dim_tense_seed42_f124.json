@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "campaign": "H3_MUSIC_FOLLOWUP",
+  "clips": [
+    {
+      "label": "J2-2b",
+      "filename": "h3_music_followup_mood_dim_tense_seed42_f124_out_00001_.mp4",
+      "sha256": "a27571f53ef3ed56cfa71a8842ce872d1026af845fcbcc579c6f4159536d8590",
+      "recipe": "h3_music_followup_mood_dim_tense_seed42_f124",
+      "recipe_sha256": "f190104d94542abe26097013f534f01f8d012c7fa48da3c95be6d45a489fdac6",
+      "receipt_path": "results/h3_music_followup_mood_dim_tense_seed42_f124_run1.json",
+      "receipt_sha256": "d9e489a0edb3a76ac65651571325135e94fd30158a8e97d018f6cd6ded6baa53"
+    }
+  ],
+  "quality_judgment": "PENDING_HUMAN"
+}

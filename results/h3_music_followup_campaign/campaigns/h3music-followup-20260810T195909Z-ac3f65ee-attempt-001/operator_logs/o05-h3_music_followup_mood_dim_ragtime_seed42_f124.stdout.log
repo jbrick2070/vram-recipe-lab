@@ -1,0 +1,39 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 18116)
+--- Running Preflight Checks for h3_music_followup_mood_dim_ragtime_seed42_f124 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 2: Five-sample WDDM idle gate passed
+[SERVER] Launching lab server via boot_h3_manager_offline_test.cmd on port 8199...
+[SERVER] Recorded server PID 8328 in .server.pid
+[SERVER] Updated .server.pid to serving PID 31928
+[SERVER] Lab server online on port 8199 after 15.2s
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+[FIXTURE] Uploaded and verified fixture portrait.png in server input directory
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 2.30 GB | Host RAM: 20.32 GB
+Queueing prompt for h3_music_followup_mood_dim_ragtime_seed42_f124...
+Queued successfully (Prompt ID: ab4fac7c-b834-462d-beb5-d8a6956bc7f5)
+
+--- Run Summary ---
+Recipe:        h3_music_followup_mood_dim_ragtime_seed42_f124
+Run Count:     1 (configuration run 1; Cold cache)
+Baseline VRAM: 2.305 GiB | Host RAM: 20.32 GB
+Peak VRAM:     8.406 GiB (Gate <= 14.5 GiB)
+Net Peak VRAM: 6.101 GiB (peak minus this leg's baseline)
+Baseline Lane: elevated-baseline lane, operator-authorized 2026-08-10
+Peak Host RAM: 29.36 GB
+Wall Clock:    990.5 s
+Boot Lane:     lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb
+Status:        PASS (cold)
+[LEDGER] Updated RESULTS.md entry for h3_music_followup_mood_dim_ragtime_seed42_f124: PASS (cold) (machine; human pending)
+[MATRIX] Updated ENGINE_MATRIX_BETA.md for h3_music_followup_mood_dim_ragtime_seed42_f124
+[SERVER] Shutting down verified lab server (PID 31928)...
+[SERVER] Process 31928 and listener exited; removed .server.pid receipt.
+[LOCK] Released .gpu.lock and coordinator

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "quality_judgment": "PENDING_HUMAN",
+  "clips": [
+    {
+      "label": "ORIGIN-PROMPT-ONLY-EXACT",
+      "filename": "h3_music_followup_origin_prompt_only_exact_seed42_f124_out_00001_.mp4",
+      "sha256": "1ea55eb6e0dc846ae6b5f190dfe0ed835fb296639a572d870e4b2420176368cd",
+      "recipe": "h3_music_followup_origin_prompt_only_exact_seed42_f124",
+      "recipe_sha256": "c877d6db69aad72b9f5b9333e80d53e4d35deecd09d85192b6d4345c76100428",
+      "receipt_path": "results/h3_music_followup_origin_prompt_only_exact_seed42_f124_run1.json",
+      "receipt_sha256": "f425e697cf52bf85cae915cafaeebdba3750a4b95b4c3fa3794846a8ea416545"
+    }
+  ]
+}

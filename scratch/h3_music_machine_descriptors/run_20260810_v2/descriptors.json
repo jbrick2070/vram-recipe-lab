@@ -1,0 +1,784 @@
+{
+  "schema_version": 1,
+  "repo": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab",
+  "analysis_script": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py",
+  "analysis_script_sha256": "a61aa0bfeb94421458a7a4340c00bd677d885cff0e0390878beb632b27b6e6e4",
+  "python_executable": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+  "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+  "numpy_version": "1.26.4",
+  "ffmpeg_executable": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE",
+  "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "ffprobe_executable": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE",
+  "ffprobe_version": "ffprobe version 8.0.1-full_build-www.gyan.dev Copyright (c) 2007-2025 the FFmpeg developers",
+  "analysis_command": "C:\\Users\\jeffr\\AppData\\Local\\Programs\\Python\\Python310\\python.exe -B C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py --result-dir C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\run_20260810_v2",
+  "definitions": {
+    "spectral_windows": "non-overlapping complete 50 ms windows, Hann-weighted, mono 48 kHz signed 16-bit PCM",
+    "spectral_flux": "mean sum of positive binwise changes between consecutive L1-normalized magnitude spectra",
+    "periodicity": "largest overlap-energy-normalized autocorrelation coefficient at a 0.25-2.00 s lag after global mean removal",
+    "bands_hz": [
+      [
+        20.0,
+        250.0
+      ],
+      [
+        250.0,
+        2000.0
+      ],
+      [
+        2000.0,
+        24000.0
+      ]
+    ],
+    "alignment": "Pearson r across matching 0.5 s buckets: mean ffmpeg lavfi.scene_score versus linear mono PCM RMS"
+  },
+  "records": [
+    {
+      "label": "Q-CONTROL",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4",
+      "input_bytes": 909151,
+      "input_sha256": "b58461545dc0b7ceee6bfa0eaac080446cc3148bc00783f04eaef48ee96617ed",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f124_out_00002_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -56.2,
+        "loudness_range_lu": 0.2,
+        "true_peak_dbfs": -48.0,
+        "silence_interval_count": 1,
+        "silent_time_s": 5.184,
+        "rms_dbfs_per_channel": [
+          -58.260775,
+          -58.160017
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 2436.9015003579398,
+        "spectral_centroid_std_hz": 324.5806665185833,
+        "spectral_flux_mean": 0.24663518994102906,
+        "periodicity_score": 0.6928420894811063,
+        "periodicity_best_lag_s": 0.27479166666666666,
+        "band_energy_ratio_low_20_250": 0.7841260218652342,
+        "band_energy_ratio_mid_250_2000": 0.19997658124670945,
+        "band_energy_ratio_high_2000_24000": 0.015897396888056237,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.002593469696969697,
+        "audio_rms_mean": 0.0012176231081708398,
+        "motion_audio_rms_pearson_r": -0.016991962318796287
+      }
+    },
+    {
+      "label": "Q2-B",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4",
+      "input_bytes": 860629,
+      "input_sha256": "92d044cd5d6f2bffb9e53b5ff5b6917670ff52bbb363309ba0473123ac398541",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_small_seed42_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -24.0,
+        "loudness_range_lu": 21.5,
+        "true_peak_dbfs": -8.2,
+        "silence_interval_count": 5,
+        "silent_time_s": 4.7890939999999995,
+        "rms_dbfs_per_channel": [
+          -36.178763,
+          -36.074872
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 2303.3153320978995,
+        "spectral_centroid_std_hz": 639.2248722845015,
+        "spectral_flux_mean": 0.26722731934992855,
+        "periodicity_score": 0.04412491471493192,
+        "periodicity_best_lag_s": 0.707875,
+        "band_energy_ratio_low_20_250": 0.1361706229765732,
+        "band_energy_ratio_mid_250_2000": 0.8542761966443309,
+        "band_energy_ratio_high_2000_24000": 0.009553180379095909,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.0151599696969697,
+        "audio_rms_mean": 0.005829170230638472,
+        "motion_audio_rms_pearson_r": -0.2226916455267985
+      }
+    },
+    {
+      "label": "Q2-C",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4",
+      "input_bytes": 1127954,
+      "input_sha256": "3f7b98cdd8187972e2c9119006ac56d2921e071b9b4adc977e8adc8eb81beabe",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_motion_large_seed42_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -23.1,
+        "loudness_range_lu": 2.8,
+        "true_peak_dbfs": -5.3,
+        "silence_interval_count": 4,
+        "silent_time_s": 2.803219,
+        "rms_dbfs_per_channel": [
+          -31.731135,
+          -31.601546
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 2193.1039101232222,
+        "spectral_centroid_std_hz": 1076.7004242688747,
+        "spectral_flux_mean": 0.27444404493763697,
+        "periodicity_score": 0.026215196491828203,
+        "periodicity_best_lag_s": 0.30775,
+        "band_energy_ratio_low_20_250": 0.20304077999363657,
+        "band_energy_ratio_mid_250_2000": 0.5693535243358754,
+        "band_energy_ratio_high_2000_24000": 0.22760569567048797,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.026104946969696972,
+        "audio_rms_mean": 0.015222872945278831,
+        "motion_audio_rms_pearson_r": -0.5676730673263544
+      }
+    },
+    {
+      "label": "Q3-seed43",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4",
+      "input_bytes": 852700,
+      "input_sha256": "cff95b06e823ef91209287cc6dee914a6f4f5e1f161b152e93ece00b67b84ca2",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -56.1,
+        "loudness_range_lu": 0.3,
+        "true_peak_dbfs": -37.2,
+        "silence_interval_count": 2,
+        "silent_time_s": 5.181656,
+        "rms_dbfs_per_channel": [
+          -56.749872,
+          -56.76743
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 2505.4879510522082,
+        "spectral_centroid_std_hz": 244.362714953535,
+        "spectral_flux_mean": 0.2916484347584691,
+        "periodicity_score": 0.12988319196496242,
+        "periodicity_best_lag_s": 0.9452291666666667,
+        "band_energy_ratio_low_20_250": 0.6221916644834008,
+        "band_energy_ratio_mid_250_2000": 0.34470056117800185,
+        "band_energy_ratio_high_2000_24000": 0.03310777433859727,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.002353030303030303,
+        "audio_rms_mean": 0.0014311495374319044,
+        "motion_audio_rms_pearson_r": 0.24209299228806336
+      }
+    },
+    {
+      "label": "Q3-seed44",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4",
+      "input_bytes": 1236749,
+      "input_sha256": "c17326216587c63dff23b01ec6964720c9ecfcc110575b493b47435605f9c7cf",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed44_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -13.9,
+        "loudness_range_lu": 1.4,
+        "true_peak_dbfs": -0.8,
+        "silence_interval_count": 2,
+        "silent_time_s": 1.1635,
+        "rms_dbfs_per_channel": [
+          -17.405278,
+          -17.288806
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 1862.4794053137023,
+        "spectral_centroid_std_hz": 1414.8933288995067,
+        "spectral_flux_mean": 0.41978530214617177,
+        "periodicity_score": 0.09681447079570493,
+        "periodicity_best_lag_s": 0.6398333333333334,
+        "band_energy_ratio_low_20_250": 0.4068117448254747,
+        "band_energy_ratio_mid_250_2000": 0.5860003730543697,
+        "band_energy_ratio_high_2000_24000": 0.007187882120155602,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.006832219696969699,
+        "audio_rms_mean": 0.11032031033516708,
+        "motion_audio_rms_pearson_r": -0.4737010752076152
+      }
+    },
+    {
+      "label": "Q3-seed45",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4",
+      "input_bytes": 951919,
+      "input_sha256": "aa1de4095d44112195407fe23beeacdd93ca84b5b9d4927651013bf3528ad020",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed45_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -13.9,
+        "loudness_range_lu": 2.9,
+        "true_peak_dbfs": -2.2,
+        "silence_interval_count": 2,
+        "silent_time_s": 1.549938,
+        "rms_dbfs_per_channel": [
+          -17.460266,
+          -17.491364
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 3418.7242583326197,
+        "spectral_centroid_std_hz": 3226.6013550211883,
+        "spectral_flux_mean": 0.4592180112597579,
+        "periodicity_score": 0.10325642960820393,
+        "periodicity_best_lag_s": 1.0531875,
+        "band_energy_ratio_low_20_250": 0.19015630667427694,
+        "band_energy_ratio_mid_250_2000": 0.7988867188002645,
+        "band_energy_ratio_high_2000_24000": 0.01095697452545855,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.001958522727272727,
+        "audio_rms_mean": 0.10854132377011544,
+        "motion_audio_rms_pearson_r": 0.30196032773641085
+      }
+    },
+    {
+      "label": "Q3-seed46",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4",
+      "input_bytes": 1270285,
+      "input_sha256": "bae207d958cf0bd1fed62eba770b716588cccf126eeeaea7b6c77749bf6a5890",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed46_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -41.0,
+        "loudness_range_lu": 2.2,
+        "true_peak_dbfs": -17.0,
+        "silence_interval_count": 5,
+        "silent_time_s": 4.673001,
+        "rms_dbfs_per_channel": [
+          -46.029967,
+          -46.004812
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 2478.7341841289604,
+        "spectral_centroid_std_hz": 604.8779564488143,
+        "spectral_flux_mean": 0.27121792361163727,
+        "periodicity_score": 0.14938707849477442,
+        "periodicity_best_lag_s": 1.7986458333333333,
+        "band_energy_ratio_low_20_250": 0.5968902993237877,
+        "band_energy_ratio_mid_250_2000": 0.37558101159574686,
+        "band_energy_ratio_high_2000_24000": 0.027528689080465452,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.014512030303030303,
+        "audio_rms_mean": 0.0036497151331260293,
+        "motion_audio_rms_pearson_r": 0.5039225393873992
+      }
+    },
+    {
+      "label": "Q4-B",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4",
+      "input_bytes": 778629,
+      "input_sha256": "23cff43d00b2de2a57da492b4e5942606cf25217b522927d19bad208a58d763a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_score_seed42_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -21.5,
+        "loudness_range_lu": 0.5,
+        "true_peak_dbfs": -12.5,
+        "silence_interval_count": 0,
+        "silent_time_s": 0.0,
+        "rms_dbfs_per_channel": [
+          -24.355397,
+          -23.284082
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 756.6874912800191,
+        "spectral_centroid_std_hz": 138.55593038876492,
+        "spectral_flux_mean": 0.1140053464128016,
+        "periodicity_score": 0.3005869094030978,
+        "periodicity_best_lag_s": 0.3368125,
+        "band_energy_ratio_low_20_250": 0.18312128838230632,
+        "band_energy_ratio_mid_250_2000": 0.816805277029304,
+        "band_energy_ratio_high_2000_24000": 7.3434588389608e-05,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.0018809545454545455,
+        "audio_rms_mean": 0.0643917111167678,
+        "motion_audio_rms_pearson_r": -0.113235602261491
+      }
+    },
+    {
+      "label": "Q4-C",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4",
+      "input_bytes": 853218,
+      "input_sha256": "70ffb6fa94cec7ecae2ed103b5373a689c5563f4e8feb8f09d3c173a41f81041",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_sfx_seed42_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -51.4,
+        "loudness_range_lu": 0.2,
+        "true_peak_dbfs": -42.4,
+        "silence_interval_count": 1,
+        "silent_time_s": 5.184,
+        "rms_dbfs_per_channel": [
+          -53.558882,
+          -53.462658
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 2672.1931314938856,
+        "spectral_centroid_std_hz": 349.89816859929425,
+        "spectral_flux_mean": 0.2532737612883744,
+        "periodicity_score": 0.6706099230828675,
+        "periodicity_best_lag_s": 0.32475,
+        "band_energy_ratio_low_20_250": 0.7479249398808333,
+        "band_energy_ratio_mid_250_2000": 0.22110202736328463,
+        "band_energy_ratio_high_2000_24000": 0.030973032755882125,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 11,
+        "scene_score_frame_count": 124,
+        "matched_bucket_count": 11,
+        "mean_scene_score": 0.009402795454545454,
+        "audio_rms_mean": 0.0020937920731292515,
+        "motion_audio_rms_pearson_r": 0.4475829026364443
+      }
+    },
+    {
+      "label": "Q5-192",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4",
+      "input_bytes": 1734045,
+      "input_sha256": "0c6a50a389991ffc5f6b13cc2474c78a484be359014c31f3251302c2c12109ef",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "8.000000"
+          }
+        ],
+        "format": {
+          "duration": "8.000000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f192_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -18.3,
+        "loudness_range_lu": 9.2,
+        "true_peak_dbfs": -4.9,
+        "silence_interval_count": 7,
+        "silent_time_s": 5.961845,
+        "rms_dbfs_per_channel": [
+          -27.595796,
+          -27.59499
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 384000,
+        "pcm_duration_s": 8.0,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 160,
+        "spectral_centroid_mean_hz": 2300.326482423189,
+        "spectral_centroid_std_hz": 733.75631552379,
+        "spectral_flux_mean": 0.29772988319521027,
+        "periodicity_score": 0.11761397986840351,
+        "periodicity_best_lag_s": 0.70425,
+        "band_energy_ratio_low_20_250": 0.13192462724164014,
+        "band_energy_ratio_mid_250_2000": 0.8536675086675239,
+        "band_energy_ratio_high_2000_24000": 0.01440786409083594,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 16,
+        "scene_score_frame_count": 192,
+        "matched_bucket_count": 16,
+        "mean_scene_score": 0.0022869895833333336,
+        "audio_rms_mean": 0.022016799962790705,
+        "motion_audio_rms_pearson_r": -0.084205098908713
+      }
+    },
+    {
+      "label": "Q5-277",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4",
+      "input_bytes": 2389745,
+      "input_sha256": "ebd82c654297d938ba2cfdd68d3877af945d797022507433117ee665cc1c22e0",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "11.542000"
+          }
+        ],
+        "format": {
+          "duration": "11.542000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_unconditioned_music_scene_seed42_f277_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -28.9,
+        "loudness_range_lu": 15.0,
+        "true_peak_dbfs": -3.5,
+        "silence_interval_count": 11,
+        "silent_time_s": 9.834968,
+        "rms_dbfs_per_channel": [
+          -35.911815,
+          -35.774568
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 554496,
+        "pcm_duration_s": 11.552,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 231,
+        "spectral_centroid_mean_hz": 2347.87450941593,
+        "spectral_centroid_std_hz": 718.0590950361862,
+        "spectral_flux_mean": 0.30001141286983435,
+        "periodicity_score": 0.058147685024191986,
+        "periodicity_best_lag_s": 1.9985208333333333,
+        "band_energy_ratio_low_20_250": 0.7667784749056545,
+        "band_energy_ratio_mid_250_2000": 0.2280721833100139,
+        "band_energy_ratio_high_2000_24000": 0.005149341784331563,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 24,
+        "scene_score_frame_count": 277,
+        "matched_bucket_count": 24,
+        "mean_scene_score": 0.01366445138888889,
+        "audio_rms_mean": 0.0072706426129732086,
+        "motion_audio_rms_pearson_r": -0.11194611783656747
+      }
+    }
+  ]
+}

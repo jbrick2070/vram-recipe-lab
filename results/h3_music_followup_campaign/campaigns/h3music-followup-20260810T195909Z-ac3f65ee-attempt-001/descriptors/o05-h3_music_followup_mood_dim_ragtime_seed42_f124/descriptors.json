@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "kind": "h3-music-followup-machine-descriptors",
+  "manifest": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\campaigns\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001\\descriptor_manifests\\o05-h3_music_followup_mood_dim_ragtime_seed42_f124.json",
+    "sha256": "43af87cf3a2ef27653397b4f027024b77ba599b06a652260eca87804f5ea8035"
+  },
+  "wrapper": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze_manifest.py",
+    "sha256": "5d805d411751b855d4e9d971bca88afd2e439950b0248fe13f708c23152023f5"
+  },
+  "pinned_analyzer": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py",
+    "sha256": "24cc09b0a7a187d7cf7a5dee0ab5547ad4b8bf64d40641ace86c1c8f571a5b3f"
+  },
+  "python_executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+  "python_version": "3.12.11 (main, Aug 18 2025, 19:17:54) [MSC v.1944 64 bit (AMD64)]",
+  "numpy_version": "2.4.4",
+  "ffmpeg_executable": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE",
+  "ffmpeg_version": "ffmpeg version 8.0.1-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "ffprobe_executable": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE",
+  "ffprobe_version": "ffprobe version 8.0.1-full_build-www.gyan.dev Copyright (c) 2007-2025 the FFmpeg developers",
+  "analysis_command": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe -B C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze_manifest.py --manifest C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\campaigns\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001\\descriptor_manifests\\o05-h3_music_followup_mood_dim_ragtime_seed42_f124.json --result-dir C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\campaigns\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001\\descriptors\\o05-h3_music_followup_mood_dim_ragtime_seed42_f124",
+  "definitions": {
+    "spectral_windows": "non-overlapping complete 50 ms windows, Hann-weighted, mono 48 kHz signed 16-bit PCM",
+    "spectral_flux": "mean sum of positive binwise changes between consecutive L1-normalized magnitude spectra",
+    "periodicity": "largest overlap-energy-normalized autocorrelation coefficient at a 0.25-2.00 s lag after global mean removal",
+    "bands_hz": [
+      [
+        20.0,
+        250.0
+      ],
+      [
+        250.0,
+        2000.0
+      ],
+      [
+        2000.0,
+        24000.0
+      ]
+    ],
+    "alignment": "Pearson r across matching complete 0.5 s buckets: mean ffmpeg lavfi.scene_score versus linear mono PCM RMS; first-frame zero sentinel and incomplete terminal bucket excluded",
+    "interpretation_limit": "Machine descriptors do not determine music presence, mood, quality, usability, or causation."
+  },
+  "records": [
+    {
+      "label": "J2-2e",
+      "input": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4",
+      "input_bytes": 799356,
+      "input_sha256": "f964919a8f1256f59de409a98591d7f966fa6ce17f75b358cee179136cf2c76c",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "sample_rate": "32000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "duration": "5.167000"
+          }
+        ],
+        "format": {
+          "duration": "5.167000"
+        }
+      },
+      "commands": {
+        "C0_probe": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffprobe.EXE -v error -select_streams a:0 -show_entries stream=sample_rate,channels,channel_layout,duration:format=duration -of json C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4",
+        "C1_ebur128": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4 -map 0:a:0 -af ebur128=peak=true -f null NUL",
+        "C2_silencedetect": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4 -map 0:a:0 -af silencedetect=noise=-40dB:d=0.2 -f null NUL",
+        "C3_astats": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4 -map 0:a:0 -af astats=metadata=0:reset=0 -f null NUL",
+        "C4_pcm_extract": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -v error -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4 -map 0:a:0 -vn -ac 1 -ar 48000 -acodec pcm_s16le -f s16le pipe:1",
+        "C5_scene_scores": "C:\\Users\\jeffr\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.EXE -hide_banner -nostats -i C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4 -an -vf select='gte(scene,0)',metadata=print -f null NUL"
+      },
+      "metrics": {
+        "integrated_lufs": -16.6,
+        "loudness_range_lu": 0.5,
+        "true_peak_dbfs": -3.1,
+        "silence_interval_count": 0,
+        "silent_time_s": 0.0,
+        "rms_dbfs_per_channel": [
+          -20.549976,
+          -18.379284
+        ],
+        "flat_factor_per_channel": [
+          0.0,
+          0.0
+        ],
+        "peak_count_per_channel": [
+          2.0,
+          2.0
+        ],
+        "pcm_sample_rate_hz": 48000,
+        "pcm_sample_count": 248832,
+        "pcm_duration_s": 5.184,
+        "spectral_window_ms": 50.0,
+        "spectral_window_count": 103,
+        "spectral_centroid_mean_hz": 923.2565904144942,
+        "spectral_centroid_std_hz": 213.59646215109316,
+        "spectral_flux_mean": 0.2998077656150995,
+        "periodicity_score": 0.2338835279893573,
+        "periodicity_best_lag_s": 1.0048333333333332,
+        "band_energy_ratio_low_20_250": 0.11012145219303318,
+        "band_energy_ratio_mid_250_2000": 0.8810538530227879,
+        "band_energy_ratio_high_2000_24000": 0.008824694784178829,
+        "alignment_bucket_s": 0.5,
+        "audio_rms_bucket_count": 10,
+        "scene_score_frame_count": 124,
+        "scene_score_usable_count": 123,
+        "matched_bucket_count": 10,
+        "mean_scene_score": 0.002475262121212121,
+        "audio_rms_mean": 0.1078729374267541,
+        "motion_audio_rms_pearson_r": 0.0015547287087334114
+      },
+      "receipt_binding": {
+        "receipt_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_mood_dim_ragtime_seed42_f124_run1.json",
+        "receipt_sha256": "9589e34bf32da38551457a5c6178f5ecafde1aa03d0d67140feab42c6fa2fb1d",
+        "artifact_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4",
+        "artifact_sha256": "f964919a8f1256f59de409a98591d7f966fa6ce17f75b358cee179136cf2c76c",
+        "artifact_bytes": 799356
+      },
+      "recipe": "h3_music_followup_mood_dim_ragtime_seed42_f124",
+      "recipe_sha256": "589217f02f200b994dff416dc7b9db3c426155fae38b131f437499959f032520",
+      "quality_judgment": "PENDING_HUMAN"
+    }
+  ],
+  "quality_judgment": "PENDING_HUMAN"
+}

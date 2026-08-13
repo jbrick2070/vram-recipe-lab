@@ -1,0 +1,209 @@
+{
+  "anti_circularity": {
+    "main_music_campaign_source_included": false,
+    "reason": "the main campaign must add a literal full-file SHA256 pin for this O_EXCL receipt after publication",
+    "receipt_is_resume_authority_without_external_sha_pin": false
+  },
+  "certification_effect": {
+    "attempt_001_status": "FAILED",
+    "completed_pair_count": 0,
+    "current_postconditions_are_machine_verified": true,
+    "manual_cleanup_is_operator_captured": true,
+    "normal_runner_shutdown_proved": false,
+    "promotion_or_pass_granted": false,
+    "run1_is_valid_cold_evidence": true,
+    "run1_is_warm_evidence": false
+  },
+  "current_clean_state": {
+    "expected_server_identity_live": false,
+    "gpu_lock_exists": false,
+    "listener_pids_8199": [],
+    "queue_quarantine_exists": false,
+    "server_pid_create_time": null,
+    "server_pid_receipt": null,
+    "server_pid_receipt_exists": false,
+    "suite_lock_exists": false
+  },
+  "current_clean_state_evidence": {
+    "authority": "machine-observed at receipt recording",
+    "coordinator_guard": {
+      "acquired_nonblocking": true,
+      "carrier_bytes": 1,
+      "carrier_preexisted": true,
+      "carrier_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "path": ".coordinator.mutex"
+    },
+    "expected_server_identity": {
+      "process_create_time": 1786329027.50907,
+      "serving_pid": 51136
+    },
+    "http_or_comfyui_query_performed": false,
+    "recorded_at_ns": 1786332042002357700,
+    "shape": "scratch.run_h3_canonical_campaign.runtime_state"
+  },
+  "failed_campaign_id": "h3music-20260810T023023Z-97ca44b2",
+  "failed_incident": {
+    "completed_pair_count": 0,
+    "error": "executor cache field drift: queued_prompt_sha256",
+    "error_type": "CampaignError",
+    "owned_server_cleanup": {
+      "attempted": false
+    },
+    "pending_monitor_errors": [
+      "CampaignError: candidate process does not have one expected ComfyUI main.py",
+      "CampaignError: receipt server argv length drift: expected 16, found 20"
+    ],
+    "status": "FAILED",
+    "stopped_without_force_or_additional_render": true
+  },
+  "immutable_evidence": {
+    "alias": {
+      "byte_equal_to_run1": true,
+      "bytes": 63281,
+      "path": "results/h3_unconditioned_music_scene_seed42_f124.json",
+      "sha256": "c1295c435e25419ed771aae044d33806b55e9237e594dcdd6716be519a602b8f"
+    },
+    "artifact": {
+      "bytes": 909151,
+      "path": "outputs/h3_unconditioned_music_scene_seed42_f124_out_00001_.mp4",
+      "sha256": "b58461545dc0b7ceee6bfa0eaac080446cc3148bc00783f04eaef48ee96617ed"
+    },
+    "campaign_id": "h3music-20260810T023023Z-97ca44b2",
+    "lifecycle": {
+      "current_file": {
+        "bytes": 28706,
+        "path": "results/h3_unconditioned_music_campaign/lifecycle.jsonl",
+        "row_count": 5,
+        "sha256": "fed5a70a832ad4bc9a985e5c136d583ad7338146164eef89bf3bbe3fd917c2cf"
+      },
+      "prefix": {
+        "bytes": 28706,
+        "last_event_sha256": "20ec57fc403d782ee292c3bfbd75b70c3d5466fca620f255e8aefaeb5c0bea1b",
+        "row_count": 5,
+        "sha256": "fed5a70a832ad4bc9a985e5c136d583ad7338146164eef89bf3bbe3fd917c2cf"
+      },
+      "terminal_failure": {
+        "completed_pair_count": 0,
+        "error": "executor cache field drift: queued_prompt_sha256",
+        "error_type": "CampaignError",
+        "owned_server_cleanup": {
+          "attempted": false
+        },
+        "pending_monitor_errors": [
+          "CampaignError: candidate process does not have one expected ComfyUI main.py",
+          "CampaignError: receipt server argv length drift: expected 16, found 20"
+        ],
+        "status": "FAILED",
+        "stopped_without_force_or_additional_render": true
+      }
+    },
+    "run1_disposition": {
+      "completed_pair": false,
+      "gate_pass": true,
+      "pass": false,
+      "status": "PASS (cold)",
+      "valid_measurement": true,
+      "warm_pass": false
+    },
+    "run1_receipt": {
+      "bytes": 63281,
+      "path": "results/h3_unconditioned_music_scene_seed42_f124_run1.json",
+      "sha256": "c1295c435e25419ed771aae044d33806b55e9237e594dcdd6716be519a602b8f"
+    },
+    "server_identity_from_run1": {
+      "process_create_time": 1786329027.50907,
+      "serving_pid": 51136
+    },
+    "server_log": {
+      "bytes": 22947,
+      "path": "results/h3_unconditioned_music_campaign/server_logs/h3music-20260810T023023Z-97ca44b2-p01-h3_unconditioned_music_scene_seed42_f124.log",
+      "sha256": "b1a99a7b496b5125897d41c44a5278c5b848f9afd6afc8c2e65271b57e6a443d"
+    }
+  },
+  "operator_captured_cleanup": {
+    "authority": "verbatim operator capture of run_recipe.shutdown_lab_server(); the recorder did not witness or reconstruct the shutdown",
+    "capture_timestamp": null,
+    "capture_timestamp_status": "not present in the operator capture",
+    "console_lines": [
+      "[SERVER] Shutting down verified lab server (PID 51136)...",
+      "[SERVER] Process 51136 and listener exited; removed .server.pid receipt."
+    ],
+    "server_identity_from_immutable_run1": {
+      "process_create_time": 1786329027.50907,
+      "serving_pid": 51136
+    },
+    "shutdown_lab_server_return": {
+      "had_receipt": true,
+      "listener_exited": true,
+      "pid": 51136,
+      "pid_verified": true,
+      "process_exited": true,
+      "reason": "verified server process and listener exited",
+      "receipt_removed": true,
+      "success": true,
+      "termination_attempted": true,
+      "termination_reported_success": true
+    }
+  },
+  "receipt_kind": "h3-unconditioned-music-manual-cleanup-recovery",
+  "receipt_schema_version": 1,
+  "recorded_at_ns": 1786332042002357700,
+  "recorded_at_utc": "2026-08-10T03:20:42.002358Z",
+  "recovery_id": "h3music-20260810T023023Z-97ca44b2-recovery-001",
+  "recovery_policy": {
+    "pair_index": 1,
+    "preserve_run1_immutable": true,
+    "resume_campaign_id": "h3music-20260810T023023Z-97ca44b2-attempt-002",
+    "run1_may_not_pair_with_a_later_warm_run": true,
+    "run2": {
+      "config_run_count": 1,
+      "new_server_identity_required": true,
+      "role": "cold",
+      "run_number": 2
+    },
+    "run3": {
+      "config_run_count": 2,
+      "must_immediately_follow": "run2",
+      "role": "warm",
+      "run_number": 3,
+      "same_server_identity_as": "run2",
+      "shutdown_required": true
+    }
+  },
+  "safety": {
+    "artifact_or_run_receipt_modified": false,
+    "failed_lifecycle_appended_or_rewritten": false,
+    "foreign_server_adopted_or_killed_by_recorder": false,
+    "network_used_by_recorder": false,
+    "prompt_or_render_submitted_by_recorder": false
+  },
+  "source_sha256s": {
+    "canonical_campaign_helper": {
+      "bytes": 77526,
+      "path": "scratch/run_h3_canonical_campaign.py",
+      "sha256": "0c3246a435d0c9f208ecbca4bc77b172e2a1e3793cbb96332a2e41781fd5cb38"
+    },
+    "lab_locks": {
+      "bytes": 19611,
+      "path": "lab_locks.py",
+      "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+    },
+    "manager_guard": {
+      "bytes": 39609,
+      "path": "scratch/h3_manager_offline_guard.py",
+      "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+    },
+    "recorder": {
+      "bytes": 27204,
+      "path": "scratch/record_h3_music_recovery.py",
+      "sha256": "7ecc98fa6a9157a1080406d556f0b1df055b0ac00f89367753bbe421c7a84b38"
+    },
+    "run_recipe": {
+      "bytes": 174954,
+      "path": "run_recipe.py",
+      "sha256": "938c72ad5b4cb6565804dde85222103707be67c410b4affec766b6fc9ed7acad"
+    }
+  },
+  "status": "ATTEMPT_001_FAILED_COLD_ONLY_MANUAL_CLEANUP_RECORDED",
+  "success": true
+}

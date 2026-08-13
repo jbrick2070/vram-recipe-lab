@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "campaign": "H3_MUSIC_FOLLOWUP",
+  "clips": [
+    {
+      "label": "J2-2a",
+      "filename": "h3_music_followup_mood_dim_lighthearted_seed42_f124_out_00001_.mp4",
+      "sha256": "c69136470497dd745d728dee39fce06e02e3059dffa6686f1f2b28c286d409b4",
+      "recipe": "h3_music_followup_mood_dim_lighthearted_seed42_f124",
+      "recipe_sha256": "6da9e9bd1f10c70c097f8e5c4dd5a6ba2ee73f5259d74d65684cd49cabfdf9c9",
+      "receipt_path": "results/h3_music_followup_mood_dim_lighthearted_seed42_f124_run1.json",
+      "receipt_sha256": "c0c4d3ad589550f9b47df7909863fabb553638d89ed5b13f912600c01861128b"
+    }
+  ],
+  "quality_judgment": "PENDING_HUMAN"
+}

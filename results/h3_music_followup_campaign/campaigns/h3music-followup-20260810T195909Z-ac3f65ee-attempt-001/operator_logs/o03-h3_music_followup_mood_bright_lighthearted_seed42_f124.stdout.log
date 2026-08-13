@@ -1,0 +1,39 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 20772)
+--- Running Preflight Checks for h3_music_followup_mood_bright_lighthearted_seed42_f124 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 2: Five-sample WDDM idle gate passed
+[SERVER] Launching lab server via boot_h3_manager_offline_test.cmd on port 8199...
+[SERVER] Recorded server PID 24552 in .server.pid
+[SERVER] Updated .server.pid to serving PID 7944
+[SERVER] Lab server online on port 8199 after 15.1s
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+[FIXTURE] Uploaded and verified fixture portrait.png in server input directory
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 2.08 GB | Host RAM: 18.44 GB
+Queueing prompt for h3_music_followup_mood_bright_lighthearted_seed42_f124...
+Queued successfully (Prompt ID: 30e4d5c5-ad54-4811-b3ce-19530bcdf871)
+
+--- Run Summary ---
+Recipe:        h3_music_followup_mood_bright_lighthearted_seed42_f124
+Run Count:     1 (configuration run 1; Cold cache)
+Baseline VRAM: 2.082 GiB | Host RAM: 18.44 GB
+Peak VRAM:     8.352 GiB (Gate <= 14.5 GiB)
+Net Peak VRAM: 6.270 GiB (peak minus this leg's baseline)
+Baseline Lane: elevated-baseline lane, operator-authorized 2026-08-10
+Peak Host RAM: 31.10 GB
+Wall Clock:    998.9 s
+Boot Lane:     lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb
+Status:        PASS (cold)
+[LEDGER] Updated RESULTS.md entry for h3_music_followup_mood_bright_lighthearted_seed42_f124: PASS (cold) (machine; human pending)
+[MATRIX] Updated ENGINE_MATRIX_BETA.md for h3_music_followup_mood_bright_lighthearted_seed42_f124
+[SERVER] Shutting down verified lab server (PID 7944)...
+[SERVER] Process 7944 and listener exited; removed .server.pid receipt.
+[LOCK] Released .gpu.lock and coordinator

@@ -1,0 +1,38 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 39448)
+--- Running Preflight Checks for h3_music_followup_origin_prompt_only_exact_seed42_f124 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 2: Five-sample WDDM idle gate passed
+[SERVER] Launching lab server via boot_h3_manager_offline_test.cmd on port 8199...
+[SERVER] Recorded server PID 25632 in .server.pid
+[SERVER] Updated .server.pid to serving PID 13880
+[SERVER] Lab server online on port 8199 after 11.6s
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 2.11 GB | Host RAM: 16.57 GB
+Queueing prompt for h3_music_followup_origin_prompt_only_exact_seed42_f124...
+Queued successfully (Prompt ID: fa2db8fa-5603-4ad0-8509-eb2b5610e69e)
+
+--- Run Summary ---
+Recipe:        h3_music_followup_origin_prompt_only_exact_seed42_f124
+Run Count:     1 (configuration run 1; Cold cache)
+Baseline VRAM: 2.110 GiB | Host RAM: 16.57 GB
+Peak VRAM:     6.438 GiB (Gate <= 14.5 GiB)
+Net Peak VRAM: 4.328 GiB (peak minus this leg's baseline)
+Baseline Lane: elevated-baseline lane, operator-authorized 2026-08-10
+Peak Host RAM: 26.10 GB
+Wall Clock:    192.5 s
+Boot Lane:     lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb
+Status:        PASS (cold)
+[LEDGER] Updated RESULTS.md entry for h3_music_followup_origin_prompt_only_exact_seed42_f124: PASS (cold) (machine; human pending)
+[MATRIX] Updated ENGINE_MATRIX_BETA.md for h3_music_followup_origin_prompt_only_exact_seed42_f124
+[SERVER] Shutting down verified lab server (PID 13880)...
+[SERVER] Process 13880 and listener exited; removed .server.pid receipt.
+[LOCK] Released .gpu.lock and coordinator

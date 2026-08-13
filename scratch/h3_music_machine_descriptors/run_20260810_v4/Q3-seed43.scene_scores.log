@@ -1,0 +1,279 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\outputs\h3_unconditioned_music_scene_seed43_f124_out_00001_.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Duration: 00:00:05.17, start: 0.000000, bitrate: 1320 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1344x768, 1183 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 32000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> wrapped_avframe (native))
+Press [q] to stop, [?] for help
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:0    pts:0       pts_time:0
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000000
+Output #0, null, to 'NUL':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Stream #0:0(und): Video: wrapped_avframe, yuv420p(progressive), 1344x768, q=2-31, 200 kb/s, 24 fps, 24 tbn (default)
+    Metadata:
+      encoder         : Lavc62.11.100 wrapped_avframe
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:1    pts:512     pts_time:0.0416667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.025928
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:2    pts:1024    pts_time:0.0833333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000890
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:3    pts:1536    pts_time:0.125
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000589
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:4    pts:2048    pts_time:0.166667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000957
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:5    pts:2560    pts_time:0.208333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002340
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:6    pts:3072    pts_time:0.25
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001167
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:7    pts:3584    pts_time:0.291667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000784
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:8    pts:4096    pts_time:0.333333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001195
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:9    pts:4608    pts_time:0.375
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001795
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:10   pts:5120    pts_time:0.416667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001404
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:11   pts:5632    pts_time:0.458333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001241
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:12   pts:6144    pts_time:0.5
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003173
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:13   pts:6656    pts_time:0.541667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004245
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:14   pts:7168    pts_time:0.583333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002168
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:15   pts:7680    pts_time:0.625
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000380
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:16   pts:8192    pts_time:0.666667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002490
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:17   pts:8704    pts_time:0.708333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.006593
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:18   pts:9216    pts_time:0.75
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.007094
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:19   pts:9728    pts_time:0.791667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002517
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:20   pts:10240   pts_time:0.833333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000797
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:21   pts:10752   pts_time:0.875
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002739
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:22   pts:11264   pts_time:0.916667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.006957
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:23   pts:11776   pts_time:0.958333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000300
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:24   pts:12288   pts_time:1
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000074
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:25   pts:12800   pts_time:1.041667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002422
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:26   pts:13312   pts_time:1.083333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.007364
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:27   pts:13824   pts_time:1.125
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000091
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:28   pts:14336   pts_time:1.166667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001069
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:29   pts:14848   pts_time:1.208333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001917
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:30   pts:15360   pts_time:1.25
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004079
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:31   pts:15872   pts_time:1.291667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000614
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:32   pts:16384   pts_time:1.333333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001586
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:33   pts:16896   pts_time:1.375
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000775
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:34   pts:17408   pts_time:1.416667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.005703
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:35   pts:17920   pts_time:1.458333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001056
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:36   pts:18432   pts_time:1.5
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001104
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:37   pts:18944   pts_time:1.541667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000613
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:38   pts:19456   pts_time:1.583333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001473
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:39   pts:19968   pts_time:1.625
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003020
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:40   pts:20480   pts_time:1.666667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001554
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:41   pts:20992   pts_time:1.708333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001788
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:42   pts:21504   pts_time:1.75
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001818
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:43   pts:22016   pts_time:1.791667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003296
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:44   pts:22528   pts_time:1.833333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001770
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:45   pts:23040   pts_time:1.875
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000353
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:46   pts:23552   pts_time:1.916667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001754
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:47   pts:24064   pts_time:1.958333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002104
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:48   pts:24576   pts_time:2
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003849
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:49   pts:25088   pts_time:2.041667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000371
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:50   pts:25600   pts_time:2.083333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000145
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:51   pts:26112   pts_time:2.125
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001168
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:52   pts:26624   pts_time:2.166667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001767
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:53   pts:27136   pts_time:2.208333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000183
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:54   pts:27648   pts_time:2.25
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001773
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:55   pts:28160   pts_time:2.291667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001908
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:56   pts:28672   pts_time:2.333333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000758
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:57   pts:29184   pts_time:2.375
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000525
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:58   pts:29696   pts_time:2.416667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000042
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:59   pts:30208   pts_time:2.458333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000173
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:60   pts:30720   pts_time:2.5
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000802
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:61   pts:31232   pts_time:2.541667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000659
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:62   pts:31744   pts_time:2.583333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001256
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:63   pts:32256   pts_time:2.625
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002331
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:64   pts:32768   pts_time:2.666667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000893
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:65   pts:33280   pts_time:2.708333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001777
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:66   pts:33792   pts_time:2.75
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003131
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:67   pts:34304   pts_time:2.791667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003121
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:68   pts:34816   pts_time:2.833333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002841
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:69   pts:35328   pts_time:2.875
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000165
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:70   pts:35840   pts_time:2.916667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002155
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:71   pts:36352   pts_time:2.958333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004110
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:72   pts:36864   pts_time:3
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001980
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:73   pts:37376   pts_time:3.041667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.005790
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:74   pts:37888   pts_time:3.083333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000254
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:75   pts:38400   pts_time:3.125
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001360
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:76   pts:38912   pts_time:3.166667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000135
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:77   pts:39424   pts_time:3.208333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.006046
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:78   pts:39936   pts_time:3.25
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000011
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:79   pts:40448   pts_time:3.291667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000594
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:80   pts:40960   pts_time:3.333333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000294
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:81   pts:41472   pts_time:3.375
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004665
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:82   pts:41984   pts_time:3.416667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000909
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:83   pts:42496   pts_time:3.458333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002432
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:84   pts:43008   pts_time:3.5
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001157
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:85   pts:43520   pts_time:3.541667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003219
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:86   pts:44032   pts_time:3.583333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002243
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:87   pts:44544   pts_time:3.625
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001092
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:88   pts:45056   pts_time:3.666667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003764
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:89   pts:45568   pts_time:3.708333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000784
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:90   pts:46080   pts_time:3.75
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004731
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:91   pts:46592   pts_time:3.791667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003890
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:92   pts:47104   pts_time:3.833333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002608
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:93   pts:47616   pts_time:3.875
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001453
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:94   pts:48128   pts_time:3.916667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001561
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:95   pts:48640   pts_time:3.958333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.005843
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:96   pts:49152   pts_time:4
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004480
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:97   pts:49664   pts_time:4.041667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001365
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:98   pts:50176   pts_time:4.083333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003936
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:99   pts:50688   pts_time:4.125
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003320
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:100  pts:51200   pts_time:4.166667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002998
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:101  pts:51712   pts_time:4.208333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001916
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:102  pts:52224   pts_time:4.25
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003177
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:103  pts:52736   pts_time:4.291667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003411
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:104  pts:53248   pts_time:4.333333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004505
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:105  pts:53760   pts_time:4.375
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003407
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:106  pts:54272   pts_time:4.416667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002458
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:107  pts:54784   pts_time:4.458333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003697
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:108  pts:55296   pts_time:4.5
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001634
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:109  pts:55808   pts_time:4.541667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000216
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:110  pts:56320   pts_time:4.583333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.000744
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:111  pts:56832   pts_time:4.625
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002241
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:112  pts:57344   pts_time:4.666667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003342
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:113  pts:57856   pts_time:4.708333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002110
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:114  pts:58368   pts_time:4.75
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003102
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:115  pts:58880   pts_time:4.791667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001265
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:116  pts:59392   pts_time:4.833333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.004087
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:117  pts:59904   pts_time:4.875
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003410
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:118  pts:60416   pts_time:4.916667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.003082
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:119  pts:60928   pts_time:4.958333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001359
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:120  pts:61440   pts_time:5
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001794
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:121  pts:61952   pts_time:5.041667
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002977
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:122  pts:62464   pts_time:5.083333
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.001455
+[Parsed_metadata_1 @ 000002a1f18f5280] frame:123  pts:62976   pts_time:5.125
+[Parsed_metadata_1 @ 000002a1f18f5280] lavfi.scene_score=0.002934
+[out#0/null @ 000002a1f0f42340] video:50KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame=  124 fps=0.0 q=-0.0 Lsize=N/A time=00:00:05.16 bitrate=N/A speed= 137x elapsed=0:00:00.03    

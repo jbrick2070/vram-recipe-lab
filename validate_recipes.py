@@ -659,6 +659,55 @@ def certified_output_artifact_path(repo_root: Path, output_name) -> Path:
     return artifact
 
 
+def manager_probe_identity_from_receipt(evidence: object) -> dict | None:
+    """Re-derive the manager probe identity from an immutable receipt payload.
+
+    Early schema-v3 Manager-offline receipts bind this identity only inside
+    ``identity``.  Their complete pre-queue evidence remains at
+    ``manager_offline_probe.pre_queue`` and must still agree with that binding;
+    the immutable receipt bytes must not be rewritten merely to add a later
+    top-level convenience copy.
+    """
+    if not isinstance(evidence, dict) or evidence.get("enabled") is not True:
+        return None
+    advisory = evidence.get("advisory_config") or {}
+    scan = evidence.get("log_scan") or {}
+    authority = scan.get("authoritative_server_reported_mode") or {}
+    source = scan.get("source_proof") or {}
+    return {
+        "recipe_scope": evidence.get("recipe_scope"),
+        "guard_source": evidence.get("guard_source"),
+        "test_boot_source": evidence.get("test_boot_source"),
+        "offline_environment": evidence.get("offline_environment"),
+        "advisory_config_path": (advisory.get("snapshot") or {}).get("path"),
+        "advisory_config_sha256": (advisory.get("snapshot") or {}).get("sha256"),
+        "authoritative_server_reported_mode": authority.get("resolved_mode"),
+        "manager_source_sha256s": {
+            key: (source.get(key) or {}).get("sha256")
+            for key in (
+                "manager_prestartup",
+                "manager_server",
+                "manager_core",
+                "comfy_folder_paths",
+                "manager_util",
+            )
+        },
+        "prestartup_state_sha256": (
+            (scan.get("current_prestartup_state") or {}).get("state_sha256")
+        ),
+        "preboot_record_sha256": (
+            ((scan.get("preboot_records") or [{}])[0].get("record") or {}).get(
+                "record_sha256"
+            )
+        ),
+        "log_path": evidence.get("log_path"),
+        "serving_pid": evidence.get("serving_pid"),
+        "serving_process_create_time_ns": evidence.get(
+            "serving_process_create_time_ns"
+        ),
+    }
+
+
 def current_certification_errors(rdata: dict, recipe_file: Path, repo_root: Path) -> list[str]:
     """Validate a current warm receipt without allowing field deletion to imply legacy."""
 
@@ -759,6 +808,36 @@ def current_certification_errors(rdata: dict, recipe_file: Path, repo_root: Path
             errors.append("pass requires unchanged provenance")
         if isinstance(identity, dict):
             for field, identity_value in identity.items():
+                if field == "manager_offline_probe_identity":
+                    if field in rdata:
+                        if rdata.get(field) != identity_value:
+                            errors.append(
+                                "top-level field disagrees with identity: "
+                                "manager_offline_probe_identity"
+                            )
+                    else:
+                        probe = rdata.get("manager_offline_probe")
+                        pre_queue = (
+                            probe.get("pre_queue") if isinstance(probe, dict) else None
+                        )
+                        receipt_identity = manager_probe_identity_from_receipt(pre_queue)
+                        # The receipt's runner hash fixes the historical shape.
+                        # Re-prove every field that shape claimed, while allowing
+                        # later collectors to add identity keys without making the
+                        # older immutable receipt appear corrupt.
+                        if (
+                            not isinstance(identity_value, dict)
+                            or not isinstance(receipt_identity, dict)
+                            or any(
+                                receipt_identity.get(key) != value
+                                for key, value in identity_value.items()
+                            )
+                        ):
+                            errors.append(
+                                "manager_offline_probe.pre_queue disagrees with "
+                                "identity: manager_offline_probe_identity"
+                            )
+                    continue
                 if field not in rdata or rdata.get(field) != identity_value:
                     errors.append(f"top-level field disagrees with identity: {field}")
 

@@ -1,0 +1,67 @@
+[LOCK] Acquired coordinator and .gpu.lock (PID 53728)
+--- Running Preflight Checks for h3_unconditioned_music_motion_small_seed42_f124 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 2: GPU below the pre-boot desktop threshold
+[SERVER] Launching lab server via boot_h3_manager_offline_test.cmd on port 8199...
+[SERVER] Recorded server PID 51496 in .server.pid
+[SERVER] Updated .server.pid to serving PID 19256
+[SERVER] Lab server online on port 8199 after 15.1s
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+[FIXTURE] Uploaded and verified fixture portrait.png in server input directory
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 1.69 GB | Host RAM: 19.05 GB
+Queueing prompt for h3_unconditioned_music_motion_small_seed42_f124...
+Queued successfully (Prompt ID: e50eda0e-c92d-47c4-b96e-3b78c37f99bf)
+
+--- Run Summary ---
+Recipe:        h3_unconditioned_music_motion_small_seed42_f124
+Run Count:     1 (configuration run 1; Cold cache)
+Baseline VRAM: 1.69 GB | Host RAM: 19.05 GB
+Peak VRAM:     7.58 GB (Gate <= 14.5 GB)
+Peak Host RAM: 30.19 GB
+Wall Clock:    902.2 s
+Boot Lane:     lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb
+Status:        PASS (cold)
+[LEDGER] Updated RESULTS.md entry for h3_unconditioned_music_motion_small_seed42_f124: PASS (cold) (machine; human pending)
+[MATRIX] Updated ENGINE_MATRIX_BETA.md for h3_unconditioned_music_motion_small_seed42_f124
+[LOCK] Released .gpu.lock and coordinator
+[LOCK] Acquired coordinator and .gpu.lock (PID 49096)
+--- Running Preflight Checks for h3_unconditioned_music_motion_small_seed42_f124 ---
+  [OK] Check 1: Atomic GPU lock held by this runner
+  [OK] Check 3: Lab server up & owned at 127.0.0.1:8199
+  [OK] Check 4: All recipe node class_types exist on server
+  [OK] Check 5: All referenced models exist in models_manifest.md
+  [OK] Check 6: Widget integrity and frozen topology schema verified
+  [OK] Check 7: Affordability check passed
+[FIXTURE] Uploaded and verified fixture portrait.png in server input directory
+  [OK] Check 8: Fixtures and audio ear-gate receipts verified
+  [OK] Check 9: Boot lane verified (lab-8199, sage-free)
+  [OK] Check 10: Output disk space >= 5 GB
+--- Preflight Complete: ALL CHECKS PASSED ---
+
+[RESOURCES] Baseline GPU VRAM: 3.42 GB | Host RAM: 28.73 GB
+Queueing prompt for h3_unconditioned_music_motion_small_seed42_f124...
+Queued successfully (Prompt ID: 9a5dcebf-fbba-4cdc-ab4e-92a4b03b589f)
+
+--- Run Summary ---
+Recipe:        h3_unconditioned_music_motion_small_seed42_f124
+Run Count:     2 (configuration run 2; Warm cache)
+Baseline VRAM: 3.42 GB | Host RAM: 28.73 GB
+Peak VRAM:     7.58 GB (Gate <= 14.5 GB)
+Peak Host RAM: 29.69 GB
+Wall Clock:    893.0 s
+Boot Lane:     lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb
+Status:        PASS
+[LEDGER] Updated RESULTS.md entry for h3_unconditioned_music_motion_small_seed42_f124: PASS (machine; human pending)
+[MATRIX] Updated ENGINE_MATRIX_BETA.md for h3_unconditioned_music_motion_small_seed42_f124
+[SERVER] Shutting down verified lab server (PID 19256)...
+[SERVER] server exited but PID receipt removal failed: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.server.pid'
+[LOCK] Released .gpu.lock and coordinator

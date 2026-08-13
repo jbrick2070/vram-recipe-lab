@@ -1,0 +1,541 @@
+{
+  "name": "h3_music_followup_score_seed44_f124",
+  "tier": "experiment",
+  "blocked": false,
+  "contract": {
+    "engine": "minimax_h3",
+    "mode": "r2v_unconditioned_music_followup",
+    "width": 1344,
+    "height": 768,
+    "frames": 124,
+    "fps": 24.0,
+    "duration_s": 5.166666666666667,
+    "vram_ceiling_gb": 14.5,
+    "requires_audio": true,
+    "requires_manager_offline_probe": true
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "intent": "Queued H3 music follow-up on the current flat dotted V3 picture-reference topology with untouched jointly sampled native audio",
+    "frozen_template": {
+      "path": "research/comfy_templates/video_minimax_h3_r2v.json",
+      "sha256": "099d24eda6263854818975c7209db6f29ebfd0339936c928f12293d5ab029ffb"
+    },
+    "installed_schema": {
+      "comfyui_version": "0.31.1",
+      "git_commit": "fe4195f7f4275f2626cbafc703acc3ddde1e5490"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "UNETLoader",
+      "2": "CLIPLoader",
+      "3": "VAELoader",
+      "4": "VAELoader",
+      "5": "RandomNoise",
+      "6": "BasicGuider",
+      "7": "MiniMaxH3ReferenceToVideo",
+      "8": "SamplerCustomAdvanced",
+      "9": "VAEDecode",
+      "10": "CreateVideo",
+      "12": "SaveVideo",
+      "13": "KSamplerSelect",
+      "14": "BasicScheduler",
+      "15": "VAEDecodeAudio",
+      "11": "LoadImage"
+    },
+    "required_class_types": [
+      "UNETLoader",
+      "CLIPLoader",
+      "VAELoader",
+      "RandomNoise",
+      "BasicGuider",
+      "MiniMaxH3ReferenceToVideo",
+      "SamplerCustomAdvanced",
+      "VAEDecode",
+      "CreateVideo",
+      "SaveVideo",
+      "KSamplerSelect",
+      "BasicScheduler",
+      "VAEDecodeAudio",
+      "LoadImage"
+    ],
+    "required_connections": {
+      "6.model": [
+        "1",
+        0
+      ],
+      "14.model": [
+        "1",
+        0
+      ],
+      "7.clip": [
+        "2",
+        0
+      ],
+      "7.vae": [
+        "3",
+        0
+      ],
+      "6.conditioning": [
+        "7",
+        0
+      ],
+      "8.noise": [
+        "5",
+        0
+      ],
+      "8.guider": [
+        "6",
+        0
+      ],
+      "8.sampler": [
+        "13",
+        0
+      ],
+      "8.sigmas": [
+        "14",
+        0
+      ],
+      "8.latent_image": [
+        "7",
+        1
+      ],
+      "9.samples": [
+        "8",
+        0
+      ],
+      "9.vae": [
+        "3",
+        0
+      ],
+      "15.samples": [
+        "8",
+        0
+      ],
+      "15.vae": [
+        "4",
+        0
+      ],
+      "10.images": [
+        "9",
+        0
+      ],
+      "10.audio": [
+        "15",
+        0
+      ],
+      "12.video": [
+        "10",
+        0
+      ],
+      "7.audio_vae": [
+        "4",
+        0
+      ],
+      "7.ref_images.ref_image_0": [
+        "11",
+        0
+      ]
+    },
+    "required_absent_inputs": [
+      "7.ref_images",
+      "7.ref_videos",
+      "7.ref_video_audios",
+      "7.ref_audios",
+      "7.ref_images.ref_image_1",
+      "7.ref_images.ref_image_2",
+      "7.ref_images.ref_image_3",
+      "7.ref_images.ref_image_4",
+      "7.ref_images.ref_image_5",
+      "7.ref_images.ref_image_6",
+      "7.ref_images.ref_image_7",
+      "7.ref_images.ref_image_8",
+      "7.ref_videos.ref_video_0",
+      "7.ref_videos.ref_video_1",
+      "7.ref_videos.ref_video_2",
+      "7.ref_video_audios.ref_video_audio_0",
+      "7.ref_video_audios.ref_video_audio_1",
+      "7.ref_video_audios.ref_video_audio_2",
+      "7.ref_audios.ref_audio_0",
+      "7.ref_audios.ref_audio_1",
+      "7.ref_audios.ref_audio_2"
+    ],
+    "required_input_values": [
+      {
+        "node": "2",
+        "input": "device",
+        "equals": "default"
+      },
+      {
+        "node": "13",
+        "input": "sampler_name",
+        "equals": "res_multistep"
+      },
+      {
+        "node": "14",
+        "input": "scheduler",
+        "equals": "simple"
+      },
+      {
+        "node": "14",
+        "input": "steps",
+        "equals": 20
+      },
+      {
+        "node": "14",
+        "input": "denoise",
+        "equals": 1.0
+      },
+      {
+        "node": "10",
+        "input": "fps",
+        "equals": 24.0
+      },
+      {
+        "node": "10",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "5",
+        "input": "noise_seed",
+        "equals": 44
+      },
+      {
+        "node": "7",
+        "input": "prompt",
+        "equals": "Use <Picture 1> as the exact character identity and appearance reference. Place that person in a vintage radio control room under warm analog lighting; preserve their face, hair, clothing, and proportions while the camera makes a slow cinematic move. The model-native soundtrack is a warm, wordless orchestral score."
+      },
+      {
+        "node": "7",
+        "input": "width",
+        "equals": 1344
+      },
+      {
+        "node": "7",
+        "input": "height",
+        "equals": 768
+      },
+      {
+        "node": "7",
+        "input": "length",
+        "equals": 124
+      },
+      {
+        "node": "7",
+        "input": "ref_image_size",
+        "equals": "match"
+      },
+      {
+        "node": "11",
+        "input": "image",
+        "equals": "portrait.png"
+      }
+    ],
+    "forbidden_class_types": [
+      "KSampler",
+      "CLIPTextEncode"
+    ],
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "Derived from the pinned mission-1 Q4-B flat-V3 score recipe",
+      "Follow-up Job 3 cell seed44; exploratory single leg",
+      "Seed 44, length 124, and the declared prompt are receipt-bound",
+      "Unique output prefix is evidence plumbing only",
+      "No audio-conditioning input and no external mux are present"
+    ]
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UNETLoader",
+      "inputs": {
+        "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    "2": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "type": "minimax",
+        "device": "default"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+    },
+    "5": {
+      "class_type": "RandomNoise",
+      "inputs": {
+        "noise_seed": 44
+      }
+    },
+    "6": {
+      "class_type": "BasicGuider",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "conditioning": [
+          "7",
+          0
+        ]
+      }
+    },
+    "11": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "portrait.png"
+      }
+    },
+    "7": {
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+        "clip": [
+          "2",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ],
+        "audio_vae": [
+          "4",
+          0
+        ],
+        "prompt": "Use <Picture 1> as the exact character identity and appearance reference. Place that person in a vintage radio control room under warm analog lighting; preserve their face, hair, clothing, and proportions while the camera makes a slow cinematic move. The model-native soundtrack is a warm, wordless orchestral score.",
+        "width": 1344,
+        "height": 768,
+        "length": 124,
+        "ref_image_size": "match",
+        "ref_images.ref_image_0": [
+          "11",
+          0
+        ]
+      }
+    },
+    "8": {
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+        "noise": [
+          "5",
+          0
+        ],
+        "guider": [
+          "6",
+          0
+        ],
+        "sampler": [
+          "13",
+          0
+        ],
+        "sigmas": [
+          "14",
+          0
+        ],
+        "latent_image": [
+          "7",
+          1
+        ]
+      }
+    },
+    "13": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "res_multistep"
+      }
+    },
+    "14": {
+      "class_type": "BasicScheduler",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "scheduler": "simple",
+        "steps": 20,
+        "denoise": 1.0
+      }
+    },
+    "9": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "3",
+          0
+        ]
+      }
+    },
+    "15": {
+      "class_type": "VAEDecodeAudio",
+      "inputs": {
+        "samples": [
+          "8",
+          0
+        ],
+        "vae": [
+          "4",
+          0
+        ]
+      }
+    },
+    "10": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "9",
+          0
+        ],
+        "fps": 24.0,
+        "bit_depth": 8,
+        "audio": [
+          "15",
+          0
+        ]
+      }
+    },
+    "12": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "10",
+          0
+        ],
+        "filename_prefix": "h3_music_followup_score_seed44_f124_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  },
+  "followup": {
+    "schema_version": 1,
+    "campaign": "H3_MUSIC_FOLLOWUP",
+    "execution_order": 7,
+    "job": 3,
+    "cell": "seed44",
+    "exploratory_single_leg": true,
+    "warm_certification_claimed": false,
+    "source_recipe": {
+      "path": "recipes/h3_unconditioned_music_score_seed42_f124.json",
+      "sha256": "52a4e231b3314d619bcf87b5d62a6bfedfd28e37a4c038638fc1bc896db199f8"
+    },
+    "manager_offline_required": true,
+    "sage_attention_allowed": false,
+    "disable_pinned_memory_required": true,
+    "cache_mode": "classic",
+    "reserve_vram_gib": 12,
+    "completion_timeout_s": 2400,
+    "preboot_gpu_idle_gate_required": {
+      "status": "measured",
+      "gate_ran": true,
+      "sample_count": 5,
+      "sampling_interval_s": 0.2,
+      "vram_used_recorded_non_gating": true,
+      "gpu_utilization_recorded_non_gating": true,
+      "memory_utilization_recorded_non_gating": true,
+      "known_render_compute_processes_block": true,
+      "advisory_unreadable_processes_retained_non_gating": true,
+      "shared_positive_workload_classifier_required": true,
+      "optional_verified_direct_windows_venv_launcher_exclusion": true,
+      "windows_venv_launcher_exclusion_max_count": 1,
+      "redacted_process_evidence_required": true,
+      "process_scan_result_fields": [
+        "blocking_processes",
+        "advisory_unreadable_processes"
+      ],
+      "redacted_process_schema": [
+        "pid",
+        "process_create_time",
+        "process_basename",
+        "executable_basename",
+        "target_basename",
+        "matched_markers",
+        "match_basis",
+        "argv_sha256"
+      ],
+      "desktop_graphics_signals_retained_but_not_required": true,
+      "display_active_allowed_measured_states": [
+        "Disabled",
+        "Enabled"
+      ],
+      "display_active_recorded_non_gating": true,
+      "port_8199_listener_required_absent": true
+    },
+    "operator_idle_policy": {
+      "baseline_vram_recorded_advisory": true,
+      "baseline_numeric_rejection": false,
+      "pair_baseline_drift_gate": "not applicable; exploratory single cold leg",
+      "pair_baseline_drift_numeric_rejection": false,
+      "elevated_baseline_threshold_gb": 2.0,
+      "elevated_baseline_threshold_operator": ">",
+      "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+      "per_leg_immediate_prequeue_known_workload_scan_required": true,
+      "optional_verified_direct_owned_server_windows_venv_launcher_exclusion": true,
+      "owned_server_windows_venv_launcher_exclusion_max_count": 1,
+      "owned_server_excluded_process_count_allowed": [
+        1,
+        2
+      ],
+      "owned_lab_server_exclusion_schema": [
+        "pid",
+        "process_create_time",
+        "server_instance",
+        "process_identity",
+        "argv_match",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "verified_windows_venv_launcher",
+        "expected_excluded_process_count"
+      ],
+      "verified_owned_server_windows_venv_launcher_schema": [
+        "pid",
+        "process_create_time",
+        "expected_launcher_path",
+        "direct_child_pid",
+        "direct_parent_verified",
+        "launcher_identity_live",
+        "child_identity_live",
+        "argv_tail_matches_child",
+        "both_exact_validated_server_argv",
+        "child_executable_differs",
+        "creation_delta_s",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity",
+        "argv_match"
+      ],
+      "excluded_owned_lab_server_row_schema": [
+        "pid",
+        "process_create_time",
+        "reason"
+      ],
+      "unreadable_unknown_python_advisory_non_gating": true,
+      "redacted_positive_workload_evidence_required": true,
+      "absolute_and_net_peak_required": true,
+      "net_peak_definition": "peak_vram_gb - baseline_vram_gb"
+    },
+    "post_shutdown_idle_gate_sidecar_required_absent": true,
+    "native_audio_path": "SamplerCustomAdvanced -> VAEDecodeAudio -> CreateVideo.audio",
+    "quality_judgment": "PENDING_HUMAN",
+    "conditional_bonus_authorized": false
+  }
+}

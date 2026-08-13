@@ -1,0 +1,237 @@
+{
+  "directory_entries_before_preflight": [
+    "stderr.log",
+    "stdout.log"
+  ],
+  "exclusive_log_claims": {
+    "stderr": {
+      "bytes": 0,
+      "device": 1356286727840300467,
+      "inode": 1688849860973887,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786392058446395900,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001\\stderr.log",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "device": 1356286727840300467,
+      "inode": 1688849860973886,
+      "link_count": 1,
+      "mode": 33206,
+      "mtime_ns": 1786392058443379600,
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001\\stdout.log",
+      "regular_file": true,
+      "reparse_point": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "initial_lifecycle": {
+    "bytes": 0,
+    "exists": false,
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\campaigns\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001\\lifecycle.jsonl",
+    "sha256": null
+  },
+  "kind": "h3-local-operator-transport-preflight",
+  "no_campaign_or_server_process_started_by_recorder": true,
+  "plan": {
+    "arguments": [
+      "-B",
+      "-u",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_music_followup_campaign.py",
+      "--run",
+      "--campaign-id",
+      "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001"
+    ],
+    "argv": [
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+      "-B",
+      "-u",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_music_followup_campaign.py",
+      "--run",
+      "--campaign-id",
+      "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001"
+    ],
+    "authority": "operator transport only",
+    "campaign_id": "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001",
+    "default_read_only": true,
+    "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "kind": "h3-local-operator-transport-plan",
+    "launch_receipt": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001\\launch.json",
+    "lifecycle": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\campaigns\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001\\lifecycle.jsonl",
+    "mission": "followup",
+    "operator_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001",
+    "operator_run_id": "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001",
+    "preflight_receipt": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001\\preflight.json",
+    "process_contract": {
+      "api": "Windows Start-Process",
+      "end_time_source": "System.Diagnostics.Process.ExitTime after -Wait",
+      "exit_code_source": "System.Diagnostics.Process.ExitCode after -Wait",
+      "pass_thru": true,
+      "start_time_source": "System.Diagnostics.Process.StartTime after -Wait",
+      "wait": true,
+      "window_style": "Hidden"
+    },
+    "resume": false,
+    "resume_from_campaign_id": null,
+    "safety_contract": {
+      "campaign_status_changed_by_transport": false,
+      "cleanup": false,
+      "force_or_kill": false,
+      "foreign_or_otr_access": false,
+      "server_adoption": false,
+      "server_or_gpu_probe": false,
+      "starts_only_campaign_process": true
+    },
+    "schema_version": 1,
+    "source_evidence": {
+      "builder": {
+        "bytes": 25925,
+        "device": 1356286727840300467,
+        "inode": 40813871623812547,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391029222587500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\build_h3_music_followup.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "23a536c5542fbc6a7a524c19b60c50d7a52cf514e56d81dd5465df704535404a"
+      },
+      "campaign": {
+        "bytes": 87665,
+        "device": 1356286727840300467,
+        "inode": 27021597764731303,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786390990023140700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\run_h3_music_followup_campaign.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "7633992e6c8ee5566b757b2296700839cfd029803e0590a5081d82d86cf8e441"
+      },
+      "descriptor_analyzer": {
+        "bytes": 19595,
+        "device": 1356286727840300467,
+        "inode": 18858823439616288,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786377898137386500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "24cc09b0a7a187d7cf7a5dee0ab5547ad4b8bf64d40641ace86c1c8f571a5b3f"
+      },
+      "descriptor_wrapper": {
+        "bytes": 11730,
+        "device": 1356286727840300467,
+        "inode": 9007199256129755,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786380093365350000,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze_manifest.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "5d805d411751b855d4e9d971bca88afd2e439950b0248fe13f708c23152023f5"
+      },
+      "lab_locks": {
+        "bytes": 19611,
+        "device": 1356286727840300467,
+        "inode": 12103423999309051,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786220099290678700,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\lab_locks.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+      },
+      "manager_guard": {
+        "bytes": 39609,
+        "device": 1356286727840300467,
+        "inode": 21673573207687760,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786328834896415800,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+      },
+      "manager_test_boot": {
+        "bytes": 2556,
+        "device": 1356286727840300467,
+        "inode": 1688849861645462,
+        "link_count": 1,
+        "mode": 33279,
+        "mtime_ns": 1786328122932155800,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+      },
+      "operator_launcher": {
+        "bytes": 4654,
+        "device": 1356286727840300467,
+        "inode": 17732923533996454,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786381835542073400,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\start_h3_campaign_operator.ps1",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "2873336d37427fda53ee14b762eaf586132d1a6d433f321b26d1e3b7f9f71d2d"
+      },
+      "operator_recorder": {
+        "bytes": 40313,
+        "device": 1356286727840300467,
+        "inode": 176203335421606373,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786391444933198500,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\record_h3_campaign_operator_transport.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "b584d844e4529b8061e950f1b7c4dc69c1eb1553e4c29298403ab3b76a8a5075"
+      },
+      "python_executable": {
+        "bytes": 262144,
+        "device": 1356286727840300467,
+        "inode": 562949953716875,
+        "link_count": 1,
+        "mode": 33279,
+        "mtime_ns": 1772691956859914100,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d"
+      },
+      "runner": {
+        "bytes": 331908,
+        "device": 1356286727840300467,
+        "inode": 5348024559281480,
+        "link_count": 1,
+        "mode": 33206,
+        "mtime_ns": 1786390929528633200,
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+        "regular_file": true,
+        "reparse_point": false,
+        "sha256": "85a841a4a040dfcad1d57911a583bc1345d8872c67880cc4fb68c636fe65f4ac"
+      }
+    },
+    "stderr_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001\\stderr.log",
+    "stdout_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\operator_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-operator-001\\stdout.log",
+    "working_directory": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab",
+    "write_contract": {
+      "launch_receipt": "open mode xb after terminal lifecycle verification",
+      "operator_directory": "unique atomic directory claim",
+      "preflight_receipt": "open mode xb",
+      "stderr_log": "os.open O_CREAT|O_EXCL before Start-Process",
+      "stdout_log": "os.open O_CREAT|O_EXCL before Start-Process"
+    }
+  },
+  "prepared_at_utc": "2026-08-10T20:00:58.446395Z",
+  "schema_version": 1
+}

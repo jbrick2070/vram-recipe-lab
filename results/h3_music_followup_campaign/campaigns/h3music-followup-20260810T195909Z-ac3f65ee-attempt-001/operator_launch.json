@@ -1,0 +1,706 @@
+{
+  "schema_version": 1,
+  "kind": "h3-music-followup-operator-launch",
+  "campaign_id": "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001",
+  "plan": {
+    "schema_version": 1,
+    "campaign": "H3_MUSIC_FOLLOWUP",
+    "campaign_id": "h3music-followup-20260810T195909Z-ac3f65ee-attempt-001",
+    "default_action": "READ_ONLY_RUNBOOK",
+    "execution_requires": "--run",
+    "job1": {
+      "schema_version": 1,
+      "job": 1,
+      "disposition": "LOCAL_SCHEMA_REJECTED_NO_RENDER",
+      "exact_pinned_old_recipe_bytes_present": false,
+      "pinned_old_recipe_sha256": "599718d4ee5b1a04309a4352cded8167c4e51075a9f858bdbf3468a53aae6a4e",
+      "absence_audit_scope": "2026-08-10 read-only audit of the worktree, reachable revisions, and unreachable Git blobs; the exact pinned bytes were not found",
+      "origin_receipt": {
+        "path": "results/h3_r2v_best_run1.json",
+        "sha256": "561b79dd88acf9aae9bbe19f62974a2eb59900b8fadb60592479fb1307e6c3f8"
+      },
+      "origin_artifact": {
+        "path": "outputs/h3_r2v_best_out_00001_.mp4",
+        "sha256": "51d803d53a61e67d3e2dd5772f817da6edc1b8bdc5571e851463037adf2d2d5f"
+      },
+      "nearest_recoverable_nested_source": {
+        "git_commit": "b4fb869c8bc98bb5b9d1c713a3428f5e1ff698d4",
+        "git_blob": "c2eaa864aec7c336d7acabb04847f95c4f597b63",
+        "sha256": "b81a51f7cbdd3ddfb058505bd12cea10561706cb15a00419cea876f2ebaf03b1",
+        "equals_pinned_old_recipe": false,
+        "metadata_only_not_executable": true
+      },
+      "structural_diff": {
+        "mission_described_nested_shape_reconstructed_in_memory": {
+          "ref_images": {
+            "ref_image_0": [
+              "11",
+              0
+            ]
+          }
+        },
+        "current_shape": {
+          "ref_images.ref_image_0": [
+            "11",
+            0
+          ]
+        },
+        "current_topology_contract_requires_nested_absent": true,
+        "audio_decode_branch_structurally_unchanged": "SamplerCustomAdvanced -> VAEDecodeAudio -> CreateVideo.audio"
+      },
+      "compatibility_preflight": {
+        "status": "REJECTED_BY_LOCAL_LAB_SCHEMA_VALIDATOR",
+        "error_verbatim": "Node 7 (MiniMaxH3ReferenceToVideo) input 'ref_images' is a nested V3 autogrow container that ComfyUI ignores; use direct dotted sockets such as 'ref_images.ref_image_0'",
+        "validator": {
+          "path": "run_recipe.py",
+          "sha256": "85a841a4a040dfcad1d57911a583bc1345d8872c67880cc4fb68c636fe65f4ac",
+          "function": "minimax_h3_autogrow_input_errors"
+        },
+        "candidate_basis": "In-memory structural reconstruction from the pinned current flat source; it is not the missing historical recipe bytes.",
+        "authority_limit": "This is an enforced local lab-runner schema rejection under the installed V3 socket semantics. No server was booted or queried, no prompt was queued, and this is not evidence of a node runtime error."
+      },
+      "execution_authorized": false,
+      "job1b_render_leg_count": 0,
+      "causal_claim_limit": "Historical nested versus flat output differences compare ineffective versus valid picture conditioning and do not alone prove an audio-branch regression.",
+      "quality_judgment": "PENDING_HUMAN"
+    },
+    "new_render_leg_count": 11,
+    "job_counts": {
+      "job1_render_legs": 0,
+      "job2": 5,
+      "job3": 4,
+      "job4": 2
+    },
+    "ordered_legs": [
+      {
+        "order": 1,
+        "job": 2,
+        "cell": "2a",
+        "name": "h3_music_followup_mood_dim_lighthearted_seed42_f124",
+        "path": "recipes/h3_music_followup_mood_dim_lighthearted_seed42_f124.json",
+        "sha256": "6da9e9bd1f10c70c097f8e5c4dd5a6ba2ee73f5259d74d65684cd49cabfdf9c9",
+        "seed": 42,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_mood_dim_lighthearted_seed42_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_dim_lighthearted_seed42_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o01:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o01-h3_music_followup_mood_dim_lighthearted_seed42_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 2,
+        "job": 2,
+        "cell": "2b",
+        "name": "h3_music_followup_mood_dim_tense_seed42_f124",
+        "path": "recipes/h3_music_followup_mood_dim_tense_seed42_f124.json",
+        "sha256": "f190104d94542abe26097013f534f01f8d012c7fa48da3c95be6d45a489fdac6",
+        "seed": 42,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_mood_dim_tense_seed42_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_dim_tense_seed42_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o02:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o02-h3_music_followup_mood_dim_tense_seed42_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 3,
+        "job": 2,
+        "cell": "2c",
+        "name": "h3_music_followup_mood_bright_lighthearted_seed42_f124",
+        "path": "recipes/h3_music_followup_mood_bright_lighthearted_seed42_f124.json",
+        "sha256": "849a764e8b5da7ffaac8e4ffea91b7d152f05193d6a860fab8ae36049a70c2e1",
+        "seed": 42,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_mood_bright_lighthearted_seed42_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_bright_lighthearted_seed42_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o03:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o03-h3_music_followup_mood_bright_lighthearted_seed42_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 4,
+        "job": 2,
+        "cell": "2d",
+        "name": "h3_music_followup_mood_bright_noir_seed42_f124",
+        "path": "recipes/h3_music_followup_mood_bright_noir_seed42_f124.json",
+        "sha256": "199eba02e117eb51ceb26949ce5433e7cafb8d8a3baa7dfce1193f335c62cd4e",
+        "seed": 42,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_mood_bright_noir_seed42_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_bright_noir_seed42_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o04:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o04-h3_music_followup_mood_bright_noir_seed42_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 5,
+        "job": 2,
+        "cell": "2e",
+        "name": "h3_music_followup_mood_dim_ragtime_seed42_f124",
+        "path": "recipes/h3_music_followup_mood_dim_ragtime_seed42_f124.json",
+        "sha256": "589217f02f200b994dff416dc7b9db3c426155fae38b131f437499959f032520",
+        "seed": 42,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_mood_dim_ragtime_seed42_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_dim_ragtime_seed42_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o05:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o05-h3_music_followup_mood_dim_ragtime_seed42_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 6,
+        "job": 3,
+        "cell": "seed43",
+        "name": "h3_music_followup_score_seed43_f124",
+        "path": "recipes/h3_music_followup_score_seed43_f124.json",
+        "sha256": "4ee5e5afe067704f84c8a62555499e55f6064b0e490345cb07eb53fdbd2271f6",
+        "seed": 43,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_score_seed43_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed43_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o06:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o06-h3_music_followup_score_seed43_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 7,
+        "job": 3,
+        "cell": "seed44",
+        "name": "h3_music_followup_score_seed44_f124",
+        "path": "recipes/h3_music_followup_score_seed44_f124.json",
+        "sha256": "dc897f660680c0c5a004266d3388b8fc6d2b6207317dc009ccaf5e8f42e36bed",
+        "seed": 44,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_score_seed44_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed44_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o07:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o07-h3_music_followup_score_seed44_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 8,
+        "job": 3,
+        "cell": "seed45",
+        "name": "h3_music_followup_score_seed45_f124",
+        "path": "recipes/h3_music_followup_score_seed45_f124.json",
+        "sha256": "78fe70e46930652d83d5c6312b2b90cd2f847d2e2fc2dae2e8945f83cf9a52b9",
+        "seed": 45,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_score_seed45_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed45_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o08:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o08-h3_music_followup_score_seed45_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 9,
+        "job": 3,
+        "cell": "seed46",
+        "name": "h3_music_followup_score_seed46_f124",
+        "path": "recipes/h3_music_followup_score_seed46_f124.json",
+        "sha256": "045ad26f7ad8de5b8e6d37b76af260912692991c8565bf25c30d6209d65372ae",
+        "seed": 46,
+        "frames": 124,
+        "timeout_s": 2400,
+        "expected_artifact": "h3_music_followup_score_seed46_f124_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed46_f124.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o09:cold",
+          "--completion-timeout-s",
+          "2400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o09-h3_music_followup_score_seed46_f124.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 10,
+        "job": 4,
+        "cell": "f192",
+        "name": "h3_music_followup_score_seed42_f192",
+        "path": "recipes/h3_music_followup_score_seed42_f192.json",
+        "sha256": "29589d9bf565310da7352e9623c5b064189d106703a3ee95a50eb9b801a04c9d",
+        "seed": 42,
+        "frames": 192,
+        "timeout_s": 3600,
+        "expected_artifact": "h3_music_followup_score_seed42_f192_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed42_f192.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o10:cold",
+          "--completion-timeout-s",
+          "3600",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o10-h3_music_followup_score_seed42_f192.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      },
+      {
+        "order": 11,
+        "job": 4,
+        "cell": "f277",
+        "name": "h3_music_followup_score_seed42_f277",
+        "path": "recipes/h3_music_followup_score_seed42_f277.json",
+        "sha256": "8965353ccf49d075f953cf9700119cb4030cface2b909f235d3a7bc8fd739094",
+        "seed": 42,
+        "frames": 277,
+        "timeout_s": 5400,
+        "expected_artifact": "h3_music_followup_score_seed42_f277_out_00001_.mp4",
+        "argv": [
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "-B",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed42_f277.json",
+          "--disable-pinned-memory",
+          "--manager-offline-test",
+          "--manager-probe-phase",
+          "cold",
+          "--executor-cache-nonce",
+          "h3followup:h3music-followup-20260810T195909Z-ac3f65ee-attempt-001:o11:cold",
+          "--completion-timeout-s",
+          "5400",
+          "--shutdown"
+        ],
+        "manager_log": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_campaign\\server_logs\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-o11-h3_music_followup_score_seed42_f277.log",
+        "exploratory_single_cold_leg": true,
+        "shutdown_in_same_child": true,
+        "quality_judgment": "PENDING_HUMAN"
+      }
+    ],
+    "manager_network_mode": "offline",
+    "boot_lane": "lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb",
+    "operator_idle_policy": {
+      "schema_version": 1,
+      "kind": "operator-authorized-desktop-baseline-policy",
+      "preboot_baseline_advisory_threshold_mib": 3072.0,
+      "preboot_baseline_threshold_gating": false,
+      "elevated_baseline_threshold_mib": 2048.0,
+      "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+      "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+      "known_render_compute_processes_block": true,
+      "utilization_descriptors_non_gating": true,
+      "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+      "pair_drift_threshold_gating": false,
+      "pair_drift_condition": "compare each same-identity warm baseline_vram_gb to the prior cold leg; record absolute drift and threshold exceedance without blocking",
+      "prequeue_known_workload_scan_contract": {
+        "schema_version": 1,
+        "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+        "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "known_workload_classifier": {
+          "schema_version": 1,
+          "kind": "token-aware-positive-known-workload-classifier",
+          "python_script_markers": [
+            "main.py",
+            "run_recipe.py"
+          ],
+          "other_markers": [
+            "torchrun",
+            "stable-diffusion",
+            "automatic1111",
+            "invokeai",
+            "diffusers",
+            "text-generation",
+            "vllm",
+            "ollama",
+            "kobold",
+            "eng_wan_",
+            "eng_fastwan_",
+            "eng_humo",
+            "minimax"
+          ],
+          "positive_match_sources": [
+            "process_basename",
+            "executable_basename",
+            "actual_python_script_or_module_target"
+          ],
+          "arbitrary_later_argv_values_ignored": true,
+          "exact_exclusions_run_before_classifier": true,
+          "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+          "current_runner_exclusion_schema": [
+            "pid",
+            "process_create_time",
+            "resolved_runner_path",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity",
+            "verified_windows_venv_launcher",
+            "expected_excluded_process_count"
+          ],
+          "verified_windows_venv_launcher_schema": [
+            "pid",
+            "process_create_time",
+            "expected_launcher_path",
+            "direct_child_pid",
+            "direct_parent_verified",
+            "launcher_identity_live",
+            "child_identity_live",
+            "argv_tail_matches_child",
+            "both_exact_runner_target",
+            "child_executable_differs",
+            "creation_delta_s",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity"
+          ],
+          "excluded_current_runner_row_schema": [
+            "pid",
+            "process_create_time",
+            "reason"
+          ],
+          "unreadable_or_unmatched_python_is_advisory": true,
+          "redacted_process_schema": [
+            "pid",
+            "process_create_time",
+            "process_basename",
+            "executable_basename",
+            "target_basename",
+            "matched_markers",
+            "match_basis",
+            "argv_sha256"
+          ],
+          "argv_sha256_bytes": "UTF-8 canonical JSON argv list"
+        },
+        "exact_exclusions": [
+          "current run_recipe PID + create time + resolved run_recipe.py argv",
+          "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+          "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+          "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+        ],
+        "owned_lab_server_exclusion_schema": [
+          "pid",
+          "process_create_time",
+          "server_instance",
+          "process_identity",
+          "argv_match",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "verified_windows_venv_launcher",
+          "expected_excluded_process_count"
+        ],
+        "verified_owned_server_windows_venv_launcher_schema": [
+          "pid",
+          "process_create_time",
+          "expected_launcher_path",
+          "direct_child_pid",
+          "direct_parent_verified",
+          "launcher_identity_live",
+          "child_identity_live",
+          "argv_tail_matches_child",
+          "both_exact_validated_server_argv",
+          "child_executable_differs",
+          "creation_delta_s",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity",
+          "argv_match"
+        ],
+        "excluded_owned_lab_server_row_schema": [
+          "pid",
+          "process_create_time",
+          "reason"
+        ],
+        "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+        "python_without_readable_argv_blocks": false,
+        "advisory_unreadable_processes_retained": true,
+        "listener_binding_required_before_and_after_scan": true,
+        "warm_leg_scan_required": true,
+        "blocking_condition": "any known render/compute workload is live"
+      },
+      "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+      "authorized_on": "2026-08-10"
+    },
+    "hardened_idle_requires_absent": [
+      ".gpu.lock",
+      ".suite.lock",
+      ".server.pid",
+      ".server.idle-gate.json",
+      ".queue.quarantine.json",
+      "listener on 127.0.0.1:8199"
+    ],
+    "persistent_root_coordinator_mutex_is_not_debris": true,
+    "conditional_bonus_implemented": false,
+    "warm_certification_claimed": false,
+    "quality_judgment": "PENDING_HUMAN"
+  },
+  "plan_sha256": "efd07e9c6b793d0b3f9c18fe762b5290a389f1ecfa045c5110dad106aa107cb2",
+  "sources": {
+    "runner": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+      "bytes": 331908,
+      "sha256": "85a841a4a040dfcad1d57911a583bc1345d8872c67880cc4fb68c636fe65f4ac"
+    },
+    "lab_locks": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\lab_locks.py",
+      "bytes": 19611,
+      "sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1"
+    },
+    "test_boot": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\boot_h3_manager_offline_test.cmd",
+      "bytes": 2556,
+      "sha256": "bce4a81841579226c7aaf8a0bd04cdac25ddfb9b4bcf60f63c0bd9fc740b35a3"
+    },
+    "manager_guard": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_manager_offline_guard.py",
+      "bytes": 39609,
+      "sha256": "1b06e5662e9bad8d17aac05d31e393683f3cd450dadbeb86c3763c3a47b2a821"
+    },
+    "builder": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\build_h3_music_followup.py",
+      "bytes": 25925,
+      "sha256": "23a536c5542fbc6a7a524c19b60c50d7a52cf514e56d81dd5465df704535404a"
+    },
+    "descriptor_wrapper": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze_manifest.py",
+      "bytes": 11730,
+      "sha256": "5d805d411751b855d4e9d971bca88afd2e439950b0248fe13f708c23152023f5"
+    },
+    "descriptor_analyzer": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py",
+      "bytes": 19595,
+      "sha256": "24cc09b0a7a187d7cf7a5dee0ab5547ad4b8bf64d40641ace86c1c8f571a5b3f"
+    }
+  },
+  "materialization": [
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_dim_lighthearted_seed42_f124.json",
+      "bytes": 13313,
+      "sha256": "6da9e9bd1f10c70c097f8e5c4dd5a6ba2ee73f5259d74d65684cd49cabfdf9c9",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_dim_tense_seed42_f124.json",
+      "bytes": 13287,
+      "sha256": "f190104d94542abe26097013f534f01f8d012c7fa48da3c95be6d45a489fdac6",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_bright_lighthearted_seed42_f124.json",
+      "bytes": 13391,
+      "sha256": "849a764e8b5da7ffaac8e4ffea91b7d152f05193d6a860fab8ae36049a70c2e1",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_bright_noir_seed42_f124.json",
+      "bytes": 13355,
+      "sha256": "199eba02e117eb51ceb26949ce5433e7cafb8d8a3baa7dfce1193f335c62cd4e",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_mood_dim_ragtime_seed42_f124.json",
+      "bytes": 13273,
+      "sha256": "589217f02f200b994dff416dc7b9db3c426155fae38b131f437499959f032520",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed43_f124.json",
+      "bytes": 13313,
+      "sha256": "4ee5e5afe067704f84c8a62555499e55f6064b0e490345cb07eb53fdbd2271f6",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed44_f124.json",
+      "bytes": 13313,
+      "sha256": "dc897f660680c0c5a004266d3388b8fc6d2b6207317dc009ccaf5e8f42e36bed",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed45_f124.json",
+      "bytes": 13313,
+      "sha256": "78fe70e46930652d83d5c6312b2b90cd2f847d2e2fc2dae2e8945f83cf9a52b9",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed46_f124.json",
+      "bytes": 13313,
+      "sha256": "045ad26f7ad8de5b8e6d37b76af260912692991c8565bf25c30d6209d65372ae",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed42_f192.json",
+      "bytes": 13296,
+      "sha256": "29589d9bf565310da7352e9623c5b064189d106703a3ee95a50eb9b801a04c9d",
+      "disposition": "existing_exact"
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed42_f277.json",
+      "bytes": 13311,
+      "sha256": "8965353ccf49d075f953cf9700119cb4030cface2b909f235d3a7bc8fd739094",
+      "disposition": "existing_exact"
+    }
+  ],
+  "initial_hardened_idle_state": {
+    "gpu_lock_exists": false,
+    "suite_lock_exists": false,
+    "server_pid_receipt_exists": false,
+    "server_idle_gate_receipt_exists": false,
+    "queue_quarantine_exists": false,
+    "listeners_8199": []
+  },
+  "render_authority": "run_recipe.py only",
+  "conditional_bonus_authorized": false,
+  "quality_judgment": "PENDING_HUMAN"
+}

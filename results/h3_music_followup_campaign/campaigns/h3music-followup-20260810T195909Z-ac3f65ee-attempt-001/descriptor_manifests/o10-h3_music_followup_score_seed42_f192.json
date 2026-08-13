@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "campaign": "H3_MUSIC_FOLLOWUP",
+  "clips": [
+    {
+      "label": "J4-f192",
+      "filename": "h3_music_followup_score_seed42_f192_out_00001_.mp4",
+      "sha256": "dba434bd6d3ef854d3e723b58f5d0f2921574d3b7cdfecc7ab754f331b7996f2",
+      "recipe": "h3_music_followup_score_seed42_f192",
+      "recipe_sha256": "29589d9bf565310da7352e9623c5b064189d106703a3ee95a50eb9b801a04c9d",
+      "receipt_path": "results/h3_music_followup_score_seed42_f192_run1.json",
+      "receipt_sha256": "7c5857736bda672e92507260acbf6a6782c48d4287a201134a352ae164234feb"
+    }
+  ],
+  "quality_judgment": "PENDING_HUMAN"
+}

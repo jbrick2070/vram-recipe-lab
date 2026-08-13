@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "kind": "h3-music-followup-f277-post-terminal-descriptor-file-verification",
+  "descriptor": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\descriptors.json",
+    "sha256": "1e218991a0f3ee87ad2bf99d5127d6be6c3bfcf38ea62540cbcb5c169d4c6a1c",
+    "bytes": 10370,
+    "utf8_no_bom": true
+  },
+  "logs": [
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.probe.log",
+      "sha256": "2dad2a8b38cc5ac409fe55a1267ecabfa06842a6c9c2da1ece42ba72badba8ee",
+      "bytes": 298,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.ebur128.log",
+      "sha256": "be0992613fb28cf12fc2c7143dd5c43b585c357742c1d92b0d45a944be7a176b",
+      "bytes": 21770,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.silencedetect.log",
+      "sha256": "929c52032f12e55fc9aa9c30f4092146c58c433f18e4492215dd61417589600a",
+      "bytes": 1479,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.astats.log",
+      "sha256": "a2e95671e42f3bd9bdafc0f37dd5762a660eea7ef7f1df06c050b0fe8f9b4bcb",
+      "bytes": 5950,
+      "utf8_no_bom": true
+    },
+    {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3music-followup-20260810T195909Z-ac3f65ee-attempt-001-f277-post-terminal-descriptors\\J4-duration-f277-post-terminal.scene_scores.log",
+      "sha256": "11b2a0e112605e89f612a5b329a0ca8a0f1f79c4f2c1a33d763896adb348c082",
+      "bytes": 41661,
+      "utf8_no_bom": true
+    }
+  ],
+  "pinned_sources": {
+    "wrapper": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\analyze_h3_music_followup_f277_post_terminal.py",
+      "sha256": "9a8ecded669e7cf96e72f23c13dd484b2d3c2167146017a30e3cde05f3c45995",
+      "bytes": 12279
+    },
+    "analyzer": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\scratch\\h3_music_machine_descriptors\\analyze.py",
+      "sha256": "24cc09b0a7a187d7cf7a5dee0ab5547ad4b8bf64d40641ace86c1c8f571a5b3f",
+      "bytes": 19595
+    },
+    "recipe": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\recipes\\h3_music_followup_score_seed42_f277.json",
+      "sha256": "8965353ccf49d075f953cf9700119cb4030cface2b909f235d3a7bc8fd739094",
+      "bytes": 13311
+    },
+    "receipt": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\results\\h3_music_followup_score_seed42_f277_run1.json",
+      "sha256": "5b7e8963c464dc8bcf23accc1cda120234bfd0ea8614eeb885d6f8c3f1cd1124",
+      "bytes": 457978
+    },
+    "artifact": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs\\h3_music_followup_score_seed42_f277_out_00001_.mp4",
+      "sha256": "727c2bbbf3ec969ebf8051b7659f0cd7531fba07abfb52340baf9aa1b2c60a67",
+      "bytes": 2310113
+    }
+  },
+  "file_count_before_verification_receipt": 6,
+  "all_generated_text_utf8_no_bom": true,
+  "valid_measurement": true,
+  "certification_effect": false,
+  "quality_judgment": "PENDING_HUMAN"
+}
