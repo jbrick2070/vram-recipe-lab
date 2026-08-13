@@ -9,6 +9,8 @@ Treat the 4060 as a separate physical bench. It is not a 5080 runner, a source
 of production receipts, or permission to change top-level lab state.
 
 Read [bridge boundary](references/bridge-boundary.md) before using the bridge.
+When that health check passes and a controller must actually use the bridge,
+read [healthy bridge control](references/bridge-control.md).
 Read [execution ladder](references/execution-ladder.md) before admission or a
 render.
 If a bridge check says unhealthy, read [SSH bridge health and recovery](references/ssh-bridge-health.md)
