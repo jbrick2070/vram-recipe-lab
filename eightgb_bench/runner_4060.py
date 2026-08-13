@@ -747,6 +747,11 @@ def validate_live_source_prompt(
         schema_input = node_schema.get("input") if isinstance(node_schema, Mapping) else None
         required = schema_input.get("required") if isinstance(schema_input, Mapping) else None
         optional = schema_input.get("optional") if isinstance(schema_input, Mapping) else None
+        # ComfyUI 0.32 omits an empty optional section for nodes such as
+        # UNETLoader.  Treat only the absent section as empty; any present
+        # non-mapping remains malformed so we never broaden a live schema.
+        if optional is None:
+            optional = {}
         if not isinstance(required, Mapping) or not isinstance(optional, Mapping):
             raise RunnerError(f"live schema for {class_type} is malformed")
         schema_keys = set(required) | set(optional)

@@ -168,6 +168,18 @@ class Physical4060RunnerPureTests(unittest.TestCase):
         with self.assertRaisesRegex(runner.RunnerError, "did not expose admitted model"):
             runner.validate_live_source_prompt(plan, invalid)
 
+    def test_live_schema_accepts_only_an_absent_empty_optional_section(self):
+        plan, _ = runner.load_plan()
+        actual_shape = _object_info_for_source_graph()
+        del actual_shape["UNETLoader"]["input"]["optional"]
+        self.assertEqual(
+            runner.validate_live_source_prompt(plan, actual_shape)["source_node_count"], 15
+        )
+        malformed = _object_info_for_source_graph()
+        malformed["UNETLoader"]["input"]["optional"] = []
+        with self.assertRaisesRegex(runner.RunnerError, "UNETLoader is malformed"):
+            runner.validate_live_source_prompt(plan, malformed)
+
     def test_live_schema_rejects_a_source_link_outside_the_live_output_range(self):
         plan, _ = runner.load_plan()
         invalid = _object_info_for_source_graph()
