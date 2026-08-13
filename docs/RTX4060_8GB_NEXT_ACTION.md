@@ -9,7 +9,7 @@ push it, and stop.
 Run these commands from the laptop repository root:
 
 ```powershell
-git stash push -u -m "preserve-old-4060-preflight-before-update" -- eightgb_bench/preflight_4060.py
+git stash push -m "preserve-old-4060-preflight-before-update" -- eightgb_bench/preflight_4060.py
 git pull --ff-only origin main
 git status --short
 ```
@@ -22,10 +22,11 @@ commands fails, stop and return its complete output—do not use `reset`,
 
 ## 2. Create the laptop's one finding
 
-Use any already-installed local Python; do not install Python for this task:
+Use the already-installed Windows Python launcher; do not install Python for
+this task:
 
 ```powershell
-& <already-installed-python.exe> -B .\eightgb_bench\preflight_4060.py hardware-inventory --write-public-report
+py -3 -B .\eightgb_bench\preflight_4060.py hardware-inventory --write-public-report
 ```
 
 It reads only `nvidia-smi` and Windows RAM. It does **not** download models,
