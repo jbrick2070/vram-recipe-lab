@@ -67,6 +67,22 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sha256_utf8_text_file(path: Path) -> str:
+    """Hash checked-in text consistently across LF and Windows CRLF checkouts."""
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise PreflightError(f"cannot read UTF-8 text file {path}: {exc}") from exc
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raise PreflightError(f"UTF-8 text file has a BOM: {path}")
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise PreflightError(f"UTF-8 text file cannot be decoded: {path}") from exc
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+    return sha256_bytes(normalized)
+
+
 def _read_json(path: Path, label: str) -> dict[str, Any]:
     try:
         raw = path.read_bytes()
@@ -435,7 +451,7 @@ def _validate_contract(contract: Mapping[str, Any]) -> None:
     if not isinstance(policy, dict):
         raise PreflightError("contract.future_boot_policy must be an object")
     expected = {
-        "port": 8199,
+        "port": 18299,
         "listener": "127.0.0.1 only",
         "sage_attention": "forbidden",
         "manager": "forbidden",
@@ -580,9 +596,9 @@ def _bound_orientation_source(plan: Mapping[str, Any]) -> dict[str, Any]:
         raise PreflightError("bound orientation evidence escaped the repository")
     recipe = _read_json(recipe_path, "bound orientation recipe")
     receipt = _read_json(receipt_path, "bound orientation receipt")
-    if sha256_file(recipe_path) != orientation["recipe_sha256"]:
+    if sha256_utf8_text_file(recipe_path) != orientation["recipe_sha256"]:
         raise PreflightError("bound orientation recipe bytes do not match the plan")
-    if sha256_file(receipt_path) != orientation["receipt_sha256"]:
+    if sha256_utf8_text_file(receipt_path) != orientation["receipt_sha256"]:
         raise PreflightError("bound orientation receipt bytes do not match the plan")
     if recipe.get("name") != "h3_mime_i2v" or receipt.get("recipe") != "h3_mime_i2v":
         raise PreflightError("bound orientation source names do not match H3 MIME")

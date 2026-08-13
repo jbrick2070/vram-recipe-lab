@@ -1,5 +1,5 @@
-"""Isolated physical RTX 4060 / 8 GB benchmark preparation tools.
+"""Isolated physical RTX 4060 / 8 GB benchmark tools.
 
-Nothing in this package boots ComfyUI or queues a prompt.  The live 4060
-runner is deliberately a later, separately reviewed step.
+The inventory module is read-only.  The separately reviewed direct runner is
+the only module that may boot the laptop's loopback-only ComfyUI lane.
 """

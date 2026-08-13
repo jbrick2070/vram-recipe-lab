@@ -25,6 +25,8 @@
   "acceptance_gates": {
     "absolute_peak_vram_gib_lte": 7.5,
     "absolute_peak_host_ram_gib_lte": 28,
+    "comfortable_operation_interpretation": "The 7.5 GiB VRAM and 28 GiB host-RAM values are a recommended-headroom target, not a claim that a completed 8 GiB/32 GiB physical run above them is invalid.",
+    "physical_fit_interpretation": "A completed sequence with valid media and no OOM may be recorded as TIGHT_8GB when it stays within the measured physical GPU and host-RAM capacity but exceeds the comfortable target. It remains non-promotable until human review and must disclose the observed peaks.",
     "required_sequence": [
       "cold",
       "warm-1",
@@ -37,7 +39,7 @@
     ]
   },
   "future_boot_policy": {
-    "port": 8199,
+    "port": 18299,
     "listener": "127.0.0.1 only",
     "argv": "direct argv list only; never cmd.exe or a shell command string",
     "sage_attention": "forbidden",

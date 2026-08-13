@@ -31,8 +31,9 @@ The H3 and Wan receipts are useful orientation only:
 ## Set up the laptop safely
 
 The current immediate instruction is in
-[RTX4060_8GB_NEXT_ACTION.md](RTX4060_8GB_NEXT_ACTION.md). Follow that before
-creating a profile or considering any model.
+[RTX4060_8GB_NEXT_ACTION.md](RTX4060_8GB_NEXT_ACTION.md). It first pulls the
+released isolated runner and runs offline tests, then creates only ignored
+laptop-local enrollment files before a no-prompt admission.
 
 1. Use a **separate checkout** of this repository on the 4060. Do not point it
    at the 5080 checkout, its `results/`, outputs, locks, port owner, or model
@@ -42,33 +43,34 @@ creating a profile or considering any model.
 3. Open a new Codex task on the laptop and give it this instruction:
 
    ```text
-   Read AGENTS.md, BOOT.md, PREFLIGHT.md, and docs/RTX4060_8GB_HANDOFF.md.
-   Work only in this laptop checkout. Do not download/install anything, do not
-   touch a 5080 or OTR path, and do not boot ComfyUI yet. Follow
-   docs/RTX4060_8GB_NEXT_ACTION.md exactly: update the old checkout safely,
-   create the redacted hardware finding, commit only that finding, push it,
-   report its commit hash, then stop.
+   Read AGENTS.md and .claude/skills/rtx-4060-lab/SKILL.md first. Work only in
+   this laptop checkout. Do not download/install anything, do not touch a 5080
+   or OTR path, and never use port 8199. Follow
+   docs/RTX4060_8GB_NEXT_ACTION.md exactly. Stop on a Git conflict, profile
+   drift, model/node mismatch, foreign listener, lock, or failed shutdown.
    ```
 
-4. Do **not** create a profile or run `preflight` in this first task. Those
-   steps need a later written instruction after the committed hardware proof is
-   reviewed and lawful local assets exist on the laptop.
+4. The profile and launch configuration are laptop-private ignored files. The
+   specified `preflight` may read and hash local assets; it does not boot a
+   server or allocate a model. The subsequent `admit` command may boot only the
+   isolated loopback server and must shut it down without queuing a prompt.
 
-`hardware-inventory` only reads `nvidia-smi` and Windows RAM state. The later
-profile preflight reads local paths, the already-running Python, and ComfyUI
-Git only after hardware identity passes. Neither starts a server, contacts a
-port, or allocates a model.
+`hardware-inventory` only reads `nvidia-smi` and Windows RAM state. The
+profile preflight reads local paths, the executing Python, and ComfyUI Git only
+after hardware identity passes. The isolated admission owns only port 18299,
+proves the direct argv and live model/node surface, and records shutdown proof.
 
 ## Future render gate
 
 Only after a separately reviewed direct-argv 4060 runner exists:
 
 1. Admit the exact model and core nodes from an owned, Sage-free,
-   no-Manager, no-reserve, no-pinned-memory server on `127.0.0.1:8199`.
+   no-Manager, no-reserve, no-pinned-memory server on `127.0.0.1:18299`.
 2. Run one cold leg, then warm-1 and warm-2 sequentially under the laptop's
    own GPU-UUID-bound lock and its own results/output/log namespaces.
-3. Require each passing leg to remain at or below 7.5 GiB peak VRAM and 28 GiB
-   peak host RAM, leaving real laptop headroom.
+3. Treat 7.5 GiB peak VRAM and 28 GiB peak host RAM as the comfortable target.
+   A valid run within real measured capacity but above either target is
+   `TIGHT_8GB`, not a recommended configuration, and must disclose its peaks.
 4. Prove the declared video contract and ask for human review. Any OOM,
    timeout, bad media, model drift, server-ownership error, or headroom miss
    stops the ladder.

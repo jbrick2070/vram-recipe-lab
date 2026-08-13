@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "profile_id": "physical-rtx4060-8gb",
+  "plan_id": "h3-mime-i2v-864x480-f90",
+  "port": 18299,
+  "comfyui": {
+    "version": "0.32.0",
+    "git_commit": "c2bcbecd82ec5ae66594340b395c24ef0217b238"
+  },
+  "kjnodes": {
+    "root": "REPLACE_WITH_ABSOLUTE_PATH_TO_LAPTOP_COMFYUI_KJNODES",
+    "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+    "init_py_sha256": ""
+  },
+  "policy": {
+    "listener": "127.0.0.1",
+    "sage_attention": false,
+    "manager": false,
+    "reserve_vram": "forbidden",
+    "pinned_memory": "disabled",
+    "network": "offline"
+  }
+}

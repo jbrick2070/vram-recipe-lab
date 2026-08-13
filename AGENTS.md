@@ -4,6 +4,14 @@ This file defines the strict operating constraints for agents working in `vram-r
 
 ## Hard Rules
 
+### Isolated RTX 4060 Bench
+
+When work mentions the physical RTX 4060 laptop, read
+`.claude/skills/rtx-4060-lab/SKILL.md` before acting. Its user-authorized SSH
+bridge is a local control-plane exception only; its runtime state is isolated
+under `eightgb_bench/local/`, uses its own loopback port, and must never touch
+the 5080 runner, port 8199, locks, outputs, or receipts.
+
 1. **VRAM Ceiling**: The VRAM pass line is **14.5 GB**. The 16 GB physical VRAM on the RTX 5080 Laptop (Blackwell sm_120) is the absolute hardware ceiling, not the target limit.
 2. **Platform & Torch Invariants**:
    - OS: Windows 11, Python 3.12/3.10, PyTorch 2.10.0, CUDA 13.0, SageAttention + SDPA.
