@@ -3,9 +3,13 @@
 ## Purpose and boundary
 
 This makes the 4060 available to the 5080's Codex terminal without exposing a
-Codex app-server on the Ethernet. It is **not** a ComfyUI task: do not download
-or install anything, boot ComfyUI, load a model, render, alter the lab runner,
-or touch OTR.
+Codex app-server on the Ethernet. It is **not** a ComfyUI task: do not boot
+ComfyUI, load a model, render, alter the lab runner, or touch OTR.
+
+The user has explicitly authorized exactly one system installation for this
+task: the built-in Windows **OpenSSH Server** capability, if it is absent. Do
+not install anything else: no model, node, Python package, manager, or network
+tool.
 
 The prior Ethernet listener on port 8765 must not be used directly. A token
 was shared in chat, so treat it as revoked. Stop its app-server process and
@@ -46,12 +50,12 @@ if (@(git status --porcelain=v1).Count -ne 0) { throw 'STOP: checkout is not cle
 
 Do not pop the stash. The checked-in version is the source of truth.
 
-## Guarded existing-install-only SSH setup
+## Guarded OpenSSH Server setup
 
 Run the following only from an Administrator PowerShell on the 4060. It is
-allowed to start and configure an **already installed** OpenSSH Server. If the
-server capability or `sshd` service is absent, stop and report it; do not
-install it.
+allowed to install, start, and configure the Windows OpenSSH Server capability
+only. If its installation fails, stop and report the exact failure; do not
+substitute a third-party SSH server or install any other package.
 
 1. Retire the exposed app-server. Verify that PID 9956 is the expected old
    Codex app-server before stopping it. Remove or disable only the existing
@@ -71,14 +75,24 @@ install it.
    }
    ```
 
-2. Verify the peer addresses and existing SSH service:
+2. Verify the peer address and ensure the one authorized Windows feature is
+   installed. Do not reinstall it when it is already present:
 
    ```powershell
    Get-NetIPAddress -IPAddress 10.55.0.2 -ErrorAction Stop | Format-List IPAddress,InterfaceAlias,AddressState
-   Get-Service sshd -ErrorAction SilentlyContinue | Format-List Name,Status,StartType
+   $sshCapabilityName = 'OpenSSH.Server~~~~0.0.1.0'
+   $sshCapability = Get-WindowsCapability -Online -Name $sshCapabilityName -ErrorAction Stop
+   if ($sshCapability.State -ne 'Installed') {
+     Add-WindowsCapability -Online -Name $sshCapabilityName -ErrorAction Stop
+     $sshCapability = Get-WindowsCapability -Online -Name $sshCapabilityName -ErrorAction Stop
+   }
+   if ($sshCapability.State -ne 'Installed') {
+     throw "STOP: OpenSSH Server capability state is $($sshCapability.State)."
+   }
+   Get-Service sshd -ErrorAction Stop | Format-List Name,Status,StartType
    ```
 
-   The service must exist. Do **not** change the Ethernet network category:
+   The service must exist after that command. Do **not** change the Ethernet network category:
    `Public` is appropriate for an isolated direct cable. The later firewall
    rule will use the interface's current category while still permitting only
    `10.55.0.1` to reach the 4060's port 22.

@@ -1,5 +1,9 @@
 # RTX 4060: update, check, commit, push, stop
 
+> **Current override:** when the active task is linking the 4060 Codex CLI to
+> the 5080, do not run this hardware-inventory/preflight task. Follow
+> [RTX4060_SSH_NOW.md](RTX4060_SSH_NOW.md) instead.
+
 This is one small task. The laptop has an older checkout and no video models.
 Its job is to update safely, record its physical hardware, commit that finding,
 push it, and stop.
