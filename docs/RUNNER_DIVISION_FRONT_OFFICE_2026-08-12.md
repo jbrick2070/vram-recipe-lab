@@ -1,8 +1,8 @@
 # Runner Division: dynamic lab front office
 
 - **Status:** sealed direct dispatch implemented; the first cold plumbing smoke passed, while the first sealed current-profile H3 native-A/V smoke measured 15.107 GiB and failed the 14.5 GiB gate
-- **Date:** 2026-08-12, revised 2026-08-13
-- **Repository snapshot:** `ca929db50556600607f3cf4be1c19e114aa5a421`
+- **Date:** 2026-08-12, revised 2026-08-14
+- **Repository snapshot:** `e04c2b3d5478ac99d83a056c2fe037b2ec6b167d`
 - **Purpose:** let the lab compare pinned ComfyUI environments without weakening the existing ownership, isolation, evidence, or GPU-safety rules
 - **Machine-readable proposal:** [`../research/runner_division_front_office_2026-08-12.json`](../research/runner_division_front_office_2026-08-12.json)
 
@@ -188,13 +188,13 @@ High-risk monkey-patch/kernel campaigns use a fresh process for every ordered pa
 
 Yes: every **promoted or shipping-relevant lab recipe contract** needs a fresh receipt under the new runner identity. No: the lab should not burn GPU time rerunning every historical experiment, known failure, superseded recipe, or blocked asset.
 
-The current census is **83 checked-in recipes**: 70 have same-name top-level current aliases and 13 have no alias. The results tree retains 6 orphan aliases for removed legacy recipes. Of the 70 matched aliases, 58 use modern receipt schemas (57 v3 and one v2) and 12 are legacy; 29 appear warm, but only 6 are marked promotion-ready. No selected top-level alias binds the active `run_recipe.py` SHA-256 `c3c064…386365`, so the active-runner promotion-ready count is **zero**. The current Front Office plumbing receipt lives in its deliberately separate `results/runs/` namespace and is not part of this historical-alias predicate. The reproducible predicate, source commits, and retained prior receipt are recorded in [`../research/handoff_census_2026-08-13.json`](../research/handoff_census_2026-08-13.json). The runner code is safer than the evidence generation currently displayed; Runner Division must recertify claims, not erase history.
+The current census is **84 checked-in recipes**: 70 have same-name top-level current aliases and 14 have no alias. The results tree retains 6 orphan aliases for removed legacy recipes. Of the 70 matched aliases, 58 use modern receipt schemas (57 v3 and one v2) and 12 are legacy; 29 appear warm, but only 6 are marked promotion-ready. No selected top-level alias binds the active `run_recipe.py` SHA-256 `c3c064…386365`, so the active-runner promotion-ready count is **zero**. Current Front Office receipts live in their deliberately separate `results/runs/` namespace and are not part of this historical-alias predicate. The reproducible predicate, source commits, and retained prior revision are recorded in [`../research/handoff_census_2026-08-13.json`](../research/handoff_census_2026-08-13.json). The runner code is safer than the evidence generation currently displayed; Runner Division must recertify claims, not erase history.
 
 The migration has three tiers:
 
 | Tier | Scope | Work |
 |---|---|---|
-| R0 static census | all 83 checked-in recipe JSON files | parse, schema, topology, fixture, manifest, profile-compatibility, and graph-diff validation; no GPU |
+| R0 static census | all 84 checked-in recipe JSON files | parse, schema, topology, fixture, manifest, profile-compatibility, and graph-diff validation; no GPU |
 | R1 runner parity panel | one representative image, silent-video, native-A/V, audio-conditioned, GGUF, H3, LTX, and Wan surface with available assets | fresh control runs under the frozen bridge profile; prove the new front office did not weaken execution or evidence semantics |
 | R2 certification set | every recipe whose receipt currently supports a promoted lab result or an OTR shipping video lane | fresh machine and required human gates; the front-office index displays old receipts as `PRE_RUNNER_DIVISION_HISTORY` without modifying their bytes |
 
@@ -296,7 +296,7 @@ The numbered sequence below is the eventual architecture, not a requirement for 
 - displays any receipt whose runner bundle differs from the active bundle as `STALE_FOR_ACTIVE_RUNNER` without rewriting it;
 - rejects a model whose fast fingerprint no longer matches its content-hash admission receipt;
 - proves timeout, prompt-uncertainty, and parent-death cleanup/quarantine behavior;
-- proves all 83 recipes complete the R0 static census before Runner Division v1 is certified.
+- proves all 84 recipes complete the R0 static census before Runner Division v1 is certified.
 
 ## Bottom line
 
