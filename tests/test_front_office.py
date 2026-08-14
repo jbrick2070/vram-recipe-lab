@@ -314,7 +314,7 @@ class FrontOfficeReceiptTests(unittest.TestCase):
 
     def test_r0_census_reaches_every_current_recipe_without_gpu_or_server(self):
         report = front_office.r0_static_census()
-        self.assertEqual(report["recipe_count"], 83)
+        self.assertEqual(report["recipe_count"], 84)
         self.assertEqual(report["recipe_json_bom_errors"], [])
         self.assertFalse(report["gpu_or_server_touched"])
         self.assertEqual(report["direct_launch"], "SEALED_DIRECT_DISPATCH_AVAILABLE")
@@ -370,3 +370,72 @@ class FrontOfficeReceiptTests(unittest.TestCase):
             spec["semantic"]["recipe"]["path"], "recipes/h3_i2v_current_profile_av_smoke.json"
         )
         self.assertEqual(spec["semantic"]["campaign"]["id"], "front-office-h3-current-r1")
+
+    def test_current_ltx_video_smoke_is_a_sealed_current_profile_cell(self):
+        campaign = front_office.load_campaign("front-office-ltx-current-r1")
+        self.assertEqual(campaign["status"], front_office.CAMPAIGN_STATUS_READY_FOR_DISPATCH)
+        self.assertEqual(campaign["profiles"], ["comfy0320-h3"])
+        self.assertEqual(campaign["cells"], [{
+            "id": "i2v-current-video-smoke",
+            "recipe": "ltx_video_2b_current_profile_cold_smoke.json",
+            "role": "control",
+            "phase": "sealed-one-shot-current-profile-cold-video",
+            "profiles": ["comfy0320-h3"],
+        }])
+        recipe = json.loads(
+            (front_office.RECIPE_DIR / campaign["cells"][0]["recipe"]).read_text(encoding="utf-8")
+        )
+        topology = recipe["topology_contract"]
+        self.assertEqual(recipe["name"], "ltx_video_2b_current_profile_cold_smoke")
+        self.assertIn("cold", recipe["experiment"]["scope"])
+        self.assertIn("not promotable", recipe["experiment"]["scope"])
+        self.assertIn("not comparable", recipe["experiment"]["scope"])
+        self.assertEqual(topology["installed_schema"]["comfyui_version"], "0.32.0")
+        self.assertEqual(topology["installed_schema"]["git_commit"], "c2bcbecd82ec5ae66594340b395c24ef0217b238")
+        self.assertEqual(topology["installed_schema"]["node_source"], "comfy_extras/nodes_lt.py")
+        self.assertEqual(topology["installed_schema"]["node_source_sha256"], "542cadcc408ec54194c9bdad2f3afc3e1c3eead6b0c6400f6aef78b779d74e7d")
+        self.assertEqual(recipe["prompt"]["12"]["inputs"]["filename_prefix"], "ltx_video_2b_current_profile_cold_smoke_out")
+
+    def test_current_ltx_video_smoke_preserves_the_historical_graph_except_its_output_prefix(self):
+        base = json.loads(
+            (front_office.RECIPE_DIR / "ltx_video_2b_distilled_cmp_832x480_f193.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        clone = json.loads(
+            (front_office.RECIPE_DIR / "ltx_video_2b_current_profile_cold_smoke.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        expected_prompt = copy.deepcopy(base["prompt"])
+        expected_prompt["12"]["inputs"]["filename_prefix"] = "ltx_video_2b_current_profile_cold_smoke_out"
+        self.assertEqual(clone["prompt"], expected_prompt)
+        self.assertEqual(clone["contract"], base["contract"])
+        self.assertEqual(clone["receipt_requirements"], base["receipt_requirements"])
+        expected_topology = copy.deepcopy(base["topology_contract"])
+        expected_topology["intent"] = (
+            "Current-profile LTX-Video 0.9.8 distilled 2B cold video smoke; the immutable graph "
+            "remains the historical same-canvas 193-frame graph"
+        )
+        expected_topology["installed_schema"] = {
+            "comfyui_version": "0.32.0",
+            "git_commit": "c2bcbecd82ec5ae66594340b395c24ef0217b238",
+            "node_source": "comfy_extras/nodes_lt.py",
+            "node_source_sha256": "542cadcc408ec54194c9bdad2f3afc3e1c3eead6b0c6400f6aef78b779d74e7d",
+        }
+        expected_topology["required_input_values"][-3]["equals"] = (
+            "ltx_video_2b_current_profile_cold_smoke_out"
+        )
+        expected_topology["intentional_divergences"].append(
+            "This immutable clone changes only identity metadata, the current installed-schema pin, "
+            "and the SaveVideo prefix from ltx_video_2b_distilled_cmp_832x480_f193; it is a cold "
+            "current-profile smoke, not a historical-lane comparison or promotion claim"
+        )
+        self.assertEqual(clone["topology_contract"], expected_topology)
+        spec = front_office.build_execution_spec(
+            "front-office-ltx-current-r1", "i2v-current-video-smoke", "comfy0320-h3", "b" * 32
+        )
+        self.assertEqual(
+            spec["semantic"]["recipe"]["path"], "recipes/ltx_video_2b_current_profile_cold_smoke.json"
+        )
+        self.assertEqual(spec["semantic"]["campaign"]["id"], "front-office-ltx-current-r1")

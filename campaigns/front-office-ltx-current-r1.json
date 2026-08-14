@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "front-office-ltx-current-r1",
+  "status": "READY_FOR_DISPATCH",
+  "purpose": "One sealed current-0.32-profile LTX Video 2B Front Office smoke. It validates a different-family native-core video path after the H3 native-A/V smoke. It is cold-only, not warm-cache certification, not a matched comparison to the historical reserve-4/no-pinned/cache-classic lane, and not a promotion claim.",
+  "independent_variable": "None. The immutable ltx_video_2b_distilled_cmp_832x480_f193 graph is retained except for current installed-schema provenance and the unique artifact prefix; the cell tests direct-argv Front Office delivery on the enrolled KJ-only current profile.",
+  "profiles": [
+    "comfy0320-h3"
+  ],
+  "cells": [
+    {
+      "id": "i2v-current-video-smoke",
+      "recipe": "ltx_video_2b_current_profile_cold_smoke.json",
+      "role": "control",
+      "phase": "sealed-one-shot-current-profile-cold-video",
+      "profiles": [
+        "comfy0320-h3"
+      ]
+    }
+  ]
+}
