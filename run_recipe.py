@@ -29,8 +29,9 @@ import urllib.parse
 import subprocess
 import threading
 import uuid
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Tuple, Optional, Mapping
 
 import lab_locks
 
@@ -43,6 +44,7 @@ LAB_LOCKS_SOURCE_PATH = Path(lab_locks.__file__).resolve()
 QUEUE_QUARANTINE_PATH = REPO_ROOT / ".queue.quarantine.json"
 SERVER_PID_FILE = REPO_ROOT / ".server.pid"
 SERVER_IDLE_GATE_FILE = REPO_ROOT / ".server.idle-gate.json"
+FRONT_OFFICE_SERVER_SESSION_FILE = REPO_ROOT / ".front-office-server.json"
 SERVER_LOG_FILE = REPO_ROOT / "server.log"
 BOOT_CMD = REPO_ROOT / "boot_lab_server.cmd"
 RESULTS_DIR = REPO_ROOT / "results"
@@ -70,6 +72,73 @@ LAB_PORT = "8199"
 COMFY_SERVER_URL = f"http://127.0.0.1:{LAB_PORT}"
 VRAM_GATE_GB = 14.5
 RECEIPT_SCHEMA_VERSION = 3
+
+
+@dataclass(frozen=True)
+class FrontOfficeRunContext:
+    """Sealed per-cell execution state for an enrolled Front Office launch.
+
+    The legacy runner continues to use its module constants.  Front Office
+    mode instead reads every profile-selected value from this immutable object,
+    which is created only after the execution spec has been revalidated.
+    Global ownership state (port 8199, locks, PID receipt, and quarantine) is
+    deliberately *not* part of this context.
+    """
+
+    campaign_id: str
+    cell_id: str
+    profile_id: str
+    profile_sha256: str
+    launch_spec_sha256: str
+    execution_spec_sha256: str
+    execution_spec_path: Path
+    lease_nonce: str
+    runner_bundle_sha256: str
+    front_office_bundle_sha256: str
+    comfyui_root: Path
+    recipe_path: Path
+    recipe_sha256: str
+    output_directory: Path
+    result_directory: Path
+    log_directory: Path
+    user_directory: Path
+    temp_directory: Path
+    server_argv: Tuple[str, ...]
+    server_environment: Mapping[str, str]
+    profile_whitelist: Tuple[str, ...]
+
+
+ACTIVE_FRONT_OFFICE_CONTEXT: Optional[FrontOfficeRunContext] = None
+
+
+def front_office_context() -> Optional[FrontOfficeRunContext]:
+    """Return the currently sealed Front Office context, if any."""
+
+    return ACTIVE_FRONT_OFFICE_CONTEXT
+
+
+def front_office_mode() -> bool:
+    return front_office_context() is not None
+
+
+def effective_comfyui_root() -> Path:
+    context = front_office_context()
+    return context.comfyui_root if context is not None else COMFYUI_ROOT
+
+
+def effective_results_dir() -> Path:
+    context = front_office_context()
+    return context.result_directory if context is not None else RESULTS_DIR
+
+
+def effective_output_dir() -> Path:
+    context = front_office_context()
+    return context.output_directory if context is not None else (REPO_ROOT / "outputs")
+
+
+def effective_server_log_file() -> Path:
+    context = front_office_context()
+    return context.log_directory / "server.log" if context is not None else SERVER_LOG_FILE
 # Operator-authorized desktop-use lane.  A render may start with ordinary
 # desktop applications attached to the WDDM GPU, but the measured absolute
 # desktop baseline must not exceed 3.0 GiB.  The independent 14.5 GiB absolute
@@ -367,6 +436,417 @@ def stable_identity(payload: Dict[str, Any]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def canonical_json_bytes(payload: Any) -> bytes:
+    """Encode an evidence payload in its one canonical UTF-8 JSON spelling."""
+
+    return json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+
+
+def _front_office_require_string(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"Front Office {label} must be nonempty text")
+    return value
+
+
+def _front_office_prepare_namespace(path: Path, root: Path, label: str) -> Path:
+    """Create one derived cell namespace without allowing a reparse escape."""
+
+    import front_office
+
+    trusted_root = front_office.validate_absolute_nonreparse_path(
+        str(root), f"Front Office {label} root", "directory"
+    )
+    lexical = Path(os.path.abspath(os.fspath(path)))
+    try:
+        lexical.relative_to(trusted_root)
+    except ValueError as exc:
+        raise ValueError(f"Front Office {label} escapes its derived root") from exc
+    relative = lexical.relative_to(trusted_root)
+    cursor = trusted_root
+    for part in relative.parts:
+        cursor = cursor / part
+        if not cursor.exists():
+            cursor.mkdir()
+        front_office.validate_absolute_nonreparse_path(
+            str(cursor), f"Front Office {label}", "directory"
+        )
+    return front_office.validate_absolute_nonreparse_path(
+        str(lexical), f"Front Office {label}", "directory"
+    )
+
+
+def _front_office_runtime_environment(
+    profile_environment: Mapping[str, Any], temp_directory: Path
+) -> Dict[str, str]:
+    """Build the direct Comfy child environment from a small OS baseline.
+
+    Profile values choose the lab lane; inherited values only supply the
+    Windows runtime essentials that Python/Torch require.  In particular,
+    USERNAME prevents Python's ``getpass`` from taking a Unix-only ``pwd``
+    fallback during Torch import.
+    """
+
+    if not isinstance(profile_environment, Mapping):
+        raise ValueError("Front Office profile environment is not a mapping")
+    required = {"PYTHONUTF8", "PYTHONIOENCODING", "HF_HOME"}
+    if set(profile_environment) != required:
+        raise ValueError("Front Office profile environment has unexpected selectors")
+    result: Dict[str, str] = {}
+    runtime_names = (
+        "SystemRoot",
+        "SYSTEMROOT",
+        "WINDIR",
+        "ComSpec",
+        "COMSPEC",
+        "PATHEXT",
+        "PATH",
+        "USERNAME",
+        "USERDOMAIN",
+        "USERPROFILE",
+        "HOMEDRIVE",
+        "HOMEPATH",
+        "ProgramData",
+        "LOCALAPPDATA",
+        "APPDATA",
+    )
+    for name in runtime_names:
+        value = os.environ.get(name)
+        if isinstance(value, str) and value:
+            result[name] = value
+    for name in sorted(required):
+        value = profile_environment.get(name)
+        if not isinstance(value, str) or not value:
+            raise ValueError(f"Front Office profile environment {name} is invalid")
+        result[name] = value
+    result["TEMP"] = str(temp_directory)
+    result["TMP"] = str(temp_directory)
+    return result
+
+
+def _front_office_execution_claim_path(context: FrontOfficeRunContext) -> Path:
+    return context.execution_spec_path.with_name(
+        context.execution_spec_path.name + ".claim.json"
+    )
+
+
+def _front_office_execution_claim_payload(
+    context: FrontOfficeRunContext,
+) -> Dict[str, Any]:
+    """Construct the single-use claim that makes an execution spec non-replayable."""
+
+    try:
+        process_create_time = round(float(psutil.Process(os.getpid()).create_time()), 6)
+    except (psutil.NoSuchProcess, psutil.AccessDenied, OSError) as exc:
+        raise RuntimeError(f"cannot bind Front Office execution claim to this runner: {exc}") from exc
+    return {
+        "schema_version": 1,
+        "kind": "front-office-execution-claim",
+        "execution_spec_sha256": context.execution_spec_sha256,
+        "launch_spec_sha256": context.launch_spec_sha256,
+        "lease_nonce": context.lease_nonce,
+        "runner_pid": os.getpid(),
+        "runner_process_create_time": process_create_time,
+    }
+
+
+def _claim_front_office_execution_spec(context: FrontOfficeRunContext) -> None:
+    """Exclusively consume one sealed execution spec before any GPU/port work."""
+
+    import front_office
+
+    claim_path = _front_office_execution_claim_path(context)
+    trusted_parent = front_office.validate_absolute_nonreparse_path(
+        str(context.execution_spec_path.parent),
+        "Front Office execution-spec runtime directory",
+        "directory",
+    )
+    claim_path = claim_path.resolve(strict=False)
+    try:
+        claim_path.relative_to(trusted_parent)
+    except ValueError as exc:
+        raise RuntimeError("Front Office execution-claim path escapes the runtime directory") from exc
+    payload = _front_office_execution_claim_payload(context)
+    raw = canonical_json_bytes(payload) + b"\n"
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+    try:
+        descriptor = os.open(str(claim_path), flags, 0o600)
+    except FileExistsError as exc:
+        raise RuntimeError(
+            "Front Office execution spec was already claimed; issue a new sealed spec for another leg"
+        ) from exc
+    except OSError as exc:
+        raise RuntimeError(f"cannot create Front Office execution claim: {exc}") from exc
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(raw)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except OSError as exc:
+        raise RuntimeError(f"cannot write Front Office execution claim: {exc}") from exc
+
+
+def _front_office_execution_claim_binding(context: FrontOfficeRunContext) -> Dict[str, str]:
+    """Read and validate the persisted single-use claim for receipt binding."""
+
+    import front_office
+
+    claim_path = _front_office_execution_claim_path(context)
+    front_office.validate_absolute_nonreparse_path(
+        str(claim_path), "Front Office execution claim", "file"
+    )
+    raw = claim_path.read_bytes()
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raise RuntimeError("Front Office execution claim has a UTF-8 BOM")
+    try:
+        payload = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Front Office execution claim is invalid JSON: {exc}") from exc
+    expected_keys = {
+        "schema_version",
+        "kind",
+        "execution_spec_sha256",
+        "launch_spec_sha256",
+        "lease_nonce",
+        "runner_pid",
+        "runner_process_create_time",
+    }
+    if not isinstance(payload, dict) or set(payload) != expected_keys:
+        raise RuntimeError("Front Office execution claim has an invalid shape")
+    if (
+        payload.get("schema_version") != 1
+        or payload.get("kind") != "front-office-execution-claim"
+        or payload.get("execution_spec_sha256") != context.execution_spec_sha256
+        or payload.get("launch_spec_sha256") != context.launch_spec_sha256
+        or payload.get("lease_nonce") != context.lease_nonce
+        or not isinstance(payload.get("runner_pid"), int)
+        or int(payload["runner_pid"]) <= 0
+        or not isinstance(payload.get("runner_process_create_time"), (int, float))
+        or not math.isfinite(float(payload["runner_process_create_time"]))
+        or float(payload["runner_process_create_time"]) <= 0
+        or canonical_json_bytes(payload) + b"\n" != raw
+    ):
+        raise RuntimeError("Front Office execution claim does not match the sealed spec")
+    return {
+        "path": str(claim_path),
+        "sha256": sha256_bytes(raw),
+    }
+
+
+def front_office_receipt_binding(context: FrontOfficeRunContext) -> Dict[str, Any]:
+    """Return the immutable Front Office receipt fragment for the active cell."""
+
+    namespaces = {
+        "output_directory": str(context.output_directory),
+        "result_directory": str(context.result_directory),
+        "log_directory": str(context.log_directory),
+        "user_directory": str(context.user_directory),
+        "temp_directory": str(context.temp_directory),
+    }
+    return {
+        "campaign_id": context.campaign_id,
+        "cell_id": context.cell_id,
+        "profile_id": context.profile_id,
+        "profile_sha256": context.profile_sha256,
+        "launch_spec_sha256": context.launch_spec_sha256,
+        "execution_spec_instance_sha256": context.execution_spec_sha256,
+        "lease_nonce": context.lease_nonce,
+        "execution_claim": _front_office_execution_claim_binding(context),
+        "runner_bundle_sha256": context.runner_bundle_sha256,
+        "front_office_bundle_sha256": context.front_office_bundle_sha256,
+        "server_argv_sha256": stable_identity({"argv": list(context.server_argv)}),
+        "environment_sha256": stable_identity({"environment": dict(context.server_environment)}),
+        "namespaces": namespaces,
+    }
+
+
+def front_office_identity_binding(context: FrontOfficeRunContext) -> Dict[str, Any]:
+    """Return the warm-cache identity fragment, excluding one-shot lease data."""
+
+    binding = front_office_receipt_binding(context)
+    binding.pop("execution_spec_instance_sha256", None)
+    binding.pop("lease_nonce", None)
+    binding.pop("execution_claim", None)
+    return binding
+
+
+def effective_run_cache_state(run_state: Mapping[str, Any]) -> Tuple[int, int, bool]:
+    """Return receipt-facing cache state without letting FO one-shots borrow warmth."""
+
+    run_count = int(run_state["run_count"])
+    config_run_count = int(run_state["config_run_count"])
+    is_warm_cache = config_run_count >= 2 and bool(
+        run_state["previous_gate_pass"]
+    )
+    if front_office_mode():
+        # A sealed spec's server has no reusable cache after its terminal
+        # cleanup.  A later spec shares history for audit continuity only.
+        return run_count, 1, False
+    return run_count, config_run_count, is_warm_cache
+
+
+def _front_office_context_from_spec(spec_path_text: str) -> FrontOfficeRunContext:
+    """Revalidate one sealed execution spec and derive the in-process context."""
+
+    import front_office
+
+    spec_path = Path(spec_path_text)
+    spec = front_office.load_execution_spec(spec_path)
+    front_office.validate_execution_spec(spec)
+    semantic = spec.get("semantic")
+    if not isinstance(semantic, dict):
+        raise ValueError("Front Office execution spec semantic payload is invalid")
+    profile_record = semantic.get("profile")
+    campaign_record = semantic.get("campaign")
+    cell_record = semantic.get("cell")
+    recipe_record = semantic.get("recipe")
+    server_record = semantic.get("server")
+    namespaces_record = semantic.get("namespaces")
+    office_record = semantic.get("front_office")
+    floor_record = semantic.get("floor_runner")
+    if not all(
+        isinstance(record, dict)
+        for record in (
+            profile_record,
+            campaign_record,
+            cell_record,
+            recipe_record,
+            server_record,
+            namespaces_record,
+            office_record,
+            floor_record,
+        )
+    ):
+        raise ValueError("Front Office execution spec records are malformed")
+
+    campaign_id = _front_office_require_string(campaign_record.get("id"), "campaign ID")
+    cell_id = _front_office_require_string(cell_record.get("id"), "cell ID")
+    profile_id = _front_office_require_string(profile_record.get("id"), "profile ID")
+    profile = front_office.load_enrolled_profile(profile_id)
+    profile_sha256 = front_office.canonical_sha256(profile)
+    if profile_record.get("sha256") != profile_sha256:
+        raise ValueError("Front Office profile changed after the execution spec was sealed")
+    if profile.get("status") != "ENROLLED_DISPATCHABLE":
+        raise ValueError("Front Office profile is not dispatchable")
+
+    recipe_relative = _front_office_require_string(recipe_record.get("path"), "recipe path")
+    recipe_path = (REPO_ROOT / Path(recipe_relative)).resolve()
+    try:
+        recipe_path.relative_to(REPO_ROOT)
+    except ValueError as exc:
+        raise ValueError("Front Office recipe path escapes the repository") from exc
+    if not recipe_path.is_file() or sha256_file(recipe_path) != recipe_record.get("sha256"):
+        raise ValueError("Front Office recipe bytes changed after the execution spec was sealed")
+
+    raw_spec = spec_path.read_bytes()
+    if raw_spec.startswith(b"\xef\xbb\xbf"):
+        raise ValueError("Front Office execution spec has a UTF-8 BOM")
+    execution_spec_sha256 = sha256_bytes(raw_spec)
+    launch_spec_sha256 = _front_office_require_string(
+        spec.get("launch_spec_sha256"), "launch spec SHA-256"
+    )
+    lease_nonce = _front_office_require_string(spec.get("lease_nonce"), "lease nonce")
+
+    path_roots = {
+        "output_directory": REPO_ROOT / "outputs",
+        "result_directory": REPO_ROOT / "results" / "runs",
+        "log_directory": REPO_ROOT / "logs",
+        "user_directory": REPO_ROOT / ".front_office_state",
+        "temp_directory": REPO_ROOT / ".front_office_state",
+    }
+    prepared_namespaces: Dict[str, Path] = {}
+    for key, root in path_roots.items():
+        declared = _front_office_require_string(namespaces_record.get(key), f"{key}")
+        prepared_namespaces[key] = _front_office_prepare_namespace(
+            Path(declared), root, key
+        )
+    if len(set(prepared_namespaces.values())) != len(prepared_namespaces):
+        raise ValueError("Front Office namespace paths collide")
+
+    argv = server_record.get("argv")
+    if not isinstance(argv, list) or not all(isinstance(value, str) and value for value in argv):
+        raise ValueError("Front Office server argv is invalid")
+    if server_record.get("argv_sha256") != front_office.canonical_sha256(argv):
+        raise ValueError("Front Office server argv hash is invalid")
+    expected_argv = front_office.canonical_server_argv(profile, {
+        key: str(value) for key, value in prepared_namespaces.items()
+    })
+    if argv != expected_argv:
+        raise ValueError("Front Office server argv no longer matches the enrolled profile")
+    environment = server_record.get("environment")
+    if not isinstance(environment, dict) or server_record.get("environment_sha256") != front_office.canonical_sha256(environment):
+        raise ValueError("Front Office server environment hash is invalid")
+    expected_environment = front_office.sanitized_child_environment(profile)
+    if environment != expected_environment:
+        raise ValueError("Front Office server environment no longer matches the enrolled profile")
+
+    runner_bundle_sha256 = _front_office_require_string(
+        floor_record.get("runner_bundle_sha256"), "runner bundle SHA-256"
+    )
+    front_office_bundle_sha256 = _front_office_require_string(
+        office_record.get("bundle_sha256"), "front office bundle SHA-256"
+    )
+    whitelist = tuple(node["id"] for node in profile["custom_nodes"])
+    return FrontOfficeRunContext(
+        campaign_id=campaign_id,
+        cell_id=cell_id,
+        profile_id=profile_id,
+        profile_sha256=profile_sha256,
+        launch_spec_sha256=launch_spec_sha256,
+        execution_spec_sha256=execution_spec_sha256,
+        execution_spec_path=spec_path.resolve(),
+        lease_nonce=lease_nonce,
+        runner_bundle_sha256=runner_bundle_sha256,
+        front_office_bundle_sha256=front_office_bundle_sha256,
+        comfyui_root=Path(profile["comfyui"]["root"]),
+        recipe_path=recipe_path,
+        recipe_sha256=recipe_record["sha256"],
+        output_directory=prepared_namespaces["output_directory"],
+        result_directory=prepared_namespaces["result_directory"],
+        log_directory=prepared_namespaces["log_directory"],
+        user_directory=prepared_namespaces["user_directory"],
+        temp_directory=prepared_namespaces["temp_directory"],
+        server_argv=tuple(argv),
+        server_environment=_front_office_runtime_environment(
+            environment, prepared_namespaces["temp_directory"]
+        ),
+        profile_whitelist=whitelist,
+    )
+
+
+def activate_front_office_context_from_argv(argv: List[str]) -> List[str]:
+    """Replace a sealed Front Office CLI token with its pinned recipe argument.
+
+    A Front Office run accepts no inherited run-recipe knobs.  It is one fresh,
+    self-cleaning leg; later warm-sequence orchestration will create separate
+    one-shot specs instead of replaying this one.
+    """
+
+    global ACTIVE_FRONT_OFFICE_CONTEXT
+    positions = [index for index, value in enumerate(argv) if value == "--front-office-spec"]
+    if not positions:
+        return argv
+    if len(positions) != 1:
+        raise ValueError("--front-office-spec may be supplied only once")
+    position = positions[0]
+    if position + 1 >= len(argv):
+        raise ValueError("--front-office-spec requires a sealed spec path")
+    if len(argv) != 2:
+        raise ValueError(
+            "Front Office mode accepts only --front-office-spec <sealed-spec>; "
+            "it does not accept recipe paths or runner flags"
+        )
+    context = _front_office_context_from_spec(argv[position + 1])
+    _claim_front_office_execution_spec(context)
+    ACTIVE_FRONT_OFFICE_CONTEXT = context
+    return [str(context.recipe_path), "--shutdown"]
+
+
 def parse_suite_cache_nonce(argv: List[str], is_suite: bool) -> Optional[str]:
     """Parse the suite-only executor cache nonce without treating it as recipe state."""
 
@@ -463,7 +943,7 @@ def suite_cache_runtime_sha256s() -> Dict[str, str]:
 
     actual: Dict[str, str] = {}
     for relative_name, expected_hash in SUITE_CACHE_RUNTIME_SOURCES.items():
-        source = COMFYUI_ROOT / Path(relative_name)
+        source = effective_comfyui_root() / Path(relative_name)
         if not source.is_file():
             raise ValueError(f"Suite cache runtime source is missing: {relative_name}")
         digest = sha256_file(source)
@@ -481,7 +961,7 @@ def standalone_cache_runtime_sha256s() -> Dict[str, str]:
 
     actual: Dict[str, str] = {}
     for relative_name, expected_hash in STANDALONE_CACHE_RUNTIME_SOURCES.items():
-        source = COMFYUI_ROOT / Path(relative_name)
+        source = effective_comfyui_root() / Path(relative_name)
         if not source.is_file():
             raise ValueError(f"Standalone cache runtime source is missing: {relative_name}")
         digest = sha256_file(source)
@@ -1496,7 +1976,13 @@ def media_contract_is_valid(contract: Any) -> bool:
     return True
 
 
-def bitrate_anomaly_fields(recipe_name: str, metrics: Dict[str, Any], boot_lane: str) -> Dict[str, Any]:
+def bitrate_anomaly_fields(
+    recipe_name: str,
+    metrics: Dict[str, Any],
+    boot_lane: str,
+    results_dir: Optional[Path] = None,
+    outputs_dir: Optional[Path] = None,
+) -> Dict[str, Any]:
     """Compare against >=3 distinct, explicitly human-approved clean artifacts."""
     current_bpf = metrics.get("video_stream_bytes_per_frame")
     if not current_bpf:
@@ -1505,7 +1991,9 @@ def bitrate_anomaly_fields(recipe_name: str, metrics: Dict[str, Any], boot_lane:
     fingerprint = media_fingerprint(metrics)
     approved_values = []
     artifact_hashes = set()
-    for receipt_path in RESULTS_DIR.glob(f"{recipe_name}_run*.json"):
+    receipt_root = results_dir or effective_results_dir()
+    artifact_root = outputs_dir or effective_output_dir()
+    for receipt_path in receipt_root.glob(f"{recipe_name}_run*.json"):
         try:
             receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
             if receipt.get("eyeball") != "ok" or receipt.get("eyeball_source") != "human":
@@ -1519,7 +2007,7 @@ def bitrate_anomaly_fields(recipe_name: str, metrics: Dict[str, Any], boot_lane:
             value = receipt.get("video_stream_bytes_per_frame")
             output_name = receipt.get("output_path")
             try:
-                output_file = strict_output_artifact_path(output_name)
+                output_file = strict_output_artifact_path(output_name, artifact_root)
             except ValueError:
                 continue
             if not value:
@@ -3549,8 +4037,14 @@ def _prequeue_normalize_argv(argv: Any) -> List[str]:
 
 def _prequeue_reported_server_argv_is_lab(server_argv: Any) -> bool:
     normalized = _prequeue_normalize_argv(server_argv)
-    expected_main = str(COMFYUI_ROOT / "main.py").replace("\\", "/").lower()
-    expected_output = str(REPO_ROOT / "outputs").replace("\\", "/").lower()
+    context = front_office_context()
+    if context is not None:
+        expected = _prequeue_normalize_argv(list(context.server_argv))
+        # ComfyUI's /system_stats reports argv beginning at main.py, while
+        # psutil reports the profile-pinned Python executable as well.
+        return normalized in (expected, expected[1:])
+    expected_main = str(effective_comfyui_root() / "main.py").replace("\\", "/").lower()
+    expected_output = str(effective_output_dir()).replace("\\", "/").lower()
     try:
         return (
             len(normalized) >= 5
@@ -5554,8 +6048,12 @@ def is_expected_lab_server_pid(pid: int) -> bool:
     except (psutil.NoSuchProcess, psutil.AccessDenied, OSError):
         return False
     normalized = [str(arg).replace("\\", "/").lower() for arg in argv]
-    expected_main = str(COMFYUI_ROOT / "main.py").replace("\\", "/").lower()
-    expected_output = str(REPO_ROOT / "outputs").replace("\\", "/").lower()
+    context = front_office_context()
+    if context is not None:
+        expected = _prequeue_normalize_argv(list(context.server_argv))
+        return normalized == expected
+    expected_main = str(effective_comfyui_root() / "main.py").replace("\\", "/").lower()
+    expected_output = str(effective_output_dir()).replace("\\", "/").lower()
     try:
         port_index = normalized.index("--port")
         output_index = normalized.index("--output-directory")
@@ -5566,6 +6064,114 @@ def is_expected_lab_server_pid(pid: int) -> bool:
         )
     except (ValueError, IndexError):
         return False
+
+
+def _front_office_server_session_payload(server_instance: Mapping[str, Any]) -> Dict[str, Any]:
+    context = front_office_context()
+    if context is None:
+        raise RuntimeError("Front Office server session requested without an active context")
+    if not isinstance(server_instance.get("serving_pid"), int) or not isinstance(
+        server_instance.get("process_create_time"), (int, float)
+    ):
+        raise RuntimeError("Front Office server instance is malformed")
+    return {
+        "schema_version": 1,
+        "kind": "front-office-server-session",
+        "server_instance": dict(server_instance),
+        "front_office": front_office_receipt_binding(context),
+    }
+
+
+def _read_front_office_server_session() -> Dict[str, Any]:
+    if not os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+        raise RuntimeError("Front Office server session sidecar is absent")
+    if _is_symlink_or_reparse_point(FRONT_OFFICE_SERVER_SESSION_FILE):
+        raise RuntimeError("Front Office server session sidecar is a reparse point")
+    raw = FRONT_OFFICE_SERVER_SESSION_FILE.read_bytes()
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raise RuntimeError("Front Office server session sidecar has a UTF-8 BOM")
+    try:
+        payload = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Front Office server session sidecar is invalid: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise RuntimeError("Front Office server session sidecar is not an object")
+    return payload
+
+
+def _front_office_server_session_matches_context(
+    *, expected_pid: Optional[int] = None
+) -> bool:
+    """Prove a session sidecar belongs to this exact sealed Front Office run."""
+
+    context = front_office_context()
+    if context is None:
+        return not os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE)
+    try:
+        payload = _read_front_office_server_session()
+        server_instance = payload.get("server_instance")
+        return bool(
+            payload.get("schema_version") == 1
+            and payload.get("kind") == "front-office-server-session"
+            and isinstance(server_instance, dict)
+            and (
+                expected_pid is None
+                or int(server_instance.get("serving_pid") or 0) == int(expected_pid)
+            )
+            and payload.get("front_office") == front_office_receipt_binding(context)
+        )
+    except (RuntimeError, TypeError, ValueError):
+        return False
+
+
+def _front_office_server_session_matches(server_instance: Mapping[str, Any]) -> bool:
+    context = front_office_context()
+    if context is None:
+        return not os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE)
+    if not _front_office_server_session_matches_context(
+        expected_pid=server_instance.get("serving_pid")
+    ):
+        return False
+    payload = _read_front_office_server_session()
+    expected = _front_office_server_session_payload(server_instance)
+    return canonical_json_bytes(payload) == canonical_json_bytes(expected)
+
+
+def _write_front_office_server_session(server_instance: Mapping[str, Any]) -> None:
+    if not front_office_mode():
+        return
+    if os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+        raise RuntimeError("Front Office server session sidecar already exists")
+    payload = _front_office_server_session_payload(server_instance)
+    raw = canonical_json_bytes(payload) + b"\n"
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+    try:
+        descriptor = os.open(str(FRONT_OFFICE_SERVER_SESSION_FILE), flags, 0o600)
+        try:
+            os.write(descriptor, raw)
+        finally:
+            os.close(descriptor)
+    except OSError as exc:
+        raise RuntimeError(f"cannot create Front Office server session sidecar: {exc}") from exc
+
+
+def _remove_front_office_server_session_after_shutdown() -> bool:
+    if not front_office_mode():
+        return not os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE)
+    try:
+        payload = _read_front_office_server_session()
+    except RuntimeError:
+        return False
+    context = front_office_context()
+    assert context is not None
+    binding = payload.get("front_office")
+    if not isinstance(binding, dict) or binding != front_office_receipt_binding(context):
+        return False
+    try:
+        FRONT_OFFICE_SERVER_SESSION_FILE.unlink()
+    except OSError:
+        return False
+    return not os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE)
 
 
 def terminate_owned_process_tree(pid: int) -> bool:
@@ -5598,16 +6204,26 @@ def terminate_owned_process_tree(pid: int) -> bool:
 def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
     """Boot lab server headlessly via boot_lab_server.cmd and wait for health-check."""
     manager_probe = manager_probe_requested()
+    context = front_office_context()
+    if context is not None and manager_probe:
+        raise PreflightError(
+            3,
+            "Server up",
+            "Front Office execution never permits the Manager probe lane",
+        )
     if manager_probe and recipe_name is None:
         raise PreflightError(
             3, "Server up", "Manager probe boot requires a closed recipe scope"
         )
-    active_boot_cmd = MANAGER_PROBE_BOOT_CMD if manager_probe else BOOT_CMD
-    if not active_boot_cmd.exists():
-        raise PreflightError(3, "Server up", f"Lab boot command missing: {active_boot_cmd}")
-
+    active_boot_cmd: Optional[Path] = None
+    if context is None:
+        active_boot_cmd = MANAGER_PROBE_BOOT_CMD if manager_probe else BOOT_CMD
+        if not active_boot_cmd.exists():
+            raise PreflightError(3, "Server up", f"Lab boot command missing: {active_boot_cmd}")
     active_server_log = (
-        manager_probe_log_path(recipe_name) if manager_probe else SERVER_LOG_FILE
+        manager_probe_log_path(recipe_name)
+        if manager_probe
+        else effective_server_log_file()
     )
     if manager_probe and not active_server_log.parent.is_dir():
         raise PreflightError(
@@ -5634,16 +6250,55 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
             "GPU idle",
             "An orphan .server.idle-gate.json exists before boot; refusing to overwrite it",
         )
+    if os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+        raise PreflightError(
+            3,
+            "Server up",
+            "An orphan Front Office server-session sidecar exists before boot; refusing to overwrite it",
+        )
     if manager_probe:
         initialize_manager_probe_log(active_server_log)
-    print(f"[SERVER] Launching lab server via {active_boot_cmd.name} on port {LAB_PORT}...")
-    
+    if context is None:
+        assert active_boot_cmd is not None
+        print(f"[SERVER] Launching lab server via {active_boot_cmd.name} on port {LAB_PORT}...")
+    else:
+        print(
+            "[SERVER] Launching Front Office server via sealed direct argv "
+            f"for {context.campaign_id}/{context.cell_id}/{context.profile_id} on port {LAB_PORT}..."
+        )
+
     CREATE_NO_WINDOW = 0x08000000
-    proc = subprocess.Popen(
-        ["cmd.exe", "/c", str(active_boot_cmd)],
-        cwd=str(REPO_ROOT),
-        creationflags=CREATE_NO_WINDOW if sys.platform == "win32" else 0
-    )
+    if context is None:
+        assert active_boot_cmd is not None
+        proc = subprocess.Popen(
+            ["cmd.exe", "/c", str(active_boot_cmd)],
+            cwd=str(REPO_ROOT),
+            creationflags=CREATE_NO_WINDOW if sys.platform == "win32" else 0,
+        )
+    else:
+        if not active_server_log.parent.is_dir():
+            raise PreflightError(
+                3,
+                "Server up",
+                f"Front Office log directory is absent: {active_server_log.parent}",
+            )
+        try:
+            with active_server_log.open("ab") as log_handle:
+                proc = subprocess.Popen(
+                    list(context.server_argv),
+                    cwd=str(context.comfyui_root),
+                    env=dict(context.server_environment),
+                    stdout=log_handle,
+                    stderr=subprocess.STDOUT,
+                    shell=False,
+                    creationflags=CREATE_NO_WINDOW if sys.platform == "win32" else 0,
+                )
+        except OSError as exc:
+            raise PreflightError(
+                3,
+                "Server up",
+                f"Front Office direct-argv launch failed: {exc}",
+            ) from exc
     
     SERVER_PID_FILE.write_text(str(proc.pid), encoding="utf-8")
     print(f"[SERVER] Recorded server PID {proc.pid} in .server.pid")
@@ -5668,6 +6323,8 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
                         f"Port {LAB_PORT} was claimed by PID {serving_pid}, outside the process tree this runner launched",
                     )
                 SERVER_PID_FILE.write_text(str(serving_pid), encoding="utf-8")
+                if context is not None:
+                    _write_front_office_server_session(verified_server_instance())
                 print(f"[SERVER] Updated .server.pid to serving PID {serving_pid}")
                 print(f"[SERVER] Lab server online on port {LAB_PORT} after {time.time()-start:.1f}s")
                 return stats
@@ -5684,6 +6341,11 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
         raise PreflightError(3, "Server up", f"Lab server failed to boot on port {LAB_PORT} within 120s.\nTail of server.log:\n{log_tail}")
     except Exception:
         terminated = terminate_owned_process_tree(proc.pid)
+        if terminated and context is not None:
+            # No pass is possible from a failed boot.  Remove only a sidecar
+            # created by this still-active sealed context; otherwise preserve
+            # it for manual inspection.
+            _remove_front_office_server_session_after_shutdown()
         if terminated and not os.path.lexists(SERVER_IDLE_GATE_FILE) and SERVER_PID_FILE.exists():
             SERVER_PID_FILE.unlink(missing_ok=True)
         elif terminated and os.path.lexists(SERVER_IDLE_GATE_FILE):
@@ -5705,6 +6367,13 @@ def check_server_up_and_ownership(
 ) -> Dict[str, Any]:
     """Verify ownership first; check desktop VRAM only before booting a new server."""
     cleanup_stale_pid_receipt()
+    context = front_office_context()
+    if context is None and os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+        raise PreflightError(
+            3,
+            "Server up",
+            "A Front Office server-session sidecar exists outside Front Office mode; refusing to adopt it",
+        )
     stats = query_server_stats()
     pid_receipt = get_recorded_pid()
 
@@ -5717,6 +6386,12 @@ def check_server_up_and_ownership(
         ):
             ensure_queue_idle()
             server_instance = verified_server_instance()
+            if context is not None and not _front_office_server_session_matches(server_instance):
+                raise PreflightError(
+                    3,
+                    "Server up",
+                    "Owned server does not match the active Front Office profile/spec/session sidecar",
+                )
             try:
                 sidecar = snapshot_server_idle_gate_sidecar(server_instance)
             except ServerIdleGateSidecarError as exc:
@@ -5751,12 +6426,24 @@ def check_server_up_and_ownership(
             "Orphan .server.idle-gate.json exists without an owned lab server; "
             "manual inspection is required",
         )
+    if os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+        raise PreflightError(
+            3,
+            "Server up",
+            "Front Office server-session sidecar exists without a live owned server; manual inspection is required",
+        )
 
     idle_evidence = check_gpu_idle(expected_gpu_lock_owner)
     print("  [OK] Check 2: Five-sample WDDM idle gate passed")
     stats = boot_lab_server(recipe_name)
     try:
         server_instance = verified_server_instance()
+        if context is not None and not _front_office_server_session_matches(server_instance):
+            raise PreflightError(
+                3,
+                "Server up",
+                "Fresh server does not match its Front Office session sidecar",
+            )
         finalized = _idle_finalize_evidence(idle_evidence, server_instance)
         errors = gpu_idle_gate_validation_errors(finalized, server_instance)
         if errors:
@@ -5916,6 +6603,7 @@ def shutdown_lab_server() -> Dict[str, Any]:
         "success": False,
         "had_receipt": os.path.lexists(SERVER_PID_FILE),
         "had_idle_gate_sidecar": os.path.lexists(SERVER_IDLE_GATE_FILE),
+        "had_front_office_server_session": os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE),
         "pid": None,
         "pid_verified": False,
         "termination_attempted": False,
@@ -5925,6 +6613,7 @@ def shutdown_lab_server() -> Dict[str, Any]:
         "receipt_removed": False,
         "idle_gate_sidecar_validated": False,
         "idle_gate_sidecar_removed": False,
+        "front_office_server_session_removed": False,
         "reason": "",
     }
 
@@ -5938,6 +6627,12 @@ def shutdown_lab_server() -> Dict[str, Any]:
         if os.path.lexists(SERVER_IDLE_GATE_FILE):
             result["reason"] = (
                 "orphan .server.idle-gate.json exists without an owned PID receipt"
+            )
+            print(f"[SERVER] {result['reason']}; preserving it for inspection.")
+            return result
+        if os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+            result["reason"] = (
+                "orphan Front Office server-session sidecar exists without an owned PID receipt"
             )
             print(f"[SERVER] {result['reason']}; preserving it for inspection.")
             return result
@@ -5957,6 +6652,36 @@ def shutdown_lab_server() -> Dict[str, Any]:
         print(f"[SERVER] {result['reason']}; keeping receipt.")
         return result
     result["pid"] = pid
+
+    if not front_office_mode() and os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
+        result["reason"] = (
+            "Front Office server-session sidecar exists outside Front Office mode"
+        )
+        print(f"[SERVER] {result['reason']}; keeping all receipts.")
+        return result
+    if front_office_mode():
+        if psutil.pid_exists(pid):
+            try:
+                current_instance = verified_server_instance()
+            except PreflightError as exc:
+                result["reason"] = (
+                    "could not verify Front Office server session before shutdown: "
+                    f"{exc}"
+                )
+                print(f"[SERVER] {result['reason']}; keeping all receipts.")
+                return result
+            if not _front_office_server_session_matches(current_instance):
+                result["reason"] = (
+                    "owned server does not match the active Front Office session sidecar"
+                )
+                print(f"[SERVER] {result['reason']}; refusing to terminate it.")
+                return result
+        elif not _front_office_server_session_matches_context(expected_pid=pid):
+            result["reason"] = (
+                "stale server PID does not match the active Front Office session sidecar"
+            )
+            print(f"[SERVER] {result['reason']}; preserving receipts.")
+            return result
 
     if not psutil.pid_exists(pid):
         try:
@@ -6018,6 +6743,14 @@ def shutdown_lab_server() -> Dict[str, Any]:
             )
             print(f"[SERVER] {result['reason']}; preserving the unknown sidecar.")
             return result
+        if front_office_mode():
+            if not _remove_front_office_server_session_after_shutdown():
+                result["reason"] = (
+                    "recorded server was already stopped, but Front Office session sidecar removal failed"
+                )
+                print(f"[SERVER] {result['reason']}")
+                return result
+            result["front_office_server_session_removed"] = True
         result.update(
             success=True,
             reason="recorded server was already stopped and port is clear",
@@ -6116,6 +6849,12 @@ def shutdown_lab_server() -> Dict[str, Any]:
         result["reason"] = "idle-gate sidecar path appeared after PID receipt removal"
         print(f"[SERVER] {result['reason']}; preserving the unknown sidecar.")
         return result
+    if front_office_mode():
+        if not _remove_front_office_server_session_after_shutdown():
+            result["reason"] = "server exited but Front Office session sidecar removal failed"
+            print(f"[SERVER] {result['reason']}")
+            return result
+        result["front_office_server_session_removed"] = True
     result.update(
         success=True,
         reason="verified server process and listener exited",
@@ -6359,7 +7098,7 @@ def check_installed_schema_contract(
         )
 
     actual_version = system_stats.get("system", {}).get("comfyui_version")
-    actual_commit = git_commit(COMFYUI_ROOT)
+    actual_commit = git_commit(effective_comfyui_root())
     errors = []
     if actual_version != expected_version:
         errors.append(
@@ -6412,7 +7151,7 @@ def check_installed_schema_contract(
                 )
             else:
                 try:
-                    comfy_root = COMFYUI_ROOT.resolve()
+                    comfy_root = effective_comfyui_root().resolve()
                     source_path = (comfy_root / source_relative).resolve()
                     source_path.relative_to(comfy_root)
                 except (OSError, ValueError):
@@ -6657,7 +7396,7 @@ def check_affordability(
     """Refuse an unchanged, known-over-gate recipe/lane unless explicitly forced."""
     if is_force:
         return
-    result_file = RESULTS_DIR / f"{recipe_name}.json"
+    result_file = effective_results_dir() / f"{recipe_name}.json"
     if result_file.exists():
         try:
             prev = json.loads(result_file.read_text(encoding="utf-8"))
@@ -6818,9 +7557,19 @@ def check_boot_lane(
         if value.startswith("--"):
             break
         whitelist_values.append(value)
-    expected_whitelist = set(REQUIRED_CUSTOM_NODE_WHITELIST)
-    if manager_probe:
-        expected_whitelist.add(MANAGER_PROBE_CUSTOM_NODE)
+    context = front_office_context()
+    if context is not None:
+        if manager_probe:
+            raise PreflightError(
+                9,
+                "Boot lane",
+                "Front Office execution never permits the Manager probe lane",
+            )
+        expected_whitelist = set(context.profile_whitelist)
+    else:
+        expected_whitelist = set(REQUIRED_CUSTOM_NODE_WHITELIST)
+        if manager_probe:
+            expected_whitelist.add(MANAGER_PROBE_CUSTOM_NODE)
     if (
         len(whitelist_values) != len(expected_whitelist)
         or set(whitelist_values) != expected_whitelist
@@ -7095,6 +7844,17 @@ def update_engine_matrix_beta(
 
 
 def main():
+    global ACTIVE_FRONT_OFFICE_CONTEXT
+    raw_argv = list(sys.argv[1:])
+    if "--front-office-spec" not in raw_argv:
+        ACTIVE_FRONT_OFFICE_CONTEXT = None
+    try:
+        resolved_argv = activate_front_office_context_from_argv(raw_argv)
+    except Exception as exc:
+        print(f"[FRONT OFFICE ABORT] {type(exc).__name__}: {exc}")
+        return 2
+    if resolved_argv != raw_argv:
+        sys.argv = [sys.argv[0], *resolved_argv]
     try:
         enforce_lab_port()
     except PreflightError as exc:
@@ -7210,12 +7970,13 @@ def main():
         except PreflightError as exc:
             print(f"Error: {exc}")
             return 2
-    RESULTS_DIR.mkdir(exist_ok=True)
+    effective_results_dir().mkdir(parents=True, exist_ok=True)
     lock_manager: Optional[LockManager] = None
     suite_parent_watchdog: Optional[SuiteParentWatchdog] = None
     prompt_request_started = False
     prompt_terminal_proved = False
     prompt_cleanup_proved = False
+    front_office_shutdown_attempted = False
     try:
         try:
             queued_recipe_bytes = recipe_path.read_bytes()
@@ -7281,10 +8042,20 @@ def main():
             print(f"\n[PREFLIGHT ABORT] {e}")
             sys.exit(1)
 
-        comfyui_git_commit = git_commit(COMFYUI_ROOT)
+        comfyui_git_commit = git_commit(effective_comfyui_root())
         queued_model_fingerprints = model_fingerprints(recipe_data)
         server_argv = system_stats.get("system", {}).get("argv", [])
         server_instance = verified_server_instance()
+        active_front_office_context = front_office_context()
+        if (
+            active_front_office_context is not None
+            and not _front_office_server_session_matches(server_instance)
+        ):
+            raise PreflightError(
+                3,
+                "Server identity",
+                "The owned server no longer matches the sealed Front Office session",
+            )
         queued_gpu_idle_gate_contract = queued_preboot_gpu_idle_gate.get("contract")
         if queued_gpu_idle_gate_contract != gpu_idle_gate_contract():
             raise PreflightError(
@@ -7334,6 +8105,14 @@ def main():
                 prequeue_known_workload_scan_contract()
             ),
         }
+        if active_front_office_context is not None:
+            # A one-shot spec's nonce and full envelope digest are recorded in
+            # the receipt but deliberately excluded from warm identity.  The
+            # profile/spec semantic hash, sealed argv/environment and all
+            # namespaces remain identity-bearing.
+            identity_payload["front_office"] = front_office_identity_binding(
+                active_front_office_context
+            )
         if queued_manager_probe_evidence.get("enabled") is True:
             identity_payload["manager_offline_probe_identity"] = (
                 manager_probe_identity(queued_manager_probe_evidence)
@@ -7351,9 +8130,9 @@ def main():
                 queued_standalone_cache_runtime_sha256s
             )
         run_identity_sha256 = stable_identity(identity_payload)
-        result_file = RESULTS_DIR / f"{recipe_name}.json"
+        result_file = effective_results_dir() / f"{recipe_name}.json"
         try:
-            initial_history = audit_run_history(RESULTS_DIR, recipe_name)
+            initial_history = audit_run_history(effective_results_dir(), recipe_name)
         except ReceiptHistoryError as exc:
             raise PreflightError(1, "Receipt history", str(exc)) from exc
         previous_result = initial_history["machine_previous"]
@@ -7362,9 +8141,9 @@ def main():
             run_identity_sha256,
             previous_run_number=initial_history["max_run_number"],
         )
-        run_count = run_state["run_count"]
-        config_run_count = run_state["config_run_count"]
-        is_warm_cache = config_run_count >= 2 and run_state["previous_gate_pass"]
+        run_count, config_run_count, is_warm_cache = effective_run_cache_state(
+            run_state
+        )
 
         # Execute Recipe under Lock
         with lock_manager as lock:
@@ -7489,7 +8268,9 @@ def main():
                                     print(f"[ERROR] Execution for prompt {prompt_id} produced no output artifact (output_path is empty)!")
                                 else:
                                     try:
-                                        target_file = strict_output_artifact_path(output_path)
+                                        target_file = strict_output_artifact_path(
+                                            output_path, effective_output_dir()
+                                        )
                                     except ValueError as exc:
                                         execution_success = False
                                         target_file = None
@@ -7539,7 +8320,15 @@ def main():
                 if expects_video:
                     media_metrics.update(probe_media_metrics(target_file))
                     media_metrics.update(timing_receipt_fields(recipe_data, media_metrics))
-                    media_metrics.update(bitrate_anomaly_fields(recipe_name, media_metrics, boot_lane_str))
+                    media_metrics.update(
+                        bitrate_anomaly_fields(
+                            recipe_name,
+                            media_metrics,
+                            boot_lane_str,
+                            effective_results_dir(),
+                            effective_output_dir(),
+                        )
+                    )
             media_valid = (
                 media_artifact_is_valid(
                     media_metrics,
@@ -7629,6 +8418,30 @@ def main():
                 server_instance_unchanged = False
                 if not final_provenance["error"]:
                     final_provenance["error"] = str(exc)
+            front_office_provenance_unchanged = True
+            if active_front_office_context is not None:
+                try:
+                    refreshed_front_office_context = _front_office_context_from_spec(
+                        str(active_front_office_context.execution_spec_path)
+                    )
+                    front_office_provenance_unchanged = (
+                        front_office_identity_binding(refreshed_front_office_context)
+                        == front_office_identity_binding(active_front_office_context)
+                        and front_office_receipt_binding(refreshed_front_office_context)
+                        == front_office_receipt_binding(active_front_office_context)
+                        and _front_office_server_session_matches(final_server_instance)
+                    )
+                    if not front_office_provenance_unchanged and not final_provenance["error"]:
+                        final_provenance["error"] = (
+                            "Front Office profile/spec/session identity changed during render"
+                        )
+                except Exception as exc:
+                    front_office_provenance_unchanged = False
+                    if not final_provenance["error"]:
+                        final_provenance["error"] = (
+                            "Front Office profile/spec validation failed after render: "
+                            f"{type(exc).__name__}: {exc}"
+                        )
             provenance_unchanged = (
                 final_provenance["valid"]
                 and final_recipe_sha256 == queued_recipe_sha256
@@ -7639,6 +8452,7 @@ def main():
                 and final_model_fingerprints == queued_model_fingerprints
                 and manager_probe_unchanged
                 and server_instance_unchanged
+                and front_office_provenance_unchanged
             )
             if queued_cache_runtime_sha256s:
                 try:
@@ -7681,10 +8495,37 @@ def main():
             else:
                 final_standalone_cache_runtime_sha256s = {}
 
+            front_office_shutdown: Optional[Dict[str, Any]] = None
+            if active_front_office_context is not None:
+                # Front Office receipts are terminal records: write them only
+                # after the direct-argv server has either been cleanly stopped
+                # or has emitted a durable failed-cleanup proof.  A legacy
+                # runner receipt keeps its existing timing and bytes.
+                front_office_shutdown_attempted = True
+                if orphan_cleanup.get("success") is True:
+                    front_office_shutdown = orphan_cleanup
+                else:
+                    front_office_shutdown = shutdown_lab_server()
+                if front_office_shutdown.get("success") is not True:
+                    provenance_unchanged = False
+                    if not final_provenance["error"]:
+                        final_provenance["error"] = (
+                            "Front Office shutdown proof failed: "
+                            f"{front_office_shutdown.get('reason', 'unknown reason')}"
+                        )
+
             # gate_pass = this run individually passed the VRAM ceiling
             # warm_pass = two consecutive gate passes (the final certification)
             is_marginal = False
-            if not completed:
+            if (
+                active_front_office_context is not None
+                and front_office_shutdown is not None
+                and front_office_shutdown.get("success") is not True
+            ):
+                gate_pass = False
+                warm_pass = False
+                status = "INVALID (Front Office shutdown proof failed)"
+            elif not completed:
                 gate_pass = False
                 warm_pass = False
                 if orphan_cleanup.get("success") is True:
@@ -7797,6 +8638,25 @@ def main():
                 "provenance_validation_error": final_provenance["error"],
                 "run_identity_sha256": run_identity_sha256,
                 "identity": identity_payload,
+                **(
+                    {"front_office": front_office_receipt_binding(active_front_office_context)}
+                    if active_front_office_context is not None
+                    else {}
+                ),
+                **(
+                    {
+                        "front_office_lifecycle": {
+                            "mode": "sealed-one-shot-fresh-server",
+                            "warm_cache_eligible": False,
+                            "reason": (
+                                "the sealed server is shut down before this terminal receipt; "
+                                "a later spec cannot inherit cache warmth"
+                            ),
+                        }
+                    }
+                    if active_front_office_context is not None
+                    else {}
+                ),
                 "queued_prompt_sha256": queued_prompt_sha256,
                 "execution_cache_control": cache_evidence,
                 "operator_idle_policy": operator_idle_policy_contract(),
@@ -7843,10 +8703,15 @@ def main():
                 "blocked": False,
                 "accepted_prompt": accepted_prompt,
                 "orphan_cleanup": orphan_cleanup,
+                **(
+                    {"shutdown": front_office_shutdown}
+                    if active_front_office_context is not None
+                    else {}
+                ),
                 **media_metrics,
                 **pending_human_audio_fields(recipe_data),
             }
-            final_history = audit_run_history(RESULTS_DIR, recipe_name)
+            final_history = audit_run_history(effective_results_dir(), recipe_name)
             if (
                 final_history["max_run_number"] != initial_history["max_run_number"]
                 or final_history["current_bytes"] != initial_history["current_bytes"]
@@ -7880,7 +8745,24 @@ def main():
                 ledger_note += "; baseline >3.0 GiB advisory (non-gating)"
             if baseline_drift_advisory.get("threshold_exceeded") is True:
                 ledger_note += "; cold/warm baseline drift >0.5 GiB advisory (non-gating)"
-            update_results_ledger(recipe_name, display_status, peak_vram_gb, baseline_vram_gb, duration_s, ledger_note)
+            ledger_recipe_name = recipe_name
+            if active_front_office_context is not None:
+                ledger_recipe_name = (
+                    "FO:"
+                    f"{active_front_office_context.campaign_id}/"
+                    f"{active_front_office_context.cell_id}/"
+                    f"{active_front_office_context.profile_id}/"
+                    f"{recipe_name}"
+                )
+                ledger_note += "; Front Office sealed cell"
+            update_results_ledger(
+                ledger_recipe_name,
+                display_status,
+                peak_vram_gb,
+                baseline_vram_gb,
+                duration_s,
+                ledger_note,
+            )
             matrix_note = f"Measured on box ({display_status})"
             if media_metrics.get("bitrate_anomaly"):
                 matrix_note += "; bitrate-anomaly"
@@ -7891,8 +8773,10 @@ def main():
             if baseline_drift_advisory.get("threshold_exceeded") is True:
                 matrix_note += "; baseline drift >0.5 GiB advisory (non-gating)"
             pass_consecutive = "2/2" if warm_pass else ("1/2" if gate_pass else "0/2")
+            if active_front_office_context is not None:
+                pass_consecutive = "cold-only"
             update_engine_matrix_beta(
-                recipe_name,
+                ledger_recipe_name,
                 tier,
                 display_status,
                 peak_vram_gb,
@@ -7914,7 +8798,12 @@ def main():
                 )
         if suite_parent_watchdog is not None:
             suite_parent_watchdog.stop()
-        if do_shutdown and owns_coordinator and not is_suite:
+        if (
+            do_shutdown
+            and owns_coordinator
+            and not is_suite
+            and not front_office_shutdown_attempted
+        ):
             shutdown_lab_server()
         elif do_shutdown and not owns_coordinator:
             print("[SERVER] Skipping shutdown because this runner never acquired the coordinator")

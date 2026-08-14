@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Command line for the static Front Office.
+"""Command line for the Front Office planner and sealed dispatch seam.
 
-This command can validate and seal a plan, but it intentionally cannot boot
-ComfyUI, queue a prompt, or acquire the GPU.  The direct-launch seam is added
-only after the current-runner H3-LIP-TXT comparison is closed.
+Planning remains static by default.  ``launch`` may dispatch only an explicitly
+ready campaign/profile pair, and delegates child-process creation to the small
+direct-argv adapter.  This command never owns the GPU, port 8199, or cleanup.
 """
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Sequence
 
 import front_office
+import front_office_dispatch
 
 
 def _emit(value: object, as_json: bool) -> None:
@@ -68,7 +69,7 @@ def build_parser() -> argparse.ArgumentParser:
     receipt_status.add_argument("--json", action="store_true", help="emit machine-readable JSON")
 
     launch = subparsers.add_parser(
-        "launch", help="reserved; fails closed until floor-runner integration"
+        "launch", help="seal and dispatch one explicitly ready campaign cell"
     )
     launch.add_argument("cell", metavar="CELL", help="campaign-id/cell-id")
     launch.add_argument("--profile", required=True, dest="profile_id", help="enrolled profile ID")
@@ -85,7 +86,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         if args.command == "profiles":
             profiles = front_office.list_enrolled_profiles()
-            _emit({"profiles": profiles, "direct_launch": "DIRECT_LAUNCH_NOT_INTEGRATED"}, args.json)
+            _emit({"profiles": profiles, "direct_launch": "SEALED_DIRECT_DISPATCH_AVAILABLE"}, args.json)
             return 0
         if args.command == "validate-profile":
             profile = front_office.load_enrolled_profile(args.profile_id)
@@ -115,15 +116,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             _emit(front_office.receipt_status_report(), args.json)
             return 0
         if args.command == "launch":
+            campaign_id, cell_id = _cell_reference(args.cell)
+            spec = front_office.build_execution_spec(campaign_id, cell_id, args.profile_id)
+            destination = front_office.write_execution_spec(spec)
+            child_code = front_office_dispatch.dispatch_execution_spec(destination)
             payload = {
-                "status": "DIRECT_LAUNCH_NOT_INTEGRATED",
-                "reason": (
-                    "The static front office is deliberately non-executing while "
-                    "the current-runner H3-LIP-TXT A/B remains pending."
-                ),
+                "status": "DISPATCHED",
+                "written_path": str(destination),
+                "launch_spec_sha256": spec["launch_spec_sha256"],
+                "child_returncode": child_code,
             }
             _emit(payload, args.json)
-            return 2
+            return child_code
         parser.error("unknown command")
     except front_office.FrontOfficeError as exc:
         print(f"[FRONT OFFICE ABORT] {exc}", file=sys.stderr)

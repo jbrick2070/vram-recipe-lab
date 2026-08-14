@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "front-office-r1",
+  "status": "READY_FOR_DISPATCH",
+  "purpose": "First sealed direct-argv Front Office smoke on the current 5080 bench. It proves profile selection, isolated namespaces, SaveImage artifact and receipt gates, and terminal cleanup before any H3 or cross-engine campaign. It does not test video or audio media inspection.",
+  "independent_variable": "None. This is a one-shot runner-integrity smoke using the enrolled current 0.32.0 profile; it is deliberately cold-only and cannot certify warm-cache performance.",
+  "profiles": [
+    "comfy0320-h3"
+  ],
+  "cells": [
+    {
+      "id": "t2i-low-smoke",
+      "recipe": "t2i_low.json",
+      "role": "control",
+      "phase": "sealed-one-shot-runner-smoke",
+      "profiles": [
+        "comfy0320-h3"
+      ]
+    }
+  ]
+}

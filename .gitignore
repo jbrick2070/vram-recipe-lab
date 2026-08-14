@@ -6,6 +6,7 @@ server.log
 .queue.quarantine.json
 results/delivery/.*.lock
 .server.pid
+.front-office-server.json
 __pycache__/
 .runtime/
 .front_office_state/
