@@ -3,14 +3,14 @@
   "document_type": "h3_material_candidate_campaign",
   "created_at": "2026-08-12T00:00:00-07:00",
   "research_cutoff": "2026-08-12",
-  "status": "DESIGN_READY_MINIMAL_FRONT_OFFICE_FOR_C032; H3-LIP-TXT_CURRENT_RUNNER_ELIGIBLE_AFTER_WINDOW_RECEIPT",
+  "status": "DESIGN_READY_MINIMAL_FRONT_OFFICE_FOR_C032; H3-LIP-TXT_CURRENT_RUNNER_ELIGIBLE_AFTER_WINDOW_RECEIPT; H3-T8_NAMED_LARRY_V4_COLD_ACTION_PAIR_READY_FOR_DISPATCH",
   "authoritative_report": "docs/H3_LAB_CANDIDATE_HANDOFF_2026-08-12.md",
   "runner_division_proposal": "docs/RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md",
   "active_campaign_count": 5,
   "repo_snapshots": {
     "vram_recipe_lab": {
       "branch": "main",
-      "commit": "e04c2b3d5478ac99d83a056c2fe037b2ec6b167d"
+      "commit": "6f596925d8408dd447f9471b3a18580c8c11d3fb"
     },
     "otr": {
       "branch": "v2.0-alpha",
@@ -65,7 +65,7 @@
     ],
     "deferred": [
       "ACL-protected GPU-UUID mutex",
-      "model content-admission manifests",
+      "general model content-admission manifests beyond the sealed named Turbo exception",
       "receipt schema v4 full field set",
       "cross-clone contention tests",
       "recipe schema v2"
@@ -86,17 +86,21 @@
     "front_office_display_classification": "PRE_RUNNER_DIVISION_HISTORY",
     "fresh_control_required_for_every_candidate": true,
     "audit": {
-      "census_receipt": "research/handoff_census_2026-08-13.json",
-      "checked_in_recipe_count": 84,
+      "census_receipt": "research/handoff_census_2026-08-14.json",
+      "checked_in_recipe_count": 86,
+      "selected_top_level_alias_count": 76,
       "same_name_current_alias_count": 70,
-      "recipes_without_same_name_alias_count": 14,
+      "recipes_without_same_name_alias_count": 16,
       "orphan_alias_count": 6,
       "modern_receipt_schema_alias_count": 58,
+      "modern_receipt_schema_v3_alias_count": 57,
+      "modern_receipt_schema_v2_alias_count": 1,
       "legacy_receipt_schema_alias_count": 12,
       "aliases_appearing_warm": 29,
       "promotion_ready_alias_count": 6,
       "current_runner_bound_alias_count": 0,
-      "current_runner_promotion_ready_count": 0
+      "current_runner_promotion_ready_count": 0,
+      "current_runner_sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053"
     },
     "selected_historical_orientation": [
       {
@@ -123,12 +127,12 @@
     "must_pass_before": [
       "H3-C032",
       "H3-KJ-EXACT",
-      "H3-SAGE-AUTO",
-      "H3-T8"
+      "H3-SAGE-AUTO"
     ],
     "h3_lip_txt_current_runner_exception": "Allowed after a fresh native control and unambiguous transcript-window receipt because prompt text is the only independent variable; it does not wait for the front office.",
+    "h3_t8_named_cold_action_exception": "The sealed Larry v4-600 action I2V control/candidate pair is READY_FOR_DISPATCH under campaign front-office-h3-t8-current-r1. It is a one-shot cold directional profile-delta test, not warm-cache certification or promotion, and does not remove the gates on its future Ref2VA cells.",
     "required_stages": [
-      "R0 static census for all 84 recipe definitions",
+      "R0 static census for all 86 recipe definitions",
       "R1 representative runner-parity panel",
       "fresh certification of the two unique H3 shipping contracts"
     ],
@@ -148,7 +152,7 @@
       "per-cell output, result, and log namespaces"
     ],
     "full_profile_attestation_deferred": [
-      "model content-admission manifest",
+      "general model content-admission manifest beyond the sealed named Turbo exception",
       "complete package/core/custom-node source manifests",
       "GPU UUID/driver/CUDA full contract",
       "run-private cache namespace",
@@ -202,7 +206,7 @@
       "priority": 0,
       "title": "Native ComfyUI 0.32 matched migration",
       "materiality_verdict": "YES_TEST",
-      "status": "QUEUED_AFTER_MINIMAL_FRONT_OFFICE_AND_ALL_84_RECIPE_R0",
+      "status": "QUEUED_AFTER_MINIMAL_FRONT_OFFICE_AND_ALL_86_RECIPE_R0",
       "expected_gain_surface": [
         "H3 VAE peak and residency",
         "overall peak-memory lifetime",
@@ -355,8 +359,8 @@
       "id": "H3-T8",
       "priority": 1,
       "title": "Turbo v4 eight-step speed campaign",
-      "materiality_verdict": "YES_TEST_AFTER_ASSET_ADMISSION",
-      "status": "UNQUEUED_ASSET_NOT_ADMITTED",
+      "materiality_verdict": "YES_TEST_SEALED_NAMED_COLD_PAIR",
+      "status": "READY_FOR_DISPATCH_SEALED_COLD_ACTION_PAIR_ONLY",
       "expected_gain_surface": [
         "end-to-end wall time",
         "render seconds per delivered second"
@@ -374,18 +378,26 @@
         "https://huggingface.co/drbaph/MiniMax-H3-Turbo-Lora-ComfyUI/blob/498f1e2ca02e10a598f21267739f30073f68eb10/fl_minimax_h3_turbo_lora_example_workflow.json",
         "https://github.com/tlano-z/ComfyUI-MiniMax-H3-Workflows-For3060/blob/359ea78cb7eeb0d52ee13487bca014ade312c8ef/MiniMax-H3_R2V_Turbo_Lip-sync/MiniMax-H3_R2V_Turbo_Lip-sync.json"
       ],
-      "admission_before_queue": [
-        "separate operator decision consistent with repository no-download policy",
-        "creator-license and H3-grant review",
-        "one selected provenance route",
-        "expected bytes and SHA-256",
+      "admission_completed_for_sealed_first_pair": [
+        "Jeffrey explicit authorization for the named candidate",
+        "creator-license and H3-grant record",
+        "one pinned Larry provenance route",
+        "exact bytes and SHA-256",
         "quarantine/source inspection",
-        "profile-specific model-manifest admission"
+        "profile-specific immutable model-manifest admission",
+        "runtime external-node, LoRA, support-asset, and hard-link verification before allocation"
       ],
-      "fresh_cells": [
-        "I2V native 20-step control versus Turbo 8",
-        "Ref2VA seed 42 native versus Turbo 8 after H3-LIP-TXT",
-        "Ref2VA seed 43 native versus Turbo 8 after H3-LIP-TXT"
+      "sealed_first_pair": {
+        "campaign": "front-office-h3-t8-current-r1",
+        "status": "READY_FOR_DISPATCH_NOT_YET_RENDERED",
+        "control": "comfy0320-h3 / h3_turbo_larry_v4_i2v_action_control.json / simple 20 steps",
+        "candidate": "h3-turbo-larry-v4 / h3_turbo_larry_v4_i2v_action_8step.json / simple 8 steps",
+        "fixed_surface": "FL2VA I2V, 864x480, 124 frames, 24 fps, seed 42, action prompt, source fixture, base weights, native audio path, and Sage-free boot",
+        "scope": "Cold directional evidence only; it is not a warm-cache or promotion result."
+      },
+      "future_cells_after_h3_lip_txt": [
+        "Ref2VA seed 42 native versus Turbo 8",
+        "Ref2VA seed 43 native versus Turbo 8"
       ],
       "promotion_condition": "At least 40 percent faster end-to-end with both speech seeds and identity, motion, duration, and audio human-noninferior."
     }

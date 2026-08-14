@@ -2,11 +2,11 @@
   "schema_version": 1,
   "document_type": "runner_division_front_office_proposal",
   "created_at": "2026-08-12T00:00:00-07:00",
-  "status": "IMPLEMENTED_SEALED_ONE_SHOT_SMOKE_PROVEN",
+  "status": "IMPLEMENTED_SEALED_ONE_SHOT_SMOKE_PROVEN_WITH_NAMED_TURBO_COLD_PAIR_READY",
   "authoritative_report": "docs/RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md",
-  "lab_snapshot": "e04c2b3d5478ac99d83a056c2fe037b2ec6b167d",
+  "lab_snapshot": "6f596925d8408dd447f9471b3a18580c8c11d3fb",
   "otr_snapshot": "c06128daa181ff802bc3bf79112e539eda1d8a02",
-  "census_receipt": "research/handoff_census_2026-08-13.json",
+  "census_receipt": "research/handoff_census_2026-08-14.json",
   "decision": "Keep the existing safety engine as the floor runner and add a sealed profile-selecting front office, evidence office, and promotion desk.",
   "implementation_update_2026_08_13": {
     "status": "SEALED_DIRECT_DISPATCH_IMPLEMENTED",
@@ -22,16 +22,29 @@
     "current_h3_native_av_smoke": "front-office-h3-current-r1/i2v-native-av-smoke completed as a sealed 3.750-second current-profile native-A/V cold cell: media and shutdown gates passed, but 15.107 GiB peak VRAM exceeded the 14.5 GiB ceiling, so it is a measured failure and not promotable.",
     "c032_status": "BLOCKED: no separate local 0.31.1 worktree/profile and no warm-session protocol for a matched 0.31.1-versus-0.32.0 campaign."
   },
+  "implementation_update_2026_08_14": {
+    "status": "SEALED_LARRY_TURBO_V4_600_COLD_PAIR_READY_FOR_DISPATCH",
+    "implementation_commit": "6f596925d8408dd447f9471b3a18580c8c11d3fb",
+    "campaign": "front-office-h3-t8-current-r1",
+    "control": "comfy0320-h3 / h3_turbo_larry_v4_i2v_action_control.json / 20 simple steps",
+    "candidate": "h3-turbo-larry-v4 / h3_turbo_larry_v4_i2v_action_8step.json / 8 simple steps",
+    "admission": "Named Larry v4-600 LoRA and support asset are bound by exact bytes/SHA-256, profile-specific immutable manifest, source identity, live /object_info class proof, and support hard-link proof before allocation.",
+    "scope": "One fresh current-0.32 action-I2V control/candidate cold pair only; not warm-cache certification, a general content-admission system, or an OTR promotion claim.",
+    "render_status": "NOT_YET_RENDERED"
+  },
   "why_now": {
-    "checked_in_recipes": 84,
+    "checked_in_recipes": 86,
+    "selected_top_level_aliases": 76,
     "same_name_current_aliases": 70,
-    "recipes_without_same_name_alias": 14,
+    "recipes_without_same_name_alias": 16,
     "orphan_aliases_for_removed_recipes": 6,
     "modern_receipt_schema_aliases": 58,
+    "modern_receipt_schema_v3_aliases": 57,
+    "modern_receipt_schema_v2_aliases": 1,
     "legacy_receipt_schema_aliases": 12,
     "aliases_appearing_warm": 29,
     "promotion_ready_aliases": 6,
-    "current_runner_sha256": "c3c064f7da426083ffe47a0f144843d62bbdadc9bc69b7127eb8681cf5386365",
+    "current_runner_sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053",
     "current_runner_bound_aliases": 0,
     "promotion_ready_aliases_binding_current_runner": 0,
     "otr_shipping_profile_rows": 32,
@@ -62,7 +75,7 @@
     ],
     "explicitly_deferred": [
       "ACL-protected GPU-UUID mutex",
-      "model content-admission manifests",
+      "general model content-admission manifests beyond the sealed named Turbo exception",
       "receipt schema v4 full field set",
       "cross-clone contention tests",
       "recipe schema v2"
@@ -198,7 +211,7 @@
   "regression_plan": [
     {
       "tier": "R0",
-      "scope": "all 84 recipes and every receipt plus exact OTR shipping mappings",
+      "scope": "all 86 recipes and every receipt plus exact OTR shipping mappings",
       "gpu": false,
       "purpose": "schema, topology, fixture, manifest, profile compatibility, graph diff, orphan, and stale-runner census"
     },
@@ -284,11 +297,11 @@
     "extract hard-coded roots and core hashes into an immutable RunnerContext",
     "replace command-shell boot with direct argv and structured booting-to-serving receipt",
     "add run-private namespaces and profile-aware artifact causality",
-    "add model content-admission and complete node/package/source manifests",
+    "add general model content-admission and complete node/package/source manifests beyond the sealed named-candidate exception",
     "separate logical recipe schema v2 from bench attestation while retaining fail-closed schema-v1 reads",
     "add receipt schema v4 and deterministic comparison/human-review bindings",
     "reconcile BOOT.md port text and lock-reaping documentation with actual policy",
-    "run all tests and the all-84-recipe R0 census before expanding the Runner Division live panel",
+    "run all tests and the all-86-recipe R0 census before expanding the Runner Division live panel",
     "boot/audit/shutdown the control profile without a prompt",
     "run R1 and freeze Runner Division v1",
     "run the H3 R2 slice, then the matched 0.31.1 versus 0.32.0 campaign"
