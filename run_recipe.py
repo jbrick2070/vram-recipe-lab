@@ -72,6 +72,14 @@ LAB_PORT = "8199"
 COMFY_SERVER_URL = f"http://127.0.0.1:{LAB_PORT}"
 VRAM_GATE_GB = 14.5
 RECEIPT_SCHEMA_VERSION = 3
+# ``uv`` virtual environments on this Windows bench deliberately pin their
+# small ``py.exe`` redirector.  It starts the real CPython child, whose image
+# path differs even though its argv tail and Python-level ``sys.executable``
+# remain the enrolled virtual-environment path.  The only accepted exception
+# to exact executable identity is the narrowly proved one-hop relationship
+# below; legacy runners never use it.
+FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_MAX_DELTA_S = 5.0
+FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY = "windows_venv_launcher_child"
 
 
 @dataclass(frozen=True)
@@ -6051,6 +6059,303 @@ def listener_pid(port: int, *, strict: bool = False) -> Optional[int]:
     return None
 
 
+def _front_office_normalized_path(value: Any) -> Optional[str]:
+    """Return one case-insensitive canonical Windows path, or ``None``."""
+
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        return os.path.normcase(str(Path(value).resolve()))
+    except (OSError, RuntimeError, ValueError):
+        return None
+
+
+def _front_office_identity_matches_live(
+    retained: Any, live: Any
+) -> bool:
+    """Compare the security-relevant parts of two retained process snapshots."""
+
+    if not isinstance(retained, dict) or not isinstance(live, dict):
+        return False
+    required = {
+        "pid",
+        "exists",
+        "executable",
+        "command_line",
+        "process_create_time",
+        "identity_errors",
+    }
+    if not required.issubset(retained) or not required.issubset(live):
+        return False
+    try:
+        if (
+            retained["exists"] is not True
+            or live["exists"] is not True
+            or int(retained["pid"]) <= 0
+            or int(retained["pid"]) != int(live["pid"])
+            or not math.isclose(
+                float(retained["process_create_time"]),
+                float(live["process_create_time"]),
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+        ):
+            return False
+    except (TypeError, ValueError):
+        return False
+    retained_path = _front_office_normalized_path(retained["executable"])
+    live_path = _front_office_normalized_path(live["executable"])
+    if retained_path is None or retained_path != live_path:
+        return False
+    return bool(
+        retained.get("identity_errors") == []
+        and live.get("identity_errors") == []
+        and [str(value) for value in retained.get("command_line") or []]
+        == [str(value) for value in live.get("command_line") or []]
+    )
+
+
+def _front_office_pinned_launcher_identity(pid: int) -> Optional[Dict[str, Any]]:
+    """Capture the still-live profile-pinned Windows launcher exactly once."""
+
+    context = front_office_context()
+    if context is None or os.name != "nt":
+        return None
+    expected = list(context.server_argv)
+    if len(expected) < 2:
+        return None
+    identity = _idle_process_identity(pid)
+    launcher_path = _front_office_normalized_path(expected[0])
+    actual_path = _front_office_normalized_path(identity.get("executable"))
+    argv = [str(value) for value in identity.get("command_line") or []]
+    try:
+        live = lab_locks.process_identity_is_live(
+            int(identity["pid"]), float(identity["process_create_time"])
+        )
+    except (KeyError, TypeError, ValueError):
+        live = False
+    if not (
+        identity.get("exists") is True
+        and identity.get("identity_errors") == []
+        and launcher_path is not None
+        and launcher_path == actual_path
+        and _prequeue_normalize_argv(argv) == _prequeue_normalize_argv(expected)
+        and live
+    ):
+        return None
+    return identity
+
+
+def _front_office_windows_launcher_child_proof(
+    launcher_identity: Any, listener_pid_value: int
+) -> Optional[Dict[str, Any]]:
+    """Prove the sole Front Office exception to exact executable identity.
+
+    A pinned Windows virtual-environment ``py.exe`` redirector may run the
+    physical CPython child at a different path.  This proof is intentionally
+    one hop only: the live redirector must be the direct parent of the active
+    port listener, both command lines must carry the sealed argv tail, and the
+    child must have been born immediately after the redirector.
+    """
+
+    context = front_office_context()
+    if context is None or os.name != "nt":
+        return None
+    expected = list(context.server_argv)
+    if len(expected) < 2:
+        return None
+    try:
+        launcher_pid = int(launcher_identity["pid"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    live_launcher = _front_office_pinned_launcher_identity(launcher_pid)
+    if live_launcher is None or not _front_office_identity_matches_live(
+        launcher_identity, live_launcher
+    ):
+        return None
+
+    listener_identity = _idle_process_identity(listener_pid_value)
+    listener_argv = [
+        str(value) for value in listener_identity.get("command_line") or []
+    ]
+    launcher_path = _front_office_normalized_path(live_launcher.get("executable"))
+    listener_path = _front_office_normalized_path(
+        listener_identity.get("executable")
+    )
+    try:
+        listener_pid_int = int(listener_identity["pid"])
+        launcher_created = float(live_launcher["process_create_time"])
+        listener_created = float(listener_identity["process_create_time"])
+        child_is_live = lab_locks.process_identity_is_live(
+            listener_pid_int, listener_created
+        )
+        direct_parent = psutil.Process(listener_pid_int).ppid() == launcher_pid
+        creation_delta = listener_created - launcher_created
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+        OSError,
+    ):
+        return None
+
+    exact = (
+        listener_identity.get("exists") is True
+        and listener_identity.get("identity_errors") == []
+        and listener_pid_int > 0
+        and listener_pid_int != launcher_pid
+        and direct_parent
+        and launcher_path is not None
+        and listener_path is not None
+        and listener_path != launcher_path
+        # The observed uv redirector starts the ordinary CPython executable.
+        # Do not generalize this narrowly audited exception to arbitrary child
+        # images that merely borrow an argv tail.
+        and Path(listener_path).name.casefold() == "python.exe"
+        and len(listener_argv) == len(expected)
+        and listener_argv[1:] == expected[1:]
+        and child_is_live
+        and -0.001 <= creation_delta <= FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_MAX_DELTA_S
+    )
+    if not exact:
+        return None
+    return {
+        "mode": "windows-venv-launcher-child",
+        "launcher": dict(live_launcher),
+        "listener": dict(listener_identity),
+        "direct_parent_verified": True,
+        "argv_tail_matches": True,
+        "listener_executable_differs": True,
+        "creation_delta_s": round(creation_delta, 6),
+    }
+
+
+def _front_office_windows_launcher_child_proof_is_live(
+    proof: Any, listener_pid_value: int
+) -> bool:
+    """Re-prove a recorded launcher-child relationship without broadening it."""
+
+    if not isinstance(proof, dict) or set(proof) != {
+        "mode",
+        "launcher",
+        "listener",
+        "direct_parent_verified",
+        "argv_tail_matches",
+        "listener_executable_differs",
+        "creation_delta_s",
+    }:
+        return False
+    try:
+        if (
+            proof.get("mode") != "windows-venv-launcher-child"
+            or proof.get("direct_parent_verified") is not True
+            or proof.get("argv_tail_matches") is not True
+            or proof.get("listener_executable_differs") is not True
+            or int(proof["listener"]["pid"]) != int(listener_pid_value)
+            or not math.isfinite(float(proof["creation_delta_s"]))
+        ):
+            return False
+    except (KeyError, TypeError, ValueError):
+        return False
+    refreshed = _front_office_windows_launcher_child_proof(
+        proof.get("launcher"), listener_pid_value
+    )
+    return bool(
+        refreshed is not None
+        and canonical_json_bytes(refreshed) == canonical_json_bytes(proof)
+    )
+
+
+def _front_office_retained_launcher_is_live(
+    proof: Any,
+    *,
+    expected_listener_pid: int,
+    server_instance: Any,
+) -> bool:
+    """Prove a persisted FO launcher's PID has not been reused.
+
+    This is deliberately useful after the serving child exits: the direct
+    parent relation is no longer observable, but a still-live pinned launcher
+    can be compared to its Popen-time identity before it is terminated.
+    """
+
+    if not _front_office_retained_launcher_static_binding_is_valid(
+        proof,
+        expected_listener_pid=expected_listener_pid,
+        server_instance=server_instance,
+    ):
+        return False
+    retained = proof["launcher"]
+    try:
+        pid = int(retained["pid"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    live = _front_office_pinned_launcher_identity(pid)
+    return bool(
+        live is not None and _front_office_identity_matches_live(retained, live)
+    )
+
+
+def _front_office_retained_launcher_static_binding_is_valid(
+    proof: Any,
+    *,
+    expected_listener_pid: int,
+    server_instance: Any,
+) -> bool:
+    """Validate a persisted launcher proof's immutable listener binding.
+
+    This intentionally does not inspect a live process.  Stale cleanup needs
+    the same proof-to-recorded-listener check even after the launcher died,
+    before it can remove the immutable session evidence.
+    """
+
+    if not isinstance(proof, dict) or set(proof) != {
+        "mode",
+        "launcher",
+        "listener",
+        "direct_parent_verified",
+        "argv_tail_matches",
+        "listener_executable_differs",
+        "creation_delta_s",
+    }:
+        return False
+    retained = proof.get("launcher")
+    listener = proof.get("listener")
+    if not isinstance(retained, dict) or not isinstance(listener, dict) or not isinstance(
+        server_instance, dict
+    ):
+        return False
+    try:
+        pid = int(retained["pid"])
+        listener_pid_value = int(listener["pid"])
+        instance_listener_pid = int(server_instance["serving_pid"])
+        listener_created = float(listener["process_create_time"])
+        instance_listener_created = float(server_instance["process_create_time"])
+        valid_shape = (
+            proof.get("mode") == "windows-venv-launcher-child"
+            and proof.get("direct_parent_verified") is True
+            and proof.get("argv_tail_matches") is True
+            and proof.get("listener_executable_differs") is True
+            and pid > 0
+            and listener_pid_value > 0
+            and pid != listener_pid_value
+            and listener_pid_value == int(expected_listener_pid)
+            and instance_listener_pid == int(expected_listener_pid)
+            and math.isclose(
+                listener_created,
+                instance_listener_created,
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+            and math.isfinite(float(proof["creation_delta_s"]))
+        )
+    except (KeyError, TypeError, ValueError):
+        return False
+    return valid_shape
+
+
 def verified_server_instance() -> Dict[str, Any]:
     """Return the owned listener identity so a reboot resets warm-cache state."""
     recorded_pid = get_recorded_pid()
@@ -6081,7 +6386,17 @@ def is_expected_lab_server_pid(pid: int) -> bool:
     context = front_office_context()
     if context is not None:
         expected = _prequeue_normalize_argv(list(context.server_argv))
-        return normalized == expected
+        if normalized == expected:
+            return True
+        # The enrolled virtual-environment launcher is itself hash-pinned, but
+        # on Windows it starts the physical CPython child with a distinct
+        # argv[0].  Never accept that broad class by argv tail alone: only a
+        # live, exact launcher-child proof written by this same sealed session
+        # may establish ownership after boot.
+        try:
+            return _front_office_server_session_proves_windows_launcher_child(pid)
+        except RuntimeError:
+            return False
     expected_main = str(effective_comfyui_root() / "main.py").replace("\\", "/").lower()
     expected_output = str(effective_output_dir()).replace("\\", "/").lower()
     try:
@@ -6096,7 +6411,11 @@ def is_expected_lab_server_pid(pid: int) -> bool:
         return False
 
 
-def _front_office_server_session_payload(server_instance: Mapping[str, Any]) -> Dict[str, Any]:
+def _front_office_server_session_payload(
+    server_instance: Mapping[str, Any],
+    *,
+    windows_venv_launcher_child: Optional[Mapping[str, Any]] = None,
+) -> Dict[str, Any]:
     context = front_office_context()
     if context is None:
         raise RuntimeError("Front Office server session requested without an active context")
@@ -6104,12 +6423,17 @@ def _front_office_server_session_payload(server_instance: Mapping[str, Any]) -> 
         server_instance.get("process_create_time"), (int, float)
     ):
         raise RuntimeError("Front Office server instance is malformed")
-    return {
+    payload: Dict[str, Any] = {
         "schema_version": 1,
         "kind": "front-office-server-session",
         "server_instance": dict(server_instance),
         "front_office": front_office_receipt_binding(context),
     }
+    if windows_venv_launcher_child is not None:
+        payload[FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY] = dict(
+            windows_venv_launcher_child
+        )
+    return payload
 
 
 def _read_front_office_server_session() -> Dict[str, Any]:
@@ -6140,8 +6464,22 @@ def _front_office_server_session_matches_context(
     try:
         payload = _read_front_office_server_session()
         server_instance = payload.get("server_instance")
+        allowed_keys = {
+            "schema_version",
+            "kind",
+            "server_instance",
+            "front_office",
+            FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY,
+        }
         return bool(
-            payload.get("schema_version") == 1
+            set(payload).issubset(allowed_keys)
+            and {
+                "schema_version",
+                "kind",
+                "server_instance",
+                "front_office",
+            }.issubset(payload)
+            and payload.get("schema_version") == 1
             and payload.get("kind") == "front-office-server-session"
             and isinstance(server_instance, dict)
             and (
@@ -6149,6 +6487,37 @@ def _front_office_server_session_matches_context(
                 or int(server_instance.get("serving_pid") or 0) == int(expected_pid)
             )
             and payload.get("front_office") == front_office_receipt_binding(context)
+        )
+    except (RuntimeError, TypeError, ValueError):
+        return False
+
+
+def _front_office_server_session_proves_windows_launcher_child(pid: int) -> bool:
+    """Accept the persisted, revalidated Windows launcher-child exception only."""
+
+    context = front_office_context()
+    if context is None:
+        return False
+    try:
+        payload = _read_front_office_server_session()
+        server_instance = payload.get("server_instance")
+        proof = payload.get(FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY)
+        if not _front_office_server_session_matches_context(expected_pid=pid):
+            return False
+        if not isinstance(server_instance, dict) or not isinstance(proof, dict):
+            return False
+        listener = proof.get("listener")
+        if not isinstance(listener, dict):
+            return False
+        return bool(
+            int(server_instance.get("serving_pid") or 0) == int(pid)
+            and math.isclose(
+                float(server_instance.get("process_create_time")),
+                float(listener.get("process_create_time")),
+                rel_tol=0.0,
+                abs_tol=0.001,
+            )
+            and _front_office_windows_launcher_child_proof_is_live(proof, pid)
         )
     except (RuntimeError, TypeError, ValueError):
         return False
@@ -6163,16 +6532,62 @@ def _front_office_server_session_matches(server_instance: Mapping[str, Any]) -> 
     ):
         return False
     payload = _read_front_office_server_session()
-    expected = _front_office_server_session_payload(server_instance)
-    return canonical_json_bytes(payload) == canonical_json_bytes(expected)
+    proof = payload.get(FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY)
+    if proof is None:
+        expected = _front_office_server_session_payload(server_instance)
+        return canonical_json_bytes(payload) == canonical_json_bytes(expected)
+    expected = _front_office_server_session_payload(
+        server_instance,
+        windows_venv_launcher_child=proof,
+    )
+    try:
+        pid = int(server_instance.get("serving_pid") or 0)
+    except (TypeError, ValueError):
+        return False
+    return bool(
+        canonical_json_bytes(payload) == canonical_json_bytes(expected)
+        and _front_office_server_session_proves_windows_launcher_child(pid)
+    )
 
 
-def _write_front_office_server_session(server_instance: Mapping[str, Any]) -> None:
+def _front_office_server_termination_root_pid(
+    server_instance: Mapping[str, Any]
+) -> Optional[int]:
+    """Return the exact process-tree root to stop for this proven FO session."""
+
+    if not _front_office_server_session_matches(server_instance):
+        return None
+    try:
+        payload = _read_front_office_server_session()
+        proof = payload.get(FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY)
+        if proof is None:
+            return int(server_instance["serving_pid"])
+        launcher = proof.get("launcher")
+        if not isinstance(launcher, dict):
+            return None
+        launcher_pid = int(launcher.get("pid") or 0)
+        if launcher_pid <= 0 or not lab_locks.process_identity_is_live(
+            launcher_pid, float(launcher.get("process_create_time"))
+        ):
+            return None
+        return launcher_pid
+    except (RuntimeError, TypeError, ValueError):
+        return None
+
+
+def _write_front_office_server_session(
+    server_instance: Mapping[str, Any],
+    *,
+    windows_venv_launcher_child: Optional[Mapping[str, Any]] = None,
+) -> None:
     if not front_office_mode():
         return
     if os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE):
         raise RuntimeError("Front Office server session sidecar already exists")
-    payload = _front_office_server_session_payload(server_instance)
+    payload = _front_office_server_session_payload(
+        server_instance,
+        windows_venv_launcher_child=windows_venv_launcher_child,
+    )
     raw = canonical_json_bytes(payload) + b"\n"
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
     try:
@@ -6298,6 +6713,9 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
         )
 
     CREATE_NO_WINDOW = 0x08000000
+    launcher_identity: Optional[Dict[str, Any]] = None
+    serving_pid_value: Optional[int] = None
+    windows_launcher_child_proof: Optional[Dict[str, Any]] = None
     if context is None:
         assert active_boot_cmd is not None
         proc = subprocess.Popen(
@@ -6329,6 +6747,11 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
                 "Server up",
                 f"Front Office direct-argv launch failed: {exc}",
             ) from exc
+        # Capture the exact Popen-time launcher identity before the health
+        # loop.  A later retry may fill only an initial observation race while
+        # this original Popen object still proves the launcher is alive; it may
+        # never replace an already captured PID/create-time identity.
+        launcher_identity = _front_office_pinned_launcher_identity(proc.pid)
     
     SERVER_PID_FILE.write_text(str(proc.pid), encoding="utf-8")
     print(f"[SERVER] Recorded server PID {proc.pid} in .server.pid")
@@ -6343,19 +6766,65 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
                     launched_pids.update(child.pid for child in psutil.Process(proc.pid).children(recursive=True))
                 except psutil.NoSuchProcess:
                     pass
-                serving_pid = listener_pid(int(LAB_PORT))
-                if serving_pid is None:
+                serving_pid_value = listener_pid(int(LAB_PORT))
+                if serving_pid_value is None:
                     raise PreflightError(3, "Server up", f"Could not prove ownership of the listener on port {LAB_PORT}")
-                if serving_pid not in launched_pids or not is_expected_lab_server_pid(serving_pid):
+                listener_in_launched_tree = serving_pid_value in launched_pids
+                exact_listener_argv = is_expected_lab_server_pid(serving_pid_value)
+                if context is not None and not exact_listener_argv:
+                    # The launcher is still required to be live at the first
+                    # successful health check; no exited-parent fallback is
+                    # ever accepted for this substitution exception.
+                    if launcher_identity is None and proc.poll() is None:
+                        launcher_identity = _front_office_pinned_launcher_identity(
+                            proc.pid
+                        )
+                    windows_launcher_child_proof = (
+                        _front_office_windows_launcher_child_proof(
+                            launcher_identity, serving_pid_value
+                        )
+                    )
+                if not listener_in_launched_tree and windows_launcher_child_proof is None:
                     raise PreflightError(
                         3,
                         "Server up",
-                        f"Port {LAB_PORT} was claimed by PID {serving_pid}, outside the process tree this runner launched",
+                        f"Port {LAB_PORT} was claimed by PID {serving_pid_value}, outside the process tree this runner launched",
                     )
-                SERVER_PID_FILE.write_text(str(serving_pid), encoding="utf-8")
+                if not exact_listener_argv and windows_launcher_child_proof is None:
+                    raise PreflightError(
+                        3,
+                        "Server up",
+                        f"Port {LAB_PORT} listener PID {serving_pid_value} is in the launched tree but does not match the sealed direct argv",
+                    )
+                try:
+                    server_instance = {
+                        "serving_pid": serving_pid_value,
+                        "process_create_time": round(
+                            float(psutil.Process(serving_pid_value).create_time()), 6
+                        ),
+                    }
+                except (psutil.NoSuchProcess, psutil.AccessDenied, OSError) as exc:
+                    raise PreflightError(
+                        3,
+                        "Server up",
+                        f"Could not bind listener PID {serving_pid_value} to a live process identity: {exc}",
+                    ) from exc
+                SERVER_PID_FILE.write_text(str(serving_pid_value), encoding="utf-8")
                 if context is not None:
-                    _write_front_office_server_session(verified_server_instance())
-                print(f"[SERVER] Updated .server.pid to serving PID {serving_pid}")
+                    if windows_launcher_child_proof is None:
+                        _write_front_office_server_session(server_instance)
+                    else:
+                        _write_front_office_server_session(
+                            server_instance,
+                            windows_venv_launcher_child=windows_launcher_child_proof,
+                        )
+                if verified_server_instance() != server_instance:
+                    raise PreflightError(
+                        3,
+                        "Server up",
+                        "Listener identity changed while finalizing the owned PID receipt",
+                    )
+                print(f"[SERVER] Updated .server.pid to serving PID {serving_pid_value}")
                 print(f"[SERVER] Lab server online on port {LAB_PORT} after {time.time()-start:.1f}s")
                 return stats
             time.sleep(3.0)
@@ -6371,6 +6840,16 @@ def boot_lab_server(recipe_name: Optional[str] = None) -> Dict[str, Any]:
         raise PreflightError(3, "Server up", f"Lab server failed to boot on port {LAB_PORT} within 120s.\nTail of server.log:\n{log_tail}")
     except Exception:
         terminated = terminate_owned_process_tree(proc.pid)
+        # If a failed Front Office boot left a listener alive after its launcher
+        # vanished, the runner has no longer proved that listener is ours.  Keep
+        # the PID receipt rather than silently converting it into an unknown,
+        # unreceipted port owner.
+        if (
+            context is not None
+            and serving_pid_value is not None
+            and psutil.pid_exists(serving_pid_value)
+        ):
+            terminated = False
         if terminated and context is not None:
             # No pass is possible from a failed boot.  Remove only a sidecar
             # created by this still-active sealed context; otherwise preserve
@@ -6636,6 +7115,8 @@ def shutdown_lab_server() -> Dict[str, Any]:
         "had_front_office_server_session": os.path.lexists(FRONT_OFFICE_SERVER_SESSION_FILE),
         "pid": None,
         "pid_verified": False,
+        "termination_root_pid": None,
+        "termination_root_exited": False,
         "termination_attempted": False,
         "termination_reported_success": False,
         "process_exited": False,
@@ -6737,6 +7218,88 @@ def shutdown_lab_server() -> Dict[str, Any]:
             return result
         result["process_exited"] = True
         result["listener_exited"] = True
+        if front_office_mode():
+            # A Windows venv redirector is an owned part of the sealed launch
+            # even though the recorded listener child has already exited.
+            # Do not remove Front Office receipts until that persisted root is
+            # either proved gone or re-proved exact and terminated as a tree.
+            try:
+                payload = _read_front_office_server_session()
+                proof = payload.get(FRONT_OFFICE_WINDOWS_LAUNCHER_CHILD_KEY)
+                stored_server_instance = payload.get("server_instance")
+            except RuntimeError:
+                proof = None
+                stored_server_instance = None
+            if proof is not None:
+                if not _front_office_retained_launcher_static_binding_is_valid(
+                    proof,
+                    expected_listener_pid=pid,
+                    server_instance=stored_server_instance,
+                ):
+                    result["reason"] = (
+                        "stale Front Office listener proof does not bind the recorded listener"
+                    )
+                    print(f"[SERVER] {result['reason']}; keeping receipts.")
+                    return result
+                try:
+                    launcher_pid = int(proof["launcher"]["pid"])
+                except (KeyError, TypeError, ValueError):
+                    result["reason"] = (
+                        "stale Front Office listener has an invalid persisted launcher proof"
+                    )
+                    print(f"[SERVER] {result['reason']}; keeping receipts.")
+                    return result
+                result["termination_root_pid"] = launcher_pid
+                if psutil.pid_exists(launcher_pid):
+                    if not _front_office_retained_launcher_is_live(
+                        proof,
+                        expected_listener_pid=pid,
+                        server_instance=stored_server_instance,
+                    ):
+                        result["reason"] = (
+                            "stale Front Office listener's launcher identity cannot be re-proved"
+                        )
+                        print(f"[SERVER] {result['reason']}; keeping receipts.")
+                        return result
+                    result["termination_attempted"] = True
+                    try:
+                        terminated = bool(terminate_owned_process_tree(launcher_pid))
+                    except Exception as exc:
+                        result["reason"] = (
+                            "stale Front Office launcher termination raised an error: "
+                            f"{exc}"
+                        )
+                        print(f"[SERVER] {result['reason']}; keeping receipts.")
+                        return result
+                    result["termination_reported_success"] = terminated
+                    result["termination_root_exited"] = not psutil.pid_exists(
+                        launcher_pid
+                    )
+                    if not (terminated and result["termination_root_exited"]):
+                        result["reason"] = (
+                            "stale Front Office launcher shutdown proof failed "
+                            f"(terminated={terminated}, "
+                            f"termination_root_exited={result['termination_root_exited']})"
+                        )
+                        print(f"[SERVER] {result['reason']}; keeping receipts.")
+                        return result
+                else:
+                    result["termination_root_exited"] = True
+                post_launcher_stats = query_server_stats()
+                post_launcher_listener = listener_pid(int(LAB_PORT))
+                if post_launcher_stats is not None or post_launcher_listener is not None:
+                    result["reason"] = (
+                        "Front Office launcher cleanup left a live or unverified port-8199 listener"
+                    )
+                    print(f"[SERVER] {result['reason']}; keeping receipts.")
+                    return result
+            else:
+                # Direct Front Office launches record the listener itself as
+                # their process-tree root.  It is already proved gone above;
+                # keep the cleanup result internally consistent with the
+                # launcher-substitution branch without inventing a root.
+                result["termination_root_pid"] = pid
+                result["termination_root_exited"] = True
         sidecar_removed, sidecar_error = (
             _remove_server_idle_gate_sidecar_after_proved_exit(
                 pid, sidecar_snapshot
@@ -6827,24 +7390,52 @@ def shutdown_lab_server() -> Dict[str, Any]:
         print(f"[SERVER] {result['reason']}; refusing to terminate or adopt either process.")
         return result
 
-    print(f"[SERVER] Shutting down verified lab server (PID {pid})...")
+    termination_root_pid = pid
+    if front_office_mode():
+        try:
+            current_instance = verified_server_instance()
+            termination_root = _front_office_server_termination_root_pid(
+                current_instance
+            )
+        except PreflightError:
+            termination_root = None
+        if termination_root is None:
+            result["reason"] = (
+                "could not re-prove the Front Office process-tree termination root"
+            )
+            print(f"[SERVER] {result['reason']}; keeping receipt.")
+            return result
+        termination_root_pid = termination_root
+    result["termination_root_pid"] = termination_root_pid
+    print(
+        f"[SERVER] Shutting down verified lab server (PID {pid}) via "
+        f"owned process-tree root {termination_root_pid}..."
+    )
     result["termination_attempted"] = True
     try:
-        terminated = bool(terminate_owned_process_tree(pid))
+        terminated = bool(terminate_owned_process_tree(termination_root_pid))
     except Exception as exc:
         result["reason"] = f"termination raised an error: {exc}"
         print(f"[SERVER] {result['reason']}; keeping receipt.")
         return result
     result["termination_reported_success"] = terminated
     result["process_exited"] = not psutil.pid_exists(pid)
+    result["termination_root_exited"] = not psutil.pid_exists(termination_root_pid)
     post_listener = listener_pid(int(LAB_PORT))
     post_stats = query_server_stats()
     result["listener_exited"] = post_listener is None and post_stats is None
 
-    if not (terminated and result["process_exited"] and result["listener_exited"]):
+    if not (
+        terminated
+        and result["process_exited"]
+        and result["termination_root_exited"]
+        and result["listener_exited"]
+    ):
         result["reason"] = (
             f"shutdown proof failed (terminated={terminated}, "
-            f"process_exited={result['process_exited']}, listener_exited={result['listener_exited']})"
+            f"process_exited={result['process_exited']}, "
+            f"termination_root_exited={result['termination_root_exited']}, "
+            f"listener_exited={result['listener_exited']})"
         )
         print(f"[SERVER] {result['reason']}; keeping .server.pid.")
         return result
