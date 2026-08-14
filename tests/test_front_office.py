@@ -509,7 +509,7 @@ class FrontOfficeReceiptTests(unittest.TestCase):
         self.assertEqual(candidate["prompt"]["16"]["class_type"], "MiniMaxH3TurboLoRA")
         self.assertEqual(candidate["prompt"]["16"]["inputs"], {
             "model": ["1", 0],
-            "lora_name": "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors",
+            "lora_name": "h3-turbo-larry-v4\\minimax_h3_turbo_v4_step600_ema.safetensors",
             "strength": 1.0,
             "low_vram": False,
         })
@@ -528,7 +528,7 @@ class FrontOfficeReceiptTests(unittest.TestCase):
         self.assertEqual(node_contract["git_commit"], "546b5028f4934f5129eb6c7142c2f3e461dfddbf")
         self.assertEqual(node_contract["init_py_sha256"], "036089da474d9d06fd277fd9686ff05aad913824220dd8a2f5882b271c21022f")
         self.assertEqual(node_contract["lora"], {
-            "runtime_name": "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors",
+            "runtime_name": "h3-turbo-larry-v4\\minimax_h3_turbo_v4_step600_ema.safetensors",
             "managed_path": "C:\\ComfyUI-Models\\loras\\h3-turbo-larry-v4\\minimax_h3_turbo_v4_step600_ema.safetensors",
             "bytes": 779849816,
             "sha256": "5f3a626cd72c93a8b9318d6760c510bc5092d2ab13aaba1f932c5bab07a416d3",

@@ -253,7 +253,7 @@ class FrontOfficeRunnerTests(unittest.TestCase):
         """Create a tiny hard-link-backed Turbo admission surface."""
 
         node_id = "ComfyUI-MiniMax-H3-Turbo"
-        runtime_name = "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors"
+        runtime_name = "h3-turbo-larry-v4\\minimax_h3_turbo_v4_step600_ema.safetensors"
         managed = root / "managed"
         lora = managed / "loras" / runtime_name
         lora.parent.mkdir(parents=True, exist_ok=True)
@@ -332,7 +332,10 @@ class FrontOfficeRunnerTests(unittest.TestCase):
                 evidence = run_recipe.external_node_admission_fingerprints(recipe, object_info)
 
             self.assertEqual(evidence["node_id"], "ComfyUI-MiniMax-H3-Turbo")
-            self.assertEqual(evidence["lora"]["runtime_name"], recipe["topology_contract"]["external_node_contract"]["lora"]["runtime_name"])
+            self.assertEqual(
+                evidence["lora"]["runtime_name"],
+                "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors",
+            )
             self.assertEqual(evidence["support_asset"]["sha256"], run_recipe.sha256_file(support))
             self.assertTrue(evidence["support_asset"]["same_file"])
 

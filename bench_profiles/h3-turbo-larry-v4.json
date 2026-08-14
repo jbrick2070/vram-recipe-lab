@@ -37,7 +37,7 @@
   },
   "model_manifest": {
     "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\model_admissions\\h3-turbo-larry-v4\\models_manifest.md",
-    "sha256": "8fdba295168eb8f52268e0e767c39a13d3b838029db388d86b613047bbae880e"
+      "sha256": "089ffedf7f249ce7fdb108538a431a384716fe4ac357c3faa9c154d2524d052d"
   },
   "boot": {
     "port": "8199",

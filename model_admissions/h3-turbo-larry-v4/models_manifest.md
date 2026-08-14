@@ -15,7 +15,7 @@ This is the immutable model manifest for the `h3-turbo-larry-v4` Front Office pr
 
 | Filename | Managed path | Source | Declared license | Bytes | SHA-256 |
 |---|---|---|---|---:|---|
-| `minimax_h3_turbo_v4_step600_ema.safetensors` | `C:\ComfyUI-Models\loras\h3-turbo-larry-v4\minimax_h3_turbo_v4_step600_ema.safetensors`; runtime enum `h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors` | `larryvrh/MiniMax-H3-Turbo-Lora` at `43a74557ac3f6539db8e0f2a959d03feb7a81480` | Apache-2.0, as declared by the upstream model card during the authorized retrieval | 779849816 | `5f3a626cd72c93a8b9318d6760c510bc5092d2ab13aaba1f932c5bab07a416d3` |
+| `minimax_h3_turbo_v4_step600_ema.safetensors` | `C:\ComfyUI-Models\loras\h3-turbo-larry-v4\minimax_h3_turbo_v4_step600_ema.safetensors`; Windows live runtime enum `h3-turbo-larry-v4\minimax_h3_turbo_v4_step600_ema.safetensors` | `larryvrh/MiniMax-H3-Turbo-Lora` at `43a74557ac3f6539db8e0f2a959d03feb7a81480` | Apache-2.0, as declared by the upstream model card during the authorized retrieval | 779849816 | `5f3a626cd72c93a8b9318d6760c510bc5092d2ab13aaba1f932c5bab07a416d3` |
 
 ## Pinned node support asset
 
