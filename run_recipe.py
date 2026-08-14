@@ -459,9 +459,33 @@ def _front_office_prepare_namespace(path: Path, root: Path, label: str) -> Path:
 
     import front_office
 
-    trusted_root = front_office.validate_absolute_nonreparse_path(
-        str(root), f"Front Office {label} root", "directory"
+    # These roots are fixed by this runner, not supplied by a profile or CLI.
+    # A new Front Office deployment legitimately has no ``results/runs`` or
+    # ``logs`` root yet, so create each missing component only after proving it
+    # remains a child of the trusted repository root.  Validate every component
+    # after creation to reject a junction/symlink race rather than trusting
+    # ``mkdir(parents=True)`` across an arbitrary path.
+    trusted_repo = front_office.validate_absolute_nonreparse_path(
+        str(REPO_ROOT), "Front Office repository root", "directory"
     )
+    lexical_root = Path(os.path.abspath(os.fspath(root)))
+    try:
+        root_relative = lexical_root.relative_to(trusted_repo)
+    except ValueError as exc:
+        raise ValueError(f"Front Office {label} root escapes the repository") from exc
+    trusted_root = trusted_repo
+    for part in root_relative.parts:
+        trusted_root = trusted_root / part
+        if not trusted_root.exists():
+            try:
+                trusted_root.mkdir()
+            except FileExistsError:
+                # A concurrent creator is safe only if the following
+                # non-reparse validation accepts its exact directory.
+                pass
+        trusted_root = front_office.validate_absolute_nonreparse_path(
+            str(trusted_root), f"Front Office {label} root", "directory"
+        )
     lexical = Path(os.path.abspath(os.fspath(path)))
     try:
         lexical.relative_to(trusted_root)

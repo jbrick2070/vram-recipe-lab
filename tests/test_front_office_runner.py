@@ -185,6 +185,19 @@ class FrontOfficeRunnerTests(unittest.TestCase):
             self.assertEqual(activated.server_environment["HF_HOME"], str(root / "hf"))
             self.assertEqual(activated.server_environment["TEMP"], str(context.temp_directory))
 
+    def test_prepare_namespace_creates_a_missing_fixed_root_under_the_repo(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "results" / "runs" / "campaign" / "cell" / "profile"
+            with mock.patch.object(run_recipe, "REPO_ROOT", root):
+                prepared = run_recipe._front_office_prepare_namespace(
+                    target, root / "results" / "runs", "result_directory"
+                )
+
+            self.assertEqual(prepared, target)
+            self.assertTrue((root / "results" / "runs").is_dir())
+            self.assertTrue(target.is_dir())
+
     def test_activation_replaces_spec_token_with_only_the_pinned_recipe_and_shutdown(self):
         with tempfile.TemporaryDirectory() as directory:
             context = self.make_context(Path(directory))
