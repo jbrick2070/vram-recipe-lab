@@ -24,7 +24,8 @@ the 5080 runner, port 8199, locks, outputs, or receipts.
    - When booted, track the verified serving PID in `.server.pid`. Always shut down recorded lab server processes upon completing session runs, and remove the receipt only after their exit is confirmed.
 5. **Quarantined Model Admission**:
    - Downloads are allowed only after Jeffrey explicitly authorizes a named model.
-   - Download only into a quarantine location; record source, license, exact bytes, and SHA-256 before use.
+   - Every model, including a temporary or failed candidate, must remain under the `C:\ComfyUI-Models` directory tree. Download unadmitted candidates only into `C:\ComfyUI-Models\quarantine\...`; never use a browser-download, Desktop, Documents, repository, or other model location.
+   - Record source, license, exact bytes, and SHA-256 before use.
    - Add the model to `models_manifest.md` before any render.
    - Run only its declared best-use-case recipe under normal receipt/lock/media gates.
    - If it fails, record the result first; Jeffrey may then authorize deletion.
