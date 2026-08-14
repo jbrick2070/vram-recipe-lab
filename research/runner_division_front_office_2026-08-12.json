@@ -19,7 +19,7 @@
     "current_dispatchable_profile": "comfy0320-h3 (clean ComfyUI 0.32.0 @ c2bcbecd82ec5ae66594340b395c24ef0217b238)",
     "execution_lifecycle": "single-use sealed spec, fresh cold server, mandatory terminal shutdown proof, no inherited warmth or promotion eligibility",
     "first_smoke": "front-office-r1/t2i-low-smoke passed as a SaveImage plumbing check only; it does not claim video or audio media-gate coverage.",
-    "current_h3_native_av_smoke": "front-office-h3-current-r1/i2v-native-av-smoke is a sealed 3.750-second current-profile native-A/V cold cell; it is prepared but has not run.",
+    "current_h3_native_av_smoke": "front-office-h3-current-r1/i2v-native-av-smoke completed as a sealed 3.750-second current-profile native-A/V cold cell: media and shutdown gates passed, but 15.107 GiB peak VRAM exceeded the 14.5 GiB ceiling, so it is a measured failure and not promotable.",
     "c032_status": "BLOCKED: no separate local 0.31.1 worktree/profile and no warm-session protocol for a matched 0.31.1-versus-0.32.0 campaign."
   },
   "why_now": {

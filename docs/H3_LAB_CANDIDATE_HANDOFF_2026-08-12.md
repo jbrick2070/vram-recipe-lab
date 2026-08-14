@@ -1,6 +1,6 @@
 # MiniMax H3: five-candidate lab handoff for OTR
 
-- **Status:** minimal Front Office is implemented; a sealed current-profile H3 native-A/V smoke is prepared, H3-LIP-TXT remains gated on its transcript-window receipt, and H3-C032 remains blocked on the missing isolated 0.31.1 control profile
+- **Status:** minimal Front Office is implemented; its sealed current-profile H3 native-A/V smoke completed cleanly but failed the 14.5 GiB VRAM gate at 15.107 GiB, H3-LIP-TXT remains gated on its transcript-window receipt, and H3-C032 remains blocked on the missing isolated 0.31.1 control profile
 - **Research cutoff:** 2026-08-12, America/Los_Angeles
 - **Lab snapshot:** [`ca929db50556600607f3cf4be1c19e114aa5a421`](https://github.com/jbrick2070/vram-recipe-lab/commit/ca929db50556600607f3cf4be1c19e114aa5a421)
 - **OTR snapshot:** [`v2.0-alpha@c06128daa181ff802bc3bf79112e539eda1d8a02`](https://github.com/jbrick2070/ComfyUI-OldTimeRadio/tree/c06128daa181ff802bc3bf79112e539eda1d8a02)

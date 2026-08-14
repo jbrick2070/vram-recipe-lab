@@ -1,6 +1,6 @@
 # Runner Division: dynamic lab front office
 
-- **Status:** sealed direct dispatch implemented; the first cold plumbing smoke passed and the first sealed current-profile H3 native-A/V smoke is prepared
+- **Status:** sealed direct dispatch implemented; the first cold plumbing smoke passed, while the first sealed current-profile H3 native-A/V smoke measured 15.107 GiB and failed the 14.5 GiB gate
 - **Date:** 2026-08-12, revised 2026-08-13
 - **Repository snapshot:** `ca929db50556600607f3cf4be1c19e114aa5a421`
 - **Purpose:** let the lab compare pinned ComfyUI environments without weakening the existing ownership, isolation, evidence, or GPU-safety rules
