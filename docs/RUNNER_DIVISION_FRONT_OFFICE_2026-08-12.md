@@ -1,6 +1,6 @@
 # Runner Division: dynamic lab front office
 
-- **Status:** static enrollment and planning layer implemented; direct runner integration remains deliberately deferred until the current-runner H3-LIP-TXT A/B closes
+- **Status:** sealed direct dispatch implemented; first cold plumbing smoke is pending the existing GPU-idle gate
 - **Date:** 2026-08-12
 - **Repository snapshot:** `e7398fdae74a10512a16004f7499575e68d5c882`
 - **Purpose:** let the lab compare pinned ComfyUI environments without weakening the existing ownership, isolation, evidence, or GPU-safety rules
@@ -24,7 +24,7 @@ The fix is a division of responsibility:
 
 The old runner is not discarded. Its safety machinery becomes the floor runner under a stricter, machine-readable front office.
 
-### Current static milestone (2026-08-12)
+### Historical static milestone (2026-08-12)
 
 The repository now contains the safe, non-executing half of this design:
 `front_office.py`, `labctl.py`, strict v1 profile/campaign schemas, one verified
@@ -34,16 +34,35 @@ per-cell namespaces, an all-recipe offline census, and an immutable
 `DIRECT_LAUNCH_NOT_INTEGRATED`; it cannot boot ComfyUI, acquire the GPU, or
 queue a prompt.
 
-This is intentional. Changing `run_recipe.py`, `boot_lab_server.cmd`, or the
-receipt identity now would turn the promised H3-LIP-TXT prompt-only comparison
-into a runner-change comparison. After that A/B closes, the next small change
-will connect these sealed plans to the floor runner with direct argv launch,
-receipt binding, and real namespaces.
+This was intentional at the static milestone. The execution update below keeps
+the historical profile and receipt bytes intact rather than relabeling them.
 
-Only the genuine 0.31.1 bridge profile is enrolled. No local 0.32.0 checkout
-or requested `c2bcbecd82ec5ae66594340b395c24ef0217b238` object exists, so
-`campaigns/h3-c032.json` is explicitly `BLOCKED_PROFILE_ENROLLMENT`, not a
-placeholder profile or a download request.
+### Execution update (2026-08-13)
+
+The Front Office now seals an execution specification and invokes the pinned
+floor runner through a direct argument vector (`shell=False`). The floor runner
+revalidates that specification before taking the existing global GPU lease or
+touching port 8199. It owns the server, queue, `/object_info`, fixture,
+measurement, append-only receipt, and cleanup machinery exactly as before.
+
+The new dispatchable `comfy0320-h3` profile pins the actual clean ComfyUI
+`0.32.0 @ c2bcbecd82ec5ae66594340b395c24ef0217b238` installation. Its
+namespaces are distinct per campaign/cell/profile for outputs, results, logs,
+user state, and ComfyUI's `--temp-directory` base. Every Front Office receipt
+binds the profile, sealed launch specification, direct argv, sanitized
+environment, runner/front-office bundles, and one-time execution claim.
+
+Execution specifications are single-use and terminal: the current milestone
+forces a fresh cold server, proves shutdown before writing a machine pass, and
+marks the receipt cold-only. It cannot inherit a warm result or certify
+warm-cache performance. The first allowed smoke is
+`front-office-r1/t2i-low-smoke`, a `SaveImage` plumbing check; it does not
+claim video or audio media-gate coverage.
+
+The old `comfy0311-h3` profile remains historical and invalid against the
+current root. `H3-C032` remains blocked: a separate, real 0.31.1 worktree and
+profile plus a warm-session protocol are still required for the matched
+comparison. No placeholder profile, model download, or OTR edit is authorized.
 
 ## Active 2026-08-12 mission scope
 

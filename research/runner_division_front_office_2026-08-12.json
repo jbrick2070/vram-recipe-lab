@@ -2,12 +2,25 @@
   "schema_version": 1,
   "document_type": "runner_division_front_office_proposal",
   "created_at": "2026-08-12T00:00:00-07:00",
-  "status": "PROPOSED_WITH_MINIMAL_ACTIVE_SCOPE",
+  "status": "IMPLEMENTED_SEALED_ONE_SHOT_SMOKE_PENDING",
   "authoritative_report": "docs/RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md",
   "lab_snapshot": "e7398fdae74a10512a16004f7499575e68d5c882",
   "otr_snapshot": "c06128daa181ff802bc3bf79112e539eda1d8a02",
   "census_receipt": "research/handoff_census_2026-08-12.json",
   "decision": "Keep the existing safety engine as the floor runner and add a sealed profile-selecting front office, evidence office, and promotion desk.",
+  "implementation_update_2026_08_13": {
+    "status": "SEALED_DIRECT_DISPATCH_IMPLEMENTED",
+    "implementation_commits": [
+      "8f88a80b9daf44c4daa157f9f07c70d54fab7b93",
+      "3b2d24fe6329cf511f10498414018065a87dc058",
+      "1d0425b8c31c43f15d65534a5d76d1cb7d2dd19e"
+    ],
+    "dispatch_contract": "labctl seals one execution spec; front_office_dispatch invokes the profile-pinned floor runner with direct argv and shell=False; the floor runner revalidates and owns global port 8199, locks, queue, measurement, receipts, and cleanup.",
+    "current_dispatchable_profile": "comfy0320-h3 (clean ComfyUI 0.32.0 @ c2bcbecd82ec5ae66594340b395c24ef0217b238)",
+    "execution_lifecycle": "single-use sealed spec, fresh cold server, mandatory terminal shutdown proof, no inherited warmth or promotion eligibility",
+    "first_smoke": "front-office-r1/t2i-low-smoke is a SaveImage plumbing check only; it does not claim video or audio media-gate coverage.",
+    "c032_status": "BLOCKED: no separate local 0.31.1 worktree/profile and no warm-session protocol for a matched 0.31.1-versus-0.32.0 campaign."
+  },
   "why_now": {
     "checked_in_recipes": 82,
     "same_name_current_aliases": 70,
