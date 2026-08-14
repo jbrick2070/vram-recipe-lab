@@ -71,6 +71,9 @@ class FrontOfficeRunnerTests(unittest.TestCase):
         spec_path = root / ".runtime" / "front-office-execution-test.json"
         spec_path.parent.mkdir(parents=True, exist_ok=True)
         spec_path.write_text("{}\n", encoding="utf-8")
+        model_manifest_path = root / "model_admission" / "models_manifest.md"
+        model_manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        model_manifest_path.write_text("sealed-model.safetensors\n", encoding="utf-8")
         output = root / "outputs" / "ready-campaign" / "control-cell" / profile_id
         results = root / "results" / "runs" / "ready-campaign" / "control-cell" / profile_id
         logs = root / "logs" / "ready-campaign" / "control-cell" / profile_id
@@ -119,6 +122,8 @@ class FrontOfficeRunnerTests(unittest.TestCase):
             server_argv=server_argv,
             server_environment={"PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"},
             profile_whitelist=("OnlyNode",),
+            model_manifest_path=model_manifest_path,
+            model_manifest_sha256=run_recipe.sha256_file(model_manifest_path),
         )
 
     @staticmethod
@@ -157,6 +162,10 @@ class FrontOfficeRunnerTests(unittest.TestCase):
                 "python": {"path": context.server_argv[0]},
                 "comfyui": {"root": str(context.comfyui_root)},
                 "model_paths_config": {"path": str(root / "models.yaml")},
+                "model_manifest": {
+                    "path": str(context.model_manifest_path),
+                    "sha256": context.model_manifest_sha256,
+                },
                 "environment": {
                     "PYTHONUTF8": "1",
                     "PYTHONIOENCODING": "utf-8",
@@ -219,6 +228,25 @@ class FrontOfficeRunnerTests(unittest.TestCase):
             self.assertEqual(tuple(server_argv), activated.server_argv)
             self.assertEqual(activated.server_environment["HF_HOME"], str(root / "hf"))
             self.assertEqual(activated.server_environment["TEMP"], str(context.temp_directory))
+            self.assertEqual(activated.model_manifest_path, context.model_manifest_path)
+            self.assertEqual(activated.model_manifest_sha256, context.model_manifest_sha256)
+
+    def test_front_office_model_check_uses_profile_manifest_not_legacy_global(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            context = self.make_context(root)
+            legacy_manifest = root / "models_manifest.md"
+            legacy_manifest.write_text("legacy-only.safetensors\n", encoding="utf-8")
+            recipe = {"prompt": {"1": {"inputs": {"lora_name": "sealed-model.safetensors"}}}}
+            with mock.patch.object(run_recipe, "MODELS_MANIFEST", legacy_manifest), mock.patch.object(
+                run_recipe, "ACTIVE_FRONT_OFFICE_CONTEXT", context
+            ):
+                run_recipe.check_models_exist(recipe)
+            with mock.patch.object(run_recipe, "MODELS_MANIFEST", legacy_manifest), mock.patch.object(
+                run_recipe, "ACTIVE_FRONT_OFFICE_CONTEXT", None
+            ):
+                with self.assertRaisesRegex(run_recipe.PreflightError, "models_manifest\\.md"):
+                    run_recipe.check_models_exist(recipe)
 
     def test_prepare_namespace_creates_a_missing_fixed_root_under_the_repo(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -814,6 +842,10 @@ class FrontOfficeRunnerTests(unittest.TestCase):
             self.assertEqual(
                 receipt_binding["execution_claim"]["path"],
                 str(run_recipe._front_office_execution_claim_path(context)),
+            )
+            self.assertEqual(
+                receipt_binding["model_manifest"],
+                {"path": str(context.model_manifest_path), "sha256": context.model_manifest_sha256},
             )
             self.assertNotIn("lease_nonce", identity_binding)
             self.assertNotIn("execution_spec_instance_sha256", identity_binding)

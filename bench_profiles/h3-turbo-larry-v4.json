@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "id": "comfy0320-h3",
+  "id": "h3-turbo-larry-v4",
   "status": "ENROLLED_DISPATCHABLE",
-  "purpose": "Current clean ComfyUI 0.32.0 bench for sealed Front Office one-shot cold runner smoke and later H3 campaign enrollment. It is not a substitute for the missing isolated 0.31.1 control bench.",
+  "purpose": "Pinned MiniMax H3 Turbo v4 step-600 profile for one sealed current-0.32 eight-step FL2VA I2V candidate. The boot is SageAttention-free and permits only KJNodes plus the reviewed Larry Turbo node. It is not a general LoRA admission or a warm-cache promotion profile.",
   "python": {
     "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
     "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d",
@@ -22,6 +22,13 @@
       "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
       "version": "1.3.9",
       "init_py_sha256": "8da7e12f52cabd71b06e44d733ee359fba3ea3ec07cebcceaf29e9c24eaffec2"
+    },
+    {
+      "id": "ComfyUI-MiniMax-H3-Turbo",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-MiniMax-H3-Turbo",
+      "git_commit": "546b5028f4934f5129eb6c7142c2f3e461dfddbf",
+      "version": "1.2.3",
+      "init_py_sha256": "036089da474d9d06fd277fd9686ff05aad913824220dd8a2f5882b271c21022f"
     }
   ],
   "model_paths_config": {
@@ -29,8 +36,8 @@
     "sha256": "ec421773a2f0eac02cc242ae8b8ed5699ab01f99c54edc0e45f20e8ffee1fdc8"
   },
   "model_manifest": {
-    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\models_manifest.md",
-    "sha256": "de94042bda0b9173c0ced4a210fa7f7ee0ed2d34593d9bbe633ba79b9673c007"
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\model_admissions\\h3-turbo-larry-v4\\models_manifest.md",
+    "sha256": "c77d77357bbb00795a8c5b0400e18aa69bf5676c2a415269f5fb3a217924bdfb"
   },
   "boot": {
     "port": "8199",
@@ -49,7 +56,8 @@
       "--disable-metadata",
       "--disable-all-custom-nodes",
       "--whitelist-custom-nodes",
-      "ComfyUI-KJNodes"
+      "ComfyUI-KJNodes",
+      "ComfyUI-MiniMax-H3-Turbo"
     ],
     "forbidden_args": [
       "--use-sage-attention",

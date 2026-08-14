@@ -164,12 +164,12 @@ class FrontOfficeLaunchSpecTests(unittest.TestCase):
         with self.assertRaisesRegex(front_office.CampaignValidationError, "BLOCKED_PROFILE_ENROLLMENT"):
             front_office.build_launch_spec("h3-c032", "h3-i2v-sentinel", "comfy0311-h3", "d" * 32)
 
-    def test_selected_h3_t8_is_blocked_until_weight_and_profile_admission(self):
+    def test_legacy_h3_t8_stays_blocked_even_after_the_new_turbo_profile_is_admitted(self):
         campaign = front_office.load_campaign("h3-t8")
         self.assertEqual(campaign["status"], "BLOCKED_WEIGHT_ADMISSION")
         self.assertIn("eight-step", campaign["independent_variable"])
         self.assertIn("h3-turbo-larry-v4", campaign["profiles"])
-        self.assertNotIn("h3-turbo-larry-v4", front_office.list_enrolled_profiles())
+        self.assertIn("h3-turbo-larry-v4", front_office.list_enrolled_profiles())
         with self.assertRaisesRegex(front_office.CampaignValidationError, "BLOCKED_WEIGHT_ADMISSION"):
             front_office.build_launch_spec("h3-t8", "h3-i2v-sentinel", "comfy0311-h3", "e" * 32)
 
@@ -314,7 +314,7 @@ class FrontOfficeReceiptTests(unittest.TestCase):
 
     def test_r0_census_reaches_every_current_recipe_without_gpu_or_server(self):
         report = front_office.r0_static_census()
-        self.assertEqual(report["recipe_count"], 84)
+        self.assertEqual(report["recipe_count"], 86)
         self.assertEqual(report["recipe_json_bom_errors"], [])
         self.assertFalse(report["gpu_or_server_touched"])
         self.assertEqual(report["direct_launch"], "SEALED_DIRECT_DISPATCH_AVAILABLE")
@@ -439,3 +439,96 @@ class FrontOfficeReceiptTests(unittest.TestCase):
             spec["semantic"]["recipe"]["path"], "recipes/ltx_video_2b_current_profile_cold_smoke.json"
         )
         self.assertEqual(spec["semantic"]["campaign"]["id"], "front-office-ltx-current-r1")
+
+    def test_larry_turbo_pair_is_profile_isolated_and_has_only_the_declared_graph_delta(self):
+        campaign = front_office.load_campaign("front-office-h3-t8-current-r1")
+        self.assertEqual(campaign["status"], front_office.CAMPAIGN_STATUS_READY_FOR_DISPATCH)
+        self.assertEqual(campaign["profiles"], ["comfy0320-h3", "h3-turbo-larry-v4"])
+        self.assertEqual([cell["id"] for cell in campaign["cells"]], [
+            "i2v-action-control-20step",
+            "i2v-action-turbo-v4-8step",
+        ])
+        control = json.loads(
+            (front_office.RECIPE_DIR / "h3_turbo_larry_v4_i2v_action_control.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        candidate = json.loads(
+            (front_office.RECIPE_DIR / "h3_turbo_larry_v4_i2v_action_8step.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        base_profile = front_office.load_enrolled_profile("comfy0320-h3")
+        turbo = front_office.load_enrolled_profile("h3-turbo-larry-v4")
+        admission = json.loads(
+            (front_office.REPO_ROOT / "model_admissions" / "h3-turbo-larry-v4" / "admission.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(admission["status"], "ADMITTED_FOR_ONE_SEALED_COLD_I2V_CANDIDATE")
+        self.assertEqual(
+            admission["weight"]["sha256"],
+            "5f3a626cd72c93a8b9318d6760c510bc5092d2ab13aaba1f932c5bab07a416d3",
+        )
+        self.assertEqual(admission["weight"]["bytes"], 779849816)
+        self.assertEqual(
+            admission["execution_contract"]["required_live_node_classes"],
+            ["MiniMaxH3TurboLoRA", "MiniMaxH3TurboSampler"],
+        )
+        self.assertTrue(turbo["model_manifest"]["path"].endswith("model_admissions\\h3-turbo-larry-v4\\models_manifest.md"))
+        self.assertEqual(turbo["python"], base_profile["python"])
+        self.assertEqual(turbo["comfyui"], base_profile["comfyui"])
+        self.assertEqual(turbo["model_paths_config"], base_profile["model_paths_config"])
+        self.assertEqual(turbo["environment"], base_profile["environment"])
+        self.assertEqual(turbo["boot"]["fixed_argv"][:-1], base_profile["boot"]["fixed_argv"])
+        self.assertEqual(
+            [node["id"] for node in turbo["custom_nodes"]],
+            ["ComfyUI-KJNodes", "ComfyUI-MiniMax-H3-Turbo"],
+        )
+        turbo_argv = front_office.canonical_server_argv(
+            turbo,
+            front_office.derive_cell_namespaces(
+                campaign["id"], campaign["cells"][1]["id"], turbo["id"]
+            ),
+        )
+        self.assertNotIn("--use-sage-attention", turbo_argv)
+        self.assertEqual(turbo_argv[-3:], [
+            "--whitelist-custom-nodes",
+            "ComfyUI-KJNodes",
+            "ComfyUI-MiniMax-H3-Turbo",
+        ])
+        self.assertEqual(candidate["contract"], control["contract"])
+        self.assertEqual(
+            candidate["prompt"]["7"]["inputs"]["prompt"],
+            control["prompt"]["7"]["inputs"]["prompt"],
+        )
+        self.assertEqual(candidate["prompt"]["5"], control["prompt"]["5"])
+        self.assertEqual(candidate["prompt"]["10"], control["prompt"]["10"])
+        self.assertEqual(candidate["prompt"]["15"], control["prompt"]["15"])
+        self.assertNotIn("13", candidate["prompt"])
+        self.assertEqual(candidate["prompt"]["16"]["class_type"], "MiniMaxH3TurboLoRA")
+        self.assertEqual(candidate["prompt"]["16"]["inputs"], {
+            "model": ["1", 0],
+            "lora_name": "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors",
+            "strength": 1.0,
+            "low_vram": False,
+        })
+        self.assertEqual(candidate["prompt"]["17"], {"class_type": "MiniMaxH3TurboSampler", "inputs": {}})
+        self.assertEqual(candidate["prompt"]["6"]["inputs"]["model"], ["16", 0])
+        self.assertEqual(candidate["prompt"]["14"]["inputs"], {
+            "model": ["16", 0], "scheduler": "simple", "steps": 8, "denoise": 1.0,
+        })
+        self.assertEqual(candidate["prompt"]["8"]["inputs"]["sampler"], ["17", 0])
+        self.assertEqual(candidate["prompt"]["10"]["inputs"]["audio"], ["15", 0])
+        node_contract = candidate["topology_contract"]["external_node_contract"]
+        self.assertEqual(node_contract["git_commit"], "546b5028f4934f5129eb6c7142c2f3e461dfddbf")
+        self.assertEqual(node_contract["init_py_sha256"], "036089da474d9d06fd277fd9686ff05aad913824220dd8a2f5882b271c21022f")
+        self.assertEqual(
+            node_contract["live_object_info_required"],
+            ["MiniMaxH3TurboLoRA", "MiniMaxH3TurboSampler"],
+        )
+        spec = front_office.build_execution_spec(
+            campaign["id"], campaign["cells"][1]["id"], turbo["id"], "c" * 32
+        )
+        self.assertEqual(spec["semantic"]["recipe"]["path"], "recipes/h3_turbo_larry_v4_i2v_action_8step.json")
+        self.assertEqual(spec["semantic"]["profile"]["id"], "h3-turbo-larry-v4")

@@ -114,6 +114,8 @@ class FrontOfficeRunContext:
     server_argv: Tuple[str, ...]
     server_environment: Mapping[str, str]
     profile_whitelist: Tuple[str, ...]
+    model_manifest_path: Path
+    model_manifest_sha256: str
 
 
 ACTIVE_FRONT_OFFICE_CONTEXT: Optional[FrontOfficeRunContext] = None
@@ -142,6 +144,19 @@ def effective_results_dir() -> Path:
 def effective_output_dir() -> Path:
     context = front_office_context()
     return context.output_directory if context is not None else (REPO_ROOT / "outputs")
+
+
+def effective_models_manifest() -> Path:
+    """Return the profile-bound manifest in Front Office mode.
+
+    The legacy runner keeps using its historical root manifest. A sealed Front
+    Office profile instead supplies an already hash-validated immutable
+    manifest, so a new candidate cannot rewrite old recipe identities merely
+    to become visible to a different profile.
+    """
+
+    context = front_office_context()
+    return context.model_manifest_path if context is not None else MODELS_MANIFEST
 
 
 def effective_server_log_file() -> Path:
@@ -699,6 +714,10 @@ def front_office_receipt_binding(context: FrontOfficeRunContext) -> Dict[str, An
         "front_office_bundle_sha256": context.front_office_bundle_sha256,
         "server_argv_sha256": stable_identity({"argv": list(context.server_argv)}),
         "environment_sha256": stable_identity({"environment": dict(context.server_environment)}),
+        "model_manifest": {
+            "path": str(context.model_manifest_path),
+            "sha256": context.model_manifest_sha256,
+        },
         "namespaces": namespaces,
     }
 
@@ -771,6 +790,26 @@ def _front_office_context_from_spec(spec_path_text: str) -> FrontOfficeRunContex
         raise ValueError("Front Office profile changed after the execution spec was sealed")
     if profile.get("status") != "ENROLLED_DISPATCHABLE":
         raise ValueError("Front Office profile is not dispatchable")
+
+    manifest_record = profile.get("model_manifest")
+    if not isinstance(manifest_record, dict) or set(manifest_record) != {"path", "sha256"}:
+        raise ValueError("Front Office profile model manifest is malformed")
+    manifest_path = front_office.validate_absolute_nonreparse_path(
+        _front_office_require_string(manifest_record.get("path"), "profile model manifest path"),
+        "Front Office profile model manifest",
+        "file",
+    )
+    try:
+        manifest_path.relative_to(REPO_ROOT.resolve())
+    except ValueError as exc:
+        raise ValueError("Front Office profile model manifest escapes the repository") from exc
+    manifest_sha256 = _front_office_require_string(
+        manifest_record.get("sha256"), "profile model manifest SHA-256"
+    )
+    if re.fullmatch(r"[0-9a-f]{64}", manifest_sha256) is None:
+        raise ValueError("Front Office profile model manifest SHA-256 is invalid")
+    if sha256_file(manifest_path) != manifest_sha256:
+        raise ValueError("Front Office profile model manifest changed after enrollment")
 
     recipe_relative = _front_office_require_string(recipe_record.get("path"), "recipe path")
     recipe_path = (REPO_ROOT / Path(recipe_relative)).resolve()
@@ -854,6 +893,8 @@ def _front_office_context_from_spec(spec_path_text: str) -> FrontOfficeRunContex
             environment, prepared_namespaces["temp_directory"]
         ),
         profile_whitelist=whitelist,
+        model_manifest_path=manifest_path,
+        model_manifest_sha256=manifest_sha256,
     )
 
 
@@ -7590,11 +7631,12 @@ def check_nodes_exist(recipe_data: Dict[str, Any], object_info: Dict[str, Any]):
 
 
 def check_models_exist(recipe_data: Dict[str, Any]):
-    """Preflight Check #5: Every referenced model appears in models_manifest.md."""
-    if not MODELS_MANIFEST.exists():
-        raise PreflightError(5, "Models exist", "models_manifest.md missing from repo root")
+    """Preflight Check #5: Every model appears in the active immutable manifest."""
+    manifest_path = effective_models_manifest()
+    if not manifest_path.exists():
+        raise PreflightError(5, "Models exist", f"model manifest missing: {manifest_path}")
 
-    manifest_text = MODELS_MANIFEST.read_text(encoding="utf-8")
+    manifest_text = manifest_path.read_text(encoding="utf-8")
     
     referenced_models = set()
     def scan_values(obj):
@@ -7612,7 +7654,9 @@ def check_models_exist(recipe_data: Dict[str, Any]):
 
     missing = [m for m in referenced_models if m not in manifest_text]
     if missing:
-        raise PreflightError(5, "Models exist", f"Models missing from manifest: {missing}")
+        raise PreflightError(
+            5, "Models exist", f"Models missing from active manifest {manifest_path}: {missing}"
+        )
 
 
 def iter_prompt_links(value: Any, path: str = ""):

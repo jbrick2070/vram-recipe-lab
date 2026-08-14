@@ -26,7 +26,7 @@ the 5080 runner, port 8199, locks, outputs, or receipts.
    - Downloads are allowed only after Jeffrey explicitly authorizes a named model.
    - Every model, including a temporary or failed candidate, must remain under the `C:\ComfyUI-Models` directory tree. Download unadmitted candidates only into `C:\ComfyUI-Models\quarantine\...`; never use a browser-download, Desktop, Documents, repository, or other model location.
    - Record source, license, exact bytes, and SHA-256 before use.
-   - Add the model to `models_manifest.md` before any render.
+   - Add the model to the selected profile's immutable `models_manifest.md` before any render. The root `models_manifest.md` is the legacy runner manifest; do not mutate it when that would change recipe bytes already bound to append-only evidence.
    - Run only its declared best-use-case recipe under normal receipt/lock/media gates.
    - If it fails, record the result first; Jeffrey may then authorize deletion.
 6. **UTF-8 Encoding (No BOM)**: All text, code, and JSON files must be UTF-8 encoded without BOM. Never write Python or JSON via PowerShell `Set-Content` or `Out-File`.
