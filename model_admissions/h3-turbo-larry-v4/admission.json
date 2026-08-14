@@ -8,6 +8,13 @@
     "operator": "Jeffrey",
     "scope": "One named Turbo candidate, its source-backed best-use-case control/candidate pair, and terminal evidence before any optional deletion."
   },
+  "base_h3_license_grant": {
+    "path": "docs/H3_LICENSE_GRANT.md",
+    "sha256": "d51f6311f5589e512eb12e432565c1a7726242ae9bd0e33323e33501ab72bb35",
+    "named_grantee": "Blueberrky Kale Yoga Books",
+    "scope": "Local, offline, non-commercial use on the operator's own hardware; no hosted service or weight redistribution; the underlying Community License continues to apply.",
+    "grant_authenticity_independently_verified": false
+  },
   "weight": {
     "upstream": "larryvrh/MiniMax-H3-Turbo-Lora",
     "revision": "43a74557ac3f6539db8e0f2a959d03feb7a81480",

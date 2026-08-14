@@ -521,8 +521,47 @@ class FrontOfficeReceiptTests(unittest.TestCase):
         self.assertEqual(candidate["prompt"]["8"]["inputs"]["sampler"], ["17", 0])
         self.assertEqual(candidate["prompt"]["10"]["inputs"]["audio"], ["15", 0])
         node_contract = candidate["topology_contract"]["external_node_contract"]
+        self.assertEqual(set(node_contract), {
+            "node_id", "git_commit", "version", "init_py_sha256", "lora",
+            "support_asset", "live_object_info_required",
+        })
         self.assertEqual(node_contract["git_commit"], "546b5028f4934f5129eb6c7142c2f3e461dfddbf")
         self.assertEqual(node_contract["init_py_sha256"], "036089da474d9d06fd277fd9686ff05aad913824220dd8a2f5882b271c21022f")
+        self.assertEqual(node_contract["lora"], {
+            "runtime_name": "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors",
+            "managed_path": "C:\\ComfyUI-Models\\loras\\h3-turbo-larry-v4\\minimax_h3_turbo_v4_step600_ema.safetensors",
+            "bytes": 779849816,
+            "sha256": "5f3a626cd72c93a8b9318d6760c510bc5092d2ab13aaba1f932c5bab07a416d3",
+        })
+        self.assertEqual(node_contract["support_asset"], {
+            "filename": "h3_silu_temb_grid.safetensors",
+            "managed_path": "C:\\ComfyUI-Models\\custom_node_assets\\ComfyUI-MiniMax-H3-Turbo\\h3_silu_temb_grid.safetensors",
+            "source_checkout_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-MiniMax-H3-Turbo\\h3_silu_temb_grid.safetensors",
+            "bytes": 5510600,
+            "sha256": "30eb3c2cc7fb6b470d9717ff840d359313ac27cd64b705e32da1baa10f72d6a8",
+        })
+        referenced_model_paths = set()
+
+        def collect_model_paths(value):
+            if isinstance(value, str) and value.endswith(
+                (".safetensors", ".ckpt", ".pth", ".bin", ".gguf", ".onnx")
+            ):
+                referenced_model_paths.add(value)
+            elif isinstance(value, dict):
+                for child in value.values():
+                    collect_model_paths(child)
+            elif isinstance(value, list):
+                for child in value:
+                    collect_model_paths(child)
+
+        collect_model_paths(candidate)
+        turbo_manifest = Path(turbo["model_manifest"]["path"]).read_text(
+            encoding="utf-8"
+        )
+        self.assertFalse(
+            sorted(path for path in referenced_model_paths if path not in turbo_manifest),
+            "Every candidate-declared model or support path must be in its immutable profile manifest",
+        )
         self.assertEqual(
             node_contract["live_object_info_required"],
             ["MiniMaxH3TurboLoRA", "MiniMaxH3TurboSampler"],

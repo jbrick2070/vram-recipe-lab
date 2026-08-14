@@ -8,6 +8,7 @@ Jeffrey explicitly authorized this named candidate for one best-use-case test. T
 
 The runtime profile binds [its own immutable model manifest](../model_admissions/h3-turbo-larry-v4/models_manifest.md). This preserves the legacy root manifest and its historical recipe hashes unchanged.
 The machine-readable admission record is [admission.json](../model_admissions/h3-turbo-larry-v4/admission.json).
+The required base-H3 authorization is [H3_LICENSE_GRANT.md](H3_LICENSE_GRANT.md) (SHA-256 `d51f6311f5589e512eb12e432565c1a7726242ae9bd0e33323e33501ab72bb35`). It confines this test to the named grantee's local, offline, non-commercial use on operator-owned hardware, with no hosted service or weight redistribution; the underlying Community License remains in force.
 
 | Field | Recorded value |
 |---|---|

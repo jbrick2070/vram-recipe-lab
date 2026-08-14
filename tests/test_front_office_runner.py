@@ -3,6 +3,7 @@ import json
 import os
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 from unittest import mock
 
@@ -247,6 +248,115 @@ class FrontOfficeRunnerTests(unittest.TestCase):
             ):
                 with self.assertRaisesRegex(run_recipe.PreflightError, "models_manifest\\.md"):
                     run_recipe.check_models_exist(recipe)
+
+    def external_node_fixture(self, root: Path):
+        """Create a tiny hard-link-backed Turbo admission surface."""
+
+        node_id = "ComfyUI-MiniMax-H3-Turbo"
+        runtime_name = "h3-turbo-larry-v4/minimax_h3_turbo_v4_step600_ema.safetensors"
+        managed = root / "managed"
+        lora = managed / "loras" / runtime_name
+        lora.parent.mkdir(parents=True, exist_ok=True)
+        lora.write_bytes(b"sealed-turbo-lora")
+        support = (
+            managed
+            / "custom_node_assets"
+            / node_id
+            / "h3_silu_temb_grid.safetensors"
+        )
+        support.parent.mkdir(parents=True, exist_ok=True)
+        support.write_bytes(b"sealed-turbo-support-grid")
+        source_root = root / "custom_nodes" / node_id
+        source_root.mkdir(parents=True, exist_ok=True)
+        init_path = source_root / "__init__.py"
+        init_path.write_text("# pinned test node\n", encoding="utf-8")
+        checkout_support = source_root / support.name
+        os.link(support, checkout_support)
+        context = replace(
+            self.make_context(root, profile_id="turbo-profile"),
+            profile_id="turbo-profile",
+            profile_whitelist=(node_id,),
+        )
+        profile = {
+            "id": "turbo-profile",
+            "custom_nodes": [
+                {
+                    "id": node_id,
+                    "path": str(source_root),
+                    "git_commit": "a" * 40,
+                    "version": "1.2.3",
+                    "init_py_sha256": run_recipe.sha256_file(init_path),
+                }
+            ],
+        }
+        contract = {
+            "node_id": node_id,
+            "git_commit": "a" * 40,
+            "version": "1.2.3",
+            "init_py_sha256": run_recipe.sha256_file(init_path),
+            "lora": {
+                "runtime_name": runtime_name,
+                "managed_path": str(lora),
+                "bytes": lora.stat().st_size,
+                "sha256": run_recipe.sha256_file(lora),
+            },
+            "support_asset": {
+                "filename": support.name,
+                "managed_path": str(support),
+                "source_checkout_path": str(checkout_support),
+                "bytes": support.stat().st_size,
+                "sha256": run_recipe.sha256_file(support),
+            },
+            "live_object_info_required": [
+                "MiniMaxH3TurboLoRA",
+                "MiniMaxH3TurboSampler",
+            ],
+        }
+        recipe = {
+            "topology_contract": {"external_node_contract": contract},
+            "prompt": {"16": {"inputs": {"lora_name": runtime_name}}},
+        }
+        return managed, context, profile, recipe, lora, support
+
+    def test_external_node_admission_binds_lora_support_and_live_classes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            managed, context, profile, recipe, _lora, support = self.external_node_fixture(root)
+            object_info = {
+                "MiniMaxH3TurboLoRA": {},
+                "MiniMaxH3TurboSampler": {},
+            }
+            with mock.patch.object(run_recipe, "MANAGED_MODEL_TREE", managed), mock.patch.object(
+                run_recipe, "ACTIVE_FRONT_OFFICE_CONTEXT", context
+            ), mock.patch.object(front_office, "load_enrolled_profile", return_value=profile):
+                evidence = run_recipe.external_node_admission_fingerprints(recipe, object_info)
+
+            self.assertEqual(evidence["node_id"], "ComfyUI-MiniMax-H3-Turbo")
+            self.assertEqual(evidence["lora"]["runtime_name"], recipe["topology_contract"]["external_node_contract"]["lora"]["runtime_name"])
+            self.assertEqual(evidence["support_asset"]["sha256"], run_recipe.sha256_file(support))
+            self.assertTrue(evidence["support_asset"]["same_file"])
+
+    def test_external_node_admission_rejects_changed_lora_or_missing_live_class(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            managed, context, profile, recipe, lora, _support = self.external_node_fixture(root)
+            with mock.patch.object(run_recipe, "MANAGED_MODEL_TREE", managed), mock.patch.object(
+                run_recipe, "ACTIVE_FRONT_OFFICE_CONTEXT", context
+            ), mock.patch.object(front_office, "load_enrolled_profile", return_value=profile):
+                with self.assertRaisesRegex(ValueError, "live node classes are absent"):
+                    run_recipe.external_node_admission_fingerprints(recipe, {})
+                lora.write_bytes(b"changed-turbo-lora")
+                with self.assertRaisesRegex(
+                    run_recipe.PreflightError, "lora bytes or SHA-256 changed"
+                ) as caught:
+                    run_recipe.check_external_node_admission(
+                        recipe,
+                        {
+                            "MiniMaxH3TurboLoRA": {},
+                            "MiniMaxH3TurboSampler": {},
+                        },
+                    )
+            self.assertEqual(caught.exception.check_num, 5)
 
     def test_prepare_namespace_creates_a_missing_fixed_root_under_the_repo(self):
         with tempfile.TemporaryDirectory() as directory:

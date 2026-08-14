@@ -54,6 +54,7 @@ MODELS_MANIFEST = REPO_ROOT / "models_manifest.md"
 RESULTS_LEDGER = REPO_ROOT / "RESULTS.md"
 ENGINE_MATRIX_BETA = REPO_ROOT / "ENGINE_MATRIX_BETA.md"
 COMFYUI_ROOT = Path(r"C:\Users\jeffr\ComfyUI-Installs\ComfyUI\ComfyUI")
+MANAGED_MODEL_TREE = Path(r"C:\ComfyUI-Models")
 MODEL_ROOTS = [
     Path(r"C:\ComfyUI-Models\checkpoints"),
     Path(r"C:\ComfyUI-Models\diffusion_models"),
@@ -1878,6 +1879,7 @@ def capture_provenance_snapshot(recipe_path: Path, recipe_data: Dict[str, Any]) 
             "fixture_sha256s": fixture_sha256s(recipe_data),
             "audio_receipt_sha256s": audio_receipt_sha256s(recipe_data),
             "model_fingerprints": model_fingerprints(recipe_data),
+            "external_node_admission": external_node_admission_fingerprints(recipe_data),
         }
     except Exception as exc:
         return {
@@ -1889,6 +1891,7 @@ def capture_provenance_snapshot(recipe_path: Path, recipe_data: Dict[str, Any]) 
             "fixture_sha256s": {},
             "audio_receipt_sha256s": {},
             "model_fingerprints": {},
+            "external_node_admission": {},
         }
 
 
@@ -1945,6 +1948,256 @@ def model_fingerprints(recipe_data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]
             "mtime_ns": stat.st_mtime_ns,
         }
     return fingerprints
+
+
+def _external_admission_string(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"external_node_contract {label} must be a nonempty string")
+    return value
+
+
+def _external_admission_positive_int(value: Any, label: str) -> int:
+    if not isinstance(value, int) or isinstance(value, bool) or value <= 0:
+        raise ValueError(f"external_node_contract {label} must be a positive integer")
+    return value
+
+
+def _external_admission_sha256(value: Any, label: str) -> str:
+    text = _external_admission_string(value, label)
+    if re.fullmatch(r"[0-9a-f]{64}", text) is None:
+        raise ValueError(f"external_node_contract {label} must be a lowercase SHA-256")
+    return text
+
+
+def _external_admission_managed_file(path_text: Any, label: str) -> Path:
+    """Resolve one recipe-declared model file inside the managed model tree."""
+    import front_office
+
+    try:
+        resolved = front_office.validate_absolute_nonreparse_path(
+            _external_admission_string(path_text, label),
+            f"external_node_contract {label}",
+            "file",
+        )
+        managed_root = front_office.validate_absolute_nonreparse_path(
+            str(MANAGED_MODEL_TREE),
+            "managed model tree",
+            "directory",
+        )
+        resolved.relative_to(managed_root)
+    except (front_office.FrontOfficeError, OSError, RuntimeError, ValueError) as exc:
+        if isinstance(exc, ValueError) and str(exc).startswith("external_node_contract"):
+            raise
+        raise ValueError(
+            f"external_node_contract {label} escapes or cannot resolve under {MANAGED_MODEL_TREE}"
+        ) from exc
+    return resolved
+
+
+def _external_admission_runtime_enum(value: Any, label: str) -> Tuple[str, Path]:
+    """Return one safe Comfy loader enum relative to the managed loras root."""
+    text = _external_admission_string(value, label).replace("\\", "/")
+    if text.startswith("/") or re.match(r"^[A-Za-z]:", text):
+        raise ValueError(f"external_node_contract {label} must be a relative runtime enum")
+    parts = text.split("/")
+    if any(part in {"", ".", ".."} for part in parts):
+        raise ValueError(f"external_node_contract {label} has unsafe path components")
+    return text, Path(*parts)
+
+
+def _external_admission_leaf_filename(value: Any, label: str) -> str:
+    """Reject path syntax where a support asset must be one literal filename."""
+    filename = _external_admission_string(value, label)
+    if filename in {".", ".."} or "/" in filename or "\\" in filename:
+        raise ValueError(f"external_node_contract {label} must be a literal filename")
+    return filename
+
+
+def external_node_admission_fingerprints(
+    recipe_data: Dict[str, Any], object_info: Optional[Mapping[str, Any]] = None
+) -> Dict[str, Any]:
+    """Validate an optional source-pinned external-node admission contract.
+
+    This narrow verifier is intentionally inert for legacy recipes.  A recipe
+    that opts in must prove the exact enrolled custom-node record, its live
+    classes, its model artifact and its node support asset before the prompt
+    may be queued.  Full general model-content admission remains outside this
+    targeted Turbo exception.
+    """
+    topology = recipe_data.get("topology_contract")
+    if not isinstance(topology, dict) or "external_node_contract" not in topology:
+        return {}
+    contract = topology.get("external_node_contract")
+    if not isinstance(contract, dict):
+        raise ValueError("topology_contract.external_node_contract must be an object")
+    required_keys = {
+        "node_id",
+        "git_commit",
+        "version",
+        "init_py_sha256",
+        "lora",
+        "support_asset",
+        "live_object_info_required",
+    }
+    if set(contract) != required_keys:
+        raise ValueError("external_node_contract has unexpected or missing fields")
+
+    context = front_office_context()
+    if context is None:
+        raise ValueError("external_node_contract requires a sealed Front Office profile")
+    node_id = _external_admission_string(contract.get("node_id"), "node_id")
+    if node_id not in context.profile_whitelist:
+        raise ValueError("external_node_contract node_id is not whitelisted by the active profile")
+    git_commit = _external_admission_string(contract.get("git_commit"), "git_commit")
+    if re.fullmatch(r"[0-9a-f]{40}", git_commit) is None:
+        raise ValueError("external_node_contract git_commit must be a full lowercase commit")
+    version = _external_admission_string(contract.get("version"), "version")
+    init_sha256 = _external_admission_sha256(contract.get("init_py_sha256"), "init_py_sha256")
+
+    import front_office
+
+    profile = front_office.load_enrolled_profile(context.profile_id)
+    profile_node = next(
+        (
+            record
+            for record in profile.get("custom_nodes", [])
+            if isinstance(record, dict) and record.get("id") == node_id
+        ),
+        None,
+    )
+    if not isinstance(profile_node, dict):
+        raise ValueError("external_node_contract node_id is absent from the active profile")
+    if (
+        profile_node.get("git_commit") != git_commit
+        or profile_node.get("version") != version
+        or profile_node.get("init_py_sha256") != init_sha256
+    ):
+        raise ValueError("external_node_contract source identity disagrees with the active profile")
+    try:
+        source_root = front_office.validate_absolute_nonreparse_path(
+            _external_admission_string(profile_node.get("path"), "profile node path"),
+            "external_node_contract profile node path",
+            "directory",
+        )
+    except front_office.FrontOfficeError as exc:
+        raise ValueError(
+            "external_node_contract profile node path is not an absolute non-reparse directory"
+        ) from exc
+
+    required_classes = contract.get("live_object_info_required")
+    if (
+        not isinstance(required_classes, list)
+        or not required_classes
+        or any(not isinstance(name, str) or not name for name in required_classes)
+        or len(set(required_classes)) != len(required_classes)
+    ):
+        raise ValueError("external_node_contract live_object_info_required is invalid")
+    if object_info is not None:
+        missing_classes = sorted(name for name in required_classes if name not in object_info)
+        if missing_classes:
+            raise ValueError(
+                "external_node_contract live node classes are absent: "
+                + ", ".join(missing_classes)
+            )
+
+    lora = contract.get("lora")
+    if not isinstance(lora, dict) or set(lora) != {"runtime_name", "managed_path", "bytes", "sha256"}:
+        raise ValueError("external_node_contract lora is malformed")
+    lora_runtime_name, lora_relative_path = _external_admission_runtime_enum(
+        lora.get("runtime_name"), "lora.runtime_name"
+    )
+    if lora_runtime_name not in referenced_model_names(recipe_data):
+        raise ValueError("external_node_contract lora runtime_name is not used by the recipe")
+    lora_path = _external_admission_managed_file(lora.get("managed_path"), "lora.managed_path")
+    expected_lora_path = _external_admission_managed_file(
+        str(MANAGED_MODEL_TREE / "loras" / lora_relative_path),
+        "lora.runtime_name",
+    )
+    if lora_path != expected_lora_path:
+        raise ValueError("external_node_contract lora path disagrees with its runtime enum")
+    lora_bytes = _external_admission_positive_int(lora.get("bytes"), "lora.bytes")
+    lora_sha256 = _external_admission_sha256(lora.get("sha256"), "lora.sha256")
+    if lora_path.stat().st_size != lora_bytes or sha256_file(lora_path) != lora_sha256:
+        raise ValueError("external_node_contract lora bytes or SHA-256 changed")
+
+    support = contract.get("support_asset")
+    support_keys = {"filename", "managed_path", "source_checkout_path", "bytes", "sha256"}
+    if not isinstance(support, dict) or set(support) != support_keys:
+        raise ValueError("external_node_contract support_asset is malformed")
+    support_filename = _external_admission_leaf_filename(
+        support.get("filename"), "support_asset.filename"
+    )
+    support_path = _external_admission_managed_file(
+        support.get("managed_path"), "support_asset.managed_path"
+    )
+    expected_support_path = _external_admission_managed_file(
+        str(MANAGED_MODEL_TREE / "custom_node_assets" / node_id / support_filename),
+        "support_asset.filename",
+    )
+    if support_path != expected_support_path:
+        raise ValueError("external_node_contract support asset path is not the declared managed asset")
+    support_bytes = _external_admission_positive_int(support.get("bytes"), "support_asset.bytes")
+    support_sha256 = _external_admission_sha256(support.get("sha256"), "support_asset.sha256")
+    if support_path.stat().st_size != support_bytes or sha256_file(support_path) != support_sha256:
+        raise ValueError("external_node_contract support asset bytes or SHA-256 changed")
+    try:
+        checkout_support_path = front_office.validate_absolute_nonreparse_path(
+            _external_admission_string(
+                support.get("source_checkout_path"),
+                "support_asset.source_checkout_path",
+            ),
+            "external_node_contract support_asset.source_checkout_path",
+            "file",
+        )
+        expected_checkout_support_path = front_office.validate_absolute_nonreparse_path(
+            str(source_root / support_filename),
+            "external_node_contract expected support checkout path",
+            "file",
+        )
+    except front_office.FrontOfficeError as exc:
+        raise ValueError(
+            "external_node_contract source checkout support path is not an absolute non-reparse file"
+        ) from exc
+    if checkout_support_path != expected_checkout_support_path:
+        raise ValueError("external_node_contract source checkout support path disagrees with the profile")
+    try:
+        same_support_file = os.path.samefile(support_path, checkout_support_path)
+    except OSError as exc:
+        raise ValueError("external_node_contract support asset hard-link proof failed") from exc
+    if not same_support_file:
+        raise ValueError("external_node_contract support asset is not the managed source-checkout file")
+
+    return {
+        "node_id": node_id,
+        "git_commit": git_commit,
+        "version": version,
+        "init_py_sha256": init_sha256,
+        "live_object_info_required": list(required_classes),
+        "lora": {
+            "runtime_name": lora_runtime_name,
+            "path": str(lora_path),
+            "bytes": lora_bytes,
+            "sha256": lora_sha256,
+        },
+        "support_asset": {
+            "filename": support_filename,
+            "path": str(support_path),
+            "source_checkout_path": str(checkout_support_path),
+            "bytes": support_bytes,
+            "sha256": support_sha256,
+            "same_file": True,
+        },
+    }
+
+
+def check_external_node_admission(
+    recipe_data: Dict[str, Any], object_info: Mapping[str, Any]
+) -> Dict[str, Any]:
+    """Preflight Check #5 extension for an opted-in external-node contract."""
+    try:
+        return external_node_admission_fingerprints(recipe_data, object_info)
+    except ValueError as exc:
+        raise PreflightError(5, "External node admission", str(exc)) from exc
 
 
 def probe_media_metrics(path: Path) -> Dict[str, Any]:
@@ -8377,6 +8630,12 @@ def run_all_preflights(
     check_models_exist(recipe_data)
     print("  [OK] Check 5: All referenced models exist in models_manifest.md")
 
+    queued_external_node_admission = check_external_node_admission(
+        recipe_data, object_info
+    )
+    if queued_external_node_admission:
+        print("  [OK] Check 5: External-node admission assets and live classes match")
+
     check_installed_schema_contract(recipe_data, system_stats)
     check_widget_integrity(recipe_data, object_info)
     print("  [OK] Check 6: Widget integrity and frozen topology schema verified")
@@ -8402,6 +8661,7 @@ def run_all_preflights(
         manager_offline_probe,
         preboot_gpu_idle_gate,
         preboot_gpu_idle_gate_sidecar,
+        queued_external_node_admission,
     )
 
 
@@ -8693,6 +8953,7 @@ def main():
                 queued_manager_probe_evidence,
                 queued_preboot_gpu_idle_gate,
                 queued_preboot_gpu_idle_gate_sidecar,
+                queued_external_node_admission,
             ) = run_all_preflights(
                 recipe_path,
                 recipe_data,
@@ -8770,6 +9031,8 @@ def main():
                 prequeue_known_workload_scan_contract()
             ),
         }
+        if queued_external_node_admission:
+            identity_payload["external_node_admission"] = queued_external_node_admission
         if active_front_office_context is not None:
             # A one-shot spec's nonce and full envelope digest are recorded in
             # the receipt but deliberately excluded from warm identity.  The
@@ -9024,6 +9287,7 @@ def main():
             final_fixture_sha256s = final_provenance["fixture_sha256s"]
             final_audio_receipt_sha256s = final_provenance["audio_receipt_sha256s"]
             final_model_fingerprints = final_provenance["model_fingerprints"]
+            final_external_node_admission = final_provenance["external_node_admission"]
             final_manager_probe_evidence: Dict[str, Any] = {
                 "enabled": False,
                 "default_manager_disabled": True,
@@ -9107,6 +9371,16 @@ def main():
                             "Front Office profile/spec validation failed after render: "
                             f"{type(exc).__name__}: {exc}"
                         )
+            external_node_admission_unchanged = (
+                final_external_node_admission == queued_external_node_admission
+            )
+            if (
+                not external_node_admission_unchanged
+                and not final_provenance["error"]
+            ):
+                final_provenance["error"] = (
+                    "External node admission assets/source identity changed during render"
+                )
             provenance_unchanged = (
                 final_provenance["valid"]
                 and final_recipe_sha256 == queued_recipe_sha256
@@ -9115,6 +9389,7 @@ def main():
                 and final_fixture_sha256s == queued_fixture_sha256s
                 and final_audio_receipt_sha256s == queued_audio_receipt_sha256s
                 and final_model_fingerprints == queued_model_fingerprints
+                and external_node_admission_unchanged
                 and manager_probe_unchanged
                 and server_instance_unchanged
                 and front_office_provenance_unchanged
@@ -9299,6 +9574,11 @@ def main():
                 "fixture_sha256s": queued_fixture_sha256s,
                 "audio_receipt_sha256s": queued_audio_receipt_sha256s,
                 "model_fingerprints": queued_model_fingerprints,
+                **(
+                    {"external_node_admission": queued_external_node_admission}
+                    if queued_external_node_admission
+                    else {}
+                ),
                 "provenance_unchanged": provenance_unchanged,
                 "provenance_validation_error": final_provenance["error"],
                 "run_identity_sha256": run_identity_sha256,

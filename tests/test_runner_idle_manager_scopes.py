@@ -1522,6 +1522,7 @@ class IdleGatePlumbingTests(unittest.TestCase):
 
     def test_run_all_preflights_returns_receipt_idle_evidence_separately(self):
         marker = run_recipe._idle_owned_server_reuse_evidence(self.server_instance)
+        external_admission = {"node_id": "sealed-external-node"}
         sidecar = {
             "path": str(run_recipe.SERVER_IDLE_GATE_FILE.resolve()),
             "bytes": 1,
@@ -1542,6 +1543,11 @@ class IdleGatePlumbingTests(unittest.TestCase):
             mock.patch.object(run_recipe, "fetch_object_info", return_value={}),
             mock.patch.object(run_recipe, "check_nodes_exist"),
             mock.patch.object(run_recipe, "check_models_exist"),
+            mock.patch.object(
+                run_recipe,
+                "check_external_node_admission",
+                return_value=external_admission,
+            ) as check_external_node_admission,
             mock.patch.object(run_recipe, "check_installed_schema_contract"),
             mock.patch.object(run_recipe, "check_widget_integrity"),
             mock.patch.object(run_recipe, "check_affordability"),
@@ -1564,6 +1570,8 @@ class IdleGatePlumbingTests(unittest.TestCase):
             )
         self.assertEqual(returned[4], marker)
         self.assertEqual(returned[5], sidecar)
+        self.assertEqual(returned[6], external_admission)
+        check_external_node_admission.assert_called_once_with({"prompt": {}}, {})
         self.assertNotIn(run_recipe.GPU_IDLE_INTERNAL_STATS_KEY, returned[0])
         self.assertNotIn(run_recipe.GPU_IDLE_SIDECAR_INTERNAL_STATS_KEY, returned[0])
 
