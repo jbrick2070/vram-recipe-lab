@@ -1,4 +1,4 @@
-# RTX 4060: update, verify, admit, stop
+# RTX 4060 action-demo: update, verify, admit, stop
 
 This is the current laptop handoff. It supersedes the older hardware-only
 instruction. The laptop may already have two local commits for its hardware
@@ -48,7 +48,7 @@ arbitrary environment.
 All three must pass before any admission action. If one fails, stop and report
 the exact command and output. Do not edit around it without a new instruction.
 
-## 3. Create only private local enrollment files
+## 3. First-time private enrollment only (skip if already enrolled)
 
 This step writes **ignored** files under `eightgb_bench/local/`; do not stage
 or commit them. Copy these templates:
@@ -83,12 +83,30 @@ Copy values into the ignored profile locally, then rerun that command until it
 returns `READY_FOR_HUMAN_BOOT_APPROVAL`. Do not paste raw UUIDs, absolute paths,
 or hashes into chat or Git.
 
-## 4. Perform one controlled no-prompt admission
+## 4. Select the fixed action-demo cell
+
+The current selected cell is `h3-mime-i2v-action-demo-f90`. It is a fixed,
+prompt-only story cell with its own private launch config and its own evidence
+ladder. It never inherits sentinel or motion-demo warmth, artifacts, or review.
+
+If the existing private profile and sentinel launch config already validate,
+do not overwrite them. Stage only the runner-derived ignored action config,
+then run the action-specific inventory preflight:
+
+```powershell
+& <laptop-Comfy-python.exe> -B .\eightgb_bench\runner_4060.py stage-action-config --profile physical-rtx4060-8gb
+& <laptop-Comfy-python.exe> -B .\eightgb_bench\preflight_4060.py preflight --profile physical-rtx4060-8gb --plan h3-mime-i2v-action-demo-f90 --write-receipt
+```
+
+Require `READY_FOR_HUMAN_BOOT_APPROVAL`. The profile, raw UUID, local paths,
+and full asset hashes remain private under `eightgb_bench/local/`.
+
+## 5. Perform one controlled no-prompt admission
 
 Only after the profile is ready, run:
 
 ```powershell
-& <laptop-Comfy-python.exe> -B .\eightgb_bench\runner_4060.py admit --profile physical-rtx4060-8gb
+& <laptop-Comfy-python.exe> -B .\eightgb_bench\runner_4060.py admit --profile physical-rtx4060-8gb --plan h3-mime-i2v-action-demo-f90
 ```
 
 This starts an owned Sage-free, Manager-free, reserve-free ComfyUI process on
@@ -96,5 +114,7 @@ This starts an owned Sage-free, Manager-free, reserve-free ComfyUI process on
 and shuts it down. It must not queue a video prompt.
 
 Return only: the status, receipt filenames and hashes, whether shutdown passed,
-and any blocker. Do not start the cold/warm render sequence until the lead
-controller reviews this admission result.
+and any blocker. Stop after admission; do not start the cold/warm render
+sequence until the lead controller reviews this local immutable result. See
+[`eightgb_bench/README.md`](../eightgb_bench/README.md) for the durable
+action-demo and review policy.
