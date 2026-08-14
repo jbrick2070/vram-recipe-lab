@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "document_type": "handoff_census_receipt_revision",
+  "generated_at": "2026-08-13T23:56:24.8400016-07:00",
+  "purpose": "Refresh the living Runner Division and H3 handoff census after adding one sealed current-profile H3 native-A/V recipe. No repository outside this lab was modified.",
+  "previous_receipt": "research/handoff_census_2026-08-12.json",
+  "sources": {
+    "vram_recipe_lab": {
+      "repository": "vram-recipe-lab",
+      "branch": "main",
+      "commit": "ca929db50556600607f3cf4be1c19e114aa5a421",
+      "active_run_recipe_sha256": "c3c064f7da426083ffe47a0f144843d62bbdadc9bc69b7127eb8681cf5386365",
+      "read_surface": "git-tracked files only at the named commit; untracked files were excluded"
+    },
+    "otr": {
+      "repository": "ComfyUI-OldTimeRadio",
+      "branch": "v2.0-alpha",
+      "commit": "c06128daa181ff802bc3bf79112e539eda1d8a02",
+      "read_surface": "unchanged read-only OTR snapshot carried forward from research/handoff_census_2026-08-12.json; no OTR working-tree operation was performed for this lab-only revision"
+    }
+  },
+  "method": {
+    "recipe_count": "Count `git ls-files recipes/*.json` at the named lab commit.",
+    "alias_selection": "Inspect only tracked top-level `results/<stem>.json` files: require direct parent `results`, exclude a stem containing `_run`, parse JSON, and retain an object only when `recipe == stem`. Nested Front Office receipts under `results/runs/` are intentionally outside this historical-alias predicate.",
+    "same_name_current_alias": "A selected alias whose stem is a checked-in recipe stem.",
+    "orphan_alias": "A selected alias whose stem is not a checked-in recipe stem.",
+    "modern_schema": "Selected same-name alias with integer `receipt_schema_version >= 2`; all other selected same-name aliases are legacy.",
+    "appearing_warm": "Selected same-name alias whose string `status` starts with `PASS` and does not contain `(cold)`, case-insensitive. This is a display predicate, not a promotion verdict.",
+    "active_runner_binding": "Recursively search selected alias JSON values for exact equality with the active `run_recipe.py` SHA-256.",
+    "otr_carry_forward": "Retain the unchanged profile/lane/Sage correction counts from the named read-only OTR snapshot in the prior census receipt."
+  },
+  "lab_census": {
+    "checked_in_recipe_count": 83,
+    "selected_top_level_alias_count": 76,
+    "same_name_current_alias_count": 70,
+    "recipes_without_same_name_alias_count": 13,
+    "recipes_without_same_name_alias": [
+      "h3_i2v_canonical_832x480_f192",
+      "h3_i2v_canonical_832x480_f277",
+      "h3_i2v_current_profile_av_smoke",
+      "h3_music_followup_origin_prompt_only_no_picture_sentence_seed42_f124",
+      "h3_r2v_refaudio_canonical_832x480_f107_seed43",
+      "h3_r2v_refaudio_canonical_832x480_f192_seed43",
+      "h3_r2v_refaudio_canonical_832x480_f277_seed43",
+      "h3_r2v_refaudio_static_control",
+      "ltx_audio_fullhd_experimental",
+      "ltx_i2v_ckpt",
+      "ltx_i2v_fullhd_experimental",
+      "ltx_t2v_ckpt",
+      "ltx_t2v_fullhd_experimental"
+    ],
+    "orphan_alias_count": 6,
+    "orphan_aliases": [
+      "ltx_audio_high",
+      "ltx_audio_low",
+      "ltx_i2v_high",
+      "ltx_i2v_low",
+      "ltx_t2v_high",
+      "ltx_t2v_low"
+    ],
+    "receipt_schema_split": {
+      "modern": 58,
+      "modern_v3": 57,
+      "modern_v2": 1,
+      "legacy": 12
+    },
+    "aliases_appearing_warm": 29,
+    "promotion_ready_aliases": 6,
+    "active_runner_bound_aliases": [],
+    "active_runner_bound_alias_count": 0,
+    "promotion_ready_aliases_binding_active_runner": 0,
+    "front_office_nested_receipt_note": "The current Front Office t2i plumbing receipt is under results/runs/ and is intentionally not counted as a top-level historical alias.",
+    "r0_scope": "all 83 checked-in recipe JSON files"
+  },
+  "otr_census": {
+    "tracked_profile_json_count_excluding_widget_mapping": 51,
+    "shipping_profile_rows": 32,
+    "unique_video_engine_ids": 22,
+    "h3_shipping_profile_rows": 4,
+    "registered_h3_contracts": [
+      "h3_low_video",
+      "h3_low_audio_in"
+    ],
+    "closed_lane_receipt_packets": 21,
+    "all_lane_headers_pass": true,
+    "h3_lane_packets": [
+      "lane19-h3_low_video: registered adapter, PASS",
+      "lane20-h3_low_audio_in: registered adapter, PASS",
+      "lane21-h3_low_mime: standalone and deliberately unregistered runner, PASS"
+    ]
+  },
+  "sage_attention_metadata": {
+    "field": "launch.sage_attention",
+    "status": "DEAD_UNWIRED_PROFILE_METADATA",
+    "finding": "No OTR launcher passes --use-sage-attention; production runs Sage-free, so the lab Sage-free boot is production parity.",
+    "runtime_safeguard": "The distinct H3 assert_sage_not_patched check remains live and is not the dead metadata field.",
+    "required_resolution": "DELETE_FROM_PROFILE_SCHEMA_OR_WIRE_END_TO_END",
+    "may_justify_runner_architecture": false
+  }
+}
