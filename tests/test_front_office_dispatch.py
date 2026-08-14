@@ -61,6 +61,8 @@ class FrontOfficeDispatchTests(unittest.TestCase):
                 "USERPROFILE": "C:\\Users\\jeffr",
                 "HOMEDRIVE": "C:",
                 "HOMEPATH": "\\Users\\jeffr",
+                "ProgramFiles": "C:\\Program Files",
+                "ProgramW6432": "C:\\Program Files",
                 "LOCALAPPDATA": "C:\\Users\\jeffr\\AppData\\Local",
                 "APPDATA": "C:\\Users\\jeffr\\AppData\\Roaming",
             },
@@ -88,6 +90,8 @@ class FrontOfficeDispatchTests(unittest.TestCase):
         self.assertEqual(child_environment["SystemRoot"], "C:\\Windows")
         self.assertEqual(child_environment["USERNAME"], "Jeffrey")
         self.assertEqual(child_environment["USERPROFILE"], "C:\\Users\\jeffr")
+        self.assertEqual(child_environment["ProgramFiles"], "C:\\Program Files")
+        self.assertEqual(child_environment["ProgramW6432"], "C:\\Program Files")
         self.assertEqual(child_environment["LOCALAPPDATA"], "C:\\Users\\jeffr\\AppData\\Local")
         self.assertNotIn("LAB_RESERVE_VRAM_GB", child_environment)
         self.assertNotIn("CUDA_VISIBLE_DEVICES", child_environment)

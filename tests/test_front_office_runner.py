@@ -198,6 +198,29 @@ class FrontOfficeRunnerTests(unittest.TestCase):
             self.assertTrue((root / "results" / "runs").is_dir())
             self.assertTrue(target.is_dir())
 
+    def test_runtime_environment_retains_only_required_windows_programfiles(self):
+        with mock.patch.dict(
+            os.environ,
+            {
+                "ProgramFiles": "C:\\Program Files",
+                "ProgramW6432": "C:\\Program Files",
+                "CUDA_VISIBLE_DEVICES": "7",
+            },
+            clear=True,
+        ):
+            environment = run_recipe._front_office_runtime_environment(
+                {
+                    "PYTHONUTF8": "1",
+                    "PYTHONIOENCODING": "utf-8",
+                    "HF_HOME": "C:\\models\\huggingface",
+                },
+                Path("C:/trusted/temp"),
+            )
+
+        self.assertEqual(environment["ProgramFiles"], "C:\\Program Files")
+        self.assertEqual(environment["ProgramW6432"], "C:\\Program Files")
+        self.assertNotIn("CUDA_VISIBLE_DEVICES", environment)
+
     def test_activation_replaces_spec_token_with_only_the_pinned_recipe_and_shutdown(self):
         with tempfile.TemporaryDirectory() as directory:
             context = self.make_context(Path(directory))

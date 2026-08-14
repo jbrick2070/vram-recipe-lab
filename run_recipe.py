@@ -536,6 +536,12 @@ def _front_office_runtime_environment(
         "HOMEDRIVE",
         "HOMEPATH",
         "ProgramData",
+        # Keep the same non-selector Windows runtime substrate used by the
+        # dispatcher.  On this machine nvidia-smi uses ProgramFiles to find
+        # its local NVML support, so the existing GPU-idle safety gate cannot
+        # run without it.
+        "ProgramFiles",
+        "ProgramW6432",
         "LOCALAPPDATA",
         "APPDATA",
     )

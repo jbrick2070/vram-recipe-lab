@@ -35,6 +35,12 @@ _OS_RUNTIME_ENVIRONMENT = (
     "HOMEDRIVE",
     "HOMEPATH",
     "ProgramData",
+    # NVIDIA's Windows utility resolves local NVML support through this
+    # ordinary OS location variable.  It is not a model, CUDA, or attention
+    # selector; leaving it out makes the idle gate's local nvidia-smi query
+    # fail before the runner can inspect GPU ownership.
+    "ProgramFiles",
+    "ProgramW6432",
     "LOCALAPPDATA",
     "APPDATA",
 )
