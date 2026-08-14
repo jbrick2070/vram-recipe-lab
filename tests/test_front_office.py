@@ -314,7 +314,7 @@ class FrontOfficeReceiptTests(unittest.TestCase):
 
     def test_r0_census_reaches_every_current_recipe_without_gpu_or_server(self):
         report = front_office.r0_static_census()
-        self.assertEqual(report["recipe_count"], 82)
+        self.assertEqual(report["recipe_count"], 83)
         self.assertEqual(report["recipe_json_bom_errors"], [])
         self.assertFalse(report["gpu_or_server_touched"])
         self.assertEqual(report["direct_launch"], "SEALED_DIRECT_DISPATCH_AVAILABLE")
@@ -325,3 +325,48 @@ class FrontOfficeReceiptTests(unittest.TestCase):
                 for item in report["profile_results"]
             )
         )
+
+    def test_current_h3_native_av_smoke_is_a_sealed_current_profile_cell(self):
+        campaign = front_office.load_campaign("front-office-h3-current-r1")
+        self.assertEqual(campaign["status"], front_office.CAMPAIGN_STATUS_READY_FOR_DISPATCH)
+        self.assertEqual(campaign["profiles"], ["comfy0320-h3"])
+        self.assertEqual(campaign["cells"], [{
+            "id": "i2v-native-av-smoke",
+            "recipe": "h3_i2v_current_profile_av_smoke.json",
+            "role": "control",
+            "phase": "sealed-one-shot-current-profile-native-av",
+            "profiles": ["comfy0320-h3"],
+        }])
+        recipe = json.loads(
+            (front_office.RECIPE_DIR / campaign["cells"][0]["recipe"]).read_text(encoding="utf-8")
+        )
+        topology = recipe["topology_contract"]
+        self.assertEqual(recipe["name"], "h3_i2v_current_profile_av_smoke")
+        self.assertEqual(topology["installed_schema"]["comfyui_version"], "0.32.0")
+        self.assertEqual(topology["installed_schema"]["git_commit"], "c2bcbecd82ec5ae66594340b395c24ef0217b238")
+        self.assertEqual(topology["installed_schema"]["node_source"], "comfy_extras/nodes_minimax_h3.py")
+        self.assertEqual(topology["installed_schema"]["node_source_sha256"], "f767df4074b908efb345f5a87c2fd263ba82c12e65bcca932846207cc213e064")
+        self.assertEqual(recipe["prompt"]["10"]["inputs"]["audio"], ["15", 0])
+        self.assertEqual(recipe["prompt"]["12"]["inputs"]["filename_prefix"], "h3_i2v_current_profile_av_smoke_out")
+
+    def test_current_h3_native_av_smoke_preserves_the_mime_graph_except_its_output_prefix(self):
+        base = json.loads(
+            (front_office.RECIPE_DIR / "h3_mime_i2v.json").read_text(encoding="utf-8")
+        )
+        clone = json.loads(
+            (front_office.RECIPE_DIR / "h3_i2v_current_profile_av_smoke.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        expected_prompt = copy.deepcopy(base["prompt"])
+        expected_prompt["12"]["inputs"]["filename_prefix"] = "h3_i2v_current_profile_av_smoke_out"
+        self.assertEqual(clone["prompt"], expected_prompt)
+        self.assertEqual(clone["contract"], base["contract"])
+        self.assertEqual(clone["receipt_requirements"], base["receipt_requirements"])
+        spec = front_office.build_execution_spec(
+            "front-office-h3-current-r1", "i2v-native-av-smoke", "comfy0320-h3", "a" * 32
+        )
+        self.assertEqual(
+            spec["semantic"]["recipe"]["path"], "recipes/h3_i2v_current_profile_av_smoke.json"
+        )
+        self.assertEqual(spec["semantic"]["campaign"]["id"], "front-office-h3-current-r1")
