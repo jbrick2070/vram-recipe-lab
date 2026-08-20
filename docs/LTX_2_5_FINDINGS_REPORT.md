@@ -35,7 +35,8 @@ headroom at worst. Close your browser.
 (8 vs 20), when guidance changed (CFG 1.0 vs 3.0), when quantization changed (Q3_K_M
 vs Q5_K_M), or when mode changed (t2v / i2v / a2v). The floor is set by the weights
 and the decode, not by sampler settings. If you are trying to fit LTX 2.5 into 14 GB
-by lowering steps, that is not a lever. An 8 GB card cannot host this model at all.
+by lowering steps, that is not a lever. Sixteen gigabytes is the requirement here, not a
+recommendation.
 
 **3. Without a loader patch, the audio never loads.** ComfyUI-GGUF cannot load LTX 2.5
 out of the box, for two unrelated reasons — and the second one silently disables the
@@ -146,7 +147,9 @@ quantization swapped — [`a2v_gguf`](../results/ltx_2_5_a2v_gguf.json) against
 - **In-graph 2x latent upscaling** — forces a 1664x960x97 decode and hard-OOMs. Run it as a
   separate offline pass instead. Observed; no receipt filed.
 - **Any canvas past 832x480**, including 1024x576.
-- **8 GB cards.** The measured floor is 15.47 GiB. This is not a tuning problem.
+- **Anything under 16 GB.** The floor sits at 15.47 GiB with every setting turned down, so the
+  model needs a card that can address roughly 16 GB. That is arithmetic from the measured floor,
+  not a separate test.
 
 ---
 
@@ -169,7 +172,10 @@ class, not of prompt wording.
   budget this lab sets for itself**, not against the hardware. Every one of them produced
   valid output. If you do not share that budget, read those rows as passes.
 - **One machine, one canvas, one frame count.** 832x480x97 at 25 fps is the only geometry
-  with receipts. Nothing here generalizes to other cards by arithmetic.
+  with receipts, on one 16 GB card. The binding constraint is a memory floor rather than anything
+  architecture-specific, so the same settings should hold on other 16 GB NVIDIA cards running the
+  same stack — but that is an expectation, not a measurement. Nothing here was tested on a second
+  GPU.
 - **No weights were quantized, retrained, or modified here.** The only code change is the
   loader patch above.
 

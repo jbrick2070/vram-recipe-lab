@@ -1,21 +1,27 @@
 # SEVENTY-SEVEN SECONDS
 ### LTX 2.5 with native audio on one 16 GB laptop GPU — the graphs that ran and the numbers they hit
 
-**Estimated runtime:** ~4:17 (≈145 wpm, dry narration)
+**Estimated runtime:** ~4:15 (≈145 wpm, dry narration)
 **Visual style:** NVIDIA x LTX hybrid — isometric carbon bench with green telemetry hardware feeding violet cinematic shot cards
 **Audio:** dry narration, no music (one non-musical cue — see AUDIO SYSTEM)
 **Pipeline:** NotebookLM-compatible scene blocks
 **Palette:** locked — carbon (#0C0E10), NVIDIA green (#76B900), LTX violet (#8A5CF6), paper-white (#F2EFE8)
 **Data convention:** SOLID NVIDIA green = measured on this bench, receipt-bound · DASHED LTX violet = not receipted here — upstream claim, unrun recipe, or an observation with no receipt filed
 **Scene count:** 9 (+ end card)
-**Narration word count:** ~622
+**Narration word count:** ~616
+
+**v4 changes from v3:**
+- Removed the second-machine comparison entirely. The scope of this script is one 16 GB NVIDIA
+  card, and nothing else is a finding.
+- Scene 02 now closes on the requirement (16 GB, not a recommendation) and marks other 16 GB cards
+  as an expectation, untested here.
+- End card and production notes no longer carry operator hardware that has no receipt.
 
 **v3 changes from v2:**
 - Corrected the central error in v2. The lab **does** have LTX 2.5 evidence: 16 measured cells dated 2026-08-19, 20 recipes, a loader patch, and a published guide. v2 was written against a stale `main` and wrongly said zero. Every 2.5 beat is now receipt-bound and green.
 - Subject narrowed from "LTX on the 5080" to LTX 2.5 specifically, per the working set in `LTX_2_5_ON_16GB.md`.
 - Added the loader-patch scene — without it the native audio path does not load at all.
 - Added the six graph tripwires, the Q3-vs-Q5 A/B, and the "what FAIL means here" scene.
-- 4060 hardware beat reframed: 2.5's measured floor rules that machine out, and the script says so.
 
 ---
 
@@ -61,15 +67,16 @@ hardware.
 **VISUAL:** The 5080 chassis in green wireframe with a vertical VRAM meter beside it. Sixteen run
 markers stack up the meter and land in a band so tight it reads as one line. A paper-white card
 ceiling sits just above at 15.92, and the gap between them is drawn with a caliper too small for
-its own label. Off to the right in dashed violet, the 4060 chassis sits at half the meter's height.
+its own label. Off to the right, a single dashed violet ghost chassis stands unlabeled and empty —
+every other 16-gigabyte card, none of them tested here.
 
 **NARRATION:** Sixteen runs. Peak video memory: 15.47 to 15.60 gibibytes. That band did not move
 when the lab changed steps, changed guidance, changed quantisation, or changed mode. It is set by
 the weights and the decode, not by your sampler. On a card that addresses 15.92, the headroom is
-0.32 gibibytes. It fits, and it fits by almost nothing. The 8-gigabyte laptop next to it is not a
-tuning problem. It is simply out.
+0.32 gibibytes. It fits, and it fits by almost nothing. Sixteen gigabytes is the requirement here,
+not a recommendation.
 
-**ON-SCREEN TEXT:** 16 RUNS · PEAK 15.47–15.60 GiB · CARD 15.92 GiB · HEADROOM 0.32 GiB — RTX 4060 · 8188 MiB · CANNOT HOST THIS
+**ON-SCREEN TEXT:** 16 RUNS · PEAK 15.47–15.60 GiB · CARD 15.92 GiB · HEADROOM 0.32 GiB · 16 GB REQUIRED
 
 **TRANSITION:** The meter dims. A single node panel slides in front of the bench, cracked open.
 
@@ -215,13 +222,13 @@ SOURCES — MEASURED (SOLID)
 SOURCES — NOT RECEIPTED HERE (DASHED)
 • 161-frame multishot and in-graph 2x upscale limits — observed during exploration, no receipt filed
 • Quality of any output — no human review exists yet on any 2.5 cell
-• RTX 4060 box, i9-13900, 32 GB RAM — operator-reported; no receipt records the CPU
+• Behavior on any other 16 GB NVIDIA card — expected from the memory floor, never measured here
 
 ---
 
-**Runtime estimate:** ~4:17 at ≈145 wpm
+**Runtime estimate:** ~4:15 at ≈145 wpm
 **Scene count:** 9 (+ end card)
-**Narration word count:** ~622
+**Narration word count:** ~616
 
 **Production notes:**
 - Scene 02 is the load-bearing beat: the flat 15.47–15.60 band across sixteen runs is the finding
@@ -229,4 +236,3 @@ SOURCES — NOT RECEIPTED HERE (DASHED)
 - Scene 03 is the one that saves a viewer a wasted evening. Do not compress it for time.
 - Scene 08 must not be cut. Without it the script claims quality it has not earned.
 - If runtime must come down: Scene 06 can fold into Scene 04 as a single line, saving ~35 seconds.
-- Confirm the CPU suffix (H, HX, or HK) before render — no receipt in the repository records it.
