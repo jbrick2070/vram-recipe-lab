@@ -112,10 +112,16 @@ To support physical 8 GB GPUs (e.g. RTX 4060 Laptop GPU, desktop RTX 3060/4060) 
 * **Adapter File**: `nodes/_otr_video_engines/eng_ltx_audio_hq.py`
 * **Model Backbone**: LTX-Video GGUF Q4_K_M + GGUF Text Encoder + Dual Latent AV Decoder.
 * **Canvas & Duration**: **`1024x576 @ 25.0 fps`** (Upgrade over legacy 832x480), $8k + 1$ frames (97 frames = 3.88s, 193 frames = 7.72s).
-* **Measured Performance**:
+* **Measured Performance (RTX 5080 Laptop bench — NOT measured on an 8 GB card)**:
   * **Peak VRAM**: **7.06 GiB** (97f) / **7.36 GiB** (193f).
+  * **Peak Host RAM**: **44.98 GB** (97f) / **34.19 GB** (193f).
   * **Warm Wall-Clock**: 248.5s (97f) / 585.3s (193f).
-* **Key Capabilities**: Higher spatial quality widescreen on 8 GB cards without exceeding the 7.50 GB ceiling.
+* **8 GB status — UNCONFIRMED**: unlike Engines 1 and 2, this engine has no physical 8 GB receipt.
+  Its VRAM sits under the 7.50 GB ceiling, but both measured legs drew **34–45 GB of host RAM**,
+  which exceeds the 32 GB system memory of the 8 GB reference laptop. Host RAM, not VRAM, is the
+  open gate here. Treat this as a 16 GB-bench measurement pending an 8 GB confirmation run; the
+  companion spec correspondingly scopes this lane to *"safe on 12 GB and 16 GB hardware."*
+* **Key Capabilities**: Higher spatial quality widescreen without exceeding the 7.50 GB VRAM ceiling.
 
 ---
 
@@ -152,7 +158,7 @@ To satisfy OTR's `VIDEO_LANE_PREFLIGHT.md` requirements, every engine registers 
 |---|---|---|---|---|---|---|---|---|---|---|
 | **`h3_lowvram`** | `EngH3LowVram` | **24.0** | **$17k + 5$** | 22f (0.92s) | 192f (8.00s) | **YES** (`first_frame`) | **YES** (`last_frame`) | Joint Native | `864x480` | **7.21 GiB** (8 GB Card) |
 | **`h3_audioin_lowvram`** | `EngH3AudioInLowVram` | **24.0** | **$17k + 5$** | 22f (0.92s) | 192f (8.00s) | **YES** (`<Picture 1>`) | NO | **YES** (`<Audio 1>`) | `864x480`, `1024x576` | **7.00 GiB** (8 GB Card) |
-| **`ltx_audio_hq`** | `EngLTXAudioHQ` | **25.0** | **$8k + 1$** | 97f (3.88s) | 193f (7.72s) | **YES** (`first_frame`) | **YES** (`last_frame`) | Joint Native | `1024x576`, `832x480` | **7.36 GiB** (8 GB Card) |
+| **`ltx_audio_hq`** | `EngLTXAudioHQ` | **25.0** | **$8k + 1$** | 97f (3.88s) | 193f (7.72s) | **YES** (`first_frame`) | **YES** (`last_frame`) | Joint Native | `1024x576`, `832x480` | **7.36 GiB** (5080-measured; 8 GB **unconfirmed** — 34.19 GB host RAM) |
 | **`ltx_distilled`** | `EngLTXDistilled` | **25.0** | **$8k + 1$** | 25f (1.00s) | 193f (7.72s) | **YES** (`first_frame`) | **YES** (`last_frame`) | None | `832x480`, `480x832` | **13.11 GiB** (16 GB Card) |
 | **`humo_diet_hero`** | `EngHuMoDiet` | **25.0** | **$8k + 1$** | 97f (3.88s) | 129f (5.16s) | **YES** (`first_frame`) | NO | **YES** (`audio`) | `480x832`, `832x480` | **12.84 GiB** (16 GB Card) |
 | **`wan_ti2v`** *(Legacy)* | `EngWanTI2V` | **16.0** | **$4k + 1$** | 17f (1.06s) | 81f (5.06s) | **YES** (`first_frame`) | NO | None | `832x480` | **12.10 GiB** (16 GB Card) |
@@ -326,7 +332,7 @@ gantt
 - [ ] **`[OTR-P1-02]`** Verify kinetic motion filter injected into `compose_still_word_prompt` / `compose_char_scene_prompt` — strips damping adjectives, mandates kinetic verbs/camera vectors.
 - [ ] **`[OTR-P2-01]`** `eng_h3_lowvram.py` passes `assert_usable()` and `render_clip()` produces 864x480 action clips under **7.50 GiB VRAM** on 8 GB cards.
 - [ ] **`[OTR-P2-02]`** `eng_h3_audioin_lowvram.py` passes `assert_usable()` and `render_clip()` produces 16:9 dialogue clips with synchronized lips under **7.50 GiB VRAM**.
-- [ ] **`[OTR-P2-03]`** `eng_ltx_audio_hq.py` passes `assert_usable()` and generates 1024x576 dual-latent AV clips under **7.50 GiB VRAM**.
+- [ ] **`[OTR-P2-03]`** `eng_ltx_audio_hq.py` passes `assert_usable()` and generates 1024x576 dual-latent AV clips under **7.50 GiB VRAM**, **and records peak host RAM on the target machine**. The 5080-bench legs drew 34-45 GB of host RAM, so an 8 GB / 32 GB box must be confirmed rather than assumed.
 - [ ] **`[OTR-P3-01]`** Verify HuMo 1.7B clamp-13 boot wrapper prevents spikes > 13.5 GiB.
 - [ ] **`[OTR-P3-02]`** `eng_ltx_distilled.py` delivers warm takes in under 20 seconds for rapid episode drafting.
 - [ ] **`[OTR-P3-03]`** Verify ComfyUI boots with `--disable-pinned-memory` and `sage-free` on Blackwell `sm_120`.
