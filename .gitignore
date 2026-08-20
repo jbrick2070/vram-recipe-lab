@@ -12,3 +12,5 @@ __pycache__/
 .front_office_state/
 logs/
 eightgb_bench/local/
+.server.idle-gate.json
+scratch/
