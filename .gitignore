@@ -13,4 +13,5 @@ __pycache__/
 logs/
 eightgb_bench/local/
 .server.idle-gate.json
-scratch/
+scratch/*.log
+scratch/.cache/
