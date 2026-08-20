@@ -1,0 +1,526 @@
+{
+  "75": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "405",
+        0
+      ],
+      "filename_prefix": "video/LTX_2.5_t2v"
+    }
+  },
+  "409": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "megapixels": "16:9 (Widescreen)",
+      "multiple": 0.9
+    }
+  },
+  "370": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "374",
+        0
+      ],
+      "audio": [
+        "358",
+        0
+      ],
+      "fps": [
+        "359",
+        0
+      ],
+      "bit_depth": 8
+    }
+  },
+  "340": {
+    "class_type": "LTXVConcatAVLatent",
+    "inputs": {
+      "video_latent": [
+        "348",
+        0
+      ],
+      "audio_latent": [
+        "367",
+        1
+      ]
+    }
+  },
+  "395": {
+    "class_type": "ManualSigmas",
+    "inputs": {
+      "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+    }
+  },
+  "348": {
+    "class_type": "LTXVLatentUpsampler",
+    "inputs": {
+      "samples": [
+        "367",
+        0
+      ],
+      "upscale_model": [
+        "371",
+        0
+      ],
+      "vae": [
+        "385",
+        0
+      ]
+    }
+  },
+  "358": {
+    "class_type": "LTXVAudioVAEDecode",
+    "inputs": {
+      "samples": [
+        "369",
+        1
+      ],
+      "audio_vae": [
+        "386",
+        0
+      ]
+    }
+  },
+  "341": {
+    "class_type": "KSamplerSelect",
+    "inputs": {}
+  },
+  "391": {
+    "class_type": "LTXVDualCFGGuider",
+    "inputs": {
+      "model": [
+        "384",
+        0
+      ],
+      "positive": [
+        "365",
+        0
+      ],
+      "negative": [
+        "365",
+        1
+      ],
+      "video_cfg": 1,
+      "audio_cfg": 1
+    }
+  },
+  "368": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "338",
+        0
+      ],
+      "guider": [
+        "391",
+        0
+      ],
+      "sampler": [
+        "341",
+        0
+      ],
+      "sigmas": [
+        "395",
+        0
+      ],
+      "latent_image": [
+        "340",
+        0
+      ]
+    }
+  },
+  "338": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 42
+    }
+  },
+  "367": {
+    "class_type": "LTXVSeparateAVLatent",
+    "inputs": {
+      "av_latent": [
+        "344",
+        0
+      ]
+    }
+  },
+  "369": {
+    "class_type": "LTXVSeparateAVLatent",
+    "inputs": {
+      "av_latent": [
+        "368",
+        0
+      ]
+    }
+  },
+  "374": {
+    "class_type": "VAEDecodeTiled",
+    "inputs": {
+      "samples": [
+        "369",
+        0
+      ],
+      "vae": [
+        "385",
+        0
+      ],
+      "tile_size": 512,
+      "overlap": 64,
+      "temporal_size": 64,
+      "temporal_overlap": 16
+    }
+  },
+  "344": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "339",
+        0
+      ],
+      "guider": [
+        "388",
+        0
+      ],
+      "sampler": [
+        "352",
+        0
+      ],
+      "sigmas": [
+        "404",
+        0
+      ],
+      "latent_image": [
+        "377",
+        0
+      ]
+    }
+  },
+  "404": {
+    "class_type": "ManualSigmas",
+    "inputs": {
+      "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+    }
+  },
+  "388": {
+    "class_type": "LTXVDualCFGGuider",
+    "inputs": {
+      "model": [
+        "384",
+        0
+      ],
+      "positive": [
+        "365",
+        0
+      ],
+      "negative": [
+        "365",
+        1
+      ],
+      "video_cfg": 1,
+      "audio_cfg": 1
+    }
+  },
+  "352": {
+    "class_type": "KSamplerSelect",
+    "inputs": {}
+  },
+  "339": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": [
+        "-10",
+        5
+      ]
+    }
+  },
+  "365": {
+    "class_type": "LTXVConditioning",
+    "inputs": {
+      "positive": [
+        "364",
+        0
+      ],
+      "negative": [
+        "373",
+        0
+      ],
+      "frame_rate": [
+        "359",
+        0
+      ]
+    }
+  },
+  "377": {
+    "class_type": "LTXVConcatAVLatent",
+    "inputs": {
+      "video_latent": [
+        "356",
+        0
+      ],
+      "audio_latent": [
+        "366",
+        0
+      ]
+    }
+  },
+  "364": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "387",
+        0
+      ],
+      "text": [
+        "382",
+        0
+      ]
+    }
+  },
+  "373": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "387",
+        0
+      ],
+      "text": "pc game, console game, video game, cartoon, childish, ugly"
+    }
+  },
+  "356": {
+    "class_type": "EmptyLTXVLatentVideo",
+    "inputs": {
+      "width": [
+        "353",
+        1
+      ],
+      "height": [
+        "355",
+        1
+      ],
+      "length": [
+        "378",
+        1
+      ],
+      "batch_size": 1
+    }
+  },
+  "366": {
+    "class_type": "LTXVEmptyLatentAudio",
+    "inputs": {
+      "audio_vae": [
+        "386",
+        0
+      ],
+      "frames_number": [
+        "378",
+        1
+      ],
+      "frame_rate": [
+        "359",
+        1
+      ],
+      "batch_size": 25
+    }
+  },
+  "381": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "382",
+        0
+      ]
+    }
+  },
+  "382": {
+    "class_type": "ComfySwitchNode",
+    "inputs": {
+      "on_false": [
+        "376",
+        0
+      ],
+      "on_true": [
+        "380",
+        0
+      ],
+      "switch": [
+        "383",
+        0
+      ]
+    }
+  },
+  "371": {
+    "class_type": "LatentUpscaleModelLoader",
+    "inputs": {
+      "model_name": [
+        "-10",
+        11
+      ]
+    }
+  },
+  "384": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": [
+        "-10",
+        7
+      ],
+      "weight_dtype": "default"
+    }
+  },
+  "385": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": [
+        "-10",
+        8
+      ]
+    }
+  },
+  "386": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": [
+        "-10",
+        9
+      ]
+    }
+  },
+  "387": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": [
+        "-10",
+        10
+      ],
+      "type": "ltxv",
+      "device": "default"
+    }
+  },
+  "380": {
+    "class_type": "TextGenerateLTX2Prompt",
+    "inputs": {
+      "clip": [
+        "393",
+        0
+      ],
+      "prompt": [
+        "376",
+        0
+      ],
+      "max_length": 600,
+      "thinking": "on",
+      "use_default_template": 0.7
+    }
+  },
+  "378": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "values.a": [
+        "362",
+        0
+      ],
+      "values.b": [
+        "361",
+        0
+      ],
+      "expression": "a * b + 1"
+    }
+  },
+  "353": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "values.a": [
+        "372",
+        0
+      ],
+      "expression": "a/2"
+    }
+  },
+  "355": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "values.a": [
+        "360",
+        0
+      ],
+      "expression": "a/2"
+    }
+  },
+  "359": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "values.a": [
+        "361",
+        0
+      ],
+      "expression": "a"
+    }
+  },
+  "360": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": [
+        "-10",
+        4
+      ]
+    }
+  },
+  "361": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": [
+        "-10",
+        6
+      ]
+    }
+  },
+  "362": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": [
+        "-10",
+        2
+      ]
+    }
+  },
+  "372": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": [
+        "-10",
+        3
+      ]
+    }
+  },
+  "376": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": [
+        "-10",
+        0
+      ]
+    }
+  },
+  "393": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": [
+        "-10",
+        12
+      ],
+      "type": "ltxv",
+      "device": "default"
+    }
+  },
+  "383": {
+    "class_type": "PrimitiveBoolean",
+    "inputs": {
+      "value": [
+        "-10",
+        1
+      ]
+    }
+  }
+}

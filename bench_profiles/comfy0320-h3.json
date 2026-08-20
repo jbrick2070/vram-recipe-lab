@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "comfy0320-h3",
+  "status": "ENROLLED_DISPATCHABLE",
+  "purpose": "Current clean ComfyUI 0.32.0 bench for sealed Front Office one-shot cold runner smoke and later H3 campaign enrollment. It is not a substitute for the missing isolated 0.31.1 control bench.",
+  "python": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d",
+    "version": "3.12.11"
+  },
+  "comfyui": {
+    "root": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI",
+    "version": "0.32.0",
+    "git_commit": "c2bcbecd82ec5ae66594340b395c24ef0217b238",
+    "main_py_sha256": "540ec3899eb6680eeec725a935da29c9899057de16a112d7b3e7ad7825edd9e2",
+    "clean": true
+  },
+  "custom_nodes": [
+    {
+      "id": "ComfyUI-KJNodes",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-KJNodes",
+      "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+      "version": "1.3.9",
+      "init_py_sha256": "8da7e12f52cabd71b06e44d733ee359fba3ea3ec07cebcceaf29e9c24eaffec2"
+    }
+  ],
+  "model_paths_config": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "sha256": "ec421773a2f0eac02cc242ae8b8ed5699ab01f99c54edc0e45f20e8ffee1fdc8"
+  },
+  "model_manifest": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\models_manifest.md",
+    "sha256": "de94042bda0b9173c0ced4a210fa7f7ee0ed2d34593d9bbe633ba79b9673c007"
+  },
+  "boot": {
+    "port": "8199",
+    "fixed_argv": [
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "{{USER_DIRECTORY}}",
+      "--output-directory",
+      "{{OUTPUT_DIRECTORY}}",
+      "--temp-directory",
+      "{{TEMP_DIRECTORY}}",
+      "--extra-model-paths-config",
+      "{{MODEL_PATHS_CONFIG}}",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-KJNodes"
+    ],
+    "forbidden_args": [
+      "--use-sage-attention",
+      "--listen",
+      "--enable-cors-header",
+      "--enable-manager"
+    ],
+    "sage_free": true
+  },
+  "environment": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "HF_HOME": "C:\\ComfyUI-Models\\huggingface"
+  },
+  "floor_runner": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+    "sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053"
+  }
+}

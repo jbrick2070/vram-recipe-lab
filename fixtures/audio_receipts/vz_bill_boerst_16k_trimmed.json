@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "fixture": "vz_bill_boerst_16k_trimmed.wav",
+  "sha256": "0267691314b72a69613c758db4e4fc861182007a5d15c4b7d3813ed6a79b7331",
+  "bytes": 125032,
+  "ffprobe": {
+    "codec_name": "pcm_s16le",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "channel_layout": "unknown",
+    "duration_s": 3.904
+  },
+  "volumedetect": {
+    "mean_volume_db": -24.4,
+    "max_volume_db": -8.8
+  },
+  "human_review": {
+    "reviewer": "Antigravity",
+    "reviewed_at": "2026-08-19",
+    "content_class": "voice",
+    "description": "Bill Boerst audio downsampled to 16kHz and trimmed to 3.88s."
+  },
+  "ear_gate_pass": true,
+  "loudness": {
+    "method": "ffmpeg ebur128=peak=true",
+    "integrated_lufs": -24.0,
+    "true_peak_dbtp": -8.7,
+    "lra_lu": 1.1
+  },
+  "matrix_window": {
+    "method": "ffmpeg -t 3.88 -af ebur128=peak=true summary",
+    "start_s": 0.0,
+    "duration_s": 3.88,
+    "target_lufs": -25.8,
+    "tolerance_lu": 0.3,
+    "input_lufs": -24.0,
+    "gain_db": -1.8,
+    "matched_lufs": -25.7,
+    "matched_true_peak_dbtp": -10.5
+  },
+  "commands": {
+    "ffprobe": "ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate,channels,channel_layout,duration:format=duration -of json fixtures/vz_bill_boerst_16k_trimmed.wav",
+    "volumedetect": "ffmpeg -hide_banner -nostats -i fixtures/vz_bill_boerst_16k_trimmed.wav -af volumedetect -f null NUL",
+    "matrix_loudness": "ffmpeg -hide_banner -nostats -t 3.88 -i fixtures/vz_bill_boerst_16k_trimmed.wav -af volume=-1.8dB,ebur128=peak=true -f null NUL"
+  }
+}

@@ -15,7 +15,7 @@
   "properties": {
     "schema_version": {"const": 1},
     "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$"},
-    "status": {"enum": ["STATIC_ONLY", "BLOCKED_PROFILE_ENROLLMENT", "BLOCKED_WEIGHT_ADMISSION"]},
+    "status": {"enum": ["STATIC_ONLY", "READY_FOR_DISPATCH", "BLOCKED_PROFILE_ENROLLMENT", "BLOCKED_WEIGHT_ADMISSION"]},
     "purpose": {"type": "string", "minLength": 1},
     "independent_variable": {"type": "string", "minLength": 1},
     "block_reason": {"type": "string", "minLength": 1},

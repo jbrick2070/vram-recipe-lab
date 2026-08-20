@@ -1,8 +1,8 @@
 # MiniMax H3: five-candidate lab handoff for OTR
 
-- **Status:** research and campaign design ready; H3-LIP-TXT is current-runner eligible after its transcript-window receipt, while H3-C032 remains behind the minimal front office
+- **Status:** minimal Front Office is implemented; its sealed current-profile H3 native-A/V smoke completed cleanly but failed the 14.5 GiB VRAM gate at 15.107 GiB, H3-LIP-TXT remains gated on its transcript-window receipt, H3-C032 remains blocked on the missing isolated 0.31.1 control profile, and one source-backed Larry Turbo v4-600 cold action pair is sealed `READY_FOR_DISPATCH` (not yet rendered)
 - **Research cutoff:** 2026-08-12, America/Los_Angeles
-- **Lab snapshot:** [`e7398fdae74a10512a16004f7499575e68d5c882`](https://github.com/jbrick2070/vram-recipe-lab/commit/e7398fdae74a10512a16004f7499575e68d5c882)
+- **Lab snapshot:** [`6f596925d8408dd447f9471b3a18580c8c11d3fb`](https://github.com/jbrick2070/vram-recipe-lab/commit/6f596925d8408dd447f9471b3a18580c8c11d3fb)
 - **OTR snapshot:** [`v2.0-alpha@c06128daa181ff802bc3bf79112e539eda1d8a02`](https://github.com/jbrick2070/ComfyUI-OldTimeRadio/tree/c06128daa181ff802bc3bf79112e539eda1d8a02)
 - **Machine queue:** [`../research/h3_lab_candidate_campaign_2026-08-12.json`](../research/h3_lab_candidate_campaign_2026-08-12.json)
 - **Runner prerequisite:** [`RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md`](RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md) and its [machine specification](../research/runner_division_front_office_2026-08-12.json)
@@ -17,9 +17,9 @@ Build the minimal Runner Division before profile-delta campaigns, then test exac
 | P0 | `H3-LIP-TXT` | visibly better lip synchronization for no runtime dependency | **YES** | both fixed seeds better or noninferior after a hash-bound transcript-window receipt |
 | P1 | `H3-KJ-EXACT` | lower peak VRAM without approximate attention | **YES** | ≥0.50 GiB or ≥10% lower same-surface peak, ≤10% time penalty |
 | P1 | `H3-SAGE-AUTO` | a potentially large sampling-speed win on Blackwell | **YES, controlled high-risk probe** | ≥25% lower end-to-end wall; clean I2V plus both Ref2VA seeds |
-| P1 | `H3-T8` | the strongest credible render-time improvement | **YES after asset admission** | ≥40% lower end-to-end wall; lip-sync, identity, motion, and audio noninferior |
+| P1 | `H3-T8` | the strongest credible render-time improvement | **YES; one sealed cold pair is ready** | ≥40% lower end-to-end wall; lip-sync, identity, motion, and audio noninferior |
 
-The active order is: **fresh native control and transcript window → current-runner H3-LIP-TXT → minimal Runner Front Office and all-82 R0 → fresh H3-C032 controls → KJ exact and Sage as separate branches → Turbo 8**. Never stack candidates until each passes alone.
+The active order is: **minimal Runner Front Office and all-86 R0 → sealed current-profile native-A/V smoke → sealed Larry Turbo 20-to-8 action cold pair → fresh native control and transcript window → current-runner H3-LIP-TXT → fresh H3-C032 controls → KJ exact and Sage as separate branches**. The Turbo pair is allowed now only as its narrow cold directional test; it is not a warm-cache or promotion result. Never stack candidates until each passes alone.
 
 ## 1. The bench starts fresh
 
@@ -37,7 +37,7 @@ The historical receipts say only that H3 has run on this RTX 5080 Laptop 16 GB:
 
 The prior H3 best suite remains a suite failure because its T1 peak rose 0.330 GiB over T0 against the 0.250 GiB creep gate. No child receipt turns that suite into a pass.
 
-The post-campaign census found 82 checked-in recipes: 70 have same-name current aliases and 12 have none; six top-level aliases are orphaned for removed recipes. Of the 70 matched aliases, 58 use modern schemas (57 v3 and one v2) and 12 are legacy; 29 appear warm and six are marked promotion-ready. Two aliases bind active runner SHA-256 `6d6ac785…682776`, but **zero promotion-ready receipts bind it**. The method, predicates, and read commits are recorded in [`../research/handoff_census_2026-08-12.json`](../research/handoff_census_2026-08-12.json). This is why the lab must recertify claims rather than inherit them.
+The current census finds 86 checked-in recipes: 76 selected top-level aliases include 70 same-name current aliases, while 16 recipes have no same-name alias; six top-level aliases are orphaned for removed recipes. Of the 70 matched aliases, 58 use modern schemas (57 v3 and one v2) and 12 are legacy; 29 appear warm and six are marked promotion-ready. No selected top-level alias binds active runner SHA-256 `b6dfe74…20b053`, and **zero promotion-ready receipts bind it**. Current Front Office receipts live under their isolated nested namespace and are intentionally excluded from this historical-alias predicate. The method, predicates, source commits, sealed-Turbo state, and retained prior revision are recorded in [`../research/handoff_census_2026-08-14.json`](../research/handoff_census_2026-08-14.json). This is why the lab must recertify claims rather than inherit them.
 
 ### Runner Division gate
 
@@ -46,13 +46,13 @@ Before `H3-C032`:
 1. implement and statically test the minimal sealed front office described in the runner proposal: enrolled profile IDs only, direct argv launch, pinned Python/ComfyUI/node/model-path/argv identity, receipt profile/launch-spec binding, per-cell namespaces, and stale display;
 2. enroll separate pinned profiles for ComfyUI 0.31.1/KJ 1.3.9 and ComfyUI 0.32.0/KJ 1.3.9;
 3. keep the runner bundle identical while profiles hold version-specific roots, venvs, core hashes, user/input/output/temp/log paths, and package inventories;
-4. complete the all-82-recipe R0 static census and the representative R1 parity panel;
+4. complete the all-86-recipe R0 static census and the representative R1 parity panel;
 5. recertify the two unique H3 shipping contracts with fresh controls;
 6. display old receipts as historical in the front-office index without modifying their bytes.
 
 The front office selects only an enrolled profile ID; it never accepts an arbitrary ComfyUI/Python root. The floor runner remains responsible for port 8199 ownership, the GPU lock, queue isolation, `/object_info`, fixtures, VRAM monitoring, artifact gates, cleanup, and immutable receipts.
 
-The ACL-protected GPU-UUID mutex, model content-admission manifests, receipt-schema-v4 full field set, cross-clone contention tests, and recipe schema v2 are deferred. `H3-LIP-TXT` does not wait for this gate: it is allowed on the current runner only after its transcript-window receipt and fresh native control establish the comparison surface.
+The ACL-protected GPU-UUID mutex, general model content-admission manifests beyond the sealed named Turbo exception, receipt-schema-v4 full field set, cross-clone contention tests, and recipe schema v2 are deferred. `H3-LIP-TXT` does not wait for this gate: it is allowed on the current runner only after its transcript-window receipt and fresh native control establish the comparison surface.
 
 ## 2. Corrections to the starting material
 
@@ -196,13 +196,13 @@ The code class is spelled `PathchSageAttentionKJ`; its UI name is `Patch Sage At
 
 **Preferred route:** [Larry MiniMax H3 Turbo](https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo/tree/546b5028f4934f5129eb6c7142c2f3e461dfddbf), pinned after the audio-reference AdaLN-row fix, plus [`minimax_h3_turbo_v4_step600_ema.safetensors`](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora) at strength 1.0 and eight steps.
 
-**Lab selection (2026-08-12):** this Larry route is the sole first Turbo candidate, recorded as [`campaigns/h3-t8.json`](../campaigns/h3-t8.json). It is `BLOCKED_WEIGHT_ADMISSION`; the drbaph conversion remains a later compatibility reference, not a parallel first test.
+**Lab update (2026-08-14):** this Larry route remains the sole first Turbo candidate. The historical [`campaigns/h3-t8.json`](../campaigns/h3-t8.json) remains preserved as blocked planning evidence; the executable successor is [`campaigns/front-office-h3-t8-current-r1.json`](../campaigns/front-office-h3-t8-current-r1.json), sealed `READY_FOR_DISPATCH` for one current-0.32 20-step control followed by one eight-step candidate. The drbaph conversion remains a later compatibility reference, not a parallel first test.
 
 **Compatibility references:** the [drbaph pruned-conversion graph](https://huggingface.co/drbaph/MiniMax-H3-Turbo-Lora-ComfyUI/blob/498f1e2ca02e10a598f21267739f30073f68eb10/fl_minimax_h3_turbo_lora_example_workflow.json) and the [Tlano Ref2VA lip-sync graph](https://github.com/tlano-z/ComfyUI-MiniMax-H3-Workflows-For3060/blob/359ea78cb7eeb0d52ee13487bca014ade312c8ef/MiniMax-H3_R2V_Turbo_Lip-sync/MiniMax-H3_R2V_Turbo_Lip-sync.json). Choose and pin one provenance route before admission; do not mix conversions/settings. The drbaph conversion removes incompatible AdaLN pairs and must be labeled as such.
 
-No Turbo weight is currently admitted. Operator authorization to acquire it is only the first gate: also record creator terms, H3 grant scope, expected bytes/hash, quarantine inspection, and model-manifest admission. Never redistribute the weight.
+The selected v4-600 weight is now admitted only for this pair: [`H3_TURBO_LARRY_V4_600_ADMISSION.md`](H3_TURBO_LARRY_V4_600_ADMISSION.md) binds its source, creator terms, H3 grant scope, bytes, SHA-256, quarantine/source inspection, profile-specific manifest, support asset, and runtime external-node proof. It has no render receipt yet. Never redistribute the weight.
 
-**Fresh cells:** native 20-step I2V control versus Turbo 8; native versus Turbo 8 for Ref2VA seeds 42/43 after the transcript campaign resolves. No Sage, Spectrum, TAE in the headless benchmark, W4A8, or four-step claim.
+**Fresh cells:** the admitted first pair is native 20-step I2V control versus Turbo 8 at 864x480, 124 frames, 24 fps, seed 42, and native H3 audio. Ref2VA seed 42/43 comparisons remain queued until the transcript campaign resolves. No Sage, Spectrum, TAE in the headless benchmark, W4A8, or four-step claim.
 
 **Gate:** ≥40% lower end-to-end wall at identical canvas/frames/delivery; both speech seeds human-noninferior; no doubled/dropped syllables, identity drift, frozen motion, fast-motion smear, audio click, duration change, or final-mouth regression. Turbo 4 may be proposed only after Turbo 8 passes and receives a separate verdict.
 
@@ -275,26 +275,30 @@ docs/RUNNER_DIVISION_FRONT_OFFICE_2026-08-12.md,
 docs/H3_LAB_CANDIDATE_HANDOFF_2026-08-12.md, and
 research/h3_lab_candidate_campaign_2026-08-12.json in full.
 
-First, run H3-LIP-TXT on the current runner only after a fresh native control
-and an unambiguous hash-bound transcript-window receipt. Prompt text is its sole
-independent variable; use fresh same-runner controls and candidates for both
-seeds. Treat every old receipt as immutable history, never as a new control.
+The minimal Runner Front Office is now implemented with enrolled profile-ID
+selection, direct argv launch, profile and launch-spec receipt binding,
+per-cell output/result/log namespaces, and a computed stale display. Preserve
+port 8199 ownership, `.gpu.lock`, `/object_info`, fixture/media gates, VRAM
+monitoring, append-only receipts, and cleanup proof. The GPU-UUID ACL mutex,
+general content-admission manifests beyond the sealed named Turbo exception,
+receipt-schema-v4 full field set, cross-clone tests, and recipe schema v2 remain
+deferred.
 
-Then build only the minimal Runner Front Office: enrolled profile-ID selection,
-pinned Python/ComfyUI/node/model-path/argv identity, direct argv launch,
-profile and launch-spec receipt binding, per-cell output/result/log namespaces,
-and a computed stale display. Preserve port 8199 ownership, `.gpu.lock`,
-`/object_info`, fixture/media gates, VRAM monitoring, append-only receipts, and
-cleanup proof. Defer the GPU-UUID ACL mutex, content-admission manifests,
-receipt-schema-v4 full field set, cross-clone tests, and recipe schema v2.
+Run the sealed current-profile H3 native-A/V smoke before expanding the video
+panel. Then run H3-LIP-TXT only after a fresh native control and an unambiguous
+hash-bound transcript-window receipt. Prompt text is its sole independent
+variable; use fresh same-runner controls and candidates for both seeds. Treat
+every old receipt as immutable history, never as a new control.
 
-After the all-82-recipe R0 and minimal front-office checks, run H3-C032 as a
-matched fresh 0.31.1/0.32.0 pair. Enroll the reviewed KJ profile and test
-H3-KJ-EXACT and H3-SAGE-AUTO as separate branches; Sage uses only the generic
-per-model auto patch on a globally Sage-free H3 boot and stops at the first
-corruption, timeout, or cleanup uncertainty. H3-T8 remains unqueued until its
-artifact is explicitly authorized and admitted. Do not touch OTR and do not
-download any asset.
+The named Larry v4-600 action pair is sealed `READY_FOR_DISPATCH`: run its
+current-0.32 20-step control, then its eight-step candidate, under their pinned
+profiles and Sage-free boot. It is cold directional evidence only; do not infer
+warm-cache certification or promotion. After the all-86-recipe R0 and
+minimal-front-office checks, run H3-C032 as a matched fresh 0.31.1/0.32.0 pair.
+Enroll the reviewed KJ profile and test H3-KJ-EXACT and H3-SAGE-AUTO as
+separate branches; Sage uses only the generic per-model auto patch on a globally
+Sage-free H3 boot and stops at the first corruption, timeout, or cleanup
+uncertainty. Do not touch OTR and do not download any asset.
 
 Move nothing into OTR unless an individual campaign clears its machine,
 significance, full-clip human, provenance, and license gates and Jeffrey gives

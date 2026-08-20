@@ -6,8 +6,12 @@ server.log
 .queue.quarantine.json
 results/delivery/.*.lock
 .server.pid
+.front-office-server.json
 __pycache__/
 .runtime/
 .front_office_state/
 logs/
 eightgb_bench/local/
+.server.idle-gate.json
+scratch/*.log
+scratch/.cache/

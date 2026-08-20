@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Static, fail-closed front-office primitives for the VRAM recipe lab.
+"""Fail-closed Front Office primitives for the VRAM recipe lab.
 
 This module deliberately has no ComfyUI launcher.  It enrolls a named bench
-profile, resolves a sealed *plan*, and indexes historical receipts without
-altering them.  The floor-runner integration that can execute a plan is kept
-separate so a current-runner campaign cannot be silently moved to a new
-runner bundle.
+profile, seals either a static plan or an explicitly dispatchable execution
+specification, and indexes historical receipts without altering them.  The
+small direct-argv adapter lives separately so a campaign cannot silently move
+to a different runner bundle or inherit caller-selected runtime knobs.
 """
 
 from __future__ import annotations
@@ -35,6 +35,13 @@ CAMPAIGN_SCHEMA_VERSION = 1
 LAUNCH_SPEC_SCHEMA_VERSION = 1
 LAB_PORT = "8199"
 
+PROFILE_STATUS_STATIC_ONLY = "ENROLLED_STATIC_ONLY"
+PROFILE_STATUS_DISPATCHABLE = "ENROLLED_DISPATCHABLE"
+CAMPAIGN_STATUS_STATIC_ONLY = "STATIC_ONLY"
+CAMPAIGN_STATUS_READY_FOR_DISPATCH = "READY_FOR_DISPATCH"
+STATIC_LAUNCH_SPEC_KIND = "front_office_static_launch_spec"
+EXECUTION_SPEC_KIND = "front_office_execution_spec"
+
 _ID_RE = re.compile(r"[a-z][a-z0-9-]{0,63}\Z")
 _SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 _GIT_COMMIT_RE = re.compile(r"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
@@ -42,9 +49,14 @@ _RECIPE_NAME_RE = re.compile(r"[a-z0-9][a-z0-9_-]*\.json\Z")
 _NONCE_RE = re.compile(r"[0-9a-f]{32}\Z")
 _NODE_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}\Z")
 
-PROFILE_STATUSES = frozenset({"ENROLLED_STATIC_ONLY"})
+PROFILE_STATUSES = frozenset({PROFILE_STATUS_STATIC_ONLY, PROFILE_STATUS_DISPATCHABLE})
 CAMPAIGN_STATUSES = frozenset(
-    {"STATIC_ONLY", "BLOCKED_PROFILE_ENROLLMENT", "BLOCKED_WEIGHT_ADMISSION"}
+    {
+        CAMPAIGN_STATUS_STATIC_ONLY,
+        CAMPAIGN_STATUS_READY_FOR_DISPATCH,
+        "BLOCKED_PROFILE_ENROLLMENT",
+        "BLOCKED_WEIGHT_ADMISSION",
+    }
 )
 FORBIDDEN_BOOT_TOKENS = frozenset(
     {
@@ -376,6 +388,7 @@ def _validate_boot_policy(profile: Mapping[str, Any]) -> None:
     exactly_once("--port", LAB_PORT)
     exactly_once("--user-directory", "{{USER_DIRECTORY}}")
     exactly_once("--output-directory", "{{OUTPUT_DIRECTORY}}")
+    exactly_once("--temp-directory", "{{TEMP_DIRECTORY}}")
     exactly_once("--extra-model-paths-config", "{{MODEL_PATHS_CONFIG}}")
     for required_flag in ("--cuda-malloc", "--disable-metadata", "--disable-all-custom-nodes"):
         if argv.count(required_flag) != 1:
@@ -558,7 +571,7 @@ def validate_campaign(campaign: Mapping[str, Any]) -> None:
         if not isinstance(campaign.get("block_reason"), str) or not campaign["block_reason"].strip():
             raise CampaignValidationError("blocked campaign must state its blocker")
     elif "block_reason" in campaign:
-        raise CampaignValidationError("an unblocked static campaign must not carry block_reason")
+        raise CampaignValidationError("an unblocked campaign must not carry block_reason")
     profiles = campaign["profiles"]
     if not isinstance(profiles, list) or not profiles:
         raise CampaignValidationError("campaign.profiles must be a nonempty list")
@@ -699,12 +712,13 @@ def canonical_server_argv(profile: Mapping[str, Any], namespaces: Mapping[str, s
     comfyui = _require_mapping(profile.get("comfyui"), "profile.comfyui")
     config = _require_mapping(profile.get("model_paths_config"), "profile.model_paths_config")
     boot = _require_mapping(profile.get("boot"), "profile.boot")
-    required_namespaces = {"output_directory", "user_directory"}
+    required_namespaces = {"output_directory", "user_directory", "temp_directory"}
     if not required_namespaces.issubset(namespaces):
         raise LaunchSpecValidationError("launch namespaces omit an argv placeholder")
     placeholders = {
         "{{USER_DIRECTORY}}": namespaces["user_directory"],
         "{{OUTPUT_DIRECTORY}}": namespaces["output_directory"],
+        "{{TEMP_DIRECTORY}}": namespaces["temp_directory"],
         "{{MODEL_PATHS_CONFIG}}": str(config["path"]),
     }
     args: list[str] = []
@@ -717,6 +731,22 @@ def canonical_server_argv(profile: Mapping[str, Any], namespaces: Mapping[str, s
 
 def front_office_source_hashes() -> dict[str, str]:
     paths = (REPO_ROOT / "front_office.py", REPO_ROOT / "labctl.py")
+    return {path.name: sha256_file(path) for path in paths}
+
+
+def execution_front_office_source_hashes() -> dict[str, str]:
+    """Return the sealed source set for the runnable Front Office path.
+
+    The static planner deliberately predates the dispatcher and keeps its
+    historical two-file identity.  An execution specification must also bind
+    the small direct-launch adapter that consumes it.
+    """
+
+    paths = (
+        REPO_ROOT / "front_office.py",
+        REPO_ROOT / "labctl.py",
+        REPO_ROOT / "front_office_dispatch.py",
+    )
     return {path.name: sha256_file(path) for path in paths}
 
 
@@ -734,14 +764,22 @@ def active_floor_runner_identity() -> dict[str, Any]:
     }
 
 
-def _semantic_launch_spec(
-    campaign: Mapping[str, Any], cell: Mapping[str, Any], profile: Mapping[str, Any], recipe_path: Path
+def _semantic_spec(
+    campaign: Mapping[str, Any],
+    cell: Mapping[str, Any],
+    profile: Mapping[str, Any],
+    recipe_path: Path,
+    *,
+    kind: str,
+    execution_state: str,
+    office_sources: Mapping[str, str],
+    floor_runner: Mapping[str, Any],
 ) -> dict[str, Any]:
+    """Build the immutable semantic payload shared by plan and execution specs."""
+
     namespaces = derive_cell_namespaces(campaign["id"], cell["id"], profile["id"])
     argv = canonical_server_argv(profile, namespaces)
     environment = sanitized_child_environment(profile)
-    floor_runner = active_floor_runner_identity()
-    office_sources = front_office_source_hashes()
     try:
         recipe_bytes = recipe_path.read_bytes()
     except OSError as exc:
@@ -754,8 +792,8 @@ def _semantic_launch_spec(
         raise LaunchSpecValidationError(f"selected recipe is not UTF-8 JSON: {exc}") from exc
     return {
         "schema_version": LAUNCH_SPEC_SCHEMA_VERSION,
-        "kind": "front_office_static_launch_spec",
-        "execution_state": "STATIC_ONLY_NOT_DISPATCHABLE",
+        "kind": kind,
+        "execution_state": execution_state,
         "campaign": {"id": campaign["id"], "sha256": canonical_sha256(campaign)},
         "cell": {"id": cell["id"], "role": cell["role"], "phase": cell["phase"]},
         "profile": {
@@ -784,13 +822,28 @@ def _semantic_launch_spec(
     }
 
 
+def _semantic_launch_spec(
+    campaign: Mapping[str, Any], cell: Mapping[str, Any], profile: Mapping[str, Any], recipe_path: Path
+) -> dict[str, Any]:
+    return _semantic_spec(
+        campaign,
+        cell,
+        profile,
+        recipe_path,
+        kind=STATIC_LAUNCH_SPEC_KIND,
+        execution_state="STATIC_ONLY_NOT_DISPATCHABLE",
+        office_sources=front_office_source_hashes(),
+        floor_runner=active_floor_runner_identity(),
+    )
+
+
 def build_launch_spec(
     campaign_id: str, cell_id: str, profile_id: str, lease_nonce: str | None = None
 ) -> dict[str, Any]:
     """Build a static, nonce-bound plan.  It does not start a process or touch the GPU."""
 
     campaign = load_campaign(campaign_id)
-    if campaign["status"] != "STATIC_ONLY":
+    if campaign["status"] != CAMPAIGN_STATUS_STATIC_ONLY:
         raise CampaignValidationError(
             f"campaign {campaign_id} is {campaign['status']}; direct planning is blocked"
         )
@@ -805,7 +858,7 @@ def build_launch_spec(
     semantic = _semantic_launch_spec(campaign, cell, profile, recipe_path)
     return {
         "schema_version": LAUNCH_SPEC_SCHEMA_VERSION,
-        "kind": "front_office_static_launch_spec",
+        "kind": STATIC_LAUNCH_SPEC_KIND,
         "lease_nonce": nonce,
         "launch_spec_sha256": canonical_sha256(semantic),
         "semantic": semantic,
@@ -820,7 +873,7 @@ def validate_launch_spec(spec: Mapping[str, Any]) -> None:
         {"schema_version", "kind", "lease_nonce", "launch_spec_sha256", "semantic"},
         "launch specification",
     )
-    if spec["schema_version"] != LAUNCH_SPEC_SCHEMA_VERSION or spec["kind"] != "front_office_static_launch_spec":
+    if spec["schema_version"] != LAUNCH_SPEC_SCHEMA_VERSION or spec["kind"] != STATIC_LAUNCH_SPEC_KIND:
         raise LaunchSpecValidationError("launch specification schema/kind is invalid")
     if not isinstance(spec["lease_nonce"], str) or not _NONCE_RE.fullmatch(spec["lease_nonce"]):
         raise LaunchSpecValidationError("launch specification lease nonce is invalid")
@@ -839,28 +892,200 @@ def validate_launch_spec(spec: Mapping[str, Any]) -> None:
         raise LaunchSpecValidationError("launch specification semantic hash is wrong")
 
 
-def write_launch_spec(spec: Mapping[str, Any], runtime_dir: Path = RUNTIME_DIR) -> Path:
-    """Atomically write a validated static plan; this is intentionally not a launch."""
+def _validated_runtime_root(runtime_dir: Path, *, create: bool) -> Path:
+    if create:
+        try:
+            runtime_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as exc:
+            raise LaunchSpecValidationError(f"cannot create runtime directory: {exc}") from exc
+    return validate_absolute_nonreparse_path(str(runtime_dir), "runtime directory", "directory")
 
-    validate_launch_spec(spec)
-    runtime_dir.mkdir(parents=True, exist_ok=True)
-    runtime_root = validate_absolute_nonreparse_path(str(runtime_dir), "runtime directory", "directory")
+
+def _spec_filename(spec: Mapping[str, Any], prefix: str) -> str:
     semantic = _require_mapping(spec["semantic"], "launch specification semantic payload")
-    filename = "-".join(
+    return "-".join(
         (
-            "front-office",
+            prefix,
             semantic["campaign"]["id"],
             semantic["cell"]["id"],
             semantic["profile"]["id"],
             spec["lease_nonce"],
         )
     ) + ".json"
+
+
+def _exclusive_write_spec(destination: Path, spec: Mapping[str, Any], label: str) -> Path:
+    """Create a nonce-bound specification once; never replace or replay it."""
+
+    payload = canonical_json_bytes(spec) + b"\n"
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    try:
+        descriptor = os.open(str(destination), flags, stat.S_IRUSR | stat.S_IWUSR)
+    except FileExistsError as exc:
+        raise LaunchSpecValidationError(f"{label} already exists; refusing nonce replay") from exc
+    except OSError as exc:
+        raise LaunchSpecValidationError(f"cannot create {label}: {exc}") from exc
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except OSError as exc:
+        raise LaunchSpecValidationError(f"cannot write {label}: {exc}") from exc
+    return destination
+
+
+def write_launch_spec(spec: Mapping[str, Any], runtime_dir: Path = RUNTIME_DIR) -> Path:
+    """Atomically write a validated static plan; this is intentionally not a launch."""
+
+    validate_launch_spec(spec)
+    runtime_root = _validated_runtime_root(runtime_dir, create=True)
+    filename = _spec_filename(spec, "front-office")
     destination = runtime_root / filename
     _require_path_inside(destination.resolve(strict=False), runtime_root.resolve(strict=False), "launch specification")
     temporary = runtime_root / (filename + ".tmp")
-    temporary.write_bytes(canonical_json_bytes(spec) + b"\n")
-    os.replace(temporary, destination)
+    try:
+        temporary.write_bytes(canonical_json_bytes(spec) + b"\n")
+        os.replace(temporary, destination)
+    except OSError as exc:
+        raise LaunchSpecValidationError(f"cannot write static launch specification: {exc}") from exc
     return destination
+
+
+def _execution_floor_runner_binding(profile: Mapping[str, Any]) -> dict[str, Any]:
+    """Bind the executable runner path and hash to the current runner bundle."""
+
+    runner = _require_exact_keys(profile.get("floor_runner"), {"path", "sha256"}, "profile.floor_runner")
+    runner_path = _verify_hashed_file(runner, "profile.floor_runner")
+    _require_path_inside(runner_path, REPO_ROOT, "profile.floor_runner")
+    active = active_floor_runner_identity()
+    runner_sha256 = _require_sha256(runner["sha256"], "profile.floor_runner.sha256")
+    if runner_sha256 != active["runner_sha256"]:
+        raise LaunchSpecValidationError("profile floor runner SHA-256 is not the active floor runner")
+    return {
+        "path": str(runner_path),
+        "sha256": runner_sha256,
+        **active,
+    }
+
+
+def _semantic_execution_spec(
+    campaign: Mapping[str, Any], cell: Mapping[str, Any], profile: Mapping[str, Any], recipe_path: Path
+) -> dict[str, Any]:
+    return _semantic_spec(
+        campaign,
+        cell,
+        profile,
+        recipe_path,
+        kind=EXECUTION_SPEC_KIND,
+        execution_state=CAMPAIGN_STATUS_READY_FOR_DISPATCH,
+        office_sources=execution_front_office_source_hashes(),
+        floor_runner=_execution_floor_runner_binding(profile),
+    )
+
+
+def build_execution_spec(
+    campaign_id: str, cell_id: str, profile_id: str, lease_nonce: str | None = None
+) -> dict[str, Any]:
+    """Build a nonce-bound executable spec for an explicitly admitted cell.
+
+    Static enrollment is intentionally not an execution authorization.  Both
+    the selected campaign and profile must carry their dedicated dispatchable
+    status before this function will construct anything runnable.
+    """
+
+    campaign = load_campaign(campaign_id)
+    if campaign["status"] != CAMPAIGN_STATUS_READY_FOR_DISPATCH:
+        raise CampaignValidationError(
+            f"campaign {campaign_id} is {campaign['status']}; it is not READY_FOR_DISPATCH"
+        )
+    cell = campaign_cell(campaign, cell_id)
+    if cell["role"] not in {"control", "candidate"}:
+        raise CampaignValidationError("only control or candidate cells are dispatchable")
+    if profile_id not in cell["profiles"]:
+        raise CampaignValidationError("selected profile is not enrolled for this campaign cell")
+    profile = load_enrolled_profile(profile_id)
+    if profile["status"] != PROFILE_STATUS_DISPATCHABLE:
+        raise CampaignValidationError("selected profile is not ENROLLED_DISPATCHABLE")
+    recipe_path = _recipe_path(cell["recipe"])
+    nonce = lease_nonce if lease_nonce is not None else secrets.token_hex(16)
+    if not isinstance(nonce, str) or not _NONCE_RE.fullmatch(nonce):
+        raise LaunchSpecValidationError("lease nonce must be exactly 32 lowercase hexadecimal characters")
+    semantic = _semantic_execution_spec(campaign, cell, profile, recipe_path)
+    return {
+        "schema_version": LAUNCH_SPEC_SCHEMA_VERSION,
+        "kind": EXECUTION_SPEC_KIND,
+        "lease_nonce": nonce,
+        "launch_spec_sha256": canonical_sha256(semantic),
+        "semantic": semantic,
+    }
+
+
+def validate_execution_spec(spec: Mapping[str, Any]) -> None:
+    """Fail closed unless an execution spec still equals live dispatchable enrollment."""
+
+    spec = _require_exact_keys(
+        spec,
+        {"schema_version", "kind", "lease_nonce", "launch_spec_sha256", "semantic"},
+        "execution specification",
+    )
+    if spec["schema_version"] != LAUNCH_SPEC_SCHEMA_VERSION or spec["kind"] != EXECUTION_SPEC_KIND:
+        raise LaunchSpecValidationError("execution specification schema/kind is invalid")
+    if not isinstance(spec["lease_nonce"], str) or not _NONCE_RE.fullmatch(spec["lease_nonce"]):
+        raise LaunchSpecValidationError("execution specification lease nonce is invalid")
+    _require_sha256(spec["launch_spec_sha256"], "launch_spec_sha256")
+    semantic = _require_mapping(spec["semantic"], "execution specification semantic payload")
+    if semantic.get("kind") != EXECUTION_SPEC_KIND or semantic.get("execution_state") != CAMPAIGN_STATUS_READY_FOR_DISPATCH:
+        raise LaunchSpecValidationError("execution specification is not dispatchable")
+    try:
+        campaign_id = semantic["campaign"]["id"]
+        cell_id = semantic["cell"]["id"]
+        profile_id = semantic["profile"]["id"]
+    except (KeyError, TypeError) as exc:
+        raise LaunchSpecValidationError("execution specification identity fields are malformed") from exc
+    expected = build_execution_spec(campaign_id, cell_id, profile_id, spec["lease_nonce"])
+    if canonical_json_bytes(spec["semantic"]) != canonical_json_bytes(expected["semantic"]):
+        raise LaunchSpecValidationError("execution specification semantic content no longer matches live enrollment")
+    if spec["launch_spec_sha256"] != expected["launch_spec_sha256"]:
+        raise LaunchSpecValidationError("execution specification semantic hash is wrong")
+
+
+def write_execution_spec(spec: Mapping[str, Any], runtime_dir: Path = RUNTIME_DIR) -> Path:
+    """Exclusively create one validated execution spec beneath its runtime root."""
+
+    validate_execution_spec(spec)
+    runtime_root = _validated_runtime_root(runtime_dir, create=True)
+    filename = _spec_filename(spec, "front-office-execution")
+    destination = runtime_root / filename
+    _require_path_inside(destination.resolve(strict=False), runtime_root.resolve(strict=False), "execution specification")
+    return _exclusive_write_spec(destination, spec, "execution specification")
+
+
+def resolve_execution_spec_path(spec_path: str | Path, runtime_dir: Path = RUNTIME_DIR) -> Path:
+    """Resolve one regular execution spec under a trusted, non-reparse runtime root."""
+
+    runtime_root = _validated_runtime_root(runtime_dir, create=False)
+    if not isinstance(spec_path, (str, Path)) or not str(spec_path):
+        raise LaunchSpecValidationError("execution specification path must be nonempty")
+    raw = str(spec_path)
+    if _is_unc_path(raw):
+        raise LaunchSpecValidationError("execution specification path must not be a UNC or network path")
+    requested = Path(raw)
+    candidate = requested if requested.is_absolute() else runtime_root / requested
+    resolved = validate_absolute_nonreparse_path(str(candidate), "execution specification path", "file")
+    _require_path_inside(resolved, runtime_root, "execution specification path")
+    if not resolved.name.startswith("front-office-execution-") or resolved.suffix != ".json":
+        raise LaunchSpecValidationError("execution specification filename is not front-office-owned")
+    return resolved
+
+
+def load_execution_spec(spec_path: str | Path, runtime_dir: Path = RUNTIME_DIR) -> dict[str, Any]:
+    """Read and revalidate only an execution spec beneath the trusted runtime root."""
+
+    path = resolve_execution_spec_path(spec_path, runtime_dir)
+    spec = _read_json_no_bom(path, "execution specification")
+    validate_execution_spec(spec)
+    return spec
 
 
 def classify_receipt_for_active_runner(
@@ -945,7 +1170,7 @@ def r0_static_census() -> dict[str, Any]:
         "profile_results": profile_results,
         "campaign_results": campaign_results,
         "receipt_status": receipt_status_report(),
-        "direct_launch": "DIRECT_LAUNCH_NOT_INTEGRATED",
+        "direct_launch": "SEALED_DIRECT_DISPATCH_AVAILABLE",
     }
 
 

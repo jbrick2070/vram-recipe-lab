@@ -1,0 +1,539 @@
+{
+  "name": "ltx_video_2b_current_profile_cold_smoke",
+  "tier": "experiment",
+  "blocked": false,
+  "experiment": {
+    "campaign": "front_office_ltx_current_r1",
+    "variant": "ltx_video_2b_distilled_current_profile_cold_smoke",
+    "scope": "sealed one-shot current-profile LTX Video 2B cold video smoke; not warm-cache certification, not comparable to the historical reserve-4/no-pinned/cache-classic lane, and not promotable",
+    "comparison_controls": [
+      "scene_still.png",
+      "subtle natural motion, cinematic lighting, detailed",
+      "low quality, worst quality, blurry, distorted, watermark, text, static",
+      "seed=42",
+      "832x480",
+      "193 frames",
+      "25 fps",
+      "plain VAEDecode"
+    ],
+    "grid": "8n+1 (n=24)"
+  },
+  "contract": {
+    "engine": "ltx_video_2b_distilled",
+    "mode": "i2v",
+    "width": 832,
+    "height": 480,
+    "frames": 193,
+    "fps": 25.0,
+    "target_s": 7.72,
+    "duration_s": 7.72,
+    "delivered_s": 7.72,
+    "trim_frames": 0,
+    "requires_audio": false,
+    "required_boot_lane": "lab-8199, sage-free",
+    "vram_ceiling_gb": 14.5
+  },
+  "receipt_requirements": {
+    "warm_gate": {
+      "required_consecutive_runs": 2,
+      "passing_run": "second consecutive run",
+      "peak_vram_gb_lte": 14.5
+    },
+    "timing": {
+      "ffprobe_required": true,
+      "expected_frame_count": 193,
+      "expected_fps": 25.0,
+      "target_s": 7.72,
+      "absolute_duration_error_lte_s": 0.04
+    },
+    "quality": {
+      "human_eyeball_required": true
+    }
+  },
+  "topology_contract": {
+    "schema_version": 1,
+    "intent": "Current-profile LTX-Video 0.9.8 distilled 2B cold video smoke; the immutable graph remains the historical same-canvas 193-frame graph",
+    "installed_schema": {
+      "comfyui_version": "0.32.0",
+      "git_commit": "c2bcbecd82ec5ae66594340b395c24ef0217b238",
+      "node_source": "comfy_extras/nodes_lt.py",
+      "node_source_sha256": "542cadcc408ec54194c9bdad2f3afc3e1c3eead6b0c6400f6aef78b779d74e7d"
+    },
+    "evidence": {
+      "otr_commit": "bf9f7fb11157be56b9aa6fac1115b49be68221e1",
+      "engine_source": "nodes/_otr_video_engines/eng_ltx_8gb.py",
+      "engine_source_git_blob_sha1": "2c7960af936b77c259390138f25ac4914c65fa40",
+      "bench_graph": "scripts/bench_graphs/arm_d_ltx_8gb.json",
+      "bench_graph_git_blob_sha1": "c96b78f7e3973859626d7c2a9a93dd01ad54322c",
+      "use": "read-only topology and measured v2 sampling evidence"
+    },
+    "exact_node_set": true,
+    "required_nodes": {
+      "1": "CheckpointLoaderSimple",
+      "2": "ModelSamplingLTXV",
+      "3": "CLIPLoader",
+      "4": "CLIPTextEncode",
+      "5": "CLIPTextEncode",
+      "7": "LoadImage",
+      "8": "LTXVImgToVideo",
+      "15": "LTXVConditioning",
+      "16": "LTXVScheduler",
+      "17": "KSamplerSelect",
+      "9": "SamplerCustom",
+      "10": "VAEDecode",
+      "11": "CreateVideo",
+      "12": "SaveVideo"
+    },
+    "required_class_types": [
+      "CheckpointLoaderSimple",
+      "ModelSamplingLTXV",
+      "CLIPLoader",
+      "CLIPTextEncode",
+      "LoadImage",
+      "LTXVImgToVideo",
+      "LTXVConditioning",
+      "LTXVScheduler",
+      "KSamplerSelect",
+      "SamplerCustom",
+      "VAEDecode",
+      "CreateVideo",
+      "SaveVideo"
+    ],
+    "required_connections": {
+      "2.model": [
+        "1",
+        0
+      ],
+      "4.clip": [
+        "3",
+        0
+      ],
+      "5.clip": [
+        "3",
+        0
+      ],
+      "8.positive": [
+        "4",
+        0
+      ],
+      "8.negative": [
+        "5",
+        0
+      ],
+      "8.vae": [
+        "1",
+        2
+      ],
+      "8.image": [
+        "7",
+        0
+      ],
+      "15.positive": [
+        "8",
+        0
+      ],
+      "15.negative": [
+        "8",
+        1
+      ],
+      "16.latent": [
+        "8",
+        2
+      ],
+      "9.model": [
+        "2",
+        0
+      ],
+      "9.positive": [
+        "15",
+        0
+      ],
+      "9.negative": [
+        "15",
+        1
+      ],
+      "9.sampler": [
+        "17",
+        0
+      ],
+      "9.sigmas": [
+        "16",
+        0
+      ],
+      "9.latent_image": [
+        "8",
+        2
+      ],
+      "10.samples": [
+        "9",
+        0
+      ],
+      "10.vae": [
+        "1",
+        2
+      ],
+      "11.images": [
+        "10",
+        0
+      ],
+      "12.video": [
+        "11",
+        0
+      ]
+    },
+    "required_input_values": [
+      {
+        "node": "1",
+        "input": "ckpt_name",
+        "equals": "ltxv-2b-0.9.8-distilled.safetensors"
+      },
+      {
+        "node": "2",
+        "input": "max_shift",
+        "equals": 2.05
+      },
+      {
+        "node": "2",
+        "input": "base_shift",
+        "equals": 0.95
+      },
+      {
+        "node": "3",
+        "input": "clip_name",
+        "equals": "t5xxl_fp16.safetensors"
+      },
+      {
+        "node": "3",
+        "input": "type",
+        "equals": "ltxv"
+      },
+      {
+        "node": "3",
+        "input": "device",
+        "equals": "cpu"
+      },
+      {
+        "node": "4",
+        "input": "text",
+        "equals": "subtle natural motion, cinematic lighting, detailed"
+      },
+      {
+        "node": "5",
+        "input": "text",
+        "equals": "low quality, worst quality, blurry, distorted, watermark, text, static"
+      },
+      {
+        "node": "7",
+        "input": "image",
+        "equals": "scene_still.png"
+      },
+      {
+        "node": "8",
+        "input": "width",
+        "equals": 832
+      },
+      {
+        "node": "8",
+        "input": "height",
+        "equals": 480
+      },
+      {
+        "node": "8",
+        "input": "length",
+        "equals": 193
+      },
+      {
+        "node": "8",
+        "input": "batch_size",
+        "equals": 1
+      },
+      {
+        "node": "8",
+        "input": "strength",
+        "equals": 1.0
+      },
+      {
+        "node": "15",
+        "input": "frame_rate",
+        "equals": 25.0
+      },
+      {
+        "node": "16",
+        "input": "steps",
+        "equals": 8
+      },
+      {
+        "node": "16",
+        "input": "max_shift",
+        "equals": 2.05
+      },
+      {
+        "node": "16",
+        "input": "base_shift",
+        "equals": 0.95
+      },
+      {
+        "node": "16",
+        "input": "stretch",
+        "equals": true
+      },
+      {
+        "node": "16",
+        "input": "terminal",
+        "equals": 0.1
+      },
+      {
+        "node": "17",
+        "input": "sampler_name",
+        "equals": "euler"
+      },
+      {
+        "node": "9",
+        "input": "add_noise",
+        "equals": true
+      },
+      {
+        "node": "9",
+        "input": "noise_seed",
+        "equals": 42
+      },
+      {
+        "node": "9",
+        "input": "cfg",
+        "equals": 1.0
+      },
+      {
+        "node": "11",
+        "input": "fps",
+        "equals": 25.0
+      },
+      {
+        "node": "11",
+        "input": "bit_depth",
+        "equals": 8
+      },
+      {
+        "node": "12",
+        "input": "filename_prefix",
+        "equals": "ltx_video_2b_current_profile_cold_smoke_out"
+      },
+      {
+        "node": "12",
+        "input": "format",
+        "equals": "auto"
+      },
+      {
+        "node": "12",
+        "input": "codec",
+        "equals": "auto"
+      }
+    ],
+    "required_absent_inputs": [
+      "2.latent"
+    ],
+    "forbidden_class_types": [
+      "EmptyLatentImage",
+      "VAEDecodeTiled",
+      "LoadAudio"
+    ],
+    "terminal_node": "12",
+    "require_all_nodes_reachable": true,
+    "intentional_divergences": [
+      "Lab fixture scene_still.png replaces the OTR bench still",
+      "Canvas moves from the OTR 8GB tier's 512x288 to the requested shared 832x480 comparison canvas",
+      "Length moves past the OTR adapter cap to the core-node-legal 193-frame 8n+1 rung",
+      "CreateVideo uses the native 25 fps conditioning clock for exact 7.72-second delivery",
+      "Plain VAEDecode follows the lab production-canvas no-tiling rule",
+      "OTR-only VRAM reset/probe nodes are omitted because run_recipe owns telemetry",
+      "This immutable clone changes only identity metadata, the current installed-schema pin, and the SaveVideo prefix from ltx_video_2b_distilled_cmp_832x480_f193; it is a cold current-profile smoke, not a historical-lane comparison or promotion claim"
+    ],
+    "fixture_hashes": {
+      "scene_still.png": "0476dbc87358d367d244c65e976f8013f9659aeb80f7a1c45b368cc1728a5596"
+    }
+  },
+  "prompt": {
+    "1": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {
+        "ckpt_name": "ltxv-2b-0.9.8-distilled.safetensors"
+      }
+    },
+    "2": {
+      "class_type": "ModelSamplingLTXV",
+      "inputs": {
+        "model": [
+          "1",
+          0
+        ],
+        "max_shift": 2.05,
+        "base_shift": 0.95
+      }
+    },
+    "3": {
+      "class_type": "CLIPLoader",
+      "inputs": {
+        "clip_name": "t5xxl_fp16.safetensors",
+        "type": "ltxv",
+        "device": "cpu"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "subtle natural motion, cinematic lighting, detailed",
+        "clip": [
+          "3",
+          0
+        ]
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "low quality, worst quality, blurry, distorted, watermark, text, static",
+        "clip": [
+          "3",
+          0
+        ]
+      }
+    },
+    "7": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    },
+    "8": {
+      "class_type": "LTXVImgToVideo",
+      "inputs": {
+        "positive": [
+          "4",
+          0
+        ],
+        "negative": [
+          "5",
+          0
+        ],
+        "vae": [
+          "1",
+          2
+        ],
+        "image": [
+          "7",
+          0
+        ],
+        "width": 832,
+        "height": 480,
+        "length": 193,
+        "batch_size": 1,
+        "strength": 1.0
+      }
+    },
+    "15": {
+      "class_type": "LTXVConditioning",
+      "inputs": {
+        "positive": [
+          "8",
+          0
+        ],
+        "negative": [
+          "8",
+          1
+        ],
+        "frame_rate": 25.0
+      }
+    },
+    "16": {
+      "class_type": "LTXVScheduler",
+      "inputs": {
+        "steps": 8,
+        "max_shift": 2.05,
+        "base_shift": 0.95,
+        "stretch": true,
+        "terminal": 0.1,
+        "latent": [
+          "8",
+          2
+        ]
+      }
+    },
+    "17": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "euler"
+      }
+    },
+    "9": {
+      "class_type": "SamplerCustom",
+      "inputs": {
+        "model": [
+          "2",
+          0
+        ],
+        "add_noise": true,
+        "noise_seed": 42,
+        "cfg": 1.0,
+        "positive": [
+          "15",
+          0
+        ],
+        "negative": [
+          "15",
+          1
+        ],
+        "sampler": [
+          "17",
+          0
+        ],
+        "sigmas": [
+          "16",
+          0
+        ],
+        "latent_image": [
+          "8",
+          2
+        ]
+      }
+    },
+    "10": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": [
+          "9",
+          0
+        ],
+        "vae": [
+          "1",
+          2
+        ]
+      }
+    },
+    "11": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "10",
+          0
+        ],
+        "fps": 25.0,
+        "bit_depth": 8
+      }
+    },
+    "12": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "11",
+          0
+        ],
+        "filename_prefix": "ltx_video_2b_current_profile_cold_smoke_out",
+        "format": "auto",
+        "codec": "auto"
+      }
+    }
+  },
+  "workflow": {
+    "nodes": [],
+    "links": []
+  }
+}

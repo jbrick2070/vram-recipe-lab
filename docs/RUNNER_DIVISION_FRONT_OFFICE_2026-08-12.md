@@ -1,8 +1,8 @@
 # Runner Division: dynamic lab front office
 
-- **Status:** static enrollment and planning layer implemented; direct runner integration remains deliberately deferred until the current-runner H3-LIP-TXT A/B closes
-- **Date:** 2026-08-12
-- **Repository snapshot:** `e7398fdae74a10512a16004f7499575e68d5c882`
+- **Status:** sealed direct dispatch implemented; the first cold plumbing smoke passed, the first sealed current-profile H3 native-A/V smoke measured 15.107 GiB and failed the 14.5 GiB gate, and one source-backed Larry Turbo v4-600 cold action pair is sealed `READY_FOR_DISPATCH` (not yet rendered)
+- **Date:** 2026-08-12, revised 2026-08-14
+- **Repository snapshot:** `6f596925d8408dd447f9471b3a18580c8c11d3fb`
 - **Purpose:** let the lab compare pinned ComfyUI environments without weakening the existing ownership, isolation, evidence, or GPU-safety rules
 - **Machine-readable proposal:** [`../research/runner_division_front_office_2026-08-12.json`](../research/runner_division_front_office_2026-08-12.json)
 
@@ -24,7 +24,7 @@ The fix is a division of responsibility:
 
 The old runner is not discarded. Its safety machinery becomes the floor runner under a stricter, machine-readable front office.
 
-### Current static milestone (2026-08-12)
+### Historical static milestone (2026-08-12)
 
 The repository now contains the safe, non-executing half of this design:
 `front_office.py`, `labctl.py`, strict v1 profile/campaign schemas, one verified
@@ -34,22 +34,53 @@ per-cell namespaces, an all-recipe offline census, and an immutable
 `DIRECT_LAUNCH_NOT_INTEGRATED`; it cannot boot ComfyUI, acquire the GPU, or
 queue a prompt.
 
-This is intentional. Changing `run_recipe.py`, `boot_lab_server.cmd`, or the
-receipt identity now would turn the promised H3-LIP-TXT prompt-only comparison
-into a runner-change comparison. After that A/B closes, the next small change
-will connect these sealed plans to the floor runner with direct argv launch,
-receipt binding, and real namespaces.
+This was intentional at the static milestone. The execution update below keeps
+the historical profile and receipt bytes intact rather than relabeling them.
 
-Only the genuine 0.31.1 bridge profile is enrolled. No local 0.32.0 checkout
-or requested `c2bcbecd82ec5ae66594340b395c24ef0217b238` object exists, so
-`campaigns/h3-c032.json` is explicitly `BLOCKED_PROFILE_ENROLLMENT`, not a
-placeholder profile or a download request.
+### Execution update (2026-08-13)
+
+The Front Office now seals an execution specification and invokes the pinned
+floor runner through a direct argument vector (`shell=False`). The floor runner
+revalidates that specification before taking the existing global GPU lease or
+touching port 8199. It owns the server, queue, `/object_info`, fixture,
+measurement, append-only receipt, and cleanup machinery exactly as before.
+
+The new dispatchable `comfy0320-h3` profile pins the actual clean ComfyUI
+`0.32.0 @ c2bcbecd82ec5ae66594340b395c24ef0217b238` installation. Its
+namespaces are distinct per campaign/cell/profile for outputs, results, logs,
+user state, and ComfyUI's `--temp-directory` base. Every Front Office receipt
+binds the profile, sealed launch specification, direct argv, sanitized
+environment, runner/front-office bundles, and one-time execution claim.
+
+Execution specifications are single-use and terminal: the current milestone
+forces a fresh cold server, proves shutdown before writing a machine pass, and
+marks the receipt cold-only. It cannot inherit a warm result or certify
+warm-cache performance. The first allowed smoke is
+`front-office-r1/t2i-low-smoke`, a `SaveImage` plumbing check; it does not
+claim video or audio media-gate coverage.
+
+The old `comfy0311-h3` profile remains historical and invalid against the
+current root. `H3-C032` remains blocked: a separate, real 0.31.1 worktree and
+profile plus a warm-session protocol are still required for the matched
+comparison. No placeholder profile, model download, or OTR edit is authorized.
+
+### Sealed named Turbo exception (2026-08-14)
+
+Jeffrey authorized one named Larry v4-600 Turbo LoRA for a source-backed,
+current-0.32 action-I2V cold pair. Its immutable admission,
+profile-specific manifest, pinned custom-node source, full artifact hashes, and
+runtime external-node checks are sealed in
+[`H3_TURBO_LARRY_V4_600_ADMISSION.md`](H3_TURBO_LARRY_V4_600_ADMISSION.md) and
+`front-office-h3-t8-current-r1`. The control remains `comfy0320-h3` at 20
+steps; the candidate remains `h3-turbo-larry-v4` at eight steps. This is one
+directional cold comparison, not warm-cache certification, a broad model
+admission system, or an OTR promotion claim.
 
 ## Active 2026-08-12 mission scope
 
 This proposal describes a larger eventual system. The active implementation is deliberately smaller: enroll only profile IDs that pin the Python executable, ComfyUI root/version/commit, custom-node whitelist/commits, model-paths config, and canonical argv; launch only direct argv subprocesses; bind profile identity and launch-spec hash into each new receipt; give every cell distinct output/result/log namespaces; and compute `STALE_FOR_ACTIVE_RUNNER` for old receipts without changing their bytes.
 
-Preserve the current floor runner unchanged: port-8199 ownership, `.gpu.lock`, `/object_info` validation, fixture and media gates, VRAM monitoring, append-only receipts, and cleanup proof. The ACL-protected GPU-UUID mutex, model content-admission manifests, receipt-schema-v4 full field set, cross-clone contention tests, and recipe schema v2 are explicitly deferred until bench friction demonstrates a need.
+Preserve the current floor runner unchanged: port-8199 ownership, `.gpu.lock`, `/object_info` validation, fixture and media gates, VRAM monitoring, append-only receipts, and cleanup proof. The ACL-protected GPU-UUID mutex, general model content-admission manifests beyond the sealed named Turbo exception, receipt-schema-v4 full field set, cross-clone contention tests, and recipe schema v2 are explicitly deferred until bench friction demonstrates a need.
 
 `H3-LIP-TXT` is the one current-runner exception: after a fresh native control and an unambiguous transcript-window receipt, its prompt-only A/B may run before the front office. `H3-C032` remains behind the minimal enrolled-profile front office.
 
@@ -169,13 +200,13 @@ High-risk monkey-patch/kernel campaigns use a fresh process for every ordered pa
 
 Yes: every **promoted or shipping-relevant lab recipe contract** needs a fresh receipt under the new runner identity. No: the lab should not burn GPU time rerunning every historical experiment, known failure, superseded recipe, or blocked asset.
 
-The post-campaign census is **82 checked-in recipes**: 70 have same-name current aliases and 12 have no alias. The results tree also retains 6 orphan aliases for removed legacy recipes. Of the 70 matched aliases, 58 use modern receipt schemas (57 v3 and one v2) and 12 are legacy; 29 appear warm, but only 6 are marked promotion-ready. Exactly two matched aliases bind the active `run_recipe.py` SHA-256 `6d6ac785…682776`, both cold H3 runs, so the active-runner promotion-ready count is **zero**. The reproducible predicate and both source commits are recorded in [`../research/handoff_census_2026-08-12.json`](../research/handoff_census_2026-08-12.json). The runner code is safer than the evidence generation currently displayed; Runner Division must recertify claims, not erase history.
+The current census is **86 checked-in recipes**: 76 selected top-level aliases include 70 same-name current aliases, while 16 recipes have no same-name alias. The results tree retains 6 orphan aliases for removed legacy recipes. Of the 70 matched aliases, 58 use modern receipt schemas (57 v3 and one v2) and 12 are legacy; 29 appear warm, but only 6 are marked promotion-ready. No selected top-level alias binds the active `run_recipe.py` SHA-256 `b6dfe74…20b053`, so the active-runner promotion-ready count is **zero**. Current Front Office receipts live in their deliberately separate `results/runs/` namespace and are not part of this historical-alias predicate. The reproducible predicate, source commits, sealed-Turbo state, and retained prior revision are recorded in [`../research/handoff_census_2026-08-14.json`](../research/handoff_census_2026-08-14.json). The runner code is safer than the evidence generation currently displayed; Runner Division must recertify claims, not erase history.
 
 The migration has three tiers:
 
 | Tier | Scope | Work |
 |---|---|---|
-| R0 static census | all 82 checked-in recipe JSON files | parse, schema, topology, fixture, manifest, profile-compatibility, and graph-diff validation; no GPU |
+| R0 static census | all 86 checked-in recipe JSON files | parse, schema, topology, fixture, manifest, profile-compatibility, and graph-diff validation; no GPU |
 | R1 runner parity panel | one representative image, silent-video, native-A/V, audio-conditioned, GGUF, H3, LTX, and Wan surface with available assets | fresh control runs under the frozen bridge profile; prove the new front office did not weaken execution or evidence semantics |
 | R2 certification set | every recipe whose receipt currently supports a promoted lab result or an OTR shipping video lane | fresh machine and required human gates; the front-office index displays old receipts as `PRE_RUNNER_DIVISION_HISTORY` without modifying their bytes |
 
@@ -246,14 +277,14 @@ The previous explicit FP16-PV probe remains a negative historical receipt, not t
 
 ## Implementation sequence
 
-The numbered sequence below is the eventual architecture, not a requirement for the active minimal milestone. The active milestone stops after enrolled-profile selection, direct argv launch, receipt profile/launch-spec binding, per-cell namespaces, and stale-display classification. In particular, model-content admission, recipe schema v2, full receipt schema v4, GPU-UUID ACL mutexes, and cross-clone tests remain deferred. Preserve every existing floor-runner safeguard while making that narrow change.
+The numbered sequence below is the eventual architecture, not a requirement for the active minimal milestone. The active milestone stops after enrolled-profile selection, direct argv launch, receipt profile/launch-spec binding, per-cell namespaces, and stale-display classification. In particular, general model-content admission beyond the sealed named Turbo exception, recipe schema v2, full receipt schema v4, GPU-UUID ACL mutexes, and cross-clone tests remain deferred. Preserve every existing floor-runner safeguard while making that narrow change.
 
 1. Add schemas and tests for bench profiles, campaign cells, and launch specifications.
 2. Extract path/boot identity from hard-coded constants into a validated `BenchProfile` object.
 3. Replace the shell boot path with direct Python process launch; retain the legacy launcher until parity passes.
 4. Namespace outputs, results, logs, PID receipts, and cache lineage by campaign/cell/profile.
 5. Move version-specific core-source hashes into profiles.
-6. Add model-content admission receipts and custom-node source manifests.
+6. Add general model-content admission receipts and custom-node source manifests beyond the sealed named-candidate exception.
 7. Add schema-v1 recipe adapter and schema-v2 logical recipe support.
 8. Bind the full runner bundle and front office into receipt schema v4.
 9. Update deterministic comparison builders/tests before creating new comparison receipts.
@@ -277,7 +308,7 @@ The numbered sequence below is the eventual architecture, not a requirement for 
 - displays any receipt whose runner bundle differs from the active bundle as `STALE_FOR_ACTIVE_RUNNER` without rewriting it;
 - rejects a model whose fast fingerprint no longer matches its content-hash admission receipt;
 - proves timeout, prompt-uncertainty, and parent-death cleanup/quarantine behavior;
-- proves all 82 recipes complete the R0 static census before Runner Division v1 is certified.
+- proves all 86 recipes complete the R0 static census before Runner Division v1 is certified.
 
 ## Bottom line
 

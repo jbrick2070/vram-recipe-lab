@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "kind": "quarantined_model_admission",
+  "id": "h3-turbo-larry-v4-step600-ema",
+  "status": "ADMITTED_FOR_ONE_SEALED_COLD_I2V_CANDIDATE",
+  "admitted_at": "2026-08-14",
+  "authorization": {
+    "operator": "Jeffrey",
+    "scope": "One named Turbo candidate, its source-backed best-use-case control/candidate pair, and terminal evidence before any optional deletion."
+  },
+  "base_h3_license_grant": {
+    "path": "docs/H3_LICENSE_GRANT.md",
+    "sha256": "d51f6311f5589e512eb12e432565c1a7726242ae9bd0e33323e33501ab72bb35",
+    "named_grantee": "Blueberrky Kale Yoga Books",
+    "scope": "Local, offline, non-commercial use on the operator's own hardware; no hosted service or weight redistribution; the underlying Community License continues to apply.",
+    "grant_authenticity_independently_verified": false
+  },
+  "weight": {
+    "upstream": "larryvrh/MiniMax-H3-Turbo-Lora",
+    "revision": "43a74557ac3f6539db8e0f2a959d03feb7a81480",
+    "declared_license": "Apache-2.0 from the upstream model card during the authorized retrieval; not embedded in the artifact metadata",
+    "filename": "minimax_h3_turbo_v4_step600_ema.safetensors",
+    "managed_path": "C:\\ComfyUI-Models\\loras\\h3-turbo-larry-v4\\minimax_h3_turbo_v4_step600_ema.safetensors",
+    "bytes": 779849816,
+    "sha256": "5f3a626cd72c93a8b9318d6760c510bc5092d2ab13aaba1f932c5bab07a416d3",
+    "safetensors_header": {
+      "header_bytes": 57424,
+      "tensor_count": 518,
+      "dtypes": [
+        "BF16"
+      ],
+      "metadata": {
+        "application": "W_eff = W + lora_B @ lora_A",
+        "base_model": "MiniMax-H3"
+      }
+    }
+  },
+  "node_source": {
+    "repository": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
+    "commit": "546b5028f4934f5129eb6c7142c2f3e461dfddbf",
+    "managed_quarantine_source": "C:\\ComfyUI-Models\\quarantine\\h3-turbo-larry-v4-step600-ema\\source\\ComfyUI-MiniMax-H3-Turbo",
+    "installed_checkout": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-MiniMax-H3-Turbo",
+    "clean_checkout": true,
+    "submodules": "none",
+    "code_license": "Apache-2.0",
+    "package": "comfyui-minimax-h3-turbo 1.2.3; Python >=3.10; declared dependencies []",
+    "init_py_sha256": "036089da474d9d06fd277fd9686ff05aad913824220dd8a2f5882b271c21022f",
+    "static_scan": {
+      "requirements_or_installer": false,
+      "prestartup_hook": false,
+      "subprocess_or_shell_launcher": false,
+      "http_or_network_client": false,
+      "comfyui_manager_integration": false,
+      "node_zip_executed": false
+    }
+  },
+  "support_asset": {
+    "filename": "h3_silu_temb_grid.safetensors",
+    "managed_path": "C:\\ComfyUI-Models\\custom_node_assets\\ComfyUI-MiniMax-H3-Turbo\\h3_silu_temb_grid.safetensors",
+    "bytes": 5510600,
+    "sha256": "30eb3c2cc7fb6b470d9717ff840d359313ac27cd64b705e32da1baa10f72d6a8",
+    "source_checkout_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-MiniMax-H3-Turbo\\h3_silu_temb_grid.safetensors",
+    "source_checkout_access": "NTFS hard link to the managed asset; no duplicate model bytes are stored outside C:\\ComfyUI-Models"
+  },
+  "execution_contract": {
+    "profile_id": "h3-turbo-larry-v4",
+    "profile_manifest": "model_admissions/h3-turbo-larry-v4/models_manifest.md",
+    "campaign_id": "front-office-h3-t8-current-r1",
+    "candidate_recipe": "recipes/h3_turbo_larry_v4_i2v_action_8step.json",
+    "control_recipe": "recipes/h3_turbo_larry_v4_i2v_action_control.json",
+    "required_boot_lane": "lab-8199, sage-free",
+    "forbidden_boot_flag": "--use-sage-attention",
+    "required_live_node_classes": [
+      "MiniMaxH3TurboLoRA",
+      "MiniMaxH3TurboSampler"
+    ],
+    "live_node_proof": "PENDING: Front Office must prove the exact classes and schemas through /object_info before it queues the candidate."
+  },
+  "retention": {
+    "failure_policy": "Keep this admission and the terminal machine receipt. Jeffrey may then authorize deletion of the LoRA and managed support asset.",
+    "deletion_authority": "Jeffrey only"
+  }
+}

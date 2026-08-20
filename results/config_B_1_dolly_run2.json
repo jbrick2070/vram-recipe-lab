@@ -1,0 +1,2114 @@
+{
+  "absolute_peak_vram_gb": 15.584,
+  "accepted_prompt": true,
+  "artifact_bytes": 181280,
+  "artifact_bytes_per_frame": 1868.87,
+  "artifact_sha256": "f3e39ab6317bd31ff31e890d24c14d6f00272882241333696018fb025fa17edc",
+  "audio_bitrate": 127734,
+  "audio_codec": "aac",
+  "audio_duration_s": 3.85,
+  "audio_present": true,
+  "audio_receipt_sha256s": {},
+  "audio_stream_bytes": 61813,
+  "baseline_advisory": {
+    "baseline_vram_gb": 1.334,
+    "disposition": "proceed",
+    "gating": true,
+    "kind": "per-leg-prequeue-baseline-gate",
+    "maximum_threshold_gb": 3.0,
+    "schema_version": 1,
+    "threshold_exceeded": false
+  },
+  "baseline_host_ram_gb": 18.0,
+  "baseline_lane_stamp": null,
+  "baseline_vram_gb": 1.334,
+  "bitrate_anomaly": false,
+  "bitrate_baseline_status": "provisional:0-of-3-clean-artifacts",
+  "blocked": false,
+  "boot_lane": "lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb)",
+  "certification_scope": "machine",
+  "clamp_target_gib": 15.5,
+  "clean_baseline_sample_count": 0,
+  "cold_warm_baseline_drift_advisory": {
+    "absolute_drift_gb": null,
+    "advisory_threshold_gb": 0.5,
+    "applicable": false,
+    "current_baseline_vram_gb": 1.334,
+    "disposition": "record-only; no same-identity prior leg",
+    "gating": false,
+    "kind": "same-identity-cold-warm-baseline-drift-advisory",
+    "measurement_available": false,
+    "previous_baseline_vram_gb": null,
+    "schema_version": 1,
+    "threshold_exceeded": false
+  },
+  "comfyui_git_commit": "7cee3ceb1a35503172e0dfb8dbdbdedee2aba8aa",
+  "completion_timeout_s": 1800,
+  "config_run_count": 1,
+  "container_duration_s": 3.88,
+  "duration_s": 134.0,
+  "elevated_baseline_lane": false,
+  "encoded_fps": 25.0,
+  "encoded_frame_count": 97,
+  "encoded_height": 480,
+  "encoded_width": 832,
+  "execution_cache_control": {},
+  "eyeball": "pending",
+  "final_server_instance": {
+    "process_create_time": 1787180736.686191,
+    "serving_pid": 7728
+  },
+  "final_standalone_cache_runtime_sha256s": {},
+  "final_suite_cache_runtime_sha256s": {},
+  "fixture_sha256s": {},
+  "gate_pass": false,
+  "git_commit": "3c26b19647e53216586d56de56f47d43597977eb",
+  "git_dirty": true,
+  "identity": {
+    "audio_receipt_sha256s": {},
+    "boot_lane": "lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb)",
+    "comfyui_git_commit": "7cee3ceb1a35503172e0dfb8dbdbdedee2aba8aa",
+    "completion_timeout_s": 1800,
+    "fixture_sha256s": {},
+    "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+    "model_fingerprints": {
+      "LTX-2.5-Distilled-Q5_K_M.gguf": {
+        "resolved": false
+      },
+      "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf": {
+        "bytes": 9514920864,
+        "mtime_ns": 1787103196277890500,
+        "path": "C:\\ComfyUI-Models\\text_encoders\\gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf",
+        "resolved": true
+      },
+      "ltx-2.5-audio-vae-bf16.safetensors": {
+        "bytes": 364866540,
+        "mtime_ns": 1787072018263030600,
+        "path": "C:\\ComfyUI-Models\\vae\\ltx-2.5-audio-vae-bf16.safetensors",
+        "resolved": true
+      },
+      "ltx-2.5-video-vae-bf16.safetensors": {
+        "bytes": 1472223346,
+        "mtime_ns": 1787071928857878600,
+        "path": "C:\\ComfyUI-Models\\vae\\ltx-2.5-video-vae-bf16.safetensors",
+        "resolved": true
+      }
+    },
+    "operator_idle_policy": {
+      "authorized_on": "2026-08-10",
+      "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+      "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+      "elevated_baseline_threshold_mib": 2048.0,
+      "kind": "operator-authorized-desktop-baseline-policy",
+      "known_render_compute_processes_block": true,
+      "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+      "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+      "pair_drift_condition": "compare each same-identity warm baseline_vram_gb to the prior cold leg; record absolute drift and threshold exceedance without blocking",
+      "pair_drift_threshold_gating": false,
+      "preboot_baseline_maximum_mib": 3072.0,
+      "preboot_baseline_threshold_gating": true,
+      "prequeue_known_workload_scan_contract": {
+        "advisory_unreadable_processes_retained": true,
+        "blocking_condition": "any known render/compute workload is live",
+        "exact_exclusions": [
+          "current run_recipe PID + create time + resolved run_recipe.py argv",
+          "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+          "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+          "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+        ],
+        "excluded_owned_lab_server_row_schema": [
+          "pid",
+          "process_create_time",
+          "reason"
+        ],
+        "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+        "known_workload_classifier": {
+          "arbitrary_later_argv_values_ignored": true,
+          "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+          "current_runner_exclusion_schema": [
+            "pid",
+            "process_create_time",
+            "resolved_runner_path",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity",
+            "verified_windows_venv_launcher",
+            "expected_excluded_process_count"
+          ],
+          "exact_exclusions_run_before_classifier": true,
+          "excluded_current_runner_row_schema": [
+            "pid",
+            "process_create_time",
+            "reason"
+          ],
+          "kind": "token-aware-positive-known-workload-classifier",
+          "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+          "other_markers": [
+            "torchrun",
+            "stable-diffusion",
+            "automatic1111",
+            "invokeai",
+            "diffusers",
+            "text-generation",
+            "vllm",
+            "ollama",
+            "kobold",
+            "eng_wan_",
+            "eng_fastwan_",
+            "eng_humo",
+            "minimax"
+          ],
+          "positive_match_sources": [
+            "process_basename",
+            "executable_basename",
+            "actual_python_script_or_module_target"
+          ],
+          "python_script_markers": [
+            "main.py",
+            "run_recipe.py"
+          ],
+          "redacted_process_schema": [
+            "pid",
+            "process_create_time",
+            "process_basename",
+            "executable_basename",
+            "target_basename",
+            "matched_markers",
+            "match_basis",
+            "argv_sha256"
+          ],
+          "schema_version": 1,
+          "unreadable_or_unmatched_python_is_advisory": true,
+          "verified_windows_venv_launcher_schema": [
+            "pid",
+            "process_create_time",
+            "expected_launcher_path",
+            "direct_child_pid",
+            "direct_parent_verified",
+            "launcher_identity_live",
+            "child_identity_live",
+            "argv_tail_matches_child",
+            "both_exact_runner_target",
+            "child_executable_differs",
+            "creation_delta_s",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity"
+          ]
+        },
+        "listener_binding_required_before_and_after_scan": true,
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "owned_lab_server_exclusion_schema": [
+          "pid",
+          "process_create_time",
+          "server_instance",
+          "process_identity",
+          "argv_match",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "verified_windows_venv_launcher",
+          "expected_excluded_process_count"
+        ],
+        "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+        "python_without_readable_argv_blocks": false,
+        "schema_version": 1,
+        "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+        "verified_owned_server_windows_venv_launcher_schema": [
+          "pid",
+          "process_create_time",
+          "expected_launcher_path",
+          "direct_child_pid",
+          "direct_parent_verified",
+          "launcher_identity_live",
+          "child_identity_live",
+          "argv_tail_matches_child",
+          "both_exact_validated_server_argv",
+          "child_executable_differs",
+          "creation_delta_s",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity",
+          "argv_match"
+        ],
+        "warm_leg_scan_required": true
+      },
+      "schema_version": 1,
+      "utilization_descriptors_non_gating": true
+    },
+    "preboot_gpu_idle_gate_contract": {
+      "aggregation": "maximum of five conjunctively quiescent WDDM samples",
+      "collector": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+        "sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053"
+      },
+      "gpu_index": 0,
+      "kind": "run-recipe-preboot-wddm-idle-gate-contract",
+      "policy": {
+        "current_runner_exclusion": "exact real runner PID/create-time/target plus at most one verified direct Windows venv launcher stub",
+        "desktop_graphics_signals_retained_but_not_required": true,
+        "display_active_allowed_measured_states": [
+          "Disabled",
+          "Enabled"
+        ],
+        "display_active_recorded_non_gating": true,
+        "gpu_utilization_recorded_non_gating": true,
+        "known_workload_classifier": {
+          "arbitrary_later_argv_values_ignored": true,
+          "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+          "current_runner_exclusion_schema": [
+            "pid",
+            "process_create_time",
+            "resolved_runner_path",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity",
+            "verified_windows_venv_launcher",
+            "expected_excluded_process_count"
+          ],
+          "exact_exclusions_run_before_classifier": true,
+          "excluded_current_runner_row_schema": [
+            "pid",
+            "process_create_time",
+            "reason"
+          ],
+          "kind": "token-aware-positive-known-workload-classifier",
+          "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+          "other_markers": [
+            "torchrun",
+            "stable-diffusion",
+            "automatic1111",
+            "invokeai",
+            "diffusers",
+            "text-generation",
+            "vllm",
+            "ollama",
+            "kobold",
+            "eng_wan_",
+            "eng_fastwan_",
+            "eng_humo",
+            "minimax"
+          ],
+          "positive_match_sources": [
+            "process_basename",
+            "executable_basename",
+            "actual_python_script_or_module_target"
+          ],
+          "python_script_markers": [
+            "main.py",
+            "run_recipe.py"
+          ],
+          "redacted_process_schema": [
+            "pid",
+            "process_create_time",
+            "process_basename",
+            "executable_basename",
+            "target_basename",
+            "matched_markers",
+            "match_basis",
+            "argv_sha256"
+          ],
+          "schema_version": 1,
+          "unreadable_or_unmatched_python_is_advisory": true,
+          "verified_windows_venv_launcher_schema": [
+            "pid",
+            "process_create_time",
+            "expected_launcher_path",
+            "direct_child_pid",
+            "direct_parent_verified",
+            "launcher_identity_live",
+            "child_identity_live",
+            "argv_tail_matches_child",
+            "both_exact_runner_target",
+            "child_executable_differs",
+            "creation_delta_s",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity"
+          ]
+        },
+        "live_process_identity_required": true,
+        "maximum_vram_used_mib": 3072.0,
+        "memory_utilization_recorded_non_gating": true,
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "numeric_or_unknown_process_memory_tokens_block": true,
+        "operator_idle_policy": {
+          "authorized_on": "2026-08-10",
+          "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+          "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+          "elevated_baseline_threshold_mib": 2048.0,
+          "kind": "operator-authorized-desktop-baseline-policy",
+          "known_render_compute_processes_block": true,
+          "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+          "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+          "pair_drift_condition": "compare each same-identity warm baseline_vram_gb to the prior cold leg; record absolute drift and threshold exceedance without blocking",
+          "pair_drift_threshold_gating": false,
+          "preboot_baseline_maximum_mib": 3072.0,
+          "preboot_baseline_threshold_gating": true,
+          "prequeue_known_workload_scan_contract": {
+            "advisory_unreadable_processes_retained": true,
+            "blocking_condition": "any known render/compute workload is live",
+            "exact_exclusions": [
+              "current run_recipe PID + create time + resolved run_recipe.py argv",
+              "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+              "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+              "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+            ],
+            "excluded_owned_lab_server_row_schema": [
+              "pid",
+              "process_create_time",
+              "reason"
+            ],
+            "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+            "known_workload_classifier": {
+              "arbitrary_later_argv_values_ignored": true,
+              "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+              "current_runner_exclusion_schema": [
+                "pid",
+                "process_create_time",
+                "resolved_runner_path",
+                "narrowly_verified",
+                "excluded_pid_only",
+                "process_identity",
+                "verified_windows_venv_launcher",
+                "expected_excluded_process_count"
+              ],
+              "exact_exclusions_run_before_classifier": true,
+              "excluded_current_runner_row_schema": [
+                "pid",
+                "process_create_time",
+                "reason"
+              ],
+              "kind": "token-aware-positive-known-workload-classifier",
+              "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+              "other_markers": [
+                "torchrun",
+                "stable-diffusion",
+                "automatic1111",
+                "invokeai",
+                "diffusers",
+                "text-generation",
+                "vllm",
+                "ollama",
+                "kobold",
+                "eng_wan_",
+                "eng_fastwan_",
+                "eng_humo",
+                "minimax"
+              ],
+              "positive_match_sources": [
+                "process_basename",
+                "executable_basename",
+                "actual_python_script_or_module_target"
+              ],
+              "python_script_markers": [
+                "main.py",
+                "run_recipe.py"
+              ],
+              "redacted_process_schema": [
+                "pid",
+                "process_create_time",
+                "process_basename",
+                "executable_basename",
+                "target_basename",
+                "matched_markers",
+                "match_basis",
+                "argv_sha256"
+              ],
+              "schema_version": 1,
+              "unreadable_or_unmatched_python_is_advisory": true,
+              "verified_windows_venv_launcher_schema": [
+                "pid",
+                "process_create_time",
+                "expected_launcher_path",
+                "direct_child_pid",
+                "direct_parent_verified",
+                "launcher_identity_live",
+                "child_identity_live",
+                "argv_tail_matches_child",
+                "both_exact_runner_target",
+                "child_executable_differs",
+                "creation_delta_s",
+                "narrowly_verified",
+                "excluded_pid_only",
+                "process_identity"
+              ]
+            },
+            "listener_binding_required_before_and_after_scan": true,
+            "model_workload_markers": [
+              "main.py",
+              "run_recipe.py",
+              "torchrun",
+              "stable-diffusion",
+              "automatic1111",
+              "invokeai",
+              "diffusers",
+              "text-generation",
+              "vllm",
+              "ollama",
+              "kobold",
+              "eng_wan_",
+              "eng_fastwan_",
+              "eng_humo",
+              "minimax"
+            ],
+            "owned_lab_server_exclusion_schema": [
+              "pid",
+              "process_create_time",
+              "server_instance",
+              "process_identity",
+              "argv_match",
+              "narrowly_verified",
+              "excluded_pid_only",
+              "verified_windows_venv_launcher",
+              "expected_excluded_process_count"
+            ],
+            "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+            "python_without_readable_argv_blocks": false,
+            "schema_version": 1,
+            "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+            "verified_owned_server_windows_venv_launcher_schema": [
+              "pid",
+              "process_create_time",
+              "expected_launcher_path",
+              "direct_child_pid",
+              "direct_parent_verified",
+              "launcher_identity_live",
+              "child_identity_live",
+              "argv_tail_matches_child",
+              "both_exact_validated_server_argv",
+              "child_executable_differs",
+              "creation_delta_s",
+              "narrowly_verified",
+              "excluded_pid_only",
+              "process_identity",
+              "argv_match"
+            ],
+            "warm_leg_scan_required": true
+          },
+          "schema_version": 1,
+          "utilization_descriptors_non_gating": true
+        },
+        "port_8199_listener_required_absent": true,
+        "recognized_unmetered_wddm_memory_token": "[N/A]",
+        "required_driver_model": "WDDM",
+        "same_gpu_lease_required_each_sample": true,
+        "vram_used_mib_threshold_gating": true
+      },
+      "port": 8199,
+      "sample_count": 5,
+      "sampling_interval_s": 0.2,
+      "schema_version": 1
+    },
+    "prequeue_known_workload_scan_contract": {
+      "advisory_unreadable_processes_retained": true,
+      "blocking_condition": "any known render/compute workload is live",
+      "exact_exclusions": [
+        "current run_recipe PID + create time + resolved run_recipe.py argv",
+        "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+        "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+        "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+      ],
+      "excluded_owned_lab_server_row_schema": [
+        "pid",
+        "process_create_time",
+        "reason"
+      ],
+      "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+      "known_workload_classifier": {
+        "arbitrary_later_argv_values_ignored": true,
+        "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+        "current_runner_exclusion_schema": [
+          "pid",
+          "process_create_time",
+          "resolved_runner_path",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity",
+          "verified_windows_venv_launcher",
+          "expected_excluded_process_count"
+        ],
+        "exact_exclusions_run_before_classifier": true,
+        "excluded_current_runner_row_schema": [
+          "pid",
+          "process_create_time",
+          "reason"
+        ],
+        "kind": "token-aware-positive-known-workload-classifier",
+        "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+        "other_markers": [
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "positive_match_sources": [
+          "process_basename",
+          "executable_basename",
+          "actual_python_script_or_module_target"
+        ],
+        "python_script_markers": [
+          "main.py",
+          "run_recipe.py"
+        ],
+        "redacted_process_schema": [
+          "pid",
+          "process_create_time",
+          "process_basename",
+          "executable_basename",
+          "target_basename",
+          "matched_markers",
+          "match_basis",
+          "argv_sha256"
+        ],
+        "schema_version": 1,
+        "unreadable_or_unmatched_python_is_advisory": true,
+        "verified_windows_venv_launcher_schema": [
+          "pid",
+          "process_create_time",
+          "expected_launcher_path",
+          "direct_child_pid",
+          "direct_parent_verified",
+          "launcher_identity_live",
+          "child_identity_live",
+          "argv_tail_matches_child",
+          "both_exact_runner_target",
+          "child_executable_differs",
+          "creation_delta_s",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity"
+        ]
+      },
+      "listener_binding_required_before_and_after_scan": true,
+      "model_workload_markers": [
+        "main.py",
+        "run_recipe.py",
+        "torchrun",
+        "stable-diffusion",
+        "automatic1111",
+        "invokeai",
+        "diffusers",
+        "text-generation",
+        "vllm",
+        "ollama",
+        "kobold",
+        "eng_wan_",
+        "eng_fastwan_",
+        "eng_humo",
+        "minimax"
+      ],
+      "owned_lab_server_exclusion_schema": [
+        "pid",
+        "process_create_time",
+        "server_instance",
+        "process_identity",
+        "argv_match",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "verified_windows_venv_launcher",
+        "expected_excluded_process_count"
+      ],
+      "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+      "python_without_readable_argv_blocks": false,
+      "schema_version": 1,
+      "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+      "verified_owned_server_windows_venv_launcher_schema": [
+        "pid",
+        "process_create_time",
+        "expected_launcher_path",
+        "direct_child_pid",
+        "direct_parent_verified",
+        "launcher_identity_live",
+        "child_identity_live",
+        "argv_tail_matches_child",
+        "both_exact_validated_server_argv",
+        "child_executable_differs",
+        "creation_delta_s",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity",
+        "argv_match"
+      ],
+      "warm_leg_scan_required": true
+    },
+    "recipe_sha256": "17f323894e8a4ce9394ee9744f9bec6c88a1792696388e12d58cb55277f6373b",
+    "runner_sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053",
+    "server_argv": [
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-GGUF",
+      "ComfyUI-KJNodes",
+      "--reserve-vram",
+      "0.421"
+    ],
+    "server_instance": {
+      "process_create_time": 1787180736.686191,
+      "serving_pid": 7728
+    }
+  },
+  "lab_locks_sha256": "0200e8620558fe3a7ddf75bf54678439905d6041a65d1c06bd2b2ba01def0ff1",
+  "manager_offline_probe": {
+    "post_render": {
+      "default_manager_disabled": true,
+      "enabled": false
+    },
+    "pre_queue": {
+      "default_manager_disabled": true,
+      "enabled": false
+    },
+    "provenance_unchanged": true
+  },
+  "marginal": false,
+  "model_fingerprints": {
+    "LTX-2.5-Distilled-Q5_K_M.gguf": {
+      "resolved": false
+    },
+    "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf": {
+      "bytes": 9514920864,
+      "mtime_ns": 1787103196277890500,
+      "path": "C:\\ComfyUI-Models\\text_encoders\\gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf",
+      "resolved": true
+    },
+    "ltx-2.5-audio-vae-bf16.safetensors": {
+      "bytes": 364866540,
+      "mtime_ns": 1787072018263030600,
+      "path": "C:\\ComfyUI-Models\\vae\\ltx-2.5-audio-vae-bf16.safetensors",
+      "resolved": true
+    },
+    "ltx-2.5-video-vae-bf16.safetensors": {
+      "bytes": 1472223346,
+      "mtime_ns": 1787071928857878600,
+      "path": "C:\\ComfyUI-Models\\vae\\ltx-2.5-video-vae-bf16.safetensors",
+      "resolved": true
+    }
+  },
+  "net_peak_vram_gb": 14.25,
+  "operator_idle_policy": {
+    "authorized_on": "2026-08-10",
+    "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+    "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+    "elevated_baseline_threshold_mib": 2048.0,
+    "kind": "operator-authorized-desktop-baseline-policy",
+    "known_render_compute_processes_block": true,
+    "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+    "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+    "pair_drift_condition": "compare each same-identity warm baseline_vram_gb to the prior cold leg; record absolute drift and threshold exceedance without blocking",
+    "pair_drift_threshold_gating": false,
+    "preboot_baseline_maximum_mib": 3072.0,
+    "preboot_baseline_threshold_gating": true,
+    "prequeue_known_workload_scan_contract": {
+      "advisory_unreadable_processes_retained": true,
+      "blocking_condition": "any known render/compute workload is live",
+      "exact_exclusions": [
+        "current run_recipe PID + create time + resolved run_recipe.py argv",
+        "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+        "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+        "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+      ],
+      "excluded_owned_lab_server_row_schema": [
+        "pid",
+        "process_create_time",
+        "reason"
+      ],
+      "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+      "known_workload_classifier": {
+        "arbitrary_later_argv_values_ignored": true,
+        "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+        "current_runner_exclusion_schema": [
+          "pid",
+          "process_create_time",
+          "resolved_runner_path",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity",
+          "verified_windows_venv_launcher",
+          "expected_excluded_process_count"
+        ],
+        "exact_exclusions_run_before_classifier": true,
+        "excluded_current_runner_row_schema": [
+          "pid",
+          "process_create_time",
+          "reason"
+        ],
+        "kind": "token-aware-positive-known-workload-classifier",
+        "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+        "other_markers": [
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "positive_match_sources": [
+          "process_basename",
+          "executable_basename",
+          "actual_python_script_or_module_target"
+        ],
+        "python_script_markers": [
+          "main.py",
+          "run_recipe.py"
+        ],
+        "redacted_process_schema": [
+          "pid",
+          "process_create_time",
+          "process_basename",
+          "executable_basename",
+          "target_basename",
+          "matched_markers",
+          "match_basis",
+          "argv_sha256"
+        ],
+        "schema_version": 1,
+        "unreadable_or_unmatched_python_is_advisory": true,
+        "verified_windows_venv_launcher_schema": [
+          "pid",
+          "process_create_time",
+          "expected_launcher_path",
+          "direct_child_pid",
+          "direct_parent_verified",
+          "launcher_identity_live",
+          "child_identity_live",
+          "argv_tail_matches_child",
+          "both_exact_runner_target",
+          "child_executable_differs",
+          "creation_delta_s",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity"
+        ]
+      },
+      "listener_binding_required_before_and_after_scan": true,
+      "model_workload_markers": [
+        "main.py",
+        "run_recipe.py",
+        "torchrun",
+        "stable-diffusion",
+        "automatic1111",
+        "invokeai",
+        "diffusers",
+        "text-generation",
+        "vllm",
+        "ollama",
+        "kobold",
+        "eng_wan_",
+        "eng_fastwan_",
+        "eng_humo",
+        "minimax"
+      ],
+      "owned_lab_server_exclusion_schema": [
+        "pid",
+        "process_create_time",
+        "server_instance",
+        "process_identity",
+        "argv_match",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "verified_windows_venv_launcher",
+        "expected_excluded_process_count"
+      ],
+      "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+      "python_without_readable_argv_blocks": false,
+      "schema_version": 1,
+      "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+      "verified_owned_server_windows_venv_launcher_schema": [
+        "pid",
+        "process_create_time",
+        "expected_launcher_path",
+        "direct_child_pid",
+        "direct_parent_verified",
+        "launcher_identity_live",
+        "child_identity_live",
+        "argv_tail_matches_child",
+        "both_exact_validated_server_argv",
+        "child_executable_differs",
+        "creation_delta_s",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity",
+        "argv_match"
+      ],
+      "warm_leg_scan_required": true
+    },
+    "schema_version": 1,
+    "utilization_descriptors_non_gating": true
+  },
+  "orphan_cleanup": {},
+  "output_path": "ltx_2_5_gguf_00015_.mp4",
+  "pass": false,
+  "peak_host_ram_gb": 60.07,
+  "peak_vram_gb": 15.584,
+  "physical_total_vram_gib": 15.9208984375,
+  "pixel_format": "yuv420p",
+  "preboot_gpu_idle_gate": {
+    "contract": {
+      "aggregation": "maximum of five conjunctively quiescent WDDM samples",
+      "collector": {
+        "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+        "sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053"
+      },
+      "gpu_index": 0,
+      "kind": "run-recipe-preboot-wddm-idle-gate-contract",
+      "policy": {
+        "current_runner_exclusion": "exact real runner PID/create-time/target plus at most one verified direct Windows venv launcher stub",
+        "desktop_graphics_signals_retained_but_not_required": true,
+        "display_active_allowed_measured_states": [
+          "Disabled",
+          "Enabled"
+        ],
+        "display_active_recorded_non_gating": true,
+        "gpu_utilization_recorded_non_gating": true,
+        "known_workload_classifier": {
+          "arbitrary_later_argv_values_ignored": true,
+          "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+          "current_runner_exclusion_schema": [
+            "pid",
+            "process_create_time",
+            "resolved_runner_path",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity",
+            "verified_windows_venv_launcher",
+            "expected_excluded_process_count"
+          ],
+          "exact_exclusions_run_before_classifier": true,
+          "excluded_current_runner_row_schema": [
+            "pid",
+            "process_create_time",
+            "reason"
+          ],
+          "kind": "token-aware-positive-known-workload-classifier",
+          "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+          "other_markers": [
+            "torchrun",
+            "stable-diffusion",
+            "automatic1111",
+            "invokeai",
+            "diffusers",
+            "text-generation",
+            "vllm",
+            "ollama",
+            "kobold",
+            "eng_wan_",
+            "eng_fastwan_",
+            "eng_humo",
+            "minimax"
+          ],
+          "positive_match_sources": [
+            "process_basename",
+            "executable_basename",
+            "actual_python_script_or_module_target"
+          ],
+          "python_script_markers": [
+            "main.py",
+            "run_recipe.py"
+          ],
+          "redacted_process_schema": [
+            "pid",
+            "process_create_time",
+            "process_basename",
+            "executable_basename",
+            "target_basename",
+            "matched_markers",
+            "match_basis",
+            "argv_sha256"
+          ],
+          "schema_version": 1,
+          "unreadable_or_unmatched_python_is_advisory": true,
+          "verified_windows_venv_launcher_schema": [
+            "pid",
+            "process_create_time",
+            "expected_launcher_path",
+            "direct_child_pid",
+            "direct_parent_verified",
+            "launcher_identity_live",
+            "child_identity_live",
+            "argv_tail_matches_child",
+            "both_exact_runner_target",
+            "child_executable_differs",
+            "creation_delta_s",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity"
+          ]
+        },
+        "live_process_identity_required": true,
+        "maximum_vram_used_mib": 3072.0,
+        "memory_utilization_recorded_non_gating": true,
+        "model_workload_markers": [
+          "main.py",
+          "run_recipe.py",
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "numeric_or_unknown_process_memory_tokens_block": true,
+        "operator_idle_policy": {
+          "authorized_on": "2026-08-10",
+          "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+          "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+          "elevated_baseline_threshold_mib": 2048.0,
+          "kind": "operator-authorized-desktop-baseline-policy",
+          "known_render_compute_processes_block": true,
+          "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+          "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+          "pair_drift_condition": "compare each same-identity warm baseline_vram_gb to the prior cold leg; record absolute drift and threshold exceedance without blocking",
+          "pair_drift_threshold_gating": false,
+          "preboot_baseline_maximum_mib": 3072.0,
+          "preboot_baseline_threshold_gating": true,
+          "prequeue_known_workload_scan_contract": {
+            "advisory_unreadable_processes_retained": true,
+            "blocking_condition": "any known render/compute workload is live",
+            "exact_exclusions": [
+              "current run_recipe PID + create time + resolved run_recipe.py argv",
+              "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+              "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+              "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+            ],
+            "excluded_owned_lab_server_row_schema": [
+              "pid",
+              "process_create_time",
+              "reason"
+            ],
+            "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+            "known_workload_classifier": {
+              "arbitrary_later_argv_values_ignored": true,
+              "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+              "current_runner_exclusion_schema": [
+                "pid",
+                "process_create_time",
+                "resolved_runner_path",
+                "narrowly_verified",
+                "excluded_pid_only",
+                "process_identity",
+                "verified_windows_venv_launcher",
+                "expected_excluded_process_count"
+              ],
+              "exact_exclusions_run_before_classifier": true,
+              "excluded_current_runner_row_schema": [
+                "pid",
+                "process_create_time",
+                "reason"
+              ],
+              "kind": "token-aware-positive-known-workload-classifier",
+              "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+              "other_markers": [
+                "torchrun",
+                "stable-diffusion",
+                "automatic1111",
+                "invokeai",
+                "diffusers",
+                "text-generation",
+                "vllm",
+                "ollama",
+                "kobold",
+                "eng_wan_",
+                "eng_fastwan_",
+                "eng_humo",
+                "minimax"
+              ],
+              "positive_match_sources": [
+                "process_basename",
+                "executable_basename",
+                "actual_python_script_or_module_target"
+              ],
+              "python_script_markers": [
+                "main.py",
+                "run_recipe.py"
+              ],
+              "redacted_process_schema": [
+                "pid",
+                "process_create_time",
+                "process_basename",
+                "executable_basename",
+                "target_basename",
+                "matched_markers",
+                "match_basis",
+                "argv_sha256"
+              ],
+              "schema_version": 1,
+              "unreadable_or_unmatched_python_is_advisory": true,
+              "verified_windows_venv_launcher_schema": [
+                "pid",
+                "process_create_time",
+                "expected_launcher_path",
+                "direct_child_pid",
+                "direct_parent_verified",
+                "launcher_identity_live",
+                "child_identity_live",
+                "argv_tail_matches_child",
+                "both_exact_runner_target",
+                "child_executable_differs",
+                "creation_delta_s",
+                "narrowly_verified",
+                "excluded_pid_only",
+                "process_identity"
+              ]
+            },
+            "listener_binding_required_before_and_after_scan": true,
+            "model_workload_markers": [
+              "main.py",
+              "run_recipe.py",
+              "torchrun",
+              "stable-diffusion",
+              "automatic1111",
+              "invokeai",
+              "diffusers",
+              "text-generation",
+              "vllm",
+              "ollama",
+              "kobold",
+              "eng_wan_",
+              "eng_fastwan_",
+              "eng_humo",
+              "minimax"
+            ],
+            "owned_lab_server_exclusion_schema": [
+              "pid",
+              "process_create_time",
+              "server_instance",
+              "process_identity",
+              "argv_match",
+              "narrowly_verified",
+              "excluded_pid_only",
+              "verified_windows_venv_launcher",
+              "expected_excluded_process_count"
+            ],
+            "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+            "python_without_readable_argv_blocks": false,
+            "schema_version": 1,
+            "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+            "verified_owned_server_windows_venv_launcher_schema": [
+              "pid",
+              "process_create_time",
+              "expected_launcher_path",
+              "direct_child_pid",
+              "direct_parent_verified",
+              "launcher_identity_live",
+              "child_identity_live",
+              "argv_tail_matches_child",
+              "both_exact_validated_server_argv",
+              "child_executable_differs",
+              "creation_delta_s",
+              "narrowly_verified",
+              "excluded_pid_only",
+              "process_identity",
+              "argv_match"
+            ],
+            "warm_leg_scan_required": true
+          },
+          "schema_version": 1,
+          "utilization_descriptors_non_gating": true
+        },
+        "port_8199_listener_required_absent": true,
+        "recognized_unmetered_wddm_memory_token": "[N/A]",
+        "required_driver_model": "WDDM",
+        "same_gpu_lease_required_each_sample": true,
+        "vram_used_mib_threshold_gating": true
+      },
+      "port": 8199,
+      "sample_count": 5,
+      "sampling_interval_s": 0.2,
+      "schema_version": 1
+    },
+    "evidence_sha256": "daaeee4fb74670eda4a48160ca3d23e8efa1142e51b3522edc28f8b491bb3ac0",
+    "gate_ran": false,
+    "kind": "run-recipe-preboot-wddm-idle-gate",
+    "reason": "verified owned lab server already active; no fresh idle sampling claimed",
+    "schema_version": 1,
+    "server_instance": {
+      "process_create_time": 1787180736.686191,
+      "serving_pid": 7728
+    },
+    "status": "not-rerun-owned-server-reuse"
+  },
+  "preboot_gpu_idle_gate_contract": {
+    "aggregation": "maximum of five conjunctively quiescent WDDM samples",
+    "collector": {
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+      "sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053"
+    },
+    "gpu_index": 0,
+    "kind": "run-recipe-preboot-wddm-idle-gate-contract",
+    "policy": {
+      "current_runner_exclusion": "exact real runner PID/create-time/target plus at most one verified direct Windows venv launcher stub",
+      "desktop_graphics_signals_retained_but_not_required": true,
+      "display_active_allowed_measured_states": [
+        "Disabled",
+        "Enabled"
+      ],
+      "display_active_recorded_non_gating": true,
+      "gpu_utilization_recorded_non_gating": true,
+      "known_workload_classifier": {
+        "arbitrary_later_argv_values_ignored": true,
+        "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+        "current_runner_exclusion_schema": [
+          "pid",
+          "process_create_time",
+          "resolved_runner_path",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity",
+          "verified_windows_venv_launcher",
+          "expected_excluded_process_count"
+        ],
+        "exact_exclusions_run_before_classifier": true,
+        "excluded_current_runner_row_schema": [
+          "pid",
+          "process_create_time",
+          "reason"
+        ],
+        "kind": "token-aware-positive-known-workload-classifier",
+        "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+        "other_markers": [
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "positive_match_sources": [
+          "process_basename",
+          "executable_basename",
+          "actual_python_script_or_module_target"
+        ],
+        "python_script_markers": [
+          "main.py",
+          "run_recipe.py"
+        ],
+        "redacted_process_schema": [
+          "pid",
+          "process_create_time",
+          "process_basename",
+          "executable_basename",
+          "target_basename",
+          "matched_markers",
+          "match_basis",
+          "argv_sha256"
+        ],
+        "schema_version": 1,
+        "unreadable_or_unmatched_python_is_advisory": true,
+        "verified_windows_venv_launcher_schema": [
+          "pid",
+          "process_create_time",
+          "expected_launcher_path",
+          "direct_child_pid",
+          "direct_parent_verified",
+          "launcher_identity_live",
+          "child_identity_live",
+          "argv_tail_matches_child",
+          "both_exact_runner_target",
+          "child_executable_differs",
+          "creation_delta_s",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity"
+        ]
+      },
+      "live_process_identity_required": true,
+      "maximum_vram_used_mib": 3072.0,
+      "memory_utilization_recorded_non_gating": true,
+      "model_workload_markers": [
+        "main.py",
+        "run_recipe.py",
+        "torchrun",
+        "stable-diffusion",
+        "automatic1111",
+        "invokeai",
+        "diffusers",
+        "text-generation",
+        "vllm",
+        "ollama",
+        "kobold",
+        "eng_wan_",
+        "eng_fastwan_",
+        "eng_humo",
+        "minimax"
+      ],
+      "numeric_or_unknown_process_memory_tokens_block": true,
+      "operator_idle_policy": {
+        "authorized_on": "2026-08-10",
+        "elevated_baseline_condition": "recorded baseline is strictly greater than 2.0 GiB",
+        "elevated_baseline_stamp": "elevated-baseline lane, operator-authorized 2026-08-10",
+        "elevated_baseline_threshold_mib": 2048.0,
+        "kind": "operator-authorized-desktop-baseline-policy",
+        "known_render_compute_processes_block": true,
+        "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+        "pair_cold_warm_baseline_drift_advisory_gib": 0.5,
+        "pair_drift_condition": "compare each same-identity warm baseline_vram_gb to the prior cold leg; record absolute drift and threshold exceedance without blocking",
+        "pair_drift_threshold_gating": false,
+        "preboot_baseline_maximum_mib": 3072.0,
+        "preboot_baseline_threshold_gating": true,
+        "prequeue_known_workload_scan_contract": {
+          "advisory_unreadable_processes_retained": true,
+          "blocking_condition": "any known render/compute workload is live",
+          "exact_exclusions": [
+            "current run_recipe PID + create time + resolved run_recipe.py argv",
+            "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+            "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+            "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+          ],
+          "excluded_owned_lab_server_row_schema": [
+            "pid",
+            "process_create_time",
+            "reason"
+          ],
+          "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+          "known_workload_classifier": {
+            "arbitrary_later_argv_values_ignored": true,
+            "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+            "current_runner_exclusion_schema": [
+              "pid",
+              "process_create_time",
+              "resolved_runner_path",
+              "narrowly_verified",
+              "excluded_pid_only",
+              "process_identity",
+              "verified_windows_venv_launcher",
+              "expected_excluded_process_count"
+            ],
+            "exact_exclusions_run_before_classifier": true,
+            "excluded_current_runner_row_schema": [
+              "pid",
+              "process_create_time",
+              "reason"
+            ],
+            "kind": "token-aware-positive-known-workload-classifier",
+            "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+            "other_markers": [
+              "torchrun",
+              "stable-diffusion",
+              "automatic1111",
+              "invokeai",
+              "diffusers",
+              "text-generation",
+              "vllm",
+              "ollama",
+              "kobold",
+              "eng_wan_",
+              "eng_fastwan_",
+              "eng_humo",
+              "minimax"
+            ],
+            "positive_match_sources": [
+              "process_basename",
+              "executable_basename",
+              "actual_python_script_or_module_target"
+            ],
+            "python_script_markers": [
+              "main.py",
+              "run_recipe.py"
+            ],
+            "redacted_process_schema": [
+              "pid",
+              "process_create_time",
+              "process_basename",
+              "executable_basename",
+              "target_basename",
+              "matched_markers",
+              "match_basis",
+              "argv_sha256"
+            ],
+            "schema_version": 1,
+            "unreadable_or_unmatched_python_is_advisory": true,
+            "verified_windows_venv_launcher_schema": [
+              "pid",
+              "process_create_time",
+              "expected_launcher_path",
+              "direct_child_pid",
+              "direct_parent_verified",
+              "launcher_identity_live",
+              "child_identity_live",
+              "argv_tail_matches_child",
+              "both_exact_runner_target",
+              "child_executable_differs",
+              "creation_delta_s",
+              "narrowly_verified",
+              "excluded_pid_only",
+              "process_identity"
+            ]
+          },
+          "listener_binding_required_before_and_after_scan": true,
+          "model_workload_markers": [
+            "main.py",
+            "run_recipe.py",
+            "torchrun",
+            "stable-diffusion",
+            "automatic1111",
+            "invokeai",
+            "diffusers",
+            "text-generation",
+            "vllm",
+            "ollama",
+            "kobold",
+            "eng_wan_",
+            "eng_fastwan_",
+            "eng_humo",
+            "minimax"
+          ],
+          "owned_lab_server_exclusion_schema": [
+            "pid",
+            "process_create_time",
+            "server_instance",
+            "process_identity",
+            "argv_match",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "verified_windows_venv_launcher",
+            "expected_excluded_process_count"
+          ],
+          "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+          "python_without_readable_argv_blocks": false,
+          "schema_version": 1,
+          "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+          "verified_owned_server_windows_venv_launcher_schema": [
+            "pid",
+            "process_create_time",
+            "expected_launcher_path",
+            "direct_child_pid",
+            "direct_parent_verified",
+            "launcher_identity_live",
+            "child_identity_live",
+            "argv_tail_matches_child",
+            "both_exact_validated_server_argv",
+            "child_executable_differs",
+            "creation_delta_s",
+            "narrowly_verified",
+            "excluded_pid_only",
+            "process_identity",
+            "argv_match"
+          ],
+          "warm_leg_scan_required": true
+        },
+        "schema_version": 1,
+        "utilization_descriptors_non_gating": true
+      },
+      "port_8199_listener_required_absent": true,
+      "recognized_unmetered_wddm_memory_token": "[N/A]",
+      "required_driver_model": "WDDM",
+      "same_gpu_lease_required_each_sample": true,
+      "vram_used_mib_threshold_gating": true
+    },
+    "port": 8199,
+    "sample_count": 5,
+    "sampling_interval_s": 0.2,
+    "schema_version": 1
+  },
+  "preboot_gpu_idle_gate_sidecar": {
+    "bytes": 315473,
+    "evidence_sha256": "0d419a161c05c0e17b2e6e1c0c8a6b739154d027c245b2935af25a845039681a",
+    "identity": [
+      1356286727840300467,
+      11821949023271259,
+      33206,
+      1,
+      315473,
+      1787180746759206000
+    ],
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\.server.idle-gate.json",
+    "server_instance": {
+      "process_create_time": 1787180736.686191,
+      "serving_pid": 7728
+    },
+    "sha256": "be3eaedad3dbe8e856979b8316f689f52618a6bf1f3a3a64d7f589f310e1b021"
+  },
+  "prequeue_known_workload_scan": {
+    "advisory_unreadable_processes": [],
+    "blocking_processes": [],
+    "completed_at_ns": 1787180750377529800,
+    "contract": {
+      "advisory_unreadable_processes_retained": true,
+      "blocking_condition": "any known render/compute workload is live",
+      "exact_exclusions": [
+        "current run_recipe PID + create time + resolved run_recipe.py argv",
+        "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+        "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+        "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+      ],
+      "excluded_owned_lab_server_row_schema": [
+        "pid",
+        "process_create_time",
+        "reason"
+      ],
+      "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+      "known_workload_classifier": {
+        "arbitrary_later_argv_values_ignored": true,
+        "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+        "current_runner_exclusion_schema": [
+          "pid",
+          "process_create_time",
+          "resolved_runner_path",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity",
+          "verified_windows_venv_launcher",
+          "expected_excluded_process_count"
+        ],
+        "exact_exclusions_run_before_classifier": true,
+        "excluded_current_runner_row_schema": [
+          "pid",
+          "process_create_time",
+          "reason"
+        ],
+        "kind": "token-aware-positive-known-workload-classifier",
+        "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+        "other_markers": [
+          "torchrun",
+          "stable-diffusion",
+          "automatic1111",
+          "invokeai",
+          "diffusers",
+          "text-generation",
+          "vllm",
+          "ollama",
+          "kobold",
+          "eng_wan_",
+          "eng_fastwan_",
+          "eng_humo",
+          "minimax"
+        ],
+        "positive_match_sources": [
+          "process_basename",
+          "executable_basename",
+          "actual_python_script_or_module_target"
+        ],
+        "python_script_markers": [
+          "main.py",
+          "run_recipe.py"
+        ],
+        "redacted_process_schema": [
+          "pid",
+          "process_create_time",
+          "process_basename",
+          "executable_basename",
+          "target_basename",
+          "matched_markers",
+          "match_basis",
+          "argv_sha256"
+        ],
+        "schema_version": 1,
+        "unreadable_or_unmatched_python_is_advisory": true,
+        "verified_windows_venv_launcher_schema": [
+          "pid",
+          "process_create_time",
+          "expected_launcher_path",
+          "direct_child_pid",
+          "direct_parent_verified",
+          "launcher_identity_live",
+          "child_identity_live",
+          "argv_tail_matches_child",
+          "both_exact_runner_target",
+          "child_executable_differs",
+          "creation_delta_s",
+          "narrowly_verified",
+          "excluded_pid_only",
+          "process_identity"
+        ]
+      },
+      "listener_binding_required_before_and_after_scan": true,
+      "model_workload_markers": [
+        "main.py",
+        "run_recipe.py",
+        "torchrun",
+        "stable-diffusion",
+        "automatic1111",
+        "invokeai",
+        "diffusers",
+        "text-generation",
+        "vllm",
+        "ollama",
+        "kobold",
+        "eng_wan_",
+        "eng_fastwan_",
+        "eng_humo",
+        "minimax"
+      ],
+      "owned_lab_server_exclusion_schema": [
+        "pid",
+        "process_create_time",
+        "server_instance",
+        "process_identity",
+        "argv_match",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "verified_windows_venv_launcher",
+        "expected_excluded_process_count"
+      ],
+      "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+      "python_without_readable_argv_blocks": false,
+      "schema_version": 1,
+      "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+      "verified_owned_server_windows_venv_launcher_schema": [
+        "pid",
+        "process_create_time",
+        "expected_launcher_path",
+        "direct_child_pid",
+        "direct_parent_verified",
+        "launcher_identity_live",
+        "child_identity_live",
+        "argv_tail_matches_child",
+        "both_exact_validated_server_argv",
+        "child_executable_differs",
+        "creation_delta_s",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity",
+        "argv_match"
+      ],
+      "warm_leg_scan_required": true
+    },
+    "current_runner_exclusion": {
+      "excluded_pid_only": true,
+      "expected_excluded_process_count": 2,
+      "narrowly_verified": true,
+      "pid": 42980,
+      "process_create_time": 1787180747.8344455,
+      "process_identity": {
+        "command_line": [
+          "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "run_recipe.py",
+          "recipes/ab_test/config_B_1_dolly.json",
+          "--clamp",
+          "15.5"
+        ],
+        "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+        "exists": true,
+        "identity_errors": [],
+        "name": "python.exe",
+        "pid": 42980,
+        "process_create_time": 1787180747.8344455
+      },
+      "resolved_runner_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+      "verified_windows_venv_launcher": {
+        "argv_tail_matches_child": true,
+        "both_exact_runner_target": true,
+        "child_executable_differs": true,
+        "child_identity_live": true,
+        "creation_delta_s": 0.008915,
+        "direct_child_pid": 42980,
+        "direct_parent_verified": true,
+        "excluded_pid_only": true,
+        "expected_launcher_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "launcher_identity_live": true,
+        "narrowly_verified": true,
+        "pid": 42016,
+        "process_create_time": 1787180747.8255303,
+        "process_identity": {
+          "command_line": [
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "run_recipe.py",
+            "recipes/ab_test/config_B_1_dolly.json",
+            "--clamp",
+            "15.5"
+          ],
+          "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "exists": true,
+          "identity_errors": [],
+          "name": "python.exe",
+          "pid": 42016,
+          "process_create_time": 1787180747.8255303
+        }
+      }
+    },
+    "evidence_sha256": "17c1e173f5f5208009f431d3ef6b58613e402e6cf451278083be07f623811dbc",
+    "excluded_current_runner": [
+      {
+        "pid": 42016,
+        "process_create_time": 1787180747.8255303,
+        "reason": "exact verified direct Windows venv launcher stub"
+      },
+      {
+        "pid": 42980,
+        "process_create_time": 1787180747.8344455,
+        "reason": "exact current run_recipe process"
+      }
+    ],
+    "excluded_owned_lab_server": [
+      {
+        "pid": 7728,
+        "process_create_time": 1787180736.6861913,
+        "reason": "exact owned port-8199 server PID/create-time/argv"
+      },
+      {
+        "pid": 34188,
+        "process_create_time": 1787180736.6791449,
+        "reason": "exact verified direct Windows venv owned-server launcher stub"
+      }
+    ],
+    "kind": "per-leg-immediate-prequeue-known-workload-scan",
+    "listener_pid_after": 7728,
+    "listener_pid_before": 7728,
+    "owned_lab_server_exclusion": {
+      "argv_match": {
+        "actual_argv": [
+          "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8199",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+          "--disable-metadata",
+          "--disable-all-custom-nodes",
+          "--whitelist-custom-nodes",
+          "ComfyUI-GGUF",
+          "ComfyUI-KJNodes",
+          "--reserve-vram",
+          "0.421"
+        ],
+        "match_mode": "exact-self-reported-argv-plus-python-interpreter-prefix",
+        "matches": true,
+        "reported_server_argv": [
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8199",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+          "--disable-metadata",
+          "--disable-all-custom-nodes",
+          "--whitelist-custom-nodes",
+          "ComfyUI-GGUF",
+          "ComfyUI-KJNodes",
+          "--reserve-vram",
+          "0.421"
+        ]
+      },
+      "excluded_pid_only": true,
+      "expected_excluded_process_count": 2,
+      "narrowly_verified": true,
+      "pid": 7728,
+      "process_create_time": 1787180736.6861913,
+      "process_identity": {
+        "command_line": [
+          "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+          "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+          "--port",
+          "8199",
+          "--cuda-malloc",
+          "--user-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI",
+          "--output-directory",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+          "--extra-model-paths-config",
+          "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+          "--disable-metadata",
+          "--disable-all-custom-nodes",
+          "--whitelist-custom-nodes",
+          "ComfyUI-GGUF",
+          "ComfyUI-KJNodes",
+          "--reserve-vram",
+          "0.421"
+        ],
+        "executable": "C:\\Users\\jeffr\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\python.exe",
+        "exists": true,
+        "identity_errors": [],
+        "name": "python.exe",
+        "pid": 7728,
+        "process_create_time": 1787180736.6861913
+      },
+      "server_instance": {
+        "process_create_time": 1787180736.686191,
+        "serving_pid": 7728
+      },
+      "verified_windows_venv_launcher": {
+        "argv_match": {
+          "actual_argv": [
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "0.421"
+          ],
+          "match_mode": "exact-self-reported-argv-plus-python-interpreter-prefix",
+          "matches": true,
+          "reported_server_argv": [
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "0.421"
+          ]
+        },
+        "argv_tail_matches_child": true,
+        "both_exact_validated_server_argv": true,
+        "child_executable_differs": true,
+        "child_identity_live": true,
+        "creation_delta_s": 0.007046,
+        "direct_child_pid": 7728,
+        "direct_parent_verified": true,
+        "excluded_pid_only": true,
+        "expected_launcher_path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+        "launcher_identity_live": true,
+        "narrowly_verified": true,
+        "pid": 34188,
+        "process_create_time": 1787180736.6791449,
+        "process_identity": {
+          "command_line": [
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+            "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+            "--port",
+            "8199",
+            "--cuda-malloc",
+            "--user-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI",
+            "--output-directory",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+            "--extra-model-paths-config",
+            "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+            "--disable-metadata",
+            "--disable-all-custom-nodes",
+            "--whitelist-custom-nodes",
+            "ComfyUI-GGUF",
+            "ComfyUI-KJNodes",
+            "--reserve-vram",
+            "0.421"
+          ],
+          "executable": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+          "exists": true,
+          "identity_errors": [],
+          "name": "python.exe",
+          "pid": 34188,
+          "process_create_time": 1787180736.6791449
+        }
+      }
+    },
+    "sampled_at_ns": 1787180749091533700,
+    "sampled_at_utc": "2026-08-19T23:05:49Z",
+    "scan_errors": [],
+    "scan_ran": true,
+    "scanned_process_count": 408,
+    "schema_version": 1,
+    "server_argv": [
+      "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI",
+      "--output-directory",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+      "--extra-model-paths-config",
+      "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-GGUF",
+      "ComfyUI-KJNodes",
+      "--reserve-vram",
+      "0.421"
+    ],
+    "server_instance": {
+      "process_create_time": 1787180736.686191,
+      "serving_pid": 7728
+    },
+    "status": "clean"
+  },
+  "prequeue_known_workload_scan_contract": {
+    "advisory_unreadable_processes_retained": true,
+    "blocking_condition": "any known render/compute workload is live",
+    "exact_exclusions": [
+      "current run_recipe PID + create time + resolved run_recipe.py argv",
+      "optional one-hop direct Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, exact runner targets, live PID/create-times, distinct child executable, and <=5s creation delta",
+      "owned port-8199 serving PID + create time + exact self-reported server argv (with only its Python interpreter prefix permitted)",
+      "optional one-hop direct owned-server Windows venv launcher at sys.prefix/Scripts/python.exe with identical argv tail, both exact validated self-reported server argv, live PID/create-times, distinct serving-child executable, and <=5s creation delta"
+    ],
+    "excluded_owned_lab_server_row_schema": [
+      "pid",
+      "process_create_time",
+      "reason"
+    ],
+    "kind": "per-leg-immediate-prequeue-known-workload-scan-contract",
+    "known_workload_classifier": {
+      "arbitrary_later_argv_values_ignored": true,
+      "argv_sha256_bytes": "UTF-8 canonical JSON argv list",
+      "current_runner_exclusion_schema": [
+        "pid",
+        "process_create_time",
+        "resolved_runner_path",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity",
+        "verified_windows_venv_launcher",
+        "expected_excluded_process_count"
+      ],
+      "exact_exclusions_run_before_classifier": true,
+      "excluded_current_runner_row_schema": [
+        "pid",
+        "process_create_time",
+        "reason"
+      ],
+      "kind": "token-aware-positive-known-workload-classifier",
+      "optional_current_windows_venv_launcher_exclusion": "one direct parent only; exact sys.prefix/Scripts/python.exe; launcher argv[1:] equals real child argv[1:]; both target run_recipe.py; live PID/create-times; real child executable differs; ordered creation delta <=5s",
+      "other_markers": [
+        "torchrun",
+        "stable-diffusion",
+        "automatic1111",
+        "invokeai",
+        "diffusers",
+        "text-generation",
+        "vllm",
+        "ollama",
+        "kobold",
+        "eng_wan_",
+        "eng_fastwan_",
+        "eng_humo",
+        "minimax"
+      ],
+      "positive_match_sources": [
+        "process_basename",
+        "executable_basename",
+        "actual_python_script_or_module_target"
+      ],
+      "python_script_markers": [
+        "main.py",
+        "run_recipe.py"
+      ],
+      "redacted_process_schema": [
+        "pid",
+        "process_create_time",
+        "process_basename",
+        "executable_basename",
+        "target_basename",
+        "matched_markers",
+        "match_basis",
+        "argv_sha256"
+      ],
+      "schema_version": 1,
+      "unreadable_or_unmatched_python_is_advisory": true,
+      "verified_windows_venv_launcher_schema": [
+        "pid",
+        "process_create_time",
+        "expected_launcher_path",
+        "direct_child_pid",
+        "direct_parent_verified",
+        "launcher_identity_live",
+        "child_identity_live",
+        "argv_tail_matches_child",
+        "both_exact_runner_target",
+        "child_executable_differs",
+        "creation_delta_s",
+        "narrowly_verified",
+        "excluded_pid_only",
+        "process_identity"
+      ]
+    },
+    "listener_binding_required_before_and_after_scan": true,
+    "model_workload_markers": [
+      "main.py",
+      "run_recipe.py",
+      "torchrun",
+      "stable-diffusion",
+      "automatic1111",
+      "invokeai",
+      "diffusers",
+      "text-generation",
+      "vllm",
+      "ollama",
+      "kobold",
+      "eng_wan_",
+      "eng_fastwan_",
+      "eng_humo",
+      "minimax"
+    ],
+    "owned_lab_server_exclusion_schema": [
+      "pid",
+      "process_create_time",
+      "server_instance",
+      "process_identity",
+      "argv_match",
+      "narrowly_verified",
+      "excluded_pid_only",
+      "verified_windows_venv_launcher",
+      "expected_excluded_process_count"
+    ],
+    "owned_server_launcher_boot_lineage": "not inferred when unavailable; only the exact serving PID direct parent may be excluded, never arbitrary ancestors",
+    "python_without_readable_argv_blocks": false,
+    "schema_version": 1,
+    "timing": "every cold and warm leg, after queue-idle and baseline/drift measurements, immediately before POST /prompt",
+    "verified_owned_server_windows_venv_launcher_schema": [
+      "pid",
+      "process_create_time",
+      "expected_launcher_path",
+      "direct_child_pid",
+      "direct_parent_verified",
+      "launcher_identity_live",
+      "child_identity_live",
+      "argv_tail_matches_child",
+      "both_exact_validated_server_argv",
+      "child_executable_differs",
+      "creation_delta_s",
+      "narrowly_verified",
+      "excluded_pid_only",
+      "process_identity",
+      "argv_match"
+    ],
+    "warm_leg_scan_required": true
+  },
+  "promotion_ready": false,
+  "prompt_id": "ef514cdd-0031-4b45-916d-93c1cc7bf6ec",
+  "provenance_unchanged": true,
+  "provenance_validation_error": "",
+  "queued_prompt_sha256": "a360d13a76bba1c5cda317c2ab5d6eb6eb325b8b747459bf57daa536db66ff62",
+  "receipt_schema_version": 3,
+  "recipe": "config_B_1_dolly",
+  "recipe_sha256": "17f323894e8a4ce9394ee9744f9bec6c88a1792696388e12d58cb55277f6373b",
+  "requires_human_eyeball": false,
+  "reserve_vram_gib": 0.4208984375,
+  "run_count": 2,
+  "run_identity_sha256": "086e8df5111978f950cb666d2ecc933e10fac92a0fb67ef365f64fe09e187805",
+  "run_number": 2,
+  "runner_sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053",
+  "server_argv": [
+    "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI\\main.py",
+    "--port",
+    "8199",
+    "--cuda-malloc",
+    "--user-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI",
+    "--output-directory",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\outputs",
+    "--extra-model-paths-config",
+    "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "--disable-metadata",
+    "--disable-all-custom-nodes",
+    "--whitelist-custom-nodes",
+    "ComfyUI-GGUF",
+    "ComfyUI-KJNodes",
+    "--reserve-vram",
+    "0.421"
+  ],
+  "server_instance": {
+    "process_create_time": 1787180736.686191,
+    "serving_pid": 7728
+  },
+  "server_instance_unchanged": true,
+  "standalone_cache_runtime_sha256s": {},
+  "status": "FAIL (VRAM 15.58 GB > 14.5 GB)",
+  "suite_cache_runtime_sha256s": {},
+  "timestamp": "2026-08-19T23:08:03Z",
+  "valid_measurement": true,
+  "video_codec": "h264",
+  "video_duration_s": 3.88,
+  "video_stream_bytes": 115058,
+  "video_stream_bytes_per_frame": 1186.16,
+  "vram_measurement": {
+    "baseline_absolute_gib": 1.334,
+    "baseline_measurement_point": "immediately before prompt queue; includes owned lab server and desktop load",
+    "net_peak_formula": "peak_vram_gb - baseline_vram_gb",
+    "net_peak_gib": 14.25,
+    "peak_absolute_gib": 15.584,
+    "units": "GiB (nvidia-smi MiB / 1024)"
+  },
+  "warm_pass": false
+}

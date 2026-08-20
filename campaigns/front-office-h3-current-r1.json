@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "front-office-h3-current-r1",
+  "status": "READY_FOR_DISPATCH",
+  "purpose": "One sealed current-0.32-profile MiniMax H3 native-A/V Front Office smoke. It validates the first real video/audio media path after the SaveImage plumbing smoke. It is a cold-only current-profile check, not an H3-C032 comparison, H3-LIP study, warm-cache certification, or promotion claim.",
+  "independent_variable": "None. The immutable h3_mime_i2v graph is retained except for current installed-schema provenance and the unique artifact prefix; the cell tests direct-argv Front Office delivery of model-native H3 video and audio.",
+  "profiles": [
+    "comfy0320-h3"
+  ],
+  "cells": [
+    {
+      "id": "i2v-native-av-smoke",
+      "recipe": "h3_i2v_current_profile_av_smoke.json",
+      "role": "control",
+      "phase": "sealed-one-shot-current-profile-native-av",
+      "profiles": [
+        "comfy0320-h3"
+      ]
+    }
+  ]
+}

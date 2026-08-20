@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "id": "h3-turbo-larry-v4",
+  "status": "ENROLLED_DISPATCHABLE",
+  "purpose": "Pinned MiniMax H3 Turbo v4 step-600 profile for one sealed current-0.32 eight-step FL2VA I2V candidate. The boot is SageAttention-free and permits only KJNodes plus the reviewed Larry Turbo node. It is not a general LoRA admission or a warm-cache promotion profile.",
+  "python": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
+    "sha256": "553e867886f2a2672e6473d589d322133716a60dbbeb38be06266460b1037d3d",
+    "version": "3.12.11"
+  },
+  "comfyui": {
+    "root": "C:\\Users\\jeffr\\ComfyUI-Installs\\ComfyUI\\ComfyUI",
+    "version": "0.32.0",
+    "git_commit": "c2bcbecd82ec5ae66594340b395c24ef0217b238",
+    "main_py_sha256": "540ec3899eb6680eeec725a935da29c9899057de16a112d7b3e7ad7825edd9e2",
+    "clean": true
+  },
+  "custom_nodes": [
+    {
+      "id": "ComfyUI-KJNodes",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-KJNodes",
+      "git_commit": "b7646ad70a7daa7aeb919ca542274758d26ba2df",
+      "version": "1.3.9",
+      "init_py_sha256": "8da7e12f52cabd71b06e44d733ee359fba3ea3ec07cebcceaf29e9c24eaffec2"
+    },
+    {
+      "id": "ComfyUI-MiniMax-H3-Turbo",
+      "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-MiniMax-H3-Turbo",
+      "git_commit": "546b5028f4934f5129eb6c7142c2f3e461dfddbf",
+      "version": "1.2.3",
+      "init_py_sha256": "036089da474d9d06fd277fd9686ff05aad913824220dd8a2f5882b271c21022f"
+    }
+  ],
+  "model_paths_config": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\comfy_model_paths.yaml",
+    "sha256": "ec421773a2f0eac02cc242ae8b8ed5699ab01f99c54edc0e45f20e8ffee1fdc8"
+  },
+  "model_manifest": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\model_admissions\\h3-turbo-larry-v4\\models_manifest.md",
+      "sha256": "089ffedf7f249ce7fdb108538a431a384716fe4ac357c3faa9c154d2524d052d"
+  },
+  "boot": {
+    "port": "8199",
+    "fixed_argv": [
+      "--port",
+      "8199",
+      "--cuda-malloc",
+      "--user-directory",
+      "{{USER_DIRECTORY}}",
+      "--output-directory",
+      "{{OUTPUT_DIRECTORY}}",
+      "--temp-directory",
+      "{{TEMP_DIRECTORY}}",
+      "--extra-model-paths-config",
+      "{{MODEL_PATHS_CONFIG}}",
+      "--disable-metadata",
+      "--disable-all-custom-nodes",
+      "--whitelist-custom-nodes",
+      "ComfyUI-KJNodes",
+      "ComfyUI-MiniMax-H3-Turbo"
+    ],
+    "forbidden_args": [
+      "--use-sage-attention",
+      "--listen",
+      "--enable-cors-header",
+      "--enable-manager"
+    ],
+    "sage_free": true
+  },
+  "environment": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "HF_HOME": "C:\\ComfyUI-Models\\huggingface"
+  },
+  "floor_runner": {
+    "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\vram-recipe-lab\\run_recipe.py",
+    "sha256": "b6dfe74e5b568382f5e584262debe6131d444b8ce86bee0cb0d7ae52f420b053"
+  }
+}

@@ -748,6 +748,7 @@ class TestRunnerProvenance(unittest.TestCase):
                 )
         self.assertFalse(snapshot["valid"])
         self.assertIn("receipt drift", snapshot["error"])
+        self.assertEqual(snapshot["external_node_admission"], {})
 
     def test_suite_lock_blocks_unrelated_runner_but_allows_owned_child(self):
         with tempfile.TemporaryDirectory() as tmp:

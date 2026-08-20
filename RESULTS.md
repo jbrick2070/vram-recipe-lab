@@ -116,3 +116,25 @@ Exact distribution-seed 2.1 pins are recorded in
 | h3_music_followup_score_seed42_f277 | FAIL (VRAM 14.72 GB > 14.5 GB) | 14.72 | 2.24 | 3594.7 | Run #1; boot lane: lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb; executor cache nonce; sampler/output execution proved; elevated-baseline lane, operator-authorized 2026-08-10 |
 | h3_jobd_lipsync_refaudio_seed43_f192 | PASS (cold) (machine; human pending) | 6.88 | 2.28 | 436.0 | Run #1; boot lane: lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb; executor cache nonce; sampler/output execution proved; elevated-baseline lane, operator-authorized 2026-08-10 |
 | h3_music_followup_origin_prompt_only_exact_seed42_f124 | PASS (cold) (machine; human pending) | 6.44 | 2.11 | 192.5 | Run #1; boot lane: lab-8199, sage-free, manager-offline-test, no-pinned, cache-classic, reserve-12gb; executor cache nonce; sampler/output execution proved; elevated-baseline lane, operator-authorized 2026-08-10 |
+| FO:front-office-r1/t2i-low-smoke/comfy0320-h3/t2i_low | PASS (cold) | 12.55 | 2.37 | 7.8 | Run #1; boot lane: lab-8199, sage-free; elevated-baseline lane, operator-authorized 2026-08-10; Front Office sealed cell |
+| FO:front-office-h3-current-r1/i2v-native-av-smoke/comfy0320-h3/h3_i2v_current_profile_av_smoke | FAIL (VRAM 15.11 GB > 14.5 GB) | 15.11 | 2.46 | 170.7 | Run #1; boot lane: lab-8199, sage-free; elevated-baseline lane, operator-authorized 2026-08-10; Front Office sealed cell |
+| FO:front-office-ltx-current-r1/i2v-current-video-smoke/comfy0320-h3/ltx_video_2b_current_profile_cold_smoke | PASS (cold) | 13.36 | 2.03 | 24.8 | Run #1; boot lane: lab-8199, sage-free; elevated-baseline lane, operator-authorized 2026-08-10; Front Office sealed cell |
+| FO:front-office-h3-t8-current-r1/i2v-action-control-20step/comfy0320-h3/h3_turbo_larry_v4_i2v_action_control | FAIL (VRAM 15.10 GB > 14.5 GB) | 15.10 | 2.54 | 237.7 | Run #1; boot lane: lab-8199, sage-free; elevated-baseline lane, operator-authorized 2026-08-10; Front Office sealed cell |
+| FO:front-office-h3-t8-current-r1/i2v-action-turbo-v4-8step/h3-turbo-larry-v4/h3_turbo_larry_v4_i2v_action_8step | FAIL (VRAM 15.13 GB > 14.5 GB) | 15.13 | 2.17 | 125.9 | Run #1; boot lane: lab-8199, sage-free; elevated-baseline lane, operator-authorized 2026-08-10; Front Office sealed cell |
+| ltx_2_5_a2v_gguf | FAIL (VRAM 15.56 GB > 14.5 GB) | 15.56 | 0.74 | 276.8 | Run #16; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_gguf | FAIL (VRAM 15.60 GB > 14.5 GB) | 15.60 | 0.86 | 275.9 | Run #4; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_a2v_gguf_opt | FAIL (VRAM 15.51 GB > 14.5 GB) | 15.51 | 1.50 | 152.3 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_a2v_gguf_q5 | FAIL (VRAM 15.51 GB > 14.5 GB) | 15.51 | 1.19 | 348.5 | Run #3; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_mime_gguf | FAIL (VRAM 15.48 GB > 14.5 GB) | 15.48 | 1.05 | 220.0 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_soundtrack_1 | FAIL (VRAM 15.56 GB > 14.5 GB) | 15.56 | 1.03 | 224.5 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_soundtrack_2 | FAIL (VRAM 15.52 GB > 14.5 GB) | 15.52 | 0.84 | 272.7 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_radio_drama | FAIL (VRAM 15.56 GB > 14.5 GB) | 15.56 | 0.84 | 254.4 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_path_a | FAIL (VRAM 15.52 GB > 14.5 GB) | 15.52 | 1.62 | 87.0 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_t2v_path_a_visual | FAIL (VRAM 15.48 GB > 14.5 GB) | 15.48 | 1.12 | 87.2 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_a2v_path_a_action | FAIL (VRAM 15.48 GB > 14.5 GB) | 15.48 | 0.98 | 106.4 | Run #1; boot lane: lab-8199, sage-free, clamp-14.5gb (reserve-1.421gb) |
+| ltx_2_5_path_b_pass1 | FAIL (VRAM 15.56 GB > 14.5 GB) | 15.56 | 1.09 | 98.9 | Run #2; boot lane: lab-8199, sage-free, clamp-15gb (reserve-0.921gb) |
+| ltx_2_5_a2v_path_a3_constrained | FAIL (VRAM 15.57 GB > 14.5 GB) | 15.57 | 1.59 | 107.6 | Run #1; boot lane: lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb) |
+| ltx_2_5_golden_a2v_static_lipsync | FAIL (VRAM 15.60 GB > 14.5 GB) | 15.60 | 2.31 | 404.6 | Run #1; boot lane: lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb); elevated-baseline lane, operator-authorized 2026-08-10 |
+| ltx_2_5_golden_t2v_action_foley | FAIL (VRAM 15.50 GB > 14.5 GB) | 15.50 | 0.90 | 93.0 | Run #1; boot lane: lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb) |
+| ltx_2_5_golden_t2v_cinematic_music | FAIL (VRAM 15.47 GB > 14.5 GB) | 15.47 | 0.87 | 77.7 | Run #1; boot lane: lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb) |
+| config_B_1_dolly | FAIL (no artifact output) | 15.52 | 1.03 | 14.7 | Run #3; boot lane: lab-8199, sage-free, clamp-15.5gb (reserve-0.421gb) |

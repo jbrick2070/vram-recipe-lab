@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "front-office-h3-t8-current-r1",
+  "status": "READY_FOR_DISPATCH",
+  "purpose": "One source-backed current-0.32 MiniMax H3 action I2V pair: a fresh 20-step native control and the Larry v4-600 Turbo LoRA eight-step candidate. Both are isolated cold-only Front Office legs, not warm-cache certification or promotion.",
+  "independent_variable": "The candidate adds only the source-prescribed Turbo LoRA, Turbo sampler, simple scheduler step count (20 to 8), and the necessarily distinct reviewed custom-node/profile manifest that exposes that LoRA. Prompt, seed, base weights, fixture, 864x480 canvas, 124 H3 frames, 24 fps, native audio path, and all other graph links remain matched. This is a cold directional profile-delta pair, not warm-cache promotion evidence.",
+  "profiles": [
+    "comfy0320-h3",
+    "h3-turbo-larry-v4"
+  ],
+  "cells": [
+    {
+      "id": "i2v-action-control-20step",
+      "recipe": "h3_turbo_larry_v4_i2v_action_control.json",
+      "role": "control",
+      "phase": "fresh-current-profile-native-action-control",
+      "profiles": [
+        "comfy0320-h3"
+      ]
+    },
+    {
+      "id": "i2v-action-turbo-v4-8step",
+      "recipe": "h3_turbo_larry_v4_i2v_action_8step.json",
+      "role": "candidate",
+      "phase": "fresh-current-profile-larry-v4-600-eight-step-action-candidate",
+      "profiles": [
+        "h3-turbo-larry-v4"
+      ]
+    }
+  ]
+}

@@ -20,7 +20,7 @@
   "properties": {
     "schema_version": {"const": 1},
     "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$"},
-    "status": {"const": "ENROLLED_STATIC_ONLY"},
+    "status": {"enum": ["ENROLLED_STATIC_ONLY", "ENROLLED_DISPATCHABLE"]},
     "purpose": {"type": "string", "minLength": 1},
     "python": {
       "type": "object",
