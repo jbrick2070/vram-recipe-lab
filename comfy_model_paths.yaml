@@ -21,6 +21,7 @@ comfyui_desktop:
   diffusion_models: |
                 C:/ComfyUI-Models/diffusion_models
                 C:/ComfyUI-Models/unet
+                C:/ComfyUI-Models/quarantine/diffusion_models
   embeddings: C:/ComfyUI-Models/embeddings/
   loras: C:/ComfyUI-Models/loras/
   upscale_models: C:/ComfyUI-Models/upscale_models/

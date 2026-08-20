@@ -1,0 +1,229 @@
+import json
+
+workflow = {
+  "name": "ltx_2_5_golden_i2v_foley",
+  "tier": "gguf",
+  "status": "ACTIVE",
+  "contract": {
+    "engine": "ltx_2_5_i2v_gguf",
+    "mode": "i2v",
+    "width": 832,
+    "height": 480,
+    "frames": 97,
+    "fps": 25.0,
+    "duration_s": 3.88,
+    "vram_ceiling_gb": 14.5
+  },
+  "prompt": {
+    "1": {
+      "class_type": "UnetLoaderGGUF",
+      "inputs": {
+        "unet_name": "LTX-2.5-Distilled-Q3_K_M.gguf"
+      }
+    },
+    "2": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "ltx-2.5-video-vae-bf16.safetensors"
+      }
+    },
+    "3": {
+      "class_type": "VAELoader",
+      "inputs": {
+        "vae_name": "ltx-2.5-audio-vae-bf16.safetensors"
+      }
+    },
+    "4": {
+      "class_type": "CLIPLoaderGGUF",
+      "inputs": {
+        "clip_name": "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf",
+        "type": "ltxv"
+      }
+    },
+    "5": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": ["4", 0],
+        "text": "1950s cinematic shot of the detective standing by the rainy window, turning abruptly and slamming his fist on the desk, a loud heavy wooden thud echoing with papers rustling violently, rain drumming steadily against the glass. No speech, no voices."
+      }
+    },
+    "6": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": ["4", 0],
+        "text": ""
+      }
+    },
+    "18": {
+      "class_type": "FloatConstant",
+      "inputs": {
+        "value": 25.0
+      }
+    },
+    "20": {
+      "class_type": "LTXVConditioning",
+      "inputs": {
+        "positive": ["5", 0],
+        "negative": ["6", 0],
+        "frame_rate": ["18", 0]
+      }
+    },
+    "7": {
+      "class_type": "LTXVScheduler",
+      "inputs": {
+        "steps": 8,
+        "max_shift": 2.05,
+        "base_shift": 0.95,
+        "stretch": True,
+        "terminal": 0.1,
+        "latent": ["16", 0]
+      }
+    },
+    "8": {
+      "class_type": "KSamplerSelect",
+      "inputs": {
+        "sampler_name": "euler_ancestral_cfg_pp"
+      }
+    },
+    "9": {
+      "class_type": "RandomNoise",
+      "inputs": {
+        "noise_seed": 42
+      }
+    },
+    "90": {
+      "class_type": "LTXVModalityGuidance",
+      "inputs": {
+        "model": ["1", 0],
+        "modality_scale": 1.0,
+        "start_percent": 0.0,
+        "end_percent": 1.0
+      }
+    },
+    "10": {
+      "class_type": "LTXVDualCFGGuider",
+      "inputs": {
+        "model": ["90", 0],
+        "positive": ["20", 0],
+        "negative": ["20", 1],
+        "video_cfg": 1.0,
+        "audio_cfg": 1.0
+      }
+    },
+    "11": {
+      "class_type": "EmptyLTXVLatentVideo",
+      "inputs": {
+        "width": 832,
+        "height": 480,
+        "length": 97,
+        "batch_size": 1
+      }
+    },
+    "12": {
+      "class_type": "LTXVEmptyLatentAudio",
+      "inputs": {
+        "audio_vae": ["3", 0],
+        "frames_number": 97,
+        "frame_rate": ["18", 0],
+        "batch_size": 1
+      }
+    },
+    "13": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "scene_still.png"
+      }
+    },
+    "14": {
+      "class_type": "ResizeImageMaskNode",
+      "inputs": {
+        "input": ["13", 0],
+        "resize_type": "scale dimensions",
+        "resize_type.width": 832,
+        "resize_type.height": 480,
+        "resize_type.crop": "center",
+        "scale_method": "lanczos"
+      }
+    },
+    "15": {
+      "class_type": "LTXVPreprocess",
+      "inputs": {
+        "image": ["14", 0],
+        "img_compression": 0.0
+      }
+    },
+    "16": {
+      "class_type": "LTXVImgToVideoInplace",
+      "inputs": {
+        "vae": ["2", 0],
+        "image": ["15", 0],
+        "latent": ["11", 0],
+        "bypass": False,
+        "strength": 1.0
+      }
+    },
+    "30": {
+      "class_type": "LTXVConcatAVLatent",
+      "inputs": {
+        "video_latent": ["16", 0],
+        "audio_latent": ["12", 0]
+      }
+    },
+    "31": {
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+        "noise": ["9", 0],
+        "guider": ["10", 0],
+        "sampler": ["8", 0],
+        "sigmas": ["7", 0],
+        "latent_image": ["30", 0]
+      }
+    },
+    "32": {
+      "class_type": "LTXVSeparateAVLatent",
+      "inputs": {
+        "av_latent": ["31", 0]
+      }
+    },
+    "33": {
+      "class_type": "VAEDecodeTiled",
+      "inputs": {
+        "samples": ["32", 0],
+        "vae": ["2", 0],
+        "tile_size": 512,
+        "overlap": 64,
+        "temporal_size": 33,
+        "temporal_overlap": 4
+      }
+    },
+    "34": {
+      "class_type": "LTXVAudioVAEDecode",
+      "inputs": {
+        "samples": ["32", 1],
+        "audio_vae": ["3", 0]
+      }
+    },
+    "35": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": ["33", 0],
+        "audio": ["34", 0],
+        "fps": ["18", 0]
+      }
+    },
+    "75": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": ["35", 0],
+        "format": "auto",
+        "codec": "auto",
+        "filename_prefix": "ltx_2_5_golden_i2v_foley_out"
+      }
+    }
+  }
+}
+
+with open('recipes/ltx_2_5_golden_i2v_foley.json', 'w') as f:
+    json.dump(workflow, f, indent=2)
+
+print("Saved recipes/ltx_2_5_golden_i2v_foley.json successfully")

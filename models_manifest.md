@@ -33,6 +33,7 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `ltx-2.3-22b-dev-Q3_K_M.gguf` | `unet/` | LTX Video 2.3 22B Q3_K_M GGUF model (`UnetLoaderGGUF`) |
 | `distilled-1.1/ltx-2.3-22b-distilled-1.1-Q3_K_M.gguf` | `unet/` | LTX Video 2.3 22B Distilled Q3_K_M GGUF model (`UnetLoaderGGUF`) |
 | `ltx-2.3-spatial-upscaler-x2-1.1.safetensors` | `latent_upscale_models/` | LTX Video 2.3 Spatial Upscaler x2 model |
+| `LTX-2.5-Distilled-Q3_K_M.gguf` | `diffusion_models/` | LTX Video 2.5 Distilled Q3_K_M GGUF model (`UnetLoaderGGUF`) |
 
 ### Text Encoders / CLIP (`CLIPLoader`)
 | Model Filename | Path / Store | Notes |
@@ -48,6 +49,8 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `t5gemma_b_b_ul2.safetensors` | `text_encoders/` | T5 Gemma UL2 text encoder |
 | `umt5_xxl_fp8_e4m3fn_scaled.safetensors` | `text_encoders/` | UMT5 XXL FP8 text encoder |
 | `ltx-2.3-22b-dev_embeddings_connectors.safetensors` | `text_encoders/` | LTX Video 2.3 22B CLIP connectors |
+| `gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors` | `text_encoders/` | Gemma 4 12B LTX 2.5 INT8 text encoder |
+| `gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf` | `text_encoders/` | Gemma 4 12B LTX 2.5 Q5_K_M GGUF text encoder |
 
 ### Audio Encoders (`AudioEncoderLoader`)
 | Model Filename | Path / Store | Notes |
@@ -66,6 +69,8 @@ This manifest lists all models available on the local lab server (`http://127.0.
 | `ltx-2.3-22b-dev_audio_vae.safetensors` | `vae/` | LTX Audio VAE |
 | `wan2.2_vae.safetensors` | `vae/` | Wan 2.2 VAE |
 | `wan_2.1_vae.safetensors` | `vae/` | Wan 2.1 VAE |
+| `ltx-2.5-video-vae-bf16.safetensors` | `vae/` | LTX Video 2.5 Video VAE BF16 |
+| `ltx-2.5-audio-vae-bf16.safetensors` | `vae/` | LTX Video 2.5 Audio VAE BF16 |
 
 ### LoRAs (`LoraLoader` & `LoraLoaderModelOnly`)
 | Model Filename | Path / Store | Notes |
@@ -77,3 +82,4 @@ This manifest lists all models available on the local lab server (`http://127.0.
 
 ## Verified Active Models
 All MiniMax H3 weight files verified byte-exact on disk in `C:\ComfyUI-Models` under license grant at `docs/H3_LICENSE_GRANT.md`.
+| `LTX-2.5-Distilled-Q5_K_M.gguf` | `quarantine/diffusion_models/` | LTX Video 2.5 Distilled Q5_K_M GGUF model (`UnetLoaderGGUF`) |
