@@ -1,14 +1,21 @@
 # SEVENTY-SEVEN SECONDS
-### LTX 2.5 with native audio on one 16 GB laptop GPU — the graphs that ran and the numbers they hit
+### The newest open video model, measured on one 16 GB laptop GPU eight days after launch
 
-**Estimated runtime:** ~4:15 (≈145 wpm, dry narration)
+**Estimated runtime:** ~4:26 (≈145 wpm, dry narration)
 **Visual style:** NVIDIA x LTX hybrid — isometric carbon bench with green telemetry hardware feeding violet cinematic shot cards
 **Audio:** dry narration, no music (one non-musical cue — see AUDIO SYSTEM)
 **Pipeline:** NotebookLM-compatible scene blocks
 **Palette:** locked — carbon (#0C0E10), NVIDIA green (#76B900), LTX violet (#8A5CF6), paper-white (#F2EFE8)
 **Data convention:** SOLID NVIDIA green = measured on this bench, receipt-bound · DASHED LTX violet = not receipted here — upstream claim, unrun recipe, or an observation with no receipt filed
 **Scene count:** 9 (+ end card)
-**Narration word count:** ~616
+**Narration word count:** ~643
+
+**v5 changes from v4:**
+- Reframed the cold open as news. LTX 2.5 is eight days old at measurement time, and the script now
+  says what shipped, what LTX claimed at launch, and on what silicon they claimed it — before
+  showing what the same model does on one 16 GB laptop GPU.
+- The launch claim (10 s of 720p in 6.8 s on two GB200s) renders dashed violet; the 77.7 s laptop
+  number renders solid green in the same frame. The contrast is the hook.
 
 **v4 changes from v3:**
 - Removed the second-machine comparison entirely. The scope of this script is one 16 GB NVIDIA
@@ -44,21 +51,26 @@ A value turns green only by having a receipt path under it. Nothing else earns t
 
 ---
 
-## SCENE 01 — COLD OPEN: SEVENTY-SEVEN SECONDS
+## SCENE 01 — COLD OPEN: WHAT SHIPPED, AND WHAT IT DOES HERE
 
-**VISUAL:** Black. A green wall-clock counter runs up from zero. Beside it a violet shot card
-builds frame by frame, and a waveform draws itself along the card's lower edge in the same motion —
-picture and sound arriving together, not stacked. The counter stops at 77.7.
+**VISUAL:** Black. A violet dashed spec plate assembles itself line by line the way a launch page
+does — release date, parameter count, the feature list — and hangs there, weightless. Then it
+shrinks to the top of frame and a green wall-clock counter starts beneath it: the claim goes up,
+the measurement begins. Under the counter a violet shot card builds frame by frame with a waveform
+drawing itself along the lower edge in the same motion — picture and sound arriving together, not
+stacked. The counter stops at 77.7.
 
-**NARRATION:** Seventy-seven point seven seconds. That is one 832 by 480 clip, 97 frames at 25
-frames per second — three point eight eight seconds of finished video, with its own score, composed
-in the same pass that drew the pictures. Not a video model plus an audio model. One joint model, on
-one laptop GPU, on a bench that wrote down every number.
+**NARRATION:** LTX 2.5 shipped on the eleventh of August, twenty twenty-six. Twenty-two billion
+parameters, open weights, video and its own audio in one joint pass, native multishot, four-K HDR,
+ComfyUI support on day one. The launch number was ten seconds of 720p in six point eight seconds —
+on two GB200s. Eight days later, here is the same model on one sixteen-gigabyte laptop GPU: 832 by
+480, 97 frames at 25 frames per second, three point eight eight seconds of finished video with its
+own score, in seventy-seven point seven seconds.
 
-**ON-SCREEN TEXT:** LTX 2.5 · 832x480x97 @ 25 fps · 3.88 s OUT · 77.7 s RENDER · VIDEO + NATIVE AUDIO
+**ON-SCREEN TEXT:** LTX 2.5 · 11 AUG 2026 · 22B OPEN WEIGHTS · LAUNCH CLAIM 6.8 s ON 2x GB200 — THIS BENCH · 1x 16 GB LAPTOP GPU · 77.7 s
 
-**TRANSITION:** The shot card docks into a slot on the isometric bench; camera pulls back to the
-hardware.
+**TRANSITION:** The shot card docks into a slot on the isometric bench; the violet spec plate stays
+pinned at the top of frame for the rest of the film. Camera pulls back to the hardware.
 
 ---
 
@@ -226,11 +238,13 @@ SOURCES — NOT RECEIPTED HERE (DASHED)
 
 ---
 
-**Runtime estimate:** ~4:15 at ≈145 wpm
+**Runtime estimate:** ~4:26 at ≈145 wpm
 **Scene count:** 9 (+ end card)
-**Narration word count:** ~616
+**Narration word count:** ~643
 
 **Production notes:**
+- Scene 01 carries the news: the launch claim and the laptop number must share one frame, violet
+  against green. If a viewer leaves after 20 seconds, that contrast is what they take.
 - Scene 02 is the load-bearing beat: the flat 15.47–15.60 band across sixteen runs is the finding
   nobody else has published. Hold the sixteen markers on screen until the tightness reads.
 - Scene 03 is the one that saves a viewer a wasted evening. Do not compress it for time.

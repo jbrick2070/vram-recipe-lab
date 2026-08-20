@@ -2,8 +2,12 @@
 
 **Findings report — measured 2026-08-19 on one machine, with receipts.**
 
-LTX 2.5 generates video and its own audio in a single joint pass, and it runs on a
-16 GB consumer laptop GPU. This report states what was measured, what it cost, what
+LTX 2.5 shipped on **11 August 2026** — 22B open weights, video and audio generated in one joint
+pass, native multishot, 4K HDR, ComfyUI support on day one, and a launch benchmark of a 10-second
+720p clip in **6.8 seconds on two NVIDIA GB200s**. This report is the same model measured eight days
+later, on one 16 GB laptop GPU.
+
+It runs. This report states what was measured, what it cost, what
 did not fit, and what nobody has verified yet. Sixteen cells were run. Every number
 below is bound to a receipt in [`results/`](../results/); every graph is a drop-in
 API-format file in [`recipes/`](../recipes/).
