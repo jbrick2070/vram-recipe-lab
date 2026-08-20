@@ -143,3 +143,21 @@ sentinel or the earlier motion-demo output with this more adventurous prompt.
 
 Until all three legs and human review exist, never say that MiniMax H3—or all
 8 GB cards—are supported.
+
+## Completed bench runs & human review outcomes (2026-08-14)
+
+Both dynamic prompt demo plans have completed full machine execution ladders and human review:
+
+1. **Action Demo (`h3-mime-i2v-action-demo-f90`)**:
+   - Workload: 864x480, 90 frames @ 24 fps, 20 steps.
+   - Peak VRAM: 7.21 GiB (Comfortable pass on 8 GB laptop).
+   - Human Verdict: **APPROVED (Good Dynamic Action)**. Explicit high-urgency alarm prompts forced large temporal frame displacement and cinematic movement.
+
+2. **Motion Demo (`h3-mime-i2v-motion-demo-f90`)**:
+   - Workload: 864x480, 90 frames @ 24 fps, 20 steps.
+   - Peak VRAM: 6.79 GiB (Comfortable pass on 8 GB laptop).
+   - Human Verdict: **APPROVED (Good Camera Motion, but blander/tamer than Action Demo)**.
+
+### Core Model Finding: Motion Damping vs Prompt Energy
+Modern video diffusion models (across both MiniMax H3 and LTX-Video) exhibit high internal temporal regularization. Subtle, gentle, or ambient prompts get damped down into flat, static "live-photo" still holds. Production recipes must mandate high-energy kinetic verbs, explicit camera trajectory vectors, and clear cause-and-effect event triggers to produce dynamic cinematic video.
+
