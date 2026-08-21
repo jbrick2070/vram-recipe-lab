@@ -1,0 +1,62 @@
+--- a/nodes.py
++++ b/nodes.py
+@@ -251,3 +251,50 @@
+         return (self.load_patcher([clip_path], clip_type, self.load_data([clip_path])),)
+-
++
++class CLIPLoaderGGUFCPU(CLIPLoaderGGUF):
++    """GGUF text-encoder loader whose patcher is pinned to CPU.
++
++    ``initial_device`` alone is not a residency guarantee: ComfyUI may still
++    move the patcher to ``load_device`` for the encode.  LTX 2.5's Gemma-4 12B
++    encoder therefore needs all three placements fixed to CPU, matching the
++    production OTR adapter.  This is deliberately additive so existing GGUF
++    workflows keep their original placement policy unless they opt into this
++    node by name.
++    """
++
++    TITLE = "CLIPLoader (GGUF, CPU pinned)"
++
++    def load_patcher(self, clip_paths, clip_type, clip_data):
++        cpu = torch.device("cpu")
++        clip = comfy.sd.load_text_encoder_state_dicts(
++            clip_type=clip_type,
++            state_dicts=clip_data,
++            model_options={
++                "custom_operations": GGMLOps,
++                "initial_device": cpu,
++                "load_device": cpu,
++                "offload_device": cpu,
++            },
++            embedding_directory=folder_paths.get_folder_paths("embeddings"),
++        )
++        clip.patcher = GGUFModelPatcher.clone(clip.patcher)
++
++        load_device = getattr(clip.patcher, "load_device", None)
++        offload_device = getattr(clip.patcher, "offload_device", None)
++        if (
++            str(load_device).split(":", 1)[0].lower() != "cpu"
++            or str(offload_device).split(":", 1)[0].lower() != "cpu"
++        ):
++            raise RuntimeError(
++                "CLIPLoaderGGUFCPU requires CPU load/offload placement, but "
++                f"the patcher returned load_device={load_device!s} "
++                f"offload_device={offload_device!s}"
++            )
++        logging.info(
++            "[ComfyUI-GGUF] text encoder pinned to CPU "
++            "(load=%s offload=%s)",
++            load_device,
++            offload_device,
++        )
++        return clip
++
+ class DualCLIPLoaderGGUF(CLIPLoaderGGUF):
+@@ -321,6 +368,7 @@
+ NODE_CLASS_MAPPINGS = {
+     "UnetLoaderGGUF": UnetLoaderGGUF,
+     "CLIPLoaderGGUF": CLIPLoaderGGUF,
++    "CLIPLoaderGGUFCPU": CLIPLoaderGGUFCPU,
+     "DualCLIPLoaderGGUF": DualCLIPLoaderGGUF,
+     "TripleCLIPLoaderGGUF": TripleCLIPLoaderGGUF,
+     "QuadrupleCLIPLoaderGGUF": QuadrupleCLIPLoaderGGUF,

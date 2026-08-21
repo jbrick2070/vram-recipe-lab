@@ -1,0 +1,95 @@
+reference : video_wan2_2_14B_i2v.json
+ours      : video:wan_i2v
+nodes     : reference 27/30, ours 7/10 (significant/total)
+edges     : reference 60, ours 13; topology differs
+digests   : ece3ec955bddaa72 / fbd9336f99d16ca7
+
+3 parameters identical, 3 differ, 10 node classes/counts only in the reference, 2 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  ComfyMathExpression                  [order=29] {"expression": "floor (a * b + 1)"}
+  ComfySwitchNode                      [order=22] {}
+  ComfySwitchNode                      [order=23] {}
+  ComfySwitchNode                      [order=24] {}
+  ComfySwitchNode                      [order=25] {}
+  ComfySwitchNode                      [order=26] {}
+  CreateVideo                          [order=14] {"bit_depth": 8}
+  KSamplerAdvanced                     [order=8] {"add_noise": "disable", "noise_seed": 0, "return_with_leftover_noise": "disable", "sampler_name": "euler", "scheduler": "simple"}
+  KSamplerAdvanced                     [order=9] {"add_noise": "enable", "noise_seed": 264244520398999, "return_with_leftover_noise": "enable", "sampler_name": "euler", "scheduler": "simple", "start_at_step": 0}
+  LoraLoaderModelOnly                  [order=18] {"lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors", "strength_model": 1.0000000000000002}
+  LoraLoaderModelOnly                  [order=19] {"lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors", "strength_model": 1.0000000000000002}
+  ModelSamplingSD3 [x2 vs our x1]      [order=20] {"shift": 5.000000000000001}
+  ModelSamplingSD3 [x2 vs our x1]      [order=21] {"shift": 5.000000000000001}
+  PrimitiveBoolean                     [order=27] {"value": false}
+  PrimitiveFloat                       [order=2] {"value": 3.5}
+  PrimitiveFloat                       [order=3] {"value": 1}
+  PrimitiveFloat                       [order=6] {"value": 16}
+  PrimitiveFloat                       [order=28] {"value": 5}
+  PrimitiveInt                         [order=0] {"value": 20}
+  PrimitiveInt                         [order=1] {"value": 10}
+  PrimitiveInt                         [order=4] {"value": 2}
+  PrimitiveInt                         [order=5] {"value": 4}
+  UNETLoader [x2 vs our x1]            [order=15] {"unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors", "weight_dtype": "default"}
+  UNETLoader [x2 vs our x1]            [order=16] {"unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors", "weight_dtype": "default"}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  KSampler                             [order=8] {"cfg": 3.5, "denoise": 1.0, "sampler_name": "uni_pc", "scheduler": "simple", "seed": 42, "steps": 20}
+  LoadImage                            [order=6] {}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] UNETLoader.unet_name
+      reference : wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors, wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
+      ours      : wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
+  [undocumented] UNETLoader.weight_dtype
+      reference : default, default
+      ours      : default
+  [DOCUMENTED  ] ModelSamplingSD3.shift
+      reference : 5.000000000000001, 5.000000000000001
+      ours      : 8.0
+      reason    : [C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-OldTimeRadio\nodes\_otr_video_engines\eng_wan_i2v.py:229] ModelSamplingSD3 sigma shift; 8.0 is the 14B value (the 5B uses 5.0).
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] CLIPTextEncode#2:0 -> WanImageToVideo#1.positive
+  [reference only] CLIPTextEncode#1:0 -> WanImageToVideo#1.negative
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+  [reference only] UNETLoader#2:0 -> LoraLoaderModelOnly#2.model
+  [reference only] UNETLoader#2:0 -> ComfySwitchNode#2.on_false
+  [reference only] LoraLoaderModelOnly#2:0 -> ComfySwitchNode#2.on_true
+  [reference only] PrimitiveFloat#1:0 -> ComfySwitchNode#4.on_false
+  [reference only] PrimitiveFloat#2:0 -> ComfySwitchNode#4.on_true
+  [reference only] PrimitiveInt#2:0 -> ComfySwitchNode#5.on_false
+  [reference only] PrimitiveInt#3:0 -> ComfySwitchNode#5.on_true
+  [reference only] ModelSamplingSD3#1:0 -> KSamplerAdvanced#1.model
+  [reference only] WanImageToVideo#1:0 -> KSamplerAdvanced#1.positive
+  [reference only] WanImageToVideo#1:1 -> KSamplerAdvanced#1.negative
+  [reference only] KSamplerAdvanced#2:0 -> KSamplerAdvanced#1.latent_image
+  [reference only] PrimitiveInt#1:0 -> ComfySwitchNode#3.on_false
+  [reference only] PrimitiveInt#4:0 -> ComfySwitchNode#3.on_true
+  [reference only] ModelSamplingSD3#2:0 -> KSamplerAdvanced#2.model
+  [reference only] WanImageToVideo#1:0 -> KSamplerAdvanced#2.positive
+  [reference only] WanImageToVideo#1:1 -> KSamplerAdvanced#2.negative
+  [reference only] WanImageToVideo#1:2 -> KSamplerAdvanced#2.latent_image
+  [reference only] UNETLoader#1:0 -> ComfySwitchNode#1.on_false
+  [reference only] LoraLoaderModelOnly#1:0 -> ComfySwitchNode#1.on_true
+  [reference only] UNETLoader#1:0 -> LoraLoaderModelOnly#1.model
+  [reference only] KSamplerAdvanced#1:0 -> VAEDecode#1.samples
+  [reference only] $INPUT#1:0 -> WanImageToVideo#1.start_image
+  [reference only] CreateVideo#1:0 -> $OUTPUT#1.VIDEO
+  [reference only] $INPUT#1:2 -> WanImageToVideo#1.width
+  [reference only] $INPUT#1:3 -> WanImageToVideo#1.height
+  [reference only] $INPUT#1:1 -> CLIPTextEncode#2.text
+  [reference only] PrimitiveBoolean#1:0 -> ComfySwitchNode#5.switch
+  [ours only     ] UNETLoader#1:0 -> ModelSamplingSD3#1.model
+  [ours only     ] CLIPTextEncode#1:0 -> WanImageToVideo#1.positive
+  [ours only     ] CLIPTextEncode#2:0 -> WanImageToVideo#1.negative
+  [ours only     ] LoadImage#1:0 -> WanImageToVideo#1.start_image
+  [ours only     ] ModelSamplingSD3#1:0 -> KSampler#1.model
+  [ours only     ] WanImageToVideo#1:0 -> KSampler#1.positive
+  [ours only     ] WanImageToVideo#1:1 -> KSampler#1.negative
+  [ours only     ] WanImageToVideo#1:2 -> KSampler#1.latent_image
+  [ours only     ] KSampler#1:0 -> VAEDecode#1.samples
+  ... 5 additional edge deltas in JSON receipt
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\wan_i2v__video_wan2_2_14B_i2v.json

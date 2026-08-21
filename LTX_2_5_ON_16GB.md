@@ -11,6 +11,14 @@ If you have your own app and you want to plug LTX 2.5 into it, the recipes in
 [`recipes/`](recipes/) are drop-in API-format graphs. They ran. Every claim
 below is bound to a receipt in [`results/`](results/).
 
+> **2026-08-21 conformance correction.** The original receipts below used the
+> stock `CLIPLoaderGGUF`, which can move the 12B Gemma text encoder onto the
+> GPU during encode. OTR production already pinned that encoder to CPU, so the
+> old lab memory figures describe a heavier lab-only configuration and are not
+> current recipe verdicts. Active recipes now use `CLIPLoaderGGUFCPU`; the
+> historical receipts remain append-only evidence of what actually ran. No new
+> memory claim is made by this correction.
+
 ---
 
 ## What this is measured on
@@ -31,18 +39,19 @@ looks. That distinction is the whole point of the lab, and this guide keeps it.
 
 ---
 
-## The one number that matters
+## Historical memory measurements (superseded for current recipes)
 
 **Absolute peak: 15.47 - 15.60 GiB.** Sixteen runs. Every lane, every step
 count, every CFG, both quantisations.
 
-That tight clustering is the finding. Peak VRAM **did not move** when we changed
+That tight clustering was the finding for the original, non-conforming loader.
+Peak VRAM **did not move** when we changed
 steps (8 vs 20), CFG (1.0 vs 3.0), quantisation (Q3_K_M vs Q5_K_M), or mode
 (t2v / i2v / a2v). It is a floor set by the weights and the decode, not by your
 sampler settings.
 
-**You cannot tune your way under it.** If you are trying to fit LTX 2.5 into
-14 GB by lowering steps, stop -- it does not work that way. Get a 16 GB card.
+Do not use these figures to grade the CPU-pinned recipes. They remain useful
+only for reproducing the older stock-loader receipts.
 
 Net of the desktop-and-server baseline, the render itself accounted for
 13.3 - 14.8 GiB; the baseline at measurement time ranged 0.74 - 2.31 GiB. Net
@@ -54,10 +63,11 @@ not comfortable. Close your browser.
 
 ---
 
-## Before anything runs: the loader patch
+## Before anything runs: the two loader patches
 
-Out of the box, ComfyUI-GGUF **cannot load LTX 2.5.** Two separate reasons, one
-patch: [`scratch/patches/ComfyUI-GGUF-ltx25-gemma4.patch`](scratch/patches/ComfyUI-GGUF-ltx25-gemma4.patch)
+Out of the box, this installed ComfyUI-GGUF version **cannot load LTX 2.5.**
+Two weight-decoding fixes live in
+[`ComfyUI-GGUF-ltx25-gemma4.patch`](scratch/patches/ComfyUI-GGUF-ltx25-gemma4.patch):
 
 1. **The text encoder is rejected outright.** LTX 2.5 uses a Gemma-4 12B
    encoder, and `gemma4` is not in `TXT_ARCH_LIST`. One word fixes it.
@@ -76,7 +86,14 @@ patch: [`scratch/patches/ComfyUI-GGUF-ltx25-gemma4.patch`](scratch/patches/Comfy
    The first one is the audio embeddings connector. Without the patch, **the
    native audio feature -- the reason to use 2.5 at all -- will not load.**
 
-Apply it inside your `ComfyUI-GGUF` custom node directory.
+Apply it inside your `ComfyUI-GGUF` custom node directory. Then apply the
+separate additive
+[`ComfyUI-GGUF-CLIPLoaderGGUFCPU.patch`](scratch/patches/ComfyUI-GGUF-CLIPLoaderGGUFCPU.patch).
+That patch leaves the stock loader unchanged and adds one opt-in node which
+sets `initial_device`, `load_device`, and `offload_device` to CPU, then fails
+before the first forward if the patcher is not actually CPU-resident. Its
+baseline and installed hashes are recorded beside it in
+[`ComfyUI-GGUF-CLIPLoaderGGUFCPU.json`](scratch/patches/ComfyUI-GGUF-CLIPLoaderGGUFCPU.json).
 
 ## Weights
 
@@ -86,7 +103,7 @@ Fetchers with every source URL: [`scratch/download_ggufs.py`](scratch/download_g
 | File | Loader | From |
 |---|---|---|
 | `LTX-2.5-Distilled-Q3_K_M.gguf` | `UnetLoaderGGUF` | `realrebelai/LTX-2.5_GGUFs` |
-| `gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf` | `CLIPLoaderGGUF`, type `ltxv` | `elix3r/gemma4-12b-with-proj-ltx-2.5-GGUF` |
+| `gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf` | `CLIPLoaderGGUFCPU`, type `ltxv` | `elix3r/gemma4-12b-with-proj-ltx-2.5-GGUF` |
 | `ltx-2.5-video-vae-bf16.safetensors` | `VAELoader` | `Lightricks/LTX-2.5` |
 | `ltx-2.5-audio-vae-bf16.safetensors` | `VAELoader` | `Lightricks/LTX-2.5` |
 
@@ -199,9 +216,11 @@ runs and produces a file -- at **404.6 s**, the slowest cell measured, for the
 same 3.88 s of output. We are not recommending it in the 16 GB range. It was
 worth testing; it is not worth your render budget yet.
 
-**Do not bother with:** 161-frame multishot (spikes to 18-20 GiB), in-graph 2x
-latent upscaling (forces a 1664x960x97 decode and hard-OOMs -- run it as a
-separate offline pass instead), or pushing the canvas past 832x480.
+**Historical caution:** the 161-frame multishot receipt did not fit its test
+lane. The old claim that in-graph latent upscaling necessarily hard-OOMs is
+withdrawn: the lab later decoded 1664x960x97 successfully, and OTR now ships
+the latent-upsample plus three-step-refine path. Its real tradeoff is render
+time, not a categorical decode failure.
 
 ### One prompting note that applies to every lane
 

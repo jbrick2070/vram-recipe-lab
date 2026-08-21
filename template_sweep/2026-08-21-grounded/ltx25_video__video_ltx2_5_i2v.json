@@ -1,0 +1,775 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_ltx2_5_i2v.json",
+    "source_kind": "ui_subgraph",
+    "total": 47,
+    "significant": 44,
+    "edges": 80,
+    "scope": "subgraph:Image to Video (LTX-2.5)",
+    "topology_digest": "f730ae7e4d8b4bf417f90d4cb4c6f667f017f2c49f62ec8a8aa43d64f8541ffc",
+    "provenance": {
+      "source_sha256": "0a88024394467250013ce611ee46d01cc7e73078a0899e4c80709080c5101f71",
+      "source_bytes": 128647,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "ltx25_video",
+    "source_kind": "otr_engine",
+    "total": 29,
+    "significant": 27,
+    "edges": 39,
+    "scope": "ltx25_video",
+    "topology_digest": "cd1465f8b592339dea6701412e31b53b4e2529a12bf8eda58cfc0be820345728",
+    "provenance": {
+      "engine_id": "ltx25_video",
+      "engine_class": "Ltx25VideoEngine",
+      "engine_module": "nodes._otr_video_engines.eng_ltx25",
+      "render_canvas": [
+        832,
+        480
+      ],
+      "builder_signature": "(plan, image_name, length, width, height)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_ltx25.py",
+          "status": "present",
+          "bytes": 82974,
+          "sha256": "4d86b305f727226e4b9408d573e60aae4ff544fae3f0c1a1911d60b549a213d1"
+        },
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\ltx25_recipe.py",
+          "status": "present",
+          "bytes": 19985,
+          "sha256": "198d0367a0c782cefceecbc68094b544384cb61ac18c34a34a024addd35ce311"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_ltx2_5_i2v.json",
+      "source_kind": "ui_subgraph",
+      "total": 47,
+      "significant": 44,
+      "edges": 80,
+      "scope": "subgraph:Image to Video (LTX-2.5)",
+      "topology_digest": "f730ae7e4d8b4bf417f90d4cb4c6f667f017f2c49f62ec8a8aa43d64f8541ffc"
+    },
+    "ours": {
+      "source": "ltx25_video",
+      "source_kind": "otr_engine",
+      "total": 29,
+      "significant": 27,
+      "edges": 39,
+      "scope": "ltx25_video",
+      "topology_digest": "cd1465f8b592339dea6701412e31b53b4e2529a12bf8eda58cfc0be820345728"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "CLIPLoader#2:0 -> TextGenerateLTX2Prompt#1.clip",
+      "LTXVPreprocess#1:0 -> TextGenerateLTX2Prompt#1.image",
+      "PrimitiveStringMultiline#1:0 -> TextGenerateLTX2Prompt#1.prompt",
+      "CLIPLoader#1:0 -> CLIPTextEncode#1.clip",
+      "ComfySwitchNode#1:0 -> CLIPTextEncode#1.text",
+      "PrimitiveStringMultiline#1:0 -> ComfySwitchNode#1.on_false",
+      "TextGenerateLTX2Prompt#1:0 -> ComfySwitchNode#1.on_true",
+      "PrimitiveBoolean#2:0 -> ComfySwitchNode#1.switch",
+      "ComfySwitchNode#1:0 -> PreviewAny#1.source",
+      "ComfyMathExpression#3:0 -> LTXVConditioning#1.frame_rate",
+      "CLIPLoader#1:0 -> CLIPTextEncode#2.clip",
+      "RandomNoise#2:0 -> SamplerCustomAdvanced#1.noise",
+      "ManualSigmas#1:0 -> SamplerCustomAdvanced#1.sigmas",
+      "LTXVConcatAVLatent#2:0 -> SamplerCustomAdvanced#1.latent_image",
+      "EmptyLTXVLatentVideo#1:0 -> LTXVImgToVideoInplace#2.latent",
+      "PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#2.bypass",
+      "ComfyMathExpression#4:1 -> LTXVEmptyLatentAudio#1.frames_number",
+      "ComfyMathExpression#3:1 -> LTXVEmptyLatentAudio#1.frame_rate",
+      "LTXVEmptyLatentAudio#1:0 -> LTXVConcatAVLatent#2.audio_latent",
+      "PrimitiveInt#4:0 -> ComfyMathExpression#1.values.a",
+      "PrimitiveInt#1:0 -> ComfyMathExpression#2.values.a",
+      "ComfyMathExpression#1:1 -> EmptyLTXVLatentVideo#1.width",
+      "ComfyMathExpression#2:1 -> EmptyLTXVLatentVideo#1.height",
+      "ComfyMathExpression#4:1 -> EmptyLTXVLatentVideo#1.length",
+      "LTXVLatentUpsampler#1:0 -> LTXVImgToVideoInplace#1.latent",
+      "PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#1.bypass",
+      "PrimitiveInt#2:0 -> ComfyMathExpression#3.values.a",
+      "PrimitiveInt#3:0 -> ComfyMathExpression#4.values.a",
+      "PrimitiveInt#2:0 -> ComfyMathExpression#4.values.b",
+      "LTXVSeparateAVLatent#1:1 -> LTXVConcatAVLatent#1.audio_latent",
+      "LTXVConditioning#1:0 -> LTXVDualCFGGuider#2.positive",
+      "LTXVConditioning#1:1 -> LTXVDualCFGGuider#2.negative",
+      "LTXVDualCFGGuider#2:0 -> SamplerCustomAdvanced#2.guider",
+      "KSamplerSelect#2:0 -> SamplerCustomAdvanced#2.sampler",
+      "ManualSigmas#2:0 -> SamplerCustomAdvanced#2.sigmas",
+      "LTXVConcatAVLatent#1:0 -> SamplerCustomAdvanced#2.latent_image",
+      "LTXVSeparateAVLatent#2:1 -> LTXVAudioVAEDecode#1.samples",
+      "VAELoader#2:0 -> LTXVAudioVAEDecode#1.audio_vae",
+      "VAEDecodeTiled#1:0 -> CreateVideo#1.images",
+      "LTXVAudioVAEDecode#1:0 -> CreateVideo#1.audio",
+      "ComfyMathExpression#3:0 -> CreateVideo#1.fps",
+      "CreateVideo#1:0 -> $OUTPUT#1.VIDEO",
+      "$INPUT#1:0 -> ResizeImageMaskNode#1.input",
+      "$INPUT#1:1 -> PrimitiveStringMultiline#1.value",
+      "$INPUT#1:2 -> PrimitiveBoolean#2.value",
+      "$INPUT#1:3 -> PrimitiveInt#3.value",
+      "$INPUT#1:4 -> PrimitiveInt#4.value",
+      "$INPUT#1:5 -> PrimitiveInt#1.value",
+      "$INPUT#1:6 -> RandomNoise#2.noise_seed",
+      "UNETLoader#1:0 -> LTXVDualCFGGuider#1.model",
+      "UNETLoader#1:0 -> LTXVDualCFGGuider#2.model",
+      "$INPUT#1:7 -> PrimitiveInt#2.value",
+      "$INPUT#1:8 -> UNETLoader#1.unet_name",
+      "$INPUT#1:9 -> VAELoader#1.vae_name",
+      "$INPUT#1:10 -> VAELoader#2.vae_name",
+      "$INPUT#1:11 -> CLIPLoader#1.clip_name",
+      "$INPUT#1:12 -> LatentUpscaleModelLoader#1.model_name",
+      "$INPUT#1:13 -> CLIPLoader#2.clip_name"
+    ],
+    "ours_only_edges": [
+      "CLIPLoaderGGUF#1:0 -> CLIPTextEncode#1.clip",
+      "CLIPLoaderGGUF#1:0 -> CLIPTextEncode#2.clip",
+      "LoadImage#1:0 -> ResizeImageMaskNode#1.input",
+      "EmptyLTXVLatentVideo#1:0 -> LTXVImgToVideoInplace#1.latent",
+      "LTXVEmptyLatentAudio#1:0 -> LTXVConcatAVLatent#1.audio_latent",
+      "UnetLoaderGGUF#1:0 -> LTXVModalityGuidance#1.model",
+      "LTXVModalityGuidance#1:0 -> LTXVDualCFGGuider#1.model",
+      "LTXVImgToVideoInplace#1:0 -> LTXVScheduler#1.latent",
+      "RandomNoise#1:0 -> SamplerCustomAdvanced#1.noise",
+      "LTXVScheduler#1:0 -> SamplerCustomAdvanced#1.sigmas",
+      "LTXVConcatAVLatent#1:0 -> SamplerCustomAdvanced#1.latent_image",
+      "LTXVLatentUpsampler#1:0 -> LTXVImgToVideoInplace#2.latent",
+      "LTXVSeparateAVLatent#1:1 -> LTXVConcatAVLatent#2.audio_latent",
+      "LTXVDualCFGGuider#1:0 -> SamplerCustomAdvanced#2.guider",
+      "KSamplerSelect#1:0 -> SamplerCustomAdvanced#2.sampler",
+      "ManualSigmas#1:0 -> SamplerCustomAdvanced#2.sigmas",
+      "LTXVConcatAVLatent#2:0 -> SamplerCustomAdvanced#2.latent_image"
+    ]
+  },
+  "identical_parameters": 7,
+  "differences": [
+    {
+      "node": "EmptyLTXVLatentVideo",
+      "param": "height",
+      "reference": [],
+      "ours": [
+        "480"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "EmptyLTXVLatentVideo",
+      "param": "length",
+      "reference": [],
+      "ours": [
+        "97"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "EmptyLTXVLatentVideo",
+      "param": "width",
+      "reference": [],
+      "ours": [
+        "832"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "KSamplerSelect",
+      "param": "sampler_name",
+      "reference": [
+        "\"euler_ancestral\"",
+        "\"euler_ancestral\""
+      ],
+      "ours": [
+        "\"euler_ancestral_cfg_pp\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVConditioning",
+      "param": "frame_rate",
+      "reference": [],
+      "ours": [
+        "25.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVDualCFGGuider",
+      "param": "audio_cfg",
+      "reference": [
+        "1",
+        "1"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVDualCFGGuider",
+      "param": "video_cfg",
+      "reference": [
+        "1",
+        "1"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVEmptyLatentAudio",
+      "param": "frame_rate",
+      "reference": [],
+      "ours": [
+        "25.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVEmptyLatentAudio",
+      "param": "frames_number",
+      "reference": [],
+      "ours": [
+        "97"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVImgToVideoInplace",
+      "param": "bypass",
+      "reference": [],
+      "ours": [
+        "false",
+        "false"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVImgToVideoInplace",
+      "param": "strength",
+      "reference": [
+        "1",
+        "0.7"
+      ],
+      "ours": [
+        "1.0",
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVPreprocess",
+      "param": "img_compression",
+      "reference": [
+        "18"
+      ],
+      "ours": [
+        "0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ManualSigmas",
+      "param": "sigmas",
+      "reference": [
+        "\"1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0\"",
+        "\"0.85, 0.7250, 0.4219, 0.0\""
+      ],
+      "ours": [
+        "\"0.85, 0.7250, 0.4219, 0.0\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "RandomNoise",
+      "param": "noise_seed",
+      "reference": [
+        "42",
+        "900359092894726"
+      ],
+      "ours": [
+        "42"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ResizeImageMaskNode",
+      "param": "resize_type",
+      "reference": [
+        "\"scale longer dimension\""
+      ],
+      "ours": [
+        "\"scale dimensions\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ResizeImageMaskNode",
+      "param": "resize_type.crop",
+      "reference": [],
+      "ours": [
+        "\"center\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ResizeImageMaskNode",
+      "param": "resize_type.height",
+      "reference": [],
+      "ours": [
+        "480"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ResizeImageMaskNode",
+      "param": "resize_type.longer_size",
+      "reference": [
+        "1536"
+      ],
+      "ours": [],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ResizeImageMaskNode",
+      "param": "resize_type.width",
+      "reference": [],
+      "ours": [
+        "832"
+      ],
+      "documented": false,
+      "reason": ""
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "CLIPLoader",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 43,
+          "params": {
+            "clip_name": "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors",
+            "type": "ltxv"
+          }
+        },
+        {
+          "order": 46,
+          "params": {
+            "clip_name": "gemma4_e2b_it_int8_convrot.safetensors",
+            "type": "ltxv"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ComfyMathExpression",
+      "instance_count": 4,
+      "instances": [
+        {
+          "order": 13,
+          "params": {
+            "expression": "a/2"
+          }
+        },
+        {
+          "order": 14,
+          "params": {
+            "expression": "a/2"
+          }
+        },
+        {
+          "order": 18,
+          "params": {
+            "expression": "a"
+          }
+        },
+        {
+          "order": 35,
+          "params": {
+            "expression": "a * b + 1"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ComfySwitchNode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 38,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 28,
+          "params": {
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "KSamplerSelect [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 1,
+          "params": {
+            "sampler_name": "euler_ancestral"
+          }
+        },
+        {
+          "order": 5,
+          "params": {
+            "sampler_name": "euler_ancestral"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVAudioVAEDecode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 17,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LTXVDualCFGGuider [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 44,
+          "params": {
+            "video_cfg": 1,
+            "audio_cfg": 1
+          }
+        },
+        {
+          "order": 45,
+          "params": {
+            "video_cfg": 1,
+            "audio_cfg": 1
+          }
+        }
+      ]
+    },
+    {
+      "node": "ManualSigmas [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 2,
+          "params": {
+            "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+          }
+        },
+        {
+          "order": 4,
+          "params": {
+            "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveBoolean",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "value": false
+          }
+        },
+        {
+          "order": 39,
+          "params": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveInt",
+      "instance_count": 4,
+      "instances": [
+        {
+          "order": 19,
+          "params": {
+            "value": 720
+          }
+        },
+        {
+          "order": 20,
+          "params": {
+            "value": 24
+          }
+        },
+        {
+          "order": 21,
+          "params": {
+            "value": 5
+          }
+        },
+        {
+          "order": 30,
+          "params": {
+            "value": 1280
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveStringMultiline",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 33,
+          "params": {
+            "value": "Egyptian royal in blue-and-gold headdress and high collar, white dress with golden embroidery and armbands, desert, robot soldiers in formation left and right. She walks steadily forward, head held level and gaze fixed ahead—no dipping or lowering of the head. The camera performs a single, smooth push-in only: starting in a wider shot of her, the robots, and the desert, it moves steadily forward until she is in a medium or medium-close frame, then holds. She stops, posture and head still upright, and says: “The old gods are silent. I am not.” Robot soldiers shift or march in place; sand and fabric move with the wind. No pull-back; the only camera move is the continuous push-in."
+          }
+        }
+      ]
+    },
+    {
+      "node": "RandomNoise [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 3,
+          "params": {
+            "noise_seed": 42
+          }
+        },
+        {
+          "order": 6,
+          "params": {
+            "noise_seed": 900359092894726
+          }
+        }
+      ]
+    },
+    {
+      "node": "TextGenerateLTX2Prompt",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 36,
+          "params": {
+            "max_length": 600,
+            "sampling_mode": "on",
+            "sampling_mode.temperature": 0.7,
+            "sampling_mode.top_k": 64,
+            "sampling_mode.top_p": 0.95,
+            "sampling_mode.min_p": 0.05,
+            "sampling_mode.repetition_penalty": 1.15,
+            "sampling_mode.seed": 0,
+            "sampling_mode.presence_penalty": 0,
+            "thinking": false,
+            "use_default_template": true
+          }
+        }
+      ]
+    },
+    {
+      "node": "UNETLoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 40,
+          "params": {
+            "unet_name": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+            "weight_dtype": "default"
+          }
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [
+    {
+      "node": "CLIPLoaderGGUF",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 1,
+          "params": {
+            "clip_name": "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf",
+            "type": "ltxv"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVModalityGuidance",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 15,
+          "params": {
+            "modality_scale": 1.0,
+            "start_percent": 0.0,
+            "end_percent": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVScheduler",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 19,
+          "params": {
+            "steps": 8,
+            "max_shift": 2.05,
+            "base_shift": 0.95,
+            "stretch": true,
+            "terminal": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoadImage",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 8,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "UnetLoaderGGUF",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "unet_name": "LTX-2.5-Distilled-Q3_K_M.gguf"
+          }
+        }
+      ]
+    }
+  ],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}

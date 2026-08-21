@@ -1,0 +1,57 @@
+reference : ltxv_image_to_video.json
+ours      : video:ltx_8gb
+nodes     : reference 11/15, ours 10/12 (significant/total)
+edges     : reference 19, ours 18; topology differs
+digests   : 685847a676b6abdb / 4957795bbf98bce7
+
+9 parameters identical, 8 differ, 3 node classes/counts only in the reference, 2 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  CreateVideo                          [order=13] {"bit_depth": 8, "fps": 24}
+  SaveVideo                            [order=14] {"codec": "auto", "format": "auto"}
+  VAEDecode                            [order=12] {}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  ModelSamplingLTXV                    [order=5] {"base_shift": 0.95, "max_shift": 2.05}
+  VAEDecodeTiled                       [order=11] {"overlap": 64, "temporal_overlap": 8, "temporal_size": 16, "tile_size": 512}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] CheckpointLoaderSimple.ckpt_name
+      reference : ltx-video-2b-v0.9.5.safetensors
+      ours      : ltxv-2b-0.9.8-distilled.safetensors
+  [undocumented] LTXVConditioning.frame_rate
+      reference : 25
+      ours      : 25.0
+  [undocumented] LTXVImgToVideo.height
+      reference : 512
+      ours      : 288
+  [undocumented] LTXVImgToVideo.strength
+      reference : 0.15
+      ours      : 1.0
+  [undocumented] LTXVImgToVideo.width
+      reference : 768
+      ours      : 512
+  [undocumented] LTXVScheduler.steps
+      reference : 30
+      ours      : 8
+  [undocumented] SamplerCustom.cfg
+      reference : 3
+      ours      : 1.0
+  [undocumented] SamplerCustom.noise_seed
+      reference : 712395695050634
+      ours      : 42
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] CheckpointLoaderSimple#1:2 -> VAEDecode#1.vae
+  [reference only] SamplerCustom#1:0 -> VAEDecode#1.samples
+  [reference only] CheckpointLoaderSimple#1:0 -> SamplerCustom#1.model
+  [reference only] CreateVideo#1:0 -> SaveVideo#1.video
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+  [ours only     ] CheckpointLoaderSimple#1:0 -> ModelSamplingLTXV#1.model
+  [ours only     ] ModelSamplingLTXV#1:0 -> SamplerCustom#1.model
+  [ours only     ] SamplerCustom#1:0 -> VAEDecodeTiled#1.samples
+  [ours only     ] CheckpointLoaderSimple#1:2 -> VAEDecodeTiled#1.vae
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\ltx_8gb__ltxv_image_to_video.json

@@ -34,7 +34,7 @@ workflow = {
       }
     },
     "4": {
-      "class_type": "CLIPLoaderGGUF",
+      "class_type": "CLIPLoaderGGUFCPU",
       "inputs": {
         "clip_name": "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf",
         "type": "ltxv"
@@ -223,7 +223,12 @@ workflow = {
   }
 }
 
-with open('recipes/ltx_2_5_golden_i2v_foley.json', 'w') as f:
+with open(
+    'recipes/ltx_2_5_golden_i2v_foley.json',
+    'w',
+    encoding='utf-8',
+    newline='\n',
+) as f:
     json.dump(workflow, f, indent=2)
 
 print("Saved recipes/ltx_2_5_golden_i2v_foley.json successfully")

@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_humo.json",
+    "source_kind": "ui_root",
+    "total": 19,
+    "significant": 13,
+    "edges": 20,
+    "scope": "root",
+    "topology_digest": "22164284b5c978f52e4ac2496a270a5b379e4ba7f6323709a3a01df4496f4c93",
+    "provenance": {
+      "source_sha256": "4a8a18e27e216e4419fa0b8d812b881546afb243e1ac3fdb01c3097500768fba",
+      "source_bytes": 21215,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "humo_1.7B_169",
+    "source_kind": "otr_engine",
+    "total": 13,
+    "significant": 10,
+    "edges": 16,
+    "scope": "humo_1.7B_169",
+    "topology_digest": "bec765a23b84971bf8d388902fe46764bed950598d3684579bd67a2c4454333b",
+    "provenance": {
+      "engine_id": "humo_1.7B_169",
+      "engine_class": "HuMo17BLandscapeEngine",
+      "engine_module": "nodes._otr_video_engines.eng_humo",
+      "render_canvas": [
+        832,
+        480
+      ],
+      "builder_signature": "(image_name, audio_name, plan, length, width, height, external_results=None)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_humo.py",
+          "status": "present",
+          "bytes": 85639,
+          "sha256": "a1b1146ae1101f8e2a4cb23bb371496f9b4e9469d73482c442d60e74ee6ec920"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_humo.json",
+      "source_kind": "ui_root",
+      "total": 19,
+      "significant": 13,
+      "edges": 20,
+      "scope": "root",
+      "topology_digest": "22164284b5c978f52e4ac2496a270a5b379e4ba7f6323709a3a01df4496f4c93"
+    },
+    "ours": {
+      "source": "humo_1.7B_169",
+      "source_kind": "otr_engine",
+      "total": 13,
+      "significant": 10,
+      "edges": 16,
+      "scope": "humo_1.7B_169",
+      "topology_digest": "bec765a23b84971bf8d388902fe46764bed950598d3684579bd67a2c4454333b"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "CreateVideo#1:0 -> SaveVideo#1.video",
+      "LoadAudio#1:0 -> CreateVideo#1.audio",
+      "UNETLoader#1:0 -> LoraLoaderModelOnly#1.model",
+      "LoraLoaderModelOnly#1:0 -> ModelSamplingSD3#1.model",
+      "VAEDecode#1:0 -> CreateVideo#1.images"
+    ],
+    "ours_only_edges": [
+      "UNETLoader#1:0 -> ModelSamplingSD3#1.model"
+    ]
+  },
+  "identical_parameters": 7,
+  "differences": [
+    {
+      "node": "KSampler",
+      "param": "cfg",
+      "reference": [
+        "1"
+      ],
+      "ours": [
+        "2.5"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "KSampler",
+      "param": "denoise",
+      "reference": [
+        "1"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "KSampler",
+      "param": "seed",
+      "reference": [
+        "1067760026265042"
+      ],
+      "ours": [
+        "42"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "KSampler",
+      "param": "steps",
+      "reference": [
+        "6"
+      ],
+      "ours": [
+        "20"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LoadAudio",
+      "param": "audio",
+      "reference": [
+        "\"video_humo_input_audio.wav\""
+      ],
+      "ours": [
+        "\"diffomatic.wav\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ModelSamplingSD3",
+      "param": "shift",
+      "reference": [
+        "8"
+      ],
+      "ours": [
+        "8.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "UNETLoader",
+      "param": "unet_name",
+      "reference": [
+        "\"humo_17B_fp8_e4m3fn.safetensors\""
+      ],
+      "ours": [
+        "\"humo_1.7B_fp16.safetensors\""
+      ],
+      "documented": false,
+      "reason": ""
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 18,
+          "params": {
+            "fps": 25,
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 12,
+          "params": {
+            "lora_name": "lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors",
+            "strength_model": 1
+          }
+        }
+      ]
+    },
+    {
+      "node": "SaveVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 19,
+          "params": {
+            "format": "auto",
+            "codec": "auto"
+          }
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}

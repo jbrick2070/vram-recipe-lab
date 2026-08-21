@@ -1,0 +1,65 @@
+reference : video_minimax_h3_r2v.json
+ours      : video:minimax_h3_audio_in
+nodes     : reference 24/29, ours 12/13 (significant/total)
+edges     : reference 33, ours 13; topology differs
+digests   : 8af184e1dea07527 / 3977d6af3c33132b
+
+7 parameters identical, 3 differ, 11 node classes/counts only in the reference, 1 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  ComfyMathExpression                  [order=18] {"expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"}
+  ComfySwitchNode                      [order=19] {}
+  ComfySwitchNode                      [order=20] {}
+  CreateVideo                          [order=27] {"bit_depth": 8, "fps": 24}
+  LoadImage [x2 vs our x1]             [order=10] {}
+  LoadImage [x2 vs our x1]             [order=12] {}
+  LoraLoaderModelOnly                  [order=17] {"lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors", "strength_model": 1}
+  PrimitiveBoolean                     [order=16] {"value": false}
+  PrimitiveFloat                       [order=9] {"value": 5}
+  PrimitiveInt                         [order=14] {"fixed": "fixed", "value": 20}
+  PrimitiveInt                         [order=15] {"fixed": "fixed", "value": 4}
+  PrimitiveStringMultiline             [order=11] {"value": "Bold comic-book ink style, heavy linework, red and blue-black palette, night city. Use <Picture 2> and <Picture 1> as reference frames and <Audio 1> exactly as it is.\nCUT 1: top-down view of the little boy superhero on the rooftop — red cape fluttering in the wind, hands planted on his hips, freckles and a cocky grin as he looks straight up into the camera. The camera slowly descends toward him as he delivers his line — as he speaks, comic-book graphic overlay text word by word in sync with his voice: \"GET READY TO\" - \"MEET\" — \"YOUR\" — \"MAKER\" — huge jagged comic lettering, white with heavy black outlines and red drop shadows, tilted at scrappy angles, until the three words hang stacked in the air above him between his face and the lens.\nTRANSITION: a violent WHIP PAN off the rooftop that SMEARS the floating words away with it, motion-streaked —\nCUT 2: low hero angle on the colossal black mech-kaiju towering over the skyline as it rears back and unleashes a GIANT terrifying ROAR — jaws wide with fangs, red eyes and chest-core flaring blinding bright, blue lightning arcing off its head, the roar's shockwave rippling dust and rattling windows down the buildings, comic-style speed-lines and ink splatter bursting from the impact of the sound. It leans INTO the camera as the roar peaks. Hold on the roar."}
+  SaveVideo                            [order=28] {"codec": "auto", "format": "auto"}
+  VAEDecodeAudio                       [order=26] {}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  LoadAudio                            [order=11] {"audio": "diffomatic.wav"}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] BasicScheduler.denoise
+      reference : 1
+      ours      : 1.0
+  [undocumented] BasicScheduler.steps
+      reference : <absent>
+      ours      : 20
+  [undocumented] RandomNoise.noise_seed
+      reference : 261662374822964
+      ours      : 42
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] VAELoader#2:0 -> VAEDecodeAudio#1.vae
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+  [reference only] VAEDecodeAudio#1:0 -> CreateVideo#1.audio
+  [reference only] CreateVideo#1:0 -> SaveVideo#1.video
+  [reference only] PrimitiveFloat#1:0 -> ComfyMathExpression#1.values.a
+  [reference only] ComfyMathExpression#1:1 -> MiniMaxH3ReferenceToVideo#1.length
+  [reference only] ResolutionSelector#1:0 -> MiniMaxH3ReferenceToVideo#1.width
+  [reference only] ResolutionSelector#1:1 -> MiniMaxH3ReferenceToVideo#1.height
+  [reference only] LoadImage#1:0 -> MiniMaxH3ReferenceToVideo#1.ref_images.ref_image_0
+  [reference only] PrimitiveStringMultiline#1:0 -> MiniMaxH3ReferenceToVideo#1.prompt
+  [reference only] SamplerCustomAdvanced#1:0 -> VAEDecodeAudio#1.samples
+  [reference only] LoadImage#2:0 -> MiniMaxH3ReferenceToVideo#1.ref_images.ref_image_1
+  [reference only] PrimitiveInt#2:0 -> ComfySwitchNode#1.on_true
+  [reference only] PrimitiveInt#1:0 -> ComfySwitchNode#1.on_false
+  [reference only] UNETLoader#1:0 -> LoraLoaderModelOnly#1.model
+  [reference only] LoraLoaderModelOnly#1:0 -> ComfySwitchNode#2.on_true
+  [reference only] UNETLoader#1:0 -> ComfySwitchNode#2.on_false
+  [reference only] ComfySwitchNode#2:0 -> BasicGuider#1.model
+  [reference only] ComfySwitchNode#1:0 -> BasicScheduler#1.steps
+  [reference only] PrimitiveBoolean#1:0 -> ComfySwitchNode#2.switch
+  [reference only] PrimitiveBoolean#1:0 -> ComfySwitchNode#1.switch
+  [ours only     ] UNETLoader#1:0 -> BasicGuider#1.model
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\minimax_h3_audio_in__video_minimax_h3_r2v.json

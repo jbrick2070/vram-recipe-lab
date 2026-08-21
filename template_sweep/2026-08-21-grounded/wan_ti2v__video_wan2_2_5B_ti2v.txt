@@ -1,0 +1,60 @@
+reference : video_wan2_2_5B_ti2v.json
+ours      : video:wan_ti2v
+nodes     : reference 8/12, ours 7/10 (significant/total)
+edges     : reference 12, ours 11; topology differs
+digests   : 69fad40a14084e93 / be6ff920123b5198
+
+2 parameters identical, 6 differ, 5 node classes/counts only in the reference, 4 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  CLIPLoader                           [order=1] {"clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan"}
+  CreateVideo                          [order=11] {"bit_depth": 8, "fps": 24}
+  SaveVideo                            [order=12] {"codec": "auto", "format": "auto"}
+  UNETLoader                           [order=0] {"unet_name": "wan2.2_ti2v_5B_fp16.safetensors", "weight_dtype": "default"}
+  VAEDecode                            [order=10] {}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  CLIPLoaderGGUF                       [order=2] {"clip_name": "umt5-xxl-encoder-Q5_K_M.gguf", "type": "wan"}
+  LoadImage                            [order=6] {}
+  UnetLoaderGGUF                       [order=0] {"unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"}
+  VAEDecodeTiled                       [order=9] {"overlap": 64, "temporal_overlap": 8, "temporal_size": 16, "tile_size": 256}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] KSampler.cfg
+      reference : 5
+      ours      : 5.0
+  [undocumented] KSampler.denoise
+      reference : 1
+      ours      : 1.0
+  [undocumented] KSampler.sampler_name
+      reference : uni_pc
+      ours      : euler
+  [undocumented] KSampler.seed
+      reference : 898471028164125
+      ours      : 42
+  [undocumented] KSampler.steps
+      reference : 20
+      ours      : 30
+  [DOCUMENTED  ] ModelSamplingSD3.shift
+      reference : 8
+      ours      : 5.0
+      reason    : [C:\Users\jeffr\Documents\ComfyUI\custom_nodes\ComfyUI-OldTimeRadio\nodes\_otr_video_engines\eng_wan_ti2v.py:212] ModelSamplingSD3 sigma shift; 5.0 is the 5B value (the 14B uses 8.0).
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] KSampler#1:0 -> VAEDecode#1.samples
+  [reference only] CLIPLoader#1:0 -> CLIPTextEncode#1.clip
+  [reference only] CLIPLoader#1:0 -> CLIPTextEncode#2.clip
+  [reference only] VAELoader#1:0 -> VAEDecode#1.vae
+  [reference only] UNETLoader#1:0 -> ModelSamplingSD3#1.model
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+  [reference only] CreateVideo#1:0 -> SaveVideo#1.video
+  [ours only     ] UnetLoaderGGUF#1:0 -> ModelSamplingSD3#1.model
+  [ours only     ] CLIPLoaderGGUF#1:0 -> CLIPTextEncode#1.clip
+  [ours only     ] CLIPLoaderGGUF#1:0 -> CLIPTextEncode#2.clip
+  [ours only     ] LoadImage#1:0 -> Wan22ImageToVideoLatent#1.start_image
+  [ours only     ] KSampler#1:0 -> VAEDecodeTiled#1.samples
+  [ours only     ] VAELoader#1:0 -> VAEDecodeTiled#1.vae
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\wan_ti2v__video_wan2_2_5B_ti2v.json

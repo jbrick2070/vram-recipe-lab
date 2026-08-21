@@ -1,0 +1,1178 @@
+{
+  "status": "ok",
+  "engines": [
+    {
+      "engine": "cloud_flux_pro",
+      "kind": "image",
+      "module": "eng_cloud_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_krea_2_turbo",
+      "kind": "image",
+      "module": "eng_cloud_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_luma_photon_flash",
+      "kind": "image",
+      "module": "eng_cloud_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_nano_banana_2",
+      "kind": "image",
+      "module": "eng_cloud_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_seedream_2",
+      "kind": "image",
+      "module": "eng_cloud_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "flux2_klein",
+      "kind": "image",
+      "module": "flux2_klein",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "equal evidence for ['image_flux2_klein_image_edit_4b_distilled.json', 'image_flux2_klein_text_to_image.json', 'templates-all_in_one-image_edit_models.json']",
+      "status": "ambiguous_template",
+      "candidates": [
+        {
+          "template": "image_flux2_klein_image_edit_4b_distilled.json",
+          "score": 103.01213402093556,
+          "why": "rare exact weight: flux2-vae.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "image_flux2_klein_text_to_image.json",
+          "score": 103.01213402093556,
+          "why": "rare exact weight: flux2-vae.safetensors",
+          "role": "unknown"
+        },
+        {
+          "template": "templates-all_in_one-image_edit_models.json",
+          "score": 103.01213402093556,
+          "why": "rare exact weight: flux2-vae.safetensors",
+          "role": "i2v"
+        }
+      ],
+      "rejected_modality": []
+    },
+    {
+      "engine": "flux_gen1",
+      "kind": "image",
+      "module": "flux_gen1",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "equal evidence for ['flux1_dev_uso_reference_image_gen.json', 'flux_depth_lora_example.json']",
+      "status": "ambiguous_template",
+      "candidates": [
+        {
+          "template": "flux1_dev_uso_reference_image_gen.json",
+          "score": 103.29772648956823,
+          "why": "rare exact weight: flux1-dev-fp8.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "flux_depth_lora_example.json",
+          "score": 103.29772648956823,
+          "why": "rare exact weight: flux1-dev-fp8.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "flux1_krea_dev.json",
+          "score": 30.0,
+          "why": "strong family: dev, flux1",
+          "role": "unknown"
+        },
+        {
+          "template": "flux_canny_model_example.json",
+          "score": 30.0,
+          "why": "strong family: dev, flux1",
+          "role": "i2v"
+        },
+        {
+          "template": "flux_dev_checkpoint_example.json",
+          "score": 30.0,
+          "why": "strong family: dev, flux1",
+          "role": "unknown"
+        }
+      ],
+      "rejected_modality": []
+    },
+    {
+      "engine": "google_image",
+      "kind": "image",
+      "module": "eng_google_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "ideo",
+      "kind": "image",
+      "module": "eng_cloud_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "lumina_image",
+      "kind": "image",
+      "module": "lumina_image",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "no rare exact weight or strong model-family evidence",
+      "status": "no_match",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "z_image_turbo",
+      "kind": "image",
+      "module": "z_image_turbo",
+      "engine_role": "unknown",
+      "template": "image_z_image_turbo_int8.json",
+      "score": 104.95349837078119,
+      "why": "rare exact weight: qwen_3_4b_fp8_mixed.safetensors",
+      "status": "matched",
+      "candidates": [
+        {
+          "template": "image_z_image_turbo_int8.json",
+          "score": 104.95349837078119,
+          "why": "rare exact weight: qwen_3_4b_fp8_mixed.safetensors",
+          "role": "unknown"
+        },
+        {
+          "template": "basic_switch_node.json",
+          "score": 104.24652549924578,
+          "why": "rare exact weight: z_image_turbo_bf16.safetensors",
+          "role": "unknown"
+        },
+        {
+          "template": "image_z_image_turbo.json",
+          "score": 104.24652549924578,
+          "why": "rare exact weight: z_image_turbo_bf16.safetensors",
+          "role": "unknown"
+        },
+        {
+          "template": "image_z_image_turbo_fun_union_controlnet.json",
+          "score": 104.24652549924578,
+          "why": "rare exact weight: z_image_turbo_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "template_rob_realistic_2k_images_quick_variations.json",
+          "score": 104.24652549924578,
+          "why": "rare exact weight: z_image_turbo_bf16.safetensors",
+          "role": "i2v"
+        }
+      ],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_kling_avatar",
+      "kind": "video",
+      "module": "eng_cloud_video",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_seedance_2",
+      "kind": "video",
+      "module": "eng_cloud_video",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_vidu_q2_pro_fast_720p",
+      "kind": "video",
+      "module": "eng_cloud_video",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_wan_i2v",
+      "kind": "video",
+      "module": "eng_cloud_video",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "cloud_wan_i2v_audio",
+      "kind": "video",
+      "module": "eng_cloud_video",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "fastwan_8gb",
+      "kind": "video",
+      "module": "eng_fastwan_8gb",
+      "engine_role": "ti2v",
+      "template": null,
+      "score": 0.0,
+      "why": "no rare exact weight or strong model-family evidence",
+      "status": "no_match",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "google_omni_video",
+      "kind": "video",
+      "module": "eng_google_omni_video",
+      "engine_role": "t2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "google_veo_video",
+      "kind": "video",
+      "module": "eng_google_veo_video",
+      "engine_role": "t2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "humo",
+      "kind": "video",
+      "module": "eng_humo",
+      "engine_role": "ia2v",
+      "template": "video_humo.json",
+      "score": 107.82039772937986,
+      "why": "rare exact weight: whisper_large_v3_fp16.safetensors; explicit ia2v role rejected ['video_wan_vace_flf2v.json', 'video_wanmove_480p.json', 'video_wan21_scail2_character_replacement.json', 'video_wan21_scail2_character_replacement_int8.json', 'video_wan_animate2.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_humo.json",
+          "score": 107.82039772937986,
+          "why": "rare exact weight: whisper_large_v3_fp16.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan_animate2.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ]
+    },
+    {
+      "engine": "humo_1.7B",
+      "kind": "video",
+      "module": "eng_humo",
+      "engine_role": "ia2v",
+      "template": "video_humo.json",
+      "score": 107.82039772937986,
+      "why": "rare exact weight: whisper_large_v3_fp16.safetensors; explicit ia2v role rejected ['video_wan_vace_flf2v.json', 'video_wanmove_480p.json', 'video_wan21_scail2_character_replacement.json', 'video_wan21_scail2_character_replacement_int8.json', 'video_wan_animate2.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_humo.json",
+          "score": 107.82039772937986,
+          "why": "rare exact weight: whisper_large_v3_fp16.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan_animate2.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ]
+    },
+    {
+      "engine": "humo_1.7B_169",
+      "kind": "video",
+      "module": "eng_humo",
+      "engine_role": "ia2v",
+      "template": "video_humo.json",
+      "score": 107.82039772937986,
+      "why": "rare exact weight: whisper_large_v3_fp16.safetensors; explicit ia2v role rejected ['video_wan_vace_flf2v.json', 'video_wanmove_480p.json', 'video_wan21_scail2_character_replacement.json', 'video_wan21_scail2_character_replacement_int8.json', 'video_wan_animate2.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_humo.json",
+          "score": 107.82039772937986,
+          "why": "rare exact weight: whisper_large_v3_fp16.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan_animate2.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ]
+    },
+    {
+      "engine": "humo_14B_169",
+      "kind": "video",
+      "module": "eng_humo",
+      "engine_role": "ia2v",
+      "template": "video_humo.json",
+      "score": 107.82039772937986,
+      "why": "rare exact weight: whisper_large_v3_fp16.safetensors; explicit ia2v role rejected ['video_wan_vace_flf2v.json', 'video_wanmove_480p.json', 'video_wan21_scail2_character_replacement.json', 'video_wan21_scail2_character_replacement_int8.json', 'video_wan_animate2.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_humo.json",
+          "score": 107.82039772937986,
+          "why": "rare exact weight: whisper_large_v3_fp16.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_wan_vace_flf2v.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wanmove_480p.json",
+          "score": 103.78152412402898,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan21_scail2_character_replacement_int8.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan_animate2.json",
+          "score": 102.72086395224916,
+          "why": "rare exact weight: lightx2v_i2v_14b_480p_cfg_step_distill_rank64_bf16.safetensors",
+          "role": "i2v"
+        }
+      ]
+    },
+    {
+      "engine": "ltx25_video",
+      "kind": "video",
+      "module": "eng_ltx25",
+      "engine_role": "i2v",
+      "template": "video_ltx2_5_i2v.json",
+      "score": 109.00955631896616,
+      "why": "rare exact weight: ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors; explicit i2v role rejected ['video_ltx2_5_t2v.json', 'video_ltx2_5_flf2v.json', 'video_ltx2_canny_to_video.json', 'video_ltx2_depth_to_video.json', 'video_ltx2_t2v.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_ltx2_5_i2v.json",
+          "score": 109.00955631896616,
+          "why": "rare exact weight: ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_ltx2_5_t2v.json",
+          "score": 109.00955631896616,
+          "why": "rare exact weight: ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+          "role": "t2v"
+        },
+        {
+          "template": "video_ltx2_5_flf2v.json",
+          "score": 105.71182982939793,
+          "why": "rare exact weight: ltx-2.5-audio-vae-bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_ltx2_canny_to_video.json",
+          "score": 40.0,
+          "why": "strong family: 1.0, ltx, spatial, upscaler",
+          "role": "unknown"
+        },
+        {
+          "template": "video_ltx2_depth_to_video.json",
+          "score": 40.0,
+          "why": "strong family: 1.0, ltx, spatial, upscaler",
+          "role": "unknown"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_ltx2_5_t2v.json",
+          "score": 109.00955631896616,
+          "why": "rare exact weight: ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors",
+          "role": "t2v"
+        },
+        {
+          "template": "video_ltx2_5_flf2v.json",
+          "score": 105.71182982939793,
+          "why": "rare exact weight: ltx-2.5-audio-vae-bf16.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_ltx2_canny_to_video.json",
+          "score": 40.0,
+          "why": "strong family: 1.0, ltx, spatial, upscaler",
+          "role": "unknown"
+        },
+        {
+          "template": "video_ltx2_depth_to_video.json",
+          "score": 40.0,
+          "why": "strong family: 1.0, ltx, spatial, upscaler",
+          "role": "unknown"
+        },
+        {
+          "template": "video_ltx2_t2v.json",
+          "score": 40.0,
+          "why": "strong family: 1.0, ltx, spatial, upscaler",
+          "role": "t2v"
+        }
+      ]
+    },
+    {
+      "engine": "ltx_8gb",
+      "kind": "video",
+      "module": "eng_ltx_8gb",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "all weight matches have roles ['t2v'], incompatible with explicit i2v engine role",
+      "status": "no_match",
+      "candidates": [
+        {
+          "template": "ltxv_text_to_video.json",
+          "score": 105.46683106270036,
+          "why": "rare exact weight: ltx-video-2b-v0.9.safetensors",
+          "role": "t2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "ltxv_text_to_video.json",
+          "score": 105.46683106270036,
+          "why": "rare exact weight: ltx-video-2b-v0.9.safetensors",
+          "role": "t2v"
+        }
+      ]
+    },
+    {
+      "engine": "ltx_audio_in",
+      "kind": "video",
+      "module": "eng_ltx_av",
+      "engine_role": "ia2v",
+      "template": null,
+      "score": 0.0,
+      "why": "equal evidence for ['video_ltx2_3_ia2v.json', 'video_ltx2_3_id_lora.json']",
+      "status": "ambiguous_template",
+      "candidates": [
+        {
+          "template": "template_image_speech_to_video.json",
+          "score": 107.79867582597257,
+          "why": "rare exact weight: ltx-2.3-22b-distilled-lora-384.safetensors",
+          "role": "speech_i2v"
+        },
+        {
+          "template": "video_ltx2_3_i2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_ltx2_3_ia2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_ltx2_3_id_lora.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_ltx2_3_t2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "t2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "template_image_speech_to_video.json",
+          "score": 107.79867582597257,
+          "why": "rare exact weight: ltx-2.3-22b-distilled-lora-384.safetensors",
+          "role": "speech_i2v"
+        },
+        {
+          "template": "video_ltx2_3_i2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_ltx2_3_t2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "t2v"
+        },
+        {
+          "template": "video_ltx2_i2v_lora.json",
+          "score": 35.0,
+          "why": "strong family: 384, lora, ltx",
+          "role": "i2v"
+        },
+        {
+          "template": "video_ltx2_5_flf2v.json",
+          "score": 30.0,
+          "why": "strong family: 22b, ltx",
+          "role": "flf2v"
+        }
+      ]
+    },
+    {
+      "engine": "ltx_video",
+      "kind": "video",
+      "module": "eng_ltx_video",
+      "engine_role": "t2v",
+      "template": "video_ltx2_3_t2v.json",
+      "score": 103.75980222062168,
+      "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors; explicit t2v role rejected ['template_image_speech_to_video.json', 'video_ltx2_3_i2v.json', 'video_ltx2_3_ia2v.json', 'video_ltx2_3_id_lora.json', 'video_ltx2_i2v_lora.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "template_image_speech_to_video.json",
+          "score": 107.79867582597257,
+          "why": "rare exact weight: ltx-2.3-22b-distilled-lora-384.safetensors",
+          "role": "speech_i2v"
+        },
+        {
+          "template": "video_ltx2_3_i2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_ltx2_3_ia2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_ltx2_3_id_lora.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_ltx2_3_t2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "t2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "template_image_speech_to_video.json",
+          "score": 107.79867582597257,
+          "why": "rare exact weight: ltx-2.3-22b-distilled-lora-384.safetensors",
+          "role": "speech_i2v"
+        },
+        {
+          "template": "video_ltx2_3_i2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_ltx2_3_ia2v.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_ltx2_3_id_lora.json",
+          "score": 103.75980222062168,
+          "why": "rare exact weight: ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+          "role": "ia2v"
+        },
+        {
+          "template": "video_ltx2_i2v_lora.json",
+          "score": 35.0,
+          "why": "strong family: 384, lora, ltx",
+          "role": "i2v"
+        }
+      ]
+    },
+    {
+      "engine": "mesh_stage",
+      "kind": "video",
+      "module": "eng_mesh_stage",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "hybrid Hunyuan3D plus Blender stage, not an end-to-end Comfy video workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "minimax_h3_audio_in",
+      "kind": "video",
+      "module": "eng_minimax_h3",
+      "engine_role": "r2v",
+      "template": "video_minimax_h3_r2v.json",
+      "score": 112.60661834944777,
+      "why": "rare exact weight: minimax_h3_ref2va_pruned_int8_convrot.safetensors; explicit r2v role rejected ['video_minimax_h3_i2v.json', 'video_minimax_h3_t2v.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_minimax_h3_r2v.json",
+          "score": 112.60661834944777,
+          "why": "rare exact weight: minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+          "role": "r2v"
+        },
+        {
+          "template": "video_minimax_h3_i2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_minimax_h3_t2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "t2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_minimax_h3_i2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_minimax_h3_t2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "t2v"
+        }
+      ]
+    },
+    {
+      "engine": "minimax_h3_video",
+      "kind": "video",
+      "module": "eng_minimax_h3",
+      "engine_role": "i2v",
+      "template": "video_minimax_h3_i2v.json",
+      "score": 111.86547123366513,
+      "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors; explicit i2v role rejected ['video_minimax_h3_r2v.json', 'video_minimax_h3_t2v.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_minimax_h3_r2v.json",
+          "score": 112.60661834944777,
+          "why": "rare exact weight: minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+          "role": "r2v"
+        },
+        {
+          "template": "video_minimax_h3_i2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_minimax_h3_t2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "t2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_minimax_h3_r2v.json",
+          "score": 112.60661834944777,
+          "why": "rare exact weight: minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+          "role": "r2v"
+        },
+        {
+          "template": "video_minimax_h3_t2v.json",
+          "score": 111.86547123366513,
+          "why": "rare exact weight: minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+          "role": "t2v"
+        }
+      ]
+    },
+    {
+      "engine": "still_flat",
+      "kind": "video",
+      "module": "cheap_families",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "static/ffmpeg still lane, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "still_motion",
+      "kind": "video",
+      "module": "cheap_families",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "ffmpeg motion on a still, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "still_pan",
+      "kind": "video",
+      "module": "cheap_families",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "ffmpeg motion on a still, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "still_word",
+      "kind": "video",
+      "module": "cheap_families",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "static/ffmpeg word-card lane, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "viz_camera",
+      "kind": "video",
+      "module": "eng_viz_camera",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "procedural visualiser, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "viz_green",
+      "kind": "video",
+      "module": "eng_visualizer",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "procedural visualiser, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "viz_mxc_cpu",
+      "kind": "video",
+      "module": "eng_viz_rainbow",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "procedural visualiser, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "viz_mxc_mandala",
+      "kind": "video",
+      "module": "eng_viz_mandala",
+      "engine_role": "unknown",
+      "template": null,
+      "score": 0.0,
+      "why": "procedural visualiser, not a model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    },
+    {
+      "engine": "wan_i2v",
+      "kind": "video",
+      "module": "eng_wan_i2v",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "equal evidence for ['templates-6-key-frames.json', 'templates_mjm_looped_restyler.json', 'video_wan2_2_14B_i2v.json']",
+      "status": "ambiguous_template",
+      "candidates": [
+        {
+          "template": "templates-6-key-frames.json",
+          "score": 104.52969289209909,
+          "why": "rare exact weight: wan2.2_i2v_low_noise_14b_fp8_scaled.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "templates_mjm_looped_restyler.json",
+          "score": 104.52969289209909,
+          "why": "rare exact weight: wan2.2_i2v_low_noise_14b_fp8_scaled.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan2_2_14B_flf2v.json",
+          "score": 104.52969289209909,
+          "why": "rare exact weight: wan2.2_i2v_low_noise_14b_fp8_scaled.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wan2_2_14B_i2v.json",
+          "score": 104.52969289209909,
+          "why": "rare exact weight: wan2.2_i2v_low_noise_14b_fp8_scaled.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan_dancer.json",
+          "score": 30.0,
+          "why": "strong family: 14b, wan2.2",
+          "role": "ia2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_wan2_2_14B_flf2v.json",
+          "score": 104.52969289209909,
+          "why": "rare exact weight: wan2.2_i2v_low_noise_14b_fp8_scaled.safetensors",
+          "role": "flf2v"
+        },
+        {
+          "template": "video_wan_dancer.json",
+          "score": 30.0,
+          "why": "strong family: 14b, wan2.2",
+          "role": "ia2v"
+        }
+      ]
+    },
+    {
+      "engine": "wan_ti2v",
+      "kind": "video",
+      "module": "eng_wan_ti2v",
+      "engine_role": "ti2v",
+      "template": "video_wan2_2_5B_ti2v.json",
+      "score": 103.77053968012927,
+      "why": "rare exact weight: wan2.2_vae.safetensors; explicit ti2v role rejected ['video_wan2_2_5B_fun_control.json', 'video_wan2_2_5B_fun_inpaint.json', 'video_wan_dancer.json']",
+      "status": "role_disambiguated",
+      "candidates": [
+        {
+          "template": "video_wan2_2_5B_fun_control.json",
+          "score": 103.77053968012927,
+          "why": "rare exact weight: wan2.2_vae.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan2_2_5B_fun_inpaint.json",
+          "score": 103.77053968012927,
+          "why": "rare exact weight: wan2.2_vae.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan2_2_5B_ti2v.json",
+          "score": 103.77053968012927,
+          "why": "rare exact weight: wan2.2_vae.safetensors",
+          "role": "ti2v"
+        },
+        {
+          "template": "video_wan_dancer.json",
+          "score": 30.0,
+          "why": "strong family: umt5, xxl",
+          "role": "ia2v"
+        }
+      ],
+      "rejected_modality": [
+        {
+          "template": "video_wan2_2_5B_fun_control.json",
+          "score": 103.77053968012927,
+          "why": "rare exact weight: wan2.2_vae.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan2_2_5B_fun_inpaint.json",
+          "score": 103.77053968012927,
+          "why": "rare exact weight: wan2.2_vae.safetensors",
+          "role": "i2v"
+        },
+        {
+          "template": "video_wan_dancer.json",
+          "score": 30.0,
+          "why": "strong family: umt5, xxl",
+          "role": "ia2v"
+        }
+      ]
+    },
+    {
+      "engine": "word_razzle",
+      "kind": "video",
+      "module": "eng_cloud_video",
+      "engine_role": "i2v",
+      "template": null,
+      "score": 0.0,
+      "why": "external provider lane, not a local ComfyUI model workflow",
+      "status": "no_reference_by_design",
+      "candidates": [],
+      "rejected_modality": []
+    }
+  ]
+}

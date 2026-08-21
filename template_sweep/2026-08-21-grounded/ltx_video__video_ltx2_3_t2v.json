@@ -1,0 +1,838 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_ltx2_3_t2v.json",
+    "source_kind": "ui_subgraph",
+    "total": 51,
+    "significant": 46,
+    "edges": 90,
+    "scope": "subgraph:Text to Video (LTX-2.3)",
+    "topology_digest": "98888289fa2d90263e90a7b02fe1b6941b19c262742602eeddf038abbd1339b5",
+    "provenance": {
+      "source_sha256": "75b10f3ee48c1fe00c7fb21b24c0c247b133e5ee34676144de4b652ac7dcbe7f",
+      "source_bytes": 132778,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "ltx_video",
+    "source_kind": "otr_engine",
+    "total": 14,
+    "significant": 12,
+    "edges": 15,
+    "scope": "ltx_video",
+    "topology_digest": "13d098151dfc69fba8e1736bfc9910ff63af4bb305e8eb99767e9df2d2b8a39b",
+    "provenance": {
+      "engine_id": "ltx_video",
+      "engine_class": "LtxVideoEngine",
+      "engine_module": "nodes._otr_video_engines.eng_ltx_video",
+      "render_canvas": [
+        1024,
+        576
+      ],
+      "builder_signature": "(plan, length, width, height)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_ltx_video.py",
+          "status": "present",
+          "bytes": 107285,
+          "sha256": "1835c2fa1b14d7eba5fdb096888940ef67373159c7446e82f4324677c9f6879d"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_ltx2_3_t2v.json",
+      "source_kind": "ui_subgraph",
+      "total": 51,
+      "significant": 46,
+      "edges": 90,
+      "scope": "subgraph:Text to Video (LTX-2.3)",
+      "topology_digest": "98888289fa2d90263e90a7b02fe1b6941b19c262742602eeddf038abbd1339b5"
+    },
+    "ours": {
+      "source": "ltx_video",
+      "source_kind": "otr_engine",
+      "total": 14,
+      "significant": 12,
+      "edges": 15,
+      "scope": "ltx_video",
+      "topology_digest": "13d098151dfc69fba8e1736bfc9910ff63af4bb305e8eb99767e9df2d2b8a39b"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "LTXVImgToVideoInplace#1:0 -> LTXVConcatAVLatent#2.video_latent",
+      "LTXVSeparateAVLatent#1:1 -> LTXVConcatAVLatent#2.audio_latent",
+      "LTXVCropGuides#1:0 -> CFGGuider#1.positive",
+      "LTXVCropGuides#1:1 -> CFGGuider#1.negative",
+      "LoraLoaderModelOnly#1:0 -> CFGGuider#2.model",
+      "LTXVConditioning#1:0 -> CFGGuider#2.positive",
+      "LTXVConditioning#1:1 -> CFGGuider#2.negative",
+      "RandomNoise#2:0 -> SamplerCustomAdvanced#1.noise",
+      "CFGGuider#2:0 -> SamplerCustomAdvanced#1.guider",
+      "KSamplerSelect#2:0 -> SamplerCustomAdvanced#1.sampler",
+      "ManualSigmas#2:0 -> SamplerCustomAdvanced#1.sigmas",
+      "LTXVConcatAVLatent#1:0 -> SamplerCustomAdvanced#1.latent_image",
+      "LTXVConditioning#1:0 -> LTXVCropGuides#1.positive",
+      "LTXVConditioning#1:1 -> LTXVCropGuides#1.negative",
+      "LTXVSeparateAVLatent#1:0 -> LTXVCropGuides#1.latent",
+      "CheckpointLoaderSimple#1:0 -> LoraLoaderModelOnly#1.model",
+      "ResizeImageMaskNode#1:0 -> ResizeImagesByLongerEdge#1.images",
+      "LTXVSeparateAVLatent#1:0 -> LTXVLatentUpsampler#1.samples",
+      "LatentUpscaleModelLoader#1:0 -> LTXVLatentUpsampler#1.upscale_model",
+      "Reroute#1:0 -> LTXVLatentUpsampler#1.vae",
+      "Reroute#1:0 -> LTXVImgToVideoInplace#1.vae",
+      "LTXVPreprocess#1:0 -> LTXVImgToVideoInplace#1.image",
+      "LTXVLatentUpsampler#1:0 -> LTXVImgToVideoInplace#1.latent",
+      "PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#1.bypass",
+      "ResizeImagesByLongerEdge#1:0 -> LTXVPreprocess#1.image",
+      "PrimitiveInt#2:0 -> ResizeImageMaskNode#1.resize_type.width",
+      "PrimitiveInt#3:0 -> ResizeImageMaskNode#1.resize_type.height",
+      "PrimitiveInt#2:0 -> ComfyMathExpression#1.values.a",
+      "CheckpointLoaderSimple#1:2 -> Reroute#1.input_slot_0",
+      "PrimitiveInt#3:0 -> ComfyMathExpression#2.values.a",
+      "ComfyMathExpression#1:1 -> EmptyLTXVLatentVideo#1.width",
+      "ComfyMathExpression#2:1 -> EmptyLTXVLatentVideo#1.height",
+      "CheckpointLoaderSimple#1:2 -> LTXVImgToVideoInplace#2.vae",
+      "LTXVPreprocess#1:0 -> LTXVImgToVideoInplace#2.image",
+      "EmptyLTXVLatentVideo#1:0 -> LTXVImgToVideoInplace#2.latent",
+      "PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#2.bypass",
+      "LTXVSeparateAVLatent#2:1 -> LTXVAudioVAEDecode#1.samples",
+      "LTXVAudioVAELoader#1:0 -> LTXVAudioVAEDecode#1.audio_vae",
+      "PrimitiveInt#4:0 -> ComfyMathExpression#3.values.a",
+      "ComfyMathExpression#3:0 -> LTXVConditioning#1.frame_rate",
+      "LTXVImgToVideoInplace#2:0 -> LTXVConcatAVLatent#1.video_latent",
+      "LTXVEmptyLatentAudio#1:0 -> LTXVConcatAVLatent#1.audio_latent",
+      "LTXVAudioVAELoader#1:0 -> LTXVEmptyLatentAudio#1.audio_vae",
+      "ComfyMathExpression#3:1 -> LTXVEmptyLatentAudio#1.frame_rate",
+      "SamplerCustomAdvanced#1:0 -> LTXVSeparateAVLatent#1.av_latent",
+      "RandomNoise#1:0 -> SamplerCustomAdvanced#2.noise",
+      "CFGGuider#1:0 -> SamplerCustomAdvanced#2.guider",
+      "KSamplerSelect#1:0 -> SamplerCustomAdvanced#2.sampler",
+      "ManualSigmas#1:0 -> SamplerCustomAdvanced#2.sigmas",
+      "LTXVConcatAVLatent#2:0 -> SamplerCustomAdvanced#2.latent_image",
+      "SamplerCustomAdvanced#2:0 -> LTXVSeparateAVLatent#2.av_latent",
+      "LTXVSeparateAVLatent#2:0 -> VAEDecodeTiled#1.samples",
+      "Reroute#1:0 -> VAEDecodeTiled#1.vae",
+      "VAEDecodeTiled#1:0 -> CreateVideo#1.images",
+      "LTXVAudioVAEDecode#1:0 -> CreateVideo#1.audio",
+      "ComfyMathExpression#3:0 -> CreateVideo#1.fps",
+      "CreateVideo#1:0 -> $OUTPUT#1.VIDEO",
+      "$INPUT#1:0 -> PrimitiveStringMultiline#1.value",
+      "$INPUT#1:2 -> PrimitiveInt#2.value",
+      "$INPUT#1:3 -> PrimitiveInt#3.value",
+      "$INPUT#1:4 -> PrimitiveInt#1.value",
+      "$INPUT#1:7 -> CheckpointLoaderSimple#1.ckpt_name",
+      "$INPUT#1:8 -> LoraLoaderModelOnly#1.lora_name",
+      "$INPUT#1:7 -> LTXVAudioVAELoader#1.ckpt_name",
+      "$INPUT#1:7 -> LTXAVTextEncoderLoader#1.ckpt_name",
+      "$INPUT#1:9 -> LTXAVTextEncoderLoader#1.text_encoder",
+      "$INPUT#1:10 -> LatentUpscaleModelLoader#1.model_name",
+      "$INPUT#1:5 -> PrimitiveInt#4.value",
+      "PrimitiveInt#1:0 -> ComfyMathExpression#4.values.a",
+      "PrimitiveInt#4:0 -> ComfyMathExpression#4.values.b",
+      "ComfyMathExpression#4:1 -> LTXVEmptyLatentAudio#1.frames_number",
+      "ComfyMathExpression#4:1 -> EmptyLTXVLatentVideo#1.length",
+      "EmptyImage#1:0 -> ResizeImageMaskNode#1.input",
+      "LoraLoader#1:1 -> TextGenerateLTX2Prompt#1.clip",
+      "LTXAVTextEncoderLoader#1:0 -> LoraLoader#1.clip",
+      "PrimitiveStringMultiline#1:0 -> ComfySwitchNode#1.on_false",
+      "ComfySwitchNode#1:0 -> CLIPTextEncode#1.text",
+      "PrimitiveBoolean#2:0 -> ComfySwitchNode#1.switch",
+      "$INPUT#1:1 -> PrimitiveBoolean#2.value",
+      "PrimitiveStringMultiline#1:0 -> TextGenerateLTX2Prompt#1.prompt",
+      "LoraLoaderModelOnly#1:0 -> LoraLoader#1.model",
+      "TextGenerateLTX2Prompt#1:0 -> ComfySwitchNode#1.on_true",
+      "ComfySwitchNode#1:0 -> PreviewAny#1.source",
+      "$INPUT#1:11 -> LoraLoader#1.lora_name",
+      "$INPUT#1:6 -> RandomNoise#2.noise_seed"
+    ],
+    "ours_only_edges": [
+      "UnetLoaderGGUF#1:0 -> LoraLoaderModelOnly#1.model",
+      "LTXVConditioning#1:0 -> CFGGuider#1.positive",
+      "LTXVConditioning#1:1 -> CFGGuider#1.negative",
+      "RandomNoise#1:0 -> SamplerCustomAdvanced#1.noise",
+      "CFGGuider#1:0 -> SamplerCustomAdvanced#1.guider",
+      "KSamplerSelect#1:0 -> SamplerCustomAdvanced#1.sampler",
+      "_SigmasFromValues#1:0 -> SamplerCustomAdvanced#1.sigmas",
+      "EmptyLTXVLatentVideo#1:0 -> SamplerCustomAdvanced#1.latent_image",
+      "SamplerCustomAdvanced#1:0 -> VAEDecodeTiled#1.samples",
+      "VAELoader#1:0 -> VAEDecodeTiled#1.vae"
+    ]
+  },
+  "identical_parameters": 3,
+  "differences": [
+    {
+      "node": "CFGGuider",
+      "param": "cfg",
+      "reference": [
+        "1",
+        "1"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "EmptyLTXVLatentVideo",
+      "param": "height",
+      "reference": [],
+      "ours": [
+        "576"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "EmptyLTXVLatentVideo",
+      "param": "length",
+      "reference": [],
+      "ours": [
+        "97"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "EmptyLTXVLatentVideo",
+      "param": "width",
+      "reference": [],
+      "ours": [
+        "1024"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "KSamplerSelect",
+      "param": "sampler_name",
+      "reference": [
+        "\"euler\"",
+        "\"euler\""
+      ],
+      "ours": [
+        "\"euler_cfg_pp\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXAVTextEncoderLoader",
+      "param": "ckpt_name",
+      "reference": [
+        "\"ltx-2.3-22b-dev-fp8.safetensors\""
+      ],
+      "ours": [
+        "\"ltx-2.3-22b-dev.safetensors\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVConditioning",
+      "param": "frame_rate",
+      "reference": [],
+      "ours": [
+        "25.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "param": "lora_name",
+      "reference": [
+        "\"ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors\""
+      ],
+      "ours": [
+        "\"ltxv\\\\ltx2\\\\ltx-2.3-22b-distilled-lora-384-1.1.safetensors\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "param": "strength_model",
+      "reference": [
+        "0.5"
+      ],
+      "ours": [
+        "0.7"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "RandomNoise",
+      "param": "noise_seed",
+      "reference": [
+        "42",
+        "810138461690240"
+      ],
+      "ours": [
+        "42"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "VAEDecodeTiled",
+      "param": "temporal_overlap",
+      "reference": [
+        "4"
+      ],
+      "ours": [
+        "8"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "VAEDecodeTiled",
+      "param": "tile_size",
+      "reference": [
+        "768"
+      ],
+      "ours": [
+        "512"
+      ],
+      "documented": false,
+      "reason": ""
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "CFGGuider [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 8,
+          "params": {
+            "cfg": 1
+          }
+        },
+        {
+          "order": 21,
+          "params": {
+            "cfg": 1
+          }
+        }
+      ]
+    },
+    {
+      "node": "CheckpointLoaderSimple",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 25,
+          "params": {
+            "ckpt_name": "ltx-2.3-22b-dev-fp8.safetensors"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ComfyMathExpression",
+      "instance_count": 4,
+      "instances": [
+        {
+          "order": 38,
+          "params": {
+            "expression": "a/2"
+          }
+        },
+        {
+          "order": 41,
+          "params": {
+            "expression": "a/2"
+          }
+        },
+        {
+          "order": 43,
+          "params": {
+            "expression": "a"
+          }
+        },
+        {
+          "order": 45,
+          "params": {
+            "expression": "a * b + 1"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ComfySwitchNode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 49,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 30,
+          "params": {
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "KSamplerSelect [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 1,
+          "params": {
+            "sampler_name": "euler"
+          }
+        },
+        {
+          "order": 3,
+          "params": {
+            "sampler_name": "euler"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVAudioVAEDecode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 14,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LTXVAudioVAELoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 15,
+          "params": {
+            "ckpt_name": "ltx-2.3-22b-dev-fp8.safetensors"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVConcatAVLatent",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 16,
+          "params": {}
+        },
+        {
+          "order": 19,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LTXVCropGuides",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 7,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LTXVEmptyLatentAudio",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 9,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LTXVImgToVideoInplace",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 20,
+          "params": {
+            "strength": 1
+          }
+        },
+        {
+          "order": 34,
+          "params": {
+            "strength": 0.7
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVLatentUpsampler",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 36,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LTXVPreprocess",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 33,
+          "params": {
+            "img_compression": 18
+          }
+        }
+      ]
+    },
+    {
+      "node": "LTXVSeparateAVLatent",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 11,
+          "params": {}
+        },
+        {
+          "order": 12,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LatentUpscaleModelLoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 23,
+          "params": {
+            "model_name": "ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoraLoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 46,
+          "params": {
+            "lora_name": "gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors",
+            "strength_model": 1,
+            "strength_clip": 1
+          }
+        }
+      ]
+    },
+    {
+      "node": "ManualSigmas",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 2,
+          "params": {
+            "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+          }
+        },
+        {
+          "order": 5,
+          "params": {
+            "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveBoolean",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 4,
+          "params": {
+            "value": true
+          }
+        },
+        {
+          "order": 50,
+          "params": {
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveInt",
+      "instance_count": 4,
+      "instances": [
+        {
+          "order": 17,
+          "params": {
+            "value": 5
+          }
+        },
+        {
+          "order": 39,
+          "params": {
+            "value": 1280
+          }
+        },
+        {
+          "order": 40,
+          "params": {
+            "value": 720
+          }
+        },
+        {
+          "order": 42,
+          "params": {
+            "value": 25
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveStringMultiline",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 44,
+          "params": {
+            "value": "Dynamic cinematic close-up of high-tech modular machinery self-assembling in midair, precision robotic parts, magnetic connectors, and glowing circuits clicking together, subtle smoke and light flares, extremely detailed titanium textures. The final product displays a clean, clear surface with large glowing engraved text “LTX-2.3” centered and unobstructed, dramatic lighting, photorealism, 8K, sharp focus.\n"
+          }
+        }
+      ]
+    },
+    {
+      "node": "RandomNoise [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "noise_seed": 42
+          }
+        },
+        {
+          "order": 26,
+          "params": {
+            "noise_seed": 810138461690240
+          }
+        }
+      ]
+    },
+    {
+      "node": "ResizeImageMaskNode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 27,
+          "params": {
+            "resize_type": "scale dimensions",
+            "resize_type.crop": "center",
+            "scale_method": "lanczos"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ResizeImagesByLongerEdge",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 24,
+          "params": {
+            "longer_edge": 1536
+          }
+        }
+      ]
+    },
+    {
+      "node": "SamplerCustomAdvanced [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 10,
+          "params": {}
+        },
+        {
+          "order": 13,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "TextGenerateLTX2Prompt",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 47,
+          "params": {
+            "max_length": 2048,
+            "sampling_mode": "on",
+            "sampling_mode.temperature": 0.7,
+            "sampling_mode.top_k": 64,
+            "sampling_mode.top_p": 0.95,
+            "sampling_mode.min_p": 0.05,
+            "sampling_mode.repetition_penalty": 1.05,
+            "sampling_mode.seed": 0,
+            "sampling_mode.presence_penalty": 0,
+            "thinking": false,
+            "use_default_template": true
+          }
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [
+    {
+      "node": "UnetLoaderGGUF",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "unet_name": "ltx-2.3-22b-dev-Q3_K_M.gguf"
+          }
+        }
+      ]
+    },
+    {
+      "node": "VAELoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 3,
+          "params": {
+            "vae_name": "ltx-2.3-22b-dev_video_vae.safetensors"
+          }
+        }
+      ]
+    },
+    {
+      "node": "_SigmasFromValues",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 9,
+          "params": {
+            "values": [
+              1.0,
+              0.99375,
+              0.9875,
+              0.98125,
+              0.975,
+              0.909375,
+              0.725,
+              0.421875,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}

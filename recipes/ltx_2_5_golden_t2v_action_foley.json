@@ -32,7 +32,7 @@
       }
     },
     "4": {
-      "class_type": "CLIPLoaderGGUF",
+      "class_type": "CLIPLoaderGGUFCPU",
       "inputs": {
         "clip_name": "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf",
         "type": "ltxv"

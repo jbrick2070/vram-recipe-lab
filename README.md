@@ -96,7 +96,7 @@ The full grid, including every failure and every superseded run, is in
 | [`eightgb_bench/`](eightgb_bench/) | The separate 8 GB-card investigation |
 | [`tests/`](tests/) | 53 tests over the runner's own gates and receipt integrity |
 | [`fixtures/`](fixtures/) | Hash-frozen input images and audio |
-| [`scratch/patches/`](scratch/patches/) | Upstream patches, including the LTX 2.5 GGUF loader fix |
+| [`scratch/patches/`](scratch/patches/) | Upstream patches, including LTX 2.5 weight decoding and the additive CPU-pinned text loader |
 | [`BOOT.md`](BOOT.md) / [`PREFLIGHT.md`](PREFLIGHT.md) | How the server boots and what is enforced before every prompt |
 
 ## Using it

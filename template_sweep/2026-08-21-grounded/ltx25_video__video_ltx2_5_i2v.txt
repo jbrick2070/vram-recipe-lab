@@ -1,0 +1,155 @@
+reference : video_ltx2_5_i2v.json
+ours      : video:ltx25_video
+nodes     : reference 44/47, ours 27/29 (significant/total)
+edges     : reference 80, ours 39; topology differs
+digests   : f730ae7e4d8b4bf4 / cd1465f8b592339d
+
+7 parameters identical, 19 differ, 14 node classes/counts only in the reference, 5 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  CLIPLoader                           [order=43] {"clip_name": "gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors", "type": "ltxv"}
+  CLIPLoader                           [order=46] {"clip_name": "gemma4_e2b_it_int8_convrot.safetensors", "type": "ltxv"}
+  ComfyMathExpression                  [order=13] {"expression": "a/2"}
+  ComfyMathExpression                  [order=14] {"expression": "a/2"}
+  ComfyMathExpression                  [order=18] {"expression": "a"}
+  ComfyMathExpression                  [order=35] {"expression": "a * b + 1"}
+  ComfySwitchNode                      [order=38] {}
+  CreateVideo                          [order=28] {"bit_depth": 8}
+  KSamplerSelect [x2 vs our x1]        [order=1] {"sampler_name": "euler_ancestral"}
+  KSamplerSelect [x2 vs our x1]        [order=5] {"sampler_name": "euler_ancestral"}
+  LTXVAudioVAEDecode                   [order=17] {}
+  LTXVDualCFGGuider [x2 vs our x1]     [order=44] {"audio_cfg": 1, "video_cfg": 1}
+  LTXVDualCFGGuider [x2 vs our x1]     [order=45] {"audio_cfg": 1, "video_cfg": 1}
+  ManualSigmas [x2 vs our x1]          [order=2] {"sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"}
+  ManualSigmas [x2 vs our x1]          [order=4] {"sigmas": "0.85, 0.7250, 0.4219, 0.0"}
+  PrimitiveBoolean                     [order=0] {"value": false}
+  PrimitiveBoolean                     [order=39] {"value": true}
+  PrimitiveInt                         [order=19] {"value": 720}
+  PrimitiveInt                         [order=20] {"value": 24}
+  PrimitiveInt                         [order=21] {"value": 5}
+  PrimitiveInt                         [order=30] {"value": 1280}
+  PrimitiveStringMultiline             [order=33] {"value": "Egyptian royal in blue-and-gold headdress and high collar, white dress with golden embroidery and armbands, desert, robot soldiers in formation left and right. She walks steadily forward, head held level and gaze fixed ahead—no dipping or lowering of the head. The camera performs a single, smooth push-in only: starting in a wider shot of her, the robots, and the desert, it moves steadily forward until she is in a medium or medium-close frame, then holds. She stops, posture and head still upright, and says: “The old gods are silent. I am not.” Robot soldiers shift or march in place; sand and fabric move with the wind. No pull-back; the only camera move is the continuous push-in."}
+  RandomNoise [x2 vs our x1]           [order=3] {"noise_seed": 42}
+  RandomNoise [x2 vs our x1]           [order=6] {"noise_seed": 900359092894726}
+  TextGenerateLTX2Prompt               [order=36] {"max_length": 600, "sampling_mode": "on", "sampling_mode.min_p": 0.05, "sampling_mode.presence_penalty": 0, "sampling_mode.repetition_penalty": 1.15, "sampling_mode.seed": 0, "sampling_mode.temperature": 0.7, "sampling_mode.top_k": 64, "sampling_mode.top_p": 0.95, "thinking": false, "use_default_template": true}
+  UNETLoader                           [order=40] {"unet_name": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors", "weight_dtype": "default"}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  CLIPLoaderGGUF                       [order=1] {"clip_name": "gemma4-12b-with-proj-ltx-2.5-Q5_K_M.gguf", "type": "ltxv"}
+  LTXVModalityGuidance                 [order=15] {"end_percent": 1.0, "modality_scale": 1.0, "start_percent": 0.0}
+  LTXVScheduler                        [order=19] {"base_shift": 0.95, "max_shift": 2.05, "steps": 8, "stretch": true, "terminal": 0.1}
+  LoadImage                            [order=8] {}
+  UnetLoaderGGUF                       [order=0] {"unet_name": "LTX-2.5-Distilled-Q3_K_M.gguf"}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] EmptyLTXVLatentVideo.height
+      reference : <absent>
+      ours      : 480
+  [undocumented] EmptyLTXVLatentVideo.length
+      reference : <absent>
+      ours      : 97
+  [undocumented] EmptyLTXVLatentVideo.width
+      reference : <absent>
+      ours      : 832
+  [undocumented] KSamplerSelect.sampler_name
+      reference : euler_ancestral, euler_ancestral
+      ours      : euler_ancestral_cfg_pp
+  [undocumented] LTXVConditioning.frame_rate
+      reference : <absent>
+      ours      : 25.0
+  [undocumented] LTXVDualCFGGuider.audio_cfg
+      reference : 1, 1
+      ours      : 1.0
+  [undocumented] LTXVDualCFGGuider.video_cfg
+      reference : 1, 1
+      ours      : 1.0
+  [undocumented] LTXVEmptyLatentAudio.frame_rate
+      reference : <absent>
+      ours      : 25.0
+  [undocumented] LTXVEmptyLatentAudio.frames_number
+      reference : <absent>
+      ours      : 97
+  [undocumented] LTXVImgToVideoInplace.bypass
+      reference : <absent>
+      ours      : false, false
+  [undocumented] LTXVImgToVideoInplace.strength
+      reference : 1, 0.7
+      ours      : 1.0, 1.0
+  [undocumented] LTXVPreprocess.img_compression
+      reference : 18
+      ours      : 0
+  [undocumented] ManualSigmas.sigmas
+      reference : 1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0, 0.85, 0.7250, 0.4219, 0.0
+      ours      : 0.85, 0.7250, 0.4219, 0.0
+  [undocumented] RandomNoise.noise_seed
+      reference : 42, 900359092894726
+      ours      : 42
+  [undocumented] ResizeImageMaskNode.resize_type
+      reference : scale longer dimension
+      ours      : scale dimensions
+  [undocumented] ResizeImageMaskNode.resize_type.crop
+      reference : <absent>
+      ours      : center
+  [undocumented] ResizeImageMaskNode.resize_type.height
+      reference : <absent>
+      ours      : 480
+  [undocumented] ResizeImageMaskNode.resize_type.longer_size
+      reference : 1536
+      ours      : <absent>
+  [undocumented] ResizeImageMaskNode.resize_type.width
+      reference : <absent>
+      ours      : 832
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] CLIPLoader#2:0 -> TextGenerateLTX2Prompt#1.clip
+  [reference only] LTXVPreprocess#1:0 -> TextGenerateLTX2Prompt#1.image
+  [reference only] PrimitiveStringMultiline#1:0 -> TextGenerateLTX2Prompt#1.prompt
+  [reference only] CLIPLoader#1:0 -> CLIPTextEncode#1.clip
+  [reference only] ComfySwitchNode#1:0 -> CLIPTextEncode#1.text
+  [reference only] PrimitiveStringMultiline#1:0 -> ComfySwitchNode#1.on_false
+  [reference only] TextGenerateLTX2Prompt#1:0 -> ComfySwitchNode#1.on_true
+  [reference only] PrimitiveBoolean#2:0 -> ComfySwitchNode#1.switch
+  [reference only] ComfySwitchNode#1:0 -> PreviewAny#1.source
+  [reference only] ComfyMathExpression#3:0 -> LTXVConditioning#1.frame_rate
+  [reference only] CLIPLoader#1:0 -> CLIPTextEncode#2.clip
+  [reference only] RandomNoise#2:0 -> SamplerCustomAdvanced#1.noise
+  [reference only] ManualSigmas#1:0 -> SamplerCustomAdvanced#1.sigmas
+  [reference only] LTXVConcatAVLatent#2:0 -> SamplerCustomAdvanced#1.latent_image
+  [reference only] EmptyLTXVLatentVideo#1:0 -> LTXVImgToVideoInplace#2.latent
+  [reference only] PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#2.bypass
+  [reference only] ComfyMathExpression#4:1 -> LTXVEmptyLatentAudio#1.frames_number
+  [reference only] ComfyMathExpression#3:1 -> LTXVEmptyLatentAudio#1.frame_rate
+  [reference only] LTXVEmptyLatentAudio#1:0 -> LTXVConcatAVLatent#2.audio_latent
+  [reference only] PrimitiveInt#4:0 -> ComfyMathExpression#1.values.a
+  [reference only] PrimitiveInt#1:0 -> ComfyMathExpression#2.values.a
+  [reference only] ComfyMathExpression#1:1 -> EmptyLTXVLatentVideo#1.width
+  [reference only] ComfyMathExpression#2:1 -> EmptyLTXVLatentVideo#1.height
+  [reference only] ComfyMathExpression#4:1 -> EmptyLTXVLatentVideo#1.length
+  [reference only] LTXVLatentUpsampler#1:0 -> LTXVImgToVideoInplace#1.latent
+  [reference only] PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#1.bypass
+  [reference only] PrimitiveInt#2:0 -> ComfyMathExpression#3.values.a
+  [reference only] PrimitiveInt#3:0 -> ComfyMathExpression#4.values.a
+  [reference only] PrimitiveInt#2:0 -> ComfyMathExpression#4.values.b
+  [reference only] LTXVSeparateAVLatent#1:1 -> LTXVConcatAVLatent#1.audio_latent
+  [ours only     ] CLIPLoaderGGUF#1:0 -> CLIPTextEncode#1.clip
+  [ours only     ] CLIPLoaderGGUF#1:0 -> CLIPTextEncode#2.clip
+  [ours only     ] LoadImage#1:0 -> ResizeImageMaskNode#1.input
+  [ours only     ] EmptyLTXVLatentVideo#1:0 -> LTXVImgToVideoInplace#1.latent
+  [ours only     ] LTXVEmptyLatentAudio#1:0 -> LTXVConcatAVLatent#1.audio_latent
+  [ours only     ] UnetLoaderGGUF#1:0 -> LTXVModalityGuidance#1.model
+  [ours only     ] LTXVModalityGuidance#1:0 -> LTXVDualCFGGuider#1.model
+  [ours only     ] LTXVImgToVideoInplace#1:0 -> LTXVScheduler#1.latent
+  [ours only     ] RandomNoise#1:0 -> SamplerCustomAdvanced#1.noise
+  [ours only     ] LTXVScheduler#1:0 -> SamplerCustomAdvanced#1.sigmas
+  [ours only     ] LTXVConcatAVLatent#1:0 -> SamplerCustomAdvanced#1.latent_image
+  [ours only     ] LTXVLatentUpsampler#1:0 -> LTXVImgToVideoInplace#2.latent
+  [ours only     ] LTXVSeparateAVLatent#1:1 -> LTXVConcatAVLatent#2.audio_latent
+  [ours only     ] LTXVDualCFGGuider#1:0 -> SamplerCustomAdvanced#2.guider
+  [ours only     ] KSamplerSelect#1:0 -> SamplerCustomAdvanced#2.sampler
+  [ours only     ] ManualSigmas#1:0 -> SamplerCustomAdvanced#2.sigmas
+  [ours only     ] LTXVConcatAVLatent#2:0 -> SamplerCustomAdvanced#2.latent_image
+  ... 15 additional edge deltas in JSON receipt
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\ltx25_video__video_ltx2_5_i2v.json

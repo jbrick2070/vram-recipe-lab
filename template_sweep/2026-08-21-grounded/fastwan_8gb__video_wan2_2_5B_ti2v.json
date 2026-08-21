@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_wan2_2_5B_ti2v.json",
+    "source_kind": "ui_root",
+    "total": 12,
+    "significant": 8,
+    "edges": 12,
+    "scope": "root",
+    "topology_digest": "69fad40a14084e9321c15720f92f09c4899ad2e91abad1d1b7b67ffb6d2ee492",
+    "provenance": {
+      "source_sha256": "50390798a133757075d750ab78b26274e3bf3e4a09f46aaa2f08d9559e62750b",
+      "source_bytes": 14523,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "fastwan_8gb",
+    "source_kind": "otr_engine",
+    "total": 12,
+    "significant": 9,
+    "edges": 12,
+    "scope": "fastwan_8gb",
+    "topology_digest": "173874c2357e02ea79b7305c8004d7ed688fa0de2f0ff7611d8cfa2fdabc9585",
+    "provenance": {
+      "engine_id": "fastwan_8gb",
+      "engine_class": "FastWan8gbEngine",
+      "engine_module": "nodes._otr_video_engines.eng_fastwan_8gb",
+      "render_canvas": [
+        832,
+        480
+      ],
+      "builder_signature": "(request, image_name, plan, length, width, height, external_results=None)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_fastwan_8gb.py",
+          "status": "present",
+          "bytes": 20086,
+          "sha256": "092f9203d4dfc00821b5893b50306bfab7644100eaea3096d8c8c3354daa6969"
+        },
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_wan_ti2v.py",
+          "status": "present",
+          "bytes": 73104,
+          "sha256": "b6f87fa5ca213e255428bd1fd62291daafd6fa679f61b5787390e5d2ae396a40"
+        },
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\wan_recipe.py",
+          "status": "present",
+          "bytes": 11684,
+          "sha256": "0cdfbc903d5d0e211f2bb23fbc31be17fe06e74a81040871d6e406bb26070b45"
+        },
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\wan_shared.py",
+          "status": "present",
+          "bytes": 33472,
+          "sha256": "92ed92c4a251766404614ad3d885afb46461b7937018aa94480bc00c1fc0435a"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_wan2_2_5B_ti2v.json",
+      "source_kind": "ui_root",
+      "total": 12,
+      "significant": 8,
+      "edges": 12,
+      "scope": "root",
+      "topology_digest": "69fad40a14084e9321c15720f92f09c4899ad2e91abad1d1b7b67ffb6d2ee492"
+    },
+    "ours": {
+      "source": "fastwan_8gb",
+      "source_kind": "otr_engine",
+      "total": 12,
+      "significant": 9,
+      "edges": 12,
+      "scope": "fastwan_8gb",
+      "topology_digest": "173874c2357e02ea79b7305c8004d7ed688fa0de2f0ff7611d8cfa2fdabc9585"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "KSampler#1:0 -> VAEDecode#1.samples",
+      "CLIPTextEncode#1:0 -> KSampler#1.positive",
+      "CLIPTextEncode#2:0 -> KSampler#1.negative",
+      "CLIPLoader#1:0 -> CLIPTextEncode#1.clip",
+      "CLIPLoader#1:0 -> CLIPTextEncode#2.clip",
+      "VAELoader#1:0 -> VAEDecode#1.vae",
+      "UNETLoader#1:0 -> ModelSamplingSD3#1.model",
+      "ModelSamplingSD3#1:0 -> KSampler#1.model",
+      "Wan22ImageToVideoLatent#1:0 -> KSampler#1.latent_image",
+      "VAEDecode#1:0 -> CreateVideo#1.images",
+      "CreateVideo#1:0 -> SaveVideo#1.video"
+    ],
+    "ours_only_edges": [
+      "CLIPLoaderGGUF#1:0 -> CLIPTextEncode#1.clip",
+      "CLIPLoaderGGUF#1:0 -> CLIPTextEncode#2.clip",
+      "LoadImage#1:0 -> Wan22ImageToVideoLatent#1.start_image",
+      "SamplerCustom#1:0 -> VAEDecodeTiled#1.samples",
+      "VAELoader#1:0 -> VAEDecodeTiled#1.vae",
+      "ModelSamplingSD3#1:0 -> SamplerCustom#1.model",
+      "CLIPTextEncode#1:0 -> SamplerCustom#1.positive",
+      "CLIPTextEncode#2:0 -> SamplerCustom#1.negative",
+      "Wan22ImageToVideoLatent#1:0 -> SamplerCustom#1.latent_image",
+      "OTR_DMDRestartSamplerSelect#1:0 -> SamplerCustom#1.sampler",
+      "ManualSigmas#1:0 -> SamplerCustom#1.sigmas"
+    ]
+  },
+  "identical_parameters": 1,
+  "differences": [
+    {
+      "node": "ModelSamplingSD3",
+      "param": "model",
+      "reference": [],
+      "ours": [
+        "[\"lora\", 0]"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ModelSamplingSD3",
+      "param": "shift",
+      "reference": [
+        "8"
+      ],
+      "ours": [
+        "5.0"
+      ],
+      "documented": false,
+      "reason": ""
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "CLIPLoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 1,
+          "params": {
+            "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "type": "wan"
+          }
+        }
+      ]
+    },
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 11,
+          "params": {
+            "fps": 24,
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "KSampler",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 9,
+          "params": {
+            "seed": 898471028164125,
+            "steps": 20,
+            "cfg": 5,
+            "sampler_name": "uni_pc",
+            "scheduler": "simple",
+            "denoise": 1
+          }
+        }
+      ]
+    },
+    {
+      "node": "SaveVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 12,
+          "params": {
+            "format": "auto",
+            "codec": "auto"
+          }
+        }
+      ]
+    },
+    {
+      "node": "UNETLoader",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+            "weight_dtype": "default"
+          }
+        }
+      ]
+    },
+    {
+      "node": "VAEDecode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 10,
+          "params": {}
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [
+    {
+      "node": "CLIPLoaderGGUF",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 2,
+          "params": {
+            "clip_name": "umt5-xxl-encoder-Q5_K_M.gguf",
+            "type": "wan"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoadImage",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 6,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "ManualSigmas",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 9,
+          "params": {
+            "sigmas": "1.0, 0.757, 0.522, 0.0"
+          }
+        }
+      ]
+    },
+    {
+      "node": "OTR_DMDRestartSamplerSelect",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 10,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "SamplerCustom",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 11,
+          "params": {
+            "add_noise": true,
+            "noise_seed": 42,
+            "cfg": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "node": "UnetLoaderGGUF",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"
+          }
+        }
+      ]
+    },
+    {
+      "node": "VAEDecodeTiled",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 8,
+          "params": {
+            "tile_size": 256,
+            "overlap": 64,
+            "temporal_size": 16,
+            "temporal_overlap": 8
+          }
+        }
+      ]
+    }
+  ],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}

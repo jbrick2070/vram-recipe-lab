@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\ltxv_image_to_video.json",
+    "source_kind": "ui_root",
+    "total": 15,
+    "significant": 11,
+    "edges": 19,
+    "scope": "root",
+    "topology_digest": "685847a676b6abdb5d0bb8b6972c25130f7492822cf2d963f32474e603ccc807",
+    "provenance": {
+      "source_sha256": "96bf9ddbbf4591af29df2b707933c2ea25d9c3a406296ade0fbe1ae91d43b0d0",
+      "source_bytes": 16566,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "ltx_8gb",
+    "source_kind": "otr_engine",
+    "total": 12,
+    "significant": 10,
+    "edges": 18,
+    "scope": "ltx_8gb",
+    "topology_digest": "4957795bbf98bce7270691d1746f80e75b66bbd8c36785b4378289e46232f522",
+    "provenance": {
+      "engine_id": "ltx_8gb",
+      "engine_class": "Ltx8gbEngine",
+      "engine_module": "nodes._otr_video_engines.eng_ltx_8gb",
+      "render_canvas": [
+        512,
+        288
+      ],
+      "builder_signature": "(request, image_name, plan, length, width, height, external_results=None)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_ltx_8gb.py",
+          "status": "present",
+          "bytes": 88988,
+          "sha256": "86ef750e01dbc0b47e38947b397dc82a52e5ee457ea4878db106046e7a63c0f5"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\ltxv_image_to_video.json",
+      "source_kind": "ui_root",
+      "total": 15,
+      "significant": 11,
+      "edges": 19,
+      "scope": "root",
+      "topology_digest": "685847a676b6abdb5d0bb8b6972c25130f7492822cf2d963f32474e603ccc807"
+    },
+    "ours": {
+      "source": "ltx_8gb",
+      "source_kind": "otr_engine",
+      "total": 12,
+      "significant": 10,
+      "edges": 18,
+      "scope": "ltx_8gb",
+      "topology_digest": "4957795bbf98bce7270691d1746f80e75b66bbd8c36785b4378289e46232f522"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "CheckpointLoaderSimple#1:2 -> VAEDecode#1.vae",
+      "SamplerCustom#1:0 -> VAEDecode#1.samples",
+      "CheckpointLoaderSimple#1:0 -> SamplerCustom#1.model",
+      "CreateVideo#1:0 -> SaveVideo#1.video",
+      "VAEDecode#1:0 -> CreateVideo#1.images"
+    ],
+    "ours_only_edges": [
+      "CheckpointLoaderSimple#1:0 -> ModelSamplingLTXV#1.model",
+      "ModelSamplingLTXV#1:0 -> SamplerCustom#1.model",
+      "SamplerCustom#1:0 -> VAEDecodeTiled#1.samples",
+      "CheckpointLoaderSimple#1:2 -> VAEDecodeTiled#1.vae"
+    ]
+  },
+  "identical_parameters": 9,
+  "differences": [
+    {
+      "node": "CheckpointLoaderSimple",
+      "param": "ckpt_name",
+      "reference": [
+        "\"ltx-video-2b-v0.9.5.safetensors\""
+      ],
+      "ours": [
+        "\"ltxv-2b-0.9.8-distilled.safetensors\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVConditioning",
+      "param": "frame_rate",
+      "reference": [
+        "25"
+      ],
+      "ours": [
+        "25.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVImgToVideo",
+      "param": "height",
+      "reference": [
+        "512"
+      ],
+      "ours": [
+        "288"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVImgToVideo",
+      "param": "strength",
+      "reference": [
+        "0.15"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVImgToVideo",
+      "param": "width",
+      "reference": [
+        "768"
+      ],
+      "ours": [
+        "512"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "LTXVScheduler",
+      "param": "steps",
+      "reference": [
+        "30"
+      ],
+      "ours": [
+        "8"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "SamplerCustom",
+      "param": "cfg",
+      "reference": [
+        "3"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "SamplerCustom",
+      "param": "noise_seed",
+      "reference": [
+        "712395695050634"
+      ],
+      "ours": [
+        "42"
+      ],
+      "documented": false,
+      "reason": ""
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 13,
+          "params": {
+            "fps": 24,
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "SaveVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 14,
+          "params": {
+            "format": "auto",
+            "codec": "auto"
+          }
+        }
+      ]
+    },
+    {
+      "node": "VAEDecode",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 12,
+          "params": {}
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [
+    {
+      "node": "ModelSamplingLTXV",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 5,
+          "params": {
+            "max_shift": 2.05,
+            "base_shift": 0.95
+          }
+        }
+      ]
+    },
+    {
+      "node": "VAEDecodeTiled",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 11,
+          "params": {
+            "tile_size": 512,
+            "overlap": 64,
+            "temporal_size": 16,
+            "temporal_overlap": 8
+          }
+        }
+      ]
+    }
+  ],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}

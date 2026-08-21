@@ -1,0 +1,60 @@
+reference : video_wan2_2_5B_ti2v.json
+ours      : video:fastwan_8gb
+nodes     : reference 8/12, ours 9/12 (significant/total)
+edges     : reference 12, ours 12; topology differs
+digests   : 69fad40a14084e93 / 173874c2357e02ea
+
+1 parameters identical, 2 differ, 6 node classes/counts only in the reference, 7 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  CLIPLoader                           [order=1] {"clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan"}
+  CreateVideo                          [order=11] {"bit_depth": 8, "fps": 24}
+  KSampler                             [order=9] {"cfg": 5, "denoise": 1, "sampler_name": "uni_pc", "scheduler": "simple", "seed": 898471028164125, "steps": 20}
+  SaveVideo                            [order=12] {"codec": "auto", "format": "auto"}
+  UNETLoader                           [order=0] {"unet_name": "wan2.2_ti2v_5B_fp16.safetensors", "weight_dtype": "default"}
+  VAEDecode                            [order=10] {}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  CLIPLoaderGGUF                       [order=2] {"clip_name": "umt5-xxl-encoder-Q5_K_M.gguf", "type": "wan"}
+  LoadImage                            [order=6] {}
+  ManualSigmas                         [order=9] {"sigmas": "1.0, 0.757, 0.522, 0.0"}
+  OTR_DMDRestartSamplerSelect          [order=10] {}
+  SamplerCustom                        [order=11] {"add_noise": true, "cfg": 1.0, "noise_seed": 42}
+  UnetLoaderGGUF                       [order=0] {"unet_name": "Wan2.2-TI2V-5B-Q5_K_M.gguf"}
+  VAEDecodeTiled                       [order=8] {"overlap": 64, "temporal_overlap": 8, "temporal_size": 16, "tile_size": 256}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] ModelSamplingSD3.model
+      reference : <absent>
+      ours      : ["lora", 0]
+  [undocumented] ModelSamplingSD3.shift
+      reference : 8
+      ours      : 5.0
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] KSampler#1:0 -> VAEDecode#1.samples
+  [reference only] CLIPTextEncode#1:0 -> KSampler#1.positive
+  [reference only] CLIPTextEncode#2:0 -> KSampler#1.negative
+  [reference only] CLIPLoader#1:0 -> CLIPTextEncode#1.clip
+  [reference only] CLIPLoader#1:0 -> CLIPTextEncode#2.clip
+  [reference only] VAELoader#1:0 -> VAEDecode#1.vae
+  [reference only] UNETLoader#1:0 -> ModelSamplingSD3#1.model
+  [reference only] ModelSamplingSD3#1:0 -> KSampler#1.model
+  [reference only] Wan22ImageToVideoLatent#1:0 -> KSampler#1.latent_image
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+  [reference only] CreateVideo#1:0 -> SaveVideo#1.video
+  [ours only     ] CLIPLoaderGGUF#1:0 -> CLIPTextEncode#1.clip
+  [ours only     ] CLIPLoaderGGUF#1:0 -> CLIPTextEncode#2.clip
+  [ours only     ] LoadImage#1:0 -> Wan22ImageToVideoLatent#1.start_image
+  [ours only     ] SamplerCustom#1:0 -> VAEDecodeTiled#1.samples
+  [ours only     ] VAELoader#1:0 -> VAEDecodeTiled#1.vae
+  [ours only     ] ModelSamplingSD3#1:0 -> SamplerCustom#1.model
+  [ours only     ] CLIPTextEncode#1:0 -> SamplerCustom#1.positive
+  [ours only     ] CLIPTextEncode#2:0 -> SamplerCustom#1.negative
+  [ours only     ] Wan22ImageToVideoLatent#1:0 -> SamplerCustom#1.latent_image
+  [ours only     ] OTR_DMDRestartSamplerSelect#1:0 -> SamplerCustom#1.sampler
+  [ours only     ] ManualSigmas#1:0 -> SamplerCustom#1.sigmas
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\fastwan_8gb__video_wan2_2_5B_ti2v.json

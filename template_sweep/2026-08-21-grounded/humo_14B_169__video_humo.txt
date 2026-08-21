@@ -1,0 +1,43 @@
+reference : video_humo.json
+ours      : video:humo_14B_169
+nodes     : reference 13/19, ours 11/14 (significant/total)
+edges     : reference 20, ours 17; topology differs
+digests   : 22164284b5c978f5 / bb471c30a39d090f
+
+9 parameters identical, 7 differ, 2 node classes/counts only in the reference, 0 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  CreateVideo                          [order=18] {"bit_depth": 8, "fps": 25}
+  SaveVideo                            [order=19] {"codec": "auto", "format": "auto"}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] KSampler.cfg
+      reference : 1
+      ours      : 1.0
+  [undocumented] KSampler.denoise
+      reference : 1
+      ours      : 1.0
+  [undocumented] KSampler.seed
+      reference : 1067760026265042
+      ours      : 42
+  [undocumented] LoadAudio.audio
+      reference : video_humo_input_audio.wav
+      ours      : diffomatic.wav
+  [undocumented] LoraLoaderModelOnly.strength_model
+      reference : 1
+      ours      : 1.0
+  [undocumented] ModelSamplingSD3.shift
+      reference : 8
+      ours      : 8.0
+  [undocumented] UNETLoader.unet_name
+      reference : humo_17B_fp8_e4m3fn.safetensors
+      ours      : Wan2_1-HuMo-14B_fp8_e4m3fn_scaled_KJ.safetensors
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] CreateVideo#1:0 -> SaveVideo#1.video
+  [reference only] LoadAudio#1:0 -> CreateVideo#1.audio
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\humo_14B_169__video_humo.json

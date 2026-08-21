@@ -1,0 +1,77 @@
+reference : video_minimax_h3_i2v.json
+ours      : video:minimax_h3_video
+nodes     : reference 20/21, ours 10/11 (significant/total)
+edges     : reference 42, ours 13; topology differs
+digests   : b5cd3d4b87343f2f / cc028ff45f88c3be
+
+6 parameters identical, 4 differ, 9 node classes/counts only in the reference, 1 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  ComfyMathExpression                  [order=14] {"expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"}
+  ComfySwitchNode                      [order=17] {}
+  ComfySwitchNode                      [order=18] {}
+  CreateVideo                          [order=12] {"bit_depth": 8, "fps": 24}
+  LoraLoaderModelOnly                  [order=16] {"lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors", "strength_model": 1}
+  PrimitiveBoolean                     [order=20] {"value": false}
+  PrimitiveFloat                       [order=15] {"value": 2}
+  PrimitiveInt                         [order=1] {"fixed": "fixed", "value": 20}
+  PrimitiveInt                         [order=19] {"fixed": "fixed", "value": 6}
+  VAEDecodeAudio                       [order=10] {}
+  VAELoader [x2 vs our x1]             [order=5] {"vae_name": "minimax_h3_video_vae_fp16.safetensors"}
+  VAELoader [x2 vs our x1]             [order=11] {"vae_name": "minimax_h3_audio_vae_fp32.safetensors"}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  LoadImage                            [order=9] {"image.audio": "diffomatic.wav"}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] BasicScheduler.denoise
+      reference : 1
+      ours      : 1.0
+  [undocumented] BasicScheduler.steps
+      reference : <absent>
+      ours      : 20
+  [undocumented] RandomNoise.noise_seed
+      reference : 1
+      ours      : 42
+  [undocumented] VAELoader.vae_name
+      reference : minimax_h3_video_vae_fp16.safetensors, minimax_h3_audio_vae_fp32.safetensors
+      ours      : minimax_h3_video_vae_fp16.safetensors
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] VAELoader#2:0 -> VAEDecodeAudio#1.vae
+  [reference only] VAEDecode#1:0 -> CreateVideo#1.images
+  [reference only] VAEDecodeAudio#1:0 -> CreateVideo#1.audio
+  [reference only] CreateVideo#1:0 -> $OUTPUT#1.VIDEO
+  [reference only] $INPUT#1:0 -> MiniMaxH3ImageToVideo#1.first_frame
+  [reference only] $INPUT#1:1 -> MiniMaxH3ImageToVideo#1.last_frame
+  [reference only] $INPUT#1:2 -> MiniMaxH3ImageToVideo#1.prompt
+  [reference only] ComfyMathExpression#1:1 -> MiniMaxH3ImageToVideo#1.length
+  [reference only] $INPUT#1:3 -> MiniMaxH3ImageToVideo#1.width
+  [reference only] $INPUT#1:4 -> MiniMaxH3ImageToVideo#1.height
+  [reference only] PrimitiveFloat#1:0 -> ComfyMathExpression#1.values.a
+  [reference only] $INPUT#1:5 -> PrimitiveFloat#1.value
+  [reference only] $INPUT#1:6 -> RandomNoise#1.noise_seed
+  [reference only] $INPUT#1:7 -> UNETLoader#1.unet_name
+  [reference only] $INPUT#1:9 -> VAELoader#1.vae_name
+  [reference only] $INPUT#1:10 -> VAELoader#2.vae_name
+  [reference only] SamplerCustomAdvanced#1:0 -> VAEDecodeAudio#1.samples
+  [reference only] $INPUT#1:8 -> CLIPLoader#1.clip_name
+  [reference only] UNETLoader#1:0 -> LoraLoaderModelOnly#1.model
+  [reference only] UNETLoader#1:0 -> ComfySwitchNode#1.on_false
+  [reference only] LoraLoaderModelOnly#1:0 -> ComfySwitchNode#1.on_true
+  [reference only] ComfySwitchNode#1:0 -> BasicScheduler#1.model
+  [reference only] ComfySwitchNode#2:0 -> BasicScheduler#1.steps
+  [reference only] PrimitiveInt#1:0 -> ComfySwitchNode#2.on_false
+  [reference only] PrimitiveInt#2:0 -> ComfySwitchNode#2.on_true
+  [reference only] PrimitiveBoolean#1:0 -> ComfySwitchNode#1.switch
+  [reference only] PrimitiveBoolean#1:0 -> ComfySwitchNode#2.switch
+  [reference only] $INPUT#1:11 -> PrimitiveBoolean#1.value
+  [reference only] ComfySwitchNode#1:0 -> BasicGuider#1.model
+  [reference only] $INPUT#1:12 -> LoraLoaderModelOnly#1.lora_name
+  [ours only     ] UNETLoader#1:0 -> BasicGuider#1.model
+  [ours only     ] UNETLoader#1:0 -> BasicScheduler#1.model
+  [ours only     ] LoadImage#1:0 -> MiniMaxH3ImageToVideo#1.first_frame
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\minimax_h3_video__video_minimax_h3_i2v.json

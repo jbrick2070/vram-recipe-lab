@@ -1,0 +1,140 @@
+reference : video_ltx2_3_t2v.json
+ours      : video:ltx_video
+nodes     : reference 46/51, ours 12/14 (significant/total)
+edges     : reference 90, ours 15; topology differs
+digests   : 98888289fa2d9026 / 13d098151dfc69fb
+
+3 parameters identical, 12 differ, 26 node classes/counts only in the reference, 3 only in ours
+
+=== NODE CLASSES/INSTANCES THE REFERENCE HAS AND WE DO NOT ===
+  CFGGuider [x2 vs our x1]             [order=8] {"cfg": 1}
+  CFGGuider [x2 vs our x1]             [order=21] {"cfg": 1}
+  CheckpointLoaderSimple               [order=25] {"ckpt_name": "ltx-2.3-22b-dev-fp8.safetensors"}
+  ComfyMathExpression                  [order=38] {"expression": "a/2"}
+  ComfyMathExpression                  [order=41] {"expression": "a/2"}
+  ComfyMathExpression                  [order=43] {"expression": "a"}
+  ComfyMathExpression                  [order=45] {"expression": "a * b + 1"}
+  ComfySwitchNode                      [order=49] {}
+  CreateVideo                          [order=30] {"bit_depth": 8}
+  KSamplerSelect [x2 vs our x1]        [order=1] {"sampler_name": "euler"}
+  KSamplerSelect [x2 vs our x1]        [order=3] {"sampler_name": "euler"}
+  LTXVAudioVAEDecode                   [order=14] {}
+  LTXVAudioVAELoader                   [order=15] {"ckpt_name": "ltx-2.3-22b-dev-fp8.safetensors"}
+  LTXVConcatAVLatent                   [order=16] {}
+  LTXVConcatAVLatent                   [order=19] {}
+  LTXVCropGuides                       [order=7] {}
+  LTXVEmptyLatentAudio                 [order=9] {}
+  LTXVImgToVideoInplace                [order=20] {"strength": 1}
+  LTXVImgToVideoInplace                [order=34] {"strength": 0.7}
+  LTXVLatentUpsampler                  [order=36] {}
+  LTXVPreprocess                       [order=33] {"img_compression": 18}
+  LTXVSeparateAVLatent                 [order=11] {}
+  LTXVSeparateAVLatent                 [order=12] {}
+  LatentUpscaleModelLoader             [order=23] {"model_name": "ltx-2.3-spatial-upscaler-x2-1.1.safetensors"}
+  LoraLoader                           [order=46] {"lora_name": "gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors", "strength_clip": 1, "strength_model": 1}
+  ManualSigmas                         [order=2] {"sigmas": "0.85, 0.7250, 0.4219, 0.0"}
+  ManualSigmas                         [order=5] {"sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"}
+  PrimitiveBoolean                     [order=4] {"value": true}
+  PrimitiveBoolean                     [order=50] {"value": true}
+  PrimitiveInt                         [order=17] {"value": 5}
+  PrimitiveInt                         [order=39] {"value": 1280}
+  PrimitiveInt                         [order=40] {"value": 720}
+  PrimitiveInt                         [order=42] {"value": 25}
+  PrimitiveStringMultiline             [order=44] {"value": "Dynamic cinematic close-up of high-tech modular machinery self-assembling in midair, precision robotic parts, magnetic connectors, and glowing circuits clicking together, subtle smoke and light flares, extremely detailed titanium textures. The final product displays a clean, clear surface with large glowing engraved text “LTX-2.3” centered and unobstructed, dramatic lighting, photorealism, 8K, sharp focus.\n"}
+  RandomNoise [x2 vs our x1]           [order=0] {"noise_seed": 42}
+  RandomNoise [x2 vs our x1]           [order=26] {"noise_seed": 810138461690240}
+  ResizeImageMaskNode                  [order=27] {"resize_type": "scale dimensions", "resize_type.crop": "center", "scale_method": "lanczos"}
+  ResizeImagesByLongerEdge             [order=24] {"longer_edge": 1536}
+  SamplerCustomAdvanced [x2 vs our x1] [order=10] {}
+  SamplerCustomAdvanced [x2 vs our x1] [order=13] {}
+  TextGenerateLTX2Prompt               [order=47] {"max_length": 2048, "sampling_mode": "on", "sampling_mode.min_p": 0.05, "sampling_mode.presence_penalty": 0, "sampling_mode.repetition_penalty": 1.05, "sampling_mode.seed": 0, "sampling_mode.temperature": 0.7, "sampling_mode.top_k": 64, "sampling_mode.top_p": 0.95, "thinking": false, "use_default_template": true}
+
+=== NODE CLASSES/INSTANCES WE HAVE AND THE REFERENCE DOES NOT ===
+  UnetLoaderGGUF                       [order=0] {"unet_name": "ltx-2.3-22b-dev-Q3_K_M.gguf"}
+  VAELoader                            [order=3] {"vae_name": "ltx-2.3-22b-dev_video_vae.safetensors"}
+  _SigmasFromValues                    [order=9] {"values": [1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0]}
+
+=== PARAMETER DIFFERENCES -- UNDOCUMENTED FIRST ===
+  [undocumented] CFGGuider.cfg
+      reference : 1, 1
+      ours      : 1.0
+  [undocumented] EmptyLTXVLatentVideo.height
+      reference : <absent>
+      ours      : 576
+  [undocumented] EmptyLTXVLatentVideo.length
+      reference : <absent>
+      ours      : 97
+  [undocumented] EmptyLTXVLatentVideo.width
+      reference : <absent>
+      ours      : 1024
+  [undocumented] KSamplerSelect.sampler_name
+      reference : euler, euler
+      ours      : euler_cfg_pp
+  [undocumented] LTXAVTextEncoderLoader.ckpt_name
+      reference : ltx-2.3-22b-dev-fp8.safetensors
+      ours      : ltx-2.3-22b-dev.safetensors
+  [undocumented] LTXVConditioning.frame_rate
+      reference : <absent>
+      ours      : 25.0
+  [undocumented] LoraLoaderModelOnly.lora_name
+      reference : ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors
+      ours      : ltxv\\ltx2\\ltx-2.3-22b-distilled-lora-384-1.1.safetensors
+  [undocumented] LoraLoaderModelOnly.strength_model
+      reference : 0.5
+      ours      : 0.7
+  [undocumented] RandomNoise.noise_seed
+      reference : 42, 810138461690240
+      ours      : 42
+  [undocumented] VAEDecodeTiled.temporal_overlap
+      reference : 4
+      ours      : 8
+  [undocumented] VAEDecodeTiled.tile_size
+      reference : 768
+      ours      : 512
+
+=== NORMALIZED WIRING DIFFERENCES ===
+  [reference only] LTXVImgToVideoInplace#1:0 -> LTXVConcatAVLatent#2.video_latent
+  [reference only] LTXVSeparateAVLatent#1:1 -> LTXVConcatAVLatent#2.audio_latent
+  [reference only] LTXVCropGuides#1:0 -> CFGGuider#1.positive
+  [reference only] LTXVCropGuides#1:1 -> CFGGuider#1.negative
+  [reference only] LoraLoaderModelOnly#1:0 -> CFGGuider#2.model
+  [reference only] LTXVConditioning#1:0 -> CFGGuider#2.positive
+  [reference only] LTXVConditioning#1:1 -> CFGGuider#2.negative
+  [reference only] RandomNoise#2:0 -> SamplerCustomAdvanced#1.noise
+  [reference only] CFGGuider#2:0 -> SamplerCustomAdvanced#1.guider
+  [reference only] KSamplerSelect#2:0 -> SamplerCustomAdvanced#1.sampler
+  [reference only] ManualSigmas#2:0 -> SamplerCustomAdvanced#1.sigmas
+  [reference only] LTXVConcatAVLatent#1:0 -> SamplerCustomAdvanced#1.latent_image
+  [reference only] LTXVConditioning#1:0 -> LTXVCropGuides#1.positive
+  [reference only] LTXVConditioning#1:1 -> LTXVCropGuides#1.negative
+  [reference only] LTXVSeparateAVLatent#1:0 -> LTXVCropGuides#1.latent
+  [reference only] CheckpointLoaderSimple#1:0 -> LoraLoaderModelOnly#1.model
+  [reference only] ResizeImageMaskNode#1:0 -> ResizeImagesByLongerEdge#1.images
+  [reference only] LTXVSeparateAVLatent#1:0 -> LTXVLatentUpsampler#1.samples
+  [reference only] LatentUpscaleModelLoader#1:0 -> LTXVLatentUpsampler#1.upscale_model
+  [reference only] Reroute#1:0 -> LTXVLatentUpsampler#1.vae
+  [reference only] Reroute#1:0 -> LTXVImgToVideoInplace#1.vae
+  [reference only] LTXVPreprocess#1:0 -> LTXVImgToVideoInplace#1.image
+  [reference only] LTXVLatentUpsampler#1:0 -> LTXVImgToVideoInplace#1.latent
+  [reference only] PrimitiveBoolean#1:0 -> LTXVImgToVideoInplace#1.bypass
+  [reference only] ResizeImagesByLongerEdge#1:0 -> LTXVPreprocess#1.image
+  [reference only] PrimitiveInt#2:0 -> ResizeImageMaskNode#1.resize_type.width
+  [reference only] PrimitiveInt#3:0 -> ResizeImageMaskNode#1.resize_type.height
+  [reference only] PrimitiveInt#2:0 -> ComfyMathExpression#1.values.a
+  [reference only] CheckpointLoaderSimple#1:2 -> Reroute#1.input_slot_0
+  [reference only] PrimitiveInt#3:0 -> ComfyMathExpression#2.values.a
+  [ours only     ] UnetLoaderGGUF#1:0 -> LoraLoaderModelOnly#1.model
+  [ours only     ] LTXVConditioning#1:0 -> CFGGuider#1.positive
+  [ours only     ] LTXVConditioning#1:1 -> CFGGuider#1.negative
+  [ours only     ] RandomNoise#1:0 -> SamplerCustomAdvanced#1.noise
+  [ours only     ] CFGGuider#1:0 -> SamplerCustomAdvanced#1.guider
+  [ours only     ] KSamplerSelect#1:0 -> SamplerCustomAdvanced#1.sampler
+  [ours only     ] _SigmasFromValues#1:0 -> SamplerCustomAdvanced#1.sigmas
+  [ours only     ] EmptyLTXVLatentVideo#1:0 -> SamplerCustomAdvanced#1.latent_image
+  [ours only     ] SamplerCustomAdvanced#1:0 -> VAEDecodeTiled#1.samples
+  [ours only     ] VAELoader#1:0 -> VAEDecodeTiled#1.vae
+  ... 35 additional edge deltas in JSON receipt
+
+NOTHING HERE IS A RECOMMENDATION. A human owns every recipe decision.
+
+wrote C:\Users\jeffr\Documents\ComfyUI\vram-recipe-lab\template_sweep\2026-08-21-grounded\ltx_video__video_ltx2_3_t2v.json

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "target": "C:/Users/jeffr/Documents/ComfyUI/custom_nodes/ComfyUI-GGUF/nodes.py",
+  "purpose": "Add an opt-in GGUF text-encoder loader with production-equivalent CPU placement for LTX 2.5 lab recipes.",
+  "baseline_sha256": "16be3b08b13de6279fc432addc628320019fcb24963cbc6b52b248de8f06316e",
+  "post_patch_sha256": "93dd5eadc5e0d8ac26e90349f900238283aa103e70a7ae47ded9b2e7f31b179b",
+  "patch": "ComfyUI-GGUF-CLIPLoaderGGUFCPU.patch",
+  "invariants": [
+    "CLIPLoaderGGUF remains unchanged",
+    "CLIPLoaderGGUFCPU inherits the stock input contract",
+    "initial_device, load_device, and offload_device are all CPU",
+    "placement is checked before the first encoder forward"
+  ]
+}

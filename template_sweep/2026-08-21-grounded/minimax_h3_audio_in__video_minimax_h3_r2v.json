@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_minimax_h3_r2v.json",
+    "source_kind": "ui_root",
+    "total": 29,
+    "significant": 24,
+    "edges": 33,
+    "scope": "root",
+    "topology_digest": "8af184e1dea075278ab43d94b8ba44e0baaac1658fa685126cf1f14fed5a13f4",
+    "provenance": {
+      "source_sha256": "45a3f213430d3b4db6bdbd1873f6b0c09ea81aafdfd0fd5ec2a26d355c5c5941",
+      "source_bytes": 43565,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "minimax_h3_audio_in",
+    "source_kind": "otr_engine",
+    "total": 13,
+    "significant": 12,
+    "edges": 13,
+    "scope": "minimax_h3_audio_in",
+    "topology_digest": "3977d6af3c33132bf1d95f459d663164edb279f3202ea3cac88c8a7ff2e13f7d",
+    "provenance": {
+      "engine_id": "minimax_h3_audio_in",
+      "engine_class": "MiniMaxH3AudioInEngine",
+      "engine_module": "nodes._otr_video_engines.eng_minimax_h3",
+      "render_canvas": [
+        864,
+        480
+      ],
+      "builder_signature": "(request, staged, plan, model_length, width, height)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_minimax_h3.py",
+          "status": "present",
+          "bytes": 64266,
+          "sha256": "cffa0ee18673e0a7edf817c52e4c08d47b0ef7c8073c738f1be7072fada5aed6"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_minimax_h3_r2v.json",
+      "source_kind": "ui_root",
+      "total": 29,
+      "significant": 24,
+      "edges": 33,
+      "scope": "root",
+      "topology_digest": "8af184e1dea075278ab43d94b8ba44e0baaac1658fa685126cf1f14fed5a13f4"
+    },
+    "ours": {
+      "source": "minimax_h3_audio_in",
+      "source_kind": "otr_engine",
+      "total": 13,
+      "significant": 12,
+      "edges": 13,
+      "scope": "minimax_h3_audio_in",
+      "topology_digest": "3977d6af3c33132bf1d95f459d663164edb279f3202ea3cac88c8a7ff2e13f7d"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "VAELoader#2:0 -> VAEDecodeAudio#1.vae",
+      "VAEDecode#1:0 -> CreateVideo#1.images",
+      "VAEDecodeAudio#1:0 -> CreateVideo#1.audio",
+      "CreateVideo#1:0 -> SaveVideo#1.video",
+      "PrimitiveFloat#1:0 -> ComfyMathExpression#1.values.a",
+      "ComfyMathExpression#1:1 -> MiniMaxH3ReferenceToVideo#1.length",
+      "ResolutionSelector#1:0 -> MiniMaxH3ReferenceToVideo#1.width",
+      "ResolutionSelector#1:1 -> MiniMaxH3ReferenceToVideo#1.height",
+      "LoadImage#1:0 -> MiniMaxH3ReferenceToVideo#1.ref_images.ref_image_0",
+      "PrimitiveStringMultiline#1:0 -> MiniMaxH3ReferenceToVideo#1.prompt",
+      "SamplerCustomAdvanced#1:0 -> VAEDecodeAudio#1.samples",
+      "LoadImage#2:0 -> MiniMaxH3ReferenceToVideo#1.ref_images.ref_image_1",
+      "PrimitiveInt#2:0 -> ComfySwitchNode#1.on_true",
+      "PrimitiveInt#1:0 -> ComfySwitchNode#1.on_false",
+      "UNETLoader#1:0 -> LoraLoaderModelOnly#1.model",
+      "LoraLoaderModelOnly#1:0 -> ComfySwitchNode#2.on_true",
+      "UNETLoader#1:0 -> ComfySwitchNode#2.on_false",
+      "ComfySwitchNode#2:0 -> BasicGuider#1.model",
+      "ComfySwitchNode#1:0 -> BasicScheduler#1.steps",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#2.switch",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#1.switch"
+    ],
+    "ours_only_edges": [
+      "UNETLoader#1:0 -> BasicGuider#1.model"
+    ]
+  },
+  "identical_parameters": 7,
+  "differences": [
+    {
+      "node": "BasicScheduler",
+      "param": "denoise",
+      "reference": [
+        "1"
+      ],
+      "ours": [
+        "1.0"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "BasicScheduler",
+      "param": "steps",
+      "reference": [],
+      "ours": [
+        "20"
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "RandomNoise",
+      "param": "noise_seed",
+      "reference": [
+        "261662374822964"
+      ],
+      "ours": [
+        "42"
+      ],
+      "documented": false,
+      "reason": ""
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "ComfyMathExpression",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 18,
+          "params": {
+            "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ComfySwitchNode",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 19,
+          "params": {}
+        },
+        {
+          "order": 20,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 27,
+          "params": {
+            "fps": 24,
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoadImage [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 10,
+          "params": {}
+        },
+        {
+          "order": 12,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 17,
+          "params": {
+            "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+            "strength_model": 1
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveBoolean",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 16,
+          "params": {
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveFloat",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 9,
+          "params": {
+            "value": 5
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveInt",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 14,
+          "params": {
+            "value": 20,
+            "fixed": "fixed"
+          }
+        },
+        {
+          "order": 15,
+          "params": {
+            "value": 4,
+            "fixed": "fixed"
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveStringMultiline",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 11,
+          "params": {
+            "value": "Bold comic-book ink style, heavy linework, red and blue-black palette, night city. Use <Picture 2> and <Picture 1> as reference frames and <Audio 1> exactly as it is.\nCUT 1: top-down view of the little boy superhero on the rooftop — red cape fluttering in the wind, hands planted on his hips, freckles and a cocky grin as he looks straight up into the camera. The camera slowly descends toward him as he delivers his line — as he speaks, comic-book graphic overlay text word by word in sync with his voice: \"GET READY TO\" - \"MEET\" — \"YOUR\" — \"MAKER\" — huge jagged comic lettering, white with heavy black outlines and red drop shadows, tilted at scrappy angles, until the three words hang stacked in the air above him between his face and the lens.\nTRANSITION: a violent WHIP PAN off the rooftop that SMEARS the floating words away with it, motion-streaked —\nCUT 2: low hero angle on the colossal black mech-kaiju towering over the skyline as it rears back and unleashes a GIANT terrifying ROAR — jaws wide with fangs, red eyes and chest-core flaring blinding bright, blue lightning arcing off its head, the roar's shockwave rippling dust and rattling windows down the buildings, comic-style speed-lines and ink splatter bursting from the impact of the sound. It leans INTO the camera as the roar peaks. Hold on the roar."
+          }
+        }
+      ]
+    },
+    {
+      "node": "SaveVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 28,
+          "params": {
+            "format": "auto",
+            "codec": "auto"
+          }
+        }
+      ]
+    },
+    {
+      "node": "VAEDecodeAudio",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 26,
+          "params": {}
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [
+    {
+      "node": "LoadAudio",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 11,
+          "params": {
+            "audio": "diffomatic.wav"
+          }
+        }
+      ]
+    }
+  ],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}

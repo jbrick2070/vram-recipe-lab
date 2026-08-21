@@ -1,0 +1,514 @@
+{
+  "schema_version": 1,
+  "status": "ok",
+  "reference": {
+    "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_wan2_2_14B_i2v.json",
+    "source_kind": "ui_subgraph",
+    "total": 30,
+    "significant": 27,
+    "edges": 60,
+    "scope": "subgraph:Image to Video (Wan2.2)",
+    "topology_digest": "ece3ec955bddaa72772077762101f7f3a03991258e130e1d6406e68789287744",
+    "provenance": {
+      "source_sha256": "455337c85e3fb0c7da9b2e3e6408f02f4be3615ec9b77c0f18c4262b931dd650",
+      "source_bytes": 84289,
+      "template_package": "comfyui-workflow-templates-json",
+      "template_package_version": "0.1.50"
+    }
+  },
+  "ours": {
+    "source": "wan_i2v",
+    "source_kind": "otr_engine",
+    "total": 10,
+    "significant": 7,
+    "edges": 13,
+    "scope": "wan_i2v",
+    "topology_digest": "fbd9336f99d16ca749b561515b3adb96e3595f04428c4e035aa00a1c0c07b542",
+    "provenance": {
+      "engine_id": "wan_i2v",
+      "engine_class": "WanI2VEngine",
+      "engine_module": "nodes._otr_video_engines.eng_wan_i2v",
+      "render_canvas": [
+        832,
+        480
+      ],
+      "builder_signature": "(request, image_name, plan, length, width, height, external_results=None)",
+      "recipe_sources": [
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_wan_i2v.py",
+          "status": "present",
+          "bytes": 47855,
+          "sha256": "cf5e1340f1c1e62c5980e46d2c68cad938634102b594f243cba9552c16945a86"
+        },
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\wan_recipe.py",
+          "status": "present",
+          "bytes": 11684,
+          "sha256": "0cdfbc903d5d0e211f2bb23fbc31be17fe06e74a81040871d6e406bb26070b45"
+        },
+        {
+          "path": "C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\wan_shared.py",
+          "status": "present",
+          "bytes": 33472,
+          "sha256": "92ed92c4a251766404614ad3d885afb46461b7937018aa94480bc00c1fc0435a"
+        }
+      ],
+      "fleet_environment": {
+        "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+        "cleared_present_keys": [
+          "HF_HOME",
+          "OTR_BLENDER_EXE",
+          "OTR_CHATTERBOX_VENV",
+          "OTR_CLOUD_WAN_MODEL",
+          "OTR_COMFY_API_KEY",
+          "OTR_ENABLE_CHATTERBOX",
+          "OTR_ENABLE_COMFY_CREDITS",
+          "OTR_ENABLE_FLUX2_KLEIN",
+          "OTR_ENABLE_LUMINA",
+          "OTR_ENABLE_OPENROUTER",
+          "OTR_ENABLE_WAN_TI2V",
+          "OTR_ENABLE_ZIMAGE",
+          "OTR_FLUX2_KLEIN_CKPT",
+          "OTR_FLUX2_KLEIN_TE",
+          "OTR_FLUX2_KLEIN_VAE",
+          "OTR_GOOGLE_API_KEY",
+          "OTR_INDEXTTS2_DIR",
+          "OTR_INDEXTTS2_VENV",
+          "OTR_INDEXTTS2_WORKER",
+          "OTR_LTX_END_ANCHOR_STRENGTH",
+          "OTR_LTX_ENGINE",
+          "OTR_LTX_V0_9_SAMPLER_NAME",
+          "OTR_LUMINA_CKPT",
+          "OTR_LUMINA_CLIP",
+          "OTR_LUMINA_VAE",
+          "OTR_MODELS_DIR",
+          "OTR_TEST_MODE",
+          "OTR_WAN_TI2V_CKPT",
+          "OTR_ZIMAGE_CLIP",
+          "OTR_ZIMAGE_CLIP_TYPE",
+          "OTR_ZIMAGE_UNET",
+          "OTR_ZIMAGE_VAE"
+        ],
+        "effective": {
+          "CUDA_VISIBLE_DEVICES": "",
+          "PYTHONUTF8": "1",
+          "OTR_TEST_MODE": "1"
+        }
+      }
+    }
+  },
+  "node_counts": {
+    "reference": {
+      "source": "C:\\Users\\jeffr\\Documents\\ComfyUI\\.venv\\Lib\\site-packages\\comfyui_workflow_templates_json\\templates\\video_wan2_2_14B_i2v.json",
+      "source_kind": "ui_subgraph",
+      "total": 30,
+      "significant": 27,
+      "edges": 60,
+      "scope": "subgraph:Image to Video (Wan2.2)",
+      "topology_digest": "ece3ec955bddaa72772077762101f7f3a03991258e130e1d6406e68789287744"
+    },
+    "ours": {
+      "source": "wan_i2v",
+      "source_kind": "otr_engine",
+      "total": 10,
+      "significant": 7,
+      "edges": 13,
+      "scope": "wan_i2v",
+      "topology_digest": "fbd9336f99d16ca749b561515b3adb96e3595f04428c4e035aa00a1c0c07b542"
+    }
+  },
+  "comparison": {
+    "topology_digest_equal": false,
+    "reference_only_edges": [
+      "CLIPTextEncode#2:0 -> WanImageToVideo#1.positive",
+      "CLIPTextEncode#1:0 -> WanImageToVideo#1.negative",
+      "VAEDecode#1:0 -> CreateVideo#1.images",
+      "UNETLoader#2:0 -> LoraLoaderModelOnly#2.model",
+      "UNETLoader#2:0 -> ComfySwitchNode#2.on_false",
+      "LoraLoaderModelOnly#2:0 -> ComfySwitchNode#2.on_true",
+      "PrimitiveFloat#1:0 -> ComfySwitchNode#4.on_false",
+      "PrimitiveFloat#2:0 -> ComfySwitchNode#4.on_true",
+      "PrimitiveInt#2:0 -> ComfySwitchNode#5.on_false",
+      "PrimitiveInt#3:0 -> ComfySwitchNode#5.on_true",
+      "ModelSamplingSD3#1:0 -> KSamplerAdvanced#1.model",
+      "WanImageToVideo#1:0 -> KSamplerAdvanced#1.positive",
+      "WanImageToVideo#1:1 -> KSamplerAdvanced#1.negative",
+      "KSamplerAdvanced#2:0 -> KSamplerAdvanced#1.latent_image",
+      "PrimitiveInt#1:0 -> ComfySwitchNode#3.on_false",
+      "PrimitiveInt#4:0 -> ComfySwitchNode#3.on_true",
+      "ModelSamplingSD3#2:0 -> KSamplerAdvanced#2.model",
+      "WanImageToVideo#1:0 -> KSamplerAdvanced#2.positive",
+      "WanImageToVideo#1:1 -> KSamplerAdvanced#2.negative",
+      "WanImageToVideo#1:2 -> KSamplerAdvanced#2.latent_image",
+      "UNETLoader#1:0 -> ComfySwitchNode#1.on_false",
+      "LoraLoaderModelOnly#1:0 -> ComfySwitchNode#1.on_true",
+      "UNETLoader#1:0 -> LoraLoaderModelOnly#1.model",
+      "KSamplerAdvanced#1:0 -> VAEDecode#1.samples",
+      "$INPUT#1:0 -> WanImageToVideo#1.start_image",
+      "CreateVideo#1:0 -> $OUTPUT#1.VIDEO",
+      "$INPUT#1:2 -> WanImageToVideo#1.width",
+      "$INPUT#1:3 -> WanImageToVideo#1.height",
+      "$INPUT#1:1 -> CLIPTextEncode#2.text",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#5.switch",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#1.switch",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#2.switch",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#3.switch",
+      "PrimitiveBoolean#1:0 -> ComfySwitchNode#4.switch",
+      "ComfySwitchNode#1:0 -> ModelSamplingSD3#2.model",
+      "ComfySwitchNode#2:0 -> ModelSamplingSD3#1.model",
+      "ComfySwitchNode#3:0 -> KSamplerAdvanced#2.steps",
+      "ComfySwitchNode#4:0 -> KSamplerAdvanced#2.cfg",
+      "ComfySwitchNode#5:0 -> KSamplerAdvanced#2.end_at_step",
+      "ComfySwitchNode#5:0 -> KSamplerAdvanced#1.start_at_step",
+      "ComfySwitchNode#3:0 -> KSamplerAdvanced#1.end_at_step",
+      "ComfySwitchNode#3:0 -> KSamplerAdvanced#1.steps",
+      "ComfySwitchNode#4:0 -> KSamplerAdvanced#1.cfg",
+      "PrimitiveFloat#4:0 -> ComfyMathExpression#1.values.a",
+      "PrimitiveFloat#3:0 -> ComfyMathExpression#1.values.b",
+      "ComfyMathExpression#1:1 -> WanImageToVideo#1.length",
+      "$INPUT#1:4 -> PrimitiveFloat#4.value",
+      "PrimitiveFloat#3:0 -> CreateVideo#1.fps",
+      "$INPUT#1:5 -> KSamplerAdvanced#2.noise_seed",
+      "$INPUT#1:6 -> UNETLoader#1.unet_name",
+      "$INPUT#1:7 -> LoraLoaderModelOnly#1.lora_name",
+      "$INPUT#1:8 -> UNETLoader#2.unet_name",
+      "$INPUT#1:9 -> LoraLoaderModelOnly#2.lora_name",
+      "$INPUT#1:10 -> CLIPLoader#1.clip_name",
+      "$INPUT#1:11 -> VAELoader#1.vae_name",
+      "$INPUT#1:12 -> PrimitiveBoolean#1.value"
+    ],
+    "ours_only_edges": [
+      "UNETLoader#1:0 -> ModelSamplingSD3#1.model",
+      "CLIPTextEncode#1:0 -> WanImageToVideo#1.positive",
+      "CLIPTextEncode#2:0 -> WanImageToVideo#1.negative",
+      "LoadImage#1:0 -> WanImageToVideo#1.start_image",
+      "ModelSamplingSD3#1:0 -> KSampler#1.model",
+      "WanImageToVideo#1:0 -> KSampler#1.positive",
+      "WanImageToVideo#1:1 -> KSampler#1.negative",
+      "WanImageToVideo#1:2 -> KSampler#1.latent_image",
+      "KSampler#1:0 -> VAEDecode#1.samples"
+    ]
+  },
+  "identical_parameters": 3,
+  "differences": [
+    {
+      "node": "UNETLoader",
+      "param": "unet_name",
+      "reference": [
+        "\"wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors\"",
+        "\"wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors\""
+      ],
+      "ours": [
+        "\"wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "UNETLoader",
+      "param": "weight_dtype",
+      "reference": [
+        "\"default\"",
+        "\"default\""
+      ],
+      "ours": [
+        "\"default\""
+      ],
+      "documented": false,
+      "reason": ""
+    },
+    {
+      "node": "ModelSamplingSD3",
+      "param": "shift",
+      "reference": [
+        "5.000000000000001",
+        "5.000000000000001"
+      ],
+      "ours": [
+        "8.0"
+      ],
+      "documented": true,
+      "reason": "[C:\\Users\\jeffr\\Documents\\ComfyUI\\custom_nodes\\ComfyUI-OldTimeRadio\\nodes\\_otr_video_engines\\eng_wan_i2v.py:229] ModelSamplingSD3 sigma shift; 8.0 is the 14B value (the 5B uses 5.0)."
+    }
+  ],
+  "only_in_reference": [
+    {
+      "node": "ComfyMathExpression",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 29,
+          "params": {
+            "expression": "floor (a * b + 1)"
+          }
+        }
+      ]
+    },
+    {
+      "node": "ComfySwitchNode",
+      "instance_count": 5,
+      "instances": [
+        {
+          "order": 22,
+          "params": {}
+        },
+        {
+          "order": 23,
+          "params": {}
+        },
+        {
+          "order": 24,
+          "params": {}
+        },
+        {
+          "order": 25,
+          "params": {}
+        },
+        {
+          "order": 26,
+          "params": {}
+        }
+      ]
+    },
+    {
+      "node": "CreateVideo",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 14,
+          "params": {
+            "bit_depth": 8
+          }
+        }
+      ]
+    },
+    {
+      "node": "KSamplerAdvanced",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 8,
+          "params": {
+            "add_noise": "disable",
+            "noise_seed": 0,
+            "sampler_name": "euler",
+            "scheduler": "simple",
+            "return_with_leftover_noise": "disable"
+          }
+        },
+        {
+          "order": 9,
+          "params": {
+            "add_noise": "enable",
+            "noise_seed": 264244520398999,
+            "sampler_name": "euler",
+            "scheduler": "simple",
+            "start_at_step": 0,
+            "return_with_leftover_noise": "enable"
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 18,
+          "params": {
+            "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+            "strength_model": 1.0000000000000002
+          }
+        },
+        {
+          "order": 19,
+          "params": {
+            "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+            "strength_model": 1.0000000000000002
+          }
+        }
+      ]
+    },
+    {
+      "node": "ModelSamplingSD3 [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 20,
+          "params": {
+            "shift": 5.000000000000001
+          }
+        },
+        {
+          "order": 21,
+          "params": {
+            "shift": 5.000000000000001
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveBoolean",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 27,
+          "params": {
+            "value": false
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveFloat",
+      "instance_count": 4,
+      "instances": [
+        {
+          "order": 2,
+          "params": {
+            "value": 3.5
+          }
+        },
+        {
+          "order": 3,
+          "params": {
+            "value": 1
+          }
+        },
+        {
+          "order": 6,
+          "params": {
+            "value": 16
+          }
+        },
+        {
+          "order": 28,
+          "params": {
+            "value": 5
+          }
+        }
+      ]
+    },
+    {
+      "node": "PrimitiveInt",
+      "instance_count": 4,
+      "instances": [
+        {
+          "order": 0,
+          "params": {
+            "value": 20
+          }
+        },
+        {
+          "order": 1,
+          "params": {
+            "value": 10
+          }
+        },
+        {
+          "order": 4,
+          "params": {
+            "value": 2
+          }
+        },
+        {
+          "order": 5,
+          "params": {
+            "value": 4
+          }
+        }
+      ]
+    },
+    {
+      "node": "UNETLoader [x2 vs our x1]",
+      "instance_count": 2,
+      "instances": [
+        {
+          "order": 15,
+          "params": {
+            "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "weight_dtype": "default"
+          }
+        },
+        {
+          "order": 16,
+          "params": {
+            "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "weight_dtype": "default"
+          }
+        }
+      ]
+    }
+  ],
+  "only_in_ours": [
+    {
+      "node": "KSampler",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 8,
+          "params": {
+            "seed": 42,
+            "steps": 20,
+            "cfg": 3.5,
+            "sampler_name": "uni_pc",
+            "scheduler": "simple",
+            "denoise": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "node": "LoadImage",
+      "instance_count": 1,
+      "instances": [
+        {
+          "order": 6,
+          "params": {}
+        }
+      ]
+    }
+  ],
+  "fleet_environment": {
+    "policy": "clear OTR_*, LAB_*, HF_HOME, and COMFYUI_MODELS_ROOT",
+    "cleared_present_keys": [
+      "HF_HOME",
+      "OTR_BLENDER_EXE",
+      "OTR_CHATTERBOX_VENV",
+      "OTR_CLOUD_WAN_MODEL",
+      "OTR_COMFY_API_KEY",
+      "OTR_ENABLE_CHATTERBOX",
+      "OTR_ENABLE_COMFY_CREDITS",
+      "OTR_ENABLE_FLUX2_KLEIN",
+      "OTR_ENABLE_LUMINA",
+      "OTR_ENABLE_OPENROUTER",
+      "OTR_ENABLE_WAN_TI2V",
+      "OTR_ENABLE_ZIMAGE",
+      "OTR_FLUX2_KLEIN_CKPT",
+      "OTR_FLUX2_KLEIN_TE",
+      "OTR_FLUX2_KLEIN_VAE",
+      "OTR_GOOGLE_API_KEY",
+      "OTR_INDEXTTS2_DIR",
+      "OTR_INDEXTTS2_VENV",
+      "OTR_INDEXTTS2_WORKER",
+      "OTR_LTX_END_ANCHOR_STRENGTH",
+      "OTR_LTX_ENGINE",
+      "OTR_LTX_V0_9_SAMPLER_NAME",
+      "OTR_LUMINA_CKPT",
+      "OTR_LUMINA_CLIP",
+      "OTR_LUMINA_VAE",
+      "OTR_MODELS_DIR",
+      "OTR_TEST_MODE",
+      "OTR_WAN_TI2V_CKPT",
+      "OTR_ZIMAGE_CLIP",
+      "OTR_ZIMAGE_CLIP_TYPE",
+      "OTR_ZIMAGE_UNET",
+      "OTR_ZIMAGE_VAE"
+    ],
+    "effective": {
+      "CUDA_VISIBLE_DEVICES": "",
+      "PYTHONUTF8": "1",
+      "OTR_TEST_MODE": "1"
+    }
+  }
+}
